@@ -1,7 +1,7 @@
 ---
 title: "Microsoft Surface on Omarchy Linux"
 description: "Microsoft Surface Laptop and Surface Pro on Omarchy 4.0.4: the keyboard works after boot but often dies at the LUKS prompt, and touch needs linux-surface."
-answer: "Rate the Surface family bronze. Omarchy does detect Surface hardware and installs Marvell firmware plus an initramfs keyboard module list, but that list is only written when a pinctrl module is found, so AMD Surfaces get nothing and the built-in keyboard is dead at the LUKS prompt. Touch and stylus on IPTS models still need the third-party linux-surface kernel. Prefer an Intel Surface Laptop 3 or 4."
+answer: "Rate the Surface family bronze. Omarchy does detect Surface hardware and installs Marvell firmware plus an initramfs keyboard module list, but that list is only written when a pinctrl module is found, so AMD Surfaces get nothing and the built-in keyboard is dead at the LUKS prompt. Touch and stylus on most IPTS models still need the third-party linux-surface kernel. Prefer an Intel Surface Laptop 3."
 appliesTo:
   from: "3.x"
 status: partial
@@ -106,6 +106,16 @@ sources:
     kind: commit
     author: "omacom"
     date: "2026-09-15"
+  - url: "https://github.com/omacom/omarchy/releases/tag/v3.1.4"
+    title: "Release v3.1.4: Fix Surface keyboard compatibility with decryption screen"
+    kind: release
+    author: "omacom"
+    date: "2025-10-28"
+  - url: "https://github.com/omacom/omarchy/releases/tag/v3.4.0"
+    title: "Release v3.4.0: Fix Surface laptops should have driver kit installed by default"
+    kind: release
+    author: "omacom"
+    date: "2026-02-26"
   - url: "https://github.com/omacom/omarchy/releases/tag/v4.0.4"
     title: "Release v4.0.4 release notes"
     kind: release
@@ -131,28 +141,28 @@ faq:
   - q: "Does the Surface keyboard work in Omarchy?"
     a: "In the desktop session, yes. At the LUKS passphrase prompt it depends on whether /etc/mkinitcpio.conf.d/surface_device_modules.conf exists. On AMD Surface models Omarchy 4.0.x does not write it, so you need an external USB keyboard until you create it yourself."
   - q: "Does the Surface touchscreen and pen work?"
-    a: "Not on the stock kernel for IPTS-era models such as the Surface Pro 4 and newer, Surface Book 2 and the Laptop Studio. Those need the third-party linux-surface kernel plus iptsd. Omarchy does not install it as of 4.0.4."
+    a: "On the stock kernel it depends on the model. A Surface Book 2 owner reported no touch at all until they installed the third-party linux-surface kernel plus iptsd. A Surface Laptop Studio 2 owner reported touchscreen and stylus working on the stock Omarchy kernel, with only the haptic touchpad dead. Omarchy does not install linux-surface as of 4.0.4."
   - q: "Should I buy a Surface to run Omarchy?"
-    a: "Not if you have a choice. A Framework or ThinkPad will cost you far fewer evenings. If you already own a Surface Laptop 3 or 4 on Intel, it is workable."
+    a: "Not if you have a choice. A Framework or ThinkPad will cost you far fewer evenings. If you already own an Intel Surface Laptop 3, it is workable."
 related: [touchpad-input, boot-limine, webcam, battery-power, nvidia]
 draft: false
 ---
 
 ## Verdict
 
-Bronze. A Microsoft Surface will run Omarchy, and the desktop session is mostly ordinary once you are logged in, but you should expect to do real work before and after the install. Omarchy has exactly three lines of Surface-specific code, all of them about the keyboard and Wi-Fi firmware, and none of them about touch, pen or the multi-battery machines.
+Bronze. A Microsoft Surface will run Omarchy, and the desktop session is mostly ordinary once you are logged in, but you should expect to do real work before and after the install. Omarchy carries exactly three Surface-specific files: a detection helper, a one-line firmware installer and a keyboard module drop-in writer. Nothing in the tree is about touch, pen or the multi-battery machines.
 
-The two problems that define this family are pre-boot input and touch. The built-in keyboard often does not exist yet at the LUKS passphrase prompt, because the Surface Aggregator modules are not in the initramfs. And the touchscreen and stylus on every IPTS-era Surface need a kernel Omarchy does not ship.
+The two problems that define this family are pre-boot input and touch. The built-in keyboard often does not exist yet at the LUKS passphrase prompt, because the Surface Aggregator modules are not in the initramfs. And on the IPTS-era models the touchscreen and stylus can need a kernel Omarchy does not ship.
 
-Checked against Omarchy 4.0.4 source, with the v3.8.4 tree compared for what changed. The single best case in the tracker is an Intel Surface Laptop 3, which is the only model the Omarchy script claims to have been tested on.
+Checked against Omarchy 4.0.4 source, with the v3.8.4 tree compared for what changed. `Surface Laptop 3` is the only product name the keyboard script treats as tested, and the one Surface Laptop 3 keyboard recipe in the tracker uses the Intel `pinctrl_icelake` module, so an Intel Laptop 3 is the best documented case here.
 
 ## What works
 
-Wi-Fi is fine on the reported machines. Omarchy installs `linux-firmware-marvell` on any detected Surface, and the debug dump in [issue #11128](https://github.com/omacom/omarchy/issues/11128) shows a Qualcomm Atheros QCA6174 bound to `ath10k_pci` on a Surface Laptop 3 running 4.0.3.
+Wi-Fi is fine on the reported machines. Omarchy has installed `linux-firmware-marvell` on any detected Surface since [v3.4.0](https://github.com/omacom/omarchy/releases/tag/v3.4.0), whose notes list "Surface laptops should have driver kit installed by default", and the debug dump in [issue #11128](https://github.com/omacom/omarchy/issues/11128) shows a Qualcomm Atheros QCA6174 bound to `ath10k_pci` on a Surface Laptop 3 running 4.0.3. No Surface Wi-Fi failure has been filed.
 
-The internal display works, including high-resolution panels. A Surface Pro 10 reported a 2880x1920 panel driving correctly in [issue #9537](https://github.com/omacom/omarchy/issues/9537). The only complaint there was refresh rate, covered below.
+The internal display works, including high-resolution panels. [Issue #9537](https://github.com/omacom/omarchy/issues/9537) shows a Surface Pro 10 driving a 2880x1920 panel, though that reporter was running the third-party linux-surface kernel rather than Omarchy's own. The Surface Laptop Studio 2 in [issue #12136](https://github.com/omacom/omarchy/issues/12136) was on stock `linux-omarchy` with a working desktop.
 
-The built-in keyboard and touchpad work normally inside the Hyprland session on Surface Laptop and Surface Pro models. Every keyboard report in the tracker is about the pre-boot stage, not the desktop.
+The built-in keyboard works normally inside the Hyprland session. The reporter in [issue #729](https://github.com/omacom/omarchy/issues/729) traced it stage by stage: the Surface keyboard selects entries in the boot menu and works after login, and only the encryption prompt is dead. The touchpad is the same story, with one exception: the Surface Laptop Studio 2, covered below, is the only model anyone has reported a dead pointer on inside the desktop.
 
 There is no Surface-specific audio, Bluetooth or suspend issue in the data set. That is weak evidence, not good evidence. It means nobody filed one, not that somebody verified it. Those subsystems are marked unknown here on purpose.
 
@@ -160,21 +170,23 @@ There is no Surface-specific audio, Bluetooth or suspend issue in the data set. 
 
 **Keyboard and touchpad dead at the LUKS prompt.** This is the headline bug. On AMD Surface models, `install/hardware/fix-surface-keyboard.sh` never writes its module drop-in, so the initramfs has no `surface_aggregator` chain and you must plug in a USB keyboard to unlock the disk. Greg Baker filed [issue #11128](https://github.com/omacom/omarchy/issues/11128) on 2026-09-10 with the full chain and a confirmed workaround. The script looks for a `pinctrl_` module in `lsmod`, which exists on Intel Surfaces and not on AMD ones, and on failure it simply does nothing.
 
-This is a regression between 3.x and 4.x. In v3.8.4 the `MODULES=(...)` line sat outside the pinctrl branch and was written either way, with an empty first entry. In v4.0.0 through v4.0.4 the write moved inside the `else`, so a failed pinctrl autodetect now means no drop-in at all.
+This is a regression between 3.x and 4.x, and it is not stated in the issue. In v3.8.4 the script lived at `install/config/hardware/fix-surface-keyboard.sh` and its `MODULES=(...)` line sat outside the pinctrl branch, so it was written either way, with an empty first entry when autodetect failed. In v4.0.0 the write moved inside the `else`, and v4.0.4 is byte-identical to v4.0.0 there, so a failed pinctrl autodetect now means no drop-in at all. The keyboard fix itself first shipped in [v3.1.4](https://github.com/omacom/omarchy/releases/tag/v3.1.4), credited there as "Fix Surface keyboard compatibility with decryption screen".
 
-The Intel side of the same problem is older. [Issue #729](https://github.com/omacom/omarchy/issues/729) covers a Surface Laptop Studio with no keyboard at the Plymouth screen, and [issue #2092](https://github.com/omacom/omarchy/issues/2092) is a Surface Laptop 4 owner who could not type a password at all and closed it after switching keyboards. See [/fix/luks-passphrase-not-accepted-at-boot/](/fix/luks-passphrase-not-accepted-at-boot/) for the general shape of that failure.
+The problem predates the regression. [Issue #729](https://github.com/omacom/omarchy/issues/729) covers a Surface Laptop Studio with no keyboard at the Plymouth screen, back on Omarchy 1.13.0 before the script existed. [Issue #2092](https://github.com/omacom/omarchy/issues/2092) is filed as a Surface Laptop 4 that could not type a password at all on 3.0.2 and was closed after switching keyboards, but read it with care: the title says Surface Laptop 4 while the system details line reports a desktop Ryzen 5 5600X, so it may not be Surface hardware at all. See [/fix/luks-passphrase-not-accepted-at-boot/](/fix/luks-passphrase-not-accepted-at-boot/) for the general shape of that failure.
 
-**Touchscreen and pen do not work on the stock kernel.** Surfaces from the Pro 4 era onwards use Intel Precise Touch and Stylus, and mainline has no IPTS driver. Alex Jessup confirmed this on a Surface Book 2 in [issue #9484](https://github.com/omacom/omarchy/issues/9484) and got touch working by installing the third-party `linux-surface` kernel, `iptsd` and `surface-ipts-firmware`. [PR #7857](https://github.com/omacom/omarchy/pull/7857) would add that as an opt-in install step, keeping the stock kernel as the default boot entry and skipping when Secure Boot is on. It is still open as of 2026-09-16.
+**Touchscreen and pen can be dead on the stock kernel.** Surfaces from the Pro 4 era onwards use Intel Precise Touch and Stylus. Alex Jessup found no `ipts` module and no touch input node on a Surface Book 2 in [issue #9484](https://github.com/omacom/omarchy/issues/9484), and got touch working by installing the third-party `linux-surface` kernel, `iptsd` and `surface-ipts-firmware`. [PR #7857](https://github.com/omacom/omarchy/pull/7857) would add that as an opt-in install step, tested by its author on a Surface Pro 7, keeping the stock kernel as the default boot entry and skipping when Secure Boot is on. It is still open as of 2026-09-16.
 
-**Surface Laptop Studio 2 touchpad is worse than that.** In [issue #12136](https://github.com/omacom/omarchy/issues/12136), the haptic touchpad produces no pointer events at all on 4.0.4 with `linux-omarchy`, and the fix was the same linux-surface kernel plus the ITHC DKMS driver.
+That PR scopes the touch problem to the Surface Pro 4 and newer, the Laptop Studio and the Go 3 and 4, and says touch already works with mainline on the Surface Laptop 1 to 5, Go 1 and 2, and Surface 3. Treat the boundary as untested rather than settled: the Surface Laptop Studio 2 in [issue #12136](https://github.com/omacom/omarchy/issues/12136) had a working touchscreen and stylus on stock `linux-omarchy`, which the PR's list would not predict.
 
-**NVIDIA early KMS gets stripped.** On a Surface Book 2 or Laptop Studio, the Surface drop-in sorts after `nvidia.conf` and resets `MODULES` instead of appending, so the NVIDIA modules are dropped from the initramfs. That is [issue #7111](https://github.com/omacom/omarchy/issues/7111), filed by an automated QA pass and confirmed in source. The Omarchy tree already documents the hazard in its own `mkinitcpio.conf.d/omarchy_hooks.conf`. See [/hardware/nvidia/](/hardware/nvidia/).
+**Surface Laptop Studio 2 touchpad does not work at all.** In [issue #12136](https://github.com/omacom/omarchy/issues/12136), the haptic touchpad produces no pointer events on 4.0.4 with `linux-omarchy 7.2.5-3`. The reporter's working setup was the linux-surface kernel plus `iptsd` and an ITHC DKMS driver for the `8086:51d1` controller.
+
+**NVIDIA early KMS gets stripped.** On a Surface Book 2 or Laptop Studio, the Surface drop-in sorts after `nvidia.conf` and resets `MODULES` instead of appending, so the NVIDIA modules are dropped from initramfs images generated afterwards. That is [issue #7111](https://github.com/omacom/omarchy/issues/7111), filed by an automated QA pass and proven in source rather than reproduced. It only bites when the drop-in was actually written, which means an Intel Surface where the pinctrl autodetect succeeded. The Omarchy tree already documents the hazard in its own `mkinitcpio.conf.d/omarchy_hooks.conf`, which keeps the `kms` hook alive for the Intel iGPU but does not put the NVIDIA modules back. See [/hardware/nvidia/](/hardware/nvidia/).
 
 **Battery percentage is wrong on Surface Book.** `omarchy-battery-status` picks the first `BAT*` device, which on a Surface Book is the small tablet pack, so the panel can read 0% while the bar icon reads the truth. Filed twice, in [issue #8504](https://github.com/omacom/omarchy/issues/8504) and [issue #11990](https://github.com/omacom/omarchy/issues/11990). More at [/hardware/battery-power/](/hardware/battery-power/).
 
-**The webcam may work everywhere except your browser.** On a Surface Pro running 4.0.1, `qcam` and WirePlumber saw the camera but Chromium-based browsers never did, with the GTK portal logging an unhandled parent window type. That is [issue #8843](https://github.com/omacom/omarchy/issues/8843). See [/hardware/webcam/](/hardware/webcam/).
+**The webcam may work everywhere except your browser.** On a Surface Pro running 4.0.1, `qcam` and WirePlumber saw the camera but Chromium-based browsers never did, with the GTK portal logging an unhandled parent window type. That is [issue #8843](https://github.com/omacom/omarchy/issues/8843). Nothing in that report is Surface-specific: the camera hardware itself works, and the fault sits in the desktop portal stack. See [/hardware/webcam/](/hardware/webcam/).
 
-**Internal panel defaults to 60 Hz.** On a Surface Pro 10 with a 120 Hz panel, the default wildcard rule picks the preferred mode, which is 60 Hz. [Issue #9537](https://github.com/omacom/omarchy/issues/9537) was closed by the reporter as acceptable behavior. An explicit `eDP-1` rule using Hyprland's `highrr` mode in `~/.config/hypr/monitors.lua` fixes it. The official [monitors chapter](https://omarchy.org/manual/monitors/) covers the file.
+**Internal panel defaults to 60 Hz.** Omarchy's shipped `config/hypr/monitors.lua` sets one wildcard rule with `mode = "preferred"`. On a Surface Pro 10 that panel advertises 60 Hz as preferred even though 120 Hz is available, so the desktop runs at half the panel's rate. [Issue #9537](https://github.com/omacom/omarchy/issues/9537) was closed by the reporter as acceptable behavior. Naming `eDP-1` in your own `~/.config/hypr/monitors.lua` and asking Hyprland for `highrr` instead is what fixed it there. See [the Omarchy manual's monitors chapter](https://omarchy.org/manual/monitors/) for how that file is meant to be edited.
 
 ## What Omarchy does for this model
 
@@ -191,9 +203,11 @@ There is no Surface entry in the Omarchy speaker tuning set, no Surface touch pa
 
 ## Variants
 
-Prefer the **Intel Surface Laptop 3 and 4**. The Laptop 3 is the only product name the keyboard script treats as tested, and the Intel pinctrl path is the one that actually fires.
+Prefer the **Intel Surface Laptop 3**. It is the only product name the keyboard script treats as tested, the Intel pinctrl path is the one that actually fires, and it is the model with a published working module list in the tracker. The Surface Laptop 4 has no clean report either way.
 
-Avoid or treat as a project: **AMD Surface Laptop 3 and 4**, where the keyboard drop-in is never written; **Surface Book 2 and Laptop Studio**, which add the NVIDIA initramfs bug on top of dead touch; **Surface Laptop Studio 2**, where the touchpad itself needs an out-of-tree driver; and **Surface Go 2**, whose only tracker report is a machine that does not finish shutting down and drains its battery overnight ([issue #6079](https://github.com/omacom/omarchy/issues/6079)).
+Avoid or treat as a project: **AMD Surface Laptop 3 and 4**, where the keyboard drop-in is never written; **Surface Book 2 and Laptop Studio**, which add the NVIDIA initramfs bug on top of dead touch; and **Surface Laptop Studio 2**, where the touchpad itself needs an out-of-tree driver.
+
+The **Surface Go 2** has one open report, [issue #6079](https://github.com/omacom/omarchy/issues/6079): the machine goes black on shutdown but keeps running and drains the battery. Do not read that as Surface hardware. Commenters tie it to `omarchy-system-shutdown` scheduling the poweroff inside the user session scope, which systemd then kills during teardown, and that is a general Omarchy bug rather than anything about the Go.
 
 Do not buy an **ARM Surface** for this. Omarchy ships x86_64 only.
 

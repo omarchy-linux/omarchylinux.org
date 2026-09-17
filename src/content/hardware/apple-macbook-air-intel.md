@@ -1,6 +1,6 @@
 ---
 title: "Apple MacBook Air (Intel, T2) on Omarchy"
-description: "MacBook Air 2018 to 2020 with the Apple T2 chip on Omarchy 4.0.4: the linux-t2 kernel it gets, the suspend and Bluetooth bugs, and what to check before you install."
+description: "MacBook Air 2018 to 2020 with the Apple T2 chip on Omarchy 4.0.4: the linux-t2 kernel it gets, the suspend and Bluetooth bugs, what to check first."
 answer: "Bronze. Omarchy installs the linux-t2 kernel automatically on the T2 MacBook Air, and the screen, keyboard, trackpad, audio and Wi-Fi all come up. Sleep is the problem. On the 2020 Air suspend aborts every time on a brcmfmac timeout, hibernate hangs the machine, and Bluetooth often never powers on at boot. Use it plugged in or shut it down."
 appliesTo:
   from: "3.x"
@@ -11,8 +11,8 @@ kind: model
 vendor: "Apple"
 model: "MacBook Air (Intel, T2)"
 dmi: ["MacBookAir8,1", "MacBookAir9,1"]
-cpu: "Intel Core i3/i5/i7 Amber Lake Y (2018 and 2019), Intel Core i3/i5/i7 Ice Lake (2020)"
-gpu: "Intel UHD Graphics 617 (2018 and 2019), Intel Iris Plus (2020)"
+cpu: "Intel Core i5 Amber Lake Y (2018 and 2019), Intel Core i3/i5/i7 Ice Lake (2020)"
+gpu: "Intel UHD Graphics 617 (2018 and 2019), Intel Ice Lake integrated graphics (2020)"
 year: "2018 to 2020"
 rating: bronze
 subsystems:
@@ -119,12 +119,12 @@ credits:
     for: "Built and tested the T2 suspend and resume recovery service on the legacy apple_bce stack"
   - name: "framp"
     url: "https://github.com/framp"
-    for: "Confirmed that a full disk install leaves a T2 Mac's Touch Bar, Esc key and webcam working"
+    for: "Reported that a T2 Mac's Touch Bar, Esc key and webcam still work under Omarchy"
 faq:
   - q: "Does the Intel MacBook Air work with Omarchy?"
     a: "It installs and runs. Omarchy detects the T2 chip by PCI ID and installs the linux-t2 kernel, Apple's Broadcom firmware, the T2 audio config and fan control without you doing anything. Display, keyboard, trackpad, audio and Wi-Fi work. Sleep does not, so treat it as a desk machine."
   - q: "Will installing Omarchy brick my MacBook Air's webcam or Touch ID like the Touch Bar Macs?"
-    a: "No. The firmware that the installer wipes with the partition table belongs to the T1 chip in 2016 and 2017 Touch Bar MacBook Pros. Issue #8271 concluded the T2 is unaffected, and a T2 owner confirmed Touch Bar, Esc and webcam still worked after a normal install."
+    a: "No. The firmware that the installer wipes with the partition table belongs to the T1 chip in 2016 and 2017 Touch Bar MacBook Pros. Issue #8271 concluded the T2 is unaffected, and a T2 MacBook Pro owner in that thread reported Touch Bar, Esc and webcam still working on Omarchy."
   - q: "Does the new Omarchy kernel in 4.0.4 replace linux-t2 on my Air?"
     a: "No. Migration 1789325478 exits early when linux-t2 is installed or the running kernel name contains -t2, so T2 Macs keep their kernel and never get linux-omarchy as the default boot entry."
   - q: "Can I make suspend work on a 2020 MacBook Air?"
@@ -135,33 +135,33 @@ draft: false
 
 ## Verdict
 
-Bronze. The Intel MacBook Air with a T2 chip, meaning the 2018, 2019 and 2020 models, is a supported Omarchy target and it is the least complicated T2 laptop to run. It has one GPU, no Touch Bar and no discrete graphics, so the two worst T2 failure classes on the tracker do not apply to it. Omarchy's installer does all the hardware setup for you.
+Bronze. The Intel MacBook Air with a T2 chip, meaning the 2018, 2019 and 2020 models, is the least complicated T2 laptop to run. The manual covers Intel Macs, and the installer does the T2 setup for you. The Air has one integrated GPU and no Touch Bar, so the Touch Bar and dual-GPU trouble that fills the T2 MacBook Pro reports does not apply to it.
 
 What keeps it out of silver is sleep. On a MacBookAir9,1 (2020), suspend has never once succeeded for the one owner who filed a full diagnosis, and hibernate hangs the machine hard. That is a laptop you shut down rather than close. If you want a laptop that sleeps in a bag, buy something else. If you want to bring a shelved Air back to life as a desk or couch machine, it is a good fit.
 
-Checked against Omarchy 4.0.4 (2026-09-15) with the source at tag v4.0.4. All three Air-specific issues in the tracker are open.
+Checked against Omarchy 4.0.4 (2026-09-15) with the source at tag v4.0.4. The three T2 Air issues in the tracker are all open.
 
 ## What works
 
-The T2 bridge brings up the internal keyboard, the trackpad and audio, and they all survive a resume once the Wi-Fi chip is out of the way. The 2020 Air report in issue #11264 confirms that directly: with `brcmfmac` unloaded, deep suspend and resume work and "the `t2bce` bridge, keyboard, trackpad and audio all come back", in the reporter's words.
+The T2 bridge brings up the internal keyboard, the trackpad and audio, and they all survive a resume once the Wi-Fi chip is out of the way. The 2020 Air report in issue #11264 shows it directly: take the Broadcom chip out of the picture and a deep sleep cycle completes, after which "the `t2bce` bridge, keyboard, trackpad and audio all come back", in the reporter's words.
 
-The internal panel and the brightness keys work. Omarchy 4.0.0 changed `omarchy-hw-display` to pick the gmux backlight instead of the Touch Bar display, and 4.0.2 improved Apple brightness detection again. Neither matters much on an Air, which has no Touch Bar, but it means the brightness keys land on the right device.
+The internal panel works. Both Air reporters run the Omarchy desktop on it, one of them as far as the lock screen after a resume. Brightness goes through `omarchy-hw-display`, which Omarchy 4.0.0 taught to skip the Touch Bar backlight and prefer gmux, with Apple brightness detection improved again in 4.0.2. An Air has neither a Touch Bar nor a gmux, so the picker falls through to the panel's own `intel_backlight`.
 
 Wi-Fi associates and stays up in normal use. The BCM4377 needs Omarchy's `brcmfmac` quirk to complete a WPA handshake against a mixed WPA2/WPA3 access point, and the installer writes it for you.
 
-Graphics are plain Intel. No gmux switching, no AMD driver, none of the hybrid graphics hangs that hit the 16-inch MacBook Pro.
+Graphics are plain Intel, and the desktop runs on them in both Air reports. There is no second GPU here, so none of the gmux and dual-GPU backlight handling that `omarchy-hw-display` carries for the bigger MacBook Pros comes into play.
 
-The webcam routes through the T2 bridge rather than a separate PCIe camera. A MacBook Air 2018 owner corrected an earlier guess on issue #3883 to say the T2 webcam is handled by the bridge driver plus `uvcvideo`, both already in `linux-t2`, and that the `facetimehd` packages are for pre-T2 Macs only. Treat it as working once the bridge is up, and as a casualty whenever the bridge is not.
+The webcam routes through the T2 bridge rather than a separate PCIe camera. A MacBook Air 2018 owner corrected an earlier guess on issue #3883 to say the T2 webcam is handled by the bridge driver plus `uvcvideo`, both already in `linux-t2`, and that the `facetimehd` packages only do anything on pre-T2 Macs with the older Broadcom camera. Treat it as working once the bridge is up, and as a casualty whenever the bridge is not.
 
 ## What breaks
 
-**Suspend on the 2020 Air.** Issue #11264 (open, MacBookAir9,1 on 4.0.3) reports that every suspend aborts with `brcmf_pcie_pm_enter_D3: Timeout on response for entering D3 substate` followed by `PM: failed to suspend: error -5`. systemd then retries with s2idle and fails the same way. With the lid shut, logind keeps retrying roughly every 30 seconds, so the machine stays awake and hot in a bag. The reporter counted 371 failed attempts in one three-hour stretch.
+**Suspend on the 2020 Air.** Issue #11264 (open, MacBookAir9,1 on 4.0.3) reports that every suspend aborts with `brcmf_pcie_pm_enter_D3: Timeout on response for entering D3 substate` followed by `PM: failed to suspend: error -5`. The s2idle retry that systemd falls back to dies on the same timeout. Closing the lid turns that into a loop: logind reattempts the suspend about twice a minute, and the laptop sits there running instead of sleeping. The reporter counted 371 failed attempts in one three-hour stretch with the lid down.
 
-**Bluetooth at boot.** On the same machine `hci_bcm4377` loads and `hci0` exists, but the controller never powers on: `command 0x0c56 tx timeout`, then `bluetoothctl power on` fails. Unbinding and rebinding the driver after boot brings it up, usually on the second try. Omarchy already loads the module, from PR #5145 (merged 2026-04-01, shipped in 3.5.0), so this is a firmware-init flake rather than a missing driver.
+**Bluetooth at boot.** On the same machine the driver loads and the `hci0` device appears, yet the controller stays dead: `command 0x0c56 tx timeout`, and `bluetoothctl power on` returns an error. Unbinding and rebinding the driver after boot brings it up, usually on the second try. Omarchy already loads the module, from PR #5145 (merged 2026-04-01, shipped in 3.5.0), so this is a firmware-init flake rather than a missing driver.
 
-**Hibernate.** Issue #9237 (open) is a MacBookAir9,1 on 4.0.1: `omarchy hibernation setup` configures hibernation happily, and triggering it freezes the machine mid-write with an unresponsive keyboard and no resume. The reporter points at the T2 embedded controller not surviving S4 and proposed an `omarchy-hw-t2` guard that refuses hibernation setup on T2 hardware. No such helper exists in v4.0.4, so the Hibernate menu entry is still reachable. Do not set it up.
+**Hibernate.** Issue #9237 (open) is a MacBookAir9,1 on 4.0.1: `omarchy hibernation setup` configures hibernation happily, and triggering it hard-freezes the machine partway through, with an unresponsive keyboard and no resume. The journal stops after the filesystem sync and the next boot is a cold one. The reporter points at the T2 embedded controller not surviving S4 and proposed an `omarchy-hw-t2` guard that refuses hibernation setup on T2 hardware. No such helper exists in v4.0.4, so nothing stands between you and a hung machine. Do not set it up.
 
-**Fan control on the 2018 Air.** Issue #5155 (open) is a MacBookAir8,1 where `t2fanrd` stopped controlling the fan after a kernel update. The cause was traced to the `linux-t2` patch set, where an unaligned `iowrite32` on byte-sized SMC registers made the T2 reject every fan write. The machine does not cook, because the T2 does its own basic thermal management, but it runs hotter than it should and the fan sits near minimum.
+**Fan control on the 2018 Air.** Issue #5155 (open) is a MacBookAir8,1 where `t2fanrd` stopped controlling the fan after a kernel update. The cause was traced to the `linux-t2` patch set, where an unaligned `iowrite32` on byte-sized SMC registers made the T2 reject every fan write. The machine does not cook, because the T2 does its own basic thermal management, but the fan sits near minimum and the laptop stays warmer than it needs to be.
 
 **Touch ID.** Nothing in Omarchy enables it and nothing in the tracker reports it working. Omarchy's fingerprint setup targets ordinary fprintd readers. Assume it does nothing on this machine.
 
@@ -193,12 +193,12 @@ Do not confuse the 2020 Intel Air with the M1 Air released the same year. The M1
 
 - Back up anything on the machine. Omarchy's standard path wipes the disk and macOS stops being bootable. You can restore it later through Internet Recovery.
 - Disable Secure Boot and allow external boot from macOS Recovery first, following the manual's [Mac support](https://omarchy.org/manual/mac-support/) chapter. Without it the USB will not boot.
-- Do not worry about the T1 firmware story on this machine. Issue #8271 concerns 2016 and 2017 Touch Bar MacBook Pros, whose coprocessor loads firmware from the macOS EFI partition. A T2 owner in that thread confirmed Touch Bar, Esc and webcam still working after an ordinary install.
+- Do not worry about the T1 firmware story on this machine. Issue #8271 concerns 2016 and 2017 Touch Bar MacBook Pros, whose coprocessor loads firmware from the macOS EFI partition. The thread's own analysis puts the scope at `MacBookPro13,2`, `13,3`, `14,2` and `14,3`, and a T2 owner there reported Touch Bar, Esc and webcam still working.
 - After the first boot, check you are on the right kernel: `uname -r` should contain `-t2`. If it does not, the T2 detection did not run and nothing else will behave.
 - Skip `omarchy hibernation setup` entirely.
 - Plan for a machine you shut down rather than suspend, at least until a Wi-Fi sleep hook ships. PR #5998, the closest thing to one, was closed without merging and targeted the older `apple-bce` stack.
 
-Evidence here is thin in one direction and solid in the other. Three open issues name an Intel MacBook Air specifically, so almost everything above that says "this breaks" is well sourced and almost everything that says "this works" rests on the same small number of reports. Battery life on Omarchy is unmeasured on this model. If you run one, [send a report](/hardware/submit/).
+Evidence here is thin in one direction and solid in the other. Three open issues name a T2 MacBook Air specifically, so almost everything above that says "this breaks" is well sourced and almost everything that says "this works" rests on the same small number of reports. Battery life on Omarchy is unmeasured on this model. If you run one, [send a report](/hardware/submit/).
 
 ## Related
 

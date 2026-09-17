@@ -1,6 +1,6 @@
 ---
 title: "Lenovo ThinkPad T480 and T480s on Omarchy"
-description: "ThinkPad T480 and T480s on Omarchy 4.0.4: Intel UHD 620 works, the dual-battery readout is wrong, and the Validity fingerprint reader never enrolls."
+description: "ThinkPad T480 and T480s on Omarchy 4.0.4: Intel UHD 620 needs no setup, the dual-battery readout is wrong, and the Validity fingerprint reader never enrolls."
 answer: "Silver. A T480 or T480s runs Omarchy 4.0.4 well: i915 graphics, Intel 8265 Wi-Fi and HDA audio come up with no extra work, and TPM must be off in the BIOS. Two things bite. The bar and power panel report only BAT0, so the second pack is invisible, and the Synaptics Validity 06cb:009a fingerprint reader has no libfprint driver, so Setup > Security > Fingerprint always fails."
 appliesTo:
   from: "3.x"
@@ -37,6 +37,9 @@ quirkScripts:
   - name: "install/hardware/intel/video-acceleration.sh"
     url: "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/intel/video-acceleration.sh"
     note: "Matches the UHD Graphics string and installs intel-media-driver, libvpl and vpl-gpu-rt."
+  - name: "install/hardware/intel/sof-firmware.sh"
+    url: "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/intel/sof-firmware.sh"
+    note: "Installs sof-firmware whenever lspci shows any Intel audio controller, so it fires here. The T480's HDA codec does not use it."
   - name: "install/hardware/intel/lpmd.sh"
     url: "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/intel/lpmd.sh"
     note: "Skipped here. It only runs on CPU models 151, 154, 170, 172, 183, 186, 189, 191 and 204, which is Alder Lake and newer."
@@ -125,7 +128,12 @@ sources:
     title: "PR #10384: Read battery aggregate from UPower DisplayDevice"
     kind: pr
     author: "fresh3nough"
-    date: "2026-09-04"
+    date: "2026-09-05"
+  - url: "https://github.com/omacom/omarchy/pull/8864"
+    title: "PR #8864: Fix battery status reading the wrong device on multi-battery hardware"
+    kind: pr
+    author: "zmitton"
+    date: "2026-08-29"
   - url: "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-battery-status"
     title: "bin/omarchy-battery-status at v4.0.4"
     kind: commit
@@ -158,7 +166,7 @@ faq:
     a: "The top bar icon reads UPower's combined device while the power panel runs omarchy-battery-status, which still picks the first BAT device. On a T480 with the rear hot-swap pack those two numbers disagree. Fixes are open in PR #10384 and PR #8864, neither merged as of 4.0.4."
   - q: "Should I buy a T480 to run Omarchy?"
     a: "Yes, if you want cheap and predictable. Buy the version without the MX150, put 16 GB or more in it, and plan on no fingerprint login. Prefer the T480 over the T480s if you want the second hot-swap battery, and accept that Omarchy will only show one of the packs."
-related: [fingerprint, battery-power, intel-gpu, suspend-sleep, thunderbolt-dock]
+related: [fingerprint, battery-power, intel-gpu, suspend-sleep, multi-monitor]
 draft: false
 ---
 
@@ -177,7 +185,7 @@ The clearest evidence is a full `omarchy debug` dump from a T480s (machine type 
 - Graphics come up on `i915` with the UHD 620 at PCI ID `8086:5917`, driving the internal 1920x1080 eDP panel under Hyprland 0.56.2.
 - Wi-Fi is the Intel 8265/8275 on `iwlwifi`, interface up. Wired is the Intel I219-LM on `e1000e`.
 - Bluetooth is the Intel `btusb` adapter, `hci0` up at Bluetooth 4.2.
-- Audio is Sunrise Point-LP HD Audio on `snd_hda_intel`, with PipeWire, pipewire-pulse and WirePlumber all active. The T480 predates the SOF-based codecs that cause so much trouble on newer ThinkPads, so `install/hardware/intel/sof-firmware.sh` is not what makes sound work here.
+- Audio is Sunrise Point-LP HD Audio on `snd_hda_intel`, with PipeWire, pipewire-pulse and WirePlumber all active. The T480 predates the SOF-based codecs that cause so much trouble on newer ThinkPads, so the `sof-firmware` package Omarchy installs on every Intel audio controller is not what makes sound work here.
 - Both cameras, the regular Chicony one and the IR camera on IR-equipped units, bind to `uvcvideo`. That is a driver binding, not a capture test, so the camera row above stays at unknown.
 - Suspend states `freeze,mem,disk` are available and the machine reports `deep` as the configured suspend mode, so the T480 still has real S3 rather than s2idle only.
 
@@ -199,7 +207,7 @@ That is one machine, so treat the Bluetooth and audio lines as "came up on a liv
 
 ## What Omarchy does for this model
 
-Nothing by name. `bin/omarchy-hw-match` is the DMI matcher, and it greps `/sys/class/dmi/id/product_name` and `product_family`. No caller in the v4.0.4 tree passes a ThinkPad or T480 pattern, and `install/hardware/lenovo/` contains exactly one script, for Yoga Pro 7 bass speakers. Your T480 gets only the generic Intel path from `install/hardware/all.sh`: `thermald` enabled (Kaby Lake-R clears the Sandy Bridge or newer test), `intel-media-driver` plus `libvpl` and `vpl-gpu-rt` for video acceleration, and the generic Synaptics InterTouch touchpad nudge. `intel-lpmd` is skipped, since that script only matches Alder Lake and newer CPU model numbers.
+Nothing by name. `bin/omarchy-hw-match` is the DMI matcher, and it greps `/sys/class/dmi/id/product_name` and `product_family`. No caller in the v4.0.4 tree passes a ThinkPad or T480 pattern, and `install/hardware/lenovo/` contains exactly one script, for Yoga Pro 7 bass speakers. Your T480 gets only what `install/hardware/all.sh` hands every machine of its shape: `thermald` enabled (Kaby Lake-R clears the Sandy Bridge or newer test), `intel-media-driver` plus `libvpl` and `vpl-gpu-rt` for video acceleration, `sof-firmware` on the strength of an Intel audio controller being present, and a generic Synaptics InterTouch touchpad nudge that does nothing while the installer runs under arch-chroot. `intel-lpmd` is skipped, since that script only matches Alder Lake and newer CPU model numbers.
 
 On DMI, ThinkPads put the machine type in `product_name` and the friendly name in `product_version` and `product_family`. Machine types seen in the cited issues are `20L6S77E00` for a T480 and `20L8S27E04`, `20L7S2QV00` and `20MF000DUS` for the T480s; the T480s family string reads `ThinkPad T480s`. If you write your own quirk, match on the family, not the machine type, because every configuration has a different type code.
 
@@ -216,11 +224,11 @@ Libreboot or Coreboot units without an EFI payload install but never boot: [#420
 - Check the fingerprint reader with `lsusb | grep -iE '06cb|138a|04f3'` first. If it says `06cb:009a`, plan on password login.
 - Put in 16 GB. The 8 GB unit in the #11721 dump sat at 3 GB used with a fairly idle desktop.
 - Confirm UEFI, not Libreboot or a BIOS-only Coreboot payload.
-- Turn off Secure Boot and TPM in the BIOS before the first boot. The manual requires it, and #4296 and #4120 are what a T480 does with TPM left on.
+- Turn off Secure Boot and TPM in the BIOS before the first boot. The manual words it as "Secure Boot and/or TPM", which reads as optional and is not, and #4296 and #4120 are what a T480 does with TPM left on.
 - Leave the old kernel entry in Limine alone after updating to 4.0.4, in case of #12238.
 - Expect the power panel number to be wrong if you have two packs, and check with `upower -i /org/freedesktop/UPower/devices/DisplayDevice` when it matters.
 - Read the sleep and fingerprint chapters of the official manual: [system sleep](https://omarchy.org/manual/system-sleep/) and [hardware authentication](https://omarchy.org/manual/hardware-authentication/).
 
 ## Related
 
-[/hardware/fingerprint/](/hardware/fingerprint/) · [/hardware/battery-power/](/hardware/battery-power/) · [/hardware/intel-gpu/](/hardware/intel-gpu/) · [/hardware/suspend-sleep/](/hardware/suspend-sleep/) · [/hardware/thunderbolt-dock/](/hardware/thunderbolt-dock/) · [/hardware/lenovo-thinkpad-x1-carbon/](/hardware/lenovo-thinkpad-x1-carbon/) · [/reference/commands/omarchy-battery-status/](/reference/commands/omarchy-battery-status/) · [/releases/v4.0.4/](/releases/v4.0.4/) · [/hardware/submit/](/hardware/submit/)
+[/hardware/fingerprint/](/hardware/fingerprint/) · [/hardware/battery-power/](/hardware/battery-power/) · [/hardware/intel-gpu/](/hardware/intel-gpu/) · [/hardware/suspend-sleep/](/hardware/suspend-sleep/) · [/hardware/multi-monitor/](/hardware/multi-monitor/) · [/hardware/lenovo-thinkpad-x1-carbon/](/hardware/lenovo-thinkpad-x1-carbon/) · [/reference/commands/omarchy-battery-status/](/reference/commands/omarchy-battery-status/) · [/releases/v4.0.4/](/releases/v4.0.4/) · [/hardware/submit/](/hardware/submit/)

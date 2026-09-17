@@ -20,6 +20,11 @@ export default defineConfig({
       },
     }),
   ],
+  // Local dev/preview only. Production is static files on a CDN, so this never ships.
+  vite: {
+    server: { allowedHosts: true },
+    preview: { allowedHosts: true },
+  },
   markdown: {
     shikiConfig: { themes: { light: 'github-light', dark: 'github-dark' }, wrap: true },
   },

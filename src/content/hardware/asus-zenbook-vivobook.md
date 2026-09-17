@@ -1,7 +1,7 @@
 ---
 title: "ASUS Zenbook and Vivobook on Omarchy Linux"
-description: "ASUS Zenbook and Vivobook support on Omarchy 4.0.4: one Zenbook UX5406AA backlight quirk ships, while audio, s2idle resume, FocalTech fingerprint and MediaTek Wi-Fi are open."
-answer: "Rate the mainstream Intel Zenbook silver and the Vivobook bronze. Graphics and display work, and Omarchy ships one quirk for the Zenbook S14 UX5406AA backlight. The real risks are suspend and resume, which hangs or freezes on four different reported Zenbooks, plus FocalTech fingerprint readers with no libfprint driver and MediaTek or Realtek Wi-Fi that dies after s2idle. Avoid the Panther Lake UX5406AA if you need sound today."
+description: "ASUS Zenbook and Vivobook on Omarchy 4.0.4: one UX5406AA backlight quirk ships, while audio, s2idle resume, fingerprint and Wi-Fi stay open."
+answer: "Silver for a mainstream Intel Zenbook, bronze for most Vivobooks. Graphics and display come up, and Omarchy ships one quirk for the Zenbook S14 UX5406AA backlight. The real risks are suspend and resume, with four open reports across three Zenbook models, FocalTech fingerprint readers that no libfprint driver claims, and Realtek Wi-Fi that dies after s2idle. Skip the Panther Lake UX5406AA if you need sound today."
 appliesTo:
   from: "3.x"
 status: partial
@@ -10,9 +10,9 @@ omarchyVersionTested: "4.0.4"
 kind: model
 vendor: "ASUS"
 model: "ASUS Zenbook and Vivobook"
-dmi: ["ZenBook UX325JA", "UX5406AA", "UM3406KA", "UX8402ZE", "S3407CA", "Vivobook_ASUSLaptop M6500QC_M6500QC", "Vivobook ASUSLaptop X1504VA", "VivoBook_ASUSLaptop X515DA_D515DA", "ASUSTeK COMPUTER INC."]
+dmi: ["ZenBook UX325JA", "UX5406AA", "UM3406KA", "UX8402ZE", "S3407CA", "Vivobook_ASUSLaptop M6500QC_M6500QC", "Vivobook ASUSLaptop X1504VA", "VivoBook_ASUSLaptop X515DA_D515DA"]
 cpu: "Intel Ice Lake, Alder Lake, Arrow Lake-H and Panther Lake; AMD Ryzen 3000 through Ryzen AI in the reported machines"
-gpu: "Intel Iris Plus, Iris Xe and Xe3; AMD Radeon Vega, 840M and 860M; RTX 3050 Mobile on some Vivobook and Zenbook Pro units"
+gpu: "Intel Iris Plus, Iris Xe and Xe3; AMD Radeon Vega and 840M; NVIDIA RTX 2050 and RTX 3050 Mobile on some Vivobook and Zenbook Pro units"
 year: "2020-2026"
 rating: silver
 subsystems:
@@ -138,7 +138,7 @@ faq:
   - q: "Is the ASUS Zenbook a good Omarchy laptop?"
     a: "A mainstream Intel Zenbook is a reasonable choice. Graphics, display and Wi-Fi generally come up, and the open reports concentrate on suspend and resume rather than on basic desktop function. Test sleep before you commit."
   - q: "Does sound work on the Zenbook S14 UX5406AA?"
-    a: "Not on the stock Omarchy kernel as of 4.0.4. The sof_sdw driver fails to register a card, so PipeWire only shows a dummy sink. One reporter says kernel 7.3.0-rc1 fixes it, and the stable channel ships linux-omarchy 7.2.5."
+    a: "Not on the stock Omarchy kernel as of 4.0.4. The sof_sdw driver fails to register a card, so PipeWire only shows a dummy sink. A commenter says kernel 7.3.0-rc1 fixes it with no patching, but the newest kernel in the stable channel is linux-omarchy 7.2.5 and its Panther Lake kernels are older."
   - q: "Will my Vivobook fingerprint reader work?"
     a: "If it is a FocalTech reader with USB vendor 2808, probably not. Omarchy's detector does not list that vendor, and for the FT9366 no libfprint driver exists at all."
   - q: "Do the ASUS audio quirk scripts run on a Zenbook?"
@@ -159,9 +159,7 @@ The honest summary is that a Zenbook or Vivobook will install and run, and the t
 
 Graphics come up on their own. Intel Iris Plus, Iris Xe and AMD Radeon integrated graphics all use in-tree drivers, and no Zenbook or Vivobook issue in the tracker reports a machine that fails to reach a desktop.
 
-Wi-Fi works once firmware is current. The MediaTek MT7921 and MT7922 breakage reported on a Vivobook S14 in issue #1829 was a `linux-firmware-mediatek` regression, and the reporter later confirmed version 20251011-1 works again.
-
-Fingerprint hardware itself is fine where a driver exists. On issue #11384 the reporter bypassed Omarchy's detection gate and got enrollment, `fprintd-verify` and PAM all working end to end, so the plumbing is sound and only the presence test was wrong.
+One old Wi-Fi regression is behind us. The MediaTek MT7921 and MT7922 breakage reported on a Vivobook S14 in issue #1829 was a `linux-firmware-mediatek` regression, and a commenter on that thread confirmed version 20251011-1 works again. The thread is closed. The Wi-Fi problems still open on this family are different ones, below.
 
 Checked on 4.0.4. Most of this was already true on 3.x, since none of it depends on the Quickshell rewrite.
 
@@ -171,15 +169,15 @@ Suspend is the recurring theme, and it is not one bug.
 
 On the Zenbook UX325JA, an Ice Lake machine, issue #11458 reports a hard freeze 20 to 50 seconds after a successful s2idle resume on kernel 7.2.3. The reporter had 42 clean cycles on 7.1.9 before the update, which makes it a kernel regression rather than a configuration problem. Still open.
 
-On the Zenbook 14 UM3406KA, issue #10924 reports the ASUP1206 I2C touchpad going dead after resume, with `i2c_hid_acpi` failing its power state restore and returning error 121. Unbinding and rebinding only that device brings it back, and the reporter runs that from a systemd sleep hook. Still open.
+On the Zenbook 14 UM3406KA, issue #10924 reports the ASUP1206 I2C touchpad going dead after resume, with `i2c_hid_acpi` failing its power state restore and returning error -121. Unbinding and rebinding only that device brings it back, and the reporter runs that from a systemd sleep hook. Still open.
 
 On the Zenbook UX8402ZE, an Alder Lake machine with NVIDIA graphics, issue #7788 reports a hard hang entering s2idle on lid close, 5 boots out of 7 before the reporter pinned `MemorySleepMode=deep`. A commenter links the same class of failure to the NVIDIA GSP suspend path. Still open.
 
 Older but worth knowing: issue #4908 traced a UM3406KA that would not sleep at all to a `linux-firmware-other` update, and the fix was downgrading that package. DHH's answer on that thread was blunt about scope, saying Omarchy has no power over the firmware bundle.
 
-Audio is broken on one model. Issue #5557 shows the Panther Lake Zenbook S14 UX5406AA failing to register any sound card, with `sof_sdw` refusing the topology over an ABI mismatch and `aplay -l` reporting no soundcards. Pegorim tracked this to upstream SOF work and confirmed speakers, headphones, mic and HDMI all work with two Intel patches applied. A later commenter reports kernel 7.3.0-rc1 fixes it with no patching. Omarchy's stable channel ships `linux-omarchy` 7.2.5, so as of this writing that fix has not reached you. Note that PR #5606, which the tracker links to this issue, only installs `sof-firmware` on Panther Lake machines. It does not address the UX5406AA failure.
+Audio is broken on one model. Issue #5557 shows the Panther Lake Zenbook S14 UX5406AA failing to register any sound card, with `sof_sdw` refusing the topology over an ABI mismatch and `aplay -l` reporting no soundcards. Pegorim tracked this to upstream SOF work and confirmed speakers, headphones, mic and HDMI all work with two Intel patches applied. A later commenter reports kernel 7.3.0-rc1 fixes it with no patching. Nothing in Omarchy's stable channel is that new: `linux-omarchy` sits at 7.2.5, and the Panther Lake kernels this machine would actually run, `linux-ptl` and `linux-mainline-panther-lake`, are older still at 7.1.8 and 7.0-rc4. As of this writing the fix has not reached you. Note that PR #5606, which the tracker links to this issue, only installs `sof-firmware` on Panther Lake machines. It does not address the UX5406AA failure.
 
-FocalTech fingerprint readers are a dead end on some units. Issue #8800 covers a Vivobook M6500QC where libfprint reports no driver for USB device 2808:A658, and there is no open source driver for that chip. Issue #11384 is the neighbouring problem: `omarchy-hw-fingerprint` lists vendors `27c6 138a 06cb 08ff 1c7a 147e`, and FocalTech's `2808` is not among them, so readers that would work are told they do not exist.
+FocalTech fingerprint readers are a dead end on some units. Issue #8800 covers a Vivobook M6500QC where libfprint reports no driver for USB device 2808:A658, and there is no open source driver for that chip. Issue #11384 is the neighbouring problem. It was filed from an ASUS ExpertBook rather than a Zenbook, but it concerns the same FocalTech sensor family these laptops use: `omarchy-hw-fingerprint` lists vendors `27c6 138a 06cb 08ff 1c7a 147e`, and FocalTech's `2808` is not among them, so readers that would work are told they do not exist. On that ExpertBook, bypassing the gate got enrollment, `fprintd-verify` and PAM working end to end, which puts the fault in the detector rather than the hardware.
 
 Wi-Fi after resume is chip dependent. Issue #7003 covers a Vivobook S 14 S3407CA whose Realtek RTL8852BE is dead after s2idle until the driver is reloaded. Issues #11813 and #11812, both on a Vivobook X1504VA with MediaTek MT7902, cover Wi-Fi that never reconnects on its own and a fresh install that prefers 2.4 GHz over the same SSID on 5 GHz.
 
@@ -189,13 +187,13 @@ Two smaller ones. Issue #8944 on a Vivobook 15 Pro reports the panel going dim a
 
 Less than you might expect. Two files, one model.
 
-`bin/omarchy-hw-asus-zenbook-ux5406aa` matches the string `ux5406aa` against `/sys/class/dmi/id/product_name` or `product_family` through `omarchy-hw-match`, then confirms a Panther Lake GPU. `install/hardware/asus/fix-asus-ptl-display-backlight.sh` uses that detector to write `xe.enable_dpcd_backlight=1` into a Limine entry drop-in, because the panel reports an empty EDID and the xe driver otherwise picks PWM backlight, which makes brightness effectively binary. That fix shipped in v3.8.0 and is still wired into `install/hardware/all.sh` at v4.0.4. The script's own comment says it is enabled only for the ExpertBook B9406 and the UX5406AA for now.
+`bin/omarchy-hw-asus-zenbook-ux5406aa` matches the string `ux5406aa` against `/sys/class/dmi/id/product_name` or `product_family` through `omarchy-hw-match`, then confirms a Panther Lake GPU. `install/hardware/asus/fix-asus-ptl-display-backlight.sh` uses that detector to write `xe.enable_dpcd_backlight=1` into a Limine entry drop-in, because the panel reports an empty EDID and the xe driver otherwise picks PWM backlight, which leaves the panel with roughly two usable brightness levels. That fix shipped in v3.8.0 and is still wired into `install/hardware/all.sh` at v4.0.4. The script's own comment says it is enabled only for the ExpertBook B9406 and the UX5406AA for now.
 
-Everything else under `install/hardware/asus/` targets other machines. The B9406 display and touchpad scripts, the ROG Flow Z13 touchpad rule, the ROG `asusctl` install, and the user level ALC285 mic and soft mixer fixes all gate on a different detector. `omarchy-hw-asus-rog` requires the literal string `ROG` in the DMI product family, so a Zenbook or Vivobook never triggers them. Speaker tunings ship only for the 2026 Dell XPS.
+Everything else under `install/hardware/asus/` targets other machines. The B9406 display and touchpad scripts gate on `omarchy-hw-asus-expertbook-b9406`. The ROG Flow Z13 touchpad rule, the `asusctl` install, and the user level ALC285 mic and soft mixer fixes gate on `omarchy-hw-asus-rog`, which requires DMI `sys_vendor` to be exactly `ASUSTeK COMPUTER INC.` and the product family to contain `ROG`. A Zenbook or Vivobook matches neither detector. Speaker tunings ship only for the 2026 Dell XPS.
 
 ## Variants
 
-Prefer a recent Intel Zenbook that is not Panther Lake. Lunar Lake and Arrow Lake units avoid the SoundWire audio problem entirely.
+Prefer a recent Intel Zenbook that is not Panther Lake. The audio failure is tied to the UX5406AA SoundWire topology, and no other Zenbook or Vivobook in the tracker reports a dead sound card.
 
 Avoid the Zenbook S14 UX5406AA if you want sound now. It is the one model with dedicated Omarchy enablement and the one model with a dead sound card.
 

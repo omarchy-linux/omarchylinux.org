@@ -1,16 +1,16 @@
 ---
 title: "ASUS ROG Zephyrus and Strix on Omarchy"
 description: "ASUS ROG Zephyrus G14, G16 and Strix on Omarchy 4.0.4: bronze. asusctl and the hybrid GPU toggle ship, but hibernate, boot and audio still bite."
-answer: "Bronze. ASUS ROG is one of the few families Omarchy names by hand: asusctl installs automatically, brightness and volume keys work, and the hybrid GPU toggle is built in. But 13 of 17 Zephyrus issues are still open on 4.0.4. The 2024 Strix Point G14 can black screen at boot, hibernate hangs hard on G14s, and the ROG audio fix caps volume at 80 percent."
+answer: "Bronze. ASUS ROG is one of the few families Omarchy names by hand: asusctl installs automatically, brightness and volume keys work, and the hybrid GPU toggle is built in. But 14 of the 16 ROG issues cited below are still open on 4.0.4. The 2024 Strix Point G14 can black screen at boot, hibernate hangs hard on G14s, and the ROG audio fix caps volume at 80 percent."
 appliesTo:
   from: "4.0.0"
   to: "4.0.4"
 status: partial
 kind: model
 vendor: "ASUS"
-model: "ROG Zephyrus G14, G15, G16, M16 and ROG Strix G16, G18"
-dmi: ["GA401QC", "GA401QE", "GA402XV", "GA403UI", "GA403UM", "GA403UV", "GA605KM", "GA605WI", "GU603ZEB", "GU605CR", "G614FM", "G614FR", "G733ZW"]
-year: "2021 to 2026"
+model: "ROG Zephyrus G14, G16 and M16, plus ROG Strix G16 and G18"
+dmi: ["GA401QC", "GA401QE", "GA402XV", "GA403UI", "GA403UM", "GA403UV", "GA605KM", "GA605WI", "GU603ZEB", "GU605CR", "G614FM", "G614FR", "G733ZW", "G815LR"]
+year: "2021 to 2025"
 cpu: "AMD Ryzen 5000H to Ryzen AI 9 HX 370, Intel Core Ultra 9 HX on some G16 and Strix models"
 gpu: "Hybrid: AMD Radeon or Intel Arc iGPU on the panel plus NVIDIA RTX 3050 to RTX 5070 Ti Laptop"
 rating: bronze
@@ -58,7 +58,7 @@ quirkScripts:
   - name: "install/hardware/nvidia.sh"
     url: "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/nvidia.sh"
     note: "The generic NVIDIA path your dGPU gets: nvidia-open-dkms on Turing and newer, early KMS, nvidia_drm modeset=1. It never enables nvidia-powerd, which is issue #9678."
-issueCount: 17
+issueCount: 16
 lastVerified: 2026-09-16
 omarchyVersionTested: "4.0.4"
 tags: [asus, rog, zephyrus, strix, nvidia, hybrid-gpu]
@@ -103,6 +103,11 @@ sources:
     kind: issue
     author: "awt"
     date: "2026-08-22"
+  - url: "https://github.com/omacom/omarchy/issues/9325"
+    title: "Issue #9325: Lock screen accepts no keyboard input after suspend/resume, fcitx5 wedges, presents as a system freeze"
+    kind: issue
+    author: "brendanhalfpenny"
+    date: "2026-08-31"
   - url: "https://github.com/omacom/omarchy/issues/11460"
     title: "Issue #11460: LIBVA_DRIVER_NAME=nvidia forced on hybrid laptops where the panel is driven by the iGPU"
     kind: issue
@@ -142,6 +147,10 @@ sources:
     title: "Omarchy v3.4.0 release notes: Full Asus Zephyrous G14/16 compatibility"
     kind: release
     date: "2026-02-26"
+  - url: "https://github.com/omacom/omarchy/releases/tag/v3.7.0"
+    title: "Omarchy v3.7.0 release notes: Fix hybrid GPU hardware detection so the toggle only appears when actually applicable"
+    kind: release
+    date: "2026-05-04"
   - url: "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-hw-asus-rog"
     title: "bin/omarchy-hw-asus-rog at v4.0.4"
     kind: commit
@@ -163,10 +172,13 @@ credits:
     for: "Measured the ROG audio ceiling on a G16 GA605KM: soft-mixer plus a hardware Master at step 70 of 87 means the bar's 100 percent is 12.75 dB down"
   - name: "beyondeye"
     url: "https://github.com/beyondeye"
-    for: "Worked out why the headphone jack stays silent on a Strix G16 and that removing the soft-mixer config lets PipeWire unmute the hardware switches on every boot"
+    for: "Posted the diagnosis of why the headphone jack stays silent on a Strix G16, and that removing the soft-mixer config lets PipeWire unmute the hardware switches on every boot"
   - name: "onelegdave"
     url: "https://github.com/onelegdave"
     for: "Proved by masking nvidia-powerd on a working install that the missing service is what pins ROG laptop GPUs at default TGP"
+  - name: "brendanhalfpenny"
+    url: "https://github.com/brendanhalfpenny"
+    for: "Traced a dead lock screen after resume on a Strix G18 to fcitx5 wedging across suspend, and found that restarting omarchy-fcitx5.service restores input instantly"
   - name: "Orneyfish"
     url: "https://github.com/Orneyfish"
     for: "Reported that the blanket ROG soft-mixer hurts smart-amp models such as the Strix G733ZW"
@@ -187,19 +199,17 @@ draft: false
 
 Bronze. ASUS ROG is one of the very few laptop families Omarchy names by hand. Release [v3.4.0](https://github.com/omacom/omarchy/releases/tag/v3.4.0) in February 2026 shipped what its notes call full Zephyrus G14 and G16 compatibility: screen and keyboard brightness, volume keys, a hybrid GPU switch under _Trigger > Hardware_, and keyboard backlighting that follows your theme. That work is all still in the 4.0.4 tree.
 
-The problem is everything around it. Of the 17 Zephyrus issues in the tracker, 13 are open, and they are not cosmetic. The 2024 and 2025 Strix Point G14 can black screen before you ever see a desktop. Hibernate ends in a forced power off on two separate G14 reports. The audio script that makes ROG speakers work also caps them below what the hardware can do.
+The problem is everything around it. Of the 16 ROG tracker issues cited on this page, 14 are still open, and they are not cosmetic. The Strix Point G14 can black screen before you ever see a desktop. Hibernate ends in a forced power off on two separate G14 reports. The audio script that makes ROG speakers work also caps them below what the hardware can do.
 
-Everything below was checked against the v4.0.4 source tree on 2026-09-16. Where a fix landed in 3.x it is noted; nothing here is a 4.x regression from 3.8.4 unless it says so.
+Everything below was checked against the v4.0.4 source tree on 2026-09-16, and where a fix landed in an earlier release the release is named.
 
 ## What works
 
 The ROG specific enablement is genuine. `install/hardware/asus-rog.sh` installs `asusctl` on any machine where `omarchy-hw-asus-rog` passes, and Omarchy carries `asusctl 6.4.0-1` in its own stable channel repo rather than leaving you to the AUR. `omarchy-theme-set-keyboard-asus-rog` pushes your theme color to the keyboard through `asusctl aura effect static`.
 
-Hybrid graphics have a first class path. `omarchy-toggle-hybrid-gpu` installs `supergfxctl` on demand, writes `/etc/supergfxd.conf`, and flips between Hybrid and Integrated. Integrated mode is what buys you battery life on these machines. A closed bug, [#5428](https://github.com/omacom/omarchy/issues/5428) on a G16 GU605CR, had the menu entry vanish after switching to Integrated because detection counted PCI display devices; DHH replied in the thread that GPU detection was rewritten for 3.6.1, and v4.0.0 added a timeout so a wedged `supergfxd` cannot hang the menu.
+Hybrid graphics have a first class path. `omarchy-toggle-hybrid-gpu` installs `supergfxctl` on demand, writes `/etc/supergfxd.conf`, and flips between Hybrid and Integrated. Integrated mode is what buys you battery life on these machines. A closed bug, [#5428](https://github.com/omacom/omarchy/issues/5428) on a G16 GU605CR, had the menu entry vanish after switching to Integrated because detection counted PCI display devices. DHH replied in the thread that he had rewritten GPU detection and that it would be part of 3.6.1. No 3.6.1 was ever released; the detection fix appears in the [v3.7.0](https://github.com/omacom/omarchy/releases/tag/v3.7.0) notes instead. Quattro then added the timeout you can read in `bin/omarchy-hw-hybrid-gpu` at 4.0.4, so a wedged `supergfxd` no longer hangs the menu.
 
 Suspend on the Strix side improved. [#7303](https://github.com/omacom/omarchy/issues/7303), a hard s2idle freeze on a Strix G16 G614FR, was closed by its own reporter with a note that it was resolved in 4.0.1 on stable.
-
-Community reports in the earlier prototype of this site rated a 2023 G14 and a Strix G18 as ordinary installs. Those are single owner reports, not something we reproduced, so treat them as encouragement rather than evidence.
 
 ## What breaks
 
@@ -209,13 +219,13 @@ Community reports in the earlier prototype of this site rated a 2023 G14 and a S
 
 **Audio is capped and, on some models, wrong.** `fix-audio-mixer.sh` enables WirePlumber's soft mixer and then sets the ALC285 hardware Master to 80 percent. With the soft mixer on, PipeWire never touches that control again. [#11046](https://github.com/omacom/omarchy/issues/11046) measured this on a G16 GA605KM: step 70 of 87, which is 12.75 dB below full scale, so the bar showing 100 percent is a lie. [#8359](https://github.com/omacom/omarchy/issues/8359) argues the blanket soft mixer actively hurts smart amp ROG models like the Strix G733ZW. [#4821](https://github.com/omacom/omarchy/issues/4821) is the one to read if your headphone jack is silent: the kernel's ALC285 jack handler keeps resetting the Headphone switch to off, and the soft mixer stops PipeWire from undoing that. Deleting `~/.config/wireplumber/wireplumber.conf.d/alsa-soft-mixer.conf` fixed it for the reporter and for commenters on a G16 GA605WI, an M16 GU603ZEB and a G14.
 
-**Resume.** [#8491](https://github.com/omacom/omarchy/issues/8491) on a GA402XV in MUX dGPU mode: the shell survives resume but loses its EGL context and stops rendering, logging thousands of failed frames until `omarchy restart shell`. Two of four recorded events recovered on their own. [#7811](https://github.com/omacom/omarchy/issues/7811) on a GA403UM: after a lid open resume the lock screen draws but never receives keyboard input, so you cannot type your password.
+**Resume.** [#8491](https://github.com/omacom/omarchy/issues/8491) on a GA402XV in MUX dGPU mode: the shell survives resume but loses its EGL context and stops rendering, logging thousands of failed frames until `omarchy restart shell`. Two of four recorded events recovered on their own. [#7811](https://github.com/omacom/omarchy/issues/7811) on a GA403UM: after a lid open resume the lock screen draws but never receives keyboard input, so you cannot type your password. [#9325](https://github.com/omacom/omarchy/issues/9325) is the same symptom on a Strix G18 G815LR, and there the reporter traced it to `fcitx5` wedging across suspend, with `systemctl --user restart omarchy-fcitx5.service` from a TTY restoring input immediately. Other commenters on that thread hit the same dead lock screen with `fcitx5` ruled out, so treat the restart as a way back in rather than as the one root cause.
 
 **Power and battery.** [#9678](https://github.com/omacom/omarchy/issues/9678) on a Strix G16 G614FM shows the dGPU pinned at its 50 W default TGP because `nvidia-powerd` is never enabled. We confirmed no `nvidia-powerd` reference anywhere in `install/hardware/nvidia.sh` at v4.0.4. [#7374](https://github.com/omacom/omarchy/issues/7374) has the power panel reporting a 75 to 80 percent charge limit that came from a UPower hwdb default rather than from `asusctl`.
 
-**Video decode.** [#11460](https://github.com/omacom/omarchy/issues/11460) on a GA401QC: `default/hypr/nvidia.lua` sets `LIBVA_DRIVER_NAME=nvidia` whenever any NVIDIA GPU exists, without asking which GPU drives the panel. On these muxless units the panel hangs off the AMD iGPU, so video plays audio over a black frame. Override with `hl.env("LIBVA_DRIVER_NAME", "radeonsi")`.
+**Video decode.** [#11460](https://github.com/omacom/omarchy/issues/11460) on a GA401QC: `default/hypr/nvidia.lua` sets `LIBVA_DRIVER_NAME=nvidia` whenever a GSP-capable NVIDIA GPU is present, meaning Turing or newer, without asking which GPU drives the panel. On these muxless units the panel hangs off the AMD iGPU, so video plays audio over a black frame. Override with `hl.env("LIBVA_DRIVER_NAME", "radeonsi")`.
 
-**Smaller things.** [#6949](https://github.com/omacom/omarchy/issues/6949) reports Fn plus F3 keyboard backlight dead on a GA401QE after an update, with no comments and no triage, so the evidence there is thin. [#7607](https://github.com/omacom/omarchy/issues/7607) on a GA403UI has the Display panel's internal monitor toggle reverted within seconds by the clamshell watcher.
+**Smaller things.** [#6949](https://github.com/omacom/omarchy/issues/6949) reports Fn plus F3 keyboard backlight dead on a GA401QE after an update, with no comments and no triage, so the evidence there is thin. [#7607](https://github.com/omacom/omarchy/issues/7607) on a GA403UI has the Display panel's internal monitor toggle reverted within seconds by the clamshell watcher whenever an external monitor is connected, because the panel issues a raw `hyprctl keyword monitor` instead of setting Omarchy's persistent disable flag.
 
 ## What Omarchy does for this model
 
@@ -225,9 +235,9 @@ That gate drives `asus-rog.sh` (asusctl), `fix-audio-mixer.sh`, `fix-mic.sh` and
 
 ## Variants
 
-GA401 units from 2021 are the calmest on paper, with only the Fn plus F3 report and the VA-API one against them, both with workarounds. GA402 from 2023 adds the resume rendering stall in MUX dGPU mode. GA403, the 2024 and 2025 Strix Point and Hawk Point G14, carries the boot black screen and both hibernate reports, so budget an evening for it. On the G16 side, GU605 with Intel Core Ultra plus an RTX 50 had the hybrid menu bug that is already fixed, and GA605 is where the audio ceiling was measured. Strix G614 and G733 share the TGP cap and the smart amp audio complaint.
+GA401 units from 2021 are the calmest on paper, with only the Fn plus F3 report and the VA-API one against them, and only the VA-API thread carries a workaround. GA402 from 2023 adds the resume rendering stall in MUX dGPU mode, and it is the machine the phantom charge limit was reported on. GA403, the 2024 and 2025 Strix Point and Hawk Point G14, carries the boot black screen and both hibernate reports, so budget an evening for it. On the G16 side, GU605 with Intel Core Ultra plus an RTX 50 had the hybrid menu bug that is already fixed, and GA605 is where the audio ceiling was measured. On the Strix side the reports split by chassis rather than stacking: G614 has the TGP cap and the s2idle freeze its reporter later closed as fixed, G733 has the smart amp audio complaint, and the G18 G815LR has the dead lock screen after resume.
 
-Prefer a unit whose panel you are happy to run at the default scale, since the OLED G14 needs a scale set by hand in `monitors.lua`. Avoid buying a brand new chassis generation in the first months if a black screen at first boot would ruin your week.
+Expect to set scaling by hand on the OLED panels. The GA403 configuration codyoss tested in #9720 pins `eDP-1` to 2880x1800 at scale 1.5 in `monitors.lua` rather than taking the default. Avoid buying a brand new chassis generation in the first months if a black screen at first boot would ruin your week.
 
 ## Before you install
 
@@ -236,7 +246,7 @@ Prefer a unit whose panel you are happy to run at the default scale, since the O
 - Run the hybrid GPU toggle once, early. It is what installs `supergfxctl` and the `force-igpu` sleep hook, and it is also your battery life.
 - Check the real speaker volume with `amixer` on the ALC285 card after install. See [/hardware/audio/](/hardware/audio/).
 - If you game, enable `nvidia-powerd` yourself or accept base TGP. Background on the driver path is at [/hardware/nvidia/](/hardware/nvidia/).
-- Keep an external keyboard nearby for the lock screen input bug, and know that `omarchy restart shell` fixes a bar that stopped drawing.
+- Learn the two resume recoveries before you need them: `omarchy restart shell` for a bar that stopped drawing, and a TTY plus `systemctl --user restart omarchy-fcitx5.service` for a lock screen that takes no keystrokes.
 
 ## Related
 

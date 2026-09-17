@@ -93,6 +93,11 @@ sources:
     kind: issue
     author: "emredurak01"
     date: "2026-08-17"
+  - url: "https://github.com/omacom/omarchy/issues/7391"
+    title: "Issue #7391: Chromium browser PiP video always falls outside viewport, does not respect video aspect ratio"
+    kind: issue
+    author: "freezzby"
+    date: "2026-08-18"
   - url: "https://github.com/omacom/omarchy/issues/7276"
     title: "Issue #7276: Bar shows a checkered overlay after an interrupted bar-move gesture, omarchy-bar-move-ghost layer stays stuck open"
     kind: issue
@@ -135,7 +140,7 @@ faq:
   - q: "Does Omarchy have any IdeaPad specific hardware fixes?"
     a: "No. Grepping the v4.0.4 tree for IdeaPad returns nothing. The only Lenovo directory script targets the DMI string Yoga Pro 7 14IAH10. Everything else an IdeaPad gets is generic: Intel or AMD graphics, thermald, lpmd, SOF firmware, NVIDIA."
   - q: "Can I run Omarchy on a Snapdragon X IdeaPad?"
-    a: "Not from the public ISO, which is x86_64 only. PR #8672 added generic Snapdragon X support on aarch64 and merged on 13 September 2026, after 4.0.4 shipped. Treat ARM IdeaPads as experimental, not as a machine you install on this week."
+    a: "Not from the public ISO, which is x86_64 only. PR #8672 added generic Snapdragon X support on aarch64 and merged on 13 September 2026, but no Qualcomm or Snapdragon code appears anywhere in the v4.0.4 tree and the 4.0.4 release notes do not mention it. Treat ARM IdeaPads as experimental, not as a machine you install on this week."
 related: [lenovo-legion, lenovo-yoga, nvidia, hybrid-gpu, fingerprint]
 draft: false
 ---
@@ -152,7 +157,7 @@ The negative evidence is specific. One variant class cannot complete the install
 
 ## What works
 
-Modern Intel and AMD IdeaPads reach a usable desktop. The reporters above run Hyprland 0.56.2 on Omarchy 4.0.0 through 4.0.2, on both i915 Alder Lake graphics and AMD Radeon integrated graphics, on Btrfs over LUKS with Limine.
+Modern Intel and AMD IdeaPads reach a usable desktop. The reporters above run Hyprland 0.56.2 on Omarchy 4.0.0 through 4.0.3, on both i915 Alder Lake graphics and AMD Radeon integrated graphics, on Btrfs over LUKS.
 
 Wi-Fi hardware works on the models reported. The two Wi-Fi issues in this bucket are interface problems, not radio problems. In [#3458](https://github.com/omacom/omarchy/issues/3458) an IdeaPad Gaming 3 owner thought the Wi-Fi applet was frozen; suraj-9849 pointed out that Tab moves focus in the Impala TUI, and DHH confirmed the discoverability gap. That was 3.x. In [#7257](https://github.com/omacom/omarchy/issues/7257) an IdeaPad 5 on 4.0.0 connects to a WPA2-Enterprise network, but the Quickshell network panel shows it as disconnected. Both are software.
 
@@ -162,7 +167,7 @@ The fingerprint reader is at least detected. `omarchy-hw-fingerprint` lists Good
 
 **NVIDIA MX150 aborts the installer.** In [#7947](https://github.com/omacom/omarchy/issues/7947), still open, an IdeaPad 330-15IKB (machine type 81FE, i7-8550U, MX150) fails during the hardware phase. `omarchy-hw-nvidia-without-gsp` classifies the GP108 as pre-Turing, so `nvidia.sh` asks for `nvidia-580xx-dkms` and `lib32-nvidia-580xx-utils`, pacman answers `target not found`, and the whole install stops. The reporter saw it on 4.0 and on 3.8.x, and the same code is still in the v4.0.4 tree. His workaround was to add `exit 0` at the top of `/mnt/usr/share/omarchy/install/hardware/nvidia.sh` and resume with `omarchy-apply-system`. See [/fix/nvidia-drivers-omarchy-4/](/fix/nvidia-drivers-omarchy-4/).
 
-**Pre-2016 AMD models can lose the console.** [#8544](https://github.com/omacom/omarchy/issues/8544) is an IdeaPad Z50-75 (machine type 80EC, AMD FX-7500 with Radeon R7) where the ISO boots, prints `No irq handler` lines, then goes black. heliohsilva asked the reporter to attach an external monitor; the installer was there the whole time, and the install completed on the external screen. The internal panel output is the casualty, and the same firmware is why F2 does not reach the BIOS on that machine. Related: [/fix/black-screen-after-login/](/fix/black-screen-after-login/).
+**Pre-2016 AMD models can lose the console.** [#8544](https://github.com/omacom/omarchy/issues/8544) is an IdeaPad Z50-75 (machine type 80EC, AMD FX-7500 with Radeon R7) where the ISO boots, prints `No irq handler` lines, then goes black. heliohsilva asked the reporter to attach an external monitor; the installer had been running the whole time, and the reporter could finally read it on the external screen. The internal panel output is the casualty, and the same firmware is why F2 does not reach the BIOS on that machine. Related: [/fix/black-screen-after-login/](/fix/black-screen-after-login/).
 
 **Hybrid NVIDIA models get the hybrid tax.** [#9151](https://github.com/omacom/omarchy/issues/9151), open, is an IdeaPad 5 with a Ryzen 5600H and an RTX 3050 where Chromium and Brave scroll up and down forever after an update. The reporter fixed it by disabling hardware acceleration. spencerflagg reproduced it on a different hybrid laptop, traced it to the Chromium 152 ANGLE Vulkan backend, and recommends `--use-angle=egl` instead, which keeps GPU compositing. See [/fix/chromium-flicker-hardware-acceleration/](/fix/chromium-flicker-hardware-acceleration/) and [/hardware/hybrid-gpu/](/hardware/hybrid-gpu/).
 
@@ -190,13 +195,13 @@ Treat IdeaPad Gaming and IdeaPad 5 models with a GTX 1650 or RTX 3050 as hybrid 
 
 Avoid pre-2016 AMD models such as the Z50-70 and Z50-75 unless you enjoy the work. They can install, but only after you solve a display problem that also blocks your own BIOS.
 
-Snapdragon X IdeaPads are not covered by the public x86_64 ISO. Generic Snapdragon X support merged in [PR #8672](https://github.com/omacom/omarchy/pull/8672) on 13 September 2026, after 4.0.4 shipped. That is experimental, not a buying recommendation.
+Snapdragon X IdeaPads are not covered by the public x86_64 ISO. Generic Snapdragon X support merged in [PR #8672](https://github.com/omacom/omarchy/pull/8672) on 13 September 2026, two days before 4.0.4, but none of it reached the shipped 4.0.4 tree. That is experimental, not a buying recommendation.
 
 ## Before you install
 
 - Identify your GPU first. `lspci | grep -i nvidia`. If it returns an MX150 or similar, expect the installer to stop, and plan for the `exit 0` workaround.
 - If the installer goes black on an older model, plug in an external monitor before you conclude it hung.
-- Update the BIOS from Windows while you still can. Two of the worst reports here are on machines whose firmware could not be reached from a cold boot.
+- Update the BIOS from Windows while you still can. The worst report here is on a machine whose firmware could not be reached at all, from a cold boot or from Windows advanced startup, which also blocked the update.
 - Install from the current ISO, not a 4.0.0 one. Several installer bugs in this bucket were fixed in 4.0.1. See [/releases/v4.0.4/](/releases/v4.0.4/).
 - Use the installer. Do not hand-run `omarchy-apply-system` unless you are recovering, which is how the login loop above happened.
 - Test fingerprint, sleep and the webcam during your return window. Those subsystems are marked unknown on this page because nobody has reported them either way.

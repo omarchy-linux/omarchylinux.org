@@ -1,7 +1,7 @@
 ---
 title: "Lenovo Yoga on Omarchy Linux"
 description: "Lenovo Yoga support on Omarchy 4.0.4: the Yoga Pro 7 14IAH10 gets a bass speaker quirk, but touchpad, USB-C display and older-BIOS boot problems are open."
-answer: "Rate the modern Intel Yoga silver. Wi-Fi, Intel graphics and the display work, and the Yoga Pro 7 14IAH10 is the only Yoga with a dedicated Omarchy quirk (an ALC287 bass speaker pin). Expect one or two quirks: the I2C Precision Touchpad can fail to bind at cold boot, and USB-C DisplayPort can wedge. Older Yogas (730, C940, 11e) are bronze at best and may not boot without BIOS changes."
+answer: "Rate the modern Intel Yoga silver. Wi-Fi is clean, and the Yoga Pro 7 14IAH10 is the only Yoga with a dedicated Omarchy quirk, an ALC287 bass speaker pin. Expect one or two quirks: the I2C Precision Touchpad can fail to bind at cold boot, and USB-C DisplayPort can wedge. Older Yogas (730, C940, 11e) are bronze at best and may not boot without BIOS changes."
 appliesTo:
   from: "3.x"
 status: partial
@@ -12,7 +12,7 @@ kind: model
 vendor: "Lenovo"
 model: "Lenovo Yoga"
 dmi: ["Yoga Pro 7 14IAH10", "Yoga Slim 7 ProX 14IAH7", "Yoga 7 2-in-1 14ILL10", "Yoga Pro 9 16IMH9", "Yoga 14s ITL 2021", "YOGA 730-15IKB", "Yoga C940", "83KF", "82TK", "83JQ", "82G2"]
-cpu: "Intel Core, Kaby Lake through Arrow Lake and Lunar Lake in the reported machines"
+cpu: "Intel Core and Celeron, Bay Trail through Arrow Lake and Lunar Lake in the reported machines"
 gpu: "Intel integrated (UHD, Iris Xe, Arc); RTX 3050/4060 Mobile on Pro X and Pro 9"
 year: "2017-2026"
 rating: silver
@@ -22,7 +22,7 @@ subsystems:
   audio: partial
   webcam: unknown
   fingerprint: partial
-  gpu: works
+  gpu: partial
   suspend: partial
   hibernate: unknown
   touchpad: partial
@@ -95,16 +95,16 @@ sources:
     kind: issue
     author: "keylimesoda"
     date: "2026-09-16"
+  - url: "https://github.com/omacom/omarchy/issues/6684"
+    title: "Issue #6684: omarchy-shell exits when locking with a screen that has no valid Wayland output - bar disappears and the session is left on \"lockscreen app died\""
+    kind: issue
+    author: "jfbourdeau"
+    date: "2026-08-10"
   - url: "https://github.com/omacom/omarchy/issues/11841"
     title: "Issue #11841: Fingerprint setup gives no diagnosis when libfprint has no driver for the detected reader"
     kind: issue
     author: "busbyjon"
     date: "2026-09-14"
-  - url: "https://github.com/omacom/omarchy/issues/7803"
-    title: "Issue #7803: `pending-charge` treated as a charge-limit hold without checking the level: a failed battery reports \"Holding at 75-80%\" at 0%"
-    kind: issue
-    author: "xeeg"
-    date: "2026-08-22"
   - url: "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/lenovo/fix-yoga-pro7-bass-speakers.sh"
     title: "install/hardware/lenovo/fix-yoga-pro7-bass-speakers.sh at v4.0.4"
     kind: commit
@@ -141,21 +141,21 @@ draft: false
 
 ## Verdict
 
-Silver, and only if you buy a recent one. A 2023-or-newer Intel Yoga Pro or Yoga Slim installs and runs Omarchy on the generic Intel path: Wi-Fi, Intel graphics, the internal display and the keyboard all come up without intervention. The quirks are real but narrow, and each has a known workaround.
+Silver, and only if you buy a recent one. A 2023-or-newer Intel Yoga Pro or Yoga Slim installs and runs Omarchy on the generic Intel path, and Wi-Fi is the one subsystem with no open bug against it. The quirks are real but narrow. Most have a documented workaround; the USB-C DisplayPort wedge does not.
 
-The Yoga family is broad, so the rating is not uniform. Omarchy ships exactly one Yoga-specific fix, for the Yoga Pro 7 14IAH10. Everything else is generic enablement. Older Yogas (the 730-15IKB, the C940, the ThinkPad Yoga 11e) have open boot failures and drop to bronze.
+The Yoga family is broad, so the rating is not uniform. Omarchy ships exactly one Yoga-specific fix, for the Yoga Pro 7 14IAH10. Everything else is generic enablement. Older Yogas (the 730-15IKB, the C940, the ThinkPad Yoga 11e) have boot failures on file and drop to bronze.
 
-Evidence base: 25 issues in the tracker touch a Yoga, 15 of them still open. That is enough to describe failures, not enough to certify successes. Anywhere below where a subsystem is marked unknown, it means nobody filed a bug, not that it was tested.
+Evidence base: 25 issues in the tracker touch a Yoga, 15 of them still open. That is enough to describe failures, not enough to confirm successes. Anywhere below where a subsystem is marked unknown, it means nobody filed a bug, not that it was tested.
 
 ## What works
 
-Wi-Fi is the one subsystem with a clean history. The only Yoga Wi-Fi bug of substance, [#1336](https://github.com/omacom/omarchy/issues/1336), was radio staying powered off after suspend, closed on 2025-09-01 when DHH added an rfkill trigger under Update > Hardware > Wifi.
+Wi-Fi is the one subsystem with a clean history. The only Yoga Wi-Fi bug of substance, [#1336](https://github.com/omacom/omarchy/issues/1336), was the radio staying powered off after suspend, closed on 2025-09-01 when DHH added Update > Hardware > Wi-Fi. That menu entry still exists on v4.0.4 and runs `omarchy-restart-wifi`, which does `rfkill unblock wifi` and restarts the radio. It is a button you press, not an automatic sleep hook, but no Yoga Wi-Fi bug has been filed since.
 
-Intel graphics work. The reported Yogas span Kaby Lake, Tiger Lake, Alder Lake, Arrow Lake and Lunar Lake, all on i915 or xe, and none of the open issues are about the internal panel failing to light up on a current kernel.
+Intel graphics come up on the current machines in the tracker. The reported Yogas run i915 or xe across Bay Trail, Kaby Lake, Comet Lake, Tiger Lake, Alder Lake, Meteor Lake, Arrow Lake and Lunar Lake, and no open issue is about the internal panel failing to light up. That is an absence of bug reports, not a tested result, which is why gpu is rated partial: the one black screen on file is [#2693](https://github.com/omacom/omarchy/issues/2693) on a Yoga C940, and the Pro 9 and Slim 7 ProX put an NVIDIA GPU in the same chassis.
 
-Speakers work once firmware is present, and on v4.0.4 it is. `install/hardware/intel/sof-firmware.sh` installs `sof-firmware` whenever `omarchy-hw-intel-sof` sees an Intel audio controller, which every Yoga in the tracker has. That enablement landed in v3.8.3 (2026-07-13).
+Speakers work once firmware is present, and on v4.0.4 it is. `install/hardware/intel/sof-firmware.sh` installs `sof-firmware` whenever `omarchy-hw-intel-sof` sees an Intel audio controller, which every Intel Yoga in the tracker reports. That enablement landed in v3.8.3 (2026-07-13).
 
-Convertible hinge hardware (touchscreen, pen) is reported working in passing, but there is no automatic screen rotation or tablet UI. Tablet mode is your own Hyprland configuration, not something Omarchy provides.
+Convertible hinge hardware is reported working only in passing: [#9658](https://github.com/omacom/omarchy/issues/9658) notes that the pen digitizer and the touchscreen (a separate Wacom `WACF2200` chip) work fine on a machine whose touchpad is dead. There is no automatic screen rotation or tablet UI. Nothing in the v4.0.4 tree touches an accelerometer, so tablet mode is your own Hyprland configuration.
 
 ## What breaks
 
@@ -165,11 +165,13 @@ Convertible hinge hardware (touchscreen, pen) is reported working in passing, bu
 
 **Audio silent on Arrow Lake.** [#6110](https://github.com/omacom/omarchy/issues/6110) was filed on a LENOVO Yoga Pro 7 14IAH10 (`83KF`) running Omarchy 3.8.2, with PipeWire showing only a Dummy Output. The v3.8.3 `sof-firmware` change addresses the cause, but the issue is still open with later reports on other machines, so check `cat /proc/asound/cards` before assuming your hardware is broken.
 
-**Boot failures on older units.** [#9450](https://github.com/omacom/omarchy/issues/9450) on a Yoga 7 ProX ends in `VFS: Cannot open root device`; jsuchal's own answer is that the firmware calls Secure Boot support Intel Platform Trust Technology (Intel PTT), and disabling it made the install work. [#5980](https://github.com/omacom/omarchy/issues/5980) is a Limine out-of-memory panic on a YOGA 730-15IKB. [#2693](https://github.com/omacom/omarchy/issues/2693) is a first-boot black screen on a Yoga C940 that the reporter solved by switching to the LTS kernel. [#12143](https://github.com/omacom/omarchy/issues/12143) is a Quattro UKI chainload panic on a Bay Trail ThinkPad Yoga 11e.
+**Boot and install failures.** [#9450](https://github.com/omacom/omarchy/issues/9450) on a Yoga 7 ProX ends in `VFS: Cannot open root device`; jsuchal's own answer is that the firmware calls Secure Boot support Intel Platform Trust Technology (Intel PTT), and disabling it made the install work. [#5980](https://github.com/omacom/omarchy/issues/5980) is a `High memory allocator: Out of memory` panic at boot on a YOGA 730-15IKB after an update; the thread pins it on an oversized initramfs, and one reporter cleared it by recompressing with `mkinitcpio`. [#2693](https://github.com/omacom/omarchy/issues/2693) is a first-boot black screen on a Yoga C940 that the reporter solved by switching to the LTS kernel. [#12143](https://github.com/omacom/omarchy/issues/12143) is a Quattro UKI chainload panic on a Bay Trail ThinkPad Yoga 11e.
 
 **Convertible-specific display handling.** [#5903](https://github.com/omacom/omarchy/issues/5903) (open, Yoga 7 2-in-1 14ILL10) reports that toggling the laptop panel back on reassigns the touchscreen to the external monitor.
 
-**Lock screen on hybrid Yogas.** [#10459](https://github.com/omacom/omarchy/issues/10459), filed on a Yoga Pro 9 16IMH9 with an Arc iGPU plus RTX 4060 Mobile, describes the session lock being lost when an output is re-added, leaving the desktop visible. A related stranded-lock bug, [#6684](https://github.com/omacom/omarchy/issues/6684), was fixed by PR #6692 and shipped before 4.0.0.
+**Lock screen on hybrid Yogas.** [#10459](https://github.com/omacom/omarchy/issues/10459), filed on a Yoga Pro 9 16IMH9 with an Arc iGPU plus RTX 4060 Mobile, describes the session lock being lost when an output is re-added, leaving the desktop visible. A related stranded-lock bug, [#6684](https://github.com/omacom/omarchy/issues/6684), was closed by [PR #6692](https://github.com/omacom/omarchy/pull/6692) "Recover a session lock stranded by a dead shell", merged 2026-08-11 and so present in 4.0.0.
+
+**Keyboard dead after a USB unplug.** [#4576](https://github.com/omacom/omarchy/issues/4576) (open, "lenovo yoga 7 2025" on Omarchy 3.3.3) reports that unplugging a USB keyboard at the lock screen leaves the built-in keyboard unusable until reboot. No comments, no confirmation on 4.x, so treat it as one unreplicated report.
 
 **Fingerprint.** On a ThinkPad L13 Yoga Gen 3, [#11841](https://github.com/omacom/omarchy/issues/11841) shows `omarchy-hw-fingerprint` correctly detecting a Goodix `27c6:55b4` reader, then enrollment failing because libfprint has no driver for it. Detection is not support.
 
@@ -179,9 +181,9 @@ Convertible hinge hardware (touchscreen, pen) is reported working in passing, bu
 
 One script, added in v3.8.0 (2026-05-09) by @aikazu and still present at v4.0.4:
 
-`install/hardware/lenovo/fix-yoga-pro7-bass-speakers.sh` runs `omarchy-hw-match "Yoga Pro 7 14IAH10"` and, on a match, writes `/etc/modprobe.d/lenovo-yoga-pro7-bass.conf` with `options snd-sof-intel-hda-generic hda_model=alc287-yoga9-bass-spk-pin`. Without it the ALC287 codec drives only one speaker and the bass AMP stays silent.
+`install/hardware/lenovo/fix-yoga-pro7-bass-speakers.sh` runs `omarchy-hw-match "Yoga Pro 7 14IAH10"` and, on a match, writes `/etc/modprobe.d/lenovo-yoga-pro7-bass.conf` with `options snd-sof-intel-hda-generic hda_model=alc287-yoga9-bass-spk-pin`. The script comment is the only evidence for the symptom: it says that without the quirk one speaker is driven and the bass output is missing, citing the Arch wiki page for the Yoga 9i.
 
-`omarchy-hw-match` greps `/sys/class/dmi/id/product_name` and `/sys/class/dmi/id/product_family`, case-insensitively. Lenovo puts the numeric code (`83KF`) in `product_name` and the marketing name in the family or version field, so run `cat /sys/class/dmi/id/product_family` yourself to confirm the match before blaming the script.
+`omarchy-hw-match` greps `/sys/class/dmi/id/product_name` and `/sys/class/dmi/id/product_family`, case-insensitively, and reads nothing else. That matters, because the one Yoga in the tracker with a full DMI dump ([#3616](https://github.com/omacom/omarchy/issues/3616)) puts the numeric code (`82TK`) in the product name and the marketing string `Yoga Slim 7 ProX 14IAH7` in the product version, a field the script never looks at. Whether a Yoga Pro 7 14IAH10 matches therefore depends on what its firmware writes into the family field. Run `cat /sys/class/dmi/id/product_name /sys/class/dmi/id/product_family` on your own machine before blaming the script.
 
 Beyond that, a Yoga gets only the generic passes in `install/hardware/all.sh`: Intel video acceleration, `lpmd`, `thermald`, the IPU7 camera driver when an `OVTI08F4` sensor is present, `sof-firmware`, the Wi-Fi 7 EHT fix, and the wireless regdom. There is no Yoga speaker tuning in `default/audio/tunings/` (only the Dell XPS 2026 has one), no Yoga touchpad fix, and nothing Lenovo-specific for suspend.
 
@@ -193,7 +195,7 @@ Be careful with the Yoga Pro 9 16IMH9 and Slim 7 ProX: both pair an Intel iGPU w
 
 Avoid pre-2020 Yogas for a first install. The 730-15IKB, C940 and ThinkPad Yoga 11e all appear in the tracker with boot problems.
 
-Snapdragon Yogas (Yoga Slim 7x and similar) are not covered here. An earlier prototype of this site rated the Slim 7x experimental on the strength of a live session in an ARM enablement PR. That is not the public ISO and this page does not carry the claim forward.
+Snapdragon Yogas (Yoga Slim 7x and similar) are not covered here. No ARM Yoga appears anywhere in the 25 tracker issues, and nothing in the v4.0.4 tree targets one. An earlier prototype of this site rated the Slim 7x experimental; that claim is unverified and this page does not carry it forward.
 
 ## Before you install
 
@@ -201,7 +203,7 @@ Snapdragon Yogas (Yoga Slim 7x and similar) are not covered here. An earlier pro
 - Update the Lenovo UEFI first. The oldest machines in this tracker are also the ones that fail to chainload.
 - Boot the live ISO and check `hyprctl devices` for a touchpad before you commit the disk. If it is missing, you have #9658.
 - Plug in and unplug your USB-C monitor while you still have a fallback. #10492 is not recoverable by software.
-- Run `cat /sys/class/dmi/id/product_family` and note the string. It decides whether the bass fix applies.
+- Run `cat /sys/class/dmi/id/product_name /sys/class/dmi/id/product_family`. Those two strings, and nothing else, decide whether the bass fix fires.
 - After first boot, check `cat /proc/asound/cards` for a real device rather than Dummy Output.
 
 ## Related

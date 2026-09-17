@@ -36,7 +36,7 @@ quirkScripts:
     note: "The only Lenovo file in install/hardware on v4.0.4. It matches \"Yoga Pro 7 14IAH10\" and never fires on a T14."
   - name: "install/hardware/intel/sof-firmware.sh"
     url: "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/intel/sof-firmware.sh"
-    note: "Installs sof-firmware whenever an Intel audio controller is present. Covers every Intel T14."
+    note: "Runs omarchy-hw-intel-sof, which looks for an Intel audio device in lspci, and installs sof-firmware when it finds one."
   - name: "install/hardware/intel/video-acceleration.sh"
     url: "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/intel/video-acceleration.sh"
     note: "Installs intel-media-driver, libvpl and vpl-gpu-rt for UHD, Iris and Xe graphics."
@@ -51,7 +51,7 @@ quirkScripts:
     note: "Loads psmouse with synaptics_intertouch=1 when a Synaptics device is listed. Made non-fatal after it broke Quattro installs in #6985."
   - name: "bin/omarchy-brightness-keyboard-mute"
     url: "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-brightness-keyboard-mute"
-    note: "Drives the platform::micmute LED that ThinkPads expose, so the mic-mute key lights correctly."
+    note: "Sets the platform::micmute LED, and only on machines that expose /sys/class/leds/platform::micmute. Nothing in it names a ThinkPad."
   - name: "bin/omarchy-update-firmware"
     url: "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-update-firmware"
     note: "Installs fwupdx64.efi into /boot/EFI/arch, which is the directory whose absence broke firmware updates in #5939."
@@ -120,6 +120,16 @@ sources:
     kind: issue
     author: "Alkiviadroot"
     date: "2026-08-24"
+  - url: "https://github.com/omacom/omarchy/issues/8040"
+    title: "Issue #8040: Zed theme sync still broken on Quattro: omazed package in [omarchy] repo predates the upstream fix"
+    kind: issue
+    author: "jardahrazdera"
+    date: "2026-08-24"
+  - url: "https://github.com/omacom/omarchy/issues/5989"
+    title: "Issue #5989: skbuff unreclaimable slab OOM under UDP load on Ubuntu 26.04 / Intel Ultra 7 255H (Panther Lake)"
+    kind: issue
+    author: "xuanjiYUU"
+    date: "2026-05-28"
   - url: "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/all.sh"
     title: "install/hardware/all.sh at v4.0.4"
     kind: commit
@@ -147,9 +157,9 @@ credits:
     for: "Reported the T14 Gen 5 lid-wake failure with the full /proc/acpi/wakeup state"
 faq:
   - q: "Which T14 generation is the safest buy for Omarchy?"
-    a: "Any of Gen 1 through Gen 4, Intel or AMD. They use ordinary Intel or AMD integrated graphics and Intel, Qualcomm or MediaTek Wi-Fi, and the reports against them are Omarchy behaviour bugs or packaging slips rather than missing drivers. Gen 5 and Gen 6 are newer silicon with fewer confirmed reports either way."
+    a: "Any of Gen 1 through Gen 4, Intel or AMD. They use ordinary Intel or AMD integrated graphics, and the reports against them are Omarchy behaviour bugs or firmware packaging slips rather than missing drivers. Gen 5 and Gen 6 are newer silicon with fewer confirmed reports either way."
   - q: "Does Omarchy ship anything specific to the ThinkPad T14?"
-    a: "No. On v4.0.4 the only Lenovo file in install/hardware matches a Yoga Pro 7, and no script passes a ThinkPad pattern to omarchy-hw-match. The T14 gets generic Intel or AMD enablement plus the platform::micmute LED support that ThinkPads expose."
+    a: "No. On v4.0.4 the only Lenovo file in install/hardware matches a Yoga Pro 7, and no script passes a ThinkPad pattern to omarchy-hw-match. The T14 gets the generic Intel or AMD enablement and nothing else."
   - q: "Why did Caps Lock stop working after I updated to Quattro?"
     a: "It moved. Omarchy 4.0.0 set kb_options to compose:caps,shift:both_capslock_cancel, so Caps Lock is the compose key and Caps Lock itself is toggled by pressing both Shift keys. That is by design. Override kb_options in ~/.config/hypr/input.lua if you want the old behaviour."
   - q: "Is suspend reliable on the AMD models?"
@@ -160,19 +170,19 @@ draft: false
 
 ## Verdict
 
-Silver. The ThinkPad T14 and T14s are close to the default recommendation for Omarchy: everything on board is mainstream silicon with in-tree drivers, and across the 29 issues and 4 discussions that name a T14 or T14s in the Omarchy tracker there is not one report of a subsystem with no driver at all. That is the difference between this machine and a brand new Panther Lake laptop.
+Silver. The ThinkPad T14 and T14s are close to the default recommendation for Omarchy: everything on board is mainstream silicon with in-tree drivers, and across the 29 issues that name a T14 or T14s in the Omarchy tracker there is not one report of a subsystem with no driver at all. That is the difference between this machine and a brand new Panther Lake laptop.
 
 It is not gold, for three reasons. Suspend is unresolved on at least one AMD variant. The Gen 5 lid-wake report from 2025 is still open. And Omarchy ships zero T14-specific enablement, so anything Lenovo does oddly is between you and the kernel.
 
-Checked on 4.0.4 (2026-09-15) with the v4.0.4 source tree. Most of the evidence below predates Quattro and was filed against 3.x, which matters: the 4.0.0 rewrite replaced the whole shell and moved Hyprland config to Lua, so pre-Quattro reports about the bar, the lock screen or keybindings no longer describe what you will see.
+Checked on 4.0.4 (2026-09-15) with the v4.0.4 source tree. Half the evidence below predates Quattro, some of it by more than a year, which matters: the 4.0.0 rewrite replaced the whole shell and moved Hyprland config to Lua, so pre-Quattro reports about the bar, the lock screen or keybindings no longer describe what you will see.
 
 ## What works
 
 Graphics are the best-evidenced subsystem. AMD Renoir and newer run on amdgpu, Intel from Comet Lake to Arc run on i915 or xe, and none of the T14 issues that mention graphics is about a black screen; they are about session behaviour. Issue [#8580](https://github.com/omacom/omarchy/issues/8580) shows a T14 Gen 1 (20UD003LUS, Ryzen 5 PRO 4650U) driving its internal panel plus two external 1440p monitors on a dock, which is a decent proof of the amdgpu path.
 
-No T14 report describes a dead keyboard or TrackPoint. The one ThinkPad-flavoured touch Omarchy has is `omarchy-brightness-keyboard-mute`, which drives the `platform::micmute` LED node ThinkPads expose so the mic-mute indicator can track the mute state.
+No T14 report describes the built-in keyboard or TrackPoint failing on the desktop; the one keyboard report on record is about a VM guest, not the machine. The closest thing to a ThinkPad touch in the tree is `omarchy-brightness-keyboard-mute`, which sets the `platform::micmute` LED, and only on machines that expose that node.
 
-Wi-Fi has no hardware gap on record. The two Wi-Fi failures were both firmware packaging regressions, and the reporters confirmed the later packages worked, although one commenter on a fresh install still had no adapter and never followed up. See below.
+Wi-Fi has no hardware gap on record. The two Wi-Fi failures were both firmware packaging problems, and both reporters got Wi-Fi back by changing the firmware package rather than the driver, although one commenter on a fresh install still had no adapter and never followed up. See below.
 
 Everything else is marked unknown in the table above on purpose. Nobody has filed a T14 audio, webcam, fingerprint, hibernate or touchpad failure against Omarchy, which is weak positive evidence at best. An issue tracker only proves what breaks.
 
@@ -190,7 +200,7 @@ Everything else is marked unknown in the table above on purpose. Nobody has file
 
 **Two open annoyances that look like shell bugs.** On a T14 Gen 1 (20S1S64W1A, i5-10310U) the keyboard backlight stayed at zero after unlock even though the shell had reported the session unlocked; the reporter polled `tpacpi::kbd_backlight` to prove it and blames the lock plugin's wake path ([#8099](https://github.com/omacom/omarchy/issues/8099), open). And on the three-monitor Gen 1 above, a cheap external panel that drops hotplug-detect after being blanked gets re-added powered on, and the lock screen's single blank timer never runs again ([#8580](https://github.com/omacom/omarchy/issues/8580), open, reproduced by another user on a desktop amdgpu box).
 
-**Thin or stale reports.** A T14s Gen 1 owner had LUKS passphrases rejected several times per boot after a Quickshell crash ([#8618](https://github.com/omacom/omarchy/issues/8618), open); the thread's later comments point at failing RAM and unclean shutdowns on entirely different machines, so treat it as unexplained rather than as a T14 defect. See [/fix/luks-passphrase-not-accepted-at-boot/](/fix/luks-passphrase-not-accepted-at-boot/). A T14 Gen 4 (21HES5TB2C, i7-1365U) reported bursty UI lag on 3.6.0 ([#5527](https://github.com/omacom/omarchy/issues/5527)) and it was closed the next day with no comments and no recorded cause. A T14s Gen 4 AMD shutdown hang ([#3443](https://github.com/omacom/omarchy/issues/3443)) was closed in February 2026 when dhh said a fix had shipped in 3.4; the reporter had already stopped seeing it.
+**Thin or stale reports.** A T14s Gen 1 owner had LUKS passphrases rejected several times per boot after a Quickshell crash ([#8618](https://github.com/omacom/omarchy/issues/8618), open); the thread's later comments point at failing RAM and at a history of unclean shutdowns, one of them from very different hardware, so treat it as unexplained rather than as a T14 defect. See [/fix/luks-passphrase-not-accepted-at-boot/](/fix/luks-passphrase-not-accepted-at-boot/). A T14 Gen 4 (21HES5TB2C, i7-1365U) reported bursty UI lag on 3.6.0 ([#5527](https://github.com/omacom/omarchy/issues/5527)) and it was closed the next day with no comments and no recorded cause. A T14s Gen 4 AMD shutdown hang ([#3443](https://github.com/omacom/omarchy/issues/3443)) was closed on 2026-02-26 when dhh pointed at a fix in 3.4; 3.4.0 shipped later that same day and its notes cap the user-manager hang at five seconds instead of two minutes. The reporter had already stopped seeing it.
 
 ## What Omarchy does for this model
 
@@ -202,11 +212,11 @@ What you actually get is the generic path in `install/hardware/all.sh`. On an In
 
 Gen 1 through Gen 4, Intel or AMD, are the safest buy. That is where the Omarchy reports are ordinary and where the hardware has had years of kernel attention.
 
-If you get to choose the Wi-Fi card, know that the MediaTek MT7922 in some AMD T14s configurations is the part behind the only "no adapter at all" report on this model. That specific firmware build is fixed, but it is the card with the least margin.
+If you get to choose the Wi-Fi card, know that the MediaTek MT7922 in the T14s Gen 3 AMD is the part behind the only "no adapter at all" report on this model. That specific firmware build is fixed, but it is the card with the least margin on record here.
 
 The T14s Gen 2 AMD (machine type 20XG) is the one variant to approach with the sleep test in hand.
 
-Gen 5 and Gen 6 are thinner evidence rather than bad evidence. Only two Gen 6 reports exist. One is the T14s Gen 6 (Core Ultra 5 228V, Arc 140V) upgrade cosmetic bug in [#6883](https://github.com/omacom/omarchy/issues/6883), which says the machine runs Quattro and nothing about its hardware. The other, [#5989](https://github.com/omacom/omarchy/issues/5989), is a T14 Gen 6 with a Core Ultra 7 255H running Ubuntu rather than Omarchy, so it says nothing useful here.
+Gen 5 and Gen 6 are thinner evidence rather than bad evidence. Three Gen 6 reports exist and not one of them is about hardware. The first is the T14s Gen 6 (Core Ultra 5 228V, Arc 130V/140V) upgrade cosmetic bug in [#6883](https://github.com/omacom/omarchy/issues/6883), which says the machine runs Quattro and nothing about its silicon. The second, [#8040](https://github.com/omacom/omarchy/issues/8040), is a T14 Gen 6 on Lunar Lake reporting that the packaged Zed theme sync tool lagged its upstream fix, which is a repository problem, not a laptop one. The third, [#5989](https://github.com/omacom/omarchy/issues/5989), is a T14 Gen 6 with a Core Ultra 7 255H running Ubuntu rather than Omarchy, so it says nothing useful here.
 
 The P14s and T14p are close relatives and are not covered here.
 
@@ -215,7 +225,7 @@ The P14s and T14p are close relatives and are not covered here.
 - Check `cat /sys/class/dmi/id/product_name` and note the machine type, for example 20XG or 21MD. That string, not the marketing name, is what kernel quirk tables match on.
 - Update the BIOS from Windows or a Lenovo USB stick before you wipe the drive. It is the least painful time to do it.
 - After install, run firmware updates through `omarchy update firmware`, not bare `fwupdmgr`, so `/boot/EFI/arch` exists.
-- Test suspend and lid close twice, before you trust the machine, and check [/hardware/suspend-sleep/](/hardware/suspend-sleep/) if it misbehaves. The [System sleep chapter](https://omarchy.org/manual/system-sleep/) covers turning suspend and hibernate off if your machine cannot do them.
+- Test suspend and lid close twice, before you trust the machine, and check [/hardware/suspend-sleep/](/hardware/suspend-sleep/) if it misbehaves. The [System sleep chapter](https://omarchy.org/manual/system-sleep/) covers the suspend toggle and hibernation setup if your machine cannot do either.
 - If you are coming from Omarchy 3, read [/upgrade/3-to-4-quattro/](/upgrade/3-to-4-quattro/) first. A T14s Gen 6 owner lost custom app-menu icons to the Quattro upgrade ([#6883](https://github.com/omacom/omarchy/issues/6883), open) because the migration moves the legacy icon directory out from under surviving desktop entries.
 - Expect Caps Lock to be the compose key, and both Shifts to toggle Caps Lock, before you file a bug about it.
 

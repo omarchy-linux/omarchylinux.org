@@ -1,6 +1,6 @@
 ---
 title: "Slimbook and TUXEDO on Omarchy Linux"
-description: "Slimbook and TUXEDO laptop support on Omarchy 4.0.4: the vendor-wide backlight and ethernet quirk scripts, the 3.8.4 suspend regression, and what to check before you buy."
+description: "Slimbook and TUXEDO on Omarchy 4.0.4: the vendor-wide backlight and ethernet quirk scripts, the 3.8.4 suspend regression, what to check first."
 answer: "Rate Slimbook and TUXEDO silver. Omarchy matches these machines on DMI sys_vendor alone, installs tuxedo-drivers for the keyboard backlight, and installs a Motorcomm YT6801 ethernet driver for the Slimbook Executive. Slimbook sells machines with Omarchy preinstalled. Evidence in the tracker is thin: three issues total, including a 3.8.4 suspend regression on an InfinityBook Pro 15 that the reporter says Omarchy 4 fixed."
 appliesTo:
   from: "3.x"
@@ -12,8 +12,8 @@ kind: model
 vendor: "Slimbook and TUXEDO"
 model: "Slimbook and TUXEDO Linux laptops (Clevo chassis)"
 dmi: ["TUXEDO", "Slimbook", "SLIMBOOK Executive-14-UC2", "TUXEDO InfinityBook Pro 15 - Gen10 - AMD"]
-cpu: "Intel Core Ultra (Arrow Lake-H) and AMD Ryzen AI 9 HX 370 in the reported machines"
-gpu: "Intel Arc 130T/140T integrated on the Executive-14-UC2; AMD Radeon 890M on the Ryzen AI machines"
+cpu: "Intel Core Ultra 7 255H on the Executive-14-UC2, AMD Ryzen AI 9 HX 370 on the reported TUXEDO machines"
+gpu: "Intel Arc Pro 130T/140T on the Executive-14-UC2, driven by i915; integrated Radeon graphics on the Ryzen AI 9 HX 370 machines"
 year: "2025-2026"
 rating: silver
 subsystems:
@@ -102,7 +102,7 @@ faq:
   - q: "Does Omarchy have hardware support for Slimbook and TUXEDO?"
     a: "Yes, two scripts. install/hardware/fix-tuxedo-backlight.sh installs tuxedo-drivers-nocompatcheck-dkms for the keyboard backlight, and install/hardware/fix-yt6801-ethernet-adapter.sh installs yt6801-dkms for the Motorcomm NIC in the Slimbook Executive. Neither one checks the model, only the vendor or the PCI ID."
   - q: "Can I buy a laptop with Omarchy already installed?"
-    a: "Slimbook sells machines with Omarchy preinstalled, announced by DHH in September 2026. Confirm the exact SKU and the image version with the vendor. This page is not a store and cannot verify any specific order."
+    a: "Slimbook sells machines with Omarchy preinstalled, announced by DHH in September 2026. Confirm the exact SKU and the shipped Omarchy version with Slimbook before ordering, then run omarchy version and omarchy update on day one."
   - q: "Is TUXEDO OS the same thing as Omarchy?"
     a: "No. TUXEDO OS is the vendor's own Ubuntu-based distribution. Omarchy is Arch plus Hyprland. Only the tuxedo-drivers kernel package is shared, and Omarchy pulls it from the AUR as a DKMS module."
 related: [suspend-sleep, intel-gpu, battery-power, dell-xps-14-2026, framework-laptop-13]
@@ -131,7 +131,7 @@ The TUXEDO InfiniteBook Pro 14 sits on [DHH's hardware list](https://learn.omaco
 
 Suspend on 3.8.4. Issue #6380 is the clearest data point on this page. The screen went black, the power LED changed colour, and the machine needed a hard reset. It is closed and the reporter says 4.x fixed it, so if you are still on 3.8.4 the fix is to update rather than to chase power profile rules.
 
-Graphics teardown crashes on 4.0.3. In [issue #11376](https://github.com/omacom/omarchy/issues/11376) jaredpohl posted the only detailed Slimbook report on the tracker: a SLIMBOOK Executive-14-UC2 with an Intel Core Ultra 7 255H and Arc 130T/140T graphics, hitting a SIGSEGV inside `Aquamarine::CDRMBackend::flushAsyncCommitEvents()` when both the SDDM greeter compositor and the user session exit. The desktop still starts, so this is noise in `coredumpctl` rather than a broken machine, and it is not Slimbook-specific: the same issue collects NVIDIA and AMD reports. That report also notes a Slimbook vendor repository was enabled alongside Omarchy's mirror, which is not a clean-install reproduction.
+Graphics teardown crashes on 4.0.3. In [issue #11376](https://github.com/omacom/omarchy/issues/11376) jaredpohl posted the only detailed Slimbook report on the tracker: a SLIMBOOK Executive-14-UC2 with an Intel Core Ultra 7 255H and Arc Pro 130T/140T graphics, hitting a SIGSEGV inside `Aquamarine::CDRMBackend::flushAsyncCommitEvents()` when both the SDDM greeter compositor and the user session exit. The desktop still starts, so this is noise in `coredumpctl` rather than a broken machine, and it is not Slimbook-specific: the same issue collects NVIDIA and AMD reports. Read it with one caveat the reporter flags: that machine had Slimbook's own vendor repository enabled next to the Omarchy mirror, so it is not a stock package set.
 
 Black screen after login on 3.x. [Issue #4278](https://github.com/omacom/omarchy/issues/4278) came from a Tuxedo 14 inch with a Ryzen AI 9 HX 370 in January 2026. The reporter recovered by switching to a TTY, removing the Hyprland config, rebooting into the default config and running `omarchy-reinstall`. That predates Quattro and the Lua config format, so the recovery steps no longer apply verbatim.
 
@@ -139,7 +139,7 @@ Nothing else is reported. There is no Slimbook or TUXEDO Wi-Fi issue, no audio i
 
 ## What Omarchy does for this model
 
-Two scripts run from `install/hardware/all.sh` on every install and every `omarchy-update`.
+Two scripts sit in `install/hardware/all.sh`. That file is sourced by `omarchy-apply-hardware`, which `omarchy-apply-system` calls while the installer finalises the machine. It is not part of `omarchy-update`, which runs `omarchy-migrate` instead, so an in-place update does not re-run hardware detection.
 
 `install/hardware/fix-tuxedo-backlight.sh` reads `/sys/class/dmi/id/sys_vendor` and matches `TUXEDO` or `Slimbook`, case-insensitively. When it matches it installs `tuxedo-drivers-nocompatcheck-dkms`, writes `blacklist clevo_xsm_wmi` to `/etc/modprobe.d/blacklist-clevo-xsm-wmi.conf`, and deletes any leftover `clevo-xsm-wmi.ko` in `/lib/modules/*/extra/`. The comment in the file explains why: if `clevo_xsm_wmi` loads first it grabs the Clevo WMI GUIDs and `tuxedo-drivers` cannot bring up the backlight.
 
@@ -147,13 +147,13 @@ Two scripts run from `install/hardware/all.sh` on every install and every `omarc
 
 Note what these do not do. Neither script calls `omarchy-hw-match`, which is the helper other vendors use to match on `product_name` or `product_family`. The match here is vendor-wide, so every Slimbook and every TUXEDO gets the same treatment regardless of model. There is also no speaker tuning: `default/audio/tunings/` in v4.0.4 contains only `dell-xps-2026`.
 
-Version differences matter here. On 3.5.0 through 3.8.4 the backlight script ended with `[ -f "$f" ] && sudo rm "$f"` inside a loop, which returns non-zero when the glob matches nothing and could take the rest of hardware setup down with it. v4.0.0 rewrote that as a plain `if` block, listed in the Quattro notes as "Stop the Tuxedo/Slimbook backlight fix from aborting hardware setup". In 4.0.4 both scripts also stopped asking for `linux-headers` by name, because Omarchy now ships `linux-omarchy` with `linux-omarchy-headers`, and 4.0.4 carries a migration that installs the matching headers package on machines that were missing it. If your DKMS modules are the reason you care about this page, 4.0.4 is the release you want.
+Version differences matter here. On 3.5.0 through 3.8.4 the backlight script ended with `[ -f "$f" ] && sudo rm "$f"` inside a loop, which returns non-zero when the glob matches nothing and could take the rest of hardware setup down with it. v4.0.0 rewrote that as a plain `if` block, listed in the Quattro notes as "Stop the Tuxedo/Slimbook backlight fix from aborting hardware setup". In 4.0.4 both scripts also stopped asking for `linux-headers` by name. The 4.0.4 notes lead with "Install our bespoke kernel and set `linux-omarchy` as the default boot option", and the package list swapped `linux-headers` for `linux-omarchy-headers` to match. Because the hardware scripts do not re-run on update, 4.0.4 also ships a migration that installs the matching headers package for `linux-omarchy` or `linux-t2` on machines that were missing it. If your DKMS modules are the reason you care about this page, 4.0.4 is the release you want.
 
 ## Variants
 
 Prefer a Slimbook SKU sold with Omarchy preinstalled if you do not want to flash a USB stick at all. Confirm the model and the shipped Omarchy version with Slimbook directly before ordering.
 
-The Slimbook Executive is the best-covered model in Omarchy's own code, since both quirk scripts name it. The Executive-14-UC2 with Intel Arrow Lake-H graphics is the one machine with a public 4.0.3 report.
+The Slimbook Executive is the best-covered model in Omarchy's own code, since both quirk scripts name it. The Executive-14-UC2, with Arrow Lake-P era Arc Pro 130T/140T graphics on i915, is the one machine with a public 4.0.3 report.
 
 The TUXEDO InfinityBook Pro line is the best-covered on the issue tracker, such as it is: a Gen10 AMD 15 inch and a 14 inch Ryzen AI 9 HX 370. The InfiniteBook Pro 14 is the one DHH lists, with a small right Shift key on the US ANSI layout as the noted annoyance.
 
@@ -165,7 +165,7 @@ TUXEDO OS is not Omarchy. Buying TUXEDO hardware does not mean the vendor suppor
 
 - Run `cat /sys/class/dmi/id/sys_vendor` from the live ISO. If it does not contain TUXEDO or Slimbook, neither quirk script will fire and your backlight is on its own.
 - Run `lspci | grep -i ethernet` and look for Motorcomm or YT6801. That tells you whether you depend on `yt6801-dkms`, and therefore on working kernel headers.
-- Install 4.0.4 or later, or update to it first. Older releases carried the backlight script bug and asked for the wrong headers package.
+- Install 4.0.4 or later, or update to it first. Older releases carried the backlight script bug and asked for the wrong headers package. On an updated machine the 4.0.4 migration is what repairs the headers, since the hardware scripts themselves only run at install time.
 - Test suspend from the System menu before you rely on the machine. Do it on battery and on AC, since the power profile switches between them.
 - If you bought the machine preinstalled, run `omarchy version` and `omarchy update` on day one. A factory image can be months behind the current release.
 - If you are reselling or handing the machine on, `Setup > Reset Computer` returns a Quattro-installed machine to its first-boot state. It only works on machines installed from the Quattro ISO, not on ones upgraded from 3.x.
@@ -173,7 +173,7 @@ TUXEDO OS is not Omarchy. Buying TUXEDO hardware does not mean the vendor suppor
 ## Related
 
 - [/hardware/suspend-sleep/](/hardware/suspend-sleep/) and [/fix/suspend-wont-resume-s2idle/](/fix/suspend-wont-resume-s2idle/) for the failure in #6380
-- [/hardware/intel-gpu/](/hardware/intel-gpu/) for Arrow Lake-H graphics on the Executive-14-UC2
+- [/hardware/intel-gpu/](/hardware/intel-gpu/) for the Arc Pro 130T/140T graphics on the Executive-14-UC2
 - [/fix/quickshell-crashes-or-bar-missing/](/fix/quickshell-crashes-or-bar-missing/) and [/fix/black-screen-after-login/](/fix/black-screen-after-login/)
 - [/upgrade/3-to-4-quattro/](/upgrade/3-to-4-quattro/) if you are still on 3.8.4 with broken suspend
 - [/hardware/submit/](/hardware/submit/) if you own one of these and can fill in the unknowns

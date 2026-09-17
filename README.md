@@ -26,6 +26,16 @@ node scripts/validate-content.mjs       # frontmatter rules
 node scripts/og.mjs                     # regenerate Open Graph images
 ```
 
+## Before you go live
+
+Five things need your input. Everything else is done.
+
+1. **Create the GitHub repository** and push. The site links to it for "Improve this page" and the hardware-report form, so until it exists those two links 404. If you use a different name or account, change `repo` and `editBase` in `src/lib/site.ts`.
+2. **Set the contact address.** `src/lib/site.ts` has `contact: 'hello@omarchylinux.org'`. Point it somewhere you read, or change it to a GitHub discussions link.
+3. **Point DNS at the host.** The domain is already on Cloudflare nameservers. Create the Pages project (below), then add the custom domain `omarchylinux.org` in the Pages dashboard, which writes the DNS record for you.
+4. **Email the Omacom Foundation before launch.** Draft is in the research brief: tell them what the site is, that you will never host installers or use their logo, and that the domain is theirs on request. Keep the reply.
+5. **Verify the trademark facts are still current** on `/official/trademark/` (USPTO records change) and re-run `bash scripts/refresh-live-data.sh`.
+
 ## Deploy
 
 The domain is on Cloudflare. Create a Cloudflare Pages project named `omarchylinux-org`, connect this repository (build command `npm run build`, output `dist`), or set the `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` secrets and let `.github/workflows/deploy.yml` deploy on push to `main`. `public/_headers` and `public/_redirects` are picked up by Pages automatically. Any static host works; `dist/` is plain files.

@@ -1,7 +1,7 @@
 ---
 title: "Multi-monitor layout not saved: scale and position reset on Omarchy 4"
 description: "Your external monitor layout, scale and position do not survive a reload on Omarchy 4. Write explicit hl.monitor rules in monitors.lua, then reload."
-answer: "Omarchy 4's Display panel and Super + / only persist scale into the catch-all rule in ~/.config/hypr/monitors.lua, and on a docked laptop a watcher re-applies that file every two seconds with position \"auto\". Write one literal hl.monitor line per output, keyed by connector name, with the scale and position you want, then run hyprctl reload and stop using the scale buttons."
+answer: "Omarchy 4's Display panel and Super + / only persist scale into the catch-all rule in ~/.config/hypr/monitors.lua, and on a docked laptop a watcher polls every two seconds and re-applies the internal panel's scale from that file, with position \"auto\" unless a connector-name rule sets one. Write one literal hl.monitor line per output, keyed by connector name, with the scale and position you want, then run hyprctl reload and stop using the scale buttons."
 appliesTo:
   from: "4.0.0"
 status: workaround
@@ -78,6 +78,11 @@ sources:
     kind: pr
     author: "Chessing234"
     date: "2026-08-25"
+  - url: "https://github.com/omacom/omarchy/pull/12263"
+    title: "PR #12263: Monitor: report Hyprland scale and persist named outputs"
+    kind: pr
+    author: "Chessing234"
+    date: "2026-09-17"
   - url: "https://omarchy.org/manual/monitors/"
     title: "Omarchy manual: Monitors"
     kind: manual
@@ -101,9 +106,9 @@ faq:
   - q: "Why does my scale snap back about a second after I set it?"
     a: "On a laptop with an external monitor active, omarchy-hyprland-monitor-watch runs omarchy-hyprland-monitor-clamshell every two seconds. That script reads monitors.lua and re-applies the internal panel to the scale it finds there. If the Display panel did not write your new value into the file, the poll undoes it."
   - q: "Can I use nwg-displays or Hyprmon to arrange screens?"
-    a: "You can use them to work out coordinates, and the manual links Hyprmon. But anything that only sets the live Hyprland state loses to the same watcher and to the next reload. Copy the numbers into monitors.lua as hl.monitor rules to make them stick."
+    a: "Use them to work out the layout, and the manual links Hyprmon. But the clamshell script reads only ~/.config/hypr/monitors.lua, and only single-line connector-name rules in it. nwg-displays writes multi-line hl.monitor blocks to that file, which the parser cannot read (the layout in #6673, the parser limit in #7084), and Hyprmon writes its own hyprmon.lua, which the script never opens (siebertm in #7084). Copy the numbers into monitors.lua as one-line hl.monitor rules to make them stick."
   - q: "Does any 4.0.x release fix this?"
-    a: "Only partly. 4.0.1 shipped PR #7581, which stops the clamshell recovery fighting a panel whose scale is left at auto. The persistence bugs in omarchy-hyprland-monitor-scaling were still open on 2026-09-16, with PRs #7437 and #8145 unmerged."
+    a: "Only partly. 4.0.1 shipped PR #7581, which stops the clamshell recovery fighting a panel whose scale is left at auto. The persistence bugs in omarchy-hyprland-monitor-scaling were still open on 2026-09-16. PR #7437 is unmerged, and PR #8145 was closed without merging on 2026-09-17 and folded into PR #12263, also unmerged."
 related: [monitors-conf-replaced-by-monitors-lua, fractional-scaling-blurry-or-huge-apps, cursor-invisible-or-wrong-size, suspend-wont-resume-s2idle]
 draft: false
 ---
@@ -157,21 +162,21 @@ Three separate mechanisms in 4.0.x can write over your layout.
 
 **The scale tool persists to the wrong place.** `bin/omarchy-hyprland-monitor-scaling` applies the new scale live with `hyprctl eval`, then tries to save it by rewriting either `local omarchy_monitor_scale` or the wildcard `output = ""` rule. Both are global. nico-kovacs showed in [#6673](https://github.com/omacom/omarchy/issues/6673) that setting a scale on one screen therefore changes the others within a second or two, because the file write itself triggers a config reload. If your file has explicit per-output rules instead, RonRayReed found in [#8103](https://github.com/omacom/omarchy/issues/8103) that the save silently does nothing, and Douda reported the same revert in [#7242](https://github.com/omacom/omarchy/issues/7242).
 
-**The clamshell watcher re-asserts the internal panel.** `omarchy-hyprland-monitor-watch` runs `omarchy-hyprland-monitor-clamshell` on every monitor event, and every two seconds for as long as a laptop has an active external monitor. That script parses `monitors.lua` with `sed`. It matches only a rule written literally as `output = "eDP-1"`. mkelk showed in [#7084](https://github.com/omacom/omarchy/issues/7084) that a `desc:` rule is invisible to it, so it falls back to the catch-all or to a hardcoded `2` and forces that value back. This is why an unmatched panel snaps back about a second after every change.
+**The clamshell watcher re-asserts the internal panel.** `omarchy-hyprland-monitor-watch` runs `omarchy-hyprland-monitor-clamshell` on every monitor event, and every two seconds for as long as a laptop has an active external monitor. That script parses `monitors.lua` with `sed`. It matches only a rule written literally as `output = "eDP-1"`, on one line. mkelk showed in [#7084](https://github.com/omacom/omarchy/issues/7084) that a `desc:` rule, or a rule split over several lines, is invisible to it, so it falls back to the catch-all's scale and forces that onto the panel whenever the live value differs. On 4.0.0 a catch-all still at `"auto"` fell through further to a hardcoded `2`. 4.0.1 stopped that, but the catch-all becomes a number the first time any scale button is pressed, and from then on an unmatched panel snaps back about a second after every change.
 
-**Position is never read from the catch-all.** skoom21 documented in [#7326](https://github.com/omacom/omarchy/issues/7326) that the clamshell script's `read_monitor_position` returns `auto` whenever it cannot find a connector-name rule for the internal panel, and that the live `hyprctl eval` inside the scale tool hardcodes `position = "auto"` as well. So on a stock `monitors.lua`, which contains no per-output rule at all, a deliberate offset is discarded on the next monitor event or scale press. reppiz saw the same rearrangement on 3.4.0 in [#4785](https://github.com/omacom/omarchy/issues/4785), so the position half predates Quattro.
+**Position is never read from the catch-all.** skoom21 documented in [#7326](https://github.com/omacom/omarchy/issues/7326) that the clamshell script's `read_monitor_position` returns `auto` whenever it cannot find a connector-name rule for the internal panel, and that the live `hyprctl eval` inside the scale tool hardcodes `position = "auto"` as well. The watcher only re-applies position as a side effect of correcting the scale, so on a stock `monitors.lua`, which contains no per-output rule at all, a deliberate offset goes the moment the watcher decides the panel's scale is wrong, and on every scale press regardless. reppiz saw the same rearrangement on 3.4.0 in [#4785](https://github.com/omacom/omarchy/issues/4785), so the position half predates Quattro.
 
-One piece did get fixed. [PR #7581](https://github.com/omacom/omarchy/pull/7581) by fuchsblau merged on 2026-08-22 and shipped in [4.0.1](/releases/v4.0.1/) as "Leave an auto-scaled internal panel alone in clamshell recovery". It makes the recovery step return early when the configured scale is not a number, which is the default `"auto"`, and it closed PedroMiguelInacio's [#6909](https://github.com/omacom/omarchy/issues/6909). The persistence PRs [#7437](https://github.com/omacom/omarchy/pull/7437) and [#8145](https://github.com/omacom/omarchy/pull/8145) were still open on 2026-09-16.
+One piece did get fixed. [PR #7581](https://github.com/omacom/omarchy/pull/7581) by fuchsblau merged on 2026-08-22 and shipped in [4.0.1](/releases/v4.0.1/) as "Leave an auto-scaled internal panel alone in clamshell recovery". It makes the recovery step return early when the configured scale is not a number, which is the default `"auto"`, and PedroMiguelInacio's [#6909](https://github.com/omacom/omarchy/issues/6909) was closed minutes after it merged. The persistence PRs have not landed: [#7437](https://github.com/omacom/omarchy/pull/7437) was still open on 2026-09-16, and [#8145](https://github.com/omacom/omarchy/pull/8145) was closed unmerged on 2026-09-17 and folded into [#12263](https://github.com/omacom/omarchy/pull/12263), which is open.
 
 ## If that did not work
 
-**You keyed a monitor by description.** `desc:` is valid Hyprland syntax and Hyprland honours it, but the clamshell script does not. Key the internal panel by connector name. Connector numbering is stable for `eDP`, `LVDS` and `DSI`; only DP connectors renumber across hotplug, so use `desc:` for external screens if you need it and keep the internal panel literal.
+**You keyed a monitor by description.** `desc:` is valid Hyprland syntax and Hyprland honours it, but the clamshell script does not. Give the internal panel a connector-name rule instead. mkelk's reasoning in [#7084](https://github.com/omacom/omarchy/issues/7084) is that `eDP` numbering holds across hotplug and it is DP connectors that renumber, which is what `desc:` exists to survive. So use `desc:` for external screens if you need it and keep the internal panel literal.
 
-**You generated the rules with a Lua loop.** In a comment on [#8103](https://github.com/omacom/omarchy/issues/8103), gfk reported that this makes things worse, because the shell parser finds no literal line and falls back to the catch-all every two seconds. Keep at least the internal panel's rule as one plain line.
+**You generated the rules with a Lua loop.** In a comment on [#8103](https://github.com/omacom/omarchy/issues/8103), gfk reported that this makes things worse, because the shell parser finds no literal line and falls back to the catch-all on every monitor event and idle-wake. Keep at least the internal panel's rule as one plain line.
 
 **Your `monitors.lua` is a symlink into a dotfiles repo.** FCygan reported in [#7625](https://github.com/omacom/omarchy/issues/7625) that `sed -i` without `--follow-symlinks` replaces the symlink with a regular file the first time a scale button is pressed, so the repo quietly stops driving the config. Check with `ls -l ~/.config/hypr/monitors.lua` after any scale change.
 
-**Rotation comes back wrong after a reboot.** YuseiRun reported in [#7066](https://github.com/omacom/omarchy/issues/7066) that a `transform` value in the config is present but not applied until you change it and change it back. That report is one machine with no follow-up, so treat it as thin evidence rather than a confirmed pattern.
+**Rotation comes back wrong after a reboot.** YuseiRun reported in [#7066](https://github.com/omacom/omarchy/issues/7066) that a `transform` value in the config is present but not applied until you change it and change it back. That report is one machine, with `transform` set on the catch-all rule and the scale quoted as a string, and nobody else has confirmed it, so treat it as thin evidence rather than a confirmed pattern.
 
 **Nothing responds to the keyboard after your edit.** A Lua error in `monitors.lua` aborts evaluation before the bindings load. See [the nil global o page](/fix/hyprland-lua-attempt-to-index-nil-global-o/), and recover the shipped file with `omarchy-refresh-config hypr/monitors.lua`, which backs your version up first.
 

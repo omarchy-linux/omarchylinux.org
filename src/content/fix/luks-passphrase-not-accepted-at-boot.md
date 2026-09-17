@@ -65,7 +65,7 @@ sources:
     author: "folken718"
     date: "2026-09-05"
   - url: "https://github.com/omacom/omarchy/issues/6876"
-    title: "Issue #6876: omarchy_hooks.conf replaces HOOKS instead of extending it, leaving LVM-on-LUKS roots unbootable"
+    title: "Issue #6876: omarchy_hooks.conf replaces HOOKS instead of extending it, dropping lvm2/resume and leaving LVM-on-LUKS roots unbootable"
     kind: issue
     author: "alancaldas84"
     date: "2026-08-14"
@@ -104,7 +104,7 @@ related: [you-are-in-emergency-mode-after-update, kernel-panic-after-update-limi
 draft: false
 ---
 
-The passphrase is almost never wrong. The keyboard is. The Omarchy unlock prompt runs inside the initramfs, long before Hyprland loads your layout, and for most of 3.x it typed US QWERTY no matter what you picked in the installer. If your passphrase contains a character that moves between layouts, the prompt rejects it and tells you nothing useful. Everything below was checked against the 3.8.4 and 4.0.4 source trees.
+The passphrase is almost never wrong. The keyboard is. The Omarchy unlock prompt runs inside the initramfs, long before Hyprland loads your layout, and once the Plymouth 24 to 26 package update reached 3.8.2 machines in June 2026 it typed US QWERTY no matter what you picked in the installer. If your passphrase contains a character that moves between layouts, the prompt rejects it and tells you nothing useful. Everything below was checked against the 3.8.4 and 4.0.4 source trees.
 
 ## The fix
 
@@ -152,7 +152,9 @@ sudo limine-mkinitcpio
 
 That is the whole fix on a current system. Omarchy ships `/etc/mkinitcpio.conf.d/omarchy_hooks.conf`, and on 4.0.x that file decides at rebuild time whether to add `/etc/vconsole.conf` to `FILES`. It adds it for Latin layouts and skips it for the non-Latin list (`ara`, `bg`, `gr`, `il`, `ru`, `ua` and others), so a Latin passphrase stays typeable.
 
-On 3.8.2 and earlier there is no such logic at all. Either update, or append the line yourself and rebuild:
+One catch on machines upgraded from 3.x: if that file was ever edited by hand, pacman leaves the packaged version next to it as `omarchy_hooks.conf.pacnew` instead of replacing it. Omarchy's own migration `1786605598.sh` notes this, and issue #9828 hit it. Run `ls /etc/mkinitcpio.conf.d/` and, if a `.pacnew` is sitting there, merge it before rebuilding. See [pacnew and pacsave files after update](/fix/pacnew-and-pacsave-files-after-update/).
+
+On 3.8.2 and earlier there is no such logic at all. Either update, or append the line yourself and rebuild. Skip this if your layout is Hebrew, Greek, Cyrillic or Arabic, because bundling one of those is exactly what locked out the reporter of issue #6229:
 
 ```bash
 echo 'FILES+=(/etc/vconsole.conf)' | sudo tee -a /etc/mkinitcpio.conf.d/omarchy_hooks.conf
@@ -173,11 +175,11 @@ Then reboot and type the passphrase on your own layout. If it unlocks on the fir
 
 Omarchy boots a unified kernel image through Limine, with Plymouth drawing the unlock prompt. The layout that prompt uses comes from the initramfs, not from your session.
 
-Two separate things broke here. The first was Plymouth. Issues #6072, #6151 and #6165 all land in late June and early July 2026, all on Plymouth 26.134.222, and all describe the same regression: the console keymap was present in the boot image, but the graphical prompt ignored it and fell back to QWERTY. Release v3.8.3 on 2026-07-13 fixed it by bundling `/etc/vconsole.conf` into the initramfs, credited to Zeus-Deus, and v4.0.0 carried the same change forward.
+Two separate things broke here. The first was Plymouth. Issues #6072, #6151 and #6165 all land between mid-June and early July 2026, all on Plymouth 26.134.222, and all describe the same regression: the console keymap was present in the boot image, but the graphical prompt ignored it and fell back to QWERTY. Release v3.8.3 on 2026-07-13 fixed it by bundling `/etc/vconsole.conf` into the initramfs, credited to Zeus-Deus, and v4.0.0 carried the same change forward.
 
-That fix then created its own lockout. elpddev filed issue #6229 four days later: with a Hebrew layout bundled, the prompt mapped letter keys to Hebrew, and a Latin passphrase could no longer be typed at all. Omarchy 4.0.x answers this with the layout filter in `omarchy_hooks.conf` plus migration `1784476564.sh`, which strips the bundling on non-Latin machines and rebuilds the image.
+That fix then created its own lockout. elpddev filed issue #6229 three days later: with a Hebrew layout bundled, the prompt mapped letter keys to Hebrew, and a Latin passphrase could no longer be typed at all. Omarchy 4.0.x answers this with the layout filter in `omarchy_hooks.conf` plus migration `1784476564.sh`, which strips the bundling on non-Latin machines and rebuilds the image.
 
-The second problem is the missing `XKBLAYOUT`, and it is still open. Issue #7049 shows a fresh Quattro install writing only `KEYMAP=no-latin1`, and #6878 shows a Quattro upgrade in the same state with `KEYMAP=fr`. Issue #8196, filed 2026-08-25 and open at the time of writing, is the worst version: a passphrase set under AZERTY during a full-disk install that could not be typed at the boot prompt afterwards, with the reporter saying QWERTY translation did not help either. That one has no confirmed explanation yet, and the reporter reinstalled with a layout-stable passphrase.
+The second problem is the missing `XKBLAYOUT`, and it is still open. Issue #7049 shows a fresh Quattro install writing only `KEYMAP=no-latin1`, and #6878 shows a Quattro upgrade in the same state with `KEYMAP=fr`. It is not every install: a later comment on #7049 shows a 4.0.2 install with Swiss German that did get `XKBLAYOUT=ch`, so check the file rather than assume. Issue #8196, filed 2026-08-25 and open at the time of writing, is the worst version: a passphrase set under AZERTY during a full-disk install that could not be typed at the boot prompt afterwards, with the reporter saying QWERTY translation did not help either. That one has no confirmed explanation yet, and the reporter reinstalled with a layout-stable passphrase.
 
 ## If that did not work
 

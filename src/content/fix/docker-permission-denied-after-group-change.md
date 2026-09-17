@@ -8,7 +8,7 @@ status: by-design
 lastVerified: 2026-09-16
 omarchyVersionTested: "4.0.4"
 category: apps
-issueCount: 86
+issueCount: 1
 errorStrings:
   - "permission denied while trying to connect to the docker API at unix:///var/run/docker.sock"
   - "dial unix /var/run/docker.sock: connect: permission denied"
@@ -44,6 +44,11 @@ sources:
     kind: pr
     author: "acrogenesis"
     date: "2026-09-09"
+  - url: "https://github.com/omacom/omarchy/pull/11386"
+    title: "PR #11386: Run development containers with rootless Docker"
+    kind: pr
+    author: "acrogenesis"
+    date: "2026-09-11"
   - url: "https://github.com/omacom/omarchy/releases/tag/v4.0.1"
     title: "Omarchy v4.0.1 release notes"
     kind: release
@@ -71,17 +76,17 @@ credits:
     for: "Pointed out that the first docker run on a new machine now fails"
   - name: "acrogenesis"
     url: "https://github.com/acrogenesis"
-    for: "Authored the open Podman migration proposal"
+    for: "Authored the open Podman and rootless Docker proposals"
   - name: "elephantatech"
     url: "https://github.com/elephantatech"
     for: "Opened the original request for a Podman option"
 faq:
   - q: "Is this a bug I should report?"
-    a: "No. It is a deliberate security change shipped in 4.0.1 and documented in the Omarchy manual. Issue #9101 asked the same question and was closed the same morning."
+    a: "No. It is a deliberate security change shipped in 4.0.1 and documented in the Omarchy manual. Issue #9101 reported the same state and asked whether the update should have prompted; its author closed it himself fifteen minutes later."
   - q: "Can I just run newgrp docker instead of rebooting?"
     a: "Omarchy's own toggle scripts say a logout or newgrp is not reliably enough and only a reboot applies the change. The scripts set a reboot-required flag and offer to reboot for you."
   - q: "Does Omarchy ship Podman yet?"
-    a: "No. There is no podman anywhere in the 4.0.4 source tree. PR #11032 proposes making Podman native, but it is still open and unmerged as of 2026-09-16."
+    a: "No. There is no podman anywhere in the 4.0.4 source tree. PR #11032 proposes making Podman native and PR #11386 proposes rootless Docker instead. Both are open and unmerged as of 2026-09-16."
   - q: "Did my containers get deleted?"
     a: "No. Only your group membership changed. The daemon, images, volumes and containers are untouched, and sudo docker ps shows them all."
 related: [migration-failed-mid-update, omarchy-update-fails-or-hangs]
@@ -134,7 +139,7 @@ Or use the menu: `Super + Space`, then Setup > Security > Sudoless Docker. The s
 
 To go the other way later, the menu entry moves to Remove > Security > Sudoless Docker, or run `omarchy remove security sudoless docker`. Only one of the two entries is ever shown, which is what PR #8098 added.
 
-**On 3.x there is nothing to do.** Omarchy 3.8.4 and earlier ran `sudo usermod -aG docker ${USER}` during install, and so did 4.0.0. If you are still on 3.x, plain `docker` works and this page does not apply to you until you upgrade.
+**On 3.x there is nothing to do.** Omarchy 3.8.4 ran `sudo usermod -aG docker ${USER}` during install, and 4.0.0 still added the install user to the group in `install/config/docker.sh`. If you are still on 3.x, plain `docker` works and this page does not apply to you until you upgrade.
 
 ## Verify it worked
 
@@ -150,15 +155,15 @@ omarchy-sudo-docker; echo $?
 
 `omarchy-sudo-docker` is Omarchy's own answer to "does Docker need sudo right now". It exits `0` when sudo is still needed and `1` when the socket is directly writable, so `1` is what you want. Add `--configured` and it answers for the account rather than this session, which is how it reports the window between enabling the group and the reboot that applies it.
 
-The Docker TUI on `Super + Shift + D` is the other check. By default it opens behind a polkit prompt, via `pkexec lazydocker`. Once sudoless Docker is on and you have rebooted, it opens with no prompt at all.
+The Docker TUI on `Super + Shift + D` is the other check. By default it opens behind a polkit prompt, because `omarchy-launch-docker-tui` runs lazydocker through `pkexec` whenever the socket is not writable. Once sudoless Docker is on and you have rebooted, it opens with no prompt at all.
 
 ## Why it happens
 
-Membership in the `docker` group is not a convenience, it is root. The daemon runs as root and owns the socket, so anyone who can reach the socket can run `docker run -v /:/host` and rewrite the host filesystem as root, with no password. On a machine where you are already a sudo user, that is not new power, but it is a silent, headless path to root that no longer has a password prompt in front of it. A poisoned dependency or a plugin running as you gets the same access you do.
+Membership in the `docker` group is not a convenience, it is root. The daemon runs as root and owns the socket, so any process that can write to the socket can start a container with `/` bind-mounted inside it and edit any file on the host as root. You already have sudo, so on paper nothing new is granted. The difference is that sudo asks for a password and the socket does not, which means every script, editor extension, npm postinstall hook, or Omarchy plugin that runs as your user quietly inherits root. That is the reason Omarchy's own setup script prints a warning before it adds you.
 
-PR #8056 changed the default in v4.0.1 on 2026-08-25, listed in the release notes under Security. The install no longer grants the group, first-boot provisioning refuses to replay it even if an older snapshot recorded it, and the Quattro upgrade path no longer adds it. Migration `1787580187.sh` removes existing users from the group during `omarchy update` and refreshes the Docker launcher entry. A public write-up of the old default appeared on 0xcc.io on 2026-08-28, three days after the fix shipped.
+PR #8056 merged on 2026-08-24 and shipped in v4.0.1 on 2026-08-25, listed in the release notes under Security. The install no longer grants the group, first-boot provisioning refuses to replay it even if an older snapshot recorded it, and the Quattro upgrade path no longer adds it. Migration `1787580187.sh` removes existing users from the group during `omarchy update` and refreshes the Docker launcher entry. A public write-up of the old default appeared on 0xcc.io on 2026-08-28, three days after the fix shipped.
 
-The confusing part is the timing. The migration takes the group away immediately, but group membership is only read when a session is created, so the running session keeps working and the failure appears after the next reboot. That is exactly what mattrayner described in issue #9101, which he closed himself within twenty minutes once the rationale was clear.
+The confusing part is the timing. The migration takes the group away immediately, but group membership is only read when a session is created, so the running session keeps working and the failure appears after the next reboot. Nothing on screen connects the two events. Issue #9101, filed from the dev branch, shows the resulting state: `docker.socket` active, the socket at `root docker 660`, and `id` with no `docker` in it. mattrayner had already found the migration and PR #8056 and was asking whether the update should have prompted him; he closed the issue himself fifteen minutes later, without a reply from anyone.
 
 Omarchy's own manual chapter on [development tools](https://omarchy.org/manual/development-tools/) documents the new default, including the `sudo docker ps` examples.
 
@@ -172,13 +177,14 @@ Omarchy's own manual chapter on [development tools](https://omarchy.org/manual/d
 
 **The Docker TUI prompt fails.** That is a polkit problem, not a group problem. The same prompt is used by several Omarchy actions.
 
-**You want rootless containers instead.** Omarchy does not ship them. Rootless Docker was requested in discussion #8293, and a Podman option was requested back in discussion #3839, which now has fifteen upvotes. PR #11032 by acrogenesis, opened 2026-09-09, proposes making Podman native with optional Docker compatibility, Quadlet user services for the development databases, and a container transfer path. It has community approvals but is open and unmerged as of 2026-09-16, and there is no `podman` anywhere in the v4.0.4 source tree. Treat it as a proposal, not a plan you can wait for.
+**You want rootless containers instead.** Omarchy does not ship them. Rootless Docker was requested in discussion #8293, and a Podman option was requested back in discussion #3839, which now has fifteen upvotes. PR #11032 by acrogenesis, opened 2026-09-09, proposes making Podman native with optional Docker compatibility, Quadlet user services for the development databases, and a container transfer path. Its two approving reviews come from an automated reviewer, a maintainer review found two migration bugs that the author then fixed, and the branch currently reports merge conflicts against `quattro`. The same author opened PR #11386 on 2026-09-11 with the other option, rootless Docker for the development containers. Both are open and unmerged as of 2026-09-16, and there is no `podman` anywhere in the v4.0.4 source tree. Treat them as proposals, not a plan you can wait for. The [Docker to Podman](/upgrade/docker-to-podman/) page tracks what has and has not landed.
 
 ## Related
 
 - [Migration failed mid update](/fix/migration-failed-mid-update/)
 - [omarchy update fails or hangs](/fix/omarchy-update-fails-or-hangs/)
 - [The docker group root escalation](/security/docker-group-root-escalation/)
+- [Docker to Podman on Omarchy](/upgrade/docker-to-podman/)
 - [What migrations do](/upgrade/what-migrations-do/)
 - [omarchy-setup-security-sudoless-docker](/reference/commands/omarchy-setup-security-sudoless-docker/)
 - [Omarchy 4.0.1 release notes](/releases/v4.0.1/)

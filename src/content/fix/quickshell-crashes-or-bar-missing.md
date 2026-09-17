@@ -1,7 +1,7 @@
 ---
 title: "Quickshell crashes or the Omarchy bar is missing"
 description: "The Omarchy 4 Quickshell bar vanished or omarchy-shell keeps crashing. Restart the shell, read its journal, reset a broken bar, fix a Qt ABI mismatch."
-answer: "Run `omarchy restart shell` from a terminal. If it reports the shell is not running, check `journalctl -t omarchy-shell -b | tail -50`. A blank bar after cloning or setting a custom bar is fixed with `omarchy bar reset`. A shell that will not start at all after an update on the edge or rc channel is usually a quickshell and Qt version mismatch."
+answer: "Run `omarchy restart shell` from a terminal. If it reports that the shell did not become ready, check `journalctl -t omarchy-shell -b | tail -50`. A blank bar after cloning or setting a custom bar is fixed with `omarchy bar reset`. A shell that will not start at all after an update on the edge or rc channel is usually a quickshell and Qt version mismatch."
 appliesTo:
   from: "4.0.0"
 status: workaround
@@ -93,13 +93,13 @@ related: [where-did-waybar-go, plugin-fails-to-load, walker-launcher-missing-aft
 draft: false
 ---
 
-On Omarchy 4 the bar, the menu, notifications, OSD popups, the lock screen and the polkit agent are all plugins inside one Quickshell process called `omarchy-shell`. When that process dies you lose all of them at once, which is why a missing bar and a dead `SUPER + SPACE` menu are the same bug. This page was checked against the shipped source of 4.0.0 through 4.0.4. On 3.x the bar was Waybar in its own process, so none of this applies there. See [where did Waybar go](/fix/where-did-waybar-go/).
+On Omarchy 4 the bar, the menu, notifications, OSD popups, the lock screen and the polkit agent are all plugins inside one Quickshell process called `omarchy-shell`. When that process dies you lose all of them at once, which is why a missing bar and a dead `SUPER + SPACE` menu are the same bug. On 3.x the bar was Waybar in its own process, so none of this applies there. See [where did Waybar go](/fix/where-did-waybar-go/).
 
 ## The fix
 
 Work through these in order. You need a terminal: `SUPER + RETURN` still works while the shell is down, because Hyprland is a separate process.
 
-1. **Rule out the hide toggle.** `SUPER + SHIFT + SPACE` hides the bar without killing the shell. If the menu and notifications still work, you probably hid it. Press it again, or delete the flag file directly:
+1. **Rule out the hide toggle.** `SUPER + SHIFT + SPACE` hides the bar without killing the shell. If the menu and notifications still work, you probably hid it. Press it again (or use _Trigger > Toggle > Menu Bar_), or delete the flag file directly:
 
    ```bash
    rm -f ~/.local/state/omarchy/toggles/bar-off
@@ -123,20 +123,21 @@ Work through these in order. You need a terminal: `SUPER + RETURN` still works w
 
    Lines like `Omarchy shell exited with status 255; relaunching.` mean it crashed and came back. `Giving up on the Omarchy shell after 6 relaunches in under a minute.` means the supervisor stopped trying.
 
-4. **If the shell will not start at all, check the package.** On the edge and rc channels in August 2026, a `quickshell-git` build compiled against Qt 6.11.2 was installed next to Qt 6.11.1, and the shell died instantly with a symbol lookup error. Quickshell links Qt's private ABI, so it has to be rebuilt for every Qt release. Check it by hand:
+4. **If the shell will not start at all, check the package.** On the edge and rc channels in August 2026, a `quickshell-git` build compiled against Qt 6.11.2 was installed next to Qt 6.11.1, and the shell died instantly with a symbol lookup error and exit status 127. The same thing happens on stable if you hold `qt6-*` back in `IgnorePkg`: the 4.0.1 migration swaps `quickshell-git` for the packaged `quickshell`, which is built against the current Qt ([#8438](https://github.com/omacom/omarchy/issues/8438)). Quickshell depends on Qt's private ABI, which is why every Qt point release needs a matching quickshell build. Check it by hand:
 
    ```bash
    quickshell --version
    ```
 
-   If that prints `symbol lookup error`, reinstall from the repo or roll back to the cached package, as confirmed in [#7596](https://github.com/omacom/omarchy/issues/7596):
+   If that prints `symbol lookup error`, update so Qt and quickshell come from the same sync, or roll back to the cached package that matches your installed Qt, as people in [#7596](https://github.com/omacom/omarchy/issues/7596) did. Since 4.0.1 the package is `quickshell`; before that it was `quickshell-git`:
 
    ```bash
-   sudo pacman -U /var/cache/pacman/pkg/quickshell-git-*-1-x86_64.pkg.tar.zst
+   ls -t /var/cache/pacman/pkg/quickshell*
+   sudo pacman -U /var/cache/pacman/pkg/quickshell<version-that-matches-your-qt>.pkg.tar.zst
    omarchy restart shell
    ```
 
-   Moving back to the stable channel also cleared it for several people. Stable was never affected. See [releases and channels](/releases/channels/).
+   Run that from a TTY if the shell is down, because the polkit agent lives inside the shell. Moving back to the stable channel also cleared it for several people in that thread, and the maintainer later confirmed the repos were fixed. See [releases and channels](/releases/channels/).
 
 5. **If you cloned or replaced the bar, reset it.**
 
@@ -145,7 +146,7 @@ Work through these in order. You need a terminal: `SUPER + RETURN` still works w
    omarchy plugin list    # see which plugins are enabled
    ```
 
-   On 4.0.0 through 4.0.2, `omarchy plugin clone omarchy.bar` produced a bar that never rendered, and the fallback to the built-in bar was itself broken, so you got nothing at all. Both halves changed in 4.0.3: the built-in bar's injected properties are no longer `required`, and the loader's error handler no longer references an undefined `errorString`. If you are still on 4.0.2 or earlier, update first.
+   On 4.0.0 through 4.0.2, `omarchy plugin clone omarchy.bar` produced a bar that never rendered, and the fallback to the built-in bar was itself broken, so you got nothing at all ([#7418](https://github.com/omacom/omarchy/issues/7418), [#10792](https://github.com/omacom/omarchy/issues/10792)). Both halves changed in 4.0.3: the built-in bar's injected properties are no longer `required`, and the loader's error handler no longer references an undefined `errorString`. If you are still on 4.0.2 or earlier, update first.
 
 6. **If a third-party plugin is the suspect**, disable it and restart:
 
@@ -179,7 +180,7 @@ Quickshell is one long-lived QML process. `omarchy-launch-shell` supervises it, 
 
 The crashes reported most often on 4.0.x fall into a few families:
 
-- **Audio graph churn.** The audio panel's refresh timer hands a Repeater rows that still hold PipeWire node objects, and Qt segfaults when one of those objects has already been destroyed. Unplugging USB audio, a Bluetooth reconnect, `omarchy-restart-audio` and plain suspend all reach it ([#6952](https://github.com/omacom/omarchy/issues/6952)). A maintainer reproduced it ten times out of ten in a VM and confirmed the Qt 6.11.2 point release does not fix it. The proposed fix, [PR #7783](https://github.com/omacom/omarchy/pull/7783), was still open when this page was checked.
+- **Audio graph churn.** The audio panel's refresh timer rebuilds a Repeater from a list that still contains PipeWire node objects, and Qt segfaults when one of them has already been destroyed. Unplugging USB audio, a Bluetooth reconnect, `omarchy-restart-audio` and plain suspend all reach it ([#6952](https://github.com/omacom/omarchy/issues/6952)). The project's omarchybot collaborator account reproduced it ten times out of ten in a VM and confirmed the Qt 6.11.2 point release does not fix it. The proposed fix, [PR #7783](https://github.com/omacom/omarchy/pull/7783), was still open on 2026-09-16, and the 4.0.4 audio panel still carries the old code.
 - **Output changes.** On wake from an idle lock, or during a dock or HDMI reconfiguration, Hyprland reports the removal of a monitor the shell never tracked, the Wayland connection fails, and the shell exits with status 255 and relaunches ([#7380](https://github.com/omacom/omarchy/issues/7380)). Users have reported this on NVIDIA, on Intel-only laptops, and on displays that drop their connector in standby.
 - **The supervisor giving up quietly.** If the compositor is too busy to answer `hyprctl` during a display bring-up, the liveness check false-negatives and the supervisor exits without logging anything, leaving a running session with no bar and no explanation ([#10930](https://github.com/omacom/omarchy/issues/10930)).
 - **Plugin reloads during a lock.** Editing or syncing a file under `~/.config/omarchy/plugins/` while the session is locked can abort the shell with a fatal lock-surface error, sometimes long after the edit ([#7106](https://github.com/omacom/omarchy/issues/7106)).

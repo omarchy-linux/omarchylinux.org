@@ -1,7 +1,7 @@
 ---
 title: "Framework Laptop 13 on Omarchy"
 description: "Framework Laptop 13 running Omarchy 4.0.4: what works, the AMD mic fix Omarchy ships, the suspend and USB-C dock bugs, and which generation to buy."
-answer: "Silver. The Framework Laptop 13 is one of the most common Omarchy machines and installs cleanly on every generation. Wi-Fi, Bluetooth, display, battery and the Goodix fingerprint reader all work. The real quirks are around sleep: fingerprint unlock dies after suspend, and external displays behind a Thunderbolt dock can stay dark after a long clamshell sleep. Prefer AMD 7040 or AI 300 over 11th gen Intel."
+answer: "Silver. The Framework Laptop 13 is one of the most common Omarchy machines and installs cleanly on every generation. Wi-Fi, Bluetooth, display, battery and the Goodix fingerprint reader all work. The real quirks are around sleep: fingerprint unlock can die after a suspend, and external displays behind a Thunderbolt dock can stay dark after a long clamshell sleep. Prefer AMD 7040 or AI 300 over 11th gen Intel."
 appliesTo:
   from: "3.x"
 status: partial
@@ -122,7 +122,7 @@ faq:
   - q: "Is the Framework Laptop 13 a good Omarchy machine?"
     a: "Yes. It is one of the most frequently reported machines in the Omarchy tracker, it installs without hardware workarounds, and Omarchy carries an in-tree fix for its AMD microphone routing. Expect friction around suspend and Thunderbolt docks rather than around basic install."
   - q: "Does the Framework 13 fingerprint reader work on Omarchy?"
-    a: "Enrollment and unlock work. The Goodix reader is recognised by Omarchy's fingerprint detection and users have reported it working since 2025. On Omarchy 4.0.3 it stops responding after suspend until you unlock with a password once, per issue #11412."
+    a: "Enrollment and unlock work. The Goodix reader is recognised by Omarchy's fingerprint detection and users have reported it working since 2025. On Omarchy 4.0.3, if the machine suspends while a verify is in flight, the reader stays dead after resume until you unlock with the password, per issue #11412."
   - q: "Which Framework 13 generation should I buy for Omarchy?"
     a: "AMD Ryzen 7040 or Ryzen AI 300, or the Intel Core Ultra Series 3 Pro board. The 11th gen Tiger Lake boards hit a kernel regression in 7.1.9 that killed USB-C dock video, which is the one generation-specific breakage on record."
 related: [framework-laptop-16, framework-desktop, suspend-sleep, thunderbolt-dock, fingerprint]
@@ -131,15 +131,15 @@ draft: false
 
 ## Verdict
 
-Silver. The Framework Laptop 13 is a safe Omarchy machine, and it is clearly a popular one: 80 issues in the Omarchy tracker come from Framework 13 owners, the highest count of any single model in the dataset, just ahead of the Intel MacBook Pro. Most of those reports are not about the laptop. They are quickshell, clipboard, reminder and update bugs that happen to be filed from a Framework 13.
+Silver. The Framework Laptop 13 is a safe Omarchy machine, and it is clearly a popular one: 80 issues in the Omarchy tracker come from Framework 13 owners, the highest count of any single model in the dataset, just ahead of the MacBook Pro. Most of those reports are not about the laptop. They are quickshell, clipboard, reminder and update bugs that happen to be filed from a Framework 13.
 
-It is not gold because of sleep. Three separate open issues describe things that do not come back correctly after resume: the fingerprint reader, the lock screen backlight, and external displays behind a Thunderbolt dock. None of them stop you using the machine, and none of them are Framework faults, but you will meet at least one of them in normal laptop use.
+It is not gold because of sleep. Three separate open issues describe things that do not come back correctly after resume: the fingerprint reader, the lock screen itself, and external displays behind a Thunderbolt dock. None of them stop you using the machine, and none of them are Framework faults, but you will meet at least one of them in normal laptop use.
 
 Checked against v4.0.4 (2026-09-15) and the 4.0.x issue history. Where a report predates Quattro it is called out below.
 
 ## What works
 
-Wi-Fi, Bluetooth, the internal panel, the battery gauge and the Goodix fingerprint reader all come up with no manual setup. Journals attached to issue [#6637](https://github.com/omacom/omarchy/issues/6637) show a stock Framework 13 AMD associating on wlan0, loading Intel Bluetooth firmware and enumerating the Goodix MOC reader on a single boot, all without extra packages.
+Wi-Fi, Bluetooth, the internal panel, the battery gauge and the Goodix fingerprint reader all come up with no manual setup. Journals attached to issue [#6637](https://github.com/omacom/omarchy/issues/6637) show a Framework 13 AMD 7040 associating on wlan0, loading Intel Bluetooth firmware and enumerating the Goodix MOC reader on a single boot, all without extra packages.
 
 Audio works, including the internal microphones, because Omarchy ships a fix for them. See the next section.
 
@@ -149,21 +149,21 @@ Fingerprint enrollment has worked since at least August 2025. Issue [#908](https
 
 ## What breaks
 
-**Fingerprint unlock after suspend (4.0.3, open).** Issue [#11412](https://github.com/omacom/omarchy/issues/11412), on a Ryzen 5 7640U board, shows fprintd left with a busy device when the machine suspends mid-verify. After resume every retry fails instantly and the shell re-tries four times a second until you type your password. Workaround: unlock with the password once, which clears it for that session.
+**Fingerprint unlock after suspend (4.0.3, open).** Issue [#11412](https://github.com/omacom/omarchy/issues/11412), on a Ryzen 5 7640U board, shows fprintd left with a busy device when the machine suspends mid-verify. After resume every retry fails instantly and the shell re-tries four times a second until you type your password. Workaround: type the password. A ThinkPad owner in the same thread saw the stuck fprintd survive three suspend cycles and only recover once it idled out after a password unlock, so expect it again after the next suspend that lands mid-verify.
 
-**Lock screen blanks 5 seconds after waking (4.0.3, open).** Issue [#11411](https://github.com/omacom/omarchy/issues/11411), same reporter, same laptop. A timer frozen across suspend fires on resume and turns the displays off under you. Any keypress brings them back.
+**Lock screen blanks 5 seconds after waking (4.0.3, open).** Issue [#11411](https://github.com/omacom/omarchy/issues/11411), same reporter, same laptop. A timer frozen across suspend fires on resume and turns the displays off under you. A keypress normally brings them back, but the reporter measured a 10 second window on a Thunderbolt dock where keystrokes went nowhere until the DisplayPort link retrained.
 
-**External display dark after a long clamshell sleep (4.0.0, open).** Issue [#7328](https://github.com/omacom/omarchy/issues/7328) is the best-measured Framework 13 bug in the tracker. On a Ryzen AI 9 HX 370 behind a CalDigit TS3 Plus, sleeps under about 12 minutes always came back; a 40 minute sleep with the lid still closed never did. The cause is that amdgpu drops hotplug interrupts raised inside the resume window, so nothing re-probes the connector when the dock fails to re-assert HPD. Opening the lid forces the rescan.
+**External display dark after a long clamshell sleep (4.0.0, open).** Issue [#7328](https://github.com/omacom/omarchy/issues/7328) is the best-measured Framework 13 bug in the tracker. On a Ryzen AI 9 HX 370 behind a CalDigit TS3 Plus, sleeps under about 12 minutes always came back; a 40 minute sleep with the lid still closed never did. The cause is that amdgpu drops hotplug interrupts raised inside the resume window, so nothing re-probes the connector when the dock fails to re-assert HPD. Opening the lid forces the rescan. The reporter's fix, PR #7329, was still open at 4.0.4.
 
 **USB-C dock video on 11th gen Intel (open).** Issue [#9513](https://github.com/omacom/omarchy/issues/9513) reports that on a Tiger Lake Framework 13, kernel 7.1.9 stopped binding `ucsi_acpi` to the `USBC000` device, leaving `/sys/class/typec` empty and DisplayPort Alt Mode dead while USB and Ethernet on the same hub kept working. The reporter's escape hatch was `linux-lts`. A commenter later argued the timeout variant of this bug is fixed in kernel 7.2.4 but that the never-binds variant is separate and has no known upstream fix. Omarchy's stable channel now carries `linux-omarchy` 7.2.5, so this is worth re-testing before you downgrade anything.
 
 **Pro screen module plus AMD 7040 lockups (3.8.4, open).** Issue [#6637](https://github.com/omacom/omarchy/issues/6637) describes hard freezes with kernel page faults and soft lockups when using the volume or brightness function keys, starting after a display module upgrade. Later in the thread the reporter says disabling hibernation kept the machine stable for four days.
 
-**Hibernate is unreliable.** Beyond the above, issue [#7730](https://github.com/omacom/omarchy/issues/7730), filed on a Framework 13 Pro Intel, shows the Hibernate menu entry succeeding silently when the kernel has hibernation disabled.
+**Hibernate menu entry can be a silent no-op.** Issue [#7730](https://github.com/omacom/omarchy/issues/7730), filed on a Framework 13 Pro Intel, shows the Hibernate menu entry appearing and doing nothing when the kernel has hibernation disabled, because `omarchy-hibernation-available` never asks the kernel. The reporter later traced the disabled state on that machine to Bitwarden Desktop holding `memfd_secret` memory, not to the laptop. The check fix, PR #7779, was still open at 4.0.4.
 
 **eGPU attached at boot hangs the machine.** Issue [#4047](https://github.com/omacom/omarchy/issues/4047), Framework 13 plus RX 9070 XT over Thunderbolt: boot hangs before Plymouth. Hot-plugging the enclosure after login works fine. Closed with no Omarchy-side fix, since it fails before userspace exists.
 
-**Keyboard backlight off after unlock.** Issue [#7650](https://github.com/omacom/omarchy/issues/7650), Framework 13 Pro Intel X7: the brightness helper saves 0 over the good value when the screen blanks, so the backlight never comes back.
+**Keyboard backlight off after unlock.** Issue [#7650](https://github.com/omacom/omarchy/issues/7650), Framework 13 Pro Intel X7: the brightness helper saves 0 over the good value when the screen blanks twice, so the backlight never comes back. Four PRs proposing fixes were still open at 4.0.4.
 
 ## What Omarchy does for this model
 
@@ -179,17 +179,17 @@ Intel Framework 13s pick up Omarchy's generic Intel enablement instead: `sof-fir
 
 **AMD Ryzen 7040 and Ryzen AI 300.** The best-represented boards in the tracker and the ones the audio fix targets. Nothing generation-specific is broken on them.
 
-**Intel Core Ultra Series 3, the "13 Pro" board.** On DHH's recommendation list per the earlier prototype of this site, and the machine the v3.6.0 notes cite for 2 W idle. Two of the open Framework 13 issues come from Pro Intel owners, both small: hibernation reporting and the keyboard backlight.
+**Intel Core Ultra Series 3, the "13 Pro" board.** DHH said in issue #6637 that he runs a 13 Pro on Quattro himself, and it is the machine the v3.6.0 notes cite for 2 W idle. Two of the issues cited on this page come from Pro Intel owners, both small: the hibernation availability check and the keyboard backlight.
 
 **Intel 11th generation, Tiger Lake.** The one variant with a real generation-specific problem, issue #9513. Buy it used and cheap if you want, but test your dock before you commit.
 
-**Zen 5 dual-boot with GRUB.** Issue [#8629](https://github.com/omacom/omarchy/issues/8629) reports GRUB running out of memory in early boot on Ryzen AI 9 HX 370 machines with 64 GB. Omarchy installs Limine, so this affects you only if you are chain-loading from someone else's GRUB.
+**Ryzen AI 9 HX 370 with 64 GB: the installer may not boot.** Issue [#8629](https://github.com/omacom/omarchy/issues/8629) reports the Omarchy 4.0.1 installer ISO dying with a GRUB out-of-memory error before or at its boot menu on an HX 370 Framework with 64 GB, with Secure Boot, UMA size and TPM settings all ruled out. The reporter did not say whether the chassis was a 13 or a 16, and the issue had no replies at 4.0.4. The installed system boots with Limine, so this is an ISO-only problem.
 
 ## Before you install
 
-- Update the Framework BIOS from Windows or the EFI updater first. Several reports in the tracker name BIOS 3.05, 3.20 and 4.02, and firmware is the one layer Omarchy cannot patch for you.
+- Update the Framework BIOS from Windows or the EFI updater first. Reports in the tracker name BIOS 3.05, 3.20 and 4.02, and firmware is the one layer Omarchy cannot patch for you.
 - On 11th gen Intel, plug in your USB-C dock and confirm DisplayPort Alt Mode works before wiping anything.
-- If you rely on hibernation, test it early. It is the least reliable subsystem on this laptop across both CPU vendors.
+- If you rely on hibernation, test it early. The one AMD report of lockups after hibernation resume is still open, and the Hibernate menu entry can silently do nothing if something on the system has hibernation disabled in the kernel.
 - Do not attach an eGPU before first boot.
 - After install, check your microphone in a call. If it is missing, the AMD profile fix did not take and you can run it by hand.
 - If you game, watch the driver prompt. Issue [#3585](https://github.com/omacom/omarchy/issues/3585) reported the Steam installer auto-selecting `nvidia-utils` on an all-AMD Framework 13; that was fixed on dev the same day, but it is worth a glance.

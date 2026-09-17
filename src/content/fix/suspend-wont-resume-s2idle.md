@@ -1,7 +1,7 @@
 ---
 title: "Laptop will not resume from suspend on Omarchy"
-description: "Omarchy 4 laptop stuck black after suspend: split s2idle freeze failures from kernel resume failures, fix FUSE mounts, NVIDIA suspend services and kernel regressions."
-answer: "First find out whether the kernel ever suspended: run journalctl -k -b -1 | grep 'PM: suspend'. An entry with no matching exit is a kernel or firmware resume failure, so test the stock linux or linux-lts kernel and, on NVIDIA, enable nvidia-suspend.service with NVreg_PreserveVideoMemoryAllocations=1. No entry at all means a process blocked the freeze, usually an rclone or sshfs FUSE mount."
+description: "Omarchy 4 laptop stuck black after suspend: tell a failed freeze from a kernel resume failure, then fix FUSE mounts, NVIDIA sleep services and kernel bugs."
+answer: "First read the previous boot's kernel log: journalctl -k -b -1 | grep -E 'PM: suspend|refusing to freeze'. A freeze failure names the stuck tasks, usually an rclone, sshfs or gvfs FUSE mount. A suspend entry with no exit, or a log that simply stops, is a kernel or firmware failure: test stock linux or linux-lts and, on NVIDIA, enable nvidia-suspend.service with NVreg_PreserveVideoMemoryAllocations=1. Entry and exit both present means only the display stayed dark."
 appliesTo:
   from: "3.x"
 status: workaround
@@ -63,6 +63,16 @@ sources:
     kind: issue
     author: "ochowie"
     date: "2025-10-20"
+  - url: "https://github.com/omacom/omarchy/issues/4740"
+    title: "Issue #4740: Suspend and Hibernation not working"
+    kind: issue
+    author: "Divyanshu-kumar14"
+    date: "2026-02-25"
+  - url: "https://github.com/omacom/omarchy/issues/8106"
+    title: "Issue #8106: T2 Mac: lid close never suspends, brcmfmac PCIe D3 timeout aborts every suspend attempt"
+    kind: issue
+    author: "nelKorajkic"
+    date: "2026-08-24"
   - url: "https://github.com/omacom/omarchy/releases/tag/v4.0.4"
     title: "Omarchy v4.0.4 release notes"
     kind: release
@@ -103,14 +113,14 @@ Your laptop goes to sleep, and the only way back is holding the power button. Th
 **1. Find out whether the kernel ever suspended.** After a forced reboot, read the previous boot's kernel log:
 
 ```bash
-journalctl -k -b -1 | grep -E 'PM: suspend (entry|exit)'
+journalctl -k -b -1 | grep -E 'PM: suspend (entry|exit)|refusing to freeze|failed to suspend'
 ```
 
 Three outcomes, three different problems:
 
-- `PM: suspend entry` with a matching `PM: suspend exit`: the kernel suspended and resumed. Your display or session never came back. Go to step 5.
-- `PM: suspend entry` with no `exit`: the kernel went down and never came up. Go to step 4.
-- No `PM: suspend entry` at all: something refused to freeze. Go to step 2.
+- `PM: suspend entry`, then `Freezing user space processes failed` or `failed to suspend`, then a quick `PM: suspend exit`: the kernel aborted and the machine never actually slept. Go to step 2.
+- `PM: suspend entry` with no `exit`, or a log that simply stops after logind's `Suspending...`: the kernel or firmware went down and never came up. A hard hang can take the unflushed tail of the journal with it, which is why three of the four hangs in issue #12190 below have no entry line at all. Go to step 4.
+- `PM: suspend entry` with a matching `exit` and no errors between them: the kernel resumed. Your display or session never came back. Go to step 5.
 
 **2. Nothing froze: hunt the stuck process.**
 
@@ -119,7 +129,7 @@ journalctl -k -b -1 | grep -i 'refusing to freeze'
 mount | grep fuse
 ```
 
-FUSE daemons stuck in uninterruptible sleep are the classic cause. In issue [#4184](https://github.com/omacom/omarchy/issues/4184), the reporter `gulp` found rclone mounting Google Drive held the freeze for 20 seconds until it timed out, and the machine then sat awake pretending to be asleep, eating battery.
+FUSE daemons stuck in uninterruptible sleep are the classic cause. In issue [#4184](https://github.com/omacom/omarchy/issues/4184), commenter `gulp` found rclone mounting Google Drive held the freeze for 20 seconds until it timed out, and the machine then sat awake pretending to be asleep, eating battery.
 
 Omarchy ships a pre-sleep hook for this. `alansikora`'s [PR #4940](https://github.com/omacom/omarchy/pull/4940) merged on 2026-03-10 and shipped in v3.5.0. Confirm it is installed and root-owned:
 
@@ -129,7 +139,7 @@ ls -l /usr/lib/systemd/system-sleep/
 
 Read the shipped script before trusting it. In v4.0.4 `unmount-fuse` only matches the `fuse.gvfsd-fuse` filesystem type, so it clears Nautilus mounts and leaves rclone, sshfs and other FUSE mounts alone. Unmount those yourself before sleeping, or add your own `pre` hook next to it.
 
-v4.0.3 added a migration that repairs system-sleep hooks with the wrong ownership. If one of yours is user-owned, systemd quarantines it and your fix silently stops running. Check the `ls -l` output above for anything not owned by root.
+v4.0.3 added migration `1788662350.sh`, which replaces the shipped `keyboard-backlight` and `force-igpu` hooks if they are not root-owned and parks the old copy under `/var/lib/omarchy/migrations/` for review. It does not touch `unmount-fuse` or hooks you wrote yourself, so check the `ls -l` output above for anything not owned by root and fix that by hand.
 
 **3. Check what sleep state your firmware offers.**
 
@@ -157,16 +167,17 @@ sudo limine-mkinitcpio
 
 Reboot before testing. This helps when the NVIDIA card drives your panel. It does nothing on an offload-only hybrid laptop where the iGPU owns the display: in [#12041](https://github.com/omacom/omarchy/issues/12041) the reporter enabled all three services and the preserve flag and the corruption on resume was unchanged.
 
-Then suspect the kernel. v4.0.4 ships the bespoke `linux-omarchy` kernel to everyone, and that is a real regression vector. Issue [#12190](https://github.com/omacom/omarchy/issues/12190) counts suspend outcomes per boot on a Dell XPS 13 with Wildcat Lake graphics: 13 of 13 suspends completed and resumed on stock `linux` 7.2.3, and 0 of 4 resumed on `linux-omarchy` 7.2.5-3, with a byte-identical kernel command line. Install `linux-lts`, boot it from the Limine menu, and suspend twice. If it resumes, you have a kernel bug, not an Omarchy configuration bug.
+Then suspect the kernel. v4.0.4 ships the bespoke `linux-omarchy` kernel to everyone, and that is a real regression vector. Issue [#12190](https://github.com/omacom/omarchy/issues/12190) counts suspend outcomes per boot on a Dell XPS 13 with Wildcat Lake graphics: 13 of 13 suspends completed and resumed on stock `linux` 7.2.3, and 0 of 4 came back on `linux-omarchy` 7.2.5-3 with the same kernel command line (three of those four never even logged `PM: suspend entry`). Install `linux-lts`, or plain `linux` as that report did, boot it from the Limine menu, and suspend twice. If it resumes, you have a kernel bug, not an Omarchy configuration bug.
 
-**5. Kernel resumed, screen stayed dark.** Get a TTY with `Ctrl + Alt + F3`. Several reporters in [#2635](https://github.com/omacom/omarchy/issues/2635) found the panel lights up the moment they switch VT. From the TTY, or over SSH, ask Hyprland to re-enable output:
+**5. Kernel resumed, screen stayed dark.** Get a TTY with `Ctrl + Alt + F3`. One reporter in [#2635](https://github.com/omacom/omarchy/issues/2635) found the monitors lit up the moment they switched VT; others in the same thread got no TTY at all. From a TTY or over SSH as your own user, point `hyprctl` at the running instance and ask Hyprland to re-enable output:
 
 ```bash
+export HYPRLAND_INSTANCE_SIGNATURE=$(hyprctl instances | awk -F'[ :]' '/^instance / {print $2}')
 omarchy system wake
 hyprctl dispatch dpms on
 ```
 
-If the TTY is dead too, the compositor or the kernel display driver is wedged and only a power cycle will clear it. Issue [#5695](https://github.com/omacom/omarchy/issues/5695) shows the i915 form of this, with `flip_done timed out` and PHY A errors after resume; a commenter there linked an upstream kernel commit as the fix, so the answer is a newer kernel, not a config change.
+If `dpms on` does nothing, `sudo systemctl restart sddm` brought the screens back for two people in that thread, at the cost of the whole Hyprland session. If the TTY is dead too, the compositor or the kernel display driver is wedged and only a power cycle will clear it. Issue [#5695](https://github.com/omacom/omarchy/issues/5695) shows the i915 form of this, with `flip_done timed out` and PHY A errors after resume. A commenter there linked an upstream kernel commit, but the one person who applied it found it only covers DisplayPort tunnels and did nothing for the internal panel; what worked for several reporters was booting `linux-lts` or another 6.x kernel. That is a kernel problem, not a config change.
 
 **6. If it never works, take suspend off the menu.**
 
@@ -202,7 +213,7 @@ A suspend is three separate stages, and "it did not wake up" is the same symptom
 
 Freezing userspace comes first. Any task stuck in an uninterruptible kernel call, typically FUSE, blocks the freeze until it times out, and the machine stays on.
 
-Then the kernel hands off to firmware. On s2idle the CPU never fully powers down and the platform is responsible for the low-power state, so a single misbehaving device (a WWAN modem, a Wi-Fi card, an NVMe controller) can keep the system awake or wedge it on the way back. Errors like `usb usb1: PM: failed to suspend async: error -16` and `brcmfmac 0000:01:00.0: PM: failed to suspend: error -5` show up here. deep sleep pushes more of the work onto firmware, which is why swapping states sometimes helps and sometimes makes things worse.
+Then the kernel hands off to firmware. On s2idle the CPU never fully powers down and the platform is responsible for the low-power state, so a single misbehaving device (a WWAN modem, a Wi-Fi card, an NVMe controller) can keep the system awake or wedge it on the way back. Errors like `usb usb1: PM: failed to suspend async: error -16` (a Dell G15 with a USB hub in [#4740](https://github.com/omacom/omarchy/issues/4740)) and `brcmfmac 0000:01:00.0: PM: failed to suspend: error -5` (T2 MacBooks in [#8106](https://github.com/omacom/omarchy/issues/8106)) show up here, and in both the kernel abandons the suspend and wakes straight back up. deep sleep pushes more of the work onto firmware, which is why swapping states sometimes helps and sometimes makes things worse.
 
 Last, the display has to come back. The NVIDIA driver discards video memory across suspend unless `NVreg_PreserveVideoMemoryAllocations` is set and the suspend services are enabled. Intel and AMD have their own resume-path bugs; the i915 timeouts in #5695 are a kernel issue, not an Omarchy one, which is why it also reproduces on Fedora for one commenter in that thread.
 
@@ -212,7 +223,7 @@ Quattro adds a fourth wrinkle on the way down. Locking now happens in Quickshell
 
 Collect logs before filing anything. `omarchy debug` uploads a bundle to `logs.omarchy.org` and prints the link, which is what maintainers ask for. Include your `/sys/power/mem_sleep` output, the `PM: suspend` lines from the failed boot, your exact kernel package and version, and whether stock `linux` behaves differently.
 
-The evidence here is uneven on purpose. The FUSE cause is confirmed and fixed in-tree. The kernel regressions are recent, open, and in two cases pinned to a specific `linux-omarchy` build. The hybrid-GPU corruption in #12041 has no known fix at all. If your machine is not in one of those buckets, assume it is firmware or device specific and say so when you report it.
+The evidence here is uneven on purpose. The FUSE cause is confirmed and fixed in-tree. The kernel regressions are recent and open; #12190 is the only one A/B tested against stock `linux`, while #12129 and #12041 sit on the same `linux-omarchy` 7.2.5-3 build without that comparison. The hybrid-GPU corruption in #12041 has no known fix at all. If your machine is not in one of those buckets, assume it is firmware or device specific and say so when you report it.
 
 ## Related
 

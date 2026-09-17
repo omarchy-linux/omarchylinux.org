@@ -100,6 +100,11 @@ sources:
     kind: issue
     author: "matheorism"
     date: "2025-09-19"
+  - url: "https://github.com/omacom/omarchy/pull/4561"
+    title: "PR #4561: Enable bluetooth at login screen (closed unmerged)"
+    kind: pr
+    author: "jmthvt"
+    date: "2026-02-09"
   - url: "https://github.com/omacom/omarchy/pull/5336"
     title: "PR #5336: Enable Bluetooth A2DP auto-connect in WirePlumber"
     kind: pr
@@ -159,18 +164,18 @@ faq:
   - q: "Why does my Logitech MX mouse stop reconnecting?"
     a: "An active LE scan blocks the connect. Close the Bluetooth panel, then check busctl --system get-property org.bluez /org/bluez/hci0 org.bluez.Adapter1 Discovering. If it is still true, some other client owns the scan, and omarchy bluetooth power off followed by on clears it."
   - q: "Can I type my LUKS passphrase on a Bluetooth keyboard?"
-    a: "Not with the stock setup. The radio is not up in the initramfs. Use a 2.4 GHz receiver, or add the AUR package mkinitcpio-bluetooth to your hooks as described in issue #1744. Omarchy does not ship or support that path."
+    a: "Not with the stock setup. The radio is not up in the initramfs. Use a 2.4 GHz receiver, or add the AUR package mkinitcpio-bluetooth to your hooks as described in issue #1744. Omarchy does not ship that path: the one PR that tried, #4561, was closed unmerged, and the issue became a discussion in July 2026."
 related: [audio, suspend-sleep, wifi]
 draft: false
 ---
 
 Bluetooth in Omarchy 4.x is stock BlueZ with a Quickshell panel in front of it. The BlueZ half is quiet. The panel half accounts for most of the open complaints, and several of them end with a working radio that the user interface insists is off.
 
-This page was checked against v4.0.4, released 2026-09-15, using the v4.0.4 source tree. The counter in the sidebar covers every Bluetooth-matching issue and discussion in the tracker, open and closed, so read it as traffic rather than as current breakage.
+This page was checked against v4.0.4, released 2026-09-15, using the v4.0.4 source tree. The counter in the sidebar covers every Bluetooth-matching issue in the tracker, open and closed, so read it as traffic rather than as current breakage.
 
 ## Status on 4.0.4
 
-Pairing, A2DP audio, BLE mice and keyboards, and Xbox controllers all work on ordinary hardware. What is unreliable is the control surface:
+Pairing, A2DP audio, and bonded BLE mice and keyboards work on ordinary hardware; the threads below all end with the device connected once the panel is out of the way. What is unreliable is the control surface:
 
 - Turning Bluetooth **off** from the bar removes the only control that can turn it back on (issue #6956, open).
 - The panel can show **Turned Off** while the adapter is powered and connected, and its switch then does nothing (issue #7573, open).
@@ -189,11 +194,11 @@ None of these has shipped a fix. The 4.0.1 through 4.0.4 release notes carry no 
 
 **Auto-connects A2DP.** A WirePlumber drop-in sets `bluez5.auto-connect` to `a2dp_sink` and `a2dp_source` for every `bluez_card`. That landed in v3.8.0 from PR #5336 by dandresrp and closed the long-running "Bluetooth audio does not work" report, issue #1818.
 
-**Gives you a CLI.** `omarchy bluetooth power on|off|toggle|is-on` and `omarchy bluetooth device pair|connect|disconnect|forget <address>`. The device helper powers the radio up first, trusts the device, and caps each `bluetoothctl` call at 20 seconds.
+**Gives you a CLI.** `omarchy bluetooth power on|off|toggle|is-on` and `omarchy bluetooth device pair|connect|disconnect|forget <address>`. The device helper powers the radio up first for everything except `disconnect`, trusts the device, and caps `bluetoothctl` at 20 seconds for pair and connect and 10 seconds for disconnect and remove.
 
 There is no hardware quirk script for Bluetooth beyond `install/hardware/bluetooth.sh`. T2 Macs get their Broadcom firmware and the `hci_bcm4377` module from `install/hardware/apple/fix-t2.sh`, and Xbox controllers get `xpadneo-dkms` from the menu installer.
 
-**Where 3.x differed.** Up to v3.8.4 the interface was the bluetui terminal app launched from Waybar, `main.conf` carried `AutoEnable=false`, and there was no per-device panel. Everything described here as a panel bug is new in 4.0.0.
+**Where 3.x differed.** Up to v3.8.4 the interface was the bluetui terminal app launched from Waybar, and there was no per-device panel. The `AutoEnable=false` line that the migration reverts is not in the v3.8.4 tree; the install script wrote it and dropped it again somewhere between v3.8.4 and v4.0.0. Everything described here as a panel bug is new in 4.0.0.
 
 ## Known problems
 
@@ -204,14 +209,14 @@ There is no hardware quirk script for Bluetooth beyond `install/hardware/bluetoo
 | [#7573](https://github.com/omacom/omarchy/issues/7573) panel latched at "Turned Off" | Intel 8087:0a2b, ThinkPad E16 Gen 2 (RTL8852BU) | open, upstream Quickshell cache | not yet |
 | [#11739](https://github.com/omacom/omarchy/issues/11739) panel cannot turn Bluetooth back on | Intel Haswell desktop, 4.0.3 | open | not yet |
 | [#10818](https://github.com/omacom/omarchy/issues/10818) LE scan blocks BLE mouse reconnect | MX Master 3S, MX Anywhere 3S, EM01 NL | open | not yet |
-| [#8962](https://github.com/omacom/omarchy/issues/8962) pairing agent skipped on boot race | Intel i7-8700K, AX211 laptops | open | not yet |
+| [#8962](https://github.com/omacom/omarchy/issues/8962) pairing agent skipped on boot race | Intel i7-8700K desktop, AX211 laptop | open | not yet |
 | [#11936](https://github.com/omacom/omarchy/issues/11936) agent stale after bluetoothd restart | MacBook Air M1 | open | not yet |
 | [#12095](https://github.com/omacom/omarchy/issues/12095) usbcore autosuspend drop-in is a no-op | Intel AX201 and similar | open | not yet |
 | [#11683](https://github.com/omacom/omarchy/issues/11683) output slider does not move a BlueZ sink | Shokz OpenRun Pro, Kanto YU4 | open, upstream quickshell#807 | not yet |
 | [#12113](https://github.com/omacom/omarchy/issues/12113) HFP microphone records silence | OnePlus Bullets Z2, JBL Tune 770NC and 780NC | open, not Omarchy specific | not yet |
-| [#12120](https://github.com/omacom/omarchy/issues/12120) Broadcom HCI reset fails on linux-omarchy 7.2.5-3 | MacBookPro11,4 | open, one report | not yet |
+| [#12120](https://github.com/omacom/omarchy/issues/12120) Broadcom HCI reset fails on linux-omarchy 7.2.5-3 | MacBookPro11,4, MacBookPro14,1 | open, two reports | not yet |
 | [#1818](https://github.com/omacom/omarchy/issues/1818) Bluetooth audio devices do not work | various | closed | v3.8.0 |
-| [#1744](https://github.com/omacom/omarchy/issues/1744) no Bluetooth keyboard at the LUKS prompt | any | closed, by design | not a bug |
+| [#1744](https://github.com/omacom/omarchy/issues/1744) no Bluetooth keyboard at the LUKS prompt | any | converted to a discussion 2026-07-18, PR #4561 closed unmerged | not shipped |
 
 Two cautions on the LE reconnect cluster. First, a stuck scan is often not the panel's: jturan filed #11380 against it, then closed it after finding a third-party AirPods daemon held an unbounded discovery session, and erikvanzijst traced the same signature to Chrome starting a FIDO discovery and never stopping it. Second, `StopDiscovery` answering "No discovery started" while `Discovering` stays true looks identical in all three cases.
 
@@ -219,14 +224,14 @@ Two cautions on the LE reconnect cluster. First, a stuck scan is often not the p
 
 Go in this order.
 
-1. **Bring the radio back.** `omarchy bluetooth power on`, or `rfkill unblock bluetooth`. This is the answer to the vanished widget. On a Dell or ThinkPad with a platform rfkill switch it may not be enough, because the block removed the radio from the USB bus, and only suspend and resume or a reboot re-enumerates it.
+1. **Bring the radio back.** `omarchy bluetooth power on`, or `rfkill unblock bluetooth`. This is the answer to the vanished widget. On a machine with a platform rfkill switch the block also drops the radio off the USB bus. A ThinkPad E16 Gen 1 re-enumerated it a couple of seconds after the unblock, so wait before retrying; a Dell Latitude 7440 did not, and only suspend and resume or a reboot brought it back.
 2. **Restart the shell.** `omarchy restart shell` is the only cure for a panel latched at "Turned Off". A fresh process re-reads the adapter state.
 3. **Close the panel before expecting a BLE device to reconnect.** Then check `busctl --system get-property org.bluez /org/bluez/hci0 org.bluez.Adapter1 Discovering`. If it is still true with the panel closed, something else owns the scan. Look at Chromium and at any third-party Bluetooth plugin or daemon.
 4. **Power cycle the adapter.** `omarchy bluetooth power off` then `on` clears a stuck scan that `StopDiscovery` refuses to clear.
 5. **Check the pairing agent before blaming the device.** `systemctl --user status bt-agent.service`. "Skipped due to exec-condition" means no agent registered for this boot, and `bluetoothd` will log `No agent available for request type 2` on every confirmation. Fix it with `systemctl --user restart bt-agent.service`, and do the same after any `bluetooth.service` restart.
 6. **Use the CLI when the panel will not cooperate.** `omarchy bluetooth device pair <address>` does the pair, trust and connect sequence that the panel does. Plain `bluetoothctl` works too.
 7. **Restart the subsystem from the menu.** _Update > Hardware > Bluetooth_ runs `omarchy-restart-bluetooth`. Note what it actually does despite its name: it unblocks rfkill and prints `rfkill list bluetooth`. It does not restart `bluetooth.service`, so run `sudo systemctl restart bluetooth` yourself if that is what you want.
-8. **Suspect the kernel last.** `journalctl -b | grep -i hci0`. A controller that never initialises, such as `BCM: Reset failed (-110)`, is a firmware or kernel problem, not a panel one. 4.0.4 makes `linux-omarchy` the default, so booting the stock Arch kernel entry in Limine is a clean way to test that.
+8. **Suspect the kernel last.** `journalctl -b | grep -i hci0`. A controller that never initialises, such as `BCM: Reset failed (-110)`, is a firmware or kernel problem, not a panel one. 4.0.4 makes `linux-omarchy` the default and, on an upgraded install, leaves the previous kernel installed, so booting that older Limine entry is a clean way to test it. A fresh 4.0.4 install ships only `linux-omarchy`.
 
 ## Report it
 
@@ -239,7 +244,7 @@ For a Bluetooth report, add the four things triage always asks for and the log d
 - The controller's USB ID from `lsusb` and the firmware lines from `journalctl -b | grep -i hci0`.
 - `systemctl --user status bt-agent.service` if pairing is what failed.
 
-If the panel disagrees with `busctl`, say so explicitly and say whether `omarchy restart shell` fixed it. That distinction is what turned issue #7573 from a vague report into a located upstream bug.
+If the panel disagrees with `busctl`, say so explicitly and say whether `omarchy restart shell` fixed it. That distinction is what placed issue #7573 in the panel's cached adapter state rather than in BlueZ.
 
 ## Related
 

@@ -20,7 +20,7 @@ subsystems:
   audio: partial
   webcam: partial
   fingerprint: unknown
-  gpu: works
+  gpu: partial
   suspend: partial
   hibernate: unknown
   touchpad: works
@@ -49,7 +49,7 @@ quirkScripts:
   - name: "default/audio/tunings/dell-xps-2026/tuning.conf"
     url: "https://github.com/omacom/omarchy/blob/v4.0.4/default/audio/tunings/dell-xps-2026/tuning.conf"
     note: "PipeWire filter chain for the internal speakers, matched on SKU 0DB9 (XPS 14) and 0DBA (XPS 16)."
-issueCount: 23
+issueCount: 18
 lastVerified: 2026-09-16
 omarchyVersionTested: "4.0.4"
 tags: [dell, xps, panther-lake, intel, laptop, hardware]
@@ -183,7 +183,7 @@ credits:
     for: "Isolated the docked Wi-Fi stall to physical lid state rather than suspend"
 faq:
   - q: "Is the 2026 XPS 14 a good laptop to buy for Omarchy?"
-    a: "It is one of the best supported Panther Lake machines because Omarchy ships model specific enablement for it, but it is not trouble free on 4.0.4. Prefer the 1920x1200 IPS panel if you want brightness control to work without a kernel flag."
+    a: "It is one of the best supported Panther Lake machines because Omarchy ships model specific enablement for it, but it is not trouble free on 4.0.4. On the XPS 14, prefer the 1920x1200 IPS panel if you want brightness control to work without a kernel flag. The Panel Replay lag has been reported on the IPS panel too."
   - q: "Do I still need the linux-ptl kernel?"
     a: "No. 4.0.3 and earlier installed linux-ptl on XPS Panther Lake machines. 4.0.4 installs linux-omarchy for everyone and makes it the first Limine entry, leaving the old kernel installed so you can still select it at boot."
   - q: "Why is my Wi-Fi 7 card only giving me Wi-Fi 6 speeds?"
@@ -194,41 +194,41 @@ related: [dell-xps-13-2026, intel-gpu, webcam, wifi, multi-monitor]
 draft: false
 ---
 
-The Dell XPS 14 (DA14260) and XPS 16 (DA16260) from 2026 are the Panther Lake laptops Omarchy targets by name. Both carry the Core Ultra X7 358H, an Intel Arc B390 iGPU on the `xe` driver, an Intel BE211 Wi-Fi card, a Synaptics haptic trackpad, four Cirrus `cs35l56` speaker amps and an IPU7 camera with an OV08X40 sensor. Everything below was checked against the v4.0.4 source tree and against issues open on 16 September 2026.
+The Dell XPS 14 (DA14260) and XPS 16 (DA16260) from 2026 are the Panther Lake laptops Omarchy targets by name. Both carry the Core Ultra X7 358H, an Intel Arc B390 iGPU on the `xe` driver, an Intel BE211 Wi-Fi card, a Synaptics haptic trackpad, four Cirrus `cs35l56` speaker amps and an IPU7 camera with an OV08X40 sensor. Everything below was checked against the v4.0.4 source tree and the issue tracker on 16 and 17 September 2026.
 
 ## Verdict
 
 Silver. Not gold, and the gap is mostly the display.
 
-Omarchy carries more code for this machine than for almost any other laptop: a haptic trackpad package, an IPU7 camera package, a measured speaker tuning, a Wi-Fi workaround and, until 4.0.3, a dedicated kernel. All of that works. What keeps it off gold is a set of open display and camera bugs that a buyer will meet in the first week. Brightness control is dead on some boots and permanently dead on the OLED panel unless you add a kernel flag yourself (issues [#6676](https://github.com/omacom/omarchy/issues/6676) and [#11646](https://github.com/omacom/omarchy/issues/11646)). Panel Replay makes the desktop feel sluggish on kernels from 7.2.3 onward ([#11016](https://github.com/omacom/omarchy/issues/11016)). The camera stack has broken twice in a month. Wi-Fi 7 is switched off on purpose.
+Omarchy carries an unusual amount of model specific code for this machine: a haptic trackpad package, an IPU7 camera package, a measured speaker tuning, a Wi-Fi workaround and, until 4.0.3, a dedicated kernel. Most of it does its job. What keeps it off gold is a set of open display and camera bugs that a buyer will meet in the first week. On the OLED panel, brightness control is dead, on every boot for one owner and on random boots for another, unless you add a kernel flag yourself (issues [#6676](https://github.com/omacom/omarchy/issues/6676) and [#11646](https://github.com/omacom/omarchy/issues/11646)). Panel Replay makes the desktop feel sluggish on the 7.2.3 and 7.2.4 kernels ([#11016](https://github.com/omacom/omarchy/issues/11016)), and the same thread collects OLED units showing full-screen static with PSR timeouts, one of them ending in a hard freeze. The camera stack has broken twice in a month. Wi-Fi 7 is switched off on purpose.
 
-If you want the smoothest version of this laptop today, buy the IPS panel, not the OLED.
+If you want the fewest display problems on an XPS 14 today, buy the IPS panel, not the OLED. The Panel Replay lag was reported on the IPS panel, so that choice does not buy you out of everything.
 
 ## What works
 
-The trackpad, including haptic click strength, which Omarchy exposes under Trigger then Hardware then Touchpad Haptics ([manual](https://omarchy.org/manual/keyboard-mouse-trackpad/)). The iGPU, with the `xe` driver and hardware video acceleration installed by the Intel path. Internal speakers, with a shipped filter chain that the project measured on an XPS 14 and validated on 24 July 2026. Wi-Fi associates and runs, at Wi-Fi 6 rates. The RGB webcam works once `intel-ipu7-camera` is installed and the relay is running, which the installer does automatically when it sees the `OVTI08F4` ACPI device.
+The trackpad, including haptic click strength, which Omarchy exposes under Trigger then Hardware then Touchpad Haptics ([manual](https://omarchy.org/manual/keyboard-mouse-trackpad/)). The iGPU drives the desktop on the `xe` driver, with the Intel media driver installed by the Intel path; every open display bug below lives in `xe` display power features (PSR, Panel Replay, the backlight negotiation), which is why the GPU row says partial rather than works. Internal speakers, with a shipped filter chain that the project measured on an XPS 14 and validated on 24 July 2026. Wi-Fi associates and runs, at Wi-Fi 6 rates. The RGB webcam worked on the 7.1.x kernels once `intel-ipu7-camera` was installed and the relay was running; the installer adds the package when it sees the `OVTI08F4` ACPI device. On 7.2.x it depends on the fix that the 4.0.4 notes credit, and no report has confirmed that yet.
 
-Suspend works in the ordinary case: reports on this machine are about spurious suspends and docked behaviour, not about failing to resume.
+Suspend itself enters and exits s2idle in every journal quoted in these reports. The complaints are about what surrounds it: a false lid-close that triggers it, Wi-Fi while docked with the lid shut, and brightness or PSR state after resume, not about failing to wake.
 
 ## What breaks
 
-**Backlight on the OLED panel.** On the 2880x1800 LG OLED unit, `brightnessctl` and the sysfs value both change and the panel does not. nille read the DPCD registers under both modes and found the panel only acts on brightness under `xe.enable_dpcd_backlight=1`; the kernel's own suggestion of `=3` is wrong twice, since the driver here is `xe` and not `i915` and that value forces an interface the panel ignores ([#6676](https://github.com/omacom/omarchy/issues/6676)). RodriMora later showed the same failure is nondeterministic on other units: broken boots expose `max_brightness=192000`, healthy ones `512` ([#11646](https://github.com/omacom/omarchy/issues/11646)). Omarchy already ships this exact fix for two ASUS Panther Lake models, and ships an `omarchy-hw-dell-xps-oled` predicate that detects the affected panel by EDID, but nothing in the v4.0.4 install tree calls that predicate yet.
+**Backlight on the OLED panel.** On the 2880x1800 LG OLED unit, `brightnessctl` and the sysfs value both change and the panel does not. nille read the DPCD registers under both modes and found the panel only acts on brightness under `xe.enable_dpcd_backlight=1`; the kernel's own suggestion of `=3` is wrong twice, since the driver here is `xe` and not `i915` and that value forces an interface the panel ignores ([#6676](https://github.com/omacom/omarchy/issues/6676)). RodriMora later showed that on another OLED unit the failure is a per-boot race: broken boots expose `max_brightness=192000`, healthy ones `512` ([#11646](https://github.com/omacom/omarchy/issues/11646)). The maintainer answer there was that it had not reproduced on the kernels being tested and that the next Panther Lake kernel drop was expected to carry `xe` fixes. Omarchy already ships this exact flag for two ASUS Panther Lake models, and ships an `omarchy-hw-dell-xps-oled` predicate that detects the affected panel by EDID, but nothing in the v4.0.4 install tree calls that predicate yet.
 
-**The 4.0.4 kernel switch.** 4.0.3 and earlier installed `linux-ptl` on XPS Panther Lake machines and pinned it first in Limine. 4.0.4 installs `linux-omarchy` for everyone and rewrites `BOOT_ORDER`, explicitly overriding the old Dell drop-in. One report against 7.2.5-3 says brightness keys and USB audio volume both regress against stock `linux` 7.2.3 and recover when the older entry is picked from the Limine menu ([#12188](https://github.com/omacom/omarchy/issues/12188)). This is one report, filed the day after release, so treat it as a lead rather than a rule.
+**The 4.0.4 kernel switch.** 4.0.3 and earlier installed `linux-ptl` on XPS Panther Lake machines and pinned it first in Limine. The same script tried to remove the stock kernel and never actually did, because pacman aborts the whole removal when `linux-headers` is absent and the script hid the error ([#10154](https://github.com/omacom/omarchy/issues/10154)), so most of these machines already carried two kernels. 4.0.4 installs `linux-omarchy` for everyone and rewrites `BOOT_ORDER`, explicitly overriding the old Dell drop-in. One report against 7.2.5-3 says brightness keys and USB audio volume both regress against stock `linux` 7.2.3 and recover when the older entry is picked from the Limine menu ([#12188](https://github.com/omacom/omarchy/issues/12188)). This is one report, filed the day after release, so treat it as a lead rather than a rule.
 
-**Panel Replay lag.** rbulcher compared kernels on identical userspace and found 7.1.8 smooth and 7.2.3 sluggish, with the lag switching off and on live as Panel Replay is disabled and re-enabled. Booting with `xe.enable_panel_replay=0` restored smooth motion ([#11016](https://github.com/omacom/omarchy/issues/11016)).
+**Panel Replay lag and PSR timeouts.** rbulcher, on the 1920x1200 IPS panel, compared kernels on identical userspace and found 7.1.8 smooth and both 7.2.3 and a 7.2.4 `linux-omarchy` base build sluggish, with the lag switching off and on live as Panel Replay is disabled and re-enabled. Booting with `xe.enable_panel_replay=0` restored smooth motion ([#11016](https://github.com/omacom/omarchy/issues/11016)). The same thread then filled with OLED XPS 14 owners on 7.2.3 reporting whole-screen colourful static alongside `Timed out waiting for PSR Idle for re-enable`, recoverable with a DPMS off and on cycle in most cases, and in one case a hard freeze that needed a forced reboot. Nobody has tied the static to the lag yet.
 
-**Camera fragility.** The IPU7 path broke twice in September: a `jsoncpp` soname bump left the Intel HAL plugin linked against a library that no longer exists ([#10837](https://github.com/omacom/omarchy/issues/10837), still open, though stable now carries `intel-ipu7-camera` 1.0.6), and the 7.2.3 kernel moved the CVS bridge in tree so the sensor vanished from the media graph ([#10948](https://github.com/omacom/omarchy/issues/10948), closed 13 September). The 4.0.4 notes credit a webcam fix on XPS systems for the 7.2.x kernel. The Windows Hello IR camera is a separate matter: the Himax HM1092 has no Linux driver anywhere, so IR face unlock does not exist on this machine ([#8641](https://github.com/omacom/omarchy/issues/8641)).
+**Camera fragility.** The IPU7 path broke twice in September: a `jsoncpp` soname bump left the Intel HAL plugin linked against a library that no longer exists ([#10837](https://github.com/omacom/omarchy/issues/10837), still open, though stable now carries `intel-ipu7-camera` 1.0.6), and the 7.2 kernel taught the in-tree `ipu-bridge` to route the sensor through the Intel CVS device, which the DKMS `intel_cvs` driver in `intel-ipu7-camera` never registers a subdevice for, so the sensor vanished from the media graph ([#10948](https://github.com/omacom/omarchy/issues/10948), closed 13 September without a closing note). The maintainer wrote in that thread on 12 September that 7.1 would be the more stable kernel until the 7.2 regressions are fixed upstream; three days later 4.0.4 shipped 7.2.5 as the default. The 4.0.4 notes credit a webcam fix on XPS systems for the 7.2.x kernel. The Windows Hello IR camera is a separate matter: the Himax HM1092 has no Linux driver anywhere, so IR face unlock does not exist on this machine ([#8641](https://github.com/omacom/omarchy/issues/8641)).
 
-**Wi-Fi.** `fix-wifi7-eht.sh` disables 802.11be on any BE200 or BE211 card, which is every Panther Lake laptop rather than just the XPS this was written for ([#7109](https://github.com/omacom/omarchy/issues/7109)). Two harder Wi-Fi reports exist and are unresolved: a TX stall whenever the lid is physically closed while docked ([#9922](https://github.com/omacom/omarchy/issues/9922)) and an `iwlwifi` memory storm under sustained upload on the older `linux-ptl` builds ([#5827](https://github.com/omacom/omarchy/issues/5827)).
+**Wi-Fi.** `fix-wifi7-eht.sh` disables 802.11be on any BE200 or BE211 card, which is every machine with one of those PCI IDs, whatever the vendor, rather than just the XPS the script names ([#7109](https://github.com/omacom/omarchy/issues/7109)). One harder Wi-Fi report is open and unresolved: a TX stall whenever the lid is physically closed while docked, which forcing the clamshell script with the lid open does not reproduce ([#9922](https://github.com/omacom/omarchy/issues/9922)). An older `iwlwifi` memory storm under sustained upload ([#5827](https://github.com/omacom/omarchy/issues/5827)) was traced by the maintainer to an upstream TSO bug fixed in 7.0.11 and present in 7.1.8, so treat it as history unless it comes back on a current kernel; the issue is still open.
 
-**Suspend and power.** A USB-C power blip can report a lid close while the lid is open, suspending the session instantly ([#10690](https://github.com/omacom/omarchy/issues/10690)). One owner sees roughly weekly hard resets after unplugging, with a Dell power-button blink code ([#5953](https://github.com/omacom/omarchy/issues/5953)); that one has no second report and may be a firmware fault on a single unit.
+**Suspend and power.** A charger tug or USB-C PD renegotiation can make the firmware send a false lid-close with the lid open, and Omarchy suspends on it with no debounce ([#10690](https://github.com/omacom/omarchy/issues/10690)). Hard resets and freezes on battery are a longer story ([#5953](https://github.com/omacom/omarchy/issues/5953)): the original owner saw them roughly weekly with a Dell power-button blink code, they stopped after a BIOS update, and other owners report the same on an XPS 16 on BIOS 1.10.1, on CachyOS and on Windows, with a Dell community thread blaming the chassis, so this is not an Omarchy bug. What is new is the same owner logging two hard freezes in the first two sessions on `linux-omarchy` 7.2.5-3 after 4.0.4, one with no suspend involved, where the last `linux-ptl` 7.2.3 session had been clean.
 
 **Audio edge cases.** Intermittent one-sided speaker dropout on the XPS 14 traced to SoundWire bus clash and parity errors on one of the two links, and was sent upstream to the SOF project ([#10010](https://github.com/omacom/omarchy/issues/10010)).
 
 ## What Omarchy does for this model
 
-At install time, on a machine matching DMI `XPS` and a Panther Lake GPU:
+At install time, `install/hardware/all.sh` runs these checks. None of them keys on the XPS name and a Panther Lake GPU together; each has its own gate:
 
 - `dell-xps-touchpad-haptics` is installed when the Synaptics haptic device at `i2c-VEN_06CB:00` is present.
 - `intel-ipu7-camera` is installed when an `OVTI08F4` ACPI device is present.
@@ -240,7 +240,7 @@ The tuning is matched on SKU rather than a marketing name, so it cannot widen to
 
 ## Variants
 
-Prefer the 1920x1200 IPS panel. The 2880x1800 OLED is the one with the backlight problem, and you can identify it by EDID bytes reading `30e4`. The XPS 16 shares the enablement but adds its own open bugs: the capacitive function row emits no key events at all, since the HID device exposes only pointer usages ([#6114](https://github.com/omacom/omarchy/issues/6114)), the internal panel can go black with `xe` PSR timeouts ([#11176](https://github.com/omacom/omarchy/issues/11176)), a USB4 monitor's EDID read fails on about half of hotplugs ([#12207](https://github.com/omacom/omarchy/issues/12207)), and rebooting with headphones already plugged in leaves everything silent until you cycle the jack ([#7206](https://github.com/omacom/omarchy/issues/7206)). The 2026 XPS 13 (DX13260) is a different machine with a different and worse audio story; see [the XPS 13 page](/hardware/dell-xps-13-2026/).
+On the XPS 14, prefer the 1920x1200 IPS panel. The 2880x1800 OLED is the one with the backlight problem, and you can identify it by EDID bytes reading `30e4`. The XPS 16 (3200x2000 panel) shares the enablement but adds its own open bugs: the capacitive top row, Esc and F1 to F12, produces no input at all because its HID device exposes only pointer usages ([#6114](https://github.com/omacom/omarchy/issues/6114)), the internal panel can go black with `xe` PSR timeouts ([#11176](https://github.com/omacom/omarchy/issues/11176)), a USB4 monitor comes up at 640x480 on roughly every other hotplug because the kernel reads the EDID before the monitor is ready to answer ([#12207](https://github.com/omacom/omarchy/issues/12207)), and rebooting with headphones already plugged in leaves everything silent until you cycle the jack ([#7206](https://github.com/omacom/omarchy/issues/7206)); the maintainer asked that owner to try a firmware update, with no answer yet. The 2026 XPS 13 (DX13260) is a different machine with a different and worse audio story; see [the XPS 13 page](/hardware/dell-xps-13-2026/).
 
 ## Before you install
 
@@ -249,7 +249,7 @@ Prefer the 1920x1200 IPS panel. The 2880x1800 OLED is the one with the backlight
 - Know your kernel. After 4.0.4 you boot `linux-omarchy`; the previous kernel stays installed, so the Limine menu is your first test when something regresses. See [rollback with Snapper and Limine](/upgrade/rollback-with-snapper-and-limine/).
 - If the desktop feels sluggish at 120 Hz, try `xe.enable_panel_replay=0` before blaming Hyprland.
 - If Wi-Fi tops out around Wi-Fi 6 rates, that is deliberate. The file to remove is named in the Wi-Fi section above.
-- Fingerprint, Bluetooth, hibernate and battery life on these units are unverified here. Nothing in the tracker proves them working, and the tracker only proves what is broken.
+- Fingerprint, Bluetooth, hibernate and battery life have no report either way in the tracker for these units, so this page leaves them unknown.
 
 ## Related
 

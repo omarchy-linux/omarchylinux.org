@@ -1,7 +1,7 @@
 ---
 title: "Wi-Fi on Omarchy"
-description: "Wi-Fi on Omarchy 4.x runs on NetworkManager. What works out of the box, the quirk scripts Omarchy ships, the Broadcom and enterprise bugs, and the fix order."
-answer: "Wi-Fi on Omarchy 4.x is NetworkManager plus the Quickshell network panel on Super + Ctrl + W. Intel, MediaTek and Qualcomm cards generally work on a fresh install. Broadcom Wi-Fi in Intel Macs and enterprise 802.1X networks are the two weak spots. First move for a dead link is omarchy restart-wifi, then check your regulatory domain with iw reg get."
+description: "Wi-Fi on Omarchy 4.x runs on NetworkManager. What the installer sets up, the quirk scripts it ships, the Broadcom Mac and 802.1X panel bugs, and the fix order."
+answer: "Wi-Fi on Omarchy 4.x is NetworkManager plus the Quickshell network panel on Super + Ctrl + W. The open issues cluster in two places: Broadcom Wi-Fi in Intel Macs and enterprise 802.1X networks, where the panel logic is the bug. The rest are mostly driver regressions after suspend. First move for a dead link is omarchy restart-wifi, then check your regulatory domain with iw reg get."
 appliesTo:
   from: "4.0.0"
 status: info
@@ -82,6 +82,26 @@ sources:
     kind: pr
     author: "dhh"
     date: "2026-08-17"
+  - url: "https://github.com/omacom/omarchy/issues/1083"
+    title: "Issue #1083: wireless-regdb needed to support 6GHz Wi-Fi"
+    kind: issue
+    author: "eclecticc"
+    date: "2025-08-25"
+  - url: "https://github.com/omacom/omarchy/issues/7003"
+    title: "Issue #7003: RTL8852BE Wi-Fi dead after s2idle; rtw89 resume wedges the chip"
+    kind: issue
+    author: "aquaspy"
+    date: "2026-08-15"
+  - url: "https://github.com/omacom/omarchy/issues/11219"
+    title: "Issue #11219: mt7925e Wi-Fi: first association after cold boot completes 4-way handshake then gets deauthed"
+    kind: issue
+    author: "igorpeclat"
+    date: "2026-09-10"
+  - url: "https://github.com/omacom/omarchy/issues/10975"
+    title: "Issue #10975: 4.0.3 upgrade replaces broadcom-wl with DKMS without installing kernel headers, breaking Wi-Fi after reboot"
+    kind: issue
+    author: "cdevroe"
+    date: "2026-09-09"
   - url: "https://omarchy.org/manual/networking/"
     title: "Omarchy manual: Networking"
     kind: manual
@@ -115,9 +135,9 @@ Wi-Fi is one of the subsystems Quattro rewrote from the ground up. Everything be
 
 ## Status on 4.0.4
 
-For mainstream laptop radios, Wi-Fi is boring in the good way. Intel AX and BE cards, MediaTek MT7921 and MT7925, and Qualcomm parts associate during the ISO install and keep working. The component carries 235 tracked issues, 117 of them still open, and the open ones cluster hard in two places: Broadcom Wi-Fi in Intel Macs, and WPA2-Enterprise or 802.1X networks.
+The component carries 235 tracked issues, 117 of them still open, and the open ones cluster hard in two places: Broadcom Wi-Fi in Intel Macs, and WPA2-Enterprise or 802.1X networks. Outside those clusters the open reports are mostly single-driver regressions rather than cards that never associate: Realtek rtw89 and Intel BE200 radios that stay dead after an s2idle resume in [#7003](https://github.com/omacom/omarchy/issues/7003), and an mt7925e that needs two or three tries on a cold boot in [#11219](https://github.com/omacom/omarchy/issues/11219). There is no tracked evidence for any card family being trouble-free, so treat "it worked on the ISO" as your own test, not a guarantee.
 
-The stack itself changed in 4.0.0. Omarchy 3.x used iwd with the impala TUI. Issue [#1414](https://github.com/omacom/omarchy/issues/1414), filed by kromsam in September 2025 and one of the most upvoted requests in the tracker, argued that iwd could not carry desktop reality: VPN clients, eduroam, Enhanced Open. Quattro switched to NetworkManager and replaced impala, bluetui and wiremix with Quickshell panels. The network panel is `Super + Ctrl + W`. See the manual chapter on [networking](https://omarchy.org/manual/networking/).
+The stack itself changed in 4.0.0. Omarchy 3.x used iwd with the impala TUI. Issue [#1414](https://github.com/omacom/omarchy/issues/1414), filed by kromsam in September 2025 and carrying more than 120 thumbs-up and a hundred comments by the time it closed, argued that iwd could not carry desktop reality: VPN clients, eduroam, Enhanced Open. Quattro switched to NetworkManager and replaced impala, bluetui and wiremix with Quickshell panels. The network panel is `Super + Ctrl + W`. See the manual chapter on [networking](https://omarchy.org/manual/networking/).
 
 ## What Omarchy does automatically
 
@@ -125,12 +145,12 @@ Several things run at install time and again whenever hardware setup is re-run.
 
 `install/hardware/network.sh` disables `iwd.service`, disables every `systemd-networkd` unit, and masks `systemd-networkd-wait-online.service`. It also hunts down the stock DHCP files archinstall used to drop (`20-ethernet.network`, `20-wlan.network`, `20-wwan.network`), checks that they are unmodified, and moves them into a timestamped backup directory under `/etc/systemd/network/`. That is why a 3.x machine that upgrades still lands on NetworkManager. `install/config/enable-services.sh` enables `NetworkManager.service` and masks `NetworkManager-wait-online.service` so nothing in the session blocks on DHCP.
 
-`install/hardware/set-wireless-regdom.sh` derives a two-letter country from your timezone (falling back to `zone.tab`) and writes `WIRELESS_REGDOM` into `/etc/conf.d/wireless-regdom`. It deliberately does not run `iw reg set` live, because install is followed by a reboot. `wireless-regdb` is in the base package list, which is what makes 6GHz legal on cards that support it.
+`install/hardware/set-wireless-regdom.sh` derives a two-letter country from your timezone (falling back to `zone.tab`) and writes `WIRELESS_REGDOM` into `/etc/conf.d/wireless-regdom`. It deliberately does not run `iw reg set` live, because install is followed by a reboot. `wireless-regdb` is in the base package list; it went in after [#1083](https://github.com/omacom/omarchy/issues/1083), where a 6GHz card was locked out of that band without it.
 
 Three quirk scripts target specific radios:
 
-- `install/hardware/fix-bcm43xx.sh` looks for PCI IDs `14e4:43a0` and `14e4:4331` (BCM4360 in 2013 to 2015 Macs, BCM4331 in 2012 era Macs) and installs `broadcom-wl-dkms`. 4.0.3 switched this to the DKMS package after Arch dropped the prebuilt module.
-- `install/hardware/apple/fix-brcmfmac-supplicant.sh` writes `options brcmfmac feature_disable=0x82000`, which turns off Broadcom's firmware supplicant and authenticator so `wpa_supplicant` runs the four-way handshake in software. Without it, a Mac against a WPA2/WPA3 transition-mode access point associates, never finishes the handshake, and NetworkManager reports a wrong password. cupatea's [PR #6652](https://github.com/omacom/omarchy/pull/6652) widened the trigger from the T2 bridge ID to the brcmfmac PCI IDs, so BCM43602, BCM4350, BCM4355, BCM4364, BCM4377, BCM4378 and BCM4387 all get it. BCM4360 is intentionally excluded because it runs the out-of-tree `wl` driver.
+- `install/hardware/fix-bcm43xx.sh` looks for PCI IDs `14e4:43a0` and `14e4:4331` (BCM4360 in 2013 to 2015 Macs, BCM4331 in 2012 era Macs) and installs `broadcom-wl-dkms`. 4.0.3 switched this to the DKMS package after Arch dropped the prebuilt module. That switch has a known hole: DKMS needs `linux-headers` to build, and [#10975](https://github.com/omacom/omarchy/issues/10975) reports a BCM4331 MacBook losing Wi-Fi after the 4.0.3 reboot until the headers were installed over Ethernet.
+- `install/hardware/apple/fix-brcmfmac-supplicant.sh` writes `options brcmfmac feature_disable=0x82000`, which turns off Broadcom's firmware supplicant and authenticator so `wpa_supplicant` runs the four-way handshake in software. Without it, a Mac on a WPA2/WPA3 transition-mode access point gets as far as association, the handshake stalls, and the panel tells you the password is wrong. cupatea's [PR #6652](https://github.com/omacom/omarchy/pull/6652) widened the trigger from the T2 bridge ID to the brcmfmac PCI IDs, so BCM43602, BCM4350, BCM4355, BCM4364, BCM4377, BCM4378 and BCM4387 all get it. BCM4360 is left out on purpose: it uses the out-of-tree `wl` driver, which never reads a brcmfmac option.
 - `install/hardware/intel/fix-wifi7-eht.sh` writes `options iwlwifi disable_11be=Y` for Intel BE200 and BE211 (`8086:e440`, `8086:272b`), because the EHT receive path drops those links to a crawl. The comment in the script says to remove it once Intel fixes the driver.
 
 On the command side you get `omarchy restart-wifi` (rfkill unblock, radio on, rescan), `omarchy network status`, `omarchy network band`, `omarchy network qr`, `omarchy network password`, `omarchy network speedtest`, and `omarchy dns`. First login runs `nm-online` before deciding you have no Wi-Fi, so an Ethernet machine no longer gets a spurious setup prompt.
@@ -149,11 +169,11 @@ On the command side you get `omarchy restart-wifi` (rfkill unblock, radio on, re
 | [#11961](https://github.com/omacom/omarchy/issues/11961) Captive portal button opens a URL portals ignore | any | Open | not fixed |
 | [#11812](https://github.com/omacom/omarchy/issues/11812) Joins 2.4GHz when 5GHz shares the SSID | ASUS Vivobook, MT7902 | Open, workaround | not fixed |
 | [#11813](https://github.com/omacom/omarchy/issues/11813) No automatic reconnect after a drop | ASUS Vivobook, MT7902 | Open | not fixed |
-| [#1806](https://github.com/omacom/omarchy/issues/1806) Cannot connect at all, brcmfmac | MacBook Pro 2020 | Open since the 3.x iwd era | not fixed |
+| [#1806](https://github.com/omacom/omarchy/issues/1806) Cannot connect at all, BCM4377 brcmfmac | MacBook Pro 2020 (T2) | Open since the 3.x iwd era, thread workaround: blacklist `hci_bcm4377` | not fixed |
 
-The Broadcom Mac cluster is the one to take seriously. Clowdyffs on a MacBookPro14,1 found in [#11745](https://github.com/omacom/omarchy/issues/11745) that Wi-Fi showed connected with 100 percent packet loss until `sudo iw reg set US`. benjarlett went further in [#9019](https://github.com/omacom/omarchy/issues/9019): on a MacBookPro14,3 the firmware-supplicant quirk alone was not enough, because `cfg80211` had no regulatory hint source at all and sat in the world domain until beacon hints accumulated, which took roughly 47 minutes. andyholst's [#11613](https://github.com/omacom/omarchy/issues/11613) is separate again, a signal-strength problem he attributes to generic NVRAM data rather than the antenna tuning those machines need. Be careful reading that issue: the pull request it links is a Cirrus Logic audio patch and was closed without merging, so nothing has shipped for it.
+The Broadcom Mac cluster is the one to take seriously. Clowdyffs on a MacBookPro14,1 found in [#11745](https://github.com/omacom/omarchy/issues/11745) that Wi-Fi showed connected with 100 percent packet loss until `sudo iw reg set US`. benjarlett went further in [#9019](https://github.com/omacom/omarchy/issues/9019): on a MacBookPro14,3 the firmware-supplicant quirk alone was not enough, because `cfg80211` had no regulatory hint source at all and sat in the world domain until beacon hints accumulated, which took roughly 47 minutes. andyholst's [#11613](https://github.com/omacom/omarchy/issues/11613) is separate again, a signal-strength problem he attributes to generic NVRAM data rather than the antenna tuning those machines need. Be careful reading that issue: the pull request it links is titled as a Cirrus Logic audio fix, bundled an NVRAM script for this card alongside it, and was closed without merging, so nothing has shipped for the signal problem.
 
-The enterprise cluster is newer and is all panel logic, not driver logic. [#11791](https://github.com/omacom/omarchy/issues/11791) reports that the panel's enterprise connect path always adds a fresh profile hardcoded to PEAP with MSCHAPv2, no CA certificate and an eight second auth timeout, then maps that timeout to "Wrong password" and reprompts. If your institution's CAT installer already created a working profile, the panel can bury it.
+The enterprise cluster is newer and is all panel logic, not driver logic. [#11791](https://github.com/omacom/omarchy/issues/11791) reports that the panel's enterprise connect path always adds a fresh profile hardcoded to PEAP with MSCHAPv2, no CA certificate and an eight second auth timeout, then maps that timeout to "Wrong password" and reprompts. If your institution's CAT installer already created a working profile, the panel ignores it, builds its own, and blames your password when that one fails.
 
 ## Fixes that work
 
@@ -162,7 +182,7 @@ Work down this list. Stop when you are online.
 1. `omarchy restart-wifi`, or _Update > Hardware > Wi-Fi_ in the menu. It unblocks rfkill, turns the radio back on and rescans. This clears most "it worked ten minutes ago" cases.
 2. Check the regulatory domain: `iw reg get`. A `country 00` line means you are in the world domain, which on Broadcom hardware often means association or traffic failure. Put your country in `/etc/conf.d/wireless-regdom` and reboot.
 3. On a Mac with brcmfmac, if step 2 alone does not hold, add `options cfg80211 ieee80211_regdom=XX` in `/etc/modprobe.d/cfg80211.conf`, rebuild the Limine boot image with `sudo limine-mkinitcpio`, and reboot. This is the workaround benjarlett verified across a cold reboot.
-4. Confirm the Mac quirk is present: `cat /etc/modprobe.d/brcmfmac.conf` should show `feature_disable=0x82000`. Machines installed before 4.0.0 may not have it.
+4. Confirm the Mac quirk is present: `cat /etc/modprobe.d/brcmfmac.conf` should show `feature_disable=0x82000`. The installer writes it and migration `1786391100` appends it on existing installs, then flags a reboot, because modprobe only reads the file when the module loads. If the line is missing, add it and reboot.
 5. Slow or flaky on a dual-band SSID: `omarchy network band 5`. It refuses bands the access point is not answering on, and reverts if the radio cannot come back up.
 6. Enterprise networks: build the profile once with `nmcli`, matching your institution's documented EAP method, then bring it up with `nmcli connection up <name>`. Avoid re-entering credentials in the panel until [#11791](https://github.com/omacom/omarchy/issues/11791) is resolved.
 7. Captive portals: if the sign-in button does nothing, open `http://captive.apple.com` or `http://connectivitycheck.gstatic.com/generate_204` in your browser to force the redirect.

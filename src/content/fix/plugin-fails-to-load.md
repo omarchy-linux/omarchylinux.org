@@ -6,7 +6,7 @@ appliesTo:
   from: "4.0.0"
 status: workaround
 category: shell
-issueCount: 420
+issueCount: 160
 errorStrings:
   - "WARN scene: @shell.qml[256:-1]: ReferenceError: errorString is not defined"
   - "Required property barConfig was not initialized"
@@ -29,7 +29,7 @@ sources:
   - url: "https://github.com/omacom/omarchy/releases/tag/v4.0.3"
     title: "Release v4.0.3: restrict plugin access to authentication services"
     kind: release
-    author: "dhh"
+    author: "ryanrhughes"
     date: "2026-09-08"
   - url: "https://github.com/omacom/omarchy/releases/tag/v4.0.1"
     title: "Release v4.0.1: guard plugin-add against git transport-helper URLs, fix Clone Plugin"
@@ -204,7 +204,7 @@ Re-read the log for the current boot with `journalctl -t omarchy-shell -b` and c
 
 Four different things produce the same symptom.
 
-**A failed bar used to take the whole bar with it.** In 4.0.0 through 4.0.2 the built-in `Bar.qml` declared `omarchyPath`, `barWidgetRegistry` and `barConfig` as QML `required` properties, but the plugin path injected them after construction, so no third-party or cloned bar could ever instantiate. The fallback that should have loaded the stock bar then hit a second bug: the `Loader.Error` handler read a non-existent `errorString`, which throws a `ReferenceError` before `shell.failedBarId` is set. Both the warning and the fallback were skipped, so the result was no bar at all. Reported in [#7253](https://github.com/omacom/omarchy/issues/7253), [#6915](https://github.com/omacom/omarchy/issues/6915), [#9116](https://github.com/omacom/omarchy/issues/9116) and [#10556](https://github.com/omacom/omarchy/issues/10556). The 4.0.4 source has both sites repaired in the bar path: the three properties now have defaults, and the bar error handler no longer touches `errorString`.
+**A failed bar used to take the whole bar with it.** In 4.0.0 through 4.0.2 the built-in `Bar.qml` declared `omarchyPath`, `barWidgetRegistry` and `barConfig` as QML `required` properties, but the plugin path injected them after construction, so no third-party or cloned bar could ever instantiate. The fallback that should have loaded the stock bar then hit a second bug: the `Loader.Error` handler read a non-existent `errorString`, which throws a `ReferenceError` before `shell.failedBarId` is set. Both the warning and the fallback were skipped, so the result was no bar at all. Reported in [#7253](https://github.com/omacom/omarchy/issues/7253), [#6915](https://github.com/omacom/omarchy/issues/6915), [#9116](https://github.com/omacom/omarchy/issues/9116) and [#10556](https://github.com/omacom/omarchy/issues/10556). From 4.0.3 the bar path is repaired: the three properties have defaults, and the bar error handler no longer touches `errorString`. No release note mentions it and the pull requests for it are still open, but the 4.0.3 and 4.0.4 source both carry the change, so on 4.0.3 or later this particular chain is closed and a failed bar option falls back to the stock bar.
 
 **Panel plugins still fail silently.** The same `errorString` expression is still in the panel loader in 4.0.4. When a panel plugin fails to load, the handler throws before it can print the reason and before it calls `shell.hide()`, so the bar widget, `omarchy-shell shell summon <id>` and the plugin's desktop entry all do nothing and say nothing. This is [#10745](https://github.com/omacom/omarchy/issues/10745). Widget and service loads use a different, correct path, which is why those do log.
 
@@ -216,7 +216,7 @@ Four different things produce the same symptom.
 
 Force a rescan before restarting, in case the shell simply never noticed the change: `omarchy-shell shell rescanPlugins`. If `omarchy plugin disable <id>` answers with `plugin 'x' is not known`, that is the same hint.
 
-If `omarchy plugin add ... --enable` reported that the shell is not responding, the plugin is probably installed but disabled: the enable call can time out while the shell is still rebuilding its plugin set ([#9304](https://github.com/omacom/omarchy/issues/9304)). Run `omarchy plugin enable <id>` again. If enable reports success but the widget still does not appear on the bar, see [#11062](https://github.com/omacom/omarchy/issues/11062) and place it explicitly with `omarchy bar put <id>`.
+If `omarchy plugin add ... --enable` reported that the shell is not responding, the plugin is probably installed but disabled: the enable call can time out while the shell is still rebuilding its plugin set ([#9304](https://github.com/omacom/omarchy/issues/9304)). Run `omarchy plugin enable <id>` again. If enable reports success but the widget still does not appear on the bar, its id is probably sitting in `plugins[]` in `~/.config/omarchy/shell.json` without a `bar.layout` entry. `omarchy plugin enable` and `omarchy bar put` both treat that as already configured and change nothing ([#11062](https://github.com/omacom/omarchy/issues/11062), reproduced on 4.0.4). Add `{ "id": "<id>" }` to a `bar.layout` section by hand, keep the `plugins[]` entry if it holds the widget's settings, and restart the shell.
 
 Cloning a plugin that is both a service and a bar widget can break the widget, because the clone's widget does not get routed to the original service ([#10814](https://github.com/omacom/omarchy/issues/10814)). Removing the clone restores the built-in.
 

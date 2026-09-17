@@ -71,10 +71,15 @@ sources:
     kind: issue
     author: "spuder"
     date: "2026-08-29"
+  - url: "https://github.com/omacom/omarchy/issues/4023"
+    title: "Issue #4023: Hyprland config errors after Omarchy update (invalid options and window rules)"
+    kind: issue
+    author: "numanzahid"
+    date: "2025-12-30"
   - url: "https://github.com/omacom/omarchy/releases/tag/v4.0.3"
     title: "Release v4.0.3: Fix oversized 1Password windows on scaled displays"
     kind: release
-    author: "dhh"
+    author: "ryanrhughes"
     date: "2026-09-08"
   - url: "https://omarchy.org/manual/commercial-apps-services/"
     title: "Omarchy Manual: Commercial apps/services"
@@ -99,9 +104,9 @@ faq:
   - q: "Why is my 1Password window huge or its unlock box cut off?"
     a: "Chromium multiplies the GNOME text scaling factor into its own device scale, so 1Password lays out bigger than the window it was given. Omarchy 4.0.3 works around this by launching with --force-device-scale-factor=1. Resetting the text size removes the trigger."
   - q: "Does fingerprint unlock work with 1Password on Omarchy?"
-    a: "Set the reader up with Setup > Security > Fingerprint first. Issue #12030 notes that the 1Password unlock polkit action carries no owner annotation, so it is not affected by the packaging bug that breaks the CLI and SSH agent prompts. We have no confirmed report of fingerprint unlock failing on 4.x."
+    a: "Set the reader up with Setup > Security > Fingerprint first. Issue #12030 notes that only the CLI and SSH agent polkit actions carry the bad owner annotation from the package build; the unlock action carries none, so that packaging bug does not touch desktop or fingerprint unlock. We have no confirmed report of fingerprint unlock failing on 4.x."
   - q: "Why does 1Password show up black in a screen share or Moonlight stream?"
-    a: "Omarchy tags the window no_screen_share on purpose, so it is blanked in captures. Issue #8998 reports the same blanking over Sunshine and Moonlight, which is the rule working as designed rather than a bug."
+    a: "Omarchy tags the window no_screen_share on purpose, so it is blanked in screen shares and screenshots. The black box over Sunshine and Moonlight in issue #8998 turned out to be different: Sunshine's default Wayland capture failed on an Nvidia card, and setting capture = kms in sunshine.conf fixed it."
 related: [fractional-scaling-blurry-or-huge-apps, multi-monitor-layout-not-saved, quickshell-crashes-or-bar-missing, theme-not-applied-to-gtk4-apps]
 draft: false
 ---
@@ -112,13 +117,13 @@ Checked on 4.0.4 (2026-09-15), with the 4.0.0 through 4.0.3 sources and the last
 
 1. Update first. The scaling workaround shipped in 4.0.3, and the 4.0.3 release notes list it as a fix for oversized 1Password windows on scaled displays. Run `omarchy update`, then `omarchy version` to confirm you are on 4.0.3 or newer.
 
-2. Start 1Password the Omarchy way. Press `Super + Shift + /`, pick it from the Omarchy menu, or run `omarchy launch 1password`. In 4.0.3 and 4.0.4 that launcher runs `setsid uwsm-app -- 1password --force-device-scale-factor=1`. Running plain `1password` from a shell skips the flag. On 4.0.0 through 4.0.2 the same launcher had no flag at all.
+2. Start 1Password the Omarchy way. Press `Super + Shift + /` or run `omarchy launch 1password`. In 4.0.3 and 4.0.4 that launcher runs `setsid uwsm-app -- 1password --force-device-scale-factor=1`. Running plain `1password` from a shell skips the flag. On 4.0.0 through 4.0.2 the same launcher had no flag at all.
 
-3. Quit the old instance before you judge the result. 1Password is single instance, and autostart already has one running. A second launch just focuses the existing window, flag or not. Close it from the tray, or run `pkill -x 1password`, then press `Super + Shift + /` again.
+3. Quit the old instance before you judge the result. 1Password is single instance, and its own start-at-login entry usually has one running already. A second launch just focuses the existing window, flag or not. Close it from the tray, or run `pkill -x 1password`, then press `Super + Shift + /` again.
 
 4. If a dialog is still clipped, remove the trigger. Run `omarchy display text size` to see the current GTK factor. Anything above 1.0 shrinks the usable area of 1Password's fixed-size dialogs. Run `omarchy display text size reset` to return to 12px and factor 1.0, then restart 1Password.
 
-5. If you want the larger text and a working dialog, pin the environment for the autostart copy too. 1Password rewrites `~/.config/autostart/1password.desktop` on every start, so the setting cannot live there. Omarchy runs autostart entries as systemd user units, so create `/etc/systemd/user/app-1password@autostart.service.d/text-scaling.conf` with `[Service]` and `Environment=GSETTINGS_BACKEND=memory`, then log out and back in. SilentKernel documented this drop-in in issue #8574.
+5. If you want the larger text and a working dialog, pin the environment for the autostart copy too. 1Password rewrites `~/.config/autostart/1password.desktop` on every start, so the setting cannot live there. Autostart entries run as `app-<name>@autostart.service` user units, so a drop-in survives: create `/etc/systemd/user/app-1password@autostart.service.d/text-scaling.conf` (or the same path under `~/.config/systemd/user/`) containing `[Service]` and `Environment=GSETTINGS_BACKEND=memory`, then log out and back in. SilentKernel documented this drop-in in issue #8574. The cost, noted in the same thread, is that 1Password then ignores every in-process gsettings value, not just the text scale.
 
 6. If the window never appears at all, it is probably off-screen. After you disable a monitor, the floating 1Password window keeps its old global coordinates and lands outside the remaining display, as dougvk measured in issue #8010. `pkill -x 1password` and relaunch puts it back in the centre.
 
@@ -153,21 +158,21 @@ SSH_AUTH_SOCK=~/.1password/agent.sock ssh-keygen -Y sign -f /tmp/k.pub -U -n tes
 
 ## Why it happens
 
-1Password is an Electron app, and Chromium on Wayland computes its device scale as the monitor scale multiplied by GNOME's `text-scaling-factor`. Omarchy's `omarchy display text size` sets exactly that key, so raising your text size inflates 1Password's internal scale while the window frame stays the size it asked for. Dialogs whose minimum size equals their maximum size, such as the SSH and CLI approval prompt, then lay out into fewer effective pixels than they were designed for, and the bottom of the dialog is pushed out of the frame. SilentKernel measured a device pixel ratio of 2.71875 on a scale 2 monitor at text size 16, and identified this as the root cause of the older issue #2016, which had been closed and blamed on a 1Password regression.
+1Password is an Electron app, and Chromium on Wayland computes its device scale as the monitor scale multiplied by GNOME's `text-scaling-factor`. Omarchy's `omarchy display text size` sets exactly that key, so raising your text size inflates 1Password's internal scale while the window frame stays the size it asked for. Dialogs whose minimum size equals their maximum size, such as the SSH agent authorization prompt, then lay out into fewer effective pixels than they were designed for, and the bottom of the dialog is pushed out of the frame. SilentKernel measured a device pixel ratio of 2.71875 on a scale 2 monitor at text size 16, and identified this as the root cause of the older issue #2016, which had been closed as fixed by a 1Password beta and then reported back.
 
-The same arithmetic runs at fractional monitor scales. On a display at scale 1.6, kurtome found the browser unlock popup mapping at 402 by 371 logical pixels while its interface expected roughly 643 by 594, with the password field clipped. That popup is size pinned by the app, so no Hyprland rule can fix it. Omarchy's `default/hypr/apps/1password.lua` tags every 1Password window `floating-window`, which pulls in a 875 by 600 size from `system.lua`; the main window takes it, the popup silently refuses.
+The same arithmetic runs at fractional monitor scales. On a display at scale 1.6, kurtome found the browser unlock popup mapping at 402 by 371 logical pixels while its interface expected roughly 643 by 594, with the password field clipped. The app pins that popup's size, so no Hyprland rule reaches it. Omarchy's `default/hypr/apps/1password.lua` puts the `floating-window` tag on any window of class 1Password, and `system.lua` turns that tag into an 875 by 600 size; the main window takes it, the popup silently refuses.
 
 Omarchy's answer in 4.0.3 was the launcher flag rather than a window rule. The comment in `omarchy-launch-1password` says 1Password reads the display scale itself and comes up oversized next to everything else, and that the flag covers the hotkey path, which runs the binary directly.
 
 ## If that did not work
 
-The 1Password CLI approval prompt or the SSH agent authorization not appearing at all is a different problem. The manual's troubleshooting chapter says the rich prompt needs Settings > Advanced > Use Hardware Acceleration turned on, and a reboot afterwards, and that the prompt never appears if you have not opened 1Password since booting. On top of that, the `[omarchy]` package build has two open packaging bugs: edgardoalz found in issue #12030 that the polkit policy ships with the build host's account name in the owner annotation, and larok00 found in issue #11830 that the MCP group and setgid setup from the vendor's own install script is never applied. Both affect `op` and the SSH agent. Per #12030 the plain unlock action has no owner annotation, so desktop and fingerprint unlock are not in scope of that bug.
+The 1Password CLI approval prompt or the SSH agent authorization not appearing at all is a different problem. The manual's troubleshooting chapter says the rich prompt needs Settings > Advanced > Use Hardware Acceleration turned on, and a reboot afterwards, and that the prompt never appears if you have not opened 1Password since booting. On top of that, the `[omarchy]` package build has two open packaging bugs: edgardoalz found in issue #12030 that the polkit policy ships with the build host's account name in the owner annotation, and larok00 found in issue #11830 that the MCP group and setgid setup from the vendor's own install script is never applied. The first covers the `op` and SSH agent authorization actions, the second the MCP server. Per #12030 the plain unlock action carries no owner annotation at all, which keeps desktop and fingerprint unlock outside that bug.
 
 If 1Password crashes instantly with SIGILL, read issues #8470 and #10158 together before acting. inumineq attributes it to AVX-512 instructions in the binary, but a later comment on #8470 reports the identical fault at the same offset on an Ice Lake CPU that does have AVX-512, and another commenter argues the install-time case is really the SIGHUP shutdown from #7870. Both are open and neither has a confirmed fix, so try a clean launch from the hotkey before you go hunting for a rebuild.
 
-On Apple Silicon, bierlingm reported in issue #9576 that the aarch64 installer pins version 8.12.0 behind an existence-only guard, so the app never updates there. And if 1Password is simply black in a meeting or a Moonlight session, that is the deliberate `no_screen_share` tag, reported as issue #8998.
+On Apple Silicon, bierlingm reported in issue #9576 that the aarch64 installer pins version 8.12.0 behind an existence-only guard, so the app never updates there. If 1Password is simply black in a meeting, that is the deliberate `no_screen_share` tag in `1password.lua`. The black box over Sunshine and Moonlight in issue #8998 looked like the same thing but was not: on an Nvidia card Sunshine's default Wayland capture path failed, and `capture = kms` in `~/.config/sunshine/sunshine.conf` fixed it.
 
-Two 3.x differences worth knowing if you are following an older guide. Up to v3.8.4 the window rules lived in `default/hypr/apps/1password.conf` as `windowrule` lines, which is what the "invalid field noscreenshare" config errors in old threads refer to; in 4.x they are Lua. And 3.x shipped a migration that added `gnome-keyring` because 1Password could not save 2FA setup without it. On 4.0.4 `gnome-keyring` is in the base package list, so that particular fix is already in place.
+Two 3.x differences worth knowing if you are following an older guide. Up to v3.8.4 the window rules lived in `default/hypr/apps/1password.conf` as `windowrule` lines; the "invalid field noscreenshare" config errors in issue #4023 came from that file when Hyprland 0.53 changed the rule syntax in late 2025. In 4.x the rules are Lua. And 3.x shipped a migration that added `gnome-keyring` because 1Password could not save 2FA setup without it. On 4.0.4 `gnome-keyring` is in the base package list, so that particular fix is already in place.
 
 ## Related
 

@@ -23,7 +23,7 @@ sources:
   - url: "https://github.com/omacom/omarchy/issues/10837"
     title: "Issue #10837: RC jsoncpp 1.9.8 soname bump breaks intel-ipu7-camera 1.0.5"
     kind: issue
-    author: "klaudworks"
+    author: "iuliansafta"
     date: "2026-09-08"
   - url: "https://github.com/omacom/omarchy/issues/10948"
     title: "Issue #10948: [Regression] linux-ptl 7.2.3: IPU7 / OV08X40 sensor missing from media graph on Dell XPS 14 DA14260"
@@ -112,11 +112,11 @@ draft: false
 
 Split webcams into two groups and the picture gets clear fast.
 
-USB and UVC cameras are fine. They bind to `uvcvideo`, they get a real `/dev/video` node, and Chromium, OBS and the screen recorder all find them. Omarchy does nothing special for them and nothing special is needed.
+USB and UVC cameras are fine. They bind to `uvcvideo`, they get a real `/dev/video` node, and the screen recorder's picker lists them. Omarchy does nothing special for them and nothing special is needed.
 
 Built-in MIPI cameras on recent Intel laptops are the problem. These sit behind an Intel Image Processing Unit (IPU6 or IPU7) and need a kernel bridge, a sensor driver, a proprietary camera HAL, and a relay daemon that fakes a normal `/dev/video` node so browsers can read it. Any one of those four can be missing or mismatched, and on Omarchy several of them regularly are. The component tracker counts 36 issues here, 25 of them still open, and the bulk are Intel MIPI cameras.
 
-Apple hardware is a third case. T2 Macs get their camera through `linux-t2` and `uvcvideo`, pre-T2 Macs with the Broadcom 1570 FaceTime HD part get nothing at all (#11373). See [T2 Macs](/hardware/t2-mac/) and [Apple Silicon](/hardware/apple-silicon-asahi/).
+Apple hardware is a third case. T2 Macs get their camera through `linux-t2` and `uvcvideo`. Pre-T2 Macs with the Broadcom 1570 FaceTime HD part get nothing out of the box (#11373); the AUR `facetimehd` driver works there, and PR #11381 proposes an installer leaf for it but is still open. See [T2 Macs](/hardware/t2-mac/) and [Apple Silicon](/hardware/apple-silicon-asahi/).
 
 Checked against the v4.0.4 source tree. On 3.x the same `ipu7-camera.sh` detection existed, so the shape of the problem has not changed across Quattro.
 
@@ -130,7 +130,7 @@ if grep -q "OVTI08F4" /sys/bus/acpi/devices/*/hid 2>/dev/null; then
 fi
 ```
 
-That is it. One ACPI id, one package. `intel-ipu7-camera` also sits in `install/omarchy-other.packages` so the ISO carries it. The package itself brings the DKMS modules (`ipu7-drivers`, `vision-drivers`), the CamHAL plugin `/usr/lib/libcamhal/plugins/ipu75xa.so`, `camera-init.service`, `v4l2-relayd@ipu7.service`, a v4l2loopback node that usually lands at `/dev/video50`, and a `systemd` system-sleep hook that restarts the camera on resume.
+That is it. One ACPI id, one package. `intel-ipu7-camera` also sits in `install/omarchy-other.packages` so the ISO carries it. The package itself brings the DKMS modules (`ipu7-drivers`, plus `vision-drivers` on kernels before 7.2 and, since 1.0.6, an `intel-cvs` module on 7.2 and later), the CamHAL plugin `/usr/lib/libcamhal/plugins/ipu75xa.so`, `camera-init.service`, `v4l2-relayd@ipu7.service`, a v4l2loopback node that usually lands at `/dev/video50`, a udev rule that hides the raw ISYS nodes, a WirePlumber drop-in that turns the libcamera monitor off, and a `systemd` system-sleep hook that restarts the camera on resume. The plugin is built for Panther Lake only; Lunar Lake's `ipu7x` plugin is not in the package (#12178).
 
 There is no libcamera install path, no `pipewire-libcamera`, and no IPU6 leaf.
 
@@ -145,14 +145,14 @@ The rest of the webcam surface is capture tooling, not enablement:
 
 | Issue | Models | Status | Fixed in |
 | --- | --- | --- | --- |
-| [#10948](https://github.com/omacom/omarchy/issues/10948) kernel 7.2.3 routes the sensor through a CVS node with no in-tree driver, so `ov08x40` never reaches the media graph | Dell XPS 14 DA14260, XPS 16 DA16260 | closed | 4.0.4 |
-| [#10837](https://github.com/omacom/omarchy/issues/10837) jsoncpp 1.9.8 soname bump leaves `ipu75xa.so` unable to load | any IPU7 laptop | open, package rebuilt | `intel-ipu7-camera` 1.0.5-2 and later |
+| [#10948](https://github.com/omacom/omarchy/issues/10948) kernel 7.2 routes the sensor through the CVS device, and the package's DKMS `intel_cvs` registers no V4L2 subdev to answer it, so `ov08x40` never reaches the media graph | Dell XPS 14 DA14260, XPS 16 DA16260 | closed | 4.0.4 (`intel-ipu7-camera` 1.0.6) |
+| [#10837](https://github.com/omacom/omarchy/issues/10837) jsoncpp 1.9.8 soname bump leaves `ipu75xa.so` unable to load | any IPU7 laptop | open, package rebuilt | `intel-ipu7-camera` 1.0.5-2 and later (stable still shipped 1.0.5-1 on 2026-09-12; 1.0.6 carries the rebuild) |
 | [#12178](https://github.com/omacom/omarchy/issues/12178) package is installed by detection but built for Panther Lake only, so the `ipu7x` plugin Lunar Lake needs does not exist | Dell Pro 13/14 Premium, XPS 13 9350, other Core Ultra 200V | open | not yet |
 | [#9879](https://github.com/omacom/omarchy/issues/9879) IPU6 machines get no camera setup at all | Dell XPS 13 Plus 9315, Alder/Raptor/Meteor Lake laptops | open | not yet |
 | [#7697](https://github.com/omacom/omarchy/issues/7697) the OVTI08F4 test also matches Meteor Lake IPU6 boards, installing the wrong HAL | HP Spectre x360 14 (Core Ultra 7 155H) | open | not yet |
-| [#5676](https://github.com/omacom/omarchy/issues/5676) IPU6 needs AUR packages and a forced libcamera pipeline | Tiger Lake, Alder Lake, Raptor Lake | open | not yet |
-| [#6000](https://github.com/omacom/omarchy/issues/6000) sensor ACPI `_STA` reads 0, so it never binds | Lenovo ThinkPad X1 Carbon Gen 14 | open | not yet |
-| [#7776](https://github.com/omacom/omarchy/issues/7776) same `_STA` 0 signature plus "IPU7 in secure mode" | Lenovo X1 Aura 14 / X1 Carbon Gen 14 | open | not yet |
+| [#5676](https://github.com/omacom/omarchy/issues/5676) IPU6 on Raptor Lake needs a sensor driver patch plus libcamera and WirePlumber configuration nobody installs for you | Samsung Galaxy Book3 Ultra, Tiger Lake, Alder Lake, Raptor Lake | open | not yet |
+| [#6000](https://github.com/omacom/omarchy/issues/6000) `OVTI08F4` reads ACPI status 0 because it is a disabled table slot; the live sensor is a Sony IMX471 at `TBE20A0` with no in-tree driver before kernel 7.3 | Lenovo ThinkPad X1 Carbon Gen 14 | open | not yet |
+| [#7776](https://github.com/omacom/omarchy/issues/7776) same signature: `OVTI08F4` at status 0, `TBE20A0` enabled, and `intel-ipu7-camera` installed anyway with a black `/dev/video50` | Lenovo ThinkPad X1 Carbon Gen 14 | open | not yet |
 | [#8641](https://github.com/omacom/omarchy/issues/8641) Windows Hello IR sensor (Himax HM1092) has no Linux driver anywhere | Dell XPS 14 DA14260 | open | not yet |
 | [#10624](https://github.com/omacom/omarchy/issues/10624) sensor bind is lost on resume and `camera-init` cannot restore it | Dell XPS 16 DA16260 | open | not yet |
 | [#6222](https://github.com/omacom/omarchy/issues/6222) sleep hook uses a fixed transient unit name, so suspend-then-hibernate skips the resume restart | IPU7 laptops | open | not yet |
@@ -169,14 +169,14 @@ Work through this in order. Most people stop at step three.
 
 1. Confirm what you actually have. `omarchy-capture-webcam-list` prints only real capture devices. If it lists nothing, the camera never reached userspace. If it lists a node and the picture is still black, the node is a relay with nothing feeding it.
 2. Identify the IPU generation, not the sensor. `lspci | grep -i multimedia` and `lsmod | grep intel_ipu`. If `intel_ipu6` is bound but `intel-ipu7-camera` is installed, you are in #7697 and the installed HAL is for the wrong chip.
-3. Check the HAL plugin for a missing library. `ldd /usr/lib/libcamhal/plugins/ipu75xa.so | grep -i json`. If it says `libjsoncpp.so.26 => not found` you have #10837, and the fix is `intel-ipu7-camera` 1.0.5-2 or newer. disy-mk pointed out this reproduces with no camera hardware at all, and nathankramm's faster version is `gst-inspect-1.0 icamerasrc 2>&1 | grep 'CamHAL\[ERR\]'`, which names the missing library in about a second. Do this before blaming a kernel upgrade, because on those XPS machines the kernel took the blame for three days.
-4. If you are on kernel 7.2.x with a Panther Lake XPS, update to 4.0.4. The CVS bridge fix landed via omarchy-pkgs #418 and [4.0.4](/releases/v4.0.4/) lists it as "Fix webcam issues on XPS systems in the 7.2.x kernel".
-5. Check whether firmware ever enabled the sensor: `cat /sys/bus/acpi/devices/OVTI08F4:00/status`. A `0` means the device is disabled at ACPI level, and no userspace change will help. That is the ThinkPad X1 Carbon Gen 14 wall in #6000 and #7776. Try a BIOS update, then wait.
+3. Check the HAL plugin for a missing library. `ldd /usr/lib/libcamhal/plugins/ipu75xa.so | grep -i json`. If it says `libjsoncpp.so.26 => not found` you have #10837, and the fix is `intel-ipu7-camera` 1.0.5-2 or newer (1.0.6-2 is what #12178 shows on a 4.0.4 stable machine). disy-mk pointed out this reproduces with no camera hardware at all, and nathankramm's faster version is `gst-inspect-1.0 icamerasrc 2>&1 | grep 'CamHAL\[ERR\]'`, which names the missing library in about a second. Do this before blaming a kernel upgrade. On the XPS machines in #10837 the jsoncpp bump and a kernel bump landed in the same transaction, and people spent days downgrading the wrong one.
+4. If you are on kernel 7.2.x with a Panther Lake XPS, update to 4.0.4 and make sure `intel-ipu7-camera` is 1.0.6 or newer. The CVS bridge fix landed via omarchy-pkgs #418 and [4.0.4](/releases/v4.0.4/) lists it as "Fix webcam issues on XPS systems in the 7.2.x kernel". If you had installed the community SVP7500 fix pack before that, 1.0.6 ships its own `intel_cvs` module under the same name and overrides yours (#12178).
+5. Check whether firmware ever enabled the sensor: `cat /sys/bus/acpi/devices/OVTI08F4:00/status`. A `0` means that node is disabled at ACPI level and `ov08x40` will never bind, so the package Omarchy installed has nothing to drive. On the ThinkPad X1 Carbon Gen 14 (#6000, #7776) that is expected: the real camera is a Sony IMX471 at `TBE20A0`, which reads `15`, and its driver only reaches stock Arch kernels at 7.3. #6000 has a working interim route with `imx471-dkms-git` and a libcamera setup, and it keeps `intel-ipu7-camera` installed while retargeting its relay. No BIOS option flips this.
 6. Look for the bind in the kernel log: `journalctl -k -b | grep -i 'bind ov08x40'`. Seeing `All sensor registration completed` means the kernel half is healthy and the problem is in the HAL or the relay. Not seeing it after a resume is #10624, and today a reboot is the only reliable recovery.
-7. Browser sees nothing while `qcam` works. Browsers read `/dev/video` nodes, so a working libcamera and PipeWire path is not enough on its own. That is #8843, still open.
+7. Browser sees nothing while `qcam` works. On the Surface Pro in #8843 the camera is a PipeWire node, and the Camera portal request from Chromium dies in `xdg-desktop-portal-gtk` with `Unhandled parent window type`, since `xdg-desktop-portal-hyprland` has no Camera portal of its own. Still open, no fix shipped.
 8. A frozen black overlay left after a recording is #11850. `pkill -9 mpv` removes it and releases the device.
 
-If your camera is IPU6, there is currently no supported path in Omarchy. Both #9879 and #5676 contain working community recipes, but they are AUR packages and user units you install yourself.
+If your camera is IPU6, there is currently no supported path in Omarchy. Both #9879 and #5676 contain working community recipes, but they are libcamera packages, DKMS drivers, and user units you install yourself, and PR #7773, which would stop the wrong package being installed on Meteor Lake, is still open.
 
 ## Report it
 

@@ -56,7 +56,7 @@ sources:
     author: "sgersz"
     date: "2026-08-27"
   - url: "https://github.com/omacom/omarchy/issues/8648"
-    title: "Issue #8648: Consuming insane amount of battery"
+    title: "Issue #8648: Consumiing insane amount of battery"
     kind: issue
     author: "notTanveer"
     date: "2026-08-27"
@@ -128,7 +128,7 @@ Battery handling on Omarchy 4.x is split between three things: `power-profiles-d
 
 ## Status on 4.0.4
 
-Power management works. Profiles switch on plug and unplug, the 10 percent warning fires, and thermal daemons are installed for you on Intel laptops.
+Power management itself is not what people report. Profiles switch on plug and unplug as the manual describes, the 10 percent warning fires on a plain battery discharge, and thermal daemons are installed for you on Intel laptops.
 
 Reporting is where it breaks. Checked against the v4.0.4 source tree, three of the most reported problems are visible directly in the shipped code, and all three are open: only the first battery pack is read, the low-battery warning depends on a daemon-wide flag rather than on the battery's own state, and the charge limit shown in the panel is not the limit the firmware is enforcing.
 
@@ -153,7 +153,7 @@ Hibernation is opt-in. `omarchy hibernation setup` creates a `/swap` btrfs subvo
 
 ## Known problems
 
-The big one is drain, not reporting. When a laptop that used to get hours suddenly gets minutes, the usual cause is a discrete NVIDIA GPU that never enters a low power state. Issue #1776 is the long-running version of this and drew 29 reactions before it was closed; issue #8648 is the same shape on a GTX 1650 laptop after the 4.0.0 update. Omarchy 4.x ships `omarchy toggle hybrid gpu`, which drives `supergfxd` to park the dGPU in integrated mode, plus a sleep hook that re-parks it after a wake.
+The big one is drain, not reporting. When a laptop that used to get hours suddenly gets minutes, the usual cause is a discrete NVIDIA GPU that never enters a low power state. Issue #1776 is the long-running version of this and drew 29 reactions before it was closed with a pointer to the hybrid GPU toggle. Issue #8648, a GTX 1650 HP Pavilion that went from full to empty in ten minutes after the 4.0.0 update, is less clear-cut: the reporter later noted the pack has dead cells, and a second reporter with an HP Victus saw 20 percent gone in the same ten minutes. Omarchy 4.x ships `omarchy toggle hybrid gpu`, which drives `supergfxd` to park the dGPU in integrated mode, plus a sleep hook that re-parks it after a wake.
 
 ### Known issues
 
@@ -165,8 +165,8 @@ The big one is drain, not reporting. When a laptop that used to get hours sudden
 | [#12005](https://github.com/omacom/omarchy/issues/12005) widget says Charging while discharging | MacBook Air M2 on Asahi | open | not yet |
 | [#10344](https://github.com/omacom/omarchy/issues/10344), [#7374](https://github.com/omacom/omarchy/issues/7374) charge limit misreported | ASUS Zenbook, ThinkPads | open | not yet |
 | [#6895](https://github.com/omacom/omarchy/issues/6895) power draw shows 0W | HP Pavilion Gaming 15-dk0xxx | open | not yet |
-| [#8536](https://github.com/omacom/omarchy/issues/8536) power panel never opens | desktops and mini PCs with no battery | open | not yet |
-| [#8648](https://github.com/omacom/omarchy/issues/8648) very fast drain after updating to 4.0.0 | NVIDIA hybrid laptops | open | not yet |
+| [#8536](https://github.com/omacom/omarchy/issues/8536) power panel never opens without a battery | desktops and mini PCs with no battery | open, and the acceptance suite asserts the panel is hidden without battery hardware | not yet |
+| [#8648](https://github.com/omacom/omarchy/issues/8648) very fast drain after updating to 4.0.0 | HP Pavilion and Victus gaming laptops, GTX 1650 | open | not yet |
 | [#12095](https://github.com/omacom/omarchy/issues/12095) USB autosuspend drop-in is a no-op | Intel Bluetooth controllers | open | not yet |
 | [#12096](https://github.com/omacom/omarchy/issues/12096) hibernation removal leaves resume parameters | Limine plus btrfs installs | open | not yet |
 | [#12190](https://github.com/omacom/omarchy/issues/12190) `linux-omarchy` hangs entering suspend | Dell XPS 13 DX13260, Wildcat Lake | open | not yet |
@@ -180,18 +180,18 @@ The warning bugs share one root. The low-battery check requires UPower's daemon-
 Work down this list.
 
 1. Confirm what your hardware actually reports before blaming Omarchy. `upower -i $(upower -e | grep BAT | head -1)` and `cat /sys/class/power_supply/BAT*/power_now`. If UPower has the right number and the panel does not, it is a reporting bug, not a power bug.
-2. For fast drain on a hybrid laptop, park the discrete GPU with `omarchy toggle hybrid gpu`, then log out and back in. Check with `cat /sys/bus/pci/devices/*/power/runtime_status` that the dGPU reads `suspended`.
+2. For fast drain on a hybrid laptop, park the discrete GPU with `omarchy toggle hybrid gpu`. It installs `supergfxctl` if needed, switches the mode to Integrated and reboots. After the reboot, check with `cat /sys/bus/pci/devices/*/power/runtime_status` that the dGPU reads `suspended`.
 3. Set the profile you want per power source explicitly: `omarchy powerprofiles set battery power-saver`. It sticks for that source across reboots.
 4. For a laptop that only drains hard while asleep, the problem is suspend, not the battery. Read [suspend, sleep and resume](/hardware/suspend-sleep/) and [suspend will not resume](/fix/suspend-wont-resume-s2idle/).
 5. For a charge limit, write `charge_control_end_threshold` yourself or use your vendor tool. There is no Omarchy toggle on 4.0.4; PR #12177 proposes one and is unmerged.
 6. If you want deeper tuning than three profiles offer, community discussion #3907 documents replacing `power-profiles-daemon` with TLP. Remove or mask the daemon first, because the two fight over the same knobs and Omarchy's own profile commands stop working once it is gone.
-7. If suspend started hanging on 4.0.4 specifically, boot the stock `linux` or `linux-lts` kernel from the Limine menu. The bespoke `linux-omarchy` kernel became the default in 4.0.4 and has at least one confirmed suspend regression against stock.
+7. If suspend started hanging on 4.0.4 specifically, boot the stock `linux` or `linux-lts` kernel from the Limine menu. The bespoke `linux-omarchy` kernel became the default boot entry in 4.0.4, and #12190 is a detailed open report of it hanging on suspend entry where stock `linux` 7.2.3 does not.
 
 On 3.x the profile switching came from udev rules under `/etc/udev/rules.d/`. A 4.x migration removes the vulnerable versions of those rules, so do not expect to find them any more.
 
 ## Report it
 
-Run `omarchy debug`, which collects `inxi -Farz`, `dmesg`, this boot's journal warnings and errors, and your package list, and offers to upload it. Add the output of `upower -d`, `powerprofilesctl`, `omarchy-battery-status --shell`, and `ls /sys/class/power_supply/`. For drain reports, add `powertop` output or the runtime status of your GPU. For anything involving a dock or charger, include the online state of every `Mains` and `USB` supply, because most of the warning bugs turn on exactly that.
+Run `omarchy debug`, which collects `inxi -Farz`, `dmesg`, this boot's journal warnings and errors, and your package list, and offers to upload it. Add the output of `upower -d`, `powerprofilesctl`, `omarchy-battery-status --shell`, and `ls /sys/class/power_supply/`. For drain reports, add the runtime status of your GPU, or `powertop` output if you install it; Omarchy does not ship it. For anything involving a dock or charger, include the online state of every `Mains` and `USB` supply, because most of the warning bugs turn on exactly that.
 
 Check the open issues first. Battery reporting has heavy duplication: the single dual-battery bug alone has more than ten separate reports.
 

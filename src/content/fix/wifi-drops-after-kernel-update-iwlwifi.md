@@ -84,7 +84,10 @@ credits:
     for: "Documented the broadcom-wl to broadcom-wl-dkms bridge on a 7.2 kernel"
   - name: "jkc-2"
     url: "https://github.com/jkc-2"
-    for: "Isolated the MediaTek MT7921 breakage to a firmware package rather than the kernel"
+    for: "Reported the MediaTek MT7921 loss on an Asus Vivobook and the downgrade that recovered it"
+  - name: "kromsam"
+    url: "https://github.com/kromsam"
+    for: "Linked the MT7921 breakage to an upstream linux-firmware bug and narrowed the downgrade to linux-firmware-mediatek alone"
 faq:
   - q: "Why did Wi-Fi work before the reboot and not after?"
     a: "The update installed the new kernel but you kept running the old one. Modules and firmware are only chosen at boot, so a module that failed to build or a firmware blob the new driver rejects only bites on the next boot."
@@ -114,7 +117,7 @@ journalctl -k -b | grep -iE 'iwlwifi|mt7921|brcmfmac|rtw89|firmware'
 
 Three outcomes matter. No `wifi` row in `nmcli device status` and no `Kernel driver in use` line from `lspci` means the driver never loaded. A driver line plus `failed with error -2` in the log means the firmware blob is missing. A device that appears and then drops means the driver loaded but cannot hold the link.
 
-**2. Get a network back first.** Everything below needs packages. At the Limine menu, stop the countdown and arrow down to your previous kernel entry, usually `linux`. Since 4.0.4, migration `1789325478.sh` installs `linux-omarchy`, puts it first in `BOOT_ORDER`, and deliberately leaves the old kernel installed so it stays available. If no entry boots with Wi-Fi, use a pre-update snapshot entry, plug in Ethernet, or tether a phone over USB.
+**2. Get a network back first.** Everything below needs packages. At the Limine menu, stop the countdown and arrow down to your previous kernel entry, usually `linux`. Since 4.0.4, migration `1789325478.sh` installs `linux-omarchy` and puts it first in `BOOT_ORDER`, but it does not remove the kernel you were running, so that entry is still in the menu. If no entry boots with Wi-Fi, use a pre-update snapshot entry, plug in Ethernet, or tether a phone over USB.
 
 **3. If the driver is out of tree, fix the headers and rebuild.** This is the common one on Broadcom Macs and on any machine that carried `broadcom-wl`, `rtl8821ce`, `nvidia` or similar. List what is installed, then install headers to match:
 
@@ -125,7 +128,7 @@ sudo pacman -S --needed dkms linux-headers linux-omarchy-headers
 sudo dkms autoinstall
 ```
 
-Install only the `-headers` packages for kernels that line actually printed. `dkms autoinstall` matters because DKMS builds during a package transaction and nothing retries a build that was skipped, so headers arriving later do not rebuild anything on their own.
+Trim that `pacman -S` line to the `-headers` packages matching kernels the previous command actually printed. The `dkms autoinstall` at the end is not optional: the DKMS pacman hook only fires while a package is being installed or upgraded, and a build it skipped for lack of headers is never picked up again. Installing the headers afterwards, on its own, leaves the module missing.
 
 On 4.0.2 and earlier, `install/hardware/fix-bcm43xx.sh` asked for `broadcom-wl`, which Arch stopped building for Linux 7.2. Release 4.0.3 switched that to `broadcom-wl-dkms`. If you are still holding the old package:
 
@@ -143,7 +146,7 @@ sudo pacman -S --needed linux-firmware linux-firmware-intel
 
 Substitute your vendor's split package, for example `linux-firmware-mediatek` or `linux-firmware-marvell`. Reboot and read the log again. If the machine has no network at all, copy the package files over on a USB stick from another machine and install them offline with `sudo pacman -U ./<file>.pkg.tar.zst`, which is what issue #6551 did on a Dell XPS 13 with an Intel BE213.
 
-**5. If new firmware broke a card that used to work, downgrade only that package.** In issue #1829 an Asus Vivobook with an MT7921 lost Wi-Fi after an update, and the fix was pinning `linux-firmware-mediatek` to an older build until a corrected release landed. Add it to `IgnorePkg` in `/etc/pacman.conf` while you wait, then remove the pin.
+**5. If new firmware broke a card that used to work, downgrade only that package.** In issue #1829 an Asus Vivobook with an MT7921 lost Wi-Fi after an update. The reporter recovered by downgrading both the kernel and `linux-firmware-mediatek`; a later comment traced it to an upstream firmware bug and narrowed the downgrade to `linux-firmware-mediatek` alone, and the `20251011-1` build was reported working. Add the pinned package to `IgnorePkg` in `/etc/pacman.conf` while you wait, then remove the pin.
 
 **6. If the new kernel itself is the regression, stay on the old one.** Edit `/etc/default/limine`, put your working kernel first in `BOOT_ORDER`, and run `sudo limine-mkinitcpio`. The steps and the exact syntax are in [kernel panic after update](/fix/kernel-panic-after-update-limine/). This is the shape of discussion #3053 on 3.x, where iwlwifi stopped working on 6.17.2 and later and the reporter went back to 6.17.1.
 
@@ -162,11 +165,11 @@ journalctl -k -b | grep -i 'loaded firmware version'
 
 ## Why it happens
 
-Kernel modules live under `/usr/lib/modules/<version>`, so every kernel update needs its own copy of anything out of tree. DKMS rebuilds those during the package transaction, and only if headers for that exact kernel are present. `omarchy-update` runs `pacman -Syu --noconfirm`, so a `Missing kernel headers for module` error from the DKMS hook scrolls past with everything else. The first symptom is no Wi-Fi after the reboot, which is exactly what issue #10975 reports on 4.0.3 and issue #9386 reports on a BCM4360 MacBook.
+Kernel modules live under `/usr/lib/modules/<version>`, so every kernel update needs its own copy of anything out of tree. DKMS rebuilds those during the package transaction, and only if headers for that exact kernel are present. `omarchy-update` calls `pacman -Syu --noconfirm`, and the DKMS hook's `Missing kernel headers for module` line is not fatal to the transaction, so the update finishes green with a module that was never built. You find out at the next boot when there is no Wi-Fi. That is the sequence in issue #10975 on 4.0.3 and, with a kernel-specific `broadcom-wl` instead of a skipped DKMS build, in issue #9386 on a BCM4360 MacBook Air.
 
 Firmware is separate again. It ships in `linux-firmware` and its per-vendor split packages, versioned on their own schedule. A newer driver can ask for a ucode revision your firmware package does not carry yet, which is the `no suitable firmware found!` case, and newer firmware can break a driver that was fine, which is the MediaTek case.
 
-Two things changed in 4.x. Quattro replaced iwd with NetworkManager and wpa_supplicant, so a post-upgrade outage may be lost profiles rather than a dead radio. And 4.0.4 installs `linux-omarchy` and makes it the first boot entry for everyone except T2 Macs, so an update can hand you a different kernel even when the stock `linux` package did not move.
+Two things changed in 4.x. Quattro replaced iwd with NetworkManager and wpa_supplicant, so a post-upgrade outage may be lost profiles rather than a dead radio. And 4.0.4 installs `linux-omarchy` and makes it the first boot entry on every x86_64 machine that is not a T2 Mac, so an update can hand you a different kernel even when the stock `linux` package did not move.
 
 ## If that did not work
 

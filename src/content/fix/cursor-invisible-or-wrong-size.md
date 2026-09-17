@@ -1,6 +1,6 @@
 ---
 title: "Cursor invisible, wrong size, or a black box on Omarchy"
-description: "Mouse pointer missing, tiny, huge, or drawn as a black square on Omarchy 4. Force software cursors in looknfeel.lua and set the cursor size where Hyprland actually reads it."
+description: "Mouse pointer missing, tiny, huge, or drawn as a black square on Omarchy 4. Force software cursors in looknfeel.lua and set the size where Hyprland reads it."
 answer: "If the pointer is invisible, glitchy, or a black box, force software cursors: add an hl.config block with cursor.no_hardware_cursors = true to ~/.config/hypr/looknfeel.lua, then run hyprctl reload. If the size is wrong, do not use ~/.config/hypr/envs.lua, which Omarchy 4 never loads. Put hl.env(\"XCURSOR_SIZE\", \"32\") at the bottom of ~/.config/hypr/hyprland.lua and log out."
 appliesTo:
   from: "3.x"
@@ -106,7 +106,7 @@ related: [hybrid-gpu-laptop-black-screen-aq-drm-devices, nvidia-drivers-omarchy-
 draft: false
 ---
 
-Three different problems share the same symptom bucket here: the pointer is gone, the pointer is drawn as a black square or a smear, or the pointer is the wrong size. The first two are the same bug with different hardware. The third is a config plumbing problem specific to Omarchy 4.
+Three different problems share the same symptom bucket here: the pointer is gone, the pointer is drawn as a black square or a smear, or the pointer is the wrong size. The first two are the same class of bug on different GPU drivers. The third is a config plumbing problem specific to Omarchy 4.
 
 ## The fix
 
@@ -129,7 +129,7 @@ That is the exact block Omarchy itself appends on nouveau machines in `install/u
 
 Do not put a `cursor { ... }` section in `hyprland.conf` on 4.x. A legacy `.conf` block is ignored once a `hyprland.lua` config exists.
 
-Avoid `hyprctl eval 'hl.config({ cursor = { no_hardware_cursors = true } })'` as a quick test. On at least one AMD build that same eval faults inside Hyprland and takes the whole session down with SIGABRT (issue #8797). Edit the file and reload instead.
+Do not reach for `hyprctl keyword cursor:no_hardware_cursors true` either. On 4.x it prints `keyword can't work with non-legacy parsers. Use eval.` and changes nothing, still exiting 0. Issue #8797 records that message, and also a session on an AMD iGPU that died with SIGABRT the moment `omarchy-capture-screenshot` ran its `hyprctl eval` of this same setting. The triage on that issue traced the faulting frame to a stale keybind handle in Hyprland 0.56.2 rather than to the cursor option, but the crash was real, and editing the file and reloading avoids the question.
 
 ### Pointer invisible, a black box, or glitchy (3.8.4 and earlier)
 
@@ -141,11 +141,11 @@ cursor {
 }
 ```
 
-Then `hyprctl reload`. This is the pre-Quattro form of the same setting, and it is what fixed #4847 on an AMD RX 6700 XT dual-monitor setup on 3.4.1.
+Then `hyprctl reload`. This is the pre-Quattro form of the same setting. theswampdawg put it in `input.conf` and it fixed #4847 on an AMD RX 6700 XT dual-monitor desktop; commenters who hit the same black box right after updating to 3.4.1 fixed it the same way. Any personal `.conf` file that `hyprland.conf` sources will do.
 
 ### Pointer is the wrong size (Omarchy 4.0.x)
 
-The default is 24. Do not create `~/.config/hypr/envs.lua`: nothing requires that module, so anything you set there is silently dropped. Issue #9902 documents this, and the maintainer triage on that issue reproduced it by proving an `XCURSOR_SIZE` override in a personal `envs.lua` never reached spawned clients.
+The default is 24. Do not create `~/.config/hypr/envs.lua`: nothing requires that module, so anything you set there is silently dropped. Issue #9902 documents this, and the triage comment on that issue reproduced it on a clean 4.0 worker: variables set in a personal `envs.lua` never reached a spawned client, while the `XCURSOR_SIZE=24` from `default/hypr/envs.lua` did.
 
 1. Open `~/.config/hypr/hyprland.lua` and add this at the very bottom, under the "Add any other personal Hyprland configuration below" comment:
 
@@ -162,7 +162,7 @@ gsettings set org.gnome.desktop.interface cursor-size 32
 
 3. Log out and back in. Environment variables reach applications when they launch, so `hyprctl reload` is not enough.
 
-The tail of `hyprland.lua` is evaluated after `require("default.hypr.omarchy")`, so your value wins over the 24 in `default/hypr/envs.lua`. That ordering is the part the triage on #9902 confirmed on a clean 4.0 worker.
+The tail of `hyprland.lua` is evaluated after `require("default.hypr.omarchy")`, so your value wins over the 24 in `default/hypr/envs.lua`. The triage on #9902 checked exactly this: an `XCURSOR_SIZE` of 99 set after the defaults replaced the 24 in a spawned client.
 
 ### Pointer is the wrong size (3.8.4 and earlier)
 
@@ -170,14 +170,14 @@ The tail of `hyprland.lua` is evaluated after `require("default.hypr.omarchy")`,
 
 ### Wrong cursor theme
 
-Omarchy ships no cursor theme and never sets `org.gnome.desktop.interface cursor-theme`, which is why discussion #8428 got no official answer. Install a theme, then apply it in both places:
+Omarchy installs no cursor theme package of its own and never sets `org.gnome.desktop.interface cursor-theme`. Discussion #8428 asks how to make Bibata the default and has no answer beyond another user asking the same thing. Install a theme, then apply it in both places:
 
 ```bash
 gsettings set org.gnome.desktop.interface cursor-theme "Bibata-Modern-Classic"
 hyprctl setcursor Bibata-Modern-Classic 24
 ```
 
-To make the Hyprland half survive a relogin, add `hl.env("XCURSOR_THEME", "Bibata-Modern-Classic")` alongside the size lines at the bottom of `hyprland.lua`. Check your theme actually provides a cursor named `default`: on discussion #10947 a reporter saw imv 5.0.1 crash with a theme that does not.
+To make the Hyprland half survive a relogin, `XCURSOR_THEME` is the standard variable clients read, so `hl.env("XCURSOR_THEME", "Bibata-Modern-Classic")` alongside the size lines at the bottom of `hyprland.lua` uses the same channel as the size override. Nobody on the tracker has confirmed that exact line, so check a fresh client's environment afterwards as described below. Check your theme actually provides a cursor named `default`: on discussion #10947 a reporter saw imv 5.0.1 crash with a theme that does not.
 
 ## Verify it worked
 
@@ -196,7 +196,7 @@ If the hardware cursor plane was the problem, the error spam stops. Check the se
 
 ## Why it happens
 
-Hyprland normally hands the pointer to a dedicated DRM cursor plane on the GPU. Several drivers accept the buffer and then fail the commit, so the plane shows nothing, a stale black buffer, or a partial smear. Confirmed on nouveau (Omarchy automates the fix there), on VMware's vmwgfx, and on AMD and NVIDIA multi-output setups in #4847 and #4934. Software cursors cost almost nothing on a desktop and simply sidestep the plane.
+Hyprland normally hands the pointer to a dedicated DRM cursor plane on the GPU. Several drivers accept the buffer and then fail the commit, so the plane shows nothing, a stale black buffer, or a partial smear. Confirmed on nouveau (Omarchy automates the fix there), on VMware's vmwgfx, and on AMD dual-monitor desktops in #4847 and #4934. Software cursors cost almost nothing on a desktop and simply sidestep the plane. The AMD case was expected to get a Hyprland-side fix at the time, and #4847 was closed in a bulk review in July 2026 rather than by a change in Omarchy, so a current Hyprland may not need the setting on that hardware.
 
 The size problem is unrelated. Omarchy 4 moved Hyprland config to Lua, and the personal override files that `hyprland.lua` requires are `monitors`, `input`, `bindings`, `looknfeel` and `autostart`. There is no `envs` in that list and Omarchy has never shipped a `config/hypr/envs.lua`, so a file you create there is dead code. The session environment channel the manual points at, `~/.config/uwsm/env.d/*`, is exported before Hyprland starts, so it cannot override anything Omarchy sets with `hl.env` afterwards.
 
@@ -209,8 +209,6 @@ If your pointer fix vanished during the 3 to 4 upgrade, that is expected: `hypr/
 - The pointer disappears only while you are dragging a screenshot selection. That is #8240, open: `omarchy-capture-screenshot` forces hardware cursors back on before opening the picker so the software pointer is not baked into the capture, which hides it on exactly the hardware that needs software cursors.
 - Night light does not tint the pointer. Cosmetic and open as #4973.
 - If you lose the pointer on a big screen rather than seeing it broken, discussion #5833 is where people compare the `hypr-dynamic-cursors` plugin. Third party plugins are not covered by Omarchy support.
-
-Checked against the shipped source for v4.0.4 and v3.8.4.
 
 ## Related
 

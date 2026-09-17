@@ -1,6 +1,6 @@
 ---
 title: "pacnew and pacsave files after an Omarchy update"
-description: "What .pacnew and .pacsave files mean after an Omarchy update, which ones actually matter on Omarchy 4, and how to merge them without breaking pacman or your initramfs."
+description: "What .pacnew and .pacsave files mean after an Omarchy update, which ones matter on Omarchy 4, and how to merge them without breaking pacman or your boot."
 answer: "They are pacman's backup files, not errors. A .pacnew means a package shipped a new config but you had edited the old one, so your version was kept. Omarchy does not warn about them yet. List them with pacdiff, then merge by hand. On Omarchy only a few matter: pacman.conf, omarchy_hooks.conf, and the limine drop-ins."
 appliesTo:
   from: "4.0.0"
@@ -42,11 +42,6 @@ sources:
     kind: pr
     author: "mfontcada"
     date: "2025-08-18"
-  - url: "https://github.com/omacom/omarchy/issues/6234"
-    title: "Issue #6234: Default hypridle.conf: screensaver killed ~2s after launch, and update overwrites user-modified hypridle.conf"
-    kind: issue
-    author: "dlsvob"
-    date: "2026-07-18"
   - url: "https://omarchy.org/manual/updates/"
     title: "Omarchy manual: Updates"
     kind: manual
@@ -62,7 +57,7 @@ faq:
   - q: "Is a .pacnew file an error?"
     a: "No. It means pacman kept your edited config and parked the package's new version next to it. Nothing is broken, but you are now running an old config that the package no longer expects."
   - q: "Can I just delete every .pacnew file?"
-    a: "You can, and nothing breaks immediately. You lose whatever the package changed, which on Omarchy can mean a new mkinitcpio hook or a new pacman repo line that a later update assumes is present."
+    a: "You can, and nothing breaks immediately. You lose whatever the package changed, which on Omarchy can mean a new hook conditional in omarchy_hooks.conf that a later migration evaluates before deciding whether to rebuild your initramfs."
   - q: "Does omarchy update tell me about them?"
     a: "Not in 4.0.4. docs/update-process.md lists pacnew and pacsave handling under Remaining concerns. The only log check omarchy-update-analyze-logs performs is for failed initramfs generation."
   - q: "Why did my config get overwritten with no .pacnew at all?"
@@ -76,8 +71,9 @@ Checked on 4.0.4 (2026-09-15), with the 3.x behaviour taken from the v3.8.4 tree
 A `.pacnew` file is pacman telling you that a package shipped a new version of a
 config file you had edited, so it kept yours and saved the new one alongside. A
 `.pacsave` is the mirror case: a package was removed and pacman preserved the
-config you had. Neither is an error. Both are silent on Omarchy, because as of
-4.0.4 nothing in the update pipeline looks for them.
+config you had. Neither is an error. Pacman prints a one line warning as it
+happens, but that scrolls past in the update transcript, and as of 4.0.4
+nothing in the update pipeline goes back to look for them.
 
 ## The fix
 
@@ -97,8 +93,8 @@ config you had. Neither is an error. Both are silent on Omarchy, because as of
 
 2. Handle `/etc/pacman.conf.pacnew` first, and do not blindly copy it over.
    Omarchy replaces this file with its own, which carries the `[omarchy]` repo
-   pointing at `https://pkgs.omarchy.org/<channel>/$arch` plus the Omarchy
-   mirrorlist. The `.pacnew` comes from upstream Arch and has none of that.
+   pointing at `https://pkgs.omarchy.org/<channel>/$arch`. The `.pacnew` comes
+   from upstream Arch and has none of that.
    Merge only the new `[options]` lines you want, or reset the whole file to
    Omarchy's version for your channel:
 
@@ -106,8 +102,9 @@ config you had. Neither is an error. Both are silent on Omarchy, because as of
    omarchy-refresh-pacman stable   # or rc, or edge
    ```
 
-   That backs up your current file to `/etc/pacman.conf.bak` before copying, then
-   runs a full `pacman -Syyuu`.
+   That backs up your current file to `/etc/pacman.conf.bak`, swaps in both
+   `pacman.conf` and `/etc/pacman.d/mirrorlist` for the channel, then runs a
+   full `pacman -Syyuu`.
 
 3. Handle `/etc/mkinitcpio.conf.d/omarchy_hooks.conf.pacnew` next. This is the
    one that can cost you a boot. The file is owned by `omarchy-settings` and it
@@ -118,15 +115,16 @@ config you had. Neither is an error. Both are silent on Omarchy, because as of
 
    ```bash
    sudo limine-mkinitcpio
-   objcopy -O binary --only-section=.initrd \
-     /boot/EFI/Linux/omarchy_linux.efi /tmp/uki-initrd.img
-   lsinitcpio -l /tmp/uki-initrd.img | grep '^hooks/'
+   sudo lsinitcpio -a /boot/EFI/Linux/omarchy_linux-omarchy.efi | grep -A1 'Hook run order'
    ```
 
    Omarchy enables unified kernel images by default through
    `/etc/limine-entry-tool.d/omarchy-uki.conf`, so the initramfs lives inside the
-   `.efi` file rather than as a standalone image. That extraction is the method
-   the reporter of #6876 used to prove the `lvm2` hook had vanished.
+   `.efi` file rather than as a standalone image. The file is named
+   `omarchy_<kernel>.efi`, so check `omarchy_linux.efi` or
+   `omarchy_linux-lts.efi` too if you still boot those. Reading the hook list
+   straight out of the `.efi` is how the thread on #6876 proved the `lvm2` and
+   `sd-encrypt` hooks had vanished.
 
 4. Handle `/etc/limine-entry-tool.d/omarchy-defaults.conf.pacnew`. Leaving this
    one is fine. Migration `1789325478` in 4.0.4 writes `BOOT_ORDER` into
@@ -142,19 +140,20 @@ config you had. Neither is an error. Both are silent on Omarchy, because as of
    ```
 
 6. Delete `.pacsave` files once you have read them. They belong to packages that
-   are gone. Omarchy removes `cups-browsed`, for example, and its acceptance test
-   asserts that neither `/etc/cups/cups-browsed.conf.pacsave` nor the matching
-   `.pacnew` is left behind.
+   are gone. Migration `1788009111` removes `cups-browsed`, for example, and
+   Omarchy's acceptance test asserts that neither
+   `/etc/cups/cups-browsed.conf.pacsave` nor the matching `.pacnew` is left
+   behind.
 
 ## Verify it worked
 
 - The `find` command above returns nothing.
 - `pacman -Sl omarchy | head -n 1` prints a package, which proves you did not
   lose the `[omarchy]` repo while merging `pacman.conf`.
-- If you touched anything under `/etc/mkinitcpio.conf.d/`, the `lsinitcpio`
-  output lists every hook your root needs, especially `encrypt` or `sd-encrypt`,
-  and `lvm2`, `mdadm_udev`, or `resume` if you use them. An empty or short list
-  is the signature of issue #6876.
+- If you touched anything under `/etc/mkinitcpio.conf.d/`, the `Hook run order`
+  line lists every hook your root needs, especially `encrypt` or `sd-encrypt`,
+  and `lvm2`, `mdadm_udev`, or `resume` if you use them. A short list missing
+  the one your root layout depends on is the signature of issue #6876.
 - Reboot once after merging any boot path file, before you forget you changed it.
 
 ## Why it happens

@@ -12,7 +12,6 @@ issueCount: 6
 errorStrings:
   - "attempt to index a nil value (global 'o')"
   - "require(\"default.hypr.autostart\"): attempt to index a nil value (global 'o')"
-  - "Runtime error in lua:"
 tags: [hyprland, lua, quattro, config, migration]
 sources:
   - url: "https://github.com/omacom/omarchy/issues/5879"
@@ -65,7 +64,7 @@ credits:
     for: "Pointed people at omarchy refresh hyprland as the recovery command"
   - name: "vovarbv"
     url: "https://github.com/vovarbv"
-    for: "Showed the bootstrap migration can truncate a hand-edited hyprland.lua"
+    for: "Reproduced the truncation of a hand-edited hyprland.lua and opened the PR that stops it"
 faq:
   - q: "Will omarchy refresh hyprland delete my customizations?"
     a: "It overwrites the seven shipped files in ~/.config/hypr with the Omarchy defaults, but omarchy-refresh-config copies each one to <file>.bak.<timestamp> first. Your old content is still on disk, so you can copy your bindings back out of the backup."
@@ -94,10 +93,10 @@ You probably cannot open the Omarchy menu or a terminal, because the bindings th
 2. Look at the top of your entrypoint:
 
    ```bash
-   head -6 ~/.config/hypr/hyprland.lua
+   head -15 ~/.config/hypr/hyprland.lua
    ```
 
-   A healthy 4.x file starts with a `dofile(...)` line ending in `/default/hypr/bootstrap.lua` and, a few lines down, `require("default.hypr.omarchy")`. If either is missing, that is your bug.
+   A healthy 4.x file has a `dofile(...)` line ending in `/default/hypr/bootstrap.lua` near the top and, about ten lines down, `require("default.hypr.omarchy")`. If either is missing, that is your bug.
 3. Restore the shipped entrypoint:
 
    ```bash
@@ -120,7 +119,7 @@ require("default.hypr.omarchy")
 
 Everything that uses `o` must come after those, including your own `require("hypr.bindings")` and any `o.window(...)` you added at the bottom. Then log out and back in.
 
-If your file still carries the older 4.0 alpha preamble (a hand-built `package.path = ...` block and `require("default.hypr.paths")`), the minimal repair people used in May 2026 was to add `require("default.hypr.helpers")` before the first `require("default.hypr.*")` line. That works, but on 4.0.4 you are better off moving to the bootstrap `dofile`, because the bootstrap also adds `~/.local/state/?.lua` to the search path, and the current theme and toggle modules live there.
+If your file still carries the older 4.0 alpha preamble (a hand-built `package.path = ...` block and `require("default.hypr.paths")`), the minimal repair people used in May 2026 was to add `require("default.hypr.helpers")` before the first `require("default.hypr.*")` line. That works, but on 4.0.4 you are better off moving to the bootstrap `dofile`, because the bootstrap also adds `~/.local/state/?.lua` to the search path, and on 4.0.4 the current theme's Hyprland module is loaded from `~/.local/state/omarchy/current/theme/`.
 
 ## Verify it worked
 
@@ -135,28 +134,27 @@ Omarchy's own agent notes use that pair as the validation step after any Lua con
 
 ## Why it happens
 
-In Quattro the global `o` is not a Hyprland builtin. It is created by `/usr/share/omarchy/default/hypr/helpers.lua`, which starts with `o = o or {}` and then hangs `o.bind`, `o.window`, `o.launch_on_start` and the rest off that table. Nothing else defines it. `helpers.lua` is loaded on the first line of `default/hypr/omarchy.lua`, which is the single entry point the shipped `hyprland.lua` requires.
+In Quattro the global `o` is not a Hyprland builtin. It is created by `/usr/share/omarchy/default/hypr/helpers.lua`, which starts with `o = o or {}` and then hangs `o.bind`, `o.window`, `o.launch_on_start` and the rest off that table. Nothing else defines it. `helpers.lua` is the first module `default/hypr/omarchy.lua` requires, and `default.hypr.omarchy` is the one line through which the shipped `hyprland.lua` loads every default.
 
 So `o` is nil whenever your entrypoint reaches a default module without going through `default.hypr.omarchy` first. Three real ways that happens:
 
-- **You carried an old `hyprland.lua` forward.** A file written during the 4.0 alpha requires `default.hypr.autostart` and friends directly, with no helpers line. This is what issue #5879 documents, and what issues #5814, #5822 and #5824 were all hitting in May 2026 on the dev and edge channels.
+- **You carried an old `hyprland.lua` forward.** A file written during the 4.0 alpha requires `default.hypr.autostart` and friends directly, with no helpers line. This is what issue #5879 documents, and what issues #5814, #5822 and #5824 were all hitting in May 2026 on the dev channel and 4.0 alpha builds.
 - **Your `package.path` still points at the 3.x location.** Before 4.0, `OMARCHY_PATH` was `$HOME/.local/share/omarchy`. On 4.x it is `/usr/share/omarchy`, because Omarchy is a pacman package now. A restored dotfiles copy of the old preamble searches a directory that no longer holds the defaults, so every `require("default.hypr.*")` fails and `o` never gets defined.
 - **You reordered the requires.** Putting `require("hypr.bindings")` above `require("default.hypr.omarchy")` runs your `o.bind` calls before `o` exists.
 
 Omarchy ships migration `1781063758.sh` ("Update Hyprland Lua entrypoint to load Omarchy bootstrap", dated 2026-06-10) to rewrite the old preamble into the bootstrap `dofile` automatically. It is present in every 4.0.x tag from 4.0.0 through 4.0.4. It skips any file that already contains `/default/hypr/bootstrap.lua`, which is why fresh 4.0 installs are never affected.
 
-The migration is also why this page says workaround rather than fixed. Issue #7103, filed by an automated QA pass in August 2026 and still open, shows the migration's awk swallowing every line after the trigger until it finds a standalone `.. package.path` line. If you had rewrapped that assignment or appended your own path entry, there is no such line, so it reads to end of file and writes back a two-line config with no backup. PR #11222 rewrites it to consume the assignment by its continuation lines and to save a copy as `hyprland.lua.omarchy-bootstrap.bak` first. That PR was still open on 2026-09-16.
+The migration is also why this page says workaround rather than fixed. Issue #7103, filed by an automated QA pass in August 2026 and still open, shows that once the migration's awk has matched the old preamble, it discards input until it meets a line that is exactly `.. package.path`. If you had rewrapped that assignment or appended your own path entry, no line matches, the discard runs to the end of the file, and a two-line config is written back with no backup. PR #11222 rewrites it to consume the assignment by its continuation lines and to save a copy as `hyprland.lua.omarchy-bootstrap.bak` first. That PR was still open on 2026-09-16.
 
 ## What changed between 3.x and 4.x
 
-On 3.8.4, the last 3.x release, `~/.config/hypr` held `hyprland.conf`, `bindings.conf`, `monitors.conf` and the rest. There was no Lua and no `o`. The May 2026 reports in this cluster came from people on the dev and edge channels running a pre-release Lua config against Hyprland 0.55, and dhh's answer at the time was to go back to the stable channel via *Update > Channel > Stable*. That advice is dead on 4.x. Quattro moved the whole config to Lua, and there is no `.conf` path to fall back to.
+On 3.8.4, the last 3.x release, `~/.config/hypr` held `hyprland.conf`, `bindings.conf`, `monitors.conf` and the rest. There was no Lua and no `o`. The May 2026 reports in this cluster came from people on the dev channel or 4.0 alpha builds running a pre-release Lua config against Hyprland 0.55, and dhh's answer at the time was to go back to the stable channel via *Update > Channel > Stable*. That advice is dead on 4.x. Quattro moved the whole config to Lua, and there is no `.conf` path to fall back to.
 
 ## If that did not work
 
-- **`omarchy refresh hyprland` ran but nothing changed.** Check that the command actually wrote: if `~/.config/hypr/hyprland.lua` is a symlink into a dotfiles repo managed by stow or chezmoi, the refresh updates the target and your repo copy wins on the next sync. Fix the file in the repo instead.
 - **Still broken after the refresh.** Two people in issue #5879 reported that only removing the whole directory worked. Move it aside rather than deleting it: `mv ~/.config/hypr ~/hypr.broken && omarchy refresh hyprland`, then reboot and pull your edits back from `~/hypr.broken`.
-- **Your `hyprland.lua` is now two lines long.** That is issue #7103. Look for a Snapper snapshot, but note that Omarchy snapshots the root subvolume only, so `/home` is not in it. In practice `omarchy refresh hyprland` plus rewriting your bindings is the recovery.
-- **A different Lua error, such as `Runtime error in lua:` or a `bad_any_cast` crash.** Those are separate faults in Hyprland 0.56 rather than a missing `o`. See [/releases/still-broken/](/releases/still-broken/).
+- **Your `hyprland.lua` is now two lines long.** That is issue #7103. Omarchy's Snapper config covers the root subvolume only (`SUBVOLUME="/"` in `default/snapper/root`), and PR #11222 notes that `/home` is not in the pre-update snapshot. In practice `omarchy refresh hyprland` plus rewriting your bindings is the recovery.
+- **A different Lua error.** A `Runtime error in lua` popup after unbinding a key is [issue #9005](https://github.com/omacom/omarchy/issues/9005), and a `bad_any_cast` crash on mouse input under Hyprland 0.56.2 is [issue #10912](https://github.com/omacom/omarchy/issues/10912). Both were open on 2026-09-16 and neither is a missing `o`.
 - **The error appeared during an update rather than after one.** See [/fix/migration-failed-mid-update/](/fix/migration-failed-mid-update/).
 
 The manual chapter that covers these files is [Dotfiles](https://omarchy.org/manual/dotfiles/). It lists what each `~/.config/hypr/*.lua` file is for and shows the `hl.unbind` plus `o.bind` pattern for replacing a default binding.

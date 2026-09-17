@@ -1,19 +1,19 @@
 ---
 title: "Hibernate fails or hangs on Omarchy"
-description: "Hibernate writes the image but never resumes, or hangs before power-off. Fix the resume hook order, the Btrfs swapfile offset, and NVIDIA early KMS on Omarchy 4."
-answer: "Run omarchy hibernation setup, then fix the two things it gets wrong. Add a zz-sorted mkinitcpio drop-in that moves the resume hook before filesystems, and check resume_offset against btrfs inspect-internal map-swapfile -r /swap/swapfile. On NVIDIA, disable /etc/mkinitcpio.conf.d/nvidia.conf so the resume hook runs before the GPU driver binds. Rebuild with sudo limine-mkinitcpio."
+description: "Hibernate writes the image but never resumes, or hangs before power-off. Check the Btrfs swapfile offset, NVIDIA early KMS, and HibernateMode on Omarchy 4."
+answer: "Run omarchy hibernation setup, then check the two things it does not verify. Compare resume_offset in /etc/limine-entry-tool.d/resume.conf against btrfs inspect-internal map-swapfile -r /swap/swapfile and fix any mismatch. On NVIDIA, move /etc/mkinitcpio.conf.d/nvidia.conf aside so the driver is not loaded in the initramfs where the resume hook runs. Rebuild with sudo limine-mkinitcpio and reboot. If the machine never powers off, set HibernateMode=shutdown."
 appliesTo:
   from: "3.x"
 status: workaround
 category: other
-issueCount: 88
+issueCount: 123
 errorStrings:
   - "Call to Hibernate failed: Not enough suitable swap space for hibernation available on compatible block devices and file systems"
   - "Call to Hibernate failed: Specified resume device is missing or is not an active swap device"
   - "PM: hibernation: Failed to load image, recovering."
   - "PM: hibernation: resume failed (-5)"
   - "nv_pmops_freeze [nvidia] returns -5"
-  - "Failed to start System Hibernate."
+  - "PM: Image not found (code -22)"
 lastVerified: 2026-09-16
 omarchyVersionTested: "4.0.4"
 tags: [hibernate, swapfile, btrfs, limine, resume, nvidia]
@@ -23,6 +23,16 @@ sources:
     kind: manual
     author: "omacom"
     date: "2026-09-15"
+  - url: "https://github.com/omacom/omarchy-iso/blob/quattro/configs/airootfs/usr/share/omarchy-iso/orchestrator/phases_impl.py"
+    title: "omarchy-iso orchestrator: configure_hibernation runs omarchy-hibernation-setup --force --no-rebuild during install"
+    kind: code
+    author: "omacom"
+    date: "2026-09-15"
+  - url: "https://github.com/omacom/omarchy/issues/105"
+    title: "Issue #105: Add support for hibernate"
+    kind: issue
+    author: "dhh"
+    date: "2025-07-09"
   - url: "https://github.com/omacom/omarchy/issues/8471"
     title: "Issue #8471: omarchy-hibernation-setup's HOOKS+=(resume) can never place resume before `filesystems`"
     kind: issue
@@ -73,6 +83,11 @@ sources:
     kind: issue
     author: "janne"
     date: "2026-08-20"
+  - url: "https://github.com/omacom/omarchy/pull/8588"
+    title: "PR #8588: Install system-sleep hooks executable"
+    kind: pr
+    author: "wjax"
+    date: "2026-08-27"
   - url: "https://github.com/omacom/omarchy/issues/5337"
     title: "Issue #5337: Hibernation won't work anyway"
     kind: issue
@@ -86,33 +101,50 @@ sources:
   - url: "https://github.com/omacom/omarchy/issues/4259"
     title: "Issue #4259: Hibernate Crash & systemd-coredump CPU Spike"
     kind: issue
-    author: "sspaeti"
+    author: "virtualabishek"
     date: "2026-01-14"
+  - url: "https://github.com/omacom/omarchy/issues/11127"
+    title: "Issue #11127: Hibernation already setup for PCs"
+    kind: issue
+    author: "QwinkleTee"
+    date: "2026-09-10"
 credits:
-  - name: "manuelbecker123"
-    url: "https://github.com/manuelbecker123"
-    for: "Traced the resume hook landing after filesystems to the = versus += clash between the two mkinitcpio drop-ins"
-  - name: "jorgenfoss"
-    url: "https://github.com/jorgenfoss"
-    for: "Independent report of the same hook ordering defect with a working insert-before-filesystems snippet"
   - name: "unconnect"
     url: "https://github.com/unconnect"
     for: "Isolated the initramfs NVIDIA load as the cause of nv_pmops_freeze returning -EIO on single-GPU desktops"
   - name: "jamielife"
     url: "https://github.com/jamielife"
-    for: "Confirmed that disabling the early NVIDIA mkinitcpio drop-in restores resume"
+    for: "First to confirm that disabling the early NVIDIA mkinitcpio drop-in restores resume on a desktop"
+  - name: "hanshs"
+    url: "https://github.com/hanshs"
+    for: "Confirmed the same fix on a Blackwell dGPU-only desktop and showed why Plymouth still renders"
+  - name: "diegomendi"
+    url: "https://github.com/diegomendi"
+    for: "Traced NVreg_PreserveVideoMemoryAllocations=1 to Arch's gpu-screen-recorder package overriding Omarchy's build"
+  - name: "jorgenfoss"
+    url: "https://github.com/jorgenfoss"
+    for: "Fresh boot logs showing the =0 override fixing resume on nvidia-open-dkms, and the boot-ID test for a real resume"
+  - name: "TechLuddite"
+    url: "https://github.com/TechLuddite"
+    for: "Showed from mkinitcpio's init and kernel logs that the resume hook still runs before root is mounted from last position"
+  - name: "manuelbecker123"
+    url: "https://github.com/manuelbecker123"
+    for: "Documented the = versus += clash that puts the resume hook last in HOOKS"
   - name: "adevwithpurpose"
     url: "https://github.com/adevwithpurpose"
     for: "Showed that hibernation setup never reconciles a stale resume_offset"
+  - name: "mnemonicspace"
+    url: "https://github.com/mnemonicspace"
+    for: "Found that a memfd_secret holder such as Bitwarden Desktop makes the kernel refuse hibernation"
   - name: "wjax"
     url: "https://github.com/wjax"
     for: "Found HibernateMode=shutdown fixes a silent image-creation abort on the Zephyrus G14"
   - name: "sspaeti"
     url: "https://github.com/sspaeti"
-    for: "Documented the AMD resume and amdgpu cmdline combination that stopped post-hibernate crashes"
+    for: "Documented the amdgpu cmdline combination that stopped post-hibernate crashes on a TUXEDO InfinityBook"
 faq:
   - q: "Does Omarchy set up hibernation for me?"
-    a: "On 3.x it did. install/login/hibernation.sh ran omarchy-hibernation-setup --force during the install. That file is gone from the 4.0.4 tree, so on a fresh Omarchy 4 install you normally run omarchy hibernation setup yourself. Some users still report it already configured on 4.0.2, so check with swapon --show before assuming either way."
+    a: "Yes, on a fresh install. The Omarchy 4 ISO runs omarchy-hibernation-setup --force --no-rebuild from its configure_hibernation phase, and 3.x did the same from install/login/hibernation.sh. That is why #11127 found a 39 GB swapfile on a fresh 4.0.2 desktop. If you do not want it, run omarchy hibernation remove, then delete /etc/limine-entry-tool.d/resume.conf yourself and rebuild."
   - q: "How much disk does hibernation cost?"
     a: "A swapfile the size of your physical RAM, in a /swap Btrfs subvolume on the boot drive. 32 GB of RAM means a 32 GB file. On a small partition this can eat most of your free space."
   - q: "Why do I get asked for a password twice?"
@@ -127,7 +159,7 @@ Hibernate on Omarchy has two common failure shapes. Either the image is written 
 
 ## The fix
 
-Work through these in order. Steps 1 to 4 apply to every machine. Step 5 is NVIDIA only.
+Work through these in order. Steps 1 to 3 apply to every machine. Step 4 is NVIDIA only.
 
 **1. Confirm the kernel will accept hibernation at all.**
 
@@ -137,7 +169,7 @@ cat /sys/power/disk    # must not be "[disabled]"
 swapon --show
 ```
 
-`omarchy hibernation available` does not check `/sys/power/state`. It only looks for `/sys/power/image_size`, non-zram swap larger than the image size, and `/etc/mkinitcpio.conf.d/omarchy_resume.conf`. mnemonicspace showed in issue #7730 that all three can pass while `/sys/power/disk` reads `[disabled]`, which is why the Hibernate menu item can appear and then do nothing.
+`omarchy hibernation available` does not check `/sys/power/state`. It only looks for `/sys/power/image_size`, non-zram swap larger than the image size, and `/etc/mkinitcpio.conf.d/omarchy_resume.conf`. mnemonicspace showed in issue #7730 that all three can pass while `/sys/power/disk` reads `[disabled]`, which is why the Hibernate menu item can appear and then do nothing. In that thread the cause turned out to be Bitwarden Desktop holding a `memfd_secret` file, which the kernel treats as a hibernation blocker. Closing it, or launching it with `SECURE_KEY_CONTAINER_BACKEND=mlock`, brought `disk` back.
 
 **2. Set hibernation up if it is not already there.**
 
@@ -145,28 +177,9 @@ swapon --show
 omarchy hibernation setup
 ```
 
-This needs Limine and Btrfs. It creates a `/swap` subvolume with a swapfile the size of your RAM, adds it to `/etc/fstab`, writes `HOOKS+=(resume)` to `/etc/mkinitcpio.conf.d/omarchy_resume.conf`, and writes `resume=` plus `resume_offset=` to `/etc/limine-entry-tool.d/resume.conf`. On 3.x the same values were also appended to `/etc/default/limine`. Omarchy 4 writes only the drop-in.
+This needs Limine and Btrfs. It creates a `/swap` subvolume with a swapfile the size of your RAM, adds it to `/etc/fstab`, writes `HOOKS+=(resume)` to `/etc/mkinitcpio.conf.d/omarchy_resume.conf`, and writes `resume=` plus `resume_offset=` to `/etc/limine-entry-tool.d/resume.conf`. On 3.x the same values were also appended to `/etc/default/limine`. Omarchy 4 writes only the drop-in. If it prints `Hibernation is already set up`, it changed nothing, which matters for the next step.
 
-**3. Move the resume hook before `filesystems`.**
-
-This is the defect that breaks resume on machines with no GPU complications. `omarchy_hooks.conf` reassigns the whole array with `HOOKS=(...)`, and `omarchy_resume.conf` only appends, so `resume` always lands last, after root has already been mounted. manuelbecker123 documented the sort-order clash in issue #8471 and jorgenfoss reported the same thing independently in #10375.
-
-Create `/etc/mkinitcpio.conf.d/zz-resume-position.conf` with sudo:
-
-```sh
-_h=()
-for _hook in "${HOOKS[@]}"; do
-  [[ $_hook == resume ]] && continue
-  [[ $_hook == filesystems ]] && _h+=(resume)
-  _h+=("$_hook")
-done
-HOOKS=("${_h[@]}")
-unset _h _hook
-```
-
-The `zz-` prefix matters. The file has to sort after both `omarchy_hooks.conf` and `omarchy_resume.conf`.
-
-**4. Check the resume offset actually matches the swapfile.**
+**3. Check the resume offset actually matches the swapfile.**
 
 ```bash
 sudo btrfs inspect-internal map-swapfile -r /swap/swapfile
@@ -182,7 +195,7 @@ sudo limine-mkinitcpio
 sudo reboot
 ```
 
-**5. On NVIDIA, take the driver out of the initramfs.**
+**4. On NVIDIA, take the driver out of the initramfs.**
 
 ```bash
 sudo mv /etc/mkinitcpio.conf.d/nvidia.conf /etc/mkinitcpio.conf.d/nvidia.conf.disabled
@@ -190,53 +203,49 @@ sudo limine-mkinitcpio
 sudo reboot
 ```
 
-You lose the graphical Plymouth LUKS prompt on a single-GPU box. NVIDIA still loads in userspace and `nvidia-smi` still works.
+This is the change reported working on single-GPU desktops across Ampere, Ada and Blackwell in issues #5554 and #10039. NVIDIA still loads once the root filesystem is up and `nvidia-smi` still works. The cost is a plainer LUKS prompt on a single-GPU box, since Plymouth falls back to the firmware framebuffer. The installer writes this file from `install/hardware/nvidia.sh`, so re-check it after a reinstall or a major upgrade.
+
+On a hybrid laptop there is a lighter option. The `-5` failure needs `NVreg_PreserveVideoMemoryAllocations=1`, and on Omarchy that value comes from `/usr/lib/modprobe.d/gsr-nvidia.conf`, installed by Arch's `gpu-screen-recorder` package. Appending `options nvidia NVreg_PreserveVideoMemoryAllocations=0` to `/etc/modprobe.d/nvidia.conf` sorts after it and wins. diegomendi and jorgenfoss both confirmed resume working with only that change, on a Radeon 680M plus RTX 4050 laptop in #5554 and an ASUS ProArt P16 in #10375.
 
 ## Verify it worked
 
-Before the test, check the hook order that mkinitcpio will actually build:
-
-```bash
-bash -c 'source /etc/mkinitcpio.conf
-         for f in /etc/mkinitcpio.conf.d/*.conf; do source "$f"; done
-         printf "%s\n" "${HOOKS[@]}" | nl'
-```
-
-`resume` should sit immediately before `filesystems`, and after `encrypt` on a LUKS install. Then check the live cmdline:
+Check the live cmdline first:
 
 ```bash
 tr ' ' '\n' < /proc/cmdline | grep resume
 ```
 
-Now hibernate. Use the unit rather than the menu action, because `systemctl hibernate` returns as soon as logind takes the request:
+Now hibernate with `systemctl hibernate`, power back on, and look at the boot list:
 
 ```bash
-sudo systemctl start systemd-hibernate.service
+journalctl --list-boots | tail -3
 ```
 
-Power back on and read the journal for the boot you just came back into:
+A real resume keeps the same boot ID before and after, because the restored image is the old kernel instance. A failed resume shows up as a new boot. jorgenfoss pointed this out in #10375 as a cleaner test than grepping for strings. If you want the strings anyway:
 
 ```bash
-journalctl -b | grep -i 'hibernation\|Image signature'
+journalctl -b -k | grep -E 'PM: |resume'
 ```
 
-A good run shows the image signature found, the image successfully loaded, and `hibernation exit`. A failed restore shows `PM: hibernation: Failed to load image, recovering.` If the machine hung instead, the evidence is in the next boot's journal, not the failed one. Once userspace is frozen, journald has stopped writing.
+A good run shows `Image signature found`, `Image successfully loaded`, and `hibernation exit`. `PM: Image not found (code -22)` means the hook ran and found nothing at the offset, so go back to step 3. `Failed to load image, recovering` after a full load is the NVIDIA case. If the machine hung instead, the evidence is in the next boot's journal, not the failed one. Once userspace is frozen, journald has stopped writing.
 
 ## Why it happens
 
-Hibernation on Omarchy stacks four fragile things. The swap is a file on Btrfs, so the kernel needs a physical block offset rather than a device, and that offset changes if the file is ever recreated. The root is LUKS, so the resume hook has to run after `encrypt` but before `filesystems`, and Omarchy's two mkinitcpio drop-ins cannot express that ordering between them. The boot is a Limine UKI, so every cmdline change needs a rebuild. And zram sits at priority 100 covering all of RAM since 4.0.0, above the disk swapfile at priority 0, which is correct but makes `swapon --show` confusing to read.
+Hibernation on Omarchy stacks four fragile things. The swap is a file on Btrfs, so the kernel needs a physical block offset rather than a device, and that offset changes if the file is ever recreated. The root is LUKS, so the resume hook has to run after `encrypt`. The boot is a Limine UKI, so every cmdline change needs a rebuild. And zram sits at priority 100 above the disk swapfile at priority 0, sized to all of RAM since 4.0.0, which is correct but makes `swapon --show` confusing to read.
 
-The NVIDIA case is separate and worse. Omarchy early-loads `nvidia`, `nvidia_modeset`, `nvidia_uvm` and `nvidia_drm` from the initramfs for the Plymouth LUKS screen. The resume hook runs in that same initramfs, after the driver has bound to the card. With `NVreg_PreserveVideoMemoryAllocations` set to 1, the driver demands a `/proc/driver/nvidia/suspend` handshake that was performed by the old kernel's userspace and cannot carry over, so `nv_pmops_freeze` returns `-EIO` and the restore is discarded. unconnect laid this out in issue #10039. Issue #5554 is the tracking issue and it is still open.
+One thing that looks broken is not. `omarchy_hooks.conf` reassigns the whole array with `HOOKS=(...)` and `omarchy_resume.conf` only appends, so `resume` always lands last, after `filesystems`. manuelbecker123 documented the sort-order clash in issue #8471 and jorgenfoss reported it in #10375. But `filesystems` and `fsck` have no runtime hook, and mkinitcpio's init runs every `run_hook` before it mounts anything, so `resume` at the end is still the next hook after `encrypt`. TechLuddite showed this from a kernel log in #8471, and jorgenfoss's own failed boot in #10375 had the image fully loaded before NVIDIA aborted it. Reordering the hook is not the fix.
+
+The NVIDIA case is separate and worse. Omarchy early-loads `nvidia`, `nvidia_modeset`, `nvidia_uvm` and `nvidia_drm` from the initramfs for early KMS at the LUKS prompt. The resume hook runs in that same initramfs, after the driver has bound to the card. With `NVreg_PreserveVideoMemoryAllocations` set to 1, the driver refuses a freeze that did not come through its own suspend path, so `nv_pmops_freeze` returns `-EIO` and the kernel discards the restore. unconnect laid this out in issue #10039. Issue #5554 is the tracking issue and it is still open.
 
 ## If that did not work
 
 **Image written, machine never powers off.** wjax found in issue #8589 that the kernel can abort silently during image creation on an s2idle-only machine. Create `/etc/systemd/sleep.conf.d/hibernate-mode.conf` containing a `[Sleep]` section with `HibernateMode=shutdown`.
 
-**Hybrid ASUS ROG.** Omarchy ships a `force-igpu` sleep hook that detaches the dGPU through supergfxctl before hibernate, but rdelpiano showed in issue #9696 that neither the hook nor supergfxctl is installed unless you have run `omarchy toggle hybrid gpu`. Run it.
+**Hybrid ASUS ROG.** Omarchy ships a `force-igpu` sleep hook that detaches the dGPU through supergfxctl before hibernate, but rdelpiano showed in issue #9696 that neither the hook nor supergfxctl is installed unless you have run `omarchy toggle hybrid gpu`. Run it. On 4.0.0 to 4.0.2 the toggle copied the hook without the executable bit, per PR #8588, so also check that `stat -c %A /usr/lib/systemd/system-sleep/force-igpu` starts with `-rwx`.
 
-**Single NVIDIA GPU with no iGPU.** There is no reliable answer yet. Both settings of `NVreg_PreserveVideoMemoryAllocations` have been reported failing on Blackwell and Ada in #5554, one with a failed restore and the other with Xid faults after resume. Treat hibernate as unavailable on these machines for now.
+**NVIDIA desktop still cold-boots after step 4.** hanshs got a Blackwell 5070 Ti desktop resuming in #5554 with the drop-in disabled plus `nvidia-suspend.service`, `nvidia-hibernate.service` and `nvidia-resume.service` enabled. A different symptom, the image written and restored but the machine never powering off, is the NVIDIA `.shutdown` hang that tzalkind and asmyshlyaev177 reported in the same thread. No module parameter avoids it.
 
-**AMD crashes after resume.** sspaeti reported in issue #4259 that adding `amdgpu.gpu_recovery=1` and `amdgpu.noretry=0` to the kernel cmdline, later with `amdgpu.cwsr_enable=0`, ended the post-hibernate crashes on a TUXEDO InfinityBook. That was on 3.x, where the cmdline lived in `/etc/default/limine`. On 4.x put it in a `/etc/limine-entry-tool.d/` drop-in instead.
+**AMD crashes after resume.** sspaeti reported in issue #4259 that adding `amdgpu.gpu_recovery=1` and `amdgpu.noretry=0` to the kernel cmdline, later with `amdgpu.ip_block_mask=0xfffff7ff` and `amdgpu.cwsr_enable=0`, ended the post-hibernate crashes on a TUXEDO InfinityBook Pro 14. That was on 3.x, where the cmdline lived in `/etc/default/limine`. On 4.x put it in a `/etc/limine-entry-tool.d/` drop-in instead.
 
 **You removed hibernation and boot got worse.** `omarchy hibernation remove` deletes the swapfile and the mkinitcpio hook but leaves `/etc/limine-entry-tool.d/resume.conf` in place, so the rebuilt UKI still carries `resume=` pointing at blocks that no longer hold a swapfile. brenodyego reported this in issue #10037. Delete the drop-in yourself, then run `sudo limine-mkinitcpio`.
 
@@ -244,7 +253,7 @@ The NVIDIA case is separate and worse. Omarchy early-loads `nvidia`, `nvidia_mod
 
 ## Related
 
-- The [System sleep](https://omarchy.org/manual/system-sleep/) chapter of the official manual
+- The [System sleep](https://omarchy.org/manual/system-sleep/) chapter of the Omarchy manual
 - [Suspend will not resume from s2idle](/fix/suspend-wont-resume-s2idle/)
 - [NVIDIA drivers on Omarchy 4](/fix/nvidia-drivers-omarchy-4/)
 - [Hybrid GPU laptop black screen](/fix/hybrid-gpu-laptop-black-screen-aq-drm-devices/)

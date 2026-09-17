@@ -1,7 +1,7 @@
 ---
 title: "Intel Macs with the Apple T2 chip on Omarchy"
 description: "What works and what breaks on T2 Macs running Omarchy 4.x: the linux-t2 kernel, the quirk scripts the installer applies, open issues, and the fix order."
-answer: "Omarchy detects the T2 by PCI ID 106b:1801 or 106b:1802 and installs the linux-t2 kernel, apple-t2-audio-config, apple-bcm-firmware and t2fanrd automatically. Keyboard, trackpad, Wi-Fi, audio, fans and the Touch Bar usually work. Suspend, hybrid graphics on the 16-inch, USB hot-plug and AMD-only iMacs are the weak spots. Start by confirming you booted linux-t2."
+answer: "Omarchy detects the T2 by PCI ID 106b:1801 or 106b:1802 and installs the linux-t2 kernel, apple-t2-audio-config, apple-bcm-firmware and t2fanrd automatically. Keyboard, trackpad, Wi-Fi, audio, fans and the Touch Bar usually work. Suspend, hybrid graphics on the 16-inch, USB hot-plug and the AMD-only 2020 iMac are the weak spots. Start by confirming you booted linux-t2."
 appliesTo:
   from: "4.0.0"
 status: info
@@ -55,7 +55,7 @@ sources:
   - url: "https://github.com/omacom/omarchy/issues/8271"
     title: "Issue #8271: Installer erases T1/T2 firmware on Apple hardware, permanently disabling Touch Bar / camera / Touch ID"
     kind: issue
-    author: "omarchybot"
+    author: "PaulShadwell"
     date: "2026-08-25"
   - url: "https://github.com/omacom/omarchy/issues/10825"
     title: "Issue #10825: Touch Bar dead on T1 Macs: macbook12-spi-driver DKMS never builds"
@@ -87,6 +87,36 @@ sources:
     kind: issue
     author: "djfergus"
     date: "2026-09-08"
+  - url: "https://github.com/omacom/omarchy/issues/6608"
+    title: "Issue #6608: Follow up to #6559 - update fix-t2.sh and migrations/1785944594.sh to not use grep -q"
+    kind: issue
+    author: "twilightresonance86"
+    date: "2026-08-07"
+  - url: "https://github.com/omacom/omarchy/issues/6833"
+    title: "Issue #6833: Keyboard layout bar widget can switch the wrong device on T2 Macs (Apple Headset phantom keyboard not excluded)"
+    kind: issue
+    author: "brwaters"
+    date: "2026-08-13"
+  - url: "https://github.com/omacom/omarchy/issues/10121"
+    title: "Issue #10121: T2 Macs: battery charge limiting is unreachable, applesmc binds no device and the t2bce stack has no SMC transport"
+    kind: issue
+    author: "ratandeepbansal"
+    date: "2026-09-04"
+  - url: "https://github.com/omacom/omarchy/issues/2291"
+    title: "Issue #2291: Keyboard backlight support for T2 macbooks"
+    kind: issue
+    author: "satyapraneet63"
+    date: "2025-10-07"
+  - url: "https://github.com/omacom/omarchy/pull/5145"
+    title: "PR #5145: Fix Bluetooth on T2 Macs by loading hci_bcm4377 module"
+    kind: pr
+    author: "fedesapuppo"
+    date: "2026-04-01"
+  - url: "https://github.com/omacom/omarchy/pull/5135"
+    title: "PR #5135: Use percentage-based step for keyboard backlight brightness"
+    kind: pr
+    author: "fedesapuppo"
+    date: "2026-04-01"
   - url: "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-t2.sh"
     title: "install/hardware/apple/fix-t2.sh at v4.0.4"
     kind: commit
@@ -116,20 +146,20 @@ faq:
   - q: "Do I need tiny-dfr for the Touch Bar?"
     a: "Not on 4.x. Omarchy deliberately does not install it, and its own test asserts that. The Touch Bar runs on the kernel's in-tree hid_appletb_kbd path."
   - q: "Can I dual boot macOS?"
-    a: "The manual says Omarchy supports being the only OS, and the full-disk install wipes the partition table. On T1 Macs that also destroys firmware stored on the Apple ESP, per issue 8271."
+    a: "The manual says Omarchy supports being the only OS, and the full-disk install wipes the partition table. On T1 Macs that also destroys firmware stored on the Apple ESP, per issue 8271. Reporters on that thread who kept macOS used the installer's free-space option, which creates a second ESP and leaves Apple's alone."
 related: [suspend-sleep, hybrid-gpu, wifi, audio, apple-macbook-pro-intel, apple-silicon-asahi]
 draft: false
 ---
 
-Intel Macs with the Apple T2 Security Chip are the best supported Apple hardware on Omarchy. The T2 sits between the CPU and the keyboard, trackpad, audio, webcam, storage and Wi-Fi, so a stock Arch kernel sees almost nothing. Omarchy handles this by swapping in the community `linux-t2` kernel and a small pile of quirks.
+Intel Macs with the Apple T2 Security Chip get more installer attention than any other Apple hardware on Omarchy. The T2 sits between the CPU and the keyboard, trackpad, audio, webcam, storage and Wi-Fi, so a stock Arch kernel sees almost nothing. Omarchy handles this by swapping in the community `linux-t2` kernel and a small pile of quirks.
 
 ## Status on 4.0.4
 
 Verified against the v4.0.4 source tree and against issues filed on 4.0.2, 4.0.3 and 4.0.4.
 
-Working for most reporters: internal keyboard and trackpad, Wi-Fi and Bluetooth, speakers and microphone, fan control, the webcam, and the Touch Bar. On issue 8271 a reporter running a 2019 T2 MacBook Pro confirmed the Touch Bar, the Escape key and the webcam all still work after an ordinary install.
+Working for most reporters: internal keyboard and trackpad, Wi-Fi and Bluetooth, speakers, fan control, the webcam, and the Touch Bar. On issue 8271 a reporter running a 2019 T2 MacBook Pro confirmed the Touch Bar, the Escape key and the webcam all still work after an ordinary install.
 
-Unreliable: suspend and resume, hybrid graphics on the 16-inch models, USB hot-plug, and any T2 Mac whose only display adapter is AMD. Battery charge limiting is not reachable at all on T2, because the machine has no SMC transport the kernel can use (issue 10121).
+Unreliable: suspend and resume, hybrid graphics on the 16-inch models, USB hot-plug, and the 2020 27-inch iMac, whose only display adapter is AMD. Battery charge limiting is not reachable at all on T2, because the machine has no SMC transport the kernel can use (issue 10121).
 
 One 4.0.4 detail matters here. The release shipped the bespoke `linux-omarchy` kernel to everyone else, but the migration that installs it exits immediately if `linux-t2` is installed or the running kernel name contains `-t2`. T2 Macs stay on `linux-t2`. A later migration installs `linux-t2-headers` if the installer skipped them.
 
@@ -158,20 +188,20 @@ Two more Apple scripts run but target pre-T2 and T1 machines, not yours: `fix-sp
 
 | Issue | Models | Status | Fixed in |
 | --- | --- | --- | --- |
-| [#12197](https://github.com/omacom/omarchy/issues/12197) amdgpu SMU init fails, black screen before the LUKS prompt | iMac20,1 and iMac20,2 | open | |
+| [#12197](https://github.com/omacom/omarchy/issues/12197) amdgpu SMU init fails, black screen before the LUKS prompt | iMac20,1 | open | |
 | [#11926](https://github.com/omacom/omarchy/issues/11926) USB hot-plug dead unless the device was plugged in at boot | MacBookPro16,1 | open | |
 | [#6862](https://github.com/omacom/omarchy/issues/6862) `deep` never resumes, `s2idle` hangs on the second suspend | MacBookPro15,1, MacBookPro16,1 | open | |
 | [#9609](https://github.com/omacom/omarchy/issues/9609) gmux leaves the panel on the AMD dGPU and hangs at session start | MacBookPro16,1 | open | |
-| [#3883](https://github.com/omacom/omarchy/issues/3883) keyboard, wake from suspend and webcam after lid close | 2018 to 2019 T2 laptops | open | |
-| [#10815](https://github.com/omacom/omarchy/issues/10815) trackpad `disable_while_typing` ignored, trackpad classified external | MacBookPro16,1, MacBookAir9,1 | open | |
+| [#3883](https://github.com/omacom/omarchy/issues/3883) keyboard dead during setup, no wake from suspend, webcam not detected | 2018 to 2020 T2 laptops | open | |
+| [#10815](https://github.com/omacom/omarchy/issues/10815) trackpad `disable_while_typing` ignored, trackpad classified external | MacBookPro15,2, MacBookAir9,1, MacBookPro16,1 | open | |
 | [#6833](https://github.com/omacom/omarchy/issues/6833) keyboard layout widget switches the phantom "Apple Headset" device | all T2 | open | |
 | [#7347](https://github.com/omacom/omarchy/issues/7347) overlay installs get a branding-only Limine config and no `linux-t2` entry | MacBookPro16,3 via t2archinstall | open | |
 | [#8271](https://github.com/omacom/omarchy/issues/8271) full-disk install erases the Apple ESP holding T1 firmware | T1 only: 13,2 13,3 14,2 14,3 | open | |
-| [#10825](https://github.com/omacom/omarchy/issues/10825) Touch Bar dead, `macbook12-spi-driver` DKMS never builds | T1 MacBookPro13,3 | open | |
-| [#6559](https://github.com/omacom/omarchy/issues/6559) stale suspend and fan defaults, plus a `pipefail` false negative in the T2 check | all T2 | fixed | 4.0.0 |
+| [#10825](https://github.com/omacom/omarchy/issues/10825) Touch Bar dead, `macbook12-spi-driver` DKMS never builds | T1 MacBookPro13,3, MacBookPro14,3 | open | |
+| [#6559](https://github.com/omacom/omarchy/issues/6559) stale suspend and fan defaults, and the `pipefail` false negative in the T2 check filed as [#6608](https://github.com/omacom/omarchy/issues/6608) | all T2 | fixed | 4.0.0 |
 | [#6558](https://github.com/omacom/omarchy/issues/6558) brightness stuck at 100 percent, backlight resolved to the Touch Bar | Touch Bar T2 laptops | fixed | 4.0.0 |
 | [#4402](https://github.com/omacom/omarchy/issues/4402) Bluetooth menu opens and closes instantly | all T2 | fixed | 3.5.0 |
-| [#2291](https://github.com/omacom/omarchy/issues/2291) no keyboard backlight keys | all T2 | fixed | 3.5.0 |
+| [#2291](https://github.com/omacom/omarchy/issues/2291) keyboard backlight keys step 1 of 512 levels, so nothing visibly changes | all T2 | fixed | 3.5.0 |
 
 The T1 rows are here because owners of 2016 and 2017 Touch Bar Macs routinely read themselves into the T2 section of the manual. Check `lspci -nn | grep 106b:180`. No output means no T2.
 
@@ -181,11 +211,11 @@ Work down this list in order.
 
 1. Confirm the kernel. `uname -r` should contain `-t2`. If it does not, the T2 detection never fired and nothing else here applies.
 2. Confirm the command line actually took. Run `cat /proc/cmdline` and look for `mem_sleep_default=deep`. On issue 1840 a commenter pointed out that if `/etc/default/limine` uses `KERNEL_CMDLINE[default]=` rather than `+=`, it overwrites every drop-in including `t2-mac.conf`. Change it to `+=` and run `sudo limine-update`.
-3. If suspend dies immediately rather than failing to resume, try `mem_sleep_default=s2idle` instead. Two reporters on issue 6862 say `deep` kills the 16,1 outright. Neither mode is reliable on the 15,1 and 16,1 yet, and there is no upstream fix.
+3. If suspend dies immediately rather than failing to resume, try `mem_sleep_default=s2idle` instead. The reporter on issue 6862 says `deep` never resumes on the 15,1, and one commenter adds that it kills the 16,1 outright. On the 15,1, `s2idle` survived exactly one cycle before Thunderbolt failed to resume. Neither mode is reliable on the 15,1 and 16,1 yet, and there is no upstream fix.
 4. If brightness is pinned at 100 percent, run `omarchy-hw-display`. It should print `gmux_backlight` or `intel_backlight`, never `appletb_backlight`. If it prints the Touch Bar, your install predates 4.0.0 and needs `omarchy update`.
 5. If Wi-Fi reports a wrong password on a WPA2 or WPA3 network, check `/etc/modprobe.d/brcmfmac.conf` for `feature_disable=0x82000`, then reboot.
 6. If the Bluetooth menu closes instantly, check that `/etc/modules-load.d/t2.conf` lists `hci_bcm4377`.
-7. For hybrid graphics hangs at session start on the 16-inch, one reporter on issue 6559 boots with `apple_gmux.force_igd=1`. That forces the integrated GPU and is a workaround, not a fix.
+7. For hybrid graphics hangs at session start on the 16-inch, the reporter on issue 9609 boots with `apple_gmux.force_igd=1` and persists it as `options apple-gmux force_igd=y` in `/etc/modprobe.d/apple-gmux.conf`. A commenter on issue 6559 hit the same black screen on the Quattro edge ISO and used the same flag. It hands the panel to the integrated GPU, the reporter had not tested external displays with it, and it is a workaround, not a fix.
 
 Do not install the `facetimehd` driver on a T2 machine. A contributor corrected their own earlier advice on issue 3883: the T2 webcam comes through the bridge driver and `uvcvideo`, both already in `linux-t2`, and `facetimehd` is for pre-T2 Broadcom cameras.
 

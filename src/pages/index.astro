@@ -3,8 +3,9 @@ import Base from '../layouts/Base.astro';
 import { SITE } from '../lib/site';
 import { visible } from '../lib/content';
 import { latestRelease, latestVersion, issueStats, facts, commands, bindings } from '../lib/data';
-const fixes = (await visible('fix')).slice(0, 8);
-const hw = (await visible('hardware')).filter((e: any) => e.data.kind === 'model').slice(0, 6);
+const fixes = (await visible('fix')).sort((a: any, b: any) => (b.data.issueCount ?? 0) - (a.data.issueCount ?? 0)).slice(0, 8);
+const RANK: Record<string, number> = { gold: 0, silver: 1, bronze: 2, experimental: 3, broken: 4, unrated: 5 };
+const hw = (await visible('hardware')).filter((e: any) => e.data.kind === 'model').sort((a: any, b: any) => (RANK[a.data.rating] ?? 9) - (RANK[b.data.rating] ?? 9) || (b.data.issueCount ?? 0) - (a.data.issueCount ?? 0)).slice(0, 6);
 const latest = latestRelease() ?? { tag: 'v' + latestVersion(), date: '' };
 const stats = issueStats();
 const f = facts();
@@ -34,13 +35,14 @@ const nKeys = bindings().length;
 
   <section class="two" style="margin-top:36px">
     <div>
-      <h2>Recently verified fixes</h2>
+      <h2>Most-reported problems</h2>
+      <p class="small muted">Ranked by how many upstream issues mention the problem. Every page is version-stamped.</p>
       {fixes.length === 0 && <p class="muted">Fix pages are being written. Check back shortly.</p>}
       <ul class="list-plain">{fixes.map((e: any) => <li><a href={`/fix/${e.id}/`}>{e.data.title}</a><br /><span class="small muted">{e.data.description}</span></li>)}</ul>
       <p><a href="/fix/">All fixes →</a></p>
     </div>
     <div>
-      <h2>Machines with reports</h2>
+      <h2>Machines people actually run</h2>
       {hw.length === 0 && <p class="muted">Model pages are being written from the issue tracker and community reports.</p>}
       <ul class="list-plain">{hw.map((e: any) => <li><a href={`/hardware/${e.id}/`}>{e.data.title}</a> <span class={`pill pill-${e.data.rating}`}>{e.data.rating}</span></li>)}</ul>
       <p><a href="/hardware/">Full hardware index →</a> · <a href="/hardware/submit/">Submit a report</a></p>

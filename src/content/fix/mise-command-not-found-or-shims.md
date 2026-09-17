@@ -12,7 +12,6 @@ errorStrings:
   - "bash: claude: command not found"
   - "mise ~/.config/mise/config.toml tools: gh@2.100.0"
   - "warning: invalid credential line: mise ~/.config/mise/config.toml tools: gh@2.100.0"
-  - "mise ERROR Failed to install core:node@lts:"
   - "No module named build"
 lastVerified: 2026-09-16
 omarchyVersionTested: "4.0.4"
@@ -131,7 +130,7 @@ Pick the symptom you actually have.
 command -v mise || sudo pacman -S --needed mise-bin
 ```
 
-Omarchy 4.0.1 added a migration that swaps Arch's `mise` for `mise-bin` from the Omarchy repo in a single pacman transaction. If that migration failed mid-update you can be left with neither. The command above puts `mise-bin` back.
+Omarchy 4.0.1 added a migration that swaps Arch's `mise` for `mise-bin` from the Omarchy repo in a single pacman transaction. The swap happens in one go because `omarchy-zsh` and `omarchy-fish` depend on `mise`, so removing it first would break them. The command above installs `mise-bin` if no `mise` is on your `PATH`.
 
 **2. A wrapped command is missing (`bash: claude: command not found`).** Regenerate every shipped stub, then open a new shell.
 
@@ -140,7 +139,7 @@ omarchy-refresh-applications
 exec bash
 ```
 
-That command reruns `install/user/mise.sh`, which calls `omarchy-mise-install` for `codex`, `claude`, `crush`, `gemini`, `gh`, `copilot`, `opencode`, `playwright`, `pi`, `omp`, `grok`, `cursor-agent`, `ghui`, `hunk` and `muse`.
+That command reruns `install/user/mise.sh`, which calls `omarchy-mise-install` for `codex`, `claude`, `crush`, `gemini`, `gh`, `copilot`, `opencode`, `playwright`, `pi`, `omp`, `grok`, `cursor-agent`, `ghui`, `hunk` and `muse` (`cursor-agent` and `muse` only when nothing by that name is already installed).
 
 If nothing comes back, check whether you opted out:
 
@@ -148,7 +147,7 @@ If nothing comes back, check whether you opted out:
 ls ~/.local/state/omarchy/preinstalls-removed
 ```
 
-If that file exists, `omarchy-remove-preinstalls` deleted the stubs on purpose and the migrations skip you. Delete the marker and rerun `omarchy-refresh-applications` to opt back in.
+If that file exists, `omarchy-remove-preinstalls` deleted the stubs on purpose and the migrations that add new agents skip you. `omarchy-refresh-applications` ignores the marker and writes the stubs anyway. Run `omarchy-install-preinstalls` instead if you want the marker cleared and the rest of the preinstalls back as well.
 
 **3. The command hangs and repeats a `tools:` line forever.** Run any mise command first so mise prepends its install directory, then try again:
 
@@ -165,7 +164,7 @@ printf '#!/bin/bash\nexec "%s" "$@"\n' "$(mise which gh)" > ~/.local/bin/gh
 chmod +x ~/.local/bin/gh
 ```
 
-An `omarchy update` can regenerate the stub and undo this, so expect to reapply it.
+A later migration can rewrite that file with a fresh stub, so keep your replacement somewhere you can copy it back from.
 
 **4. Output is prefixed with `mise ~/.config/mise/config.toml tools: gh@...`.** That line is stdout, not stderr, so it corrupts pipes. It breaks `git push` when `gh` is your credential helper. Regenerate the stubs as in step 2, then confirm the stub carries `--quiet`.
 
@@ -191,9 +190,9 @@ which python               # expect /usr/bin/python if you ran mise unuse
 
 In 3.x these commands were npx wrappers written by `omarchy-npx-install`, which resolved a package through `npx` against mise's Node. Quattro replaced that with `omarchy-mise-install`, and the v4.0.0 notes describe the switch of lazy-loaded tools from npm to mise. The generated stub is three lines: export `MISE_MINIMUM_RELEASE_AGE=0`, run `mise use -g --quiet <package>`, then `exec mise x <package> -- <bin> "$@"`.
 
-The loop comes from that last line. `mise x` resolves the final `<bin>` by name through `PATH`, and `~/.local/bin` holds the stub itself. If mise has not put its install directory ahead of `~/.local/bin`, the stub execs itself. Because it is `exec`, the process count never grows, so nothing looks wrong in a process list. Issue #6349 traced this; the reporter notes that `~/.local/bin` sitting before mise's install dir is enough to trigger it. Issue #3685 explains why that happens on a stock install: `default/bash/init` runs `mise activate bash` first, then starship and zoxide, and the mise hook gets dropped from `PROMPT_COMMAND`. Issues #7234 and #8990 cover the residual cases and were still open when this page was checked against 4.0.4.
+The loop comes from that last line. `mise x` resolves the final `<bin>` by name through `PATH`, and `~/.local/bin` holds the stub itself. If mise has not put its install directory ahead of `~/.local/bin`, the stub execs itself. Since each hop is an `exec`, one PID spins at full CPU instead of a growing tree of processes, so a process list looks almost normal. Issue #6349 found the original form of the loop, when the stub ran `exec` on the bare bin name, and the reporter notes that `~/.local/bin` sitting before mise's install dir is enough to trigger it. Issue #3685 explains why that happens on a stock install: `default/bash/init` runs `mise activate bash` first, then starship and zoxide, and the mise hook gets dropped from `PROMPT_COMMAND`. Routing the final exec through `mise x` fixed only that ordering case. Issues #7234, #7360 and #8990 show the current template still loops whenever `mise x` falls back to a plain PATH lookup, for example after an interrupted first install left an empty version directory, or when a GUI app spawns the stub. All three were still open when this page was checked against 4.0.4.
 
-The stdout banner is separate. `mise use -g` announces the resolved tool on stdout. PR #6940 added `--quiet` and shipped in 4.0.1, but nothing regenerates stubs written earlier. Issue #11971 shows the bulk regeneration migration still matching the pre-Quattro wrapper format, so it silently skips every current stub.
+The stdout banner is separate. `mise use -g` prints the tool it resolved, and it prints that line to stdout rather than stderr. PR #6940 added `--quiet` and shipped in 4.0.1, but nothing regenerates stubs written earlier. Issue #11971 shows the bulk regeneration migration still matching the wrapper format from before the July 2026 loop fix (a bare `exec` of the bin), so it skips every current stub without saying so.
 
 The 4.0.3 hardening is PR #7994. It quotes the package and bin names with `printf %q` before they are written into the stub, and refuses command names containing a slash, a leading dot, a leading dash or control characters. Before that, a package name containing `$(...)` became live shell in the stub, and a name like `../../evil` wrote and deleted files outside `~/.local/bin`. Nothing Omarchy ships passed such names, so this matters only if you call `omarchy-mise-install` yourself. 4.0.3 also set `upgrade.auto_prune false`, so `mise up` stops deleting a version a running process is still executing from.
 

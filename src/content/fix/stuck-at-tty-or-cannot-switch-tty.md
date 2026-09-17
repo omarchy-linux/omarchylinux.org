@@ -10,7 +10,7 @@ omarchyVersionTested: "4.0.4"
 category: boot
 issueCount: 165
 errorStrings:
-  - "failed to get hyprland version string (bad json)"
+  - "failed to obtain hyprland version string (bad json)"
   - "Greeter stopped. SDDM::Auth::HELPER_TTY_ERROR"
   - "wayland-wm-env@hyprland.desktop.service: Failed with result 'exit-code'."
   - "Unknown Omarchy command: omarchy debug"
@@ -66,7 +66,7 @@ credits:
     for: "Found that SwitchToGreeter relaunches the greeter onto the occupied VT and freezes the display"
   - name: "mayounderrated"
     url: "https://github.com/mayounderrated"
-    for: "Spotted a stale /usr/local/bin/start-hyprland shadowing the packaged one in PATH"
+    for: "Reported a stale /usr/local/bin/start-hyprland shadowing the packaged one in PATH"
   - name: "OP017"
     url: "https://github.com/OP017"
     for: "Documented a VT switch restoring keyboard input to a frozen lock screen after resume"
@@ -77,7 +77,7 @@ faq:
   - q: "Which function key gets me a TTY on Omarchy?"
     a: "Ctrl+Alt+F2 through Ctrl+Alt+F6. VT1 is taken by the SDDM greeter and by your Hyprland session, so F1 takes you back to the desktop rather than to a console."
   - q: "Do I type my LUKS passphrase at the TTY login prompt?"
-    a: "No. The console login wants your Linux username and its password. The LUKS passphrase is only asked for once, by the bootloader, before the kernel starts."
+    a: "No. The console login wants your Linux username and its password. The LUKS passphrase is asked for once, by the initramfs during early boot, before any login screen appears."
   - q: "How do I start the desktop from a TTY?"
     a: "Run uwsm start -g -1 -e -D Hyprland hyprland.desktop, which is exactly what Omarchy's session entry runs. Run plain Hyprland instead if you want the crash output on screen."
   - q: "Why does Ctrl+Alt+F2 do nothing when the screen is frozen?"
@@ -90,9 +90,9 @@ A TTY is the plain text console behind the desktop. On Omarchy it is both a symp
 
 ## The fix
 
-**1. Get to a console.** Press `Ctrl+Alt+F2`. If that bounces you straight back, try `F3`, `F4`, `F5` and `F6`. VT1 is not free: SDDM's greeter and your Hyprland session both sit there. You can see it in SDDM's own log, which prints `Jumping to VT 1` when it restarts a greeter, and in `omarchy-debug` output, which reports `vt 1` for the desktop. Omarchy ships no logind override for the auto-spawned consoles, so Arch's default login prompts on VT2 through VT6 are what you get. `Ctrl+Alt+F1` returns you to the session.
+**1. Get to a console.** Press `Ctrl+Alt+F2` or `Ctrl+Alt+F3`; any of `F2` through `F6` will do. VT1 is not free: SDDM's greeter and your Hyprland session both sit there. You can see it in SDDM's own log, which prints `Jumping to VT 1` when it restarts a greeter, and in `omarchy-debug` output, which reports `vt 1` for the desktop. Omarchy ships no logind override for the auto-spawned consoles, so Arch's default login prompts on VT2 through VT6 are what you get. `Ctrl+Alt+F1` returns you to the session.
 
-At the `login:` prompt use your Linux username and its password. Not the LUKS passphrase, which is only used once by the bootloader.
+At the `login:` prompt use your Linux username and its password. Not the LUKS passphrase, which the initramfs asks for once during early boot.
 
 **2. Find out what is missing.** From the console:
 
@@ -136,11 +136,11 @@ Hyprland
 
 That is how the VirtualBox diagnosis in discussion #7758 was done: `Hyprland` aborted with signal 6 right after `Creating the AsyncResourceGatherer!`, which put the fault at GPU and EGL init rather than anywhere in Omarchy.
 
-If you use the `start-hyprland` wrapper, call it by absolute path as `/usr/bin/start-hyprland`. Issue #8319 found a stale `hyprpm`-built copy at `/usr/local/bin/start-hyprland` shadowing the packaged one in PATH; the SDDM session entry is unaffected because it uses the absolute path, but your typed command is not.
+If you use the `start-hyprland` wrapper, call it by absolute path as `/usr/bin/start-hyprland`, and check `/usr/local/bin` for leftovers. Issue #8319 reported `failed to obtain hyprland version string (bad json)` from a TTY on 4.0.0 with a stale `/usr/local/bin/start-hyprland` sitting ahead of the packaged one in PATH. Triage on that issue reproduced the message and pinned it down: `start-hyprland` runs `Hyprland --version-json` as a preflight, and the message means the `Hyprland` it found on PATH could not answer, typically a source-built copy under `/usr/local` whose libraries pacman has since upgraded underneath it. Neither `hyprpm` nor Omarchy writes there. Omarchy's own session entry runs uwsm and never touches `start-hyprland`, but the SDDM greeter does: `etc/sddm.conf.d/10-wayland.conf` launches it as a bare `start-hyprland`, so the same shadow can take out the login screen as well as your typed command.
 
 **5. Check the config, then the shell.** `hyprctl configerrors` reports a bad config. On 4.x that config is `~/.config/hypr/hyprland.lua` and edits to a leftover `hyprland.conf` are ignored; on 3.x it is the `.conf` file. If Hyprland is up but there is no bar, `omarchy-restart-shell` works from a TTY, because it derives the Hyprland instance signature from the runtime directory and respawns the shell through the compositor.
 
-**6. Collect a log.** Run `omarchy-debug --no-sudo`, which writes `/tmp/omarchy-debug.log`. Call the script directly. As of 4.0.2, `omarchy debug` through the CLI router answers `Unknown Omarchy command: omarchy debug` (issue #10258, open at the time of writing).
+**6. Collect a log.** Run `omarchy-debug --no-sudo`, which writes `/tmp/omarchy-debug.log`. From a TTY the router form `omarchy debug` works too. Inside a Hyprland terminal on 4.0.2 through 4.0.4 it answers `Unknown Omarchy command: omarchy debug` (issue #10258, open at the time of writing): the session puts `/usr/share/omarchy/bin` first on PATH and that directory carries no link to `omarchy-debug`, which the `omarchy-settings` package installs under `/usr/bin` only. The hyphenated script works from anywhere.
 
 ## Verify it worked
 
@@ -156,9 +156,9 @@ The unit should be active, `hyprctl monitors` should list a real output rather t
 
 The greeter and the session share VT1, and everything else is queued behind that. When SDDM is asked to put a second greeter on the same VT, its helper cannot take the tty and the display dies with `Greeter stopped. SDDM::Auth::HELPER_TTY_ERROR`, which is what issue #11700 reports from a `SwitchToGreeter` D-Bus call on 4.0.3. Do not call it; start a second session from a spare TTY instead.
 
-Landing on a console instead of the desktop means something in the chain exited: SDDM, the uwsm preloader, or Hyprland. The preloader case is silent by design, which is why it accounts for so many "wrong password" reports that turn out to be nothing of the sort. The Hyprland case is usually GPU init, and it looks the same whether the cause is a VM without working 3D or an initramfs that came back without the NVIDIA modules.
+Landing on a console instead of the desktop means something in the chain exited: SDDM, the uwsm preloader, or Hyprland. The preloader case is silent by design, which is why it accounts for so many "wrong password" reports that turn out to be nothing of the sort. The Hyprland case is usually GPU init, as in the VirtualBox report, or a `Hyprland` binary on PATH that no longer matches its libraries, as in issue #8319.
 
-The reverse problem, no console at all, has a different root. Under Wayland the compositor owns the keyboard on its VT and carries out the switch itself, so `Ctrl+Alt+F<n>` is a request to Hyprland rather than to the kernel console. A compositor that is wedged in a GPU or output operation never processes it. This also explains why a VT switch is such a reliable unsticker when the compositor is alive but confused: issue #11208 on 4.0.3 describes a lock screen that ignores the keyboard after resume until `Ctrl+Alt+F3` and back forces a DRM and VT transition, after which typing works again.
+The reverse problem, no console at all, has a different root. Under Wayland the compositor owns the keyboard on its VT and carries out the switch itself through the seat it holds from logind, so `Ctrl+Alt+F<n>` is a request to Hyprland rather than to the kernel console. A compositor that is wedged in a GPU or output operation never processes it. This also explains why a VT switch is such a reliable unsticker when the compositor is alive but confused: issue #11208 on 4.0.3 describes a lock screen that ignores the keyboard after resume until `Ctrl+Alt+F3` and back forces a DRM and VT transition, after which typing works again.
 
 ## If that did not work
 

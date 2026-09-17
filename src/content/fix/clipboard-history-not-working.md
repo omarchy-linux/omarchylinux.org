@@ -1,6 +1,6 @@
 ---
 title: "Clipboard history not working on Omarchy 4"
-description: "Omarchy 4 clipboard history stops recording when a capture.sh process wedges. Kill it to bring Super + Ctrl + V back, and fix Super + V paste failures."
+description: "Omarchy 4 clipboard history stops recording text when a capture.sh process wedges. Kill it to get capture back, and fix Super + V paste failures."
 answer: "Text history usually stops because a stuck capture.sh blocks the wl-paste watcher. Run pgrep -af 'clipboard/capture.sh', and if anything is listed, run pkill -f 'clipboard/capture.sh'. Capture resumes at once with no restart. If the picker itself never opens, run omarchy restart shell. If Super + V does not paste, that is a separate Hyprland send_key_state bug."
 appliesTo:
   from: "4.0.0"
@@ -30,6 +30,11 @@ sources:
     kind: issue
     author: "rsoutar"
     date: "2026-08-18"
+  - url: "https://github.com/omacom/omarchy/issues/8960"
+    title: "Issue #8960: Universal clipboard shortcuts (Super+C/V/X) fail with 'send_key_state: key not found' on non-Latin keyboard layouts (e.g. Arabic)"
+    kind: issue
+    author: "AhmedHanye"
+    date: "2026-08-29"
   - url: "https://github.com/omacom/omarchy/issues/11201"
     title: "Issue #11201: Universal copy/paste/cut (SUPER+C/V/X) fails on non-Latin keyboard layouts"
     kind: issue
@@ -75,6 +80,11 @@ sources:
     kind: issue
     author: "LeoPazEs"
     date: "2025-10-25"
+  - url: "https://github.com/omacom/omarchy/issues/2875"
+    title: "Issue #2875: Walker clipboard history stops working on copying screenshot"
+    kind: issue
+    author: "andnig"
+    date: "2025-10-26"
   - url: "https://github.com/omacom/omarchy/releases/tag/v4.0.0"
     title: "Release v4.0.0 (Quattro): adds a native clipboard manager with image previews and sensitive-content exclusion"
     kind: release
@@ -83,7 +93,7 @@ sources:
   - url: "https://github.com/omacom/omarchy/releases/tag/v4.0.2"
     title: "Release v4.0.2: prevent remote image injection in shell text elements"
     kind: release
-    author: "ErikMelton"
+    author: "ryanrhughes"
     date: "2026-08-31"
   - url: "https://omarchy.org/manual/unified-clipboard-history/"
     title: "Omarchy Manual: Unified Clipboard & History"
@@ -118,7 +128,7 @@ Omarchy 4 replaced Walker's clipboard provider with a Quickshell plugin. `Super 
 
 ### 1. History stopped recording text (most common on 4.x)
 
-The picker still opens, old entries are all there, images still get added, but nothing you copy as text appears. Look for a wedged capture process:
+Symptoms: the picker opens fine and keeps every old entry, new images still land in it, but text you copy stops showing up. Look for a wedged capture process:
 
 ```bash
 pgrep -af 'clipboard/capture.sh'
@@ -136,7 +146,7 @@ Kill it:
 pkill -f 'clipboard/capture.sh'
 ```
 
-Text capture resumes immediately. You do not need to restart the shell or log out. This is issue #9443, still open on v4.0.4.
+Text capture picks up again with the next copy. No shell restart or logout is involved. This is issue #9443, still open on v4.0.4, with a fix proposed in PR #9488 that has not merged.
 
 ### 2. The picker does not open at all
 
@@ -163,7 +173,7 @@ If the shell crashes the moment the picker opens, and you are on v4.0.0 or v4.0.
 
 ### 3. Super + V, C or X does nothing, or flashes a Lua error
 
-If you see `send_key_state: key not found`, the history is fine. The universal copy and paste binds are failing. This bites hardest on non-Latin layouts, because Hyprland resolves the key name against the active xkb group only, and a Cyrillic or Arabic group has no `c` or `v` keysym to find. Put a raw keycode version in `~/.config/hypr/bindings.lua`:
+If you see `send_key_state: key not found`, the history is fine. The universal copy and paste binds are failing. This bites hardest on non-Latin layouts, because Hyprland resolves the key name against the active xkb group only, and a Cyrillic, Thai or Arabic group has no `c` or `v` keysym to find. Put a raw keycode version in `~/.config/hypr/bindings.lua`:
 
 ```lua
 hl.unbind("SUPER + C")
@@ -199,7 +209,9 @@ o.bind("SUPER + V", "Universal paste", universal("CTRL", "code:55", "SHIFT", "In
 o.bind("SUPER + X", "Universal cut", send_once("CTRL", "code:53"))
 ```
 
-`code:54`, `code:55` and `code:53` are the physical C, V and X keys, so the lookup skips xkb entirely. Credit to assada on issue #7027 for the diagnosis and the keycode form. The terminal branch is kept from the shipped `default/hypr/bindings/clipboard.lua` so terminals keep getting `Ctrl + Insert` and `Shift + Insert`.
+`code:54`, `code:55` and `code:53` are the physical C, V and X keys in Hyprland's xkb numbering, so the lookup skips xkb entirely. Issues #7371 and #8960 quote the evdev numbers 46, 47 and 45 instead; Hyprland wants the xkb form, which is what the shipped `tiling.lua` uses for `code:20` and `code:21`. Credit to assada on issue #7027 for the diagnosis and the keycode form, and #11201 confirms it on a `us,ru` setup. The terminal branch is kept from the shipped `default/hypr/bindings/clipboard.lua` so terminals keep getting `Ctrl + Insert` and `Shift + Insert`.
+
+If you get the same error on a plain Latin layout, the keycodes will not help. That case is the race #7027 was opened for: the bind fires while Super is still held and the injected chord fails or misfires. Three PRs (#7285, #7375, #10247) move the shipped binds to keycodes, none merged as of v4.0.4, and nothing in tree addresses the race.
 
 ### 4. On 3.x
 
@@ -209,7 +221,7 @@ o.bind("SUPER + X", "Universal cut", send_once("CTRL", "code:53"))
 omarchy-restart-walker
 ```
 
-That is what resolved issue #2832. `wl-clip-persist` was a known offender in the 2.x and early 3.x era and is not shipped in 3.8.4, so there is nothing to remove there.
+Restarting Walker is what resolved issue #2832. The longer thread on the same symptom, issue #2875, was handled on the elephant side: the original reporter was fixed by elephant 2.7.7, a later reporter was still losing text on 2.7.8, and the Walker maintainer asked that person to uninstall `wl-clip-persist` because elephant already re-copies for persistence. 3.8.4 does not ship `wl-clip-persist`, so on a stock install there is nothing to remove.
 
 ## Verify it worked
 
@@ -224,9 +236,9 @@ The count should grow and the timestamp should be seconds old. Open `Super + Ctr
 
 ## Why it happens
 
-The plugin does not poll. On startup it reaps leftover watchers, then spawns two `wl-paste --watch` processes that call `shell/plugins/clipboard/capture.sh`, one for `text` and one for `image/png`. `wl-paste --watch` waits for its command to exit before handling the next clipboard event, so one capture that never returns silently stops that flavour forever.
+The plugin does not poll. On startup it reaps leftover watchers, then spawns two `wl-paste --watch` processes that call `shell/plugins/clipboard/capture.sh`, one for `text` and one for `image/png`. Each watcher runs its capture command to completion before it will look at the next clipboard change, so a capture that hangs takes that whole flavour of history down with it, and nothing logs the fact.
 
-In the shipped `capture.sh`, the image branch is guarded with `timeout 2s`, but the `wl-paste --list-types` call at the top and the final text read are not. `wl-paste` blocks indefinitely when the clipboard's owning client disappears mid transfer, so a single badly timed copy wedges text capture. That asymmetry is why images keep working while text quietly dies. The same stalled-owner behaviour also shows up as a one to two second freeze when a focused panel reads the clipboard (issue #8753).
+In the shipped `capture.sh`, the image branch is guarded with `timeout 2s`, but the `wl-paste --list-types` call at the top and the final text read are not. If the app that owns the clipboard goes away while `wl-paste` is still negotiating with it, the read never returns, so one unlucky copy is enough to wedge text capture. That asymmetry is why images keep working while text quietly dies. The same stalled-owner behaviour also shows up as a one to two second freeze when a focused panel reads the clipboard (issue #8753).
 
 The shell does restart a watcher that exits, on a one second timer. It has no way to notice a watcher that is alive but blocked, which is exactly this case.
 
@@ -234,14 +246,14 @@ For the paste keys, the cause is different. `send_key_state` resolves a key name
 
 ## If that did not work
 
-- Selecting an image in the picker copies it but does not paste, especially into terminals. `omarchy-clipboard-paste-file` finishes with `Shift + Insert`, which terminals intercept as a text-only paste. Press `Ctrl + V` yourself after picking the entry. See issues #7058 and #10526.
+- Selecting an image in the picker copies it but does not paste. In terminals this is reliable: `omarchy-clipboard-paste-file` finishes with `Shift + Insert`, which terminals intercept as a text-only paste, so press `Ctrl + V` yourself after picking the entry (issue #10526). Issue #7058 reports the same miss in a Chromium field and blames the 0.15 second wait before the keystroke, so the image is on the clipboard either way and a manual paste works.
 - Selecting any entry auto-pastes into whatever is focused. That is current behaviour, not a fault, and issue #7613 argues it should be copy only.
 - Copies from a password manager never appear. `capture.sh` deliberately drops anything flagged `CLIPBOARD_STATE=sensitive` or carrying the `x-kde-passwordManagerHint` type. Sensitive-content exclusion shipped with the plugin in v4.0.0.
 - Old entries vanish on their own. The picker keeps 300 entries.
 - As a last resort, reset the store. This loses your history: `mv ~/.local/state/omarchy/clipboard-history.json{,.bak}` then `omarchy restart shell`.
 - Non-Latin layouts break more than clipboard keys. See [keyboard layouts and locale](/keyboard/layouts-and-locale/).
 
-Nothing here needs a reinstall, and none of the open issues above have shipped a fix as of v4.0.4.
+Nothing here needs a reinstall, and none of the open issues above have shipped a fix as of v4.0.4. The `capture.sh` and `clipboard.lua` on the main branch still match v4.0.4 on the lines that matter.
 
 ## Related
 

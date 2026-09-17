@@ -1,7 +1,7 @@
 ---
 title: "Dell Latitude on Omarchy Linux"
-description: "Dell Latitude hardware support on Omarchy 4.x: Intel graphics and Wi-Fi work, ControlVault fingerprint readers are undetected, and Bluetooth off can drop the radio."
-answer: "Most Latitudes run Omarchy fine on the generic Intel path. Rate it silver. Wi-Fi (iwlwifi), Intel graphics and the display work; the fingerprint reader does not if your Latitude has a Broadcom ControlVault 3, because Omarchy never looks for vendor 0a5c. Turning Bluetooth off can remove the radio from the bus. Omarchy ships no Latitude-specific enablement at all."
+description: "Dell Latitude on Omarchy 4.x: Intel graphics and iwlwifi work, ControlVault fingerprint readers go undetected, and turning Bluetooth off can drop the radio."
+answer: "Most Latitudes run Omarchy fine on the generic Intel path. Rate it silver. Intel graphics and the iwlwifi driver work, though a 3.x upgrade can leave NetworkManager pointed at iwd; the fingerprint reader does not if your Latitude has a Broadcom ControlVault 3, because Omarchy never looks for vendor 0a5c. Turning Bluetooth off can remove the radio from the bus. Omarchy ships no Latitude-specific enablement at all."
 appliesTo:
   from: "3.x"
 status: partial
@@ -12,7 +12,7 @@ kind: model
 vendor: "Dell"
 model: "Dell Latitude"
 dmi: ["Latitude 3380", "Latitude 5320", "Latitude 5420", "Latitude 5430", "Latitude 5431", "Latitude 5490", "Latitude 5521", "Latitude 7420", "Latitude 7430", "Latitude 7440", "Latitude 7450", "Latitude E5470", "Latitude E7490"]
-cpu: "Intel Core, Skylake through Raptor Lake in the reported machines"
+cpu: "Intel Core, Skylake through Meteor Lake (Core Ultra 7 165U) in the reported machines"
 gpu: "Intel integrated (HD 530, Iris Xe, UHD)"
 rating: silver
 subsystems:
@@ -100,20 +100,23 @@ credits:
     for: "Traced ControlVault 3 detection on a Latitude 5420 and found the libfprint-tod conflict in the 4.0.3 setup script"
   - name: "bartcho"
     url: "https://github.com/bartcho"
-    for: "First report that vendor 0a5c is missing from the fingerprint allowlist"
+    for: "Reported on 4.0.0 that vendor 0a5c is missing from the fingerprint allowlist and documented the manual TOD enrollment path"
   - name: "skoom21"
     url: "https://github.com/skoom21"
     for: "Wi-Fi backend and monitor position reports from a Latitude E5470 on 4.0.0"
   - name: "DrakeMorrison"
     url: "https://github.com/DrakeMorrison"
-    for: "Root-caused the Bluetooth rfkill behaviour on Dell and ThinkPad platform switches"
+    for: "Root-caused the type-wide rfkill block that trips platform Bluetooth switches"
+  - name: "oren"
+    url: "https://github.com/oren"
+    for: "Latitude 7440 data point showing the radio leaves the USB bus and only suspend or reboot brings it back"
 faq:
   - q: "Does the fingerprint reader work on a Dell Latitude?"
     a: "Only if it is not a Broadcom ControlVault. Omarchy's reader detection allowlist has no entry for Broadcom vendor 0a5c as of 4.0.4, so Setup > Security > Fingerprint exits with \"No fingerprint sensor detected\" on Latitudes that carry a ControlVault 3 (USB 0a5c:5843)."
   - q: "Is a used Latitude a reasonable machine to buy for Omarchy?"
-    a: "Yes, if you pick an Intel Wi-Fi model and do not need the fingerprint reader. Reports cover machines from the 2016 E5470 through the 7450, and the Intel graphics and iwlwifi path is the one Omarchy exercises most."
+    a: "Yes, if you pick an Intel Wi-Fi model and do not need the fingerprint reader. Reports cover machines from the 2016 E5470 through a Core Ultra 7450 on 4.0.1, all on Intel graphics, and none of them is blocked from running Omarchy."
   - q: "Why did Wi-Fi stop after I upgraded my Latitude to Quattro?"
-    a: "The upgrade removes iwd but can leave /etc/NetworkManager/conf.d/wifi_backend.conf pointing at it, so every Wi-Fi device sits at unavailable. Delete or correct that file and restart NetworkManager."
+    a: "The upgrade removes iwd but can leave /etc/NetworkManager/conf.d/wifi_backend.conf pointing at it, so NetworkManager reports the card as unavailable. Delete or correct that file and restart NetworkManager."
 related: [fingerprint-enrollment-fails, bluetooth-stops-after-resume, multi-monitor-layout-not-saved, wifi-drops-after-kernel-update-iwlwifi]
 draft: false
 ---
@@ -124,13 +127,13 @@ Silver. A Dell Latitude installs and runs Omarchy on the generic Intel laptop pa
 
 Two things pull it off gold. Fingerprint readers on ControlVault models are not detected at all, and turning Bluetooth off through the shell can take the radio off the bus entirely. Both are open on 4.0.4.
 
-Evidence here is broader than it is deep. Twenty-two issues touch a Latitude across 3.x and 4.x, but most are generic Omarchy bugs that happened to be filed from one. The Latitude-specific findings below are the ones where the reporter's hardware is actually the cause.
+Evidence here is broader than it is deep. Twenty-two tracker issues name a Latitude, from a 2.1 install failure to 4.0.x bugs, but most are generic Omarchy bugs that happened to be filed from one. The Latitude-specific findings below are the ones where the reporter's hardware is actually the cause.
 
 ## What works
 
 Intel graphics. Latitudes running 4.0.0 with an internal panel plus an external HDMI display show up in bug reports doing ordinary Hyprland work, including the E5470 with HD 530 in [#7326](https://github.com/omacom/omarchy/issues/7326). An older performance complaint about Iris Xe on a 7420 ([#1610](https://github.com/omacom/omarchy/issues/1610)) was closed the same day and never established a defect.
 
-Intel Wi-Fi. The kernel side is clean. The E5470 report in [#7323](https://github.com/omacom/omarchy/issues/7323) includes a full `iwlwifi` log for a Dual Band Wireless-AC 8260: firmware loaded, MAC detected, no rfkill block, zero driver errors. When Wi-Fi breaks on a Latitude it has so far been NetworkManager configuration, not the radio.
+Intel Wi-Fi. The kernel side is clean. The E5470 report in [#7323](https://github.com/omacom/omarchy/issues/7323) includes the `iwlwifi` boot log for a Dual Band Wireless-AC 8260, and the driver side of it is unremarkable: the firmware loads, the adapter enumerates, nothing is rfkill-blocked and the driver logs no errors. When Wi-Fi breaks on a Latitude it has so far been NetworkManager configuration, not the radio.
 
 Installation. The reports come from installed, updated systems, which is itself evidence that the installer handles these machines.
 
@@ -142,29 +145,29 @@ Everything else on the checklist is unknown rather than confirmed. No one has fi
 
 There is a second trap behind it. Since 4.0.3 the setup script installs `libfprint-git`, which conflicts with `libfprint`, and it passes `--ask 4` so pacman accepts the conflict without prompting. ControlVault readers need `libfprint-tod` plus Dell's `libfprint-2-tod1-broadcom` driver, which also provides `libfprint`. JeronimoColon's follow-up notes that fixing detection alone would let the wizard swap the working TOD stack for an upstream build with no driver for the reader. Do not run the fingerprint wizard on a ControlVault machine even after detection is fixed, unless you have checked what it will do to your packages.
 
-**Bluetooth off removes the radio.** `omarchy-bluetooth-power off` issues a type-wide `rfkill block bluetooth`. On Dells the `dell-laptop` platform switch is blocked along with the adapter, and the embedded controller answers by cutting USB power to the module, so `hci0` disappears instead of going unpowered. DrakeMorrison traced this in [#7936](https://github.com/omacom/omarchy/issues/7936) and notes that a Latitude 7440 report on [#6956](https://github.com/omacom/omarchy/issues/6956) describes hardware where even `rfkill unblock bluetooth` does not bring the radio back, and only a suspend and resume cycle or a reboot does. The bar widget vanishes with the adapter, so there is no UI route back. Open on 4.0.4.
+**Bluetooth off removes the radio.** `omarchy-bluetooth-power off` issues a type-wide `rfkill block bluetooth`. On a Dell that block also lands on the `dell-laptop` platform switch, and firmware responds by pulling power from the USB-attached module, so the kernel loses `hci0` outright instead of holding it in a soft block. DrakeMorrison traced the mechanism in [#7936](https://github.com/omacom/omarchy/issues/7936) on ThinkPads; the Dell evidence is oren's Latitude 7440 (AX211, Omarchy 4.0.0) on [#6956](https://github.com/omacom/omarchy/issues/6956), which describes hardware where even `rfkill unblock bluetooth` does not bring the radio back, and only a suspend and resume cycle or a reboot does. The bar widget vanishes with the adapter, so there is no UI route back. Open on 4.0.4.
 
-**Wi-Fi dead after upgrading to Quattro.** On skoom21's E5470, the 4.0.0 upgrade removed the `iwd` package but left `/etc/NetworkManager/conf.d/wifi_backend.conf` still selecting `wifi.backend=iwd`. NetworkManager then points at a daemon that no longer exists and every Wi-Fi device sits at `unavailable` forever, with nothing in the UI explaining why. The one migration that touches iwd-era breakage, `migrations/1786567036.sh`, exits immediately unless `wpa_supplicant.service` is masked, which it was not here. Check that file before you blame the card.
+**Wi-Fi dead after upgrading to Quattro.** On skoom21's E5470, the 4.0.0 upgrade removed the `iwd` package but left `/etc/NetworkManager/conf.d/wifi_backend.conf` still selecting `wifi.backend=iwd`. NetworkManager keeps asking for a daemon that is no longer installed, so `nmcli` shows the card stuck at `unavailable` and the shell gives no hint why. The one migration aimed at iwd-era breakage, `migrations/1786567036.sh`, only acts when `wpa_supplicant.service` is masked; on this machine it was merely disabled, so the migration did nothing. Check that file before you blame the card.
 
-**Monitor layout does not stick.** Also from the E5470: an explicit position for the internal panel is re-applied as `position = "auto"` within about a second, by the clamshell watcher and by the Display panel's scaling path ([#7326](https://github.com/omacom/omarchy/issues/7326)). This is not Latitude-specific, it affects any laptop with an external monitor, but it is what a docked Latitude owner hits first.
+**Monitor layout does not stick.** Also from the E5470: give the internal panel a fixed position and both the clamshell watcher and the Display panel's scaling path overwrite it with `position = "auto"` within about a second ([#7326](https://github.com/omacom/omarchy/issues/7326)). This is not Latitude-specific, it affects any laptop with an external monitor, but it is what a docked Latitude owner hits first.
 
 **Live ISO freeze on i915.** One report, [#2947](https://github.com/omacom/omarchy/issues/2947), from a Latitude E7490 with an i7-8650U: the live ISO freezes in early boot, which the reporter attributes to i915 power saving. It is open, has no comments, and no one has reproduced it. Thin evidence, but worth knowing if your install stalls at the same point.
 
 ## What Omarchy does for this model
 
-Nothing specific. As of 4.0.4 no shipped script calls `omarchy-hw-match` with a Latitude or a Dell-family pattern. The only Dell matches in the tree are `XPS` (OLED handling and haptic touchpad) and the `DX13260` SKU used by the 2026 XPS 13 text-scaling and audio paths. There is no `install/hardware/dell/` directory beyond the XPS touchpad script, and no Latitude speaker tuning.
+Nothing specific. As of 4.0.4 no shipped script calls `omarchy-hw-match` with a Latitude or a Dell-family pattern. The only Dell matches in the tree are `XPS` (OLED handling and haptic touchpad) and the `DX13260` product name behind the 2026 XPS 13 text-scaling tweak; the XPS 14 and 16 speaker tuning keys on DMI SKUs `0DB9` and `0DBA`. There is no `install/hardware/dell/` directory at all. The Dell-specific files are `install/hardware/dell-xps-touchpad-haptics.sh` and `install/user/hardware/dell/xps13-text-scaling.sh`, and there is no Latitude speaker tuning.
 
 What a Latitude actually gets is the generic run in `install/hardware/all.sh`: Intel video acceleration, `lpmd`, `thermald`, SOF firmware, the wireless regdom, the F-key fix, the Synaptics touchpad fix and the Bluetooth setup. `omarchy-hw-laptop` picks the machine up from its ACPI lid switch, and `omarchy-hw-intel` from the CPU vendor string. That is the whole of it.
 
 ## Variants
 
-Prefer a 5000 or 7000 series unit from 2020 onward with an Intel AX-series card. Those are the configurations the reports come from, and they sit on the best-exercised driver path in Omarchy.
+Most of the 4.x reports come from 5000 and 7000 series units from 2021 onward: the 5420, 5430, 5431, 5521, 7420, 7430, 7440 and 7450. All of them are Intel-graphics machines that were running Omarchy when the report was filed, which is the strongest "it boots and works" evidence this page has. Only the 7440 report names its wireless card (Intel AX211).
 
 Check the fingerprint reader before you count on it. Run `lsusb` on the machine and look for `0a5c`. If it is a Broadcom ControlVault, the Omarchy wizard will not see it on 4.0.4. Latitudes with a Goodix (`27c6`) or Validity/Synaptics (`138a`, `06cb`) reader are inside the allowlist, though no Latitude report confirms enrollment on one.
 
-Older E-series units (E5470, E7490) are usable but carry the two oldest open problems on this page, the ISO freeze and the low-resolution multi-monitor grief. A 1366x768 panel also fights Omarchy's default assumption of a 2x display, covered in the [Monitors chapter](https://omarchy.org/manual/monitors/).
+Older E-series units (E5470, E7490) are usable, and the E5470 is the best-documented Latitude in the tracker, but the E7490 is also the machine behind the unreproduced ISO freeze. A 1366x768 panel also fights Omarchy's default assumption of a 2x, retina-class display; set `omarchy_monitor_scale` and `omarchy_gdk_scale` to 1 in `monitors.lua` as the [Monitors chapter](https://omarchy.org/manual/monitors/) describes.
 
-No AMD Latitude report exists in the data. If you have one, that configuration is untested here.
+No Latitude with an AMD processor appears in the data. The only AMD part on record is the Radeon Topaz XT discrete chip in the E5470, and that report says nothing about whether it is used. Both configurations are untested here.
 
 ## Before you install
 

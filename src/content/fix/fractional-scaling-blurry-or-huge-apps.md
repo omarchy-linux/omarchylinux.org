@@ -115,7 +115,7 @@ faq:
     a: "No. GTK only honours whole numbers, which is why the monitor scale can be 1.6 while GDK_SCALE has to be 1 or 2. Omarchy's scaling command persists int(scale + 0.5)."
   - q: "Does changing the scale need a reboot?"
     a: "No, but apps already running keep their old scale. Quit and relaunch anything that looks wrong, or close everything with Ctrl + Alt + Del."
-related: [monitors-conf-replaced-by-monitors-lua, multi-monitor-layout-not-saved, 1password-not-opening-or-wrong-scale, where-did-waybar-go]
+related: [monitors-conf-replaced-by-monitors-lua, multi-monitor-layout-not-saved, 1password-not-opening-or-wrong-scale, cursor-invisible-or-wrong-size]
 draft: false
 ---
 
@@ -138,7 +138,7 @@ local omarchy_gdk_scale = 2
 local omarchy_monitor_scale = "auto"
 ```
 
-GTK only honours whole numbers, so set `omarchy_gdk_scale` to the nearest integer of your monitor scale: 1 for 1 and 1.25, 2 for 1.6 and 2. Save, then quit and relaunch every oversized window. GDK_SCALE is read at launch, not live. On 3.x the same two knobs live in `~/.config/hypr/monitors.conf` as `env = GDK_SCALE,2` and a `monitor=,preferred,auto,auto` line.
+GTK only honours whole numbers, so set `omarchy_gdk_scale` to the nearest integer of your monitor scale: 1 for 1 and 1.25, 2 for 1.6 and 2. A fractional value is silently truncated: colutti's `GDK_SCALE,1.75` on 3.0 left Steam rendering at 1x (issue #2058). Save, then quit and relaunch every oversized window. GDK_SCALE is read at launch, not live. On 3.x the same two knobs live in `~/.config/hypr/monitors.conf` as `env = GDK_SCALE,2` and a `monitor=,preferred,auto,auto` line.
 
 **3. Refresh the launch environment.** If apps started from the menu or a keybinding still come up at the old size after a scale change, the systemd user manager is still exporting the old value. Check and fix it:
 
@@ -157,13 +157,13 @@ omarchy display text size reset
 
 Above 12 the factor clips fixed-size Electron dialogs, measured by SilentKernel at a device pixel ratio of 2.72 on a 2x monitor at text size 16 (issue #8574). Below 12 the whole Electron surface undershoots the Hyprland window and leaves wallpaper showing, reported by jonnyace at text size 10 (issue #8716). PR #8825 proposes a `--no-gtk` flag so the bar slider stops touching GTK; both it and PR #8575 were still open at 4.0.4.
 
-**5. Per-app flags for the stragglers.** 1Password was fixed in 4.0.3: `omarchy-launch-1password` now runs `1password --force-device-scale-factor=1`, listed in the release notes as "Fix oversized 1Password windows on scaled displays". For other Electron apps with clipped or oversized windows, the same flag goes in `~/.config/<app>-flags.conf`, one flag per line. Spotify still runs on XWayland, which is why it ignores per-output scale on mixed-DPI setups (issue #11175). Create `~/.config/spotify-flags.conf`:
+**5. Per-app flags for the stragglers.** 1Password's main window was fixed in 4.0.3: `omarchy-launch-1password` now runs `1password --force-device-scale-factor=1`, listed in the release notes as "Fix oversized 1Password windows on scaled displays". That covers the hotkey and menu launch only. The background instance that pops the SSH and CLI prompts is started from `~/.config/autostart/1password.desktop`, which 1Password rewrites without the flag, so those prompts still come up unscaled (dmthepm in issue #8716). For other Electron apps with clipped or oversized windows, the same flag goes in `~/.config/<app>-flags.conf`, one flag per line, where the package's launcher reads one. Spotify still runs on XWayland, which is why it ignores per-output scale on mixed-DPI setups (issue #11175). Create `~/.config/spotify-flags.conf`:
 
 ```
 --ozone-platform=wayland
 ```
 
-That is the same fix nightdevil00 posted for 3.x in issue #3309. Omarchy does not ship this file on 4.0.4; it ships `chromium-flags.conf` only, which its browser installer copies for each Chromium-based browser.
+That is the flag nightdevil00 posted for 3.x in issue #3309. dhh declined to ship it because on his setup Spotify under Wayland laid out too wide, so check the window after switching; the window class also changes from `Spotify` to `spotify`, which breaks any rule matching the old name (issue #11175). Omarchy does not ship this file on 4.0.4; it ships `chromium-flags.conf` only, which its browser installer copies for each Chromium-based browser.
 
 **6. Repaint corruption at 1.6.** If Electron secondary windows leave stale or duplicated regions at a fractional scale, d-geula found that disabling one Chromium feature clears it (issue #9907):
 
@@ -198,7 +198,7 @@ The scale presets silently do nothing if you have written explicit per-output `h
 
 Two failures look like scaling but are not. A Chromium profile bubble that opens as a thin clipped sliver is triggered by the window's logical width, not the scale, and reproduces at integer scale 1 as well (issue #7676). Qt apps that go blurry only after closing and reopening the laptop lid look like an output hotplug bug rather than a configuration problem, and that report has been open since 3.x with no fix (issue #1847).
 
-Evidence is thin for mixed-DPI multi-monitor setups generally. Several reports overlap, none has a merged fix as of 4.0.4, and the honest answer today is to pick one scale that is least wrong for the monitor you use most.
+Mixed-DPI multi-monitor setups have no merged fix as of 4.0.4: issues #7021, #9950 and #11175 all land on the same limit, that `GDK_SCALE` is one session-wide integer standing in for a per-output fraction. Until that changes, pick the scale that is least wrong for the monitor you use most and give XWayland apps their own flags.
 
 ## Related
 
@@ -208,4 +208,4 @@ Evidence is thin for mixed-DPI multi-monitor setups generally. Several reports o
 - [Multi-monitor hardware notes](/hardware/multi-monitor/)
 - [Fractional scaling and HiDPI apps when switching](/switch/fractional-scaling-hidpi-apps/)
 - [omarchy-display-text-size](/reference/commands/omarchy-display-text-size/)
-- Official manual chapter: [Monitors](https://omarchy.org/manual/monitors/)
+- Omarchy manual chapter: [Monitors](https://omarchy.org/manual/monitors/)

@@ -1,7 +1,7 @@
 ---
 title: "Intel GPUs on Omarchy"
 description: "Intel GPU support in Omarchy 4.x: what the installer sets up, the hybrid LIBVA_DRIVER_NAME bug, Panther Lake panel quirks, and the fix order that works."
-answer: "Intel graphics on an Intel-only machine is the best supported setup in Omarchy 4.x. The installer adds intel-media-driver, libvpl and vulkan-intel for you. Almost all real breakage is hybrid Intel plus NVIDIA, where nvidia.lua forces LIBVA_DRIVER_NAME=nvidia and corrupts browser video. Override it to iHD after the Omarchy require in hyprland.lua. Panther Lake panels need their kernel flags checked."
+answer: "Intel graphics on an Intel-only machine is the quietest GPU setup in the Omarchy tracker. The installer adds intel-media-driver, libvpl and vulkan-intel for you. Almost all real breakage is hybrid Intel plus NVIDIA, where nvidia.lua forces LIBVA_DRIVER_NAME=nvidia and corrupts browser video. Override it to iHD after the Omarchy require in hyprland.lua. Panther Lake panels need their kernel flags checked."
 appliesTo:
   from: "4.0.0"
 status: info
@@ -122,23 +122,21 @@ related: [nvidia, hybrid-gpu, multi-monitor, suspend-sleep]
 draft: false
 ---
 
-Intel graphics is the quietest GPU class on Omarchy. On a machine where an Intel iGPU is the only GPU and drives the panel, 4.0.4 generally installs, boots and plays video with nothing added by hand. Almost every noisy Intel report in the tracker is really one of two other things: a hybrid Intel plus NVIDIA laptop where session variables point at the wrong GPU, or a Panther Lake panel fighting its kernel flags.
-
-This page was checked against the v4.0.4 source tree and against issues open on 2026-09-16.
+Intel graphics is the quietest GPU class on Omarchy. On a machine where an Intel iGPU is the only GPU and drives the panel, 4.0.4 installs the driver stack itself and the only Intel-only gap cited on this page is a detection miss on Wildcat Lake. Most of the Intel reports cited here are really one of two other things: a hybrid Intel plus NVIDIA laptop where session variables point at the wrong GPU, or a Panther Lake panel fighting its kernel flags.
 
 ## Status on 4.0.4
 
-Intel-only desktops and laptops: works. Mesa handles rendering, `intel-media-driver` handles VA-API decode and encode, and `vulkan-intel` handles Vulkan. The 293 issues that mention Intel graphics are dominated by hybrid machines, not by Intel-only ones.
+Intel-only desktops and laptops: works. Mesa handles rendering, `intel-media-driver` handles VA-API decode and encode, and `vulkan-intel` handles Vulkan. The installer scripts below and the 3.6.0 release notes, which added `intel-media-driver` by default and describe Intel laptops driving Thunderbolt displays, are the enablement. Of the 293 issues matched to this component, the ones cited on this page are hybrid machines, Panther Lake panels, or the Wildcat Lake detector miss in issue #11958.
 
 Hybrid Intel plus NVIDIA: partial, and worse on 4.0.1 and later than it was on 4.0.0. See the hybrid section below and [/hardware/hybrid-gpu/](/hardware/hybrid-gpu/).
 
-Panther Lake (Core Ultra X series, Arc B-series iGPU): mostly works, with active regressions. This is the newest silicon Omarchy ships for, and the kernel it ships changed twice in a month. 4.0.3 moved the Panther Lake kernel to 7.2.3, and 4.0.4 made the bespoke `linux-omarchy` kernel the default boot entry for everyone.
+Panther Lake (Core Ultra X series, Arc B-series iGPU): mostly works, with active regressions. The 3.6.0 and 3.7.0 release notes carry the enablement work, from the custom kernel patches to `fred=on`. This is the newest silicon Omarchy ships for, and the kernel it ships changed twice in a month. 4.0.3 moved the Panther Lake kernel to 7.2.3, and 4.0.4 made the bespoke `linux-omarchy` kernel the default boot entry for everyone.
 
-Old Intel (GMA era, pre-2014): still handled, but with the legacy `libva-intel-driver` rather than the modern stack.
+Old Intel (GMA era, pre-2014): unknown. The installer still matches it and installs the legacy `libva-intel-driver` rather than the modern stack, but no report in the cited set covers a GMA machine either way.
 
 ## What Omarchy does automatically
 
-The installer runs these on every machine, and `omarchy-update` reruns the hardware phase:
+The installer runs these on every machine during ISO finalization, through `omarchy-apply-system` and `omarchy-apply-hardware`. `omarchy-update` does not rerun that phase; existing installs get the pieces that matter through migrations, such as the 3.8.3 Vulkan backfill.
 
 - `install/hardware/intel/video-acceleration.sh` looks at the `lspci` display line and installs `intel-media-driver`, `libvpl` and `vpl-gpu-rt` when the name matches HD Graphics, UHD Graphics, Xe, Iris, Arc or Panther Lake. GMA-era parts get `libva-intel-driver` instead.
 - `install/hardware/vulkan.sh` installs `vulkan-intel` when a display-class Intel device is present. This is what made Zed start on Intel machines after issue #1441.
@@ -153,11 +151,11 @@ One thing Omarchy does that hurts Intel: `default/hypr/nvidia.lua` sets `LIBVA_D
 
 ## Known problems
 
-The hybrid VA-API regression is the big one. On 4.0.0 the `o.shell_succeeds` helper always returned false inside Hyprland, so `nvidia.lua` was dead code and hybrid machines were accidentally correct. 4.0.1 fixed the helper, the variables took effect, and browser video broke. SisyphusOfCorinth pinned that in issue #8215; reporters there confirm it on Raptor Lake, Meteor Lake and AMD iGPU pairings. emshiarla's issue #8328 shows the detector only asks whether an NVIDIA chip exists, not whether it drives a display, and jtmorris measured roughly six extra watts in a browser because the dGPU never runtime-suspends. Issue #8989 adds that a user override placed before the Omarchy require is silently overwritten. PR #7851 proposes gating the variable on a sysfs hybrid check; it is still open.
+The hybrid VA-API regression is the big one. On 4.0.0 the `o.shell_succeeds` helper always returned false inside Hyprland, so `nvidia.lua` never fired and hybrid machines got the right driver by luck. 4.0.1 fixed the helper, the variables took effect, and browser video broke. SisyphusOfCorinth pinned that in issue #8215; reporters there confirm it on Raptor Lake, Meteor Lake, Arrow Lake and AMD iGPU pairings. emshiarla's issue #8328 shows the detector only asks whether an NVIDIA chip exists, not whether it drives a display, and jtmorris measured roughly six extra watts in a browser on an XPS 14 9440 because the dGPU never runtime-suspends. Issue #8989 adds the battery cost on a Legion 7i Pro and notes that an override placed before the Omarchy require loses to it, which is the documented load order, so it has to go after. PR #7851 proposes gating the variable on a sysfs hybrid check; it is still open.
 
 Panther Lake panels are the second cluster. Issue #5573 was a 3.x case where a stale `xe.enable_panel_replay=0` line survived in `/etc/default/limine` and froze the XPS 14 internal panel after 3.7.0; spencerbull reproduced it and a hotfix went out as v3.7.1. Issue #12188 is the current one: after 4.0.4 makes `linux-omarchy` 7.2.5 the default, brightness keys on a Dell XPS 14 write successfully to `intel_backlight` but the panel does not change, and booting the stock `linux` 7.2.3 entry restores it. That symptom matches what the ASUS backlight script describes, so `xe.enable_dpcd_backlight=1` is worth testing there, but nobody has confirmed it on an XPS.
 
-Displays that stay dark after idle are the third. Issue #12147 traces it into `omarchy-brightness-display`: the script skips the DPMS enable when Hyprland already reports every monitor lit, and a failed atomic commit can leave that flag stuck true while the panel has no signal. Issue #12152 is the external-only variant on Haswell i915, recovered with a VT switch.
+Displays that stay dark after idle are the third. Issue #12147 traces it into `omarchy-brightness-display`: the script skips the DPMS enable when Hyprland already reports every monitor lit, and a failed atomic commit can leave that flag stuck true while the panel has no signal. Issue #12152 is the external-only variant on a Haswell i915 Vostro, recovered with a VT switch; the reporter traced it to an Aquamarine 0.15.0 regression that leaves a stale CRTC behind on disconnect, fixed upstream but not yet in the packaged Aquamarine.
 
 Older i915 resume failures are still open in issue #5695, with PHY and transcoder timeouts on Meteor Lake after the 7.0 kernel bump.
 
@@ -166,18 +164,18 @@ Older i915 resume failures are still open in issue #5695, with PHY and transcode
 | Issue | Models | Status | Fixed in |
 | --- | --- | --- | --- |
 | [#8215](https://github.com/omacom/omarchy/issues/8215) NVDEC routed to the dGPU, corrupt browser video | Hybrid Intel or AMD iGPU plus NVIDIA | Open, workaround known | Not yet, PR #7851 open |
-| [#8328](https://github.com/omacom/omarchy/issues/8328) NVIDIA env forced when the dGPU drives no display | Dell XPS 14 9440, Raptor Lake laptops | Open | Not yet |
-| [#8989](https://github.com/omacom/omarchy/issues/8989) User override defeated, dGPU cannot suspend | Lenovo Legion 7i Pro, Arrow Lake | Open | Not yet |
-| [#4901](https://github.com/omacom/omarchy/issues/4901) Chromium acceleration needs manual flags | Iris Xe plus RTX 3050 | Open | Not yet |
+| [#8328](https://github.com/omacom/omarchy/issues/8328) NVIDIA env forced when the dGPU drives no display | Comet Lake plus RTX 2070, Dell XPS 14 9440 | Open | Not yet |
+| [#8989](https://github.com/omacom/omarchy/issues/8989) NVIDIA env session-wide, dGPU cannot suspend | Lenovo Legion 7i Pro, Arrow Lake | Open | Not yet |
+| [#4901](https://github.com/omacom/omarchy/issues/4901) Chromium acceleration needs manual flags | Raptor Lake Iris Xe plus RTX 3050 | Open | Not yet |
 | [#11958](https://github.com/omacom/omarchy/issues/11958) Wildcat Lake skipped by the detector regex | Wildcat Lake iGPU | Open | Not yet |
 | [#12188](https://github.com/omacom/omarchy/issues/12188) Backlight dead on linux-omarchy 7.2.5 | Dell XPS 14 DA14260, Arc B390 | Open | Not yet |
-| [#12147](https://github.com/omacom/omarchy/issues/12147) Monitor stays off after idle wake | Multi-monitor, external LG 4K | Open | Not yet |
-| [#12152](https://github.com/omacom/omarchy/issues/12152) External-only HDMI unusable after wake | Haswell i915 laptops | Open | Not yet |
-| [#11943](https://github.com/omacom/omarchy/issues/11943) Hardware cursor stops rendering | Hybrid Intel plus NVIDIA, 4 monitors | Open | Not yet |
+| [#12147](https://github.com/omacom/omarchy/issues/12147) Monitor stays off after idle wake | Arrow Lake plus RTX 5070, external LG 4K | Open | Not yet |
+| [#12152](https://github.com/omacom/omarchy/issues/12152) External-only HDMI unusable after wake | Dell Vostro 5470, Haswell i915 | Open, Aquamarine fix upstream | Not yet |
+| [#11943](https://github.com/omacom/omarchy/issues/11943) Hardware cursor stops rendering | Legion 7 16IRX9, i915 plus RTX 4060, 4 monitors | Open | Not yet |
 | [#5695](https://github.com/omacom/omarchy/issues/5695) Black image and long freeze on resume | ThinkPad P1 Gen 7, Meteor Lake | Open | Not yet |
 | [#5573](https://github.com/omacom/omarchy/issues/5573) Internal panel frozen after upgrade | Dell XPS 14, Panther Lake | Fixed | 3.7.1 |
-| [#1441](https://github.com/omacom/omarchy/issues/1441) Zed fails to start, no Vulkan driver | Any Intel iGPU | Fixed | Installer vulkan.sh, backfilled in 3.8.3 |
-| [#6985](https://github.com/omacom/omarchy/issues/6985) Install stops at vulkan.sh on the 4.0 ISO | Intel ThinkPads, free-space install | Fixed | 4.0.1 ISO, PR #7236 |
+| [#1441](https://github.com/omacom/omarchy/issues/1441) Zed fails to start, no Vulkan driver | Any Intel iGPU | Fixed | 3.8.3 backfill migration; fresh installs via vulkan.sh |
+| [#6985](https://github.com/omacom/omarchy/issues/6985) 4.0 ISO install aborts before vulkan.sh runs | Any machine with a Synaptics-named input device | Fixed | 4.0.1 ISO, PR #7236 |
 
 ## Fixes that work
 
@@ -187,14 +185,14 @@ Work in this order.
 2. If `LIBVA_DRIVER_NAME` is `nvidia` and your panel hangs off the Intel iGPU, that is your bug. In `~/.config/hypr/hyprland.lua`, after `require("default.hypr.omarchy")`, add `hl.env("LIBVA_DRIVER_NAME", "iHD")` and `hl.env("__GLX_VENDOR_LIBRARY_NAME", "mesa")`. It must come after the require, or it is overwritten. To avoid a relogin, also run `systemctl --user set-environment LIBVA_DRIVER_NAME=iHD` and restart the browser. Reporters in issue #8215 confirmed this on several chassis.
 3. If `vainfo` finds no driver at all, install the packages by hand: `sudo pacman -S intel-media-driver libvpl vpl-gpu-rt libva-utils`. On Wildcat Lake this is expected until issue #11958 lands.
 4. If a Vulkan app refuses to start, check `pacman -Q vulkan-intel`. Installing it is the whole fix.
-5. On Panther Lake with a panel problem, read `/etc/default/limine` and `/etc/limine-entry-tool.d/`. Remove any `xe.enable_psr=0` or `xe.enable_panel_replay=0` line left over from 3.5 or 3.6, run `sudo limine-update`, and reboot.
+5. On Panther Lake with a panel problem, read `/etc/default/limine` and `/etc/limine-entry-tool.d/`. Remove any `xe.enable_psr=0` or `xe.enable_panel_replay=0` line left over from before 3.6, run `sudo limine-update`, and reboot.
 6. If the trouble started with 4.0.4, boot the older `linux` entry once from the Limine menu. The 4.0.4 migration keeps the previous kernel installed for exactly this. If the problem disappears, say so in a `linux-omarchy` issue.
 7. If a display stays dark after idle, force a real transition: `hyprctl dispatch 'hl.dsp.dpms({ action = "disable" })'` then the same with `enable`.
 8. For Chromium specifically, see [/fix/chromium-flicker-hardware-acceleration/](/fix/chromium-flicker-hardware-acceleration/).
 
 ## Report it
 
-Run `omarchy debug`. It writes `/tmp/omarchy-debug.log` with `inxi -Farz`, dmesg, the current boot journal at warning level and up, and your package list. Use `omarchy debug --print` to read it first, and `--no-sudo` if you would rather leave dmesg out.
+Run `omarchy debug`, or `omarchy-debug` directly if the group command is missing on your build. It writes `/tmp/omarchy-debug.log` with `inxi -Farz`, dmesg, the current boot journal at warning level and up, and your package list. Use `omarchy debug --print` to read it first, and `--no-sudo` if you would rather leave dmesg out.
 
 Attach that, plus the exact output of `lspci -k` for the display device, `vainfo`, `systemctl --user show-environment`, `uname -r`, and which Limine entry you booted. For hybrid machines, say which connector your panel is on and whether the dGPU exposes any DRM connectors at all, because that is the distinction the current detector misses. Hardware reports for this site go to [/hardware/submit/](/hardware/submit/).
 

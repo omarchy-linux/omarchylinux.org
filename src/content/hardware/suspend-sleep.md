@@ -1,7 +1,7 @@
 ---
 title: "Suspend, sleep and resume on Omarchy"
 description: "What suspend, sleep and resume actually do on Omarchy 4.x: the lock-before-sleep path, the sleep hooks it ships, the models that break, and the fix order."
-answer: "Suspend works on most Omarchy 4.0.4 machines and is on by default; hibernation is opt-in via `omarchy hibernation setup`. Most failures are kernel or GPU driver bugs, not Omarchy: try the stock `linux` or `linux-lts` kernel first, then check NVIDIA sleep services, then force a real DPMS transition if the screen alone stays dark."
+answer: "Suspend is on by default on Omarchy 4.0.4; hibernation is opt-in via `omarchy hibernation setup`. Hard failures (no resume, hang on entry, corrupted screen) are mostly kernel or GPU driver bugs: try the stock `linux` or `linux-lts` kernel first, then NVIDIA sleep services, then force a real DPMS cycle if only the screen stays dark."
 appliesTo:
   from: "4.0.0"
 status: info
@@ -29,7 +29,7 @@ sources:
     title: "PR #12210: Debounce lid-close suspend so a quick reopen does not sleep in the dark"
     kind: pr
     author: "ijt"
-    date: "2026-09-16"
+    date: "2026-09-17"
   - url: "https://github.com/omacom/omarchy/issues/12194"
     title: "Issue #12194: MacBookPro14,2 (T1 Alpine Ridge): S3 wake loop heats the chassis and eventually hangs resume"
     kind: issue
@@ -98,7 +98,7 @@ sources:
 credits:
   - name: "alansikora"
     url: "https://github.com/alansikora"
-    for: "Traced suspend failure and battery drain to frozen FUSE mounts and shipped the pre-sleep unmount hook"
+    for: "Shipped the pre-sleep FUSE unmount hook after gvfsd-fuse was confirmed as the cause of failed suspends and battery drain in #4184"
   - name: "ijt"
     url: "https://github.com/ijt"
     for: "Documented the lid close/open suspend race and the Alpine Ridge Thunderbolt wake loop"
@@ -113,7 +113,7 @@ credits:
     for: "Showed that the shipped usbcore autosuspend drop-in cannot apply to a builtin module"
 faq:
   - q: "Does Omarchy suspend when the screen locks or goes idle?"
-    a: "No. The shipped idle path locks the session and blanks the display. Nothing in the default config suspends on a timer, so a machine left alone stays awake unless you close the lid or pick Suspend from the menu."
+    a: "No. The shipped idle settings in shell.json are a 150 second screensaver and a 300 second lock, and logind's IdleAction is left at its default of ignore. Nothing suspends on a timer, so a machine left alone stays awake unless you close the lid or pick Suspend from the menu."
   - q: "Why is there no Hibernate entry in my system menu?"
     a: "The menu entry is gated on omarchy-hibernation-available, which needs non-zram swap larger than /sys/power/image_size plus /etc/mkinitcpio.conf.d/omarchy_resume.conf. Run `omarchy hibernation setup` to create both. It needs the Limine bootloader and free disk space equal to your RAM."
   - q: "Suspend is unreliable on my machine. Can I just turn it off?"
@@ -122,29 +122,29 @@ related: [suspend-wont-resume-s2idle, hibernate-fails-or-hangs, bluetooth-stops-
 draft: false
 ---
 
-Suspend is enabled by default on Omarchy 4.x. Hibernation is not: you opt into it. This page covers what the shipped system actually does around sleep, which failures are real and current on 4.0.4, and the order to try fixes in. Everything below was checked against the v4.0.4 source tree and against issues filed on 4.0.x. The manual chapter is [System sleep](https://omarchy.org/manual/system-sleep/).
+Suspend is enabled by default on Omarchy 4.x. Hibernation is not: you opt into it. This page covers what the shipped system actually does around sleep, which failures are real and current on 4.0.4, and the order to try fixes in. Everything below was checked against the v4.0.4 source tree and against the open sleep issues, most of them filed on 4.0.x. The manual chapter is [System sleep](https://omarchy.org/manual/system-sleep/).
 
 ## Status on 4.0.4
 
-Suspend works on most machines. The 460 issues that touch sleep are dominated by a handful of hardware classes: NVIDIA and hybrid NVIDIA laptops that come back to a black screen, Intel Meteor Lake panels that freeze for about a minute on resume, Intel Macs, and whatever the current kernel has just broken. Very little of the breakage lives in Omarchy's own code. Most of it is the kernel, the GPU driver, or firmware, which is why the first fix below is a kernel swap rather than a config edit.
+Suspend is on by default and the manual's advice is to try it and hide the menu entry if it misbehaves. There are 460 issues whose text touches sleep, and the ones filed on 4.0.x split cleanly in two. The hard failures, where the machine never resumes, hangs on the way into sleep, or comes back with a corrupted panel, cluster on NVIDIA and hybrid NVIDIA laptops, Intel Meteor Lake panels that freeze for about a minute on resume, Intel Macs, and whatever the current kernel has just broken. Those live in the kernel, the GPU driver, or firmware, which is why the first fix below is a kernel swap rather than a config edit. The softer failures, where the machine is fine but something around the lock screen is wrong afterwards, are Omarchy's own: a wake script that skips a dark monitor, a lock timer that never blanks again, a fingerprint retry loop, a lid race with logind.
 
 Hibernation is a different story. It is opt-in, it requires Limine, and on NVIDIA it is still openly unfinished. Treat working hibernation as a nice surprise rather than a baseline.
 
 ## What Omarchy does automatically
 
-Locking before sleep is the part Omarchy owns. A user unit, `omarchy-sleep-lock.service`, runs `omarchy-system-sleep-monitor`, which holds a `systemd-inhibit --what=sleep --mode=delay` lock and watches logind's `PrepareForSleep` signal. When the signal arrives it runs `omarchy-system-sleep-lock`, which asks Quickshell to lock and polls until the session reports secure. A delay inhibitor is a timer, not a promise, so logind suspends when the window expires whether or not the lock landed. Omarchy ships `/etc/systemd/logind.conf.d/20-inhibit-delay.conf` raising `InhibitDelayMaxSec` from the 5 second default to 15, and the lock script derives its own budget from what logind reports, capped at 12 seconds. If it loses the race you get a critical notification saying the session was left unlocked.
+Locking before sleep is the part Omarchy owns. A user unit, `omarchy-sleep-lock.service`, runs `omarchy-system-sleep-monitor`, which holds a `systemd-inhibit --what=sleep --mode=delay` lock and watches logind's `PrepareForSleep` signal. When the signal arrives it runs `omarchy-system-sleep-lock`, which asks Quickshell to lock and polls until the session reports secure. The catch with a delay inhibitor is that logind only waits so long: when the window expires it suspends whether or not the lock landed. Omarchy ships `/etc/systemd/logind.conf.d/20-inhibit-delay.conf` raising `InhibitDelayMaxSec` from the 5 second default to 15, and the lock script reads that value back from logind at runtime and keeps a fifth of it in reserve, capped at 12 seconds. If it loses the race you get a critical notification saying the session was left unlocked.
 
-Closing the lid is bound in Hyprland, not just in logind. `default/hypr/bindings/utilities.lua` binds `switch:on:Lid Switch` to `omarchy-system-lid-close`, which locks immediately, unless external monitors are connected, and then reconciles clamshell state. Locking on lid close rather than waiting for `PrepareForSleep` is deliberate: it gives the shell a head start before logind commits.
+Closing the lid is bound in Hyprland, not just in logind. `default/hypr/bindings/utilities.lua` binds `switch:on:Lid Switch` to `omarchy-system-lid-close`, which locks immediately, unless external monitors are connected, and then reconciles clamshell state. The point of locking on the lid event instead of on `PrepareForSleep` is timing: the shell is usually already secure by the time the sleep monitor asks. Omarchy ships no logind lid drop-in, so logind's compiled default of `HandleLidSwitch=suspend` is still what actually triggers the suspend, and both paths fire on the same close.
 
 Three `system-sleep` hooks ship in `default/systemd/system-sleep/`:
 
-- `unmount-fuse` lazily unmounts gvfsd-fuse mounts before sleep and restarts gvfs afterwards. FUSE daemons stuck in uninterruptible sleep used to time out the process freeze, so suspend silently failed and the machine cooked in a bag. Added by PR #4940, shipped in v3.5.0.
+- `unmount-fuse` lazily unmounts gvfsd-fuse mounts before sleep and restarts gvfs afterwards. A FUSE daemon stuck in uninterruptible sleep used to time out the 20 second process freeze, so suspend silently failed and the machine stayed fully awake with the lid shut, draining the battery. Added by PR #4940, merged 2026-03-10 and first shipped in v3.5.0.
 - `keyboard-backlight` turns the keyboard backlight off before hibernate, because some ASUS LED controllers block S4.
 - `force-igpu` uses supergfxctl to park a discrete GPU in Vfio before hibernate and restore Integrated mode afterwards, since the NVIDIA driver cannot freeze a powered-off dGPU.
 
 Apple hardware gets two install-time quirks. `install/hardware/apple/fix-suspend-nvme.sh` installs a service that clears `d3cold_allowed` on the NVMe controller for MacBook8,1, 9,1, 10,1 and MacBookPro13,x and 14,x. `fix-t2.sh` adds `pm_async=off mem_sleep_default=deep` to the Limine cmdline on T2 Macs, which v4.0.0 listed as fixing T2 suspend and fan defaults.
 
-Hibernation setup is a single command, `omarchy hibernation setup`. It creates a `/swap` btrfs subvolume with a swapfile the size of your RAM, marks it nodatacow, adds the fstab entry, adds the `resume` mkinitcpio hook, writes `resume=` and `resume_offset=` into a Limine drop-in, adds `rtc_cmos.use_acpi_alarm=1` on s2idle systems, and rebuilds the UKI. `omarchy hibernation remove` undoes it.
+Hibernation setup is a single command, `omarchy hibernation setup`. Nothing in the 4.0.4 installer calls it, so a fresh machine has no swapfile and no Hibernate entry until you do. It creates a `/swap` btrfs subvolume with a swapfile the size of your RAM, marks it nodatacow, adds the fstab entry, installs the keyboard-backlight hook, adds the `resume` mkinitcpio hook, writes `resume=` and `resume_offset=` into a Limine drop-in, adds `rtc_cmos.use_acpi_alarm=1` on s2idle systems, and rebuilds the UKI. `omarchy hibernation remove` takes the swap and the mkinitcpio hook back out, but as #12096 shows it leaves the Limine drop-ins behind.
 
 ## Known problems
 
@@ -156,13 +156,14 @@ Hibernation setup is a single command, `omarchy hibernation setup`. It creates a
 | [#5695](https://github.com/omacom/omarchy/issues/5695) i915 commit timeouts, roughly 60s freeze on resume | ThinkPad P1 Gen 7, Alienware m16 R2, Meteor Lake | open | not fixed |
 | [#12194](https://github.com/omacom/omarchy/issues/12194) Thunderbolt PME wakes the machine every 45s with the lid shut | MacBookPro14,2 and Alpine Ridge siblings | open | not fixed |
 | [#12193](https://github.com/omacom/omarchy/issues/12193) lid close then quick reopen leaves a dark screen | any laptop, reported on MacBookPro14,2 | open, PR [#12210](https://github.com/omacom/omarchy/pull/12210) | not fixed |
-| [#12147](https://github.com/omacom/omarchy/issues/12147) one monitor stays dark after wake while Hyprland reports DPMS on | external DisplayPort monitors | open | not fixed |
-| [#12140](https://github.com/omacom/omarchy/issues/12140) lock screen never blanks again after a resume | any | open | not fixed |
-| [#5554](https://github.com/omacom/omarchy/issues/5554) hibernate does not power off, display corruption on resume | NVIDIA desktops and laptops | open, tracking issue | not fixed |
+| [#12147](https://github.com/omacom/omarchy/issues/12147) one monitor stays dark after wake while Hyprland reports DPMS on | LG 4K over DisplayPort in a four monitor hybrid Intel plus RTX 5070 setup | open | not fixed |
+| [#12140](https://github.com/omacom/omarchy/issues/12140) lock screen never blanks again after a resume | reported on an AMD RX 9060 XT desktop, cause is in the shell's lock timer | open | not fixed |
+| [#5554](https://github.com/omacom/omarchy/issues/5554) hibernate resume aborts to a fresh boot, or the machine never powers off, or the display comes back corrupted | NVIDIA desktops and laptops, results differ between hybrid and dGPU-only | open, tracking issue | not fixed |
 | [#12096](https://github.com/omacom/omarchy/issues/12096) hibernation remove leaves stale `resume=` in the UKI | any | open | not fixed |
 | [#12095](https://github.com/omacom/omarchy/issues/12095) shipped usbcore autosuspend drop-in is a no-op, BLE mice fail to reconnect | Intel Bluetooth, AX201 and similar | open | not fixed |
-| [#11412](https://github.com/omacom/omarchy/issues/11412) fingerprint unlock dead after suspend, fprintd stuck busy | Framework Laptop 13, Goodix sensor | open | not fixed |
-| [#4184](https://github.com/omacom/omarchy/issues/4184) no wake plus heavy battery drain during sleep | Framework 13 AMD | partly fixed | v3.5.0 for the FUSE half |
+| [#11412](https://github.com/omacom/omarchy/issues/11412) fingerprint unlock dead after suspend, fprintd stuck busy | Framework Laptop 13 and ThinkPad T14 Gen 7, Goodix sensor | open | not fixed |
+| [#2635](https://github.com/omacom/omarchy/issues/2635) monitors get no signal after wake, machine still running | NVIDIA 3070 first, then AMD RX 9070 XT, RX 580, Beelink SER5 and SER9 | open | not fixed |
+| [#4184](https://github.com/omacom/omarchy/issues/4184) no wake plus heavy battery drain during sleep | Framework 13 AMD | open, FUSE freeze cause fixed | v3.5.0 for the FUSE freeze via PR #4940 |
 
 Two patterns are worth naming. First, several of these reproduce outside Omarchy. In #5695 a reporter hit the same i915 timeouts on Ubuntu with GNOME on the same ThinkPad, and the same reporter measured zero events on a 6.17 kernel against 17 on 7.0. Second, #12190 is a clean kernel bisect by package: 13 suspends out of 13 on stock `linux` 7.2.3, one successful suspend entry out of four and zero resumes on `linux-omarchy` 7.2.5-3, which is the kernel v4.0.4 shipped to everyone.
 
@@ -171,18 +172,18 @@ Two patterns are worth naming. First, several of these reproduce outside Omarchy
 Work in this order.
 
 1. Update, then reboot. `omarchy update` gets you to 4.0.4 and the current shell.
-2. Read the journal from the boot after the failure, not the failing one. Once userspace freezes, journald stops, so a hard power-off loses everything the kernel printed. `journalctl -b -1 -k | grep -E "PM: suspend (entry|exit)"` tells you whether the kernel entered sleep, resumed, or never came back.
-3. Swap kernels. If suspend entry hangs or resume never happens, boot stock `linux`, or `linux-lts` for Meteor Lake panel freezes, and test the same cycle. This is the single highest-yield step right now.
-4. On NVIDIA, enable `nvidia-suspend.service`, `nvidia-hibernate.service` and `nvidia-resume.service`, and set the video memory parameter that matches your driver branch: `NVreg_PreserveVideoMemoryAllocations=1` on older branches, `NVreg_UseKernelSuspendNotifiers=1` on 595 and newer. Check with `cat /proc/driver/nvidia/params` after a reboot, and rerun `limine-update` after any change.
+2. Read the journal from the boot after the failure, not the failing one. Once userspace freezes, journald stops, so a hard power-off loses whatever the kernel printed but had not flushed. `journalctl -b -1 -k | grep -E "PM: suspend (entry|exit)"` tells you whether the kernel entered sleep, resumed, or never came back.
+3. Swap kernels. If suspend entry hangs or resume never happens, boot stock `linux`, or `linux-lts` for Meteor Lake panel freezes, and test the same cycle. It is the step with the clearest evidence behind it right now: #12190 on the shipped kernel and #5695 on 7.x both went away with a different kernel package.
+4. On NVIDIA, enable `nvidia-suspend.service`, `nvidia-hibernate.service` and `nvidia-resume.service`, then check `cat /proc/driver/nvidia/params` after a reboot. Omarchy ships no NVIDIA sleep parameters of its own. On the 610 driver 4.x installs, `UseKernelSuspendNotifiers` is the parameter that matters, and the finding that repeats through #5554 is that `PreserveVideoMemoryAllocations=1`, which gpu-screen-recorder's `gsr-nvidia.conf` sets behind your back, makes hibernate resume abort with `nv_pmops_freeze returns -5` when the driver is loaded from the initramfs. Reporters there got resume working by setting it to 0 or by disabling the early KMS drop-in `/etc/mkinitcpio.conf.d/nvidia.conf`, mostly on hybrid laptops; dGPU-only desktops had mixed results. Rerun `limine-update` after any change. The services alone did not help the #12129 reporter.
 5. If only the screen is dead and the machine is alive over SSH, force a real DPMS transition rather than a redundant enable: `hyprctl dispatch 'hl.dsp.dpms({ action = "disable" })'` then the same with enable. A plain `omarchy system wake` can no-op when Hyprland already believes the panel is lit.
 6. If the machine wakes itself, look at `/proc/acpi/wakeup` for Thunderbolt root ports, xHCI controllers and the Wi-Fi PME, and disable the ones you do not need to wake on.
 7. If nothing helps, `omarchy toggle suspend` removes Suspend from the system menu so you stop triggering a known-bad path.
 
-For hibernation specifically: it needs Limine, free space equal to your RAM, and a correct `resume_offset`. Verify with `btrfs inspect-internal map-swapfile -r /swap/swapfile` against the value in `/etc/limine-entry-tool.d/resume.conf`. Use `systemctl start systemd-hibernate.service` when testing, because `systemctl hibernate` returns immediately and will mislead you.
+For hibernation specifically: it needs Limine, free space equal to your RAM, and a correct `resume_offset`. Verify with `btrfs inspect-internal map-swapfile -r /swap/swapfile` against the value in `/etc/limine-entry-tool.d/resume.conf`. Use `systemctl start systemd-hibernate.service` when testing from a script, because `systemctl hibernate` hands the request to logind and returns before anything has happened.
 
 ## Report it
 
-Sleep bugs are only actionable with the boot after the failure attached. Run `omarchy debug`, pick Upload log, and paste the `logs.omarchy.org` URL into the issue. For lock and idle problems specifically, `omarchy debug idle` dumps the shell's idle state, the sleep-lock unit status, and current idle inhibitors. Include your exact kernel package and version, since `linux-omarchy` and stock `linux` behave differently, plus `cat /sys/power/mem_sleep` so it is clear whether you are on s2idle or deep. If you can, report the result on both kernels. That comparison is what moved #12190 forward.
+Sleep bugs are only actionable with the boot after the failure attached. Run `omarchy debug`, pick Upload log, and paste the `logs.omarchy.org` URL into the issue. For lock and idle problems specifically, `omarchy debug idle` dumps the shell's idle state, the sleep-lock unit status, and current idle inhibitors. Include your exact kernel package and version, since `linux-omarchy` and stock `linux` behave differently, plus `cat /sys/power/mem_sleep` so it is clear whether you are on s2idle or deep. If you can, report the result on both kernels. That side by side count of triggered, entered and resumed cycles per kernel is what makes #12190 a clean report.
 
 ## Related
 

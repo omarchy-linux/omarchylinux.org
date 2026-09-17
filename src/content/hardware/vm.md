@@ -23,7 +23,7 @@ sources:
     author: "kevincasier"
     date: "2026-09-07"
   - url: "https://github.com/omacom/omarchy/issues/7835"
-    title: "Issue #7835: Black screen after entering password when running Omarchy inside VMware"
+    title: "Issue #7835: I am trying to install and run Omarchy inside VMware, but I consistently get a black screen after entering my password"
     kind: issue
     author: "cn0xroot"
     date: "2026-08-23"
@@ -106,6 +106,9 @@ sources:
     kind: manual
     date: "2026-09-15"
 credits:
+  - name: "zhaozigu"
+    url: "https://github.com/zhaozigu"
+    for: "Posting the QT_QUICK_BACKEND=software workaround for the VMware black desktop first, in #7835, with the hyprland.lua placement"
   - name: "rsuarezc0"
     url: "https://github.com/rsuarezc0"
     for: "The WAYLAND_DEBUG trace pinning the VMware crash-loop on a rejected dmabuf from vmwgfx"
@@ -126,7 +129,7 @@ credits:
     for: "Root causing the text mode LUKS prompt to systemd-stub appending a serial console under OVMF"
 faq:
   - q: "Which hypervisor gives the least trouble on Omarchy 4?"
-    a: "QEMU/KVM with virtio-gpu on a Linux host. It is the only virtual GPU the Omarchy tree mentions at all, and the first boot greeter explicitly handles the virtio-gpu console resize. VMware has the most open graphics bugs."
+    a: "QEMU/KVM with virtio-gpu on a Linux host. It is the only virtual GPU the Omarchy code mentions, and the first boot greeter explicitly handles the virtio-gpu console resize. VMware has the most open graphics bugs."
   - q: "Does Omarchy install guest tools for me?"
     a: "No. As of 4.0.4 there is no open-vm-tools, spice-vdagent, qemu-guest-agent or VirtualBox guest package anywhere in the install tree, and no systemd-detect-virt call. Install them yourself after the first boot."
   - q: "Why is everything huge in my VM window?"
@@ -139,24 +142,24 @@ draft: false
 
 ## Status on 4.0.4
 
-Omarchy installs and runs inside a virtual machine, and plenty of people trial it that way. It is also the least tended part of the hardware surface. The issue tracker counts 106 VM issues, 55 still open, and almost none of them have ever been closed by a code change in Omarchy itself.
+Omarchy installs and runs inside a virtual machine, and plenty of people trial it that way. It is also the least tended part of the hardware surface. A search of the issue tracker for hypervisor names turns up 106 issues, 55 still open, and none of the ones cited on this page was closed by a code change in Omarchy itself.
 
 The short version by hypervisor, checked against the v4.0.4 source tree and the open reports:
 
-- QEMU/KVM and Proxmox on a Linux host are the smoothest path. virtio-gpu is the only virtual GPU the Omarchy tree acknowledges anywhere, and the first boot greeter in `bin/omarchy-provision-owner` has code that waits for the virtio-gpu KMS handoff before painting.
-- VMware Workstation and Fusion are the worst. With 3D acceleration on, the Quickshell bar and panels crash-loop and you get a black or grey desktop with a cursor (#8113, #7835). With 3D acceleration off, Hyprland cannot initialise its renderer at all. There is a workaround, below.
-- VirtualBox works for some people and not others. Most reports are old and 3.x era, and the closed ones were closed without a fix landing (#2028, #1176).
-- Parallels, UTM and Hyper-V have no first party support at all. The manual points at community guides in [Omarchy on...](https://omarchy.org/manual/omarchy-on/).
+- QEMU/KVM and Proxmox on a Linux host are the smoothest path. People reporting VirtualBox or VMware trouble tend to add that KVM on a Linux host worked (#2028, #1930). virtio-gpu is the only virtual GPU the Omarchy code mentions, and the first boot greeter in `bin/omarchy-provision-owner` has code that waits for the virtio-gpu KMS handoff before painting.
+- VMware Workstation and Fusion are the worst. With 3D acceleration on, the Quickshell bar and panels crash-loop and you get a black or grey desktop with a cursor (#8113, #7835). With 3D acceleration off, Hyprland cannot initialise its renderer at all, per dsuarezv in #8113. There is a workaround, below.
+- VirtualBox works for some people and not others. Most reports are 2.x and 3.x era, and the closed ones were closed when a VM setting change worked for the reporter or when the thread went quiet, never by a change in Omarchy (#1176, #2028).
+- Parallels, UTM and Hyper-V have nothing in the tree either. The manual's [Omarchy on...](https://omarchy.org/manual/omarchy-on/) chapter links user-driven guides for Parallels, VirtualBox and VMware. The UTM and Hyper-V guides only exist in discussions, which #2251 lists.
 
-One hard requirement: Omarchy 4 boots a UKI written to an EFI System Partition and managed by `limine-entry-tool`. Give the VM UEFI firmware. VirtualBox defaults to legacy BIOS, and that is behind a share of the "installed fine, will not boot" reports.
+One hard requirement: Omarchy 4 boots a UKI at `/boot/EFI/Linux/omarchy_linux.efi`, managed by `limine-entry-tool`, and nothing in the install tree handles a legacy BIOS boot. Give the VM UEFI firmware. The manual's own Proxmox example passes `--bios ovmf`, and VirtualBox ships with EFI off, so tick it under System before the first boot.
 
-Nothing here changed with Quattro except the config format. The 3.x guides that tell you to edit `~/.config/hypr/envs.conf` are dead on 4.x, because Hyprland config is Lua now. See [the conf to Lua migration](/reference/hyprland-conf-to-lua-migration/).
+Quattro changed the config format, not the VM story. The 3.x guides that tell you to edit `~/.config/hypr/envs.conf` are dead on 4.x, because Hyprland config is Lua now. See [the conf to Lua migration](/reference/hyprland-conf-to-lua-migration/).
 
 ## What Omarchy does automatically
 
 Almost nothing, and that is the single most useful fact on this page.
 
-Grep the v4.0.4 tree for `systemd-detect-virt`, `open-vm-tools`, `spice-vdagent`, `qemu-guest-agent` or `virtualbox-guest-utils` and you get no hits. `install/hardware/all.sh` runs 27 quirk scripts, every one of them keyed to physical hardware: ASUS ROG, Framework 16, Dell XPS haptics, Surface, NVIDIA, Intel, Apple. There is no VM leaf and no quirk script for this component.
+Grep the v4.0.4 tree for `systemd-detect-virt`, `open-vm-tools`, `spice-vdagent`, `qemu-guest-agent` or `virtualbox-guest-utils` and you get no hits. `install/hardware/all.sh` runs 34 scripts. The ones that look for a device look for physical hardware: ASUS ROG, Framework 16, Dell XPS haptics, Surface, NVIDIA, Intel, Apple. The rest are generic, such as NetworkManager and Bluetooth enablement. There is no VM leaf and no quirk script for this component.
 
 Two consequences worth knowing:
 
@@ -172,13 +175,13 @@ Scaling is the other default that bites in a VM. `config/hypr/monitors.lua` ship
 | Issue | Where it hits | Status | Fixed in |
 | --- | --- | --- | --- |
 | [#8113](https://github.com/omacom/omarchy/issues/8113) shell crash-loops, black or grey desktop | VMware Workstation and Fusion, 3D acceleration on, vmwgfx | open | not fixed, workaround below |
-| [#7835](https://github.com/omacom/omarchy/issues/7835) black screen after entering password | VMware on Windows and Linux hosts | open | not fixed |
+| [#7835](https://github.com/omacom/omarchy/issues/7835) black screen after entering password | VMware on Windows and Linux hosts | open | not fixed, same workaround as #8113 |
 | [#10620](https://github.com/omacom/omarchy/issues/10620) no open-vm-tools after install | VMware guests | open | not fixed |
 | [#11337](https://github.com/omacom/omarchy/issues/11337) unthemed text LUKS prompt | QEMU and Proxmox with OVMF, UKI boot | open | not fixed |
-| [#11011](https://github.com/omacom/omarchy/issues/11011) black screen or plymouthd crash | Proxmox 9.2 with GPU passthrough, q35 5.1 | closed, not reproducible on a newer q35 | no code change |
+| [#11011](https://github.com/omacom/omarchy/issues/11011) black screen or plymouthd crash | Proxmox 9.2 with GPU passthrough, q35 5.1 | closed by the reporter after a reinstall on a newer q35 worked | no code change |
 | [#10282](https://github.com/omacom/omarchy/issues/10282) Sunshine 503, capture never starts | any VM with no physical keyboard or mouse | open | not fixed |
 | [#11735](https://github.com/omacom/omarchy/issues/11735) Super+Print during install breaks it | VirtualBox, reported once, no comments yet | open | unverified |
-| [#2028](https://github.com/omacom/omarchy/issues/2028), [#2761](https://github.com/omacom/omarchy/issues/2761) keystrokes ignored after login | VirtualBox and VMware, 3.x | closed | no fix committed |
+| [#2028](https://github.com/omacom/omarchy/issues/2028), [#2761](https://github.com/omacom/omarchy/issues/2761) keystrokes or Super combos ignored after login | VirtualBox and VMware, mostly on Windows hosts, 3.x | closed | no fix committed |
 | [#2144](https://github.com/omacom/omarchy/issues/2144) desktop rendered at 2x, edges cut off | VirtualBox | closed as a duplicate of #127 | still the 4.0.4 default |
 | [#2513](https://github.com/omacom/omarchy/issues/2513) tiny window or low resolution | QEMU with virt-manager | closed | no fix committed |
 | [#9505](https://github.com/omacom/omarchy/issues/9505) Chromium dies when a VM shuts down | Omarchy as libvirt host, AMD GPU | open | not fixed |
@@ -196,7 +199,7 @@ Work in this order.
 hl.env("QT_QUICK_BACKEND", "software")
 ```
 
-nenad82 measured that against the wider `LIBGL_ALWAYS_SOFTWARE=1` in #8113: both stop the crash-loop, but the Qt switch keeps Hyprland itself on the GPU, with idle CPU around 4 percent instead of 12. `QSG_RHI_BACKEND=software`, which several older guides recommend, does nothing at all here. Kor123 adds `hl.env("XWAYLAND_NO_GLAMOR", "1")` if XWayland apps such as Spotify take the session down with them.
+zhaozigu posted that first in #7835 on 2026-08-23, placed right after the `dofile(...bootstrap.lua)` line, and two other people in that thread confirmed it. nenad82 then measured it against the wider `LIBGL_ALWAYS_SOFTWARE=1` in #8113: both stop the crash-loop, but the Qt switch keeps Hyprland itself on the GPU, with idle CPU around 4 percent instead of 12. `QSG_RHI_BACKEND=software`, which several older guides recommend, does nothing at all here. Kor123 adds `hl.env("XWAYLAND_NO_GLAMOR", "1")` if XWayland apps such as Spotify take the session down with them.
 
 The underlying bug is upstream, not in Omarchy: vmwgfx imports dmabufs as surface handles, the compositor's GEM close fails, and the client's `wl_surface.attach` is rejected with a fatal protocol error. dsuarezv posted a Hyprland patch in the same thread.
 
@@ -210,10 +213,10 @@ The underlying bug is upstream, not in Omarchy: vmwgfx imports dmabufs as surfac
 
 ```
 echo 'KERNEL_CMDLINE[default]+=" console=tty0"' | sudo tee -a /etc/limine-entry-tool.d/omarchy-defaults.conf
-omarchy refresh limine
+sudo limine-update
 ```
 
-Both #11337 and #11011 verified that on their own machines.
+`omarchy refresh limine` gets you there too, but it first replaces `/boot/limine.conf` with the Omarchy default and leaves a `.bak`, so plain `limine-update` is the lighter touch. #11337 verified this on QEMU. The #11011 reporter got the graphical prompt back on Proxmox with `console=tty0` plus `plymouth.enable=0`, then found a reinstall on a newer q35 machine type worked with no change at all, so treat the Proxmox half as less settled.
 
 ## Report it
 

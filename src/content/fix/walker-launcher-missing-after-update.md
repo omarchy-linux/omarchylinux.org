@@ -94,7 +94,7 @@ So if you press `Super + Space` expecting a plain list of applications and get a
 
 ### If you just want your apps back (4.0.0 through 4.0.4)
 
-1. Press `Super + Alt + Space`. That is the dedicated apps-only launcher now. It has fuzzy and acronym matching and indexes icons live, so newly installed apps appear straight away.
+1. Press `Super + Alt + Space`. That is the dedicated apps-only launcher now. The v4.0.0 notes describe it as having fuzzy and acronym matching with live app icon indexing.
 2. Or press `Super + Space` and start typing an app name. The unified menu matches installed apps as well as Omarchy commands, so you usually do not need the second shortcut at all.
 3. From a terminal or a script, the same two surfaces are:
 
@@ -127,13 +127,14 @@ Omarchy 4 moved Hyprland config from `.conf` to Lua, so this goes in `~/.config/
    o.bind("SUPER + ALT + SPACE", "Omarchy menu", "omarchy-menu toggle")
    ```
 
-4. Reload. Hyprland picks up the Lua config on reload, and the shell does not need restarting for a binding change:
+4. Reload. Hyprland re-reads its config on save, but forcing it and checking for Lua mistakes is cheap. The shell itself does not need restarting for a binding change:
 
    ```bash
    hyprctl reload
+   hyprctl configerrors
    ```
 
-The `hl.unbind` then `o.bind` pattern is the one the stock `~/.config/hypr/bindings.lua` documents in its own comments. See [the conf to Lua migration notes](/reference/hyprland-conf-to-lua-migration/) if your bindings did not survive the upgrade at all.
+The `hl.unbind` then `o.bind` pattern is the one the stock `~/.config/hypr/bindings.lua` documents in its own comments, and the one the Dotfiles chapter of the manual uses. See [the conf to Lua migration notes](/reference/hyprland-conf-to-lua-migration/) if your bindings did not survive the upgrade at all.
 
 ### Where your old config went
 
@@ -159,13 +160,13 @@ The `pacman -Qq` grep should print nothing and report `exit 1`. If it prints pac
 
 Omarchy 4.0.0 rewrote the whole desktop shell as one Quickshell process. The bar, notifications, OSDs, lock screen, polkit agent and the menu are now plugins inside `omarchy-shell`. Once the menu could search its own nested entries, keeping a second palette with a second shortcut stopped making sense, so the launcher was merged into the menu.
 
-Walker also carried real costs. It ran as a resident `walker --gapplication-service` process started from an XDG autostart entry, and on some amdgpu machines that process hard-froze the desktop because the autostart entry carried no renderer override, reported in issue #6443 and closed by DHH with the note that Walker is gone on Quattro. The 3.x series also had a long tail of walker and elephant packages disappearing or mismatching on upgrade, which is what issue #2546 and its siblings were about.
+Walker also carried real costs. It ran as a resident `walker --gapplication-service` process started from an XDG autostart entry, and on at least one amdgpu machine that process hard-froze the desktop because the autostart entry carried no renderer override, reported in issue #6443 and closed by dhh the day before the 4.0.0 release with the note that Walker is gone on Quattro. The 3.x series also had a long tail of walker and elephant packages disappearing or mismatching on upgrade, which is what issue #2546 and its siblings were about.
 
-The upgrade path is explicit. `omarchy-upgrade-to-quattro` lists `omarchy-walker`, `walker-bin`, `elephant` and its thirteen provider packages in its retired set and removes them in one pacman transaction, with a dependency-aware fallback group so they come off together rather than failing one at a time.
+The upgrade path is explicit. `omarchy-upgrade-to-quattro` lists `omarchy-walker`, `walker-bin`, `elephant` and thirteen `elephant-*` packages in its retired set and removes them in one pacman transaction, with a dependency-aware fallback group so they come off together rather than failing one at a time.
 
 ## If that did not work
 
-**The Apps menu is empty or says "Nothing here yet".** This is a real bug, not the redesign. Issue #11107 reports it as a regression in 4.0.3-1, still open as of 2026-09-16, with the Apps submenu caching an empty row set that never recovers in that session. The most common cause found so far is a cloned or third-party menu plugin: a clone of `omarchy.menu` gets a scoped shell API whose `appLibrary` is null, so its Apps list stays empty (issue #11028, also #10946 and #11307). Check what you have loaded and drop the clone:
+**The Apps menu is empty or says "Nothing here yet".** This is a real bug, not the redesign. Issue #11107 reports it as a regression in 4.0.3-1, still open as of 2026-09-16, with the Apps submenu caching an empty row set that never recovers in that session. The one cause pinned down so far is a cloned or third-party menu plugin: a clone of `omarchy.menu` gets a scoped shell API whose `appLibrary` is null, so its Apps list stays empty (issue #11028, also #10946 and #11307). Check what you have loaded and drop the clone:
 
 ```bash
 omarchy plugin list
@@ -175,11 +176,11 @@ omarchy restart shell
 
 One reporter on #11107 confirmed the stock launcher worked again once they deleted their own launcher plugin.
 
-**Typing a query that matches nothing does nothing.** Walker had an elephant `websearch` provider that fell back to a browser search. The native menu has no such fallback. Issue #7012 tracks it and is still open. Until it lands you need your own binding or menu entry.
+**Typing a query that matches nothing does nothing.** Walker had an elephant `websearch` provider that fell back to a browser search. The native menu has no such fallback. Issue #7012 tracks it and is still open. Two pull requests add a fallback to the menu (#7075 and #8012), and neither is merged as of 2026-09-16, so for now you need your own binding or menu entry.
 
 **Flatpak apps do not show up.** Tracked separately in issue #8650, where the session `XDG_DATA_DIRS` misses the Flatpak export directories. Not a Walker issue.
 
-**You are still on 3.x.** Different problem entirely. On 3.1.5 and later, install the meta package rather than the individual providers, then restart the services: `sudo pacman -S --needed omarchy-walker` followed by `omarchy-restart-walker`. Full detail is on [command not found: elephant](/fix/command-not-found-elephant/).
+**You are still on 3.x.** Different problem entirely. On 3.1.5 and later, install the meta package rather than the individual providers, then restart the services: `omarchy-pkg-add omarchy-walker` followed by `omarchy-restart-walker`. Full detail is on [command not found: elephant](/fix/command-not-found-elephant/).
 
 **The shell itself is not running.** If neither shortcut does anything and the bar is missing too, the problem is upstream of the menu. See [Quickshell crashes or bar missing](/fix/quickshell-crashes-or-bar-missing/).
 

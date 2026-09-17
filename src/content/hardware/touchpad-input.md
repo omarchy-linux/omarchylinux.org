@@ -105,6 +105,11 @@ sources:
     kind: issue
     author: "jpumfrey"
     date: "2025-09-26"
+  - url: "https://github.com/omacom/omarchy/pull/9735"
+    title: "PR #9735: Force SPI PIO on MacBook8,1 so the built-in keyboard works"
+    kind: pr
+    author: "jeissonneira"
+    date: "2026-09-02"
   - url: "https://github.com/omacom/omarchy/issues/2054"
     title: "Issue #2054: Can't switch between keyboard layouts. Stuck on Russian."
     kind: issue
@@ -131,11 +136,11 @@ credits:
     for: "Root-caused the MacBook8,1 applespi timeouts to the DesignWare DMA engine and published a working setup"
 faq:
   - q: "Where do I change touchpad settings on Omarchy 4?"
-    a: "In ~/.config/hypr/input.lua, reachable from the Omarchy menu under Setup > Input. The 3.x file was ~/.config/hypr/input.conf and the 4.0 migration converted it. Anything you set there replaces Omarchy's defaults, so a setting you leave commented out is unset, not defaulted."
+    a: "In ~/.config/hypr/input.lua, reachable from the Omarchy menu under Setup > Input. The 3.x file was ~/.config/hypr/input.conf and the 4.0 migration converted it. Only uncommented settings there replace Omarchy's defaults; a line you leave commented out falls through to default/hypr/input.lua."
   - q: "Why does my touchpad toggle key do nothing?"
     a: "Two separate bugs. Hyprland's input:resolve_binds_by_sym defaults to false, so the stock XF86TouchpadToggle bind never matches (issue #10449). And omarchy-hw-touchpad only matches devices whose Hyprland name contains touchpad or trackpad, so on other pads the toggle exits with an error nobody sees (issue #8376)."
   - q: "Are touchpad gestures set up by default?"
-    a: "No. The gesture lines in config/hypr/input.lua ship commented out. Add hl.gesture({ fingers = 3, direction = \"horizontal\", action = \"workspace\" }) yourself. The old 3.x gestures:workspace_swipe block does not exist in current Hyprland."
+    a: "No. The gesture lines in config/hypr/input.lua ship commented out. Add hl.gesture({ fingers = 3, direction = \"horizontal\", action = \"workspace\" }) yourself. It is the Lua form of the gesture = 3, horizontal, workspace line the 3.x input.conf shipped, also commented out."
 related: [suspend-wont-resume-s2idle, custom-keybindings-lost-after-quattro, layouts-and-locale, t2-mac, microsoft-surface]
 draft: false
 ---
@@ -144,13 +149,13 @@ Input is the part of Omarchy that either disappears into the background or ruins
 
 ## Status on 4.0.4
 
-Good for most hardware. Of the 541 issues that mention touchpads, keyboards, libinput or gestures, the current 4.x failures cluster into four groups: i2c-hid pads that fail to probe at boot or fail to resume, Omarchy's own touchpad tooling missing devices it should match, Intel Macs and Surface machines with no input at the LUKS prompt, and fresh regressions from the bespoke `linux-omarchy` kernel that 4.0.4 made the default for everyone.
+Good for most hardware. Of the 541 issues that mention touchpads, keyboards, libinput or gestures, the current 4.x failures cluster into four groups: i2c-hid pads that fail to probe at boot or fail to resume, Omarchy's own touchpad tooling missing devices it should match, Intel Macs and Surface machines with no built-in input in the installer or at the LUKS prompt, and fresh regressions from the bespoke `linux-omarchy` kernel that 4.0.4 made the default for everyone.
 
 That last group is new and worth watching. On an Alienware m15 Ryzen Edition R5, `linux-omarchy` 7.2.5-3 makes the SynPS/2 Synaptics pad vanish from `/proc/bus/input/devices` entirely, while stock `linux` 7.2.3 on the same machine enumerates it fine (issue #12181). If your pad died the day you took 4.0.4, suspect the kernel before anything else.
 
 ## What Omarchy does automatically
 
-The defaults live in `default/hypr/input.lua` and are short. Keyboard layout and variant are read out of `/etc/vconsole.conf` at reload time. If the layout cannot type Latin letters, Omarchy prepends `us` and adds `grp:alts_toggle` so Left Alt plus Right Alt switches, because Hyprland resolves keybindings against the first layout only. Caps Lock becomes the compose key, and both Shift keys together give you Caps Lock back with a self-cancelling variant. Repeat rate is 40 with a 250 ms delay, and numlock starts on.
+The defaults live in `default/hypr/input.lua` and are short. Keyboard layout and variant are read out of `/etc/vconsole.conf` at reload time. If the layout cannot type Latin letters, Omarchy prepends `us` and adds `grp:alts_toggle` so Left Alt plus Right Alt switches, because Hyprland resolves keybindings against the first layout only. That fallback answers reports like #2054, where an install done with a Russian layout could not switch back to English. Caps Lock becomes the compose key, and both Shift keys together give you Caps Lock back with a self-cancelling variant. Repeat rate is 40 with a 250 ms delay, and numlock starts on.
 
 For the pad itself the defaults are `natural_scroll = false`, `clickfinger_behavior = true`, and `scroll_factor = 0.4`, plus per-app scroll multipliers for Alacritty, kitty, foot and Ghostty. Gestures are not enabled: the `hl.gesture` examples in `config/hypr/input.lua` ship commented out.
 
@@ -176,21 +181,21 @@ Three helper commands matter day to day. `omarchy-hw-touchpad` prints the detect
 | [#10924](https://github.com/omacom/omarchy/issues/10924) i2c_hid_acpi fails to resume after s2idle | ASUS Zenbook UM3406KA | open | workaround only |
 | [#9658](https://github.com/omacom/omarchy/issues/9658) i2c_designware times out at boot, no pad created | Lenovo 21DM convertible | open | workaround only |
 | [#9347](https://github.com/omacom/omarchy/issues/9347) Goodix GXTP7863 probe fails with -110 | Huawei MateBook D BOD-WXX9 | open | not fixed |
-| [#6935](https://github.com/omacom/omarchy/issues/6935) right-click dead when clickfinger_behavior is unset | any install upgraded to 4.0 | open | workaround only |
+| [#6935](https://github.com/omacom/omarchy/issues/6935) right-click dead when clickfinger_behavior is unset | Framework SNSL0028 pad, config migrated from 3.x | open | workaround only |
 | [#10449](https://github.com/omacom/omarchy/issues/10449) XF86TouchpadToggle bind never fires | any laptop with a touchpad Fn key | open | PR #10577 open |
-| [#8376](https://github.com/omacom/omarchy/issues/8376) toggle no-ops when the device name lacks touchpad or trackpad | Apple MTP and bcm5974, Pixelbook, Synaptics TM3053 and TM3096 | open | PR #8281 open |
-| [#12029](https://github.com/omacom/omarchy/issues/12029) an external pad shadows the internal one | any laptop plus a Magic Trackpad | open | not fixed |
+| [#8376](https://github.com/omacom/omarchy/issues/8376) toggle no-ops when the device name lacks touchpad or trackpad | Apple MTP and bcm5974, Pixelbook, Synaptics TM3053 | open | PR #8281 open |
+| [#12029](https://github.com/omacom/omarchy/issues/12029) an external pad shadows the internal one | ThinkPad E595 plus a Bluetooth Magic Trackpad, any second pad can do it | open | not fixed |
 | [#7010](https://github.com/omacom/omarchy/issues/7010) lid close disables the touchpad and it stays off | HP Pavilion Gaming | open | not fixed |
 | [#11128](https://github.com/omacom/omarchy/issues/11128) no keyboard or pad at the LUKS prompt | AMD Surface Laptop 3 and 4 | open | not fixed |
 | [#12136](https://github.com/omacom/omarchy/issues/12136) haptic pad needs linux-surface plus iptsd | Surface Laptop Studio 2 | open | not fixed |
 | [#10815](https://github.com/omacom/omarchy/issues/10815) disable-while-typing has no effect | T2 MacBook Pro | open | not fixed |
 | [#2415](https://github.com/omacom/omarchy/issues/2415) internal keyboard dead in the installer | Intel MacBooks | open | not fixed |
 
-Two of these are Omarchy's own code rather than hardware. Issue #6935 is the sharper one: the 4.0 migration faithfully converted a commented-out `clickfinger_behavior` line from `input.conf` into a commented-out Lua line, and under the Lua config an unset value means no working right-click at all, by corner or by two-finger tap. Setting it explicitly to `true` or `false` fixes it. Issue #10449 is the other: Hyprland's `input:resolve_binds_by_sym` defaults to false and nothing in the v4.0.4 tree sets it, which we confirmed by grepping the tree, so all three stock `XF86Touchpad*` binds are dead out of the box.
+Two of these are Omarchy's own code rather than hardware. Issue #6935 is the sharper one: the 4.0 migration faithfully converted a commented-out `clickfinger_behavior` line from `input.conf` into a commented-out Lua line inside a `touchpad` table that still set `scroll_factor`, and on that machine right-click stopped working entirely, by corner or by two-finger tap, even though the stock default has set `clickfinger_behavior = true` since 4.0.0. Setting it explicitly to `true` or `false` in `input.lua` brought it back; why the default did not apply is not established in the thread. Issue #10449 is the other: Hyprland's `input:resolve_binds_by_sym` defaults to false and nothing in the v4.0.4 tree sets it, which we confirmed by grepping the tree, so all three stock `XF86Touchpad*` binds are dead out of the box.
 
-The reporter of #7010 found the nastiest interaction. HP firmware injects a fake `KEY_TOUCHPAD_OFF` press through the internal keyboard just before the lid switch fires, which hits the stock `XF86TouchpadOff` bind, writes the persisted disable state, and leaves the pad off after every lid close.
+The reporter of #7010 found the nastiest interaction. On his HP Pavilion the internal keyboard emits a spurious `KEY_TOUCHPAD_OFF` (scancode `d8`) about a quarter second before the lid switch reports closed. Omarchy binds `XF86TouchpadOff` to `omarchy-toggle-touchpad off`, so every lid close writes the persisted disable state and the pad stays off after resume. A manual suspend from the menu never triggers it because no key is emitted. His workaround is `hl.unbind("XF86TouchpadOff")` in `bindings.lua`.
 
-On Intel Macs the story is older and mostly not Omarchy's to fix. The `applespi` timeouts on MacBook8,1 (issue #1954, continued in #2099) survived several rounds of module fixes; in August 2026 matthiasjg traced them to the DesignWare DMA engine the SPI controller transfers through and published a working setup for Omarchy 4.0. The installer keyboard problem in #2415 is two bugs in one thread, and an external USB keyboard gets you through either.
+On Intel Macs the story is older and mostly not Omarchy's to fix. The `applespi` timeouts on MacBook8,1 (issue #1954, continued in #2099) survived several rounds of module fixes; in August 2026 matthiasjg traced them to the DesignWare DMA engine the SPI controller transfers through and published a working setup for Omarchy 4.0. The 4.0.4 installer already writes his MacBook8,1 `MODULES` line in `apple/fix-spi-keyboard.sh`, but the `initcall_blacklist=dw_pci_driver_init` kernel parameter that actually makes the keyboard work is only in PR #9735, which is open and not in any 4.0.x release. The installer keyboard problem in #2415 is two bugs in one thread, and an external USB keyboard gets you through either.
 
 ## Fixes that work
 

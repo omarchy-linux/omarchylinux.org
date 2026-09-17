@@ -35,6 +35,7 @@ sources:
   - url: "https://github.com/omacom/omarchy/pull/7026"
     title: "PR #7026: Prevent migration (1786643346) from hanging on stale browser lock files"
     kind: pr
+    author: "joshuafouch"
     date: "2026-08-15"
   - url: "https://github.com/omacom/omarchy/pull/7130"
     title: "PR #7130: Skip the sleep lock repair when the unit is not installed"

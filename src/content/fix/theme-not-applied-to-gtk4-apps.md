@@ -1,6 +1,6 @@
 ---
 title: "GTK4 and libadwaita apps ignore the Omarchy theme"
-description: "Nautilus and other GTK4/libadwaita apps stay Adwaita gray on Omarchy 4. Omarchy only sets light/dark, so generate a gtk.css palette with a theme template and hook."
+description: "Nautilus and other GTK4/libadwaita apps stay Adwaita gray on Omarchy 4. Omarchy only sets light or dark, so generate a gtk.css palette with a template and hook."
 answer: "Omarchy does not theme GTK4 apps. omarchy-theme-set-gnome only sets color-scheme, gtk-theme and icon-theme, so Nautilus follows light or dark and nothing else. Fix it yourself: add a gtk.css.tpl template in ~/.config/omarchy/themed/ that maps colors.toml onto libadwaita @define-color names, then a theme-set hook that copies the result to ~/.config/gtk-4.0/gtk.css and restarts the app. Chromium is themed separately and does work."
 appliesTo:
   from: "3.x"
@@ -142,7 +142,7 @@ omarchy theme refresh
 
 That re-runs the whole theme pipeline against the current theme without cycling your background.
 
-Add more app names to the `pkill` line only if you use them, for example `gnome-calendar` or `gnome-text-editor`. Those daemons survive their last window, so closing the window is not enough. Killing one discards anything unsaved in it.
+Add more app names to the `pkill` line only if you use them, for example `gnome-calendar` or `gnome-text-editor`. These apps keep a background process alive after their last window closes, so a plain close and reopen keeps showing the old colors. Killing one discards anything unsaved in it.
 
 ## Verify it worked
 
@@ -153,7 +153,7 @@ grep -c '{{' ~/.config/gtk-4.0/gtk.css
 
 Every line should carry a real hex value. A count above zero means a palette key in your template does not exist for that theme and the literal placeholder was left in place. Empty or missing values are what produced transparent Nautilus windows in #8380, where the reporter saw lines reading `@define-color background     #;`.
 
-Then open Nautilus. The window, sidebar and header bar should carry your theme's background, and selected rows should carry the accent. Switch to another theme with `Super + Ctrl + Shift + Space` and confirm it follows.
+Then open Nautilus. The window, sidebar and header bar should carry your theme's background, and selected rows should carry the accent. Open the theme menu with `Super + Ctrl + Shift + Space`, pick another theme, and confirm Nautilus follows.
 
 ## Why it happens
 
@@ -163,13 +163,13 @@ libadwaita is the reason a binary theme name is not enough. It deliberately igno
 
 Two competing pull requests would close the gap. #8408 generates the palette through a `default/themed/gtk.css.tpl` and adds a Nautilus extension that reloads it over D-Bus. #8584 writes both GTK3 and GTK4 stylesheets and reloads Files only when a window is mapped. Neither had been merged when 4.0.4 shipped on 2026-09-15.
 
-Two limits are worth knowing before you invest in this. The author of #7557 reports that GTK3 cannot be recolored the same way, because `@define-color` in the user stylesheet is provider scoped and never reaches Adwaita's rules. They also note that libadwaita reads the user stylesheet once, at process start, which is why the hook restarts the app. Both are their measurements, not ours.
+Two limits are worth knowing before you invest in this. The author of #7557 reports that the same trick does nothing for GTK3: a `@define-color` override in the user stylesheet stays inside its own provider and Adwaita rendered identically with and without it. They also note that libadwaita loads the user stylesheet once when the process starts, which is why the hook restarts the app. Both are their measurements, not ours.
 
 ## If that did not work
 
 **Nautilus is transparent instead of themed.** You probably have a stale or broken `~/.config/gtk-3.0/gtk.css` or `~/.config/gtk-4.0/gtk.css` with empty color values, the symptom in #8380. Delete both, then re-run `omarchy theme refresh`. Note that the reporter there blames a `10-gtk.sh` hook that stock Omarchy does not ship, so check `~/.config/omarchy/hooks/theme-set.d/` for something you or a plugin installed.
 
-**Icons are broken squares rather than wrong colors.** On Vantablack and White the theme asks for a `Yaru-gray` icon theme that does not exist on disk, and `omarchy-theme-set-gnome` only falls back when the `icons.theme` file is missing, not when the name is unresolvable. Check with `gsettings get org.gnome.desktop.interface icon-theme`. The workaround in #7203 is to copy the theme into `~/.config/omarchy/themes/`, write a real icon theme name such as `Yaru-dark` into its `icons.theme`, and refresh.
+**Icons are broken squares rather than wrong colors.** Vantablack asks for a `Yaru-gray` icon theme and White for `Yaru-grey`, and neither exists on disk. `omarchy-theme-set-gnome` only falls back to `Yaru-blue` when the `icons.theme` file is missing, not when the name is unresolvable, and that is still how v4.0.4 ships. Check with `gsettings get org.gnome.desktop.interface icon-theme`. Two commenters on #7203 traced repeated Nautilus and Ghostty segfaults to the same missing theme, so treat this as more than cosmetic. The workaround in #7203 is to copy the theme into `~/.config/omarchy/themes/`, write a real icon theme name such as `Yaru-dark` into its `icons.theme`, and refresh.
 
 **Chromium is not following the theme.** Chromium is themed, through a different path. `omarchy-theme-set-browser` writes `{"BrowserThemeColor": "#rrggbb", "BrowserColorScheme": "device"}` into `/etc/chromium/policies/managed/color.json` and the equivalent directories for Chrome, Edge and Brave, then asks a running browser to reload its policy. Check that the file exists and carries your theme's background color. The message "Theme is set by your Organization" in browser settings is expected with this design.
 

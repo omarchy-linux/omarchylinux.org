@@ -1,7 +1,7 @@
 ---
 title: "NVIDIA on Omarchy"
-description: "What works and what breaks on NVIDIA GPUs in Omarchy 4.0.4: driver selection by GPU generation, hybrid laptop video decode, kernel module failures, and the fix order."
-answer: "Omarchy installs NVIDIA drivers automatically: nvidia-open-dkms on Turing and newer, nvidia-580xx-dkms on Maxwell through Volta, plus early KMS via modprobe and mkinitcpio. Single-GPU desktops are mostly fine. Hybrid Intel or AMD laptops are the weak spot: forced NVDEC decode corrupts browser video, and a kernel whose NVIDIA modules did not build freezes or loops the login."
+description: "NVIDIA GPUs on Omarchy 4.0.4: driver selection by GPU generation, hybrid laptop video decode corruption, kernel module failures, and the fix order."
+answer: "Omarchy installs NVIDIA drivers automatically: nvidia-open-dkms on Turing and newer, nvidia-580xx-dkms on Maxwell through Volta, plus early KMS via modprobe and mkinitcpio. Desktop reports are mostly update and packaging failures. Hybrid Intel or AMD laptops are the weak spot: forced NVDEC decode corrupts browser video, and a kernel whose NVIDIA modules did not build freezes or loops the login."
 appliesTo:
   from: "4.0.0"
 status: info
@@ -106,7 +106,7 @@ related: [hybrid-gpu, suspend-sleep, multi-monitor]
 draft: false
 ---
 
-Omarchy has real NVIDIA support, not an afterthought. The installer detects your card, picks a driver branch by GPU generation, and configures early kernel mode setting. On a desktop with a single NVIDIA card that path is quiet. On a hybrid laptop, where an Intel or AMD iGPU drives the panel and the NVIDIA chip sits behind it, most of the open complaints live.
+Omarchy has real NVIDIA support, not an afterthought. The installer detects your card, picks a driver branch by GPU generation, and configures early kernel mode setting. On a desktop with a single NVIDIA card, the open reports are about what happens at update time and in packaging, not about the driver setup itself. On a hybrid laptop, where an Intel or AMD iGPU drives the panel and the NVIDIA chip sits behind it, most of the open complaints live.
 
 This page was checked against v4.0.4, released 2026-09-15, using the v4.0.4 source tree. The issue counter in the sidebar covers every NVIDIA-matching issue and discussion in the tracker, open and closed, so treat it as a measure of traffic rather than of current breakage.
 
@@ -116,13 +116,13 @@ Which driver you get depends on the PCI device ID of your card.
 
 - **Turing or newer**, meaning device ID `0x1e00` and above, roughly GTX 16 series and RTX 20 series onward. You get `nvidia-open-dkms`, `nvidia-utils`, `lib32-nvidia-utils` and `libva-nvidia-driver`. This is the supported path.
 - **Maxwell, Pascal and Volta**, device IDs `0x1340` through `0x1dff`, roughly GTX 700 later parts through GTX 10 series and Titan V. You get the legacy `nvidia-580xx-dkms` branch. Omarchy's own repos carry 580.178.04 on the stable, rc and edge channels.
-- **Kepler and older.** The installer prints that there is no compatible driver and points at the Arch wiki. You stay on nouveau, which works for a desktop but not for anything demanding.
+- **Kepler and older.** The installer prints that there is no compatible driver and points at the Arch wiki. You stay on nouveau, and the software cursor fix below is the only NVIDIA-specific thing Omarchy does for you.
 
 Vulkan comes from `nvidia-utils` on NVIDIA. The separate `vulkan.sh` installer only handles Intel, AMD and Apple.
 
 ## What Omarchy does automatically
 
-**Detects from sysfs, not lspci.** `omarchy-hw-nvidia`, `omarchy-hw-nvidia-gsp` and `omarchy-hw-nvidia-without-gsp` read cached IDs under `/sys/bus/pci/devices`. The 4.0.0 notes explain why: `lspci` reads PCI config space, which resumes a runtime-suspended discrete GPU out of D3cold, and that wake alone costs more than Hyprland's entire 1.5 second config load budget.
+**Detects from sysfs, not lspci.** `omarchy-hw-nvidia`, `omarchy-hw-nvidia-gsp` and `omarchy-hw-nvidia-without-gsp` read cached IDs under `/sys/bus/pci/devices`. The 4.0.0 notes explain why: an `lspci` call touches PCI config space, which pulls a runtime-suspended dGPU out of D3cold, and on a hybrid laptop that wake by itself blows through the 1.5 seconds Hyprland allows for loading its config.
 
 **Configures early KMS.** It writes `options nvidia_drm modeset=1` to `/etc/modprobe.d/nvidia.conf` and `MODULES+=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)` to `/etc/mkinitcpio.conf.d/nvidia.conf`.
 
@@ -132,20 +132,20 @@ Vulkan comes from `nvidia-utils` on NVIDIA. The separate `vulkan.sh` installer o
 
 **Offers a hybrid GPU toggle.** If `omarchy-hw-hybrid-gpu` reports hybrid, the Omarchy menu shows Hardware, Hybrid GPU, which runs `omarchy-toggle-hybrid-gpu`. That installs `supergfxctl`, writes `/etc/supergfxd.conf`, enables the daemon, and reboots. Switching to Integrated also installs a `supergfxd` startup delay, because starting it in Integrated mode races the display manager and can freeze the boot, and a `force-igpu` sleep hook that flips the card through Vfio back to Integrated after resume, and to Vfio before hibernate so the driver is never asked to freeze a powered-off dGPU.
 
-**Fixes the nouveau cursor.** If you end up on nouveau, an installer appends `no_hardware_cursors = true` to your `looknfeel.lua`, because nouveau does not drive the hardware cursor plane on many older cards and the pointer goes invisible.
+**Fixes the nouveau cursor.** If you end up on nouveau, an installer appends `no_hardware_cursors = true` to your `looknfeel.lua`, because on many older cards nouveau never shows the hardware cursor plane, so under Hyprland you get no visible pointer at all.
 
 ## Known problems
 
 | Issue | Models | Status | Fixed in |
 | --- | --- | --- | --- |
-| [#12187](https://github.com/omacom/omarchy/issues/12187) hard freeze about 5 seconds after login on the new default kernel | Lenovo hybrid, Intel iGPU plus RTX 4070 Max-Q; any machine on prebuilt `nvidia-open` | Open | not fixed |
-| [#5706](https://github.com/omacom/omarchy/issues/5706) DKMS fails to build for a new kernel, SDDM login loop with no visible error | RTX 3060 Ti, 4060 Ti and others | Open, assigned | not fixed |
+| [#12187](https://github.com/omacom/omarchy/issues/12187) hard freeze about 5 seconds after login on the new default kernel | Lenovo hybrid, Intel iGPU plus RTX 4070 Max-Q, on prebuilt `nvidia-open` rather than DKMS | Open | not fixed |
+| [#5706](https://github.com/omacom/omarchy/issues/5706) DKMS fails to build for a new kernel, SDDM login loop with no visible error | RTX 3090 Ti, 3060 Ti, 4060 Ti | Open, assigned, [PR #6840](https://github.com/omacom/omarchy/pull/6840) proposed | not fixed |
 | [#8215](https://github.com/omacom/omarchy/issues/8215) NVDEC VA-API routing corrupts or kills browser video | Hybrid Intel plus RTX 3050, Meteor Lake plus RTX 4050, AMD Cezanne plus RTX 3050 Ti | Open, [PR #7851](https://github.com/omacom/omarchy/pull/7851) proposed | not fixed |
-| [#4901](https://github.com/omacom/omarchy/issues/4901) cross-GPU DMA-BUF import fails, `eglCreateImage failed with 0x00003009` | Hybrid Intel plus RTX 3050 and similar | Open | not fixed |
+| [#4901](https://github.com/omacom/omarchy/issues/4901) cross-GPU DMA-BUF import fails, `eglCreateImage failed with 0x00003009` | Hybrid Intel plus RTX 3050, AMD plus NVIDIA confirmations | Open, [PR #5312](https://github.com/omacom/omarchy/pull/5312) proposed | not fixed |
 | [#12129](https://github.com/omacom/omarchy/issues/12129) black screen on resume from suspend | ASUS TUF F17 FX707VI, RTX 4070 Mobile, kernel 7.2.5-3-omarchy | Open, no comments yet | not fixed |
-| [#12054](https://github.com/omacom/omarchy/issues/12054) Sunshine NVENC probe fails, falls back to software x264 | RTX 2080 Ti and other Turing parts | Open | not fixed |
+| [#12054](https://github.com/omacom/omarchy/issues/12054) Sunshine NVENC probe fails, falls back to software x264 | RTX 2080 Ti, single report | Open, no comments yet | not fixed |
 | [#6790](https://github.com/omacom/omarchy/issues/6790) about 100 MB of unused nouveau GSP firmware in every initramfs | All NVIDIA-only installs | Closed | 4.0.0 |
-| [#1776](https://github.com/omacom/omarchy/issues/1776) dGPU never reaches D3cold, battery drains | Hybrid Intel plus NVIDIA laptops | Closed 2026-02-01 | no linked release |
+| [#1776](https://github.com/omacom/omarchy/issues/1776) dGPU never reaches D3cold, battery drains | Hybrid Intel plus NVIDIA laptops | Closed 2026-02-01 as completed, thread is a manual setup guide | no linked fix |
 
 Two of these deserve detail.
 
@@ -163,7 +163,7 @@ Work in this order.
 2. **Make sure the package is the DKMS one.** A prebuilt `nvidia-open` only has modules for the kernel it was built against. That is the trap in issue #12187.
 3. **Check modules exist for the kernel you boot.** `uname -r`, then `dkms status`, then `ls /usr/lib/modules/$(uname -r)/`. If NVIDIA modules are missing there, do not reboot yet.
 4. **If you are already frozen or looping,** pick the stock `linux` entry in Limine instead of the `linux-omarchy` one, or roll back with [Snapper and Limine](/upgrade/rollback-with-snapper-and-limine/). Fix DKMS from a working session. See [login loop or password not accepted](/fix/login-loop-or-password-not-accepted-sddm/) and [black screen after login](/fix/black-screen-after-login/).
-5. **For hybrid video corruption,** add `hl.env("LIBVA_DRIVER_NAME", "iHD")` to `~/.config/hypr/hyprland.lua`, using `radeonsi` instead on an AMD iGPU. Also run `systemctl --user set-environment LIBVA_DRIVER_NAME=iHD` so you do not have to log out, then restart the browser. Reporters note this variable affects video decode only, not Vulkan, OpenGL, NVENC or `prime-run`. More in [Chromium flicker and hardware acceleration](/fix/chromium-flicker-hardware-acceleration/).
+5. **For hybrid video corruption,** add `hl.env("LIBVA_DRIVER_NAME", "iHD")` to `~/.config/hypr/hyprland.lua`, using `radeonsi` instead on an AMD iGPU. Also run `systemctl --user set-environment LIBVA_DRIVER_NAME=iHD` so you do not have to log out, then restart the browser. Reporters note this variable affects video decode only, not Vulkan, OpenGL, NVENC or `prime-run`. One reporter in issue #4901 found that on a machine where Chromium renders through NVIDIA EGL, changing only the VA-API driver killed hardware decode entirely; the EGL vendor override in that thread has to go with it. More in [Chromium flicker and hardware acceleration](/fix/chromium-flicker-hardware-acceleration/).
 6. **For battery drain on a hybrid laptop,** try the Hybrid GPU toggle in the Omarchy menu and switch to Integrated. Details on [the hybrid GPU page](/hardware/hybrid-gpu/).
 7. **For resume failures,** start with [suspend will not resume](/fix/suspend-wont-resume-s2idle/) and [the suspend and sleep page](/hardware/suspend-sleep/), and say in your report whether the stock kernel behaves differently.
 

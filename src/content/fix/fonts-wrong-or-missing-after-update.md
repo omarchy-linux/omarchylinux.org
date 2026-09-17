@@ -1,7 +1,7 @@
 ---
 title: "Fonts wrong or missing after an Omarchy update"
 description: "Wrong monospace font, tofu boxes, or broken emoji after an Omarchy 4 update. Reset fontconfig with omarchy font set, rebuild the font cache, fix leftovers."
-answer: "Run `omarchy font set \"JetBrainsMono Nerd Font\"`. That rewrites ~/.config/fontconfig/fonts.conf from scratch, updates every terminal config, and restarts the shell, which clears a stale Omarchy 3 fontconfig file left behind by the Quattro upgrade. Then run `fc-cache -f` and restart Ghostty, Foot, and your browser by hand, because none of them reload fonts in place."
+answer: "Run `omarchy font set \"JetBrainsMono Nerd Font\"`. That overwrites ~/.config/fontconfig/fonts.conf in full, which replaces any stale Omarchy 3 copy the Quattro upgrade left behind, then updates every terminal config and restarts the shell. Follow with `fc-cache -f` and restart Ghostty, Foot, and your browser by hand, because none of them pick up the change in place."
 appliesTo:
   from: "4.0.0"
 status: workaround
@@ -95,7 +95,7 @@ credits:
     for: "Measured Nerd Font glyph boxes to explain why bar icons shrink with some fonts"
 faq:
   - q: "Did Omarchy 4 change the default font?"
-    a: "The family is the same, JetBrainsMono Nerd Font, but the package is not. Omarchy 3.8.4 installed ttf-jetbrains-mono-nerd; 4.0.0 switched to the lighter ttf-jetbrains-mono-nerd-basic to save about 200MB, and the Quattro upgrader removes the old package. If you were using a variant family that only the full package shipped, it is gone after the upgrade."
+    a: "The family is the same, JetBrainsMono Nerd Font, but the package is not. Omarchy 3.8.4 installed ttf-jetbrains-mono-nerd; 4.0.0 switched to the lighter ttf-jetbrains-mono-nerd-basic to save about 200MB, and the Quattro upgrader removes the old package. If a family name you used on 3.x no longer shows up in fc-list after the upgrade, the package swap is the likely reason."
   - q: "Where does Omarchy set the system font now?"
     a: "In two places. The package-owned default lives at /usr/share/fontconfig/conf.avail/50-omarchy.conf and is loaded from /etc/fonts/conf.d. Your own choice lives in ~/.config/fontconfig/fonts.conf, which omarchy font set rewrites in full every time you run it. On 3.x there was no package-owned file; ~/.config/fontconfig/fonts.conf was the only one."
   - q: "Why did my terminal font change but nothing else, or the other way round?"
@@ -116,15 +116,15 @@ Start with `omarchy-version`. Everything below is for 4.0.0 and later. If you ar
 
 2. Re-apply your font. `omarchy font list` shows what is installed, then `omarchy font set "JetBrainsMono Nerd Font"` (or your own choice, in quotes). This is the step that fixes most post-update font trouble, because `omarchy-font-set` does not patch your fontconfig file, it overwrites `~/.config/fontconfig/fonts.conf` in full. Any leftover from Omarchy 3 is gone afterwards. It also rewrites the Alacritty, Kitty, Ghostty and Foot configs and restarts the Omarchy shell.
 
-3. If you get `Font '<name>' not found.`, the family really is not installed. Check with `fc-list | grep -i <name>`. The Quattro upgrader removes `ttf-jetbrains-mono` and `ttf-jetbrains-mono-nerd` before the main package transaction and installs `ttf-jetbrains-mono-nerd-basic` instead, so a variant family that came from the full Nerd Font package will not resolve any more. Pick a family that `omarchy font list` shows, or install a fresh one from _Install > Style > Font_ in the Omarchy menu (`Super + Space`), which installs the package and switches to it in one go.
+3. If you get `Font '<name>' not found.`, the family really is not installed. Check with `fc-list | grep -i <name>`. The Quattro upgrader removes `ttf-jetbrains-mono` and `ttf-jetbrains-mono-nerd` before the main package transaction and installs `ttf-jetbrains-mono-nerd-basic` instead, so a family name that only the full package provided will not resolve any more. Which names the basic package drops is not documented anywhere I could find, so let `fc-list` be the judge. Pick a family that `omarchy font list` shows, or install a fresh one from _Install > Style > Font_ in the Omarchy menu (`Super + Space`), which installs the package and switches to it in one go.
 
 4. Rebuild the font cache and restart the clients: `fc-cache -f`, then `omarchy restart shell`. Add `-r` (`fc-cache -f -r`) if you want the old cache files discarded rather than updated.
 
-5. Close and reopen Ghostty, Foot and your browser. Kitty and Alacritty pick up the change live; Ghostty and Foot do not. Omarchy is supposed to warn you about this with a toast, but the notification call in `omarchy-font-set` is malformed and the message is never delivered. That was reported in issue #7183 and PR #7370 is still open as of 4.0.4, so treat the manual restart as required.
+5. Close and reopen Ghostty, Foot and your browser. `omarchy-font-set` signals Kitty to reload and Alacritty watches its own config, so those two follow along; Ghostty and Foot do not. Omarchy is supposed to warn you about this with a toast, but the notification call in `omarchy-font-set` is malformed and the message is never delivered. That was reported in issue #7183 and PR #7370 is still open as of 4.0.4, so treat the manual restart as required.
 
 6. If bold or italic text in Kitty still uses the old font, open `~/.config/kitty/kitty.conf` and look for `bold_font` and `italic_font` lines. `omarchy font set` only rewrites `font_family`, so an explicit `bold_font` from an earlier choice survives (issue #9167). Set them to `auto` or to your new family.
 
-7. If the Omarchy icon glyphs in the bar look wrong or duplicated, check for a leftover user copy of the icon font: `ls -l ~/.local/share/fonts/omarchy.ttf`. Migration 1788848726, which shipped in v4.0.3, removes that file, but only when its checksum matches the stock one, and it refuses to touch symlinks or a font you replaced yourself. If the file is still there and you did not put it there, move it aside and run `fc-cache -f`.
+7. If the Omarchy icon glyphs in the bar look wrong or out of date, check for a leftover user copy of the icon font: `ls -l ~/.local/share/fonts/omarchy.ttf`. Migration 1788848726, which shipped in v4.0.3, removes that file, but only when its checksum matches the stock one, and it refuses to touch symlinks or a font you replaced yourself. If the file is still there and you did not put it there, move it aside and run `fc-cache -f`.
 
 ## Verify it worked
 
@@ -137,15 +137,15 @@ fc-match serif
 
 On a stock 4.0.x install those return your chosen monospace family, `Liberation Sans` and `Liberation Serif`. The two Liberation answers come from the package-owned `50-omarchy.conf`, not from anything in your home directory, so seeing them is a good sign that the package default is in charge again.
 
-Then look at the desktop. The bar icons should be crisp and evenly sized, emoji should be in colour in a fresh terminal, and any CJK or other non-Latin text you use should render as glyphs rather than boxes.
+Then look at the desktop. The bar icons should be crisp and evenly sized, emoji should render as emoji rather than boxes, and any CJK or other non-Latin text you use should render as glyphs rather than boxes.
 
 ## Why it happens
 
 Quattro moved the font defaults out of your home directory. On 3.8.4 the whole configuration was one user file, `~/.config/fontconfig/fonts.conf`, and `omarchy-font-set` edited the monospace entry inside it with `xmlstarlet`. On 4.x the defaults are package-owned, shipped as `50-omarchy.conf` and loaded from `/etc/fonts/conf.d`, and the user file only carries your override.
 
-The upgrade handles that move by hash. It backs up each retired config file, then compares the backup against a list of checksums for every default Omarchy has ever shipped. A file that matches is deleted so the packaged one takes over. A file that does not match is copied back, on the assumption that you customized it deliberately. Five stock hashes for `fontconfig/fonts.conf` are on that list. If you ever changed your font on 3.x, your copy matches none of them, so it is restored and stays active alongside the new packaged file. Issue #10117 documents an upgrade where the removal pass never ran at all, leaving `fontconfig/fonts.conf` and an orphaned `omarchy.ttf` behind while the upgrade still showed its completion screen.
+The upgrade handles that move by hash. It backs up each retired config file, then compares the backup against a list of checksums for every default Omarchy has ever shipped. A file that matches is deleted so the packaged one takes over. A file that does not match is copied back, on the assumption that you customized it deliberately. Five stock hashes for `fontconfig/fonts.conf` are on that list. If you ever changed your font on 3.x, your copy matches none of them, so it is restored and stays active alongside the new packaged file. Issue #10117 documents an upgrade where the removal pass never ran at all, leaving `fontconfig/fonts.conf` and an orphaned `omarchy.ttf` in `~/.config` behind while the upgrade still showed its completion screen.
 
-The other half is the new fallback rules. `50-omarchy.conf` pins the three generic families with a strong `assign`, which cuts the alias chains that `noto-fonts` appends later in the load order. It then adds an unconditional last-resort family to catch Chromium and Electron, which resolve missing glyphs one character at a time. Both choices have visible side effects that are open as of 4.0.4.
+The other half is the new fallback rules. `50-omarchy.conf` pins the three generic families with a strong `assign`, which cuts the alias chains that `noto-fonts` appends later in the load order. It then appends a single Arabic face to every pattern as a catch-all, because Chromium and Electron look up each missing character separately and never carry a language tag that the targeted rules could match. Both choices have visible side effects that are open as of 4.0.4.
 
 ## If that did not work
 
@@ -153,9 +153,9 @@ The other half is the new fallback rules. `50-omarchy.conf` pins the three gener
 - **Digits rendering in a serif or calligraphic face in GTK4 apps such as Files.** Same last-resort rule, opposite failure. Issue #8928 has a user-level override that drops the Arabic face when it is the effective fallback.
 - **An app asks for a specific font and gets the one you set globally.** Any family whose name contains "mono" is affected, because fontconfig's own `48-guessfamily.conf` widens such patterns before the Omarchy rule sees them. Issue #8404 has the full load order and the evidence.
 - **Your font is installed but missing from _Style > Font_.** `omarchy-font-list` filters on `fc-list :spacing=100`, so dual-width fonts are excluded from the picker even though `omarchy font set` will accept them by name. Issue #7698.
-- **Bar icons much smaller than before.** Some Nerd Fonts draw icon glyphs at about half the em box. The bar renders them at a fixed pixel size, so the painted icon shrinks. Issue #8608 has measurements per codepoint. Switching back to JetBrainsMono Nerd Font is the only fix today.
-- **Ghostty ignores a font size you set by hand.** Ghostty honours whichever config file loads last. In discussion #3555 the reporter kept the Omarchy-managed line in place and added a `config-file` include as the final line, with personal font settings in the included file.
-- **You are still on 3.x.** Discussion #4818 describes the 3.4.0 version of this problem, where an update reset Ghostty to the default font. The workaround was the same in spirit: pick your font again in _Style > Font_. None of the fontconfig detail above applies, since 3.x has no packaged `50-omarchy.conf`.
+- **Bar icons much smaller than before.** The "Nerd Font Mono" variants draw their icon glyphs at about half the em box, and the bar sizes each icon by font pixel size rather than by the ink it paints, so the icon shrinks. Issue #8608 has measurements per codepoint for Iosevka, and a commenter hit the same thing with CaskaydiaMono Nerd Font Mono. The fix that worked for both was choosing the same family without the trailing "Mono" in its name. PR #8830, which sizes icons by their painted bounds, is still open as of 4.0.4.
+- **Ghostty ignores a font size you set by hand.** Ghostty processes `config-file` includes after the file that names them, so the theme include at the top of `~/.config/ghostty/config` wins over anything you write below it. In discussion #3555 a commenter left that line alone and added a second `config-file` include as the very last line, pointing at a personal file that holds the font settings. Another noted that Ghostty needs a config reload (right-click, Config, Reload Configuration) before a size change shows.
+- **You are still on 3.x.** Discussion #4818 describes the 3.4.0 version of this problem, where an update reset Ghostty to the default font. The workaround was the same in spirit: pick your font again in _Style > Font_. A commenter there traced it to the strong `assign` rule in the 3.x user file, and the 4.0.0 release notes list a fix for that binding. None of the fontconfig detail above applies to 3.x, which has no packaged `50-omarchy.conf`.
 
 If the update that broke your fonts also broke other things, the aborted-upgrade case in issue #10117 is worth ruling out before you spend time on fontconfig.
 

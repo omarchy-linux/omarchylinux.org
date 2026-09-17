@@ -120,13 +120,13 @@ credits:
     for: "Showed that direct boot keeps booting the old kernel's UKI after the 4.0.4 linux-omarchy migration"
   - name: "keylimesoda"
     url: "https://github.com/keylimesoda"
-    for: "Isolated the UKI chainload panic on older Lenovo UEFI and the ENABLE_UKI=no workaround"
+    for: "Isolated the UKI chainload panic on older Lenovo UEFI and proposed the ENABLE_UKI=no workaround"
   - name: "Cloud-Ops-Dev"
     url: "https://github.com/Cloud-Ops-Dev"
     for: "Documented the btrfs-overlayfs and limine-snapper-sync conflict that blocks snapshot restore"
 faq:
   - q: "Can I go back to GRUB or systemd-boot?"
-    a: "You can, but you lose snapshot booting. The manual states plainly that the snapshot feature only exists on Limine installs, which has been the default since Omarchy 2.0. Nothing in Omarchy 4.x offers a supported migration off Limine."
+    a: "You can, but you lose snapshot booting. The manual states plainly that the snapshot feature only exists on Limine installs, which has been the default since Omarchy 2.0. Omarchy 4.x ships no tool for moving an install off Limine."
   - q: "My machine boots straight to the LUKS prompt and never shows the menu. Is Limine gone?"
     a: "No. That is direct boot, an EFI entry pointing at the UKI that skips Limine. To reach snapshots again, pick Limine from the firmware boot menu, or run Setup > Direct Boot a second time to remove the entry."
   - q: "Which kernel entry should I pick after updating to 4.0.4?"
@@ -153,11 +153,11 @@ The component tracker counts 692 issues matching boot, Limine, LUKS, UEFI and ke
 
 Omarchy installs `limine-mkinitcpio-hook` and drives everything through `limine-entry-tool` drop-ins rather than hand-editing boot entries.
 
-The packaged drop-in `/etc/limine-entry-tool.d/omarchy-defaults.conf` sets the UKI name to `omarchy`, turns on `ENABLE_LIMINE_FALLBACK` and `FIND_BOOTLOADERS`, keeps at most six snapshot entries, and appends a quiet kernel command line: `quiet splash loglevel=0 systemd.show_status=false rd.udev.log_level=0 vt.global_cursor_default=0`. It also appends `initramfs_async=0`, with a comment explaining why: kernel 7.1 unpacks the initramfs asynchronously, `plymouthd` then fails to read `/proc/cmdline`, and encrypted boots fall back to an unthemed text LUKS prompt.
+The packaged drop-in `/etc/limine-entry-tool.d/omarchy-defaults.conf` sets the UKI name to `omarchy`, turns on `ENABLE_LIMINE_FALLBACK` and `FIND_BOOTLOADERS`, keeps at most six snapshot entries, and appends a quiet kernel command line: `quiet splash loglevel=0 systemd.show_status=false rd.udev.log_level=0 vt.global_cursor_default=0`. It also appends `initramfs_async=0`, with a comment explaining why: kernel 7.1 unpacks the initramfs asynchronously, `plymouthd` then cannot read `/proc/cmdline`, and an encrypted machine gets a bare text LUKS prompt instead of the themed one.
 
 `BOOT_ORDER` in that file reads `linux-t2, linux-omarchy, linux-omarchy-*, *, *fallback, Snapshots`. T2 Macs stay on their own kernel on purpose; everything else prefers the Omarchy kernel.
 
-Hardware quirks write their own drop-ins during install. `install/hardware/apple/fix-t2.sh` adds `intel_iommu=on iommu=pt pm_async=off mem_sleep_default=deep` for T2 Macs along with the `linux-t2` kernel; `install/hardware/intel/fred.sh` adds `fred=on` on Panther Lake; `install/hardware/asus/fix-asus-ptl-b9406-display.sh` adds `xe.enable_panel_replay=0` on the ExpertBook B9406. Those are the only shipped scripts that touch the kernel command line.
+Hardware quirks write their own drop-ins during install. `install/hardware/apple/fix-t2.sh` adds `intel_iommu=on iommu=pt pm_async=off mem_sleep_default=deep` for T2 Macs along with the `linux-t2` kernel; `install/hardware/intel/fred.sh` adds `fred=on` on Panther Lake; `install/hardware/asus/fix-asus-ptl-b9406-display.sh` adds `xe.enable_panel_replay=0` on the ExpertBook B9406, and `fix-asus-ptl-display-backlight.sh` adds `xe.enable_dpcd_backlight=1` on that model and the Zenbook UX5406AA. After install, `omarchy-hibernation-setup` writes `resume.conf` (and `rtc-alarm.conf` on s2idle machines) into the same directory, and `omarchy-upgrade-to-quattro` writes `root=` into `/etc/default/limine` when it finds the effective command line has none.
 
 Updates carry migrations that rebuild the boot image when they must. Migration `1786482992` compares the running `/proc/cmdline` against the defaults drop-in and runs `limine-mkinitcpio` if parameters are missing. Migration `1789325478`, the one that landed in 4.0.4, installs `linux-omarchy`, rewrites `BOOT_ORDER`, rebuilds that kernel's entry, then verifies with `limine-entry-tool --tree` and refuses to mark itself complete if the entry is absent. It leaves the old kernel installed on purpose so you have something to fall back to.
 
@@ -169,15 +169,15 @@ Two commands are worth knowing. `omarchy-refresh-limine` moves `/boot/limine.con
 
 | Issue | Models affected | Status | Fixed in |
 | --- | --- | --- | --- |
-| [#11878](https://github.com/omacom/omarchy/issues/11878) stale PARTUUID in `/etc/default/limine` kills the LUKS prompt | any LUKS plus Btrfs install | open | not yet |
-| [#9826](https://github.com/omacom/omarchy/issues/9826) `root=` silently dropped from the UKI command line | any | open | not yet |
+| [#11878](https://github.com/omacom/omarchy/issues/11878) stale PARTUUID in `/etc/default/limine` kills the LUKS prompt | LUKS plus Btrfs installs moved to a new drive | open | not yet |
+| [#9826](https://github.com/omacom/omarchy/issues/9826) `root=` missing from the UKI command line | bare 3.x installs over a hand-made Limine config | open | not yet |
 | [#8047](https://github.com/omacom/omarchy/issues/8047) btrfs-overlayfs blocks `limine-snapper-restore` | any Btrfs install | open | not yet |
-| [#6629](https://github.com/omacom/omarchy/issues/6629) `limine-snapper-sync` inactive, no snapshot entries | any | open | not yet |
+| [#6629](https://github.com/omacom/omarchy/issues/6629) `limine-snapper-sync` inactive, no snapshot entries | fresh installs, reported from 3.8.4 | open | not yet |
 | [#12145](https://github.com/omacom/omarchy/issues/12145) direct boot keeps booting the old kernel after 4.0.4 | any with direct boot enabled | open | not yet |
 | [#12143](https://github.com/omacom/omarchy/issues/12143) UKI chainload panic, `EFI_INVALID_PARAMETER` | ThinkPad Yoga 11e, older UEFI | open | not yet |
-| [#10945](https://github.com/omacom/omarchy/issues/10945) Secure Boot Violation after a Limine-only update | sbctl custom-key setups | open | not yet |
-| [#11526](https://github.com/omacom/omarchy/issues/11526) non-AVX2 CPU left unbootable mid-update | Celeron N4000 and similar | open | tooling fixed, path to it is not |
-| [#7989](https://github.com/omacom/omarchy/issues/7989) leftover archinstall entry panics as the default | 3.x installs upgraded to Quattro | open | not yet |
+| [#10945](https://github.com/omacom/omarchy/issues/10945) Secure Boot Violation after an update that touches Limine | sbctl custom-key setups | open | not yet |
+| [#11526](https://github.com/omacom/omarchy/issues/11526) non-AVX2 CPU left unbootable mid-update | Celeron N4000 and similar, reported from 3.8.5 | open | not yet |
+| [#7989](https://github.com/omacom/omarchy/issues/7989) leftover archinstall entry panics as the default | archinstall-based installs upgraded to Quattro | open | not yet |
 | [#7867](https://github.com/omacom/omarchy/issues/7867) second ESP created, Windows entry dropped on refresh | dual-boot with Windows | open | not yet |
 | [#7906](https://github.com/omacom/omarchy/issues/7906) `limine-scan` writes an uppercase Windows path that panics | dual-boot with Windows | open | not yet |
 | [#11997](https://github.com/omacom/omarchy/issues/11997) no `BOOTX64.EFI`, invisible in the Mac boot picker | Intel Macs | open | not yet |
@@ -186,7 +186,7 @@ Two commands are worth knowing. `omarchy-refresh-limine` moves `/boot/limine.con
 | [#11442](https://github.com/omacom/omarchy/issues/11442) mouse movement cancels the autoboot countdown | desktops with a USB mouse | open | not yet |
 | [#12096](https://github.com/omacom/omarchy/issues/12096) removing hibernation leaves `resume=` in the UKI | hibernation users | open | not yet |
 
-Three of these are worth a sentence more. In #11878 the reporter's boot dropped to an emergency shell with no passphrase prompt at all, because a PARTUUID in `/etc/default/limine` matched no partition on the disk and outranked the correct one in `/etc/kernel/cmdline`. Nothing validates that value before baking it into an entry. In #11442 the reporter points out that `omarchy debug` is useless for this class of bug, since the hang happens in Limine before the kernel starts. In #12143 the reporter got a native-Linux entry generated with `ENABLE_UKI=no`, but says openly that a full boot was not confirmed, so treat that one as a lead rather than a fix.
+A few of these are worth a sentence more. In #11878 the reporter's boot dropped to an emergency shell with no passphrase prompt at all, because a PARTUUID in `/etc/default/limine` outranked the correct one in `/etc/kernel/cmdline`. The reporter first read it as an orphaned value, then corrected himself: it was the LUKS partition of an external drive the install had been migrated from, so a check against `blkid` alone would have passed it. In #9826 the hook's argument count turned out to be fine; the machine was a bare 3.x install over a hand-made Limine config, which left an empty `KERNEL_CMDLINE[default]+=""` line that switches off the `/etc/kernel/cmdline` fallback, and the reporter confirmed that appending `root=` to `/etc/default/limine` fixed it. In #10945 a second reporter hit the lockout on a combined 4.0.2 to 4.0.3 update, not only a Limine-only one, and traced it to the installer's `99-omarchy-limine.hook` copying the unsigned binary over the signed one. In #11526 the reporter, on 3.8.5, states that `limine-mkinitcpio-hook` 1.38.0-1.1 runs on the CPU; the gap is that the update delivering it needs the older binary to rebuild the UKI first. In #11442 the reporter points out that `omarchy debug` is useless for this class of bug, since the hang happens in Limine before the kernel starts. In #12143 the reporter got a native-Linux entry generated with `ENABLE_UKI=no`, but says openly that a full boot was not confirmed, so treat that one as a lead rather than a fix.
 
 The 4.0.4 kernel switch has its own tail. #12187 reports a hybrid NVIDIA laptop freezing seconds after login on `linux-omarchy` while the stock kernel is fine, on a machine carrying prebuilt `nvidia-open` rather than the DKMS package Omarchy installs.
 
@@ -197,11 +197,11 @@ Where 3.x differed: the boot failures were mostly install-time. In #4152, Januar
 Work in this order.
 
 1. **Do not reinstall.** Limine keeps older entries. Arrow to the previous kernel or a snapshot and boot that first, then fix from a working desktop. With direct boot enabled you must pick Limine from the firmware boot menu to see the snapshot submenu at all.
-2. **If you land in an emergency shell or get no LUKS prompt**, check the effective command line with `sudo limine-entry-tool --get-cmdline default` and look for `root=`. Compare any UUID or PARTUUID in `/etc/default/limine` against `blkid`. Fix the file, then `sudo limine-mkinitcpio`.
+2. **If you land in an emergency shell or get no LUKS prompt**, check the effective command line with `sudo limine-entry-tool --get-cmdline default` and look for `root=`. Compare any UUID or PARTUUID in `/etc/default/limine` against `/etc/kernel/cmdline` and against the device `findmnt -no SOURCE /` reports, not only against `blkid`, since a stale value can still name a real partition on another drive. Fix the file, then `sudo limine-mkinitcpio`.
 3. **If the menu itself is wrong**, run `omarchy-refresh-limine`. It backs up your current `/boot/limine.conf` to `.bak` first. Be aware it replaces the file wholesale, so a hand-added Windows entry does not survive.
 4. **If snapshots are missing from the menu**, check `systemctl status limine-snapper-sync.service` and confirm a root config exists with `sudo snapper --csvout list-configs`. If there is none, rerun the packaged `install/config/snapper.sh`.
 5. **If the countdown never expires**, add `mouse: no` to the global section of `/boot/limine.conf`, above the first entry.
-6. **If Secure Boot refuses Limine after an update**, re-sign and verify with `sbctl` before rebooting again.
+6. **If Secure Boot refuses Limine after an update**, run `sudo sbctl verify` and, if `limine_x64.efi` shows as unsigned, `sudo sbctl sign -s /boot/EFI/limine/limine_x64.efi` before rebooting again.
 7. **If nothing boots**, use the ISO as a rescue system, `arch-chroot` into the install, repair the config, and run `limine-mkinitcpio` there.
 
 ## Report it

@@ -56,14 +56,14 @@ faq:
   - q: "Can I just keep my 3.x defaults instead of Omarchy's?"
     a: "Yes. Put omarchy_default_bindings = false in ~/.config/hypr/hyprland.lua above require(\"default.hypr.omarchy\") and define everything yourself in bindings.lua. Setting omarchy_preinstalled_bindings = false instead keeps the window-manager bindings and drops only the preinstalled app and web app shortcuts."
   - q: "Is it safe to edit bindings.lua, or will an update overwrite it?"
-    a: "It is safe. The 4.0.x migration that refreshes bindings.lua compares the file against known stock checksums first and only replaces it when it is still untouched. An edited file is left alone."
+    a: "It is safe. The Omarchy migration that refreshes bindings.lua compares the file against known stock checksums first and only replaces it when it is still untouched. An edited file is left alone."
 related: [monitors-conf-replaced-by-monitors-lua, hyprland-lua-attempt-to-index-nil-global-o, where-did-waybar-go, walker-launcher-missing-after-update, omarchy-update-fails-or-hangs]
 draft: false
 ---
 
 Omarchy 4.0.0 "Quattro" moved the Hyprland configuration from `.conf` files to Lua. The release notes describe it as converting bindings, monitors and toggles to "expressive Lua". Your old `~/.config/hypr/bindings.conf` survives the upgrade untouched, but nothing loads it any more, so every custom shortcut in it stops working. There is no error banner and `hyprctl configerrors` stays clean, which is what makes this hard to spot.
 
-This was verified on 4.0.4 (2026-09-15) and reported against 4.0.0-1 in issue [#6933](https://github.com/omacom/omarchy/issues/6933). On 3.x, `~/.config/hypr/hyprland.conf` ended with `source = ~/.config/hypr/bindings.conf`. On 4.x, `~/.config/hypr/hyprland.lua` calls `require("hypr.bindings")`, which loads `~/.config/hypr/bindings.lua` and nothing else.
+This was verified on 4.0.4 (2026-09-15) and reported against 4.0.0-1 in issue [#6933](https://github.com/omacom/omarchy/issues/6933). On 3.x, `~/.config/hypr/hyprland.conf` carried a `source = ~/.config/hypr/bindings.conf` line. On 4.x, `~/.config/hypr/hyprland.lua` calls `require("hypr.bindings")`, which loads `~/.config/hypr/bindings.lua` and nothing else.
 
 ## The fix
 
@@ -81,7 +81,7 @@ This was verified on 4.0.4 (2026-09-15) and reported against 4.0.0-1 in issue [#
    grep -vE '^\s*(#|$)' ~/.config/hypr/bindings.conf
    ```
 
-3. Open the new override file. Either press `Super + Space` and pick Setup > Keybindings, which opens `~/.config/hypr/bindings.lua` in your editor and restarts what needs restarting when you quit, or edit it directly:
+3. Open the new override file. Either press `Super + Space` and pick Setup > Keybindings, which opens `~/.config/hypr/bindings.lua` in your editor, or edit it directly:
 
    ```bash
    $EDITOR ~/.config/hypr/bindings.lua
@@ -135,9 +135,9 @@ hyprctl binds | grep -B2 -A4 'your description'
 
 A bind registered from Lua shows up with the dispatcher `__lua`, which is normal on 4.x. What matters is that the entry exists and that `key` holds the key you expect.
 
-`omarchy-menu-keybindings --print` lists everything with descriptions, which is the quickest way to see whether your entry landed. Do not copy its output back into Lua verbatim: it prints modifiers bunched together, like `SUPER SHIFT + S`, while `o.bind` and `hl.unbind` need a `+` between every part, `SUPER + SHIFT + S`. temper303 reported in [#7627](https://github.com/omacom/omarchy/issues/7627) that pasting the printed form into `hl.unbind` fails silently and leaves the default active. That issue is still open on 4.0.4.
+`omarchy-menu-keybindings --print` lists everything with descriptions, which is the quickest way to see whether your entry landed. Do not copy its output back into Lua verbatim. The printed combo joins the modifiers with spaces and puts a single `+` before the key (`SUPER SHIFT + S`), but the Lua helpers want a `+` after every token (`SUPER + SHIFT + S`). temper303 reported in [#7627](https://github.com/omacom/omarchy/issues/7627) that an `hl.unbind` written in the printed form does nothing and the default stays bound, with no error to tell you why. That issue is still open on 4.0.4.
 
-Finally, run `hyprctl configerrors`. A Lua syntax error in `bindings.lua` stops the rest of the file from loading, so a typo in one binding can take out the ones below it.
+Finally, run `hyprctl configerrors`. A syntax error anywhere in `bindings.lua` stops the whole file from compiling, so one typo can take out every binding in it, not just the broken line.
 
 ## Why it happens
 
@@ -147,7 +147,7 @@ The upgrade script does detect a live legacy config: it builds a temporary `.con
 
 ## If that did not work
 
-**The binding is registered but fires the wrong thing, or a plain `SUPER` chord walks you through workspaces.** Avoid `code:N` in your own bindings. Issue [#12050](https://github.com/omacom/omarchy/issues/12050), opened 2026-09-16 against a stock 4.0.4 config, reports that a spec like `"SUPER + code:10"` is not parsed by the Lua bind API: the whole string is stored as the key name and `keycode` stays `0`, so every bind sharing that modifier set collapses together. Use key names such as `"SUPER + 1"` while that is open.
+**The binding is registered but fires the wrong thing, or a plain `SUPER` chord walks you through workspaces.** Avoid `code:N` in your own bindings. Issue [#12050](https://github.com/omacom/omarchy/issues/12050), opened 2026-09-16 against a stock 4.0.4 config, reports that the Lua bind API does not resolve a spec like `"SUPER + code:10"`. Hyprland keeps the literal text as the key name with a zero keycode, and the result is that all binds on that modifier set fire together. Use key names such as `"SUPER + 1"` while that is open.
 
 **A punctuation key does nothing.** Use the xkbcommon keysym name in lower case. Omarchy's own defaults bind `"SUPER + comma"` with a source comment noting that the upper-case `COMMA` does not match.
 

@@ -68,6 +68,10 @@ td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabu
 .tablewrap{overflow-x:auto;margin:14px 0;border:1px solid var(--rule-2);border-radius:var(--radius);background:var(--paper)}
 .tablewrap table{margin:0}
 .prose table{display:block;overflow-x:auto}
+/* subsystem grid on hardware model pages */
+.subgrid{list-style:none;margin:12px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:var(--radius);overflow:hidden}
+.subgrid li{margin:0;background:var(--paper);padding:7px 10px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.subgrid .sg-k{font-size:13px;color:var(--ink-2);text-transform:capitalize}
 /* pills */
 .pill{display:inline-block;font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;padding:2px 8px;border-radius:3px;white-space:nowrap;vertical-align:middle;line-height:1.6}
 .pill-ok,.pill-works,.pill-fixed{background:var(--ok-bg);color:var(--ok)}

@@ -8,7 +8,7 @@ status: workaround
 lastVerified: 2026-09-16
 omarchyVersionTested: "4.0.4"
 category: gaming
-issueCount: 102
+issueCount: 113
 errorStrings:
   - "Failed to load steamui.so"
   - "libXtst.so.6: cannot open shared object file: No such file or directory"
@@ -96,7 +96,7 @@ related: [nvidia-drivers-omarchy-4, hybrid-gpu-laptop-black-screen-aq-drm-device
 draft: false
 ---
 
-Games that vanish two or three seconds after you press Play, with no window and no error dialog, are the single most common Steam complaint in the Omarchy tracker. The cause is almost never Hyprland itself. It is usually a 32-bit Vulkan driver that does not match your GPU, or an environment variable inherited from an older config.
+Games that vanish two or three seconds after you press Play, with no window and no error dialog, are one of the most common Steam complaints in the Omarchy tracker. The cause is almost never Hyprland itself. It is usually a 32-bit Vulkan driver that does not match your GPU, or an environment variable inherited from an older config.
 
 Checked on v4.0.4 against the source snapshots for v3.8.4, v4.0.3 and v4.0.4.
 
@@ -114,7 +114,7 @@ Checked on v4.0.4 against the source snapshots for v3.8.4, v4.0.3 and v4.0.4.
    omarchy-install-gaming-gpu-lib32
    ```
 
-   This exists on both 3.x and 4.x. It picks `lib32-vulkan-intel`, `lib32-vulkan-radeon`, or the NVIDIA lib32 userspace based on detection, and it is the step most crash reports turn out to have skipped.
+   It ships on v3.8.4 and every 4.0.x snapshot. It adds `lib32-vulkan-intel` and `lib32-vulkan-radeon` for whichever Intel or AMD GPUs `lspci` shows, plus `lib32-nvidia-utils` or `lib32-nvidia-580xx-utils` when the NVIDIA detectors succeed, and it is the step most crash reports turn out to have skipped.
 
 3. Check that you did not get NVIDIA userspace on a machine with no NVIDIA card. The Steam installer runs `omarchy-pkg-add steam` before the GPU-aware step, so pacman's `--noconfirm` provider pick can win the race and pull `lib32-nvidia-utils` plus `nvidia-utils` for Steam's `lib32-vulkan-driver` dependency. That is issue 8856, open as of 4.0.4.
 
@@ -132,7 +132,7 @@ Checked on v4.0.4 against the source snapshots for v3.8.4, v4.0.3 and v4.0.4.
 
    Reboot afterwards. The NVIDIA EGL vendor file outranks Mesa's until it is gone.
 
-4. Look for a leftover `SDL_VIDEODRIVER`. Omarchy 3.x set `env = SDL_VIDEODRIVER,wayland` in `hypr/envs.conf`, and it broke a long list of Proton titles. It was removed in v3.7.0 and it is not in `default/hypr/envs.lua` on v4.0.4. But it survives in personal dotfiles and in an old session environment.
+4. Look for a leftover `SDL_VIDEODRIVER`. Omarchy 3.x set `env = SDL_VIDEODRIVER,wayland` in `hypr/envs.conf` (later `wayland,x11`), and it broke a long list of Proton titles. It was removed in v3.7.0 and it is not in `default/hypr/envs.lua` on v4.0.4. But it survives in personal dotfiles and in an old session environment.
 
    ```bash
    grep -rn SDL_VIDEODRIVER ~/.config/hypr/ ~/.config/uwsm/ 2>/dev/null
@@ -186,13 +186,13 @@ The historical one is `SDL_VIDEODRIVER`. Forcing SDL to a single backend removes
 
 The current one is driver mismatch. Steam's 32-bit runtime needs a lib32 Vulkan driver for your card. Issue 2466 showed Intel machines where every game reported a fatal error until `lib32-mesa` and `lib32-vulkan-intel` were added by hand. Issue 8856 shows the opposite failure, where NVIDIA userspace lands on an AMD laptop because of installer ordering.
 
-The third is hybrid laptops. `default/hypr/nvidia.lua` on v4.0.4 sets `__GLX_VENDOR_LIBRARY_NAME=nvidia` session wide whenever an NVIDIA GPU with GSP firmware is detected, without consulting `omarchy-hw-hybrid-gpu`. There is no PRIME offload wrapper anywhere in the tree. Issue 9688 documents the result: the dGPU sits at zero percent while games freeze or crawl on the iGPU. That issue is open.
+The third is hybrid laptops. `default/hypr/nvidia.lua` on v4.0.4 sets `__GLX_VENDOR_LIBRARY_NAME=nvidia` session wide whenever `omarchy-hw-nvidia` finds an NVIDIA GPU, with or without GSP firmware, and never consults `omarchy-hw-hybrid-gpu` even though that detector sits in the same `bin/` directory. There is no PRIME offload wrapper anywhere in the tree. Issue 9688 documents the result: the dGPU sits at zero percent while games freeze or crawl on the iGPU. That issue is open.
 
 ## If that did not work
 
-- Native Linux builds that only launch once, such as the Paradox titles in issue 4016, are a game-side bug. Forcing Proton or running under gamescope is the reported workaround.
+- Native Linux builds that only launch once, such as the Paradox titles in issue 4016, were reported on 3.2.3 while `SDL_VIDEODRIVER` was still set. Reporters got them running again with Proton, with gamescope, or with `SDL_VIDEODRIVER=x11 %command%` as a launch option.
 - Fullscreen flicker rather than an outright crash is issue 4595. Proton Experimental fixed it for one reporter. gamescope is the other option.
-- If Steam itself never shows a window, that is a different failure. Check for `Failed to load steamui.so` and a missing `libXtst.so.6` in the console output, which was the upstream packaging break behind issue 2870 in October 2025.
+- If Steam itself never shows a window, that is a different failure. Issue 2870 in October 2025 looked like one, with dozens of same-day reports and one console log showing `Failed to load steamui.so` over a missing `libXtst.so.6`. The real culprit was an fcitx5 update (fcitx/fcitx5#1441), and the fix was the patched `fcitx5` package Omarchy published to its own repo the same day. If Steam hangs right after a system update, check what pacman just upgraded before chasing driver theories.
 - Controllers that Steam sees but games ignore are issue 8373, a `/dev/uinput` permission problem, not a crash.
 - A game that seems to blink to the desktop every 150 seconds is the screensaver, not a crash. See issues 6947 and 9636.
 

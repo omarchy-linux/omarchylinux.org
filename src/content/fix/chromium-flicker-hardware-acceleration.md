@@ -1,6 +1,6 @@
 ---
 title: "Chromium flickers, plays black video, or loses hardware acceleration"
-description: "Chromium flicker, black video, and dead hardware acceleration on Omarchy 4.x hybrid laptops: override LIBVA_DRIVER_NAME so VA-API stays on the GPU that drives your screen."
+description: "Chromium flicker, black video, or lost hardware acceleration on Omarchy 4.x hybrid laptops: point LIBVA_DRIVER_NAME at the GPU that drives your screen."
 answer: "On a hybrid laptop whose screen runs off the integrated GPU, Omarchy points the whole session at the NVIDIA VA-API driver, so video decodes on the dGPU and fails to import on the iGPU. Add hl.env(\"LIBVA_DRIVER_NAME\", \"iHD\") (or \"radeonsi\" on AMD) to ~/.config/hypr/hyprland.lua, run systemctl --user set-environment with the same value, then restart the browser. Still open on 4.0.4."
 appliesTo:
   from: "3.x"
@@ -47,7 +47,7 @@ sources:
     author: "VykosMolt"
     date: "2026-08-31"
   - url: "https://github.com/omacom/omarchy/issues/8328"
-    title: "Issue #8328: nvidia.lua forces LIBVA_DRIVER_NAME=nvidia on hybrid laptops where the dGPU drives no display"
+    title: "Issue #8328: nvidia.lua forces LIBVA_DRIVER_NAME=nvidia on hybrid laptops where the dGPU drives no displays"
     kind: issue
     author: "emshiarla"
     date: "2026-08-26"
@@ -86,7 +86,7 @@ credits:
     for: "Proposed setting the NVIDIA session variables only when NVIDIA drives a connected display"
   - name: "Rookie0ne"
     url: "https://github.com/Rookie0ne"
-    for: "Showed that libva picks the right driver on its own when the variable is unset"
+    for: "Showed that libva picks the right driver on its own when the variable is unset, and that moving VA-API alone while rendering stays on NVIDIA kills decode entirely"
   - name: "AharonG298"
     url: "https://github.com/AharonG298"
     for: "A/B measurements of nvidia versus iHD decode, and the systemctl --user set-environment tip"
@@ -117,7 +117,7 @@ If that prints `LIBVA_DRIVER_NAME=nvidia` and your laptop panel is wired to the 
 for c in /sys/class/drm/card*-*/status; do echo "$c $(cat "$c")"; done
 ```
 
-**2. Pick the right driver name.** Intel graphics from about Broadwell onwards use `iHD`. Older Intel generations use `i965`. An AMD integrated GPU uses `radeonsi`.
+**2. Pick the right driver name.** Intel graphics that Omarchy's installer pairs with `intel-media-driver` (HD Graphics, Iris, Xe, Arc) use `iHD`. Older Intel generations that get `libva-intel-driver` use `i965`. An AMD integrated GPU uses `radeonsi`.
 
 **3. On 4.0.0 through 4.0.4**, add one line at the bottom of `~/.config/hypr/hyprland.lua`, below the `require` lines. Your file loads after Omarchy's defaults, and the later `env` wins:
 
@@ -129,14 +129,14 @@ hl.env("LIBVA_DRIVER_NAME", "iHD")
 
 ```bash
 systemctl --user set-environment LIBVA_DRIVER_NAME=iHD
-hyprctl reload
+omarchy restart shell
 ```
 
-Apps launched through `uwsm-app`, which is how Omarchy starts your browser, inherit from the user systemd environment, so the `set-environment` call matters. An already running browser keeps its old environment until you close every window. Log out and back in if you want the clean version.
+`Super + Shift + Return` runs `omarchy-launch-browser`, which starts the browser as a user systemd unit through `uwsm-app`, so it picks up whatever `set-environment` put in the user manager. The shell's app menu hands its own environment to anything it launches, which is why Rookie0ne recommends restarting it too. Do not rely on `hyprctl reload` alone: Hyprland applies `env` at launch, and SisyphusOfCorinth confirmed on issue 8215 that reloading the config leaves the session variable as it was. An already running browser keeps its old environment until you close every window. Log out and back in if you want the clean version.
 
 **On 3.x** the same variables were written once at install time into `~/.config/hypr/envs.conf` by the NVIDIA install step, as plain `env = LIBVA_DRIVER_NAME,nvidia` lines. Edit or delete the line there. Note that the `hyprland.conf` template shipped in later 3.x releases sources Omarchy's own `envs.conf`, not yours, so if your edit has no effect, put `env = LIBVA_DRIVER_NAME,iHD` at the bottom of `~/.config/hypr/hyprland.conf` instead.
 
-**5. If video now plays but the window still flickers or goes black**, you have the second, separate half: Chromium rendering on the NVIDIA GPU while Hyprland composites on the integrated one. josefdc's fix in issue 4901 is a wrapper that forces Mesa EGL for the browser only:
+**5. If video now plays but the window still flickers or goes black, or if hardware decode disappeared entirely after step 3**, you have the second, separate half: Chromium rendering on the NVIDIA GPU while Hyprland composites on the integrated one. Rookie0ne measured the second symptom on Google Chrome: with VA-API moved to Intel while rendering stayed on NVIDIA EGL, no VA driver loaded at all and VP9 fell back to software. josefdc's fix in issue 4901 is a wrapper that forces Mesa EGL for the browser only:
 
 ```bash
 mkdir -p ~/.local/bin
@@ -153,7 +153,7 @@ Do not export `__EGL_VENDOR_LIBRARY_FILENAMES` session wide. josefdc reports Hyp
 
 To make launchers use the wrapper, copy `/usr/share/applications/chromium.desktop` to `~/.local/share/applications/` and point `Exec` at the absolute path of the wrapper. Keep the first word of `Exec` a real program: `omarchy-launch-browser` reads that first token out of the desktop file, so an `Exec=env VAR=x /usr/bin/chromium` line makes `Super + Shift + Return` do nothing. rvalue reported exactly that on issue 4901.
 
-**6. The blunt fallback.** Adding `--disable-gpu-compositing` to `~/.config/chromium-flags.conf` stops the corruption on every machine in these threads, at the cost of software compositing and the fan noise that comes with it. The equivalent files are `~/.config/brave-flags.conf`, `~/.config/chrome-flags.conf` and `~/.config/microsoft-edge-stable-flags.conf`. Brave Origin reads `~/.config/brave-origin-flags.conf` and nothing else, which is why the workaround looks like it failed if you only edited Brave's file.
+**6. The blunt fallback.** Adding `--disable-gpu-compositing` to `~/.config/chromium-flags.conf` stopped the corruption for the reporters who tried it, at the cost of software compositing and the fan noise that comes with it. The equivalent files are `~/.config/brave-flags.conf`, `~/.config/chrome-flags.conf` and `~/.config/microsoft-edge-stable-flags.conf`. Brave Origin reads `~/.config/brave-origin-flags.conf`, not `brave-flags.conf`, which is why the workaround looks like it failed if you only edited Brave's file.
 
 ## Verify it worked
 
@@ -161,15 +161,15 @@ To make launchers use the wrapper, copy `/usr/share/applications/chromium.deskto
 vainfo | grep 'Driver version'
 ```
 
-You want `Intel iHD driver` or the Mesa Gallium line for radeonsi, not `VA-API NVDEC driver`.
+You want `Intel iHD driver` or the Mesa Gallium line for radeonsi, not `VA-API NVDEC driver`. Bear in mind that `vainfo` inherits the same variable you just set, so it proves the override took, not that the browser is using it.
 
-Then open `chrome://gpu`. Video Decode and Compositing should both read "Hardware accelerated". For a live test, scroll a feed with autoplaying video, which is where most reporters first saw it, or open an incoming Discord stream, which CompleteDotTech used as a regression test on 4.0.2. If you want the decoder's own account, launch with `chromium --vmodule=*vaapi*=2` and watch for a repeating `vaEndPicture failed` construct and teardown loop. That loop disappearing is the signal.
+Then open `chrome://gpu`. Video Decode and Compositing should both read "Hardware accelerated", but Rookie0ne found the top table can say that while no encoder exists, so trust the "Video Acceleration Information" table further down. For a live test, scroll a feed with autoplaying video, which is where most reporters first saw it. If you want the decoder's own account, launch with `chromium --vmodule=*vaapi*=2` and watch for a repeating `vaEndPicture failed` construct and teardown loop. That loop disappearing is the signal.
 
 ## Why it happens
 
-`default/hypr/nvidia.lua` sets `NVD_BACKEND=direct`, `LIBVA_DRIVER_NAME=nvidia` and `__GLX_VENDOR_LIBRARY_NAME=nvidia` whenever a GSP-era NVIDIA GPU is detected. The detector asks whether such a card exists, not whether it drives a screen. `autostart.lua` then exports the session environment with `systemctl --user import-environment`, so every app inherits it. On a hybrid laptop each frame is decoded on the NVIDIA card and imported into an integrated GPU GL context as a DMA-BUF, which fails with `EGL_BAD_MATCH`. karluiz traced that chain in issue 8989, and ArghyaRanjanDas showed the same failure with an AMD integrated GPU, where radeonsi cannot import NVIDIA vendor modifiers.
+`default/hypr/nvidia.lua` sets `NVD_BACKEND=direct`, `LIBVA_DRIVER_NAME=nvidia` and `__GLX_VENDOR_LIBRARY_NAME=nvidia` whenever `omarchy-hw-nvidia-gsp` finds an NVIDIA display device with a Turing or newer device ID. The detector asks whether such a card exists, not whether it drives a screen. `autostart.lua` then exports the session environment with `systemctl --user import-environment`, so every app inherits it. On a hybrid laptop each frame is decoded on the NVIDIA card and imported into an integrated GPU GL context as a DMA-BUF, which fails with `EGL_BAD_MATCH`. karluiz traced that chain in issue 8989, and ArghyaRanjanDas showed the same failure with an AMD integrated GPU, where radeonsi cannot import NVIDIA vendor modifiers.
 
-The reason this arrived as a 4.0.1 regression, with nothing GPU related in the release notes, is subtler. `nvidia.lua` is byte-identical from 4.0.0 to 4.0.4, which I checked against the tagged sources. What changed in 4.0.1 was `o.shell_succeeds` in `default/hypr/helpers.lua`, rewritten from `os.execute` to `io.popen` with an `OK` marker because Hyprland reaps its own children and swallows exit statuses. That repair made the NVIDIA detector actually fire for the first time. SisyphusOfCorinth documented the attribution, and AharonG298 confirmed it independently through the edge channel.
+The reason this arrived as a 4.0.1 regression, with nothing GPU related in the release notes, is subtler. `nvidia.lua` is byte-identical from 4.0.0 to 4.0.4, which I checked against the tagged sources. What changed in 4.0.1 was `o.shell_succeeds` in `default/hypr/helpers.lua`, rewritten from `os.execute` to `io.popen` with an `OK` marker, because inside the compositor `os.execute` never got a usable exit status back. That repair made the NVIDIA detector actually fire for the first time. SisyphusOfCorinth documented the attribution, and AharonG298 confirmed it independently through the edge channel.
 
 Rookie0ne added a useful correction: libva is not the problem. With the variable unset it picks the right driver per render node on its own.
 
@@ -180,10 +180,10 @@ The second half is GLVND. NVIDIA's EGL vendor file has priority 10 against Mesa'
 - **Single-GPU NVIDIA desktop.** This is a different problem. Issue 5372 tracks lockups on media-heavy pages with `NVRM: dmaAllocMapping_GM107: can't alloc VA space for mapping` in the journal, and it is still open with no accepted fix.
 - **Still on 3.x with `SharedImageManager` and `eglCreateImage` spam.** That is issue 3899, and its reporter said the problem cleared on 3.4.0, which also carried Chromium Wayland colour manager flag changes. Update before you chase flags, and see [upgrading 3 to 4](/upgrade/3-to-4-quattro/).
 - **Your flags vanished after an update.** `omarchy refresh chromium` overwrites `~/.config/chromium-flags.conf` with the Omarchy default and leaves your old file as `~/.config/chromium-flags.conf.bak.<timestamp>`.
-- **Browser version matters.** daedalus-codes needed `--disable-gpu-compositing` on Brave 1.94 and Chromium 152 on hardware where 1.93.138 was fine without it. If a browser update broke a previously working setup, that is a plausible cause.
+- **Browser version matters.** daedalus-codes needed `--disable-gpu-compositing` on Brave 1.94 (Chromium 152) on hardware where Brave 1.93.138 was fine without it. If a browser update broke a previously working setup, that is a plausible cause.
 - **Every app is black, not just the browser.** Then this is not your bug. Start at [hybrid GPU black screen](/fix/hybrid-gpu-laptop-black-screen-aq-drm-devices/).
 
-Evidence for the workaround is strong: four separate hardware pairings in these threads, with before and after measurements. Evidence that any 4.0.x release fixed it is absent.
+Evidence for the workaround is strong: Intel and AMD integrated GPUs paired with several NVIDIA generations across these threads, with before and after measurements. Evidence that any 4.0.x release fixed it is absent.
 
 ## Related
 

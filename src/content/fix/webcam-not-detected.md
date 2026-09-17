@@ -111,9 +111,9 @@ credits:
   - name: "labjt"
     url: "https://github.com/labjt"
     for: "Showing that the package's own DKMS intel_cvs shadows the in-tree module"
-  - name: "nathankramm"
-    url: "https://github.com/nathankramm"
-    for: "Pinning the jsoncpp soname break to the HAL plugin with one ldd check"
+  - name: "disy-mk"
+    url: "https://github.com/disy-mk"
+    for: "The one-line ldd check for the jsoncpp soname break and the ipu-bridge diff behind the 7.2 regression"
   - name: "ocewers"
     url: "https://github.com/ocewers"
     for: "Working out the IMX471 path on the ThinkPad X1 Carbon Gen 14"
@@ -122,7 +122,7 @@ credits:
     for: "Documenting that the package is built for Panther Lake only"
   - name: "yashranaway"
     url: "https://github.com/yashranaway"
-    for: "The 4.0.0 change that stops the picker offering raw sensor nodes"
+    for: "The 4.0.0 change that limits the webcam picker to video capture devices"
 faq:
   - q: "Does Omarchy install anything for my webcam automatically?"
     a: "One thing only. install/hardware/intel/ipu7-camera.sh installs intel-ipu7-camera if the ACPI HID OVTI08F4 appears anywhere in /sys/bus/acpi/devices. There is no IPU6 leaf and no check on which IPU controller you actually have."
@@ -138,18 +138,18 @@ Most "no webcam" reports on Omarchy are not one bug. They are five or six differ
 
 ## The fix
 
-**1. Identify what you actually have.** Run these on 3.x and 4.x alike:
+**1. Identify what you actually have.**
 
 ```bash
-omarchy-capture-webcam-list
+v4l2-ctl --list-devices
 lsusb | grep -i cam
-lspci -nn | grep -iE 'imaging|image signal|camera'
+lspci -nn | grep -iE 'ipu|multimedia|camera'
 for d in /sys/bus/acpi/devices/*/; do
   printf '%s %s\n' "$(cat "$d/hid" 2>/dev/null)" "$(cat "$d/status" 2>/dev/null)"
 done | grep -iE 'OVTI|TBE|SONY|INT3472|INTC10'
 ```
 
-If `lsusb` names your camera, it is an ordinary UVC device and none of the Intel sections below apply. If `lspci` shows an imaging unit, the PCI ID decides the rest: `8086:b05d` is Panther Lake IPU7.5, `8086:645d` is Lunar Lake, `8086:7d19` is Meteor Lake IPU6.
+If `lsusb` names your camera, it is an ordinary UVC device and none of the Intel sections below apply. If `lspci` shows an Intel IPU (it is listed as a multimedia controller), the PCI ID decides the rest: `8086:b05d` is Panther Lake IPU7.5, `8086:645d` is Lunar Lake, `8086:7d19` is Meteor Lake IPU6.
 
 **2. Panther Lake (`8086:b05d`, sensor `OVTI08F4` with status 15).** This is the Dell XPS 14 and XPS 16 case, and it is the one Omarchy fixed. Update and reboot:
 
@@ -165,7 +165,7 @@ omarchy update   # or Update > Omarchy in the menu, then reboot
 ldd /usr/lib/libcamhal/plugins/ipu75xa.so | grep -i json
 ```
 
-`libjsoncpp.so.26 => not found` means you hit the jsoncpp 1.9.8 soname bump. Updating to 4.0.4 resolves it. The journal only shows GLib assertions from `v4l2-relayd`, which never mention jsoncpp, so this is worth checking before you blame the kernel.
+`libjsoncpp.so.26 => not found` means you hit the jsoncpp 1.9.8 soname bump. Updating to 4.0.4 resolves it. The `v4l2-relayd` journal shows nothing but GLib assertions and never names jsoncpp, so run the `ldd` check before you blame the kernel.
 
 **4. Lunar Lake (`8086:645d`, Core Ultra 200V).** The package is installed by detection but built with `IPU_VERSIONS="ipu75xa"` only, so the plugin your IPU asks for, `ipu7x.so`, is not on disk. There is no packaged fix as of 4.0.4. If you want the fake camera out of the way:
 
@@ -177,13 +177,13 @@ omarchy-pkg-drop intel-ipu7-camera
 
 ```bash
 omarchy-pkg-drop intel-ipu7-camera
-sudo pacman -S libcamera libcamera-ipa pipewire-libcamera
+sudo pacman -S libcamera libcamera-ipa libcamera-tools pipewire-libcamera
 cam -l
 ```
 
-That gets PipeWire-native apps working. Browsers want a real `/dev/video` node, which needs a `libcamerasrc` to `v4l2sink` bridge on a v4l2loopback device.
+That is the route reporters use for PipeWire-native apps, and it only helps once `cam -l` lists the sensor. One Raptor Lake owner needed kernel patches that are still an open omarchy-pkgs PR before his OV02C10 would probe at all. Most browsers still want a real `/dev/video` node, which means a `libcamerasrc` to `v4l2sink` bridge on a v4l2loopback device, or Chromium's `WebRtcPipeWireCamera` feature flag.
 
-**6. ThinkPad X1 Carbon Gen 14 and X9 15p.** If `OVTI08F4` reports status 0 and `TBE20A0` reports 15, your sensor is a Sony IMX471 and the OV08X40 stack can never drive it. The driver and its ACPI binding both landed upstream after 7.2 was tagged, so Arch gets them at 7.3. Until then people are running `imx471-dkms-git` plus the libcamera plumbing in `ocewers/x1c14-camera-imx471`. Do not uninstall `intel-ipu7-camera` if you follow that route: those overlays retarget it rather than replace it.
+**6. ThinkPad X1 Carbon Gen 14 and X9 15p.** If `OVTI08F4` reports status 0 and `TBE20A0` reports 15, your sensor is a Sony IMX471 and the OV08X40 stack can never drive it. The driver and its ACPI binding both landed upstream after 7.2 was tagged, so Arch gets them at 7.3. Until then people are running `imx471-dkms-git` plus the libcamera plumbing in `ocewers/x1c14-camera-imx471`. Keep `intel-ipu7-camera` installed on that route: the overlays swap its `icamerasrc` relay for `libcamerasrc` and reuse its loopback plumbing instead of replacing the package.
 
 **7. Macs.** On T2 machines the camera comes from `linux-t2` and `uvcvideo`. On pre-T2 models the FaceTime HD 1570 has no in-tree driver and Omarchy ships nothing for it. See [/hardware/t2-mac/](/hardware/t2-mac/).
 
@@ -195,25 +195,25 @@ media-ctl -p -d /dev/media0 | grep -i ov08x40     # Intel IPU only
 gst-launch-1.0 icamerasrc num-buffers=5 ! fakesink
 ```
 
-On a working Intel IPU machine the media graph shows the sensor entity, and on 7.2 it links through an `Intel CVS` entity rather than straight to CSI2. Then open a camera in a browser. The first two or three frames are black while the HAL starts the sensor, so give it a second before you call it dead.
+On a working Intel IPU machine the media graph shows the sensor entity, and on 7.2 it links through an `Intel CVS` entity rather than straight to CSI2. Then open a camera in a browser. The first loopback frame is black while the ISP warms up, so give it a second before you call it dead.
 
 ## Why it happens
 
-Omarchy's entire built-in camera setup is four lines in `install/hardware/intel/ipu7-camera.sh`. It greps `/sys/bus/acpi/devices/*/hid` for `OVTI08F4` and installs `intel-ipu7-camera` if it finds it. It does not check whether the node is enabled, which IPU controller is present, or which sensor is live. That single gate produces most of the cases above: it fires on ThinkPads whose `OVTI08F4` is a disabled table slot, on Meteor Lake machines the package cannot serve, and on Lunar Lake machines whose HAL plugin was never built.
+Omarchy's entire built-in camera setup is three lines in `install/hardware/intel/ipu7-camera.sh`. It greps `/sys/bus/acpi/devices/*/hid` for `OVTI08F4` and installs `intel-ipu7-camera` if it finds it. It does not check whether the node is enabled, which IPU controller is present, or which sensor is live. That single gate produces most of the cases above: it fires on ThinkPads whose `OVTI08F4` is a disabled table slot, on Meteor Lake machines the package cannot serve, and on Lunar Lake machines whose HAL plugin was never built.
 
 The package then does real work on the system. It blacklists `ov08x40` behind `intel_cvs`, hides the raw V4L2 nodes with a udev rule, turns off WirePlumber's libcamera monitor, and publishes `/dev/video50` from `icamerasrc`. So when it lands on hardware it cannot drive, you get a camera that appears everywhere and delivers nothing, which is worse than having no node at all.
 
-The Panther Lake break on kernel 7.2 was separate and specific. Linux 7.2's `ipu-bridge` started placing the Intel CVS controller between the sensor and the CSI2 receiver, and added a matching in-tree V4L2 bridge driver. The package's own out-of-tree `intel_cvs` has the same module name, installs into `updates/`, and depmod searches that first, so it displaced the in-tree driver. It registers no subdev, the IPU waited forever for one, and the sensor never joined the media graph. Two reporters found the same mechanism independently before the fix landed.
+The Panther Lake break on kernel 7.2 was separate and specific. Linux 7.2's `ipu-bridge` started placing the Intel CVS controller between the sensor and the CSI2 receiver, and added a matching in-tree V4L2 bridge driver. The package's own out-of-tree `intel_cvs` has the same module name and installs into `updates/`, which depmod searches first, so on `linux-omarchy` it displaced the in-tree driver. `linux-ptl` could not build the in-tree one at all, because Arch-derived configs hide the option. Either way the old module registers no subdev, the IPU waited forever for one, and the sensor never joined the media graph. Several reporters on the XPS thread reached the same mechanism before the fix landed.
 
 ## If that did not work
 
 **No `/dev/video*` at all and `lsusb` shows nothing.** Check the BIOS for a camera or I/O port access toggle, and any physical shutter. Some laptops simply have no Linux driver. On a report about an Acer Nitro whose camera also failed on Ubuntu, DHH answered that it has to be fixed upstream or by the vendor.
 
-**Camera works in `qcam` but never in the browser.** That is a portal problem, not a driver one. The GTK portal rejects Hyprland's toplevel handle and the camera request fails quietly. Watch `journalctl --user -f -u xdg-desktop-portal-gtk` while you trigger it.
+**Camera works in `qcam` but never in the browser.** A Surface Pro report traced that to the portal, not the driver: the GTK portal rejects Hyprland's toplevel handle and the camera request fails quietly. Watch `journalctl --user -f -u xdg-desktop-portal-gtk` while you trigger it.
 
-**Camera works at boot and dies after the first suspend.** On Panther Lake the `ov08x40` bind is dropped on resume and `camera-init` cannot restore it, so only a reboot brings it back. The 7.2 stack in 4.0.4 has proper PM ops and may change this, but it had not been confirmed when the PR merged.
+**Camera works at boot and dies after the first suspend.** On Panther Lake the `ov08x40` bind is dropped on resume and `camera-init` cannot restore it, so only a reboot brings it back. The 7.2 stack in 4.0.4 uses the in-tree CVS driver with real PM ops, and the PR author ran two s2idle cycles on an XPS 14 with it and kept the sensor both times, so update before you chase this further.
 
-**Screen recording shows a black webcam overlay.** The picker only filters on Device Caps, and IPU7 raw Bayer nodes advertise Video Capture while offering no format mpv can read. Pick the `/dev/video50` entry by hand instead of letting auto-detect take the first one.
+**Screen recording shows a black webcam overlay.** The picker only filters on Device Caps, and IPU7 raw Bayer nodes advertise Video Capture while offering no format mpv can read. Pick the v4l2loopback entry (`/dev/video50` on the Omarchy package) by hand instead of letting auto-detect take the first one.
 
 ## Related
 

@@ -33,10 +33,9 @@ if (d.kind === 'model') {
     {d.kind === 'model' && (
       <div class="callout" data-pagefind-ignore>
         <div class="meta-row" style="margin-top:0"><Pill kind={d.rating} label={`Rating: ${d.rating}`} />{d.vendor && <span>{d.vendor}{d.model ? ` · ${d.model}` : ''}</span>}{d.cpu && <span>{d.cpu}</span>}{d.gpu && <span>{d.gpu}</span>}{d.year && <span>{d.year}</span>}</div>
-        <div class="tablewrap" style="margin:10px 0 0"><table><tbody>
-          <tr>{subs.map((s) => <th>{s}</th>)}</tr>
-          <tr>{subs.map((s) => <td><Pill kind={d.subsystems?.[s] ?? 'unknown'} label={d.subsystems?.[s] ?? '?'} /></td>)}</tr>
-        </tbody></table></div>
+        <ul class="subgrid">
+          {subs.map((s) => <li><span class="sg-k">{s}</span><Pill kind={d.subsystems?.[s] ?? 'unknown'} label={d.subsystems?.[s] ?? 'unknown'} /></li>)}
+        </ul>
         {d.quirkScripts?.length > 0 && <p class="small" style="margin:10px 0 0">Omarchy ships hardware-specific scripts for this machine: {d.quirkScripts.map((q: any, i: number) => <>{i > 0 && ', '}<a href={q.url} rel="noopener"><code>{q.name}</code></a>{q.note && <span class="muted"> ({q.note})</span>}</>)}</p>}
         {d.dmi?.length > 0 && <p class="small muted" style="margin:6px 0 0">DMI product names seen: {d.dmi.map((x: string) => <code>{x} </code>)}</p>}
       </div>

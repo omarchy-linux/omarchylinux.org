@@ -1,7 +1,7 @@
 ---
 title: "Lenovo ThinkPad X1 Carbon on Omarchy"
 description: "Omarchy on the ThinkPad X1 Carbon Gen 8 to Gen 14: what works, the Gen 13 speaker and Gen 14 camera breakage, and the hardware scripts that fire."
-answer: "Buy Gen 8 through Gen 12 and you get a solid Omarchy laptop. Gen 13 and Gen 14 are the risky ones: the Gen 14 webcam is still dead in tracked reports, its microphone needed a Lenovo BIOS update, and a Gen 13 owner lost internal speakers to a SoundWire clash. No ThinkPad quirk script ships in 4.0.4, so enablement is generic Intel."
+answer: "Gen 8 through Gen 12 mostly show up in generic Omarchy bugs, with one open Gen 11 random-reboot thread. Gen 13 and Gen 14 carry the hardware bugs: the Gen 14 webcam only works with an out-of-tree IMX471 driver, its microphone needed a Lenovo BIOS update, and one Gen 13 lost its speakers to a SoundWire clash. No ThinkPad quirk script ships in 4.0.4."
 appliesTo:
   from: "3.x"
   to: "4.0.4"
@@ -32,7 +32,7 @@ subsystems:
 quirkScripts:
   - name: "intel/sof-firmware.sh"
     url: "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/intel/sof-firmware.sh"
-    note: "Installs sof-firmware whenever an Intel audio DSP is present. Every X1 Carbon in range matches."
+    note: "Installs sof-firmware when lspci lists an Intel audio device. Every X1 Carbon in range matches."
   - name: "intel/thermald.sh"
     url: "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/intel/thermald.sh"
     note: "Installs and enables thermald on Intel laptops from Sandy Bridge up."
@@ -41,10 +41,10 @@ quirkScripts:
     note: "Installs intel-lpmd for listed hybrid CPU model IDs. No Arrow Lake ID is in the list."
   - name: "intel/video-acceleration.sh"
     url: "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/intel/video-acceleration.sh"
-    note: "Installs intel-media-driver, libvpl and vpl-gpu-rt for Iris and Xe graphics."
+    note: "Installs intel-media-driver, libvpl and vpl-gpu-rt for UHD, Iris and Xe graphics."
   - name: "intel/ipu7-camera.sh"
     url: "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/intel/ipu7-camera.sh"
-    note: "Installs intel-ipu7-camera only when ACPI device OVTI08F4 exists. Gen 14 only."
+    note: "Installs intel-ipu7-camera only when ACPI device OVTI08F4 exists. Fires on Gen 14, but that package cannot drive the IMX471 sensor the Gen 14 actually has."
   - name: "intel/fred.sh"
     url: "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/intel/fred.sh"
     note: "Adds fred=on to the Limine kernel cmdline on Panther Lake. Gen 14 only."
@@ -94,6 +94,16 @@ sources:
     kind: issue
     author: "cutzenfriend"
     date: "2025-11-25"
+  - url: "https://github.com/omacom/omarchy/issues/7776"
+    title: "Issue #7776: Built-in camera does not work on a fresh Omarchy install"
+    kind: issue
+    author: "skovuri41"
+    date: "2026-08-22"
+  - url: "https://github.com/omacom/omarchy/issues/3229"
+    title: "Issue #3229: Fingerprint fails, showing fingerprint auth deactivated on hyprlock lockscreen"
+    kind: issue
+    author: "hojner"
+    date: "2025-11-07"
   - url: "https://github.com/omacom/omarchy/issues/731"
     title: "Issue #731: Plymouth not working on ThinkPad X1 Carbon Gen 8 w/ systemd-boot"
     kind: issue
@@ -109,7 +119,7 @@ sources:
 credits:
   - name: "ocewers"
     url: "https://github.com/ocewers"
-    for: "Traced the Gen 14 microphone and camera failures to Panther Lake codec and IPU7 gaps, and found the BIOS update that fixed the mic"
+    for: "Traced the Gen 14 microphone and camera failures, found the BIOS update that fixed the mic, and got the IMX471 camera running with an out-of-tree driver and libcamera"
   - name: "heredia21"
     url: "https://github.com/heredia21"
     for: "Mapped Gen 14 lid sleep, hibernate and dark-panel behaviour and corrected the first report"
@@ -124,12 +134,15 @@ credits:
     for: "Spotted that thermald was dying at every boot on a Gen 10"
   - name: "wbnns"
     url: "https://github.com/wbnns"
-    for: "Measured the fingerprint sleep-inhibitor race on a Gen 8 and retracted his own workaround"
+    for: "Measured the fingerprint sleep-inhibitor race on a Gen 8 and retracted the workaround"
+  - name: "jriff"
+    url: "https://github.com/jriff"
+    for: "Confirmed the Gen 14 camera recipe on a second 21V7CTO1WW using the imx471-dkms-git AUR package"
 faq:
   - q: "Is the ThinkPad X1 Carbon a good Omarchy laptop?"
-    a: "Gen 8 to Gen 12 are among the safest machines you can pick. Gen 13 and Gen 14 carry open hardware bugs, so buy those only if you are willing to debug audio and camera."
+    a: "Gen 8 to Gen 12 mostly appear in generic Omarchy bugs, though Gen 11 has an open random-reboot thread worth reading. Gen 13 and Gen 14 carry open hardware bugs, so buy those only if you are willing to debug audio and camera."
   - q: "Does the webcam work on the X1 Carbon Gen 14?"
-    a: "Not in the tracked reports. Issue #6000 is still open: the OV08X40 sensor reports ACPI status 0, never binds, and /dev/video50 delivers black frames."
+    a: "Not out of the box. Issue #6000 is still open: the stock intel-ipu7-camera chain delivers black frames. Two owners got 720p30 working with the out-of-tree IMX471 driver plus libcamera, and the driver was queued for mainline."
   - q: "Why is my X1 Carbon LUKS prompt a black screen?"
     a: "Reported on Gen 13 in issue #3619. Removing the kms hook from /etc/mkinitcpio.conf and rerunning mkinitcpio -P restored the prompt for two owners."
 related: [suspend-sleep, webcam, audio, fingerprint, intel-gpu, lenovo-thinkpad-t14]
@@ -146,31 +159,33 @@ Everything below was checked against Omarchy 4.0.4 source and against issue repo
 
 ## What works
 
-Graphics are the strong point. On Gen 13 the reporter of the black LUKS prompt said the i915 driver works perfectly once the system is up, and the same machine ran fine under the xe driver too. No X1 Carbon issue in the set reports a broken desktop, a compositor that will not start, or missing acceleration.
+Graphics are the strong point. On Gen 13 the reporter of the black LUKS prompt said the i915 driver works perfectly once the system is up, and later booted the same machine with xe loaded. No X1 Carbon issue in the set reports a broken desktop, a compositor that will not start, or missing acceleration.
 
-The ThinkPad mic-mute lamp works. Omarchy writes the `platform::micmute` LED node through `omarchy-brightness-keyboard-mute`, which is wired into `omarchy-audio-input-mute`. That path started as a ThinkPad contribution in 3.6.0 and was folded into the unified command in 3.7.0.
+The ThinkPad mic-mute lamp works. Omarchy writes the `platform::micmute` LED node through `omarchy-brightness-keyboard-mute`, which is wired into `omarchy-audio-input-mute`. That path started as a ThinkPad contribution in 3.6.0 and was folded into the unified command in 3.7.0. The Gen 9 owner in issue #11005 confirms it, and confirms the F1 mute key itself mutes PipeWire; only the speaker-mute lamp stays dark.
 
-Fingerprint enrollment works on the Synaptics readers these machines ship. The Gen 8 report in issue #10252 is about a suspend race, not about enrollment: the reader enrolls, verifies, and unlocks the lock screen. See the manual chapter on [hardware authentication](https://omarchy.org/manual/hardware-authentication/) for the setup path.
+Fingerprint enrollment works on the Gen 8 Synaptics `06cb:00bd` reader. The report in issue #10252 is about a suspend race, not about enrollment: the reader enrolls, verifies, and unlocks the lock screen between incidents. The only other fingerprint report is issue #3229, a Gen 12 whose reader stopped answering hyprlock after a couple of hours idle; it closed unfixed on 2026-07-18 when Quattro replaced hyprlock, with a request to refile if it recurs. See the manual chapter on [hardware authentication](https://omarchy.org/manual/hardware-authentication/) for the setup path.
+
+The Gen 13 camera works. The Gen 14 reporter in issue #6000 says the Gen 13, on Lunar Lake with IPU7-LNL, ran correctly on the same Omarchy install.
 
 Wi-Fi, Bluetooth, touchpad and battery life are marked unknown on purpose. No X1 Carbon report in the set claims any of them is broken, but absence of complaints is not a test result. If you have run one of these machines for a while, [submit what you found](/hardware/submit/).
 
 ## What breaks
 
-**Gen 14 camera, still open.** Issue #6000 reports the OV08X40 sensor behind IPU7-PTL is invisible to Linux. ACPI `_STA` returns 0 for the sensor, nothing binds to the i2c driver, the media graph has no sensor entity, and `/dev/video50` emits black NV12 frames. The reporter says the Gen 13 on the same Omarchy install works, which points at Lenovo Panther Lake specifically rather than IPU7 in general. Tested on Omarchy 3.8.2 and unchanged in later reports.
+**Gen 14 camera, open but solvable.** Issue #6000 started as a dead sensor: the media graph had no sensor entity and `/dev/video50` emitted black NV12 frames on Omarchy 3.8.2. The reporter's first two diagnoses turned out wrong, and on 2026-07-20 the same reporter corrected the record. The sensor is a Sony IMX471 at ACPI node `TBE20A0`, not the OV08X40 that `intel-ipu7-camera` targets, so Omarchy's stock icamerasrc chain cannot drive it. With the out-of-tree IMX471 kernel series and libcamera's software ISP, the camera runs at 720p30 in browsers and Teams. A second 21V7CTO1WW owner reproduced it on the stock `linux` kernel via the `imx471-dkms-git` AUR package plus `libcamera`, `pipewire-libcamera` and a `libcamerasrc` relayd config. The IMX471 driver was in linux-next at the time, expected around kernel 7.3, so this may become out of the box later. Nothing in 4.0.4 ships it. A second report, issue #7776, filed as an X1 Aura 14 but identifying itself as a Gen 14 by PCI subsystem ID, shows the same dead sensor on a fresh install with `IPU7 in secure mode` in dmesg.
 
-**Gen 14 microphone, fixed by firmware, not by Omarchy.** Issue #6001 tracked a silent CS42L45 microphone with no matching SOF topology. It closed on 2026-06-08 when the reporter updated the Lenovo BIOS from N4OET47W (1.10) to N4OET49W (1.12) through Omarchy's firmware updater. His own note: the lid had to be open for the update to apply.
+**Gen 14 microphone, fixed by firmware, not by Omarchy.** Issue #6001 tracked a silent CS42L45 microphone with no matching SOF topology. It closed on 2026-06-08 when the reporter updated the Lenovo BIOS from N4OET47W (1.10) to N4OET49W (1.12) through Omarchy's firmware updater. The reporter's own note: the lid had to be open for the update to apply.
 
-**Gen 14 lid and hibernate.** Issue #10250 is open. Lid-open does not light the internal panel when there is no external display, because the stock binding for `switch:off:Lid Switch` is `omarchy-hyprland-monitor-clamshell`, which never re-enables DPMS on eDP-1. Hibernate is not a resume on that machine while zram sits at priority 100 above the resume swapfile. The reporter later corrected himself: stock lid-close sleep does wake on that hardware, and the never-wakes reports came from his own lid-ignore experiments.
+**Gen 14 lid and hibernate.** Issue #10250 is open. Lid-open does not light the internal panel when there is no external display, because the stock binding for `switch:off:Lid Switch` is `omarchy-hyprland-monitor-clamshell`, which only re-enables DPMS on the internal panel when it had been put into clamshell mode by an external display. Hibernate is not a resume on that machine while zram sits at priority 100 above the resume swapfile. The reporter later corrected himself: stock lid-close sleep does wake on that hardware, and the never-wakes reports came from his own lid-ignore experiments.
 
 **Gen 13 internal speakers.** Issue #10916 is the ugliest report in the set. After four or five days of normal use on a new Gen 13, the RT1318 amp on SoundWire link 1 went `UNATTACHED` after a `DATA_CLASH` and `CTRL_CLASH`, and never came back, on Linux or on Windows. Nobody has shown Omarchy caused it, and the reporter does not claim that either. Treat it as one unexplained incident, not a pattern.
 
 **Gen 13 black LUKS prompt.** Issue #3619, closed. The prompt is invisible at the Plymouth stage while the password still types through blind. Removing the `kms` hook from `/etc/mkinitcpio.conf` and running `sudo mkinitcpio -P` fixed it for two owners.
 
-**Gen 11 random hard reboots.** Issue #7909 is open and unresolved. Spontaneous resets with no panic, no MCE, no thermal event, on both `linux` and `linux-lts`, with Ubuntu stable on the same machine. Another owner reproduced hard hangs on the same chassis under CachyOS and Manjaro, which argues the cause sits in the Arch kernel, firmware and Mesa stack rather than in Omarchy. One reporter later said a full Omarchy update made it stop for him. Buyers of used Gen 11 units should know this thread exists.
+**Gen 11 random hard reboots.** Issue #7909 is open and unresolved. Spontaneous resets with no panic, no MCE, no thermal event, on both `linux` and `linux-lts`, with Ubuntu stable on the same machine. A second Gen 11 owner sees the same reset signature on Fedora 44 with niri, which argues against an Omarchy-specific cause. A third owner reported hard hangs on CachyOS and Manjaro, then traced his own hangs to Netbird running in kernel mode, so that data point no longer counts. An IdeaPad owner in the same thread said a full Omarchy update made his resets stop. Buyers of used Gen 11 units should know this thread exists.
 
-**Gen 9 and older audio policy.** Issue #11005 collects four SOF gaps on a Gen 9: plugging headphones does not switch output because Speaker and Headphones are separate UCM card profiles, HDMI jack detect does not clear after unplug, and the `platform::mute` speaker lamp stays dark because it follows ALSA Master rather than PipeWire mute.
+**Gen 9 audio policy.** Issue #11005 collects four SOF gaps on a Gen 9: plugging headphones does not switch output because Speaker and Headphones are separate UCM card profiles, HDMI jack detect does not clear after unplug, switching profiles pauses MPRIS players, and the `platform::mute` speaker lamp stays dark because it follows ALSA Master rather than PipeWire mute.
 
-**Gen 8 fingerprint during suspend.** Issue #10252, closed. `omarchy-system-sleep-monitor` locks after logind emits `PrepareForSleep(true)`, so `fprintd` can no longer take a sleep inhibitor. The measured gap was 283 ms with the reader open, 8 inhibitor failures across 10 suspends over 14 days. The reporter also retracted his own workaround twice and asks people to remove it: stopping `fprintd` does not release the reader.
+**Gen 8 fingerprint during suspend.** Issue #10252, closed. `omarchy-system-sleep-monitor` locks after logind emits `PrepareForSleep(true)`, so `fprintd` can no longer take a sleep inhibitor. The measured gap was 283 ms with the reader open, 8 inhibitor failures across 10 suspends over 14 days. The reporter also retracted the workaround twice and asks people to remove it: stopping `fprintd` does not release the reader. The only other Gen 8 report, issue #731 about Plymouth not appearing with systemd-boot, closed as a config mistake: Plymouth needs its cmdline options when used with a unified kernel image.
 
 ## What Omarchy does for this model
 
@@ -180,8 +195,8 @@ What you actually get is the generic Intel path from `install/hardware/all.sh`:
 
 - `intel/sof-firmware.sh` installs `sof-firmware` when an Intel audio DSP is present. Without it PipeWire only shows a Dummy Output. v3.8.3 widened this across Arrow Lake, Meteor Lake, Wildcat Lake and Panther Lake and made it ask for a reboot.
 - `intel/video-acceleration.sh` pulls `intel-media-driver`, `libvpl` and `vpl-gpu-rt` for Iris and Xe graphics.
-- `intel/thermald.sh` and `intel/lpmd.sh` add thermal and low-power management. Worth checking after install: a Gen 10 owner in issue #7909 found `thermald` had been dying at every boot for weeks with `Unsupported cpu model or platform`, and fixed it with a drop-in adding `--ignore-cpuid-check`. Note that `lpmd.sh` gates on a fixed list of CPU model IDs covering Alder, Raptor, Meteor, Lunar and Panther Lake. There is no Arrow Lake ID in that list.
-- `intel/ipu7-camera.sh` installs `intel-ipu7-camera` only if an ACPI device with HID `OVTI08F4` exists, which is the Gen 14 sensor.
+- `intel/thermald.sh` and `intel/lpmd.sh` add thermal and low-power management. Worth checking after install: a Gen 10 owner in issue #7909 found `thermald` had been dying at every boot for weeks with `Unsupported cpu model or platform`, and fixed it with a drop-in adding `--ignore-cpuid-check`. Note that `lpmd.sh` gates on a fixed list of CPU model IDs covering Alder, Raptor, Meteor, Lunar and Panther Lake. There is no Arrow Lake ID in that list, and nothing older than Alder Lake, so Gen 8 and Gen 9 skip it too.
+- `intel/ipu7-camera.sh` installs `intel-ipu7-camera` only if an ACPI device with HID `OVTI08F4` exists. The Gen 14 exposes that node, so the package installs, but the real sensor is the IMX471 at `TBE20A0` and the package does nothing for it.
 - `intel/fred.sh` writes a Limine drop-in adding `fred=on` on Panther Lake, so Gen 14 only.
 - `intel/fix-wifi7-eht.sh` disables 802.11be, but only for PCI IDs `8086:e440` and `8086:272b`. An AX211 card does not match.
 
@@ -193,9 +208,9 @@ Machine types seen in the reports: `20U9CTO1WW` (Gen 8), `20XWCTO1WW` (Gen 9), `
 
 - **Gen 8 to Gen 10.** The safe used buy. Comet Lake through Alder Lake, Intel Wi-Fi, Synaptics reader, well-trodden i915.
 - **Gen 11.** Raptor Lake-P with Iris Xe. Good hardware, but read issue #7909 before you commit.
-- **Gen 12.** Meteor Lake. Only generic Omarchy bugs in the set, no chassis-specific breakage found.
-- **Gen 13.** Two different silicon configurations appear in the reports, one described as Arrow Lake-U and one as Lunar Lake. Camera works, speakers have one bad incident, boot-time display needs the kms hook removed.
-- **Gen 14.** Panther Lake. Avoid unless you want to do enablement work. Camera is dead, microphone needs current firmware, hibernate is not usable as shipped.
+- **Gen 12.** Meteor Lake. Mostly generic Omarchy bugs in the set. The one hardware-flavoured report, fingerprint auth going dead after idle on the old hyprlock stack, closed without a fix when Quattro arrived.
+- **Gen 13.** Two different silicon configurations appear in the reports, one described as Arrow Lake-U and one as Lunar Lake. Camera works, speakers have one bad incident, and the LUKS prompt needed the kms hook removed on one Arrow Lake-U unit.
+- **Gen 14.** Panther Lake. Avoid unless you want to do enablement work. Camera needs an out-of-tree driver, microphone needs current firmware, hibernate is not usable as shipped.
 
 ## Before you install
 
@@ -204,7 +219,7 @@ Machine types seen in the reports: `20U9CTO1WW` (Gen 8), `20XWCTO1WW` (Gen 9), `
 3. On Gen 13, if the LUKS prompt is a black screen, do not reach for `nomodeset`. Remove the `kms` hook and rerun `mkinitcpio -P`.
 4. After the first boot, run `journalctl -u thermald` and confirm it is running rather than dying on a cpuid check.
 5. On Gen 14, do not rely on hibernate. Check `swapon --show` and see whether zram outranks your swapfile.
-6. If you use fingerprint unlock, expect the reader to re-enumerate on every resume. See [Omarchy's system sleep chapter](https://omarchy.org/manual/system-sleep/) for the toggles.
+6. If you use fingerprint unlock on a Gen 8, expect the reader to re-enumerate on every resume. See [Omarchy's system sleep chapter](https://omarchy.org/manual/system-sleep/) for the suspend toggle and hibernation setup.
 
 ## Related
 

@@ -71,9 +71,9 @@ sources:
     author: "pomartel"
     date: "2025-12-16"
   - url: "https://github.com/omacom/omarchy/discussions/4768"
-    title: "Discussion #4768: System blackout after failed update 3.3.3 to 3.4.0 (answer on the TLP conflict)"
+    title: "Discussion #4768: System blackout after failed update 3.3.3 to 3.4.0 (pomartel's answer on the TLP conflict)"
     kind: discussion
-    author: "pomartel"
+    author: "wearethesame13"
     date: "2026-02-27"
   - url: "https://github.com/omacom/omarchy/discussions/933"
     title: "Discussion #933: Auto Switch Power Profiles on AC/Battery"
@@ -107,7 +107,7 @@ faq:
   - q: "Why is there no charge limit slider?"
     a: "Omarchy 4.0.4 reads charge thresholds for display in omarchy-battery-status but ships no command to set one. Set it in firmware, or with your laptop vendor's own tool."
   - q: "Does the bespoke kernel in 4.0.4 help battery life?"
-    a: "The 4.0.4 release notes describe linux-omarchy as tuned for desktop responsiveness under load and for gaming. They claim nothing about idle power. If your drain started exactly at 4.0.4, the stock linux kernel is still installable as a comparison."
+    a: "The 4.0.4 release notes describe linux-omarchy as tuned for desktop responsiveness under load and for gaming, and say it refines power management, without numbers or a battery life claim. If your drain started exactly at 4.0.4, the stock linux kernel is still installable as a comparison."
 related: [suspend-wont-resume-s2idle, hibernate-fails-or-hangs, nvidia-drivers-omarchy-4, hybrid-gpu-laptop-black-screen-aq-drm-devices]
 draft: false
 ---
@@ -162,7 +162,7 @@ Leaving the panel open runs three helper processes every five seconds, one of wh
 
 **6. If you run the dev channel, update.**
 
-Dev builds of Quattro polled `powerprofilesctl get` every two seconds for the whole session. vstoyanov measured that at roughly 5 percent of a core and 111 ms of CPU per call in issue #11058. dhh replaced it with a direct D-Bus read in PR #11637, merged 2026-09-13. No tagged 4.0.x release shipped the poll, so this only matters on `dev` or an older dev checkout.
+Dev builds of Quattro polled `powerprofilesctl get` every two seconds for the whole session. vstoyanov measured that at roughly 5 percent of a core and 111 ms of CPU per call in issue #11058. dhh swapped the Python CLI for a `busctl` property read in PR #11637, merged 2026-09-13; the two second timer stays, but each tick is a cheap D-Bus call instead of an interpreter start. The battery service in the tagged 4.0.x trees has no such timer at all, so this only matters on `dev` or an older dev checkout.
 
 ## Verify it worked
 
@@ -181,21 +181,21 @@ If nothing changes on unplug, the shell's battery service is not firing. It reac
 
 Omarchy ships one power daemon and nothing else. `install/omarchy-base.packages` lists `power-profiles-daemon`, and `install/config/enable-services.sh` enables it. There is no TLP, no laptop-mode-tools, no disk or PCIe tuning. Intel machines with a battery additionally get `thermald`, and Alder Lake and newer hybrid Intel CPUs get `intel-lpmd`, both from `install/hardware/intel/`. That is the whole of it. Arch with a bare profile daemon idles higher than a vendor tuned Windows install, which is what reports like issue #8648 describe. Automatic switching on plug and unplug only arrived in 3.4.0; before that, people wired it up themselves with udev rules, as in discussion #933.
 
-Two shipped defaults deliberately spend power. Wi-Fi power save is switched off in `/etc/NetworkManager/conf.d/omarchy-wifi-powersave.conf`, and the file says why: it trades a fraction of a watt for avoiding latency spikes and broken Intel BE200 firmware. A migration turns it off on running interfaces too. The USB autosuspend file shipped since 4.0.4 sets a `usbcore` option that cannot apply, because `usbcore` is built into the kernel, which jordanglean documented in issue #12095. So USB devices keep whatever the udev hwdb gives them.
+Two shipped defaults deliberately spend power. Wi-Fi power save is switched off in `/etc/NetworkManager/conf.d/omarchy-wifi-powersave.conf`, and the file says why: it trades a fraction of a watt for avoiding latency spikes and broken Intel BE200 firmware. A migration turns it off on running interfaces too. The USB autosuspend file every 4.0.x release ships at `/etc/modprobe.d/omarchy-usb-autosuspend.conf` sets a `usbcore` option that cannot apply, because `usbcore` is built into the kernel, which jordanglean documented in issue #12095. So USB devices keep whatever the udev hwdb gives them.
 
 The low battery warning is a warning only. The shell's battery service checks every 30 seconds and, at 10 percent while discharging, runs `omarchy-battery-low`, which sends the "Time to recharge!" notification and fires the `battery-low` hook. Drop an executable script in `~/.config/omarchy/hooks/battery-low.d/` to add your own action. There is a `play-warning-sound.sample` to copy. Nothing in that path reduces power draw or suspends the machine for you.
 
-One more failure mode worth ruling out: the profile may never have applied at boot. In issue #8184 the udev event fired before `power-profiles-daemon` had started, the helper exited 1, and the machine stayed on whatever profile was left over. `journalctl -b | grep powerprofiles` shows it.
+One more failure mode worth ruling out: the profile may never have applied at boot. In issue #8184, on a machine upgraded from 3.x that still carried the old `99-power-profile.rules`, the udev event fired before `power-profiles-daemon` had started, the helper exited 1, and the machine stayed on whatever profile was left over. A clean 4.x install has no udev rule; the shell applies the profile when UPower reports a change. `journalctl -b | grep powerprofiles` shows either path.
 
 ## If that did not work
 
-**Consider TLP, with your eyes open.** pomartel's guide in discussion #3907 replaces power-profiles-daemon with `tlp` plus `tlp-pd` and symlinks `powerprofilesctl` to `tlpctl`. It works, and TLP tunes far more than CPU governors. But the two daemons conflict and cannot both be installed, as pomartel put it in the accepted answer on discussion #4768. Worse on 4.x: when the daemon is masked, `powerprofilesctl` crashes with SIGABRT instead of failing cleanly, and the shell calls it from the power panel, the menu, and every AC transition. That is ogrt's issue #8596, open as of 2026-09-16. Note that `tlp-pd` was not in the Arch repos for at least one reader of that guide.
+**Consider TLP, with your eyes open.** pomartel's guide in discussion #3907 replaces power-profiles-daemon with `tlp` plus `tlp-pd` and symlinks `powerprofilesctl` to `tlpctl`. It works, and TLP tunes far more than CPU governors. But the two daemons conflict and cannot both be installed, as pomartel put it in the accepted answer on discussion #4768. Worse on 4.x: when the daemon is masked, `powerprofilesctl` crashes with SIGABRT instead of failing cleanly, and the shell calls it from the power panel, the menu, and every AC transition. That is ogrt's issue #8596, open as of 2026-09-16. Note that `tlp-pd` was not in the Arch repos for at least one reader of that guide, and pomartel later wrote in the same thread that he went back to power-profiles-daemon because TLP caused odd issues when not tuned carefully.
 
 **Check the battery itself.** `omarchy battery status` prints the full charge capacity in watt hours; compare it with the design capacity in `/sys/class/power_supply/BAT0/energy_full_design`. A cell at half its design capacity drains twice as fast and no software fixes that. On dual battery laptops the readout covers only the first battery: `omarchy-battery-status` takes the first UPower BAT device, so a ThinkPad with an internal and an external pack shows one of them.
 
 **Look for a single runaway process.** A stuck Chromium tab, a compile loop, or an agent CLI left running will beat every tweak on this page. `btop` ships by default.
 
-Evidence on this topic is thinner than for boot or display problems. Most drain reports close without a root cause, and the ones with numbers attached are the screensaver, the dGPU, and the dev channel poll. If you measure something else, open an issue with `omarchy debug` output attached.
+The drains with measurements attached are the screensaver, the dGPU, and the dev channel poll. If you measure something else, open an issue with `omarchy debug` output attached.
 
 ## Related
 

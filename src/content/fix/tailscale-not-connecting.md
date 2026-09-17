@@ -1,6 +1,6 @@
 ---
 title: "Tailscale not connecting or DNS broken on Omarchy"
-description: "Tailscale shows Connected while every DNS lookup fails, or the bar panel says Disconnected on a healthy tailnet. The accept-routes and accept-dns fix, the panel bugs, and the ufw rules."
+description: "Tailscale says Connected while every DNS lookup fails, or the bar panel says Disconnected on a healthy tailnet. The accept-routes fix, the panel bugs, and ufw."
 answer: "Run `tailscale status --json | jq -r '.Health[]?'` first, because the Omarchy bar panel never reads Health. If it reports unreachable DNS servers plus advertised routes, run `sudo tailscale set --accept-routes` to accept them, or `sudo tailscale set --accept-dns=false` to keep your local resolvers. If the tailnet is fine and only the panel says Disconnected, run `omarchy restart shell`."
 appliesTo:
   from: "4.0.0"
@@ -92,7 +92,7 @@ faq:
   - q: "Should I just turn on --accept-routes everywhere?"
     a: "No. Accepting routes installs every prefix a subnet router advertises into your routing table, which can overlap your own LAN. Use `--accept-dns=false` instead if you only want your local resolvers back."
   - q: "Can I reach SSH or a dev server on my laptop over the tailnet?"
-    a: "Not until you open it. Omarchy's ufw default is deny incoming, with only LocalSend port 53317 open, so add a rule such as `sudo ufw allow in on tailscale0 to any port 22 proto tcp`."
+    a: "Not until you open it. Omarchy's ufw default is deny incoming, and the only port it opens to the outside is LocalSend's 53317, so add a rule such as `sudo ufw allow in on tailscale0 to any port 22 proto tcp`."
 related: [wifi-drops-after-kernel-update-iwlwifi, quickshell-crashes-or-bar-missing, plugin-fails-to-load]
 draft: false
 ---
@@ -124,7 +124,7 @@ Work through these in order. All of this is checked against 4.0.4.
 
    Accepting routes puts every advertised prefix in your routing table, including ranges that may collide with your home LAN. If you do not know what the subnet router advertises, take the second option.
 
-3. If you never finished the login. The installer's `sudo tailscale up --accept-routes` is also the authentication gate. Close that terminal early and the machine is registered with nothing set. Run it again by hand, follow the link, then claim operator rights so the panel and Taildrop work without sudo:
+3. If you never finished the login. The installer's `sudo tailscale up --accept-routes` is also the authentication gate. Close that terminal before you follow the link and the node never joins, and the routes preference is never written. One 3.6.0 report ([issue #5400](https://github.com/omacom/omarchy/issues/5400)) saw the terminal end at Done! without ever showing a link. Run it again by hand, follow the link, then claim operator rights so the panel and Taildrop work without sudo:
 
    ```bash
    sudo tailscale up --accept-routes
@@ -146,7 +146,7 @@ Work through these in order. All of this is checked against 4.0.4.
    omarchy restart shell
    ```
 
-6. If you can reach peers but cannot reach a service hosted on this machine, open the port on the tunnel interface. Omarchy's firewall denies all incoming traffic by default and opens only LocalSend's 53317:
+6. If you can reach peers but cannot reach a service hosted on this machine, open the port on the tunnel interface. Omarchy's firewall denies incoming traffic by default. The only inbound holes it ships are LocalSend's 53317 and a Docker DNS rule scoped to the bridge address:
 
    ```bash
    sudo ufw allow in on tailscale0 to any port 22 proto tcp
@@ -177,9 +177,9 @@ An empty `Health` array with a resolving MagicDNS name is the real all clear. Th
 
 The Linux defaults are accept DNS on, accept routes off. That combination is fine until your tailnet points DNS at nameservers that only exist behind an advertised subnet route. Tailscale then rewrites your resolvers to addresses you have no route to, and every lookup fails, not just tailnet names. z23 documented this in [issue #6962](https://github.com/omacom/omarchy/issues/6962) on a ThinkPad X1 Carbon running 4.0.0, and confirmed `tailscale set --accept-routes` restored DNS.
 
-Omarchy makes it easy to land in that state. The installer is the only code path that passes `--accept-routes`. The bar panel's own connect action runs a flagless `tailscale up` (`loginPlan` in `shell/plugins/panels/tailscale/Model.js`), which applies stock Linux defaults on a node that never got the installer's flag. thomas-trijindev added journal evidence on the same issue that a bare `up` also rewrites the full preference set, so a later toggle can undo an `--accept-routes` you set yourself.
+Omarchy makes it easy to land in that state. Nothing in 4.0.4 passes `--accept-routes` except the installer script. The bar panel's own connect action runs a flagless `tailscale up` (`loginPlan` in `shell/plugins/panels/tailscale/Model.js`), which applies stock Linux defaults on a node that never got the installer's flag. thomas-trijindev added journal evidence on the same issue that a bare `up` also rewrites the full preference set, so a later toggle can undo an `--accept-routes` you set yourself.
 
-The false Disconnected is separate. `Service.qml` arms a 15 second `pollWatchdog` when a poll starts but never stops it when the poll finishes, so it kills whatever is in flight when it fires. On a tailnet where `tailscale status --json` takes several seconds, it reaps a healthy poll, the non zero exit path runs, and the panel resets to Disconnected. iskakaushik reproduced this against a slow status stub in [issue #7774](https://github.com/omacom/omarchy/issues/7774). The watchdog in 4.0.4 still has no `stop()` in any of the process exit handlers.
+The false Disconnected is separate. `Service.qml` arms a 15 second `pollWatchdog` when a poll starts but never stops it when the poll finishes, so it kills whatever is in flight when it fires. When a status poll needs several seconds to return, as it does on big tailnets, the watchdog reaps that healthy poll, the non zero exit path runs, and the panel resets to Disconnected. iskakaushik reproduced this against a slow status stub in [issue #7774](https://github.com/omacom/omarchy/issues/7774). The watchdog in 4.0.4 still has no `stop()` in any of the process exit handlers.
 
 The CLI detection bug is simpler. The plugin shells out to `which tailscale`, and `which` is a standalone Arch package that Omarchy does not install.
 
@@ -189,9 +189,9 @@ The CLI detection bug is simpler. The plugin shells out to `which tailscale`, an
 - **The network panel shows a fake Ethernet connection.** `omarchy-network-status` picks the device that owns the default route and treats anything without a `wireless` sysfs entry as wired, so a tunnel becomes Ethernet. Cosmetic, tracked in [issue #10107](https://github.com/omacom/omarchy/issues/10107), and the fix is still an open pull request.
 - **You removed Tailscale and it half went.** Cancelling the sudo prompt in _Remove > Service > Tailscale_ still prints success while leaving the package and `tailscaled` in place, per [issue #9526](https://github.com/omacom/omarchy/issues/9526). Finish it with `sudo systemctl disable --now tailscaled.service` and `omarchy pkg drop tailscale`.
 - **You edited `/etc/nsswitch.conf` or restored a pacnew over it.** Omarchy ships a `hosts:` line without `[!UNAVAIL=return]` after `resolve`, a change made in v3.1.0 specifically for Tailscale split DNS and still present in 4.0.4. Restoring stock Arch ordering can break tailnet name resolution again. See [pacnew and pacsave files after an update](/fix/pacnew-and-pacsave-files-after-update/).
-- **Check the system DNS override.** `omarchy dns` prints the current provider, and picking Cloudflare, Google, or Custom writes `/etc/NetworkManager/conf.d/20-omarchy-dns.conf` and rewrites `/etc/systemd/resolved.conf`. `omarchy dns DHCP` removes both and hands DNS back to your network.
+- **Check the system DNS override.** `omarchy dns` prints the current provider. Picking Cloudflare, Google, or Custom writes `/etc/NetworkManager/conf.d/20-omarchy-dns.conf`, pins DNS on every NetworkManager connection, and rewrites `/etc/systemd/resolved.conf`. `omarchy dns DHCP` deletes the drop-in, clears the per connection servers, and resets `resolved.conf` to a stub, which hands DNS back to your network.
 
-On 3.x this looked different, because the stack was iwd and systemd-networkd rather than NetworkManager. Reports there mixed Tailscale with plain post suspend DNS loss ([issue #2925](https://github.com/omacom/omarchy/issues/2925), [issue #3664](https://github.com/omacom/omarchy/issues/3664)), and users worked around it by toggling the DNS provider or restarting `tailscaled`. DHH closed both on the grounds that Quattro replaced that stack, asking for fresh reports if they reproduce. Neither has been reopened. The evidence for a genuine 4.x suspend and Tailscale interaction is thin, so if you hit one, file it.
+On 3.x this looked different, because the stack was iwd and systemd-networkd rather than NetworkManager. Reports there mixed Tailscale with plain post suspend DNS loss ([issue #2925](https://github.com/omacom/omarchy/issues/2925), [issue #3664](https://github.com/omacom/omarchy/issues/3664)), and users worked around it by toggling the DNS provider or restarting `tailscaled`. DHH closed both in July 2026 as superseded by Quattro's NetworkManager stack, and asked on #3664 for a new issue if it reproduces there. Neither has been reopened. The evidence for a genuine 4.x suspend and Tailscale interaction is thin, so if you hit one, file it.
 
 ## Related
 

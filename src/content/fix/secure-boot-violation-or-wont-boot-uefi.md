@@ -1,7 +1,7 @@
 ---
 title: "Secure Boot Violation, or the Omarchy USB will not boot"
 description: "Secure Boot Violation and UEFI boot failures on Omarchy: turn Secure Boot off, pick the UEFI USB entry, fix Ventoy, and re-sign Limine after an update."
-answer: "Turn Secure Boot off in firmware before you boot the Omarchy USB. The installer refuses to run with it enabled, and on some machines the live ISO also panics. In the boot menu pick the entry labelled UEFI, not the plain legacy one. If Secure Boot Violation appears after an update on an install where you enrolled your own keys, disable Secure Boot to get back in, then re-sign the Limine binary with sbctl."
+answer: "Turn Secure Boot off in firmware before you boot the Omarchy USB. The manual requires it and the installer refuses to run with it enabled. In the boot menu pick the entry labelled UEFI, not the plain legacy one. If Secure Boot Violation appears after an update on an install where you enrolled your own keys, disable Secure Boot to get back in, then re-sign the Limine binary with sbctl and re-enrol its config."
 appliesTo:
   from: "3.x"
 status: workaround
@@ -93,16 +93,19 @@ credits:
   - name: "fenfenau"
     url: "https://github.com/fenfenau"
     for: "Found the ENABLE_UKI=no workaround for LoadImage panics on MSI firmware"
+  - name: "dot3x3q"
+    url: "https://github.com/dot3x3q"
+    for: "Reproduced the lockout on a 4.0.2 to 4.0.3 update and worked out that limine-enroll-config is the complete repair"
   - name: "killeik"
     url: "https://github.com/killeik"
     for: "Added the Secure Boot guard to the installer in v3.1.0"
 faq:
   - q: "Does Omarchy support Secure Boot at all?"
-    a: "Not out of the box. The manual tells you to turn Secure Boot off before installing, and the installer refuses to proceed while it is on. You can enrol your own keys with sbctl afterwards, which people do to keep a Windows dual boot happy, but nothing in Omarchy signs or verifies for you and issue #10945 shows an ordinary update can leave the bootloader unsigned."
+    a: "Not out of the box. The manual tells you to turn Secure Boot off before installing, and the installer refuses to proceed while it is on. You can enrol your own keys with sbctl afterwards, which people do to keep a Windows dual boot happy, but Omarchy does not set Secure Boot up for you, and issue #10945 shows an ordinary update can leave the bootloader unsigned."
   - q: "Is Ventoy safe to use for the Omarchy ISO?"
-    a: "It works now, and a maintainer said in issue #2164 that they use Ventoy to test. Normal mode hung on 3.0 and 3.0.1 and was fixed in v3.0.2. If it still hangs for you, pick grub2 mode in the Ventoy menu, which is what worked for the people in issues #1814 and #2100."
+    a: "A maintainer said in issue #2164 that they use Ventoy to test and had no trouble with 3.0.2. Normal mode hung on 3.0.1 and was fixed in v3.0.2. If it still hangs for you, pick grub2 mode in the Ventoy menu, which is what worked for the people in issue #1814. It did not help the reporter in #2100, who later said the issue was resolved without saying how."
   - q: "Do I need to turn TPM off too?"
-    a: "The manual's getting started chapter says to turn off Secure Boot and TPM in the BIOS. Only Secure Boot is actually checked by the installer, but disabling both removes a class of firmware problems that have shown up repeatedly in boot reports."
+    a: "The manual's getting started chapter says to turn off Secure Boot and TPM in the BIOS. The 3.x installer guard only checked Secure Boot, and nothing on this page needs TPM off, but the manual's instruction is the supported route so follow it."
 related: [install-fails-or-stalls, kernel-panic-after-update-limine, you-are-in-emergency-mode-after-update, luks-passphrase-not-accepted-at-boot, stuck-at-tty-or-cannot-switch-tty]
 draft: false
 ---
@@ -111,11 +114,11 @@ Three different problems share this page, because they look alike from the outsi
 
 ## The fix
 
-1. **Turn Secure Boot off in firmware first.** Reboot into your firmware setup (usually F2, F10, Del or Esc at power on), find Security or Boot, set Secure Boot to Disabled, and save. On many Lenovo and MSI boards you must also switch OS Type to "Other OS" rather than "Windows UEFI mode". The Omarchy manual's [getting started chapter](https://omarchy.org/manual/getting-started/) tells you to disable Secure Boot and TPM before you install.
+1. **Turn Secure Boot off in firmware first.** Reboot into your firmware setup (usually F2, F12 or Delete at power on), find Security or Boot, set Secure Boot to Disabled, and save. On ASUS boards there is a separate OS Type setting; the second reporter in issue #10945 had to set it to "Other OS" before the machine would boot again. The Omarchy manual's [getting started chapter](https://omarchy.org/manual/getting-started/) tells you to disable Secure Boot and TPM before you install.
 
 2. **On an Intel Mac, disable Apple's Secure Boot instead.** Hold Command-R at power on, then Utilities > Startup Security Utility, choose "No Security", and allow booting from external media. Those exact steps are in the manual's [Mac support chapter](https://omarchy.org/manual/mac-support/).
 
-3. **Pick the UEFI boot entry, not the legacy one.** Most firmware boot menus list the same stick twice, as `USB Name` and `UEFI: USB Name`. Select the `UEFI:` entry. This is the single most common cause of the EFI error. In issue #5387 the reporter first blamed the installer, then confirmed that `/sys/firmware/efi` was missing in the failing case, meaning the machine really had booted in legacy or CSM mode. Turn CSM off in firmware so the legacy entry disappears entirely.
+3. **Pick the UEFI boot entry, not the legacy one.** Many firmware boot menus list the same stick twice, as `USB Name` and `UEFI: USB Name`. Select the `UEFI:` entry. Picking the wrong one is exactly what produced the EFI error in issue #5387, where the reporter first blamed the installer, then confirmed that `/sys/firmware/efi` was missing in the failing case, meaning the machine really had booted in legacy or CSM mode. Turn CSM off in firmware so the legacy entry disappears entirely.
 
 4. **Check it from the live environment before starting the install.** Open a terminal on the ISO and run:
 
@@ -125,9 +128,9 @@ Three different problems share this page, because they look alike from the outsi
 
    A populated directory means you are in UEFI mode. `No such file or directory` means you booted legacy and the installer is right to stop.
 
-5. **If the stick was written with Rufus, rewrite it.** Rufus defaults to an NTFS target that uses its UEFI:NTFS shim. Issue #5387 lists this as a cause of the failure. Use balenaEtcher on Mac or Windows, or caligula on Linux, both of which the manual recommends, and let them write the image unmodified.
+5. **If the stick was written with Rufus, rewrite it.** Rufus writes ISOs this large to NTFS and boots them through its UEFI:NTFS shim, and the reporter in issue #5387 lists that as a likely contributor. Use balenaEtcher on Mac or Windows, or caligula on Linux, both of which the manual recommends, and let them write the image unmodified.
 
-6. **If you use Ventoy and it hangs on the Omarchy logo, choose grub2 mode.** In the Ventoy boot menu press the key for boot mode and pick grub2. This was the confirmed workaround in issues #1814 and #2100. Normal mode was fixed in [v3.0.2](https://github.com/omacom/omarchy/releases/tag/v3.0.2), which lists "Fix hanging issue for normal boot when using Ventoy".
+6. **If you use Ventoy and it hangs on the Omarchy logo, choose grub2 mode.** When Ventoy asks how to boot the ISO, pick grub2 mode instead of normal mode. Two people confirmed that in issue #1814. It did not work for the reporter in #2100, who eventually got the ISO booting some other way and did not say how. Normal mode was fixed in [v3.0.2](https://github.com/omacom/omarchy/releases/tag/v3.0.2), which lists "Fix hanging issue for normal boot when using Ventoy".
 
 7. **If Secure Boot Violation appears after an update on a machine where you enrolled your own keys**, disable Secure Boot in firmware to get back in, then boot Omarchy and repair the signature:
 
@@ -137,7 +140,7 @@ Three different problems share this page, because they look alike from the outsi
    sudo limine-enroll-config
    ```
 
-   Re-enable Secure Boot afterwards. Issue #10945 documents this on 4.0.x, and a second reporter there hit it on a 4.0.2 to 4.0.3 update.
+   The `sbctl sign` line is the reporter's own workaround in issue #10945. The `limine-enroll-config` line comes from the second reporter there, who found that on a 4.0.2 to 4.0.3 update the hook also wiped the enrolled config checksum, so a bare re-sign left Limine panicking on a config hash mismatch. Re-enable Secure Boot afterwards.
 
 ## Verify it worked
 
@@ -160,19 +163,18 @@ if bootctl status 2>/dev/null | grep -q 'Secure Boot: enabled'; then
 fi
 ```
 
-In 3.x that abort still offered to proceed anyway. The 4.x ISO installer keeps the same check but the preflight script no longer lives in the omarchy repo, so you cannot read it from a source tag. One person reports a false positive from it in issue #10647, where the live USB claimed Secure Boot was on when it was not. That issue is open, has no comments and no logs, so treat it as unconfirmed.
+In 3.x that abort still offered to proceed anyway. The 4.x ISO still refuses with Secure Boot on, but the preflight code is not in the omarchy repo's 4.x source, so you cannot read it from a source tag. One person reports a false positive from it in issue #10647, where the live USB claimed Secure Boot was on when it was not. That issue is open, has no comments and no logs, so treat it as unconfirmed.
 
 The EFI error is almost never a detection bug. Both #5385 and #5387 came from the same reporter on the same Lenovo machine, and the second one shows the machine was genuinely booting legacy. Neither issue got a maintainer reply, and both were closed the same day.
 
-The Ventoy hang was real and separate. Ventoy loop-mounts the ISO and reads `/boot/grub/loopback.cfg`, and in the 3.0.2 era that file pointed at `/arch/boot/x86_64/vmlinuz-linux` while the ISO actually shipped `vmlinuz-linux-t2`, which is what LazyStability found in issue #2164. Grub2 mode sidesteps the broken file.
+The Ventoy hang was real and separate. On the 3.0.1 ISO, Ventoy's normal mode sat on the Omarchy logo forever, and grub2 mode got past it. A different bug surfaced on the 3.0.2 ISO: its `/boot/grub/loopback.cfg` pointed at `/arch/boot/x86_64/vmlinuz-linux` while the ISO actually shipped `vmlinuz-linux-t2`, which is what LazyStability found in issue #2164 using Multios-USB. Tools that boot through loopback.cfg fail with `vmlinuz-linux not found` and drop back to a grub menu. The maintainer said he would copy the fix over; no release note names it, so if you see that error, write the ISO to a plain stick instead.
 
-The post-install violation is a signing gap. Omarchy's installer drops a pacman hook at `/etc/pacman.d/hooks/99-omarchy-limine.hook` that copies the stock `BOOTX64.EFI` over the just-signed `limine_x64.efi`, and sbctl's safety-net hook does not catch it because its target globs are lowercase while the shipped file is uppercase. That is LoboHacks's analysis in #10945. It is open, so expect it to bite again.
+The post-install violation is a signing gap. Omarchy's installer drops a pacman hook at `/etc/pacman.d/hooks/99-omarchy-limine.hook` that copies the stock `BOOTX64.EFI` over the just-signed `limine_x64.efi`, and sbctl's safety-net hook does not catch it because its target globs are lowercase while the shipped file is uppercase. That is LoboHacks's analysis in #10945. The second reporter there saw the sbctl hook fire and still sign nothing, because the file had been signed without `-s` and was not in sbctl's database. The issue is open, so expect it to bite again.
 
 ## If that did not work
 
-- **Limine panics with `PANIC: efi: LoadImage failure` once Secure Boot is back on.** Omarchy forces unified kernel images through `/etc/limine-entry-tool.d/omarchy-uki.conf`, which contains only `ENABLE_UKI=yes` in v4.0.4. Some firmware, notably MSI 600-series and newer, cannot `LoadImage()` a non-factory-signed binary. Issue #12045 reports setting that value to `no` and rerunning `limine-mkinitcpio-install` fixes it. Snapshots taken before the change still point at the old UKI.
-- **The stick boots on other machines but not this one.** Fast USB drives with SSD controllers report as non-removable, and issue #10734 says those do not boot the ISO over UEFI. Try a plain USB 2.0 or 3.0 flash drive.
-- **Firmware refuses to add a boot entry.** If the installer fails around `efibootmgr` with "No space left on device", your NVRAM variable store is full. Clear stale entries in firmware setup first.
+- **Limine panics with `PANIC: efi: LoadImage failure` once Secure Boot is back on.** Omarchy forces unified kernel images through `/etc/limine-entry-tool.d/omarchy-uki.conf`, which contains only `ENABLE_UKI=yes` in v4.0.4. The reporter in issue #12045, on an MSI X870E board, found the firmware refused to `LoadImage()` the signed UKI and ties that to the firmware family sbctl tracks as FQ0001, which covers MSI 600-series boards and newer. Setting the value to `no` and rerunning `echo linux | sudo /usr/share/libalpm/scripts/limine-mkinitcpio-install` switched the entry to Limine's native `linux` protocol and it booted. Snapshots taken before the change still point at the old UKI.
+- **The stick boots on other machines but not this one.** One reporter in issue #10734 says fast USB drives with SSD controllers present as non-removable and will not boot the ISO over UEFI. Nobody has confirmed it. Try a plain flash drive before anything else.
 - **You want Secure Boot for a Windows dual boot.** Discussion #2296 is the community custom-keys guide people follow. It does not cover the UKI panic above, so read #12045 alongside it.
 
 ## Related

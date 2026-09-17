@@ -1,7 +1,7 @@
 ---
 title: "Apple Silicon Macs and Asahi on Omarchy"
-description: "Omarchy has no official Apple Silicon build. What actually works on M-series Macs under Asahi, which quirk scripts misfire on aarch64, and the fixes people have verified."
-answer: "Omarchy does not officially support M-series Macs. There is no aarch64 ISO, and the manual points you at Asahi Alarm plus a community fork. On those forks the desktop runs, but brightness, lid handling, touchpad toggle, HDMI output and post-resume audio all have open bugs, and one Intel-Mac Wi-Fi quirk misfires on Apple Silicon and kills Wi-Fi entirely."
+description: "Omarchy ships no Apple Silicon build. What runs on M-series Macs under Asahi, which quirk scripts misfire on aarch64, and the fixes people have verified."
+answer: "Omarchy does not support M-series Macs. There is no aarch64 ISO, and the manual points you at Asahi Alarm plus a community fork. On those forks the desktop runs, but brightness, lid handling, touchpad toggle, HDMI output and post-resume audio all have open bugs, and one Intel-Mac Wi-Fi quirk misfires on Apple Silicon and kills Wi-Fi entirely."
 appliesTo:
   from: "4.0.0"
 status: info
@@ -84,7 +84,7 @@ credits:
     for: "Found that the Intel-Mac Broadcom quirk matches Apple Silicon chip IDs"
   - name: "bodhiblues"
     url: "https://github.com/bodhiblues"
-    for: "Verified the Wi-Fi recovery steps on an M1 Pro and flagged that existing installs do not self-heal"
+    for: "Confirmed on an M1 Pro that the gated script stops writing the quirk file, and supplied the cleanup for installs that already have it"
   - name: "CuraMagis"
     url: "https://github.com/CuraMagis"
     for: "Traced the dead brightness slider to the wrong backlight device and published a working override"
@@ -96,10 +96,13 @@ credits:
     for: "Proposed the logind LidClosed fallback and found the third blocker in omarchy-hw-laptop"
   - name: "doomnote"
     url: "https://github.com/doomnote"
-    for: "Reproduced the BCM4388 resume wedge and the post-resume audio teardown"
+    for: "Reproduced the BCM4388 resume wedge and the post-resume audio hang, and verified a WirePlumber restart recovers it"
+  - name: "maciej-trebacz"
+    url: "https://github.com/maciej-trebacz"
+    for: "Traced the audio hang to PipeWire destroying the same filter-chain module twice during teardown"
 faq:
   - q: "Can I install Omarchy on an M1 or M2 Mac?"
-    a: "Not with the official installer. There is no aarch64 ISO. People run Omarchy on top of Asahi Alarm using community forks, and the manual links a user-driven guide for that."
+    a: "Not with the stock installer. There is no aarch64 ISO. People run Omarchy on top of Asahi Alarm using community forks, and the manual links a user-driven guide for that."
   - q: "Does Omarchy's Mac hardware setup help on Apple Silicon?"
     a: "Barely. Three of the four scripts in install/hardware/apple gate on Intel Mac DMI names or the T2 PCI ID. The fourth matches Apple Silicon Wi-Fi chips and breaks Wi-Fi, which is issue #7439."
   - q: "Why does my brightness slider do nothing?"
@@ -114,9 +117,9 @@ draft: false
 
 Omarchy does not ship an Apple Silicon build. There is no aarch64 ISO, and the installer is x86_64 only. The [Mac support chapter](https://omarchy.org/manual/mac-support/) covers Intel Macs and says plainly that installing on an M-series Mac is not directly supported. The [Omarchy on... chapter](https://omarchy.org/manual/omarchy-on/) points at Asahi Alarm, which is Arch for M1 and M2 Macs built on Asahi Linux, and links a user-driven guide for layering Omarchy on top.
 
-So everything on this page describes Omarchy running on an Asahi or Arch Linux ARM base, usually through a community fork. The reporters below name theirs: `omarchy-mac`, `omarchy-mac.N` builds, and `omarchy-mx-mac`. None of that is an official channel, and none of it gets release testing.
+So everything on this page describes Omarchy running on an Asahi or Arch Linux ARM base, usually through a community fork. The reporters below name theirs: `omarchy-mac`, `omarchy-mac.N` builds, and `omarchy-mx-mac`. None of that is an Omarchy release channel, and none of it gets release testing.
 
-What does work once you are there: the Hyprland session and the Quickshell bar come up, the GPU has a Vulkan driver, Wi-Fi associates, and Asahi's own audio DSP loads and produces sound. What does not work is a long list, and most of it is Omarchy code assuming x86 Linux conventions rather than anything Asahi got wrong.
+What does work once you are there: the Hyprland session and the Quickshell bar come up, the installer maps the Apple GPU to `vulkan-asahi`, Wi-Fi associates once the quirk file is gone, and Asahi's own audio DSP loads and produces sound. What does not work is a long list, and most of it is Omarchy code assuming x86 Linux conventions rather than anything Asahi got wrong.
 
 Forty issues in the tracker match Apple Silicon and Asahi terms. Many of those are Intel Mac reports that share vocabulary, so treat the count as a search result, not a defect list. For Intel Macs with the T2 chip, see [/hardware/t2-mac/](/hardware/t2-mac/) instead.
 
@@ -129,7 +132,7 @@ Almost nothing, and one thing it should not.
 The four scripts in `install/hardware/apple/` are Intel-Mac code:
 
 - `fix-t2.sh` gates on PCI IDs `106b:1801` and `106b:1802`, the T2 bridge. No M-series Mac has one, so it never runs.
-- `fix-spi-keyboard.sh` and `fix-suspend-nvme.sh` gate on DMI `product_name` matching `MacBookPro13,x`, `MacBookPro14,x` and friends. Asahi machines report a device-tree compatible like `apple,j314s`, not those names, so neither runs.
+- `fix-spi-keyboard.sh` and `fix-suspend-nvme.sh` gate on DMI `product_name` matching `MacBookPro13,x`, `MacBookPro14,x` and friends. M-series Macs identify as `MacBookPro18,3`, `Mac14,10` and the like, which those patterns do not match, so neither runs.
 - `fix-brcmfmac-supplicant.sh` is the problem. It matches `sys_vendor` starting with "Apple" plus Broadcom IDs including `14e4:4425` and `14e4:4433`, which are BCM4378 and BCM4387, the Wi-Fi chips in Apple Silicon Macs. It then writes `feature_disable=0x82000` into `/etc/modprobe.d/brcmfmac.conf`, which is correct for Intel Macs and wrong here.
 
 The `omarchy-brightness-display-apple` and `omarchy-hyprland-monitor-focused-apple` commands sound relevant but are not. They drive external Apple Studio Display and Pro Display XDR panels over HID, on any machine.
@@ -138,13 +141,13 @@ The `omarchy-brightness-display-apple` and `omarchy-hyprland-monitor-focused-app
 
 | Issue | Models | Status | Fixed in |
 | --- | --- | --- | --- |
-| [#7439](https://github.com/omacom/omarchy/issues/7439) Broadcom quirk disables the firmware supplicant on M-series Wi-Fi | Any M1/M2 with BCM4378 or BCM4387 | Open. An `x86_64` gate exists on main but is in no released tag through 4.0.4 | not yet |
+| [#7439](https://github.com/omacom/omarchy/issues/7439) Broadcom quirk disables the firmware supplicant on M-series Wi-Fi | Any M1/M2 with BCM4378 or BCM4387 | Open. Commit `70e005a5` (2026-08-20) adds an `x86_64` gate, but it is not on the `quattro` default branch or in any released tag through 4.0.4 | not yet |
 | [#8125](https://github.com/omacom/omarchy/issues/8125) brightness slider and keys no-op | M1 MacBook Pro 13" (`apple,j293`), likely all | Open. `omarchy-hw-display` still has no `apple-panel-bl` entry in 4.0.4 | not yet |
 | [#7872](https://github.com/omacom/omarchy/issues/7872) audio tuning reports "nothing ships for this laptop" while the Asahi DSP is active | MacBook Pro 16" M1 Max (`apple,j316c`) | Open, cosmetic but misleading | not yet |
-| [#10858](https://github.com/omacom/omarchy/issues/10858) audio dies after VT switch or resume | MacBook Pro M1 Pro (J314) | Open. Root cause traced to PipeWire module teardown, not Omarchy | not yet |
+| [#10858](https://github.com/omacom/omarchy/issues/10858) audio dies after resume or a VT switch | MacBook Pro 16" M2 Pro (`Mac14,10`), MacBook Pro 14" M1 Pro (J314) | Open. maciej-trebacz traced the root cause to PipeWire module teardown, not Omarchy | not yet |
 | [#10857](https://github.com/omacom/omarchy/issues/10857) Wi-Fi wedges after lid-close suspend | MacBook Pro 16" 2023, M2 Pro (`Mac14,10`), BCM4388 | Open. The chip gate in the forks' resume fix omits `14e4:4434` | not yet |
 | [#8418](https://github.com/omacom/omarchy/issues/8418) lid close does nothing | Asahi MacBooks, confirmed on MacBookPro18,3 | Open. Lid state is read from `/proc/acpi`, which Asahi does not have | not yet |
-| [#10477](https://github.com/omacom/omarchy/issues/10477) `omarchy-hw-laptop` DMI fallback never matches | Any machine without an ACPI lid button | Closed as not planned. The bug is still in 4.0.4 | no |
+| [#10477](https://github.com/omacom/omarchy/issues/10477) `omarchy-hw-laptop` DMI fallback never matches | Any machine without an ACPI lid button | Closed as a duplicate of PR #7948, which is still open. The bug is still in 4.0.4 | not yet |
 | [#8376](https://github.com/omacom/omarchy/issues/8376) touchpad toggle silently does nothing | MacBook Air M2 2022 (M1 Air unaffected) | Open. Hyprland names the device `apple-mtp-multi-touch` | not yet |
 | [#8946](https://github.com/omacom/omarchy/issues/8946) external HDMI flaps "No Signal" every ~16s while locked | M-series with built-in HDMI | Open. Reporter traced it to `apple-dcp` upstream | no Omarchy fix |
 | [#11914](https://github.com/omacom/omarchy/issues/11914) built-in HDMI link teardown hangs Hyprland | MacBook Pro 16" M1 Pro 2021 | Open. `flip_done timed out` from `apple-drm` | no Omarchy fix |
@@ -163,7 +166,7 @@ sudo rm /etc/modprobe.d/brcmfmac.conf
 sudo modprobe -r brcmfmac_wcc brcmfmac && sudo modprobe brcmfmac
 ```
 
-bodhiblues verified this on an M1 Pro with BCM4387 and `linux-asahi 7.1.6`. Note that an updated install does not clean the file up on its own, so if you installed between mid and late August 2026 you have to remove it by hand.
+thejamescollins confirmed on an M1 Max with BCM4387 that the same access point joins normally once the file is gone, and that reloading in place with `modprobe brcmfmac feature_disable=0` connects immediately. bodhiblues, on an M1 Pro, supplied the removal sequence above. The 4.0.0 release is where the quirk widened to every Mac, and `migrations/1786391100.sh` writes the same file on existing installs, so an update does not clean it up on its own. If the file is there, remove it by hand.
 
 **Brightness does nothing.** Check which device is real:
 
@@ -174,11 +177,11 @@ brightnessctl -d apple-panel-bl set 10%
 
 If `apple-panel-bl` visibly dims the screen while the numeric DSI node does not, point Omarchy at it. `omarchy-hw-display` honours `OMARCHY_BACKLIGHT_PATH`, so CuraMagis made a directory containing only a symlink to `apple-panel-bl` and exported that path via `hl.env(...)` in `~/.config/hypr/hyprland.lua`.
 
-**Wi-Fi does not come back after suspend.** If your chip is BCM4388 (`14e4:4434`), the fork's resume fix skips you. doomnote enabled the same `omarchy-wifi-resume-fix.service` unit by hand and logged a clean wedge-and-recover cycle: the service reloaded `brcmfmac` after 12 seconds and NetworkManager reconnected 8 seconds later. That unit is not in the upstream 4.0.4 tree, only in the Mac forks.
+**Wi-Fi does not come back after suspend.** If your chip is BCM4388 (`14e4:4434`), the fork's resume fix skips you. doomnote enabled the same `omarchy-wifi-resume-fix.service` unit by hand and logged the wedge and the recovery: the service reloaded `brcmfmac` after 12 seconds and NetworkManager reconnected 8 seconds later. That unit is not in the upstream 4.0.4 tree, only in the Mac forks.
 
-**Lid close does nothing while docked.** flip-in's fix has three parts: read the lid from logind instead of ACPI, with `busctl get-property org.freedesktop.login1 /org/freedesktop/login1 org.freedesktop.login1.Manager LidClosed`; drop the `2>/dev/null` from the `$(< file)` substitution in `omarchy-hw-laptop` so the DMI fallback actually matches; and re-register the binds against the switch Hyprland reports, which is `Apple SMC power/lid events`. With all three, a lid close while docked disabled the internal panel and held it.
+**Lid close does nothing while docked.** flip-in's fix has three parts: read the lid from logind instead of ACPI, with `busctl get-property org.freedesktop.login1 /org/freedesktop/login1 org.freedesktop.login1.Manager LidClosed`; swap the `$(< file 2>/dev/null)` substitution in `omarchy-hw-laptop` for `$(cat file 2>/dev/null)` so the DMI fallback actually matches; and re-register the binds against the switch Hyprland reports, which is `Apple SMC power/lid events`. With all three, a lid close while docked disabled the internal panel and held it.
 
-**Audio stuck muted after a VT switch.** Restart WirePlumber with `systemctl --user restart wireplumber`. There is no configuration fix, because the defect is reentrant module destruction inside PipeWire's filter-chain teardown.
+**Audio stuck muted after resume or a VT switch.** Restart WirePlumber with `systemctl --user restart wireplumber`. doomnote runs a resume hook that does exactly that when `wpctl status` stops answering, and reports it self-heals within about ten seconds. There is no configuration fix, because maciej-trebacz traced the defect to PipeWire destroying the same filter-chain module twice during teardown.
 
 **External HDMI.** No workaround found. Disabling the lock screen's blank timer did not stop the flap, and forcing 1080p60 did not stop the hang. Use an external display only if you can tolerate that, or stay on the internal panel.
 
@@ -186,7 +189,7 @@ If `apple-panel-bl` visibly dims the screen while the numeric DSI node does not,
 
 ## Report it
 
-Run `omarchy debug --no-sudo --print` and paste the output. That command exists in 4.0.4. Several reports on this page say it was missing, because those machines were on 4.0.1rc1 or an older fork build. If yours does not have it, say so and include the manual equivalents.
+Run `omarchy debug --no-sudo --print` and paste the output. That command exists in every 4.0.x release. Two reports on this page say it was missing; those machines were on an rc build or a fork build. If yours does not have it, say so and include the manual equivalents.
 
 Always include, because none of it is guessable from a normal Omarchy bundle:
 

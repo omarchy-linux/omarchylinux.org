@@ -26,7 +26,7 @@ interface Props {
   keywords?: string[];
 }
 const { title, description, crumbs = [], ld = [], ogType = 'website', noindex = false, canonical, published, modified, keywords = [] } = Astro.props;
-const fullTitle = title === SITE.name ? `${SITE.name} (unofficial)` : `${title} · ${SITE.shortName}`;
+const fullTitle = title === SITE.name ? `${SITE.name} (unofficial)` : (title.length > 52 ? title : `${title} · ${SITE.shortName}`);
 const desc = truncate(description, 158);
 const url = canonical ?? new URL(Astro.url.pathname, SITE.url).toString();
 const sectionOg = ['hardware', 'fix', 'reference', 'releases', 'official'].find((s) => Astro.url.pathname.startsWith(`/${s}/`));

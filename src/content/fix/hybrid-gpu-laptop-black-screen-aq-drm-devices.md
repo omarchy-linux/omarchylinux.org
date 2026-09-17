@@ -20,7 +20,7 @@ sources:
   - url: "https://github.com/omacom/omarchy/issues/8776"
     title: "Issue #8776: Dual-GPU AMD: PCI by-path in AQ_DRM_DEVICES silently login-loops SDDM autologin"
     kind: issue
-    author: "Elshayib"
+    author: "mowgli42"
     date: "2026-08-28"
   - url: "https://github.com/omacom/omarchy/pull/8786"
     title: "PR #8786: Fix AQ_DRM_DEVICES by-path login loop"
@@ -33,12 +33,12 @@ sources:
     author: "Elshayib"
     date: "2026-08-30"
   - url: "https://github.com/omacom/omarchy/issues/10350"
-    title: "Issue #10350: Hybrid Pascal (nvidia-580xx) + Intel iGPU: Hyprland crashes when dGPU-driven external monitors are actively used"
+    title: "Issue #10350: Hybrid Pascal (nvidia-580xx) + Intel iGPU: Hyprland crashes when dGPU-driven external monitors are actively used, i915 rcs0 GPU hang; NVIDIA-first AQ_DRM_DEVICES fixes it"
     kind: issue
     author: "christianjgilman"
     date: "2026-09-05"
   - url: "https://github.com/omacom/omarchy/issues/9720"
-    title: "Issue #9720: Black screen on boot on AMD Strix Point / Radeon 890M laptops due to Aquamarine atomic DRM commit failure"
+    title: "Issue #9720: [Hardware]: Black screen on boot on AMD Strix Point / Radeon 890M laptops (ASUS ROG Zephyrus G14) due to Aquamarine atomic DRM commit failure"
     kind: issue
     author: "codyoss"
     date: "2026-09-02"
@@ -62,13 +62,21 @@ sources:
     kind: issue
     author: "itsmedardan"
     date: "2025-09-18"
+  - url: "https://github.com/omacom/omarchy/issues/12289"
+    title: "Issue #12289: Hybrid AMD iGPU + NVIDIA dGPU with the external display on the dGPU: nvidia.lua exports NVIDIA VA-API while Aquamarine renders on the iGPU, and Omarchy never sets AQ_DRM_DEVICES"
+    kind: issue
+    author: "RajdeepVerma"
+    date: "2026-09-17"
   - url: "https://omarchy.org/manual/troubleshooting/"
     title: "Omarchy manual: Troubleshooting"
     kind: manual
 credits:
+  - name: "mowgli42"
+    url: "https://github.com/mowgli42"
+    for: "Reported the dual-AMD login loop and traced it to Aquamarine splitting AQ_DRM_DEVICES on every colon, with the udev symlink pin that avoids it"
   - name: "Elshayib"
     url: "https://github.com/Elshayib"
-    for: "Traced the silent login loop to Aquamarine splitting AQ_DRM_DEVICES on every colon, and opened both the sanitizer and the debug warning"
+    for: "Opened the session-environment sanitizer PR and the omarchy debug warning PR"
   - name: "slhuckstead"
     url: "https://github.com/slhuckstead"
     for: "Reproduced it on a muxless NVIDIA laptop and showed that snapshots on @home inherit the broken value, plus the colon-free udev symlink approach"
@@ -80,19 +88,19 @@ credits:
     for: "Documented that Aquamarine reads its env vars before Hyprland parses Lua, so the pin has to live in the session environment"
   - name: "seanymc85"
     url: "https://github.com/seanymc85"
-    for: "Found that os.execute() cannot report exit status inside Hyprland's Lua config, so nvidia.lua silently sets nothing"
+    for: "Found that os.execute() could not report exit status inside Hyprland's Lua config on 4.0.0, so nvidia.lua silently set nothing until 4.0.1"
 faq:
   - q: "Does Omarchy set AQ_DRM_DEVICES for me?"
-    a: "No. We grepped the whole 4.0.4 tree and the string does not appear in bin/, default/, config/ or install/. If it is set on your machine, you, a guide, or an AI agent put it there. That is also what the maintainer triage on issue #8776 says."
+    a: "No. We grepped the whole 4.0.4 tree and the string does not appear in bin/, default/, config/ or install/. If it is set on your machine, you, a guide, or an AI agent put it there. That is also what the triage comment on issue #8776 says."
   - q: "Will a Limine snapshot rollback fix it?"
-    a: "Usually not. The value normally lives in ~/.config/uwsm, which is on the @home subvolume, and snapshots of the root subvolume do not revert it. slhuckstead makes this point on issue #8776: every entry in the Limine menu inherits the same broken value."
+    a: "Usually not. The value normally lives in ~/.config/uwsm, which is on the @home subvolume, and snapshots of the root subvolume do not revert it. slhuckstead makes this point on issue #8776: because the file sits on @home, each older snapshot in the Limine menu boots with the same bad pin."
   - q: "Can I just put the pin in hyprland.lua?"
-    a: "No. Aquamarine reads AQ_DRM_DEVICES and AQ_NO_ATOMIC from the process environment before Hyprland parses any Lua, so hl.env() runs too late. Issue #9720 and PR #8786 both say the same thing. Use ~/.config/uwsm/env.d instead."
+    a: "Not reliably. Aquamarine reads AQ_DRM_DEVICES and AQ_NO_ATOMIC from the process environment before Hyprland parses any Lua, so hl.env() runs too late. Issue #9720 and PR #8786 both say so, and the #8776 report describes a Lua pin as sometimes late but often still applied, which is worse than a clean miss. Use ~/.config/uwsm/env.d instead."
 related: [black-screen-after-login, nvidia-drivers-omarchy-4, login-loop-or-password-not-accepted-sddm, suspend-wont-resume-s2idle, multi-monitor-layout-not-saved]
 draft: false
 ---
 
-You have a laptop with two GPUs, you followed a multi-GPU guide (or an agent did), and now the machine shows a black screen and drops back to the login screen forever. Nothing in the UI tells you why. In almost every case reported on Omarchy 4.x, the cause is one environment variable with a colon in the wrong place.
+You have a laptop with two GPUs, you followed a multi-GPU guide (or an agent did), and now the machine shows a black screen and drops back to the login screen forever. Nothing in the UI tells you why. In the reports this page is built on, the cause is one environment variable with a colon in the wrong place.
 
 ## The fix
 
@@ -123,9 +131,9 @@ You have a laptop with two GPUs, you followed a multi-GPU guide (or an agent did
    export AQ_DRM_DEVICES=/dev/dri/card1:/dev/dri/card0
    ```
 
-   The first entry is the render-primary. On a hybrid machine list **both** cards, as christianjgilman warns on issue #10350: a single-GPU value kills the other GPU's outputs.
+   The first entry is the render-primary. On a hybrid machine list **both** cards. christianjgilman warns on issue #10350 that pinning only one GPU takes down every output wired to the other, and a reader of issue #1776 hit exactly that: after copying a one-card pin, the laptop stopped seeing any external monitor.
 
-6. `cardN` numbers can move between boots. slhuckstead's answer on issue #8776 is to give each card a stable, colon-free name with a udev rule keyed on its PCI address, for example `/etc/udev/rules.d/60-drm-names.rules`:
+6. `cardN` numbers can move between boots. Both reporters on issue #8776 give each card a stable, colon-free name with a udev rule keyed on its PCI address, the same approach itsmedardan scripted for 3.x on issue #1776. Take the addresses and vendor IDs from `lspci -nn | grep -i vga`; the ones below are examples. Put the rule in `/etc/udev/rules.d/60-drm-names.rules`:
 
    ```udev
    SUBSYSTEM=="drm", KERNEL=="card[0-9]*", KERNELS=="0000:01:00.0", ATTRS{vendor}=="0x10de", SYMLINK+="dri/dgpu"
@@ -161,19 +169,19 @@ Aquamarine, Hyprland's backend library, parses `AQ_DRM_DEVICES` by splitting on 
 
 The trap is that the Hyprland wiki's own detection step produces exactly that by-path string. Two unrelated machines hit this the same way in issue #8776, a dual-AMD desktop and a muxless MSI laptop, both because an AI agent followed the documented detection step and pasted the output into the documented variable.
 
-Omarchy does not set the variable itself. We grepped the whole v4.0.4 source tree for `AQ_` and found nothing in `bin/`, `default/`, `config/` or `install/`. What Omarchy does ship for NVIDIA is `default/hypr/nvidia.lua`, which sets `NVD_BACKEND`, `LIBVA_DRIVER_NAME` and `__GLX_VENDOR_LIBRARY_NAME` when it detects an NVIDIA card. seanymc85 reports in issue #7755 that even those never land, because `os.execute()` inside Hyprland's Lua config always returns "No child processes", so every detection branch is skipped. Treat the Lua config as the wrong place for GPU environment work in general.
+Omarchy does not set the variable itself. We grepped the whole v4.0.4 source tree for `AQ_` and found nothing in `bin/`, `default/`, `config/` or `install/`. What Omarchy does ship for NVIDIA is `default/hypr/nvidia.lua`, which sets `NVD_BACKEND`, `LIBVA_DRIVER_NAME` and `__GLX_VENDOR_LIBRARY_NAME` when it detects an NVIDIA card. On 4.0.0 even those never landed: seanymc85 showed in issue #7755 that `os.execute()` inside Hyprland's Lua config always returns "No child processes", so every detection branch was skipped. The 4.0.1 release notes carry the fix (PR #6939), and `default/hypr/helpers.lua` in 4.0.4 reads an `OK` marker from `io.popen` instead of an exit status. The lesson survives the fix: anything Aquamarine needs at backend startup has to be in the session environment, not in Lua.
 
-A second, rarer failure mode is ordering rather than syntax. Hyprland defaults to the iGPU as render primary. On an Optimus laptop whose external monitors hang off the dGPU, every frame needs a cross-GPU copy, and christianjgilman's issue #10350 shows that stalling i915 into a GPU hang that aborts the compositor: `Resetting rcs0 for preemption time out` followed by `context reset due to GPU hang`. Putting the NVIDIA node first fixed it there, verified over multi-hour use.
+A second, rarer failure mode is ordering rather than syntax. On an Optimus laptop Hyprland's default render primary is normally the iGPU. When the external monitors hang off the dGPU, every frame needs a cross-GPU copy, and christianjgilman's issue #10350 shows that stalling i915 into a GPU hang that aborts the compositor: `Resetting rcs0 for preemption time out` followed by `context reset due to GPU hang`. Putting the NVIDIA node first fixed it there, verified over multi-hour use.
 
 ## If that did not work
 
-- **The black screen started right after updating to 4.0.4, and you never touched any config.** That is likely the kernel change, not this. 4.0.4 makes `linux-omarchy` the default boot entry, and Nord-Nogare reports in issue #12187 that a hybrid laptop on the prebuilt `nvidia-open` package has no modules for it, so the desktop hard-freezes about five seconds after login. Pick the stock `linux` entry in the Limine menu and boot that. See [/releases/v4.0.4/](/releases/v4.0.4/) and [/fix/nvidia-drivers-omarchy-4/](/fix/nvidia-drivers-omarchy-4/).
+- **The black screen started right after updating to 4.0.4, and you never touched any config.** That is likely the kernel change, not this. 4.0.4 makes `linux-omarchy` the default boot entry, and Nord-Nogare reports in issue #12187 that a hybrid laptop on the prebuilt `nvidia-open` package has no modules for it, so the desktop hard-freezes about five seconds after login. Omarchy's own installer uses `nvidia-open-dkms`, which builds against every installed kernel, so this bites machines where the prebuilt package was swapped in. Pick the stock `linux` entry in the Limine menu and boot that. See [/releases/v4.0.4/](/releases/v4.0.4/) and [/fix/nvidia-drivers-omarchy-4/](/fix/nvidia-drivers-omarchy-4/).
 - **AMD Strix Point or Radeon 890M, black screen on a fresh install.** codyoss's issue #9720 reports Aquamarine failing its atomic commit with `Cannot allocate memory`. The reported workaround is `AQ_NO_ATOMIC=1` and `WLR_NO_HARDWARE_CURSORS=1`, again exported from the session environment, not Lua.
 - **The machine boots fine, then freezes randomly 20 to 30 minutes in.** commandlinetips's issue #3242 pins that on NVIDIA runtime power management, fixed there with `options nvidia NVreg_DynamicPowerManagement=0x00` in `/etc/modprobe.d/` plus a udev rule forcing `power/control=on`, then `sudo mkinitcpio -P`.
 - **Video is corrupted or the browser stutters, but nothing goes black.** That is the `LIBVA_DRIVER_NAME` family, not this one. Start at [/fix/chromium-flicker-hardware-acceleration/](/fix/chromium-flicker-hardware-acceleration/).
 - **You are filing a report.** `omarchy debug` in 4.0.4 does not capture `AQ_DRM_DEVICES` at all, so paste the two commands from the verify section by hand. PR #9063 would add that dump and PR #8786 would sanitize the value at session-env load, but neither was merged as of 4.0.4, which is why this page says workaround rather than fixed.
 
-Evidence for the ordering half of this page is thinner than for the colon half. The colon bug is confirmed in source by maintainer triage and reproduced on two machines. The NVIDIA-first ordering result is one careful report on one Pascal laptop.
+Evidence for the ordering half of this page is thinner than for the colon half. The colon bug is confirmed against Aquamarine source in the triage comment on issue #8776 and reproduced on two machines. The NVIDIA-first ordering result is one careful report on one Pascal laptop, and its working line used the by-path form with colons, which did not loop that machine on Aquamarine 0.14.0. A later comment on issue #10350 from RajdeepVerma reports the same string fatal on Aquamarine 0.15.0, resolves it with `readlink -f` at session-environment time instead, and adds that with NVIDIA as primary his iGPU-driven internal panel needed `AQ_MGPU_NO_EXPLICIT=1` or its atomic commit failed with `Invalid argument` (issue #12289). One machine each, so treat both as leads, not rules.
 
 ## Related
 

@@ -125,7 +125,7 @@ credits:
     for: "Measured stale blocks on a LUKS install and wrote the TRIM enablement PR"
 faq:
   - q: "Is TRIM enabled on Omarchy?"
-    a: "Not by default. A stock LUKS install does not pass allow-discards through dm-crypt and does not enable fstrim.timer. There is no fstrim reference in the v4.0.4 tree outside the factory reset script. PR #4840 proposed both and was closed unmerged."
+    a: "Not by default. A stock LUKS install does not pass allow-discards through dm-crypt and does not enable fstrim.timer. There is no fstrim reference in the v4.0.4 tree outside the factory reset scripts. The maintainer declined it as a default on #2229 and PR #4840, which proposed both, was closed unmerged."
   - q: "What filesystem does the Omarchy installer use?"
     a: "btrfs on top of LUKS, with snapper snapshots of the root subvolume only. The mkinitcpio hook line in v4.0.4 is base udev plymouth keyboard autodetect microcode modconf kms keymap consolefont block encrypt filesystems fsck btrfs-overlayfs."
   - q: "Why did my disk fill up with snapshots?"
@@ -161,9 +161,9 @@ From the v4.0.4 tree:
 - **Swap in RAM.** `default/systemd/zram-generator.conf.d/90-omarchy.conf` gives zram a size equal to RAM with zstd compression and `swap-priority = 100`, above the `pri=0` disk swapfile that `omarchy-hibernation-setup` creates.
 - **A free space guard on `/`.** `bin/omarchy-update-requires-free-space` refuses to update when the root filesystem has less than 10 GiB available. It measures `/` and nothing else.
 - **Removable drive automount.** `default/hypr/autostart.lua` launches `udiskie --automount --no-notify --no-tray`, added in 4.0.0.
-- **FAT repair tools.** `dosfstools` is a default package since 3.7.0, so `fsck.fat` exists before you need it. PR #5448 added it after the dirty ESP reports in #4192 and #4284.
+- **FAT repair tools.** `dosfstools` is a default package since 3.7.0, so `fsck.fat` exists before you need it. PR #5448 added it after the `/boot` mount reports in #4192 and #4284.
 - **Disk tooling.** `dua-cli` for usage, `omarchy-drive-info` and `omarchy-drive-select` for picking a device, `omarchy-drive-password` for the LUKS passphrase, and `omarchy-disk-speedtest` under Trigger then Speed Test, which uses O_DIRECT against NOCOW scratch files and reads throughput from the kernel block counters.
-- **One quirk script.** `install/hardware/apple/fix-suspend-nvme.sh` matches MacBook8,1, 9,1 and 10,1 and MacBookPro13,1 through 14,3 by DMI product name, then installs `omarchy-nvme-suspend-fix.service` to write `0` into `d3cold_allowed` for the PCI device at `0000:01:00.0`, so the NVMe is not powered off across suspend.
+- **One quirk script.** `install/hardware/apple/fix-suspend-nvme.sh` matches MacBook8,1, 9,1 and 10,1, MacBookPro13,1 to 13,3 and MacBookPro14,1 to 14,3 by DMI product name, then installs `omarchy-nvme-suspend-fix.service` to write `0` into `d3cold_allowed` for the PCI device at `0000:01:00.0`, so the NVMe is not powered off across suspend.
 
 What Omarchy does not do: enable `fstrim.timer`, or pass `allow-discards` to dm-crypt.
 
@@ -178,16 +178,16 @@ What Omarchy does not do: enable `fstrim.timer`, or pass `allow-discards` to dm-
 | [#11101](https://github.com/omacom/omarchy/issues/11101) `limine-install` cannot parse `/dev/mdXpY` | software RAID and Intel RST FakeRAID | open, unconfirmed | not fixed |
 | [#11821](https://github.com/omacom/omarchy/issues/11821) nothing checks ESP free space before the UKI is written | small ESPs | open | not fixed |
 | [#10826](https://github.com/omacom/omarchy/issues/10826) NVMe suspend quirk pins the dGPU instead of the NVMe | MacBookPro13,3 and 14,3 | open | not fixed |
-| [#8271](https://github.com/omacom/omarchy/issues/8271) full disk install wipes T1/T2 firmware along with the ESP | Touch Bar Intel MacBooks | open | not fixed |
+| [#8271](https://github.com/omacom/omarchy/issues/8271) full disk install wipes the T1 firmware that lives on the Apple ESP | 2016 to 2017 Touch Bar MacBook Pros with the T1 chip; a 2019 T2 owner reported no loss | open | not fixed |
 | [#8725](https://github.com/omacom/omarchy/issues/8725) external NTFS drive refuses to mount | any USB drive last used on Windows | workaround | not fixed |
-| [#2229](https://github.com/omacom/omarchy/issues/2229) TRIM blocked by dm-crypt, no periodic trim | every LUKS install | open, PR #4840 closed unmerged | not fixed |
-| [#2747](https://github.com/omacom/omarchy/issues/2747) 4 TiB drive hits the msdos partition table sector limit | ThinkPad T560 with a 4 TB SATA SSD, 3.x installer | open | not fixed |
-| [#4284](https://github.com/omacom/omarchy/issues/4284) systemd-stub reports a corrupt `.cred` from a dirty ESP | Limine plus UKI on 3.3.x | closed | 3.7.0, recovery tools only |
+| [#2229](https://github.com/omacom/omarchy/issues/2229) TRIM blocked by dm-crypt, no periodic trim | every LUKS install | closed, declined as a default, PR #4840 closed unmerged | not fixed |
+| [#2747](https://github.com/omacom/omarchy/issues/2747) 4 TiB drive hits the msdos partition table sector limit | ThinkPad T560 with a 4 TB SATA SSD, 3.x installer | open, not reproduced | not fixed |
+| [#4284](https://github.com/omacom/omarchy/issues/4284) systemd-stub reports a corrupt `.cred`, dirty ESP or TPM lockout | Limine plus UKI on 3.3.x, ThinkPads with the TPM enabled | closed | not fixed, `fsck.fat` ships since 3.7.0 |
 | [#3850](https://github.com/omacom/omarchy/issues/3850) snapshots consume the whole disk | btrfs installs on 3.x | closed | 3.6.0 |
 
-Two notes on that table. #11101 was filed by an AI agent and has no maintainer reply or second reporter, so treat the diagnosis as a lead rather than a confirmed bug. #2747 is from the 3.1.1 archinstall era and has no 4.x confirmation, so it may not reproduce on the current ISO.
+Three notes on that table. #11101 was filed by an AI agent and has no maintainer reply or second reporter, so treat the diagnosis as a lead rather than a confirmed bug. #2747 is from the 3.1.1 archinstall era; the maintainer could not reproduce it, runs 4 TB NVMe installs from the ISO, and suspects the T560 SATA controller, so it may not reproduce on the current ISO. #8271 has a Linux-side recovery path now: one reporter on the thread brought a wiped T1 back with the t1-revive tool linked there, and a free space install that leaves the Apple ESP alone avoids the loss in the first place.
 
-Where 3.x differs from 4.x: the dirty ESP class of failure (#4192, #4284) was largely a 3.x story, and the snapshot bloat in #3850 was addressed in 3.6.0 by dropping `/home` snapshots and btrfs quotas. An install that started on 3.x can still carry an `@home/.snapshots` subvolume that the new policy never cleans.
+Where 3.x differs from 4.x: the `/boot` failures of early 2026 were a 3.3.x story. #4192 turned out to be a kernel upgrade that never finished building its initramfs, and #4284 was closed after the maintainer pointed at an Arch change that forces a TPM lockout, with several reporters fixed by disabling the TPM in firmware. The snapshot bloat in #3850 was addressed in 3.6.0 by dropping `/home` snapshots and btrfs quotas. An install that started on 3.x can still carry an `@home/.snapshots` subvolume that the new policy never cleans.
 
 ## Fixes that work
 
@@ -195,12 +195,12 @@ Work in this order.
 
 1. **Measure both filesystems.** `df -h /` and `df -h /boot`. The update guard only looks at `/`, so a full ESP fails late, after the pacman transaction has committed.
 2. **Clear old snapshots** if `/` is tight. `sudo snapper -c root list`, then `sudo snapper -c root delete <number>`. Rollback is covered in [rollback with snapper and Limine](/upgrade/rollback-with-snapper-and-limine/).
-3. **Repair a dirty ESP.** `sudo umount /boot`, `sudo fsck.fat -a /dev/nvme0n1p1` for your ESP device, then mount it again. This is the fix reporters confirmed on #4284, and `fsck.fat` is already installed.
+3. **Repair a dirty ESP.** `sudo umount /boot`, `sudo fsck.fat -a /dev/nvme0n1p1` for your ESP device, then mount it again. Two reporters on #4284 confirmed the repair alone cleared the error, and `fsck.fat` is already installed. If it comes back on a ThinkPad, the other fix from that thread was disabling the TPM security chip in firmware.
 4. **Give the ESP an explicit fstab entry** if `findmnt /boot` reports `autofs`. A plain `vfat` line makes systemd generate a normal `boot.mount`, and the Limine check then sees `vfat` instead of the automount layer (#12060).
 5. **For the dual-boot ESP failure**, the community workaround on #7263 is to force the filesystem type on the two mount calls in the ISO configurator, adding `-t vfat`, then rerun the automated script. The upstream change is open as omarchy-iso#111 and is not in any release.
-6. **External NTFS drives.** Install `ntfsprogs`, run `sudo ntfsfix --clear-dirty /dev/sdX1`, then mount from Files rather than with sudo, so udisks mounts it under your own user. Turning off Windows Fast Startup prevents it recurring.
+6. **External NTFS drives.** Install `ntfsprogs`, run `sudo ntfsfix --clear-dirty /dev/sdX1`, then mount from Files rather than with sudo, so udisks mounts it under your own user. If `findmnt` shows the drive under `/mnt` with `uid=0`, the Disks app has written it into `/etc/fstab`; delete that line, run `sudo systemctl daemon-reload`, unmount, and replug. That is what closed #8725. Turning off Windows Fast Startup prevents the dirty flag recurring.
 7. **TRIM, if you want it.** Check with `lsblk --discard`: a `DISC-GRAN` of `0B` on the crypt device means discards are blocked. `sudo cryptsetup --allow-discards --persistent refresh root` opens the path and `sudo systemctl enable --now fstrim.timer` runs it weekly. This is your own change, not an Omarchy default, and it does leak which blocks are in use to anyone with physical access to the drive.
-8. **Apple NVMe suspend.** Run `systemctl cat omarchy-nvme-suspend-fix.service` and compare its PCI address with `lspci`. If `01:00.0` is a GPU on your machine, the service is on the wrong device.
+8. **Apple NVMe suspend.** Run `systemctl cat omarchy-nvme-suspend-fix.service` and compare its PCI address with `lspci`. If `01:00.0` is a GPU on your machine, the service is on the wrong device. Do not expect a corrected address to be enough: a MacBookPro14,3 owner on #10826 pointed it at the real NVMe and the machine still did not resume.
 
 If the installer cannot see your drive at all, see [install fails or stalls](/fix/install-fails-or-stalls/). If you are already in emergency mode, see [you are in emergency mode after update](/fix/you-are-in-emergency-mode-after-update/).
 

@@ -8,7 +8,7 @@ status: workaround
 lastVerified: 2026-09-16
 omarchyVersionTested: "4.0.4"
 category: display
-issueCount: 795
+issueCount: 850
 errorStrings:
   - "No compatible driver for your NVIDIA GPU."
   - "error: target not found: nvidia-580xx-dkms"
@@ -132,11 +132,11 @@ sudo pacman -S --needed nvidia-580xx-dkms nvidia-580xx-utils lib32-nvidia-580xx-
 
 The 580xx packages come from the Omarchy repository, not from Arch. They are present in the stable, rc and edge channels at 580.178.04 as of 2026-09-17. If pacman says `error: target not found: nvidia-580xx-dkms`, your mirror list is missing the Omarchy repo or the mirror is unreachable. See [/releases/channels/](/releases/channels/).
 
-Use the DKMS package, not a prebuilt `nvidia-open`. Prebuilt modules only exist for the stock Arch `linux` kernel.
+Use the DKMS package, not a prebuilt `nvidia-open`. A prebuilt package carries modules for one specific Arch kernel and nothing is prebuilt for `linux-omarchy`, which is exactly the gap #12187 fell into.
 
 ### 3. Give DKMS headers for every installed kernel
 
-4.0.4 installs the bespoke `linux-omarchy` kernel and makes it the first Limine boot entry. DKMS needs headers for it or no NVIDIA module gets built for the entry you now boot by default.
+On x86_64 machines that are not T2 Macs, 4.0.4 installs the bespoke `linux-omarchy` kernel and makes it the first Limine boot entry. DKMS needs headers for it or no NVIDIA module gets built for the entry you now boot by default.
 
 ```bash
 pacman -Qq | grep -E '^linux(-omarchy|-lts|-zen|-t2)?$'
@@ -144,7 +144,7 @@ sudo pacman -S --needed linux-omarchy-headers
 dkms status
 ```
 
-`dkms status` should list your nvidia module as `installed` against every kernel version you can boot. If headers were missed on an ISO install, `omarchy-migrate` re-runs the repair migration that adds them.
+`dkms status` should list your nvidia module as `installed` against every kernel version you can boot. 4.0.4 also ships a migration that installs `linux-omarchy-headers` where a fresh ISO install left them out; `omarchy-migrate` applies it if it has not run yet.
 
 ### 4. Check the boot pieces
 
@@ -189,11 +189,11 @@ systemctl --user show-environment | grep -E 'NVD_BACKEND|LIBVA_DRIVER_NAME|__GLX
 
 ## Why it happens
 
-NVIDIA kernel modules and userspace libraries must match exactly. Anything that lets them drift, a DKMS build that fails, headers that were never installed, a new default kernel with no module built for it, produces the same class of failure: Hyprland aborts at EGL init, SDDM bounces you back, or the session freezes seconds after login. That is the mechanism behind #5706 on 3.x and #12187 on 4.0.4, where the NVIDIA modules existed only under the stock kernel's directory while `linux-omarchy` had become the default entry.
+NVIDIA kernel modules and userspace libraries must match exactly. Anything that lets them drift, a DKMS build that fails, headers that were never installed, a new default kernel with no module built for it, produces the same class of failure: Hyprland aborts at EGL init, SDDM bounces you back, or the session freezes seconds after login. That is the mechanism behind #5706, filed in May 2026 before Quattro, and #12187 on 4.0.4, where the NVIDIA modules existed only under the stock kernel's directory while `linux-omarchy` had become the default entry.
 
-The branch split exists because NVIDIA dropped Maxwell, Pascal and Volta in its 590 drivers. Omarchy added the legacy 580xx path in v3.3.0 to keep those cards working. In 3.x the split was decided by matching card names out of `lspci`, which misread Turing-era MX parts as legacy and caused pacman conflicts, as reported in #6216. v4.0.0 replaced that with the device ID test, which also stopped the detector from waking a runtime-suspended dGPU out of D3cold on every config reload.
+The branch split exists because NVIDIA dropped Maxwell, Pascal and Volta in its 590 drivers. Omarchy added the legacy 580xx path in v3.3.0 to keep those cards working. In 3.x the split was decided by matching card names out of `lspci`, which misread Turing-era MX parts as legacy and caused pacman conflicts, as reported in #6216. v4.0.0 replaced that with the device ID test, which also stopped the detector from waking a runtime-suspended dGPU on every config reload.
 
-The environment variables are newer trouble. In 4.0.0 they were never set at all: the helper behind them used `os.execute`, which cannot read an exit status inside Hyprland because the compositor reaps its own children, so every branch took the false path (#7755). PR #6939 rewrote the helper and v4.0.1 shipped it. That fix then turned on `LIBVA_DRIVER_NAME=nvidia` for the first time on hybrid laptops where the iGPU owns the displays, so browsers started decoding on the dGPU and importing frames across PCIe into an iGPU GL context. Reporters on #8215 and #8328 measured corrupted frames, dead decode, higher dGPU power draw and juddery scrolling. `nvidia.lua` is byte-identical from v4.0.0 through v4.0.4, so this is still unfixed on the latest release and the user override is the only remedy.
+The environment variables are newer trouble. In 4.0.0 they were never set at all: the helper behind them used `os.execute`, and Hyprland reaps child processes itself before Lua can collect an exit status, so every branch took the false path (#7755). PR #6939 rewrote the helper and v4.0.1 shipped it. That fix then turned on `LIBVA_DRIVER_NAME=nvidia` for the first time on hybrid laptops where the iGPU owns the displays, so browsers started decoding on the dGPU and importing frames across PCIe into an iGPU GL context. Reporters on #8215 and #8328 measured corrupted frames, dead decode, higher dGPU power draw and juddery scrolling. `nvidia.lua` is byte-identical from v4.0.0 through v4.0.4 and unchanged on the `quattro` branch as of 2026-09-17. Two PRs that gate the variables on whether NVIDIA drives a display, #7851 and #9483, are still open, and a third, #11431, was closed without merging. Until one lands, the user override is the only remedy.
 
 ## If that did not work
 

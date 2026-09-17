@@ -13,7 +13,8 @@ const countFor = (key: string) => ic.find((c: any) => c.key === key)?.counts?.is
 const vendors: Record<string, any[]> = {};
 for (const m of models) (vendors[m.data.vendor ?? 'Other'] ||= []).push(m);
 const vkeys = Object.keys(vendors).sort();
-const subs = ['wifi', 'bluetooth', 'audio', 'webcam', 'fingerprint', 'gpu', 'suspend', 'display'];
+// The five subsystems that most often decide whether a machine is usable. Full grid is on each model page.
+const subs = ['gpu', 'suspend', 'audio', 'wifi', 'fingerprint'];
 const st = issueStats();
 const faq = [
   { q: 'Does Omarchy have an official hardware compatibility list?', a: 'No. omarchy.org has no hardware page; the manual\'s "Omarchy on…" chapter covers a few platforms and points to Discord. Omarchy does ship per-device quirk scripts for specific laptops, which the model pages here list.' },

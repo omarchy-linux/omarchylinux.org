@@ -1,7 +1,7 @@
 ---
 title: "Audio on Omarchy Linux"
 description: "How audio works on Omarchy 4.x: PipeWire defaults, the SOF firmware and speaker tuning install hooks, the bugs that still bite, and the fix order."
-answer: "Audio on Omarchy 4.x is plain PipeWire, WirePlumber and pipewire-pulse, and it works on most machines. Omarchy adds three things: sof-firmware on Intel DSP laptops, a soft-mixer rule on ASUS ROG, and a measured speaker tuning on the 2026 XPS 14/16. When sound dies, run omarchy-restart-audio first, then check the ALSA hardware mixer with amixer, then test the stock Arch kernel."
+answer: "Audio on Omarchy 4.x is plain PipeWire, WirePlumber and pipewire-pulse, with nothing Omarchy-specific in the path for ordinary hardware. Omarchy adds three things: sof-firmware on Intel DSP laptops, a soft-mixer rule on ASUS ROG, and a measured speaker tuning on the 2026 XPS 14/16. When sound dies, run omarchy-restart-audio first, then check the ALSA hardware mixer with amixer, then test the stock Arch kernel."
 appliesTo:
   from: "4.0.0"
 status: info
@@ -77,6 +77,11 @@ sources:
     kind: issue
     author: "matheorism"
     date: "2025-09-19"
+  - url: "https://github.com/omacom/omarchy/pull/5336"
+    title: "PR #5336: Enable Bluetooth A2DP auto-connect in WirePlumber"
+    kind: pr
+    author: "dandresrp"
+    date: "2026-05-07"
   - url: "https://github.com/omacom/omarchy/blob/v4.0.4/docs/AUDIO-TUNING.md"
     title: "Omarchy docs: Speaker tunings"
     kind: docs
@@ -94,7 +99,7 @@ credits:
     for: "Documented the ALC285 hardware mixer and soft-mixer interaction in detail"
   - name: "Pegorim"
     url: "https://github.com/Pegorim"
-    for: "Bisected the Zenbook S14 sof_sdw failure to two upstream SOF kernel patches"
+    for: "Built a kernel with the two upstream SOF patches that bring up Zenbook S14 audio"
   - name: "karlentwistle"
     url: "https://github.com/karlentwistle"
     for: "Found that MacBook9,1 speakers also need the EFI chime un-muted"
@@ -106,24 +111,24 @@ faq:
   - q: "What is the speaker tuning and can I turn it off?"
     a: "A PipeWire filter chain placed in front of the internal speaker sink on laptops Omarchy ships a measured profile for. Run omarchy audio tuning status to see it, and omarchy audio tuning off to remove it."
   - q: "My sound broke right after the 4.0.4 update. What changed?"
-    a: "4.0.4 made the bespoke linux-omarchy kernel the default boot entry. Several audio regressions since then vanish when you pick the stock Arch linux kernel in the Limine menu. Test that before anything else."
+    a: "4.0.4 made the bespoke linux-omarchy kernel the default boot entry. Two reports filed the next day, HDMI underruns on a 2013 MacBook Pro and lost USB speaker volume on an XPS 14, both vanish when the reporter picks the stock Arch linux kernel in the Limine menu. Test that before anything else."
 related: [no-sound-from-laptop-speakers, bluetooth-stops-after-resume, quickshell-crashes-or-bar-missing]
 draft: false
 ---
 
-Audio on Omarchy is stock Arch audio. PipeWire, WirePlumber and pipewire-pulse do the work, and Omarchy adds a thin layer of hardware hooks and CLI helpers on top. Most machines get working speakers, headphones and microphone straight off the ISO. The failures cluster in a few predictable places, and the list below comes from the 267 audio-tagged issues in the tracker plus the v4.0.4 source tree.
+Audio on Omarchy is stock Arch audio. PipeWire, WirePlumber and pipewire-pulse do the work, and Omarchy adds a thin layer of hardware hooks and CLI helpers on top. For ordinary hardware there is nothing Omarchy-specific in the path. The failures cluster in a few predictable places, and the list below comes from the 267 audio-tagged issues in the tracker plus the v4.0.4 source tree.
 
 ## Status on 4.0.4
 
-Works out of the box on most hardware: analog speakers and headphone jack on ordinary HDA codecs, USB DACs and headsets, HDMI and DisplayPort audio, Bluetooth A2DP playback, and internal microphones.
+Omarchy ships no audio configuration of its own for ordinary HDA codecs, USB DACs and headsets, HDMI and DisplayPort output, or Bluetooth A2DP. On that hardware you get stock Arch PipeWire behaviour plus the WirePlumber A2DP auto-connect rule that arrived in 3.8.0.
 
-Reliably rough: Intel SoundWire laptops that need a topology the kernel does not yet ship, laptops whose smart amplifier is driven by a separate chip such as TAS2781 or CS35L56, Bluetooth HFP microphones, and Apple hardware older than the T2 era.
+Reliably rough: Intel SoundWire laptops whose machine driver the kernel does not yet match, laptops whose smart amplifier is driven by a separate chip such as TAS2781 or CS35L56, Bluetooth HFP microphones, and Apple hardware older than the T2 era.
 
-New on 4.0.4 and worth knowing: the release made the bespoke `linux-omarchy` kernel the default boot entry for everyone. Three audio regressions filed the day it shipped all disappear when the reporter boots the stock Arch `linux` kernel from the Limine menu instead. If your sound changed on 15 or 16 September 2026, that is the first thing to test.
+New on 4.0.4 and worth knowing: the release made the bespoke `linux-omarchy` kernel the default boot entry for everyone. Two audio regressions filed the day after it shipped both disappear when the reporter boots the stock Arch `linux` kernel from the Limine menu instead. If your sound changed on 15 or 16 September 2026, that is the first thing to test.
 
 ## What Omarchy does automatically
 
-These run from `install/hardware/` at install time and again on update. Everything here is confirmed in the v4.0.4 tree.
+The root-side hooks live in `install/hardware/` and run through `omarchy-apply-hardware` when the ISO is finalized; the per-user ones live in `install/user/hardware/` and run from `omarchy-finalize-user`. A regular `omarchy-update` does not rerun them. A fix that lands after your install reaches you only when it also ships as a migration, which is how the wider `sof-firmware` check got to existing machines in 3.8.3.
 
 - **Intel SOF firmware.** `install/hardware/intel/sof-firmware.sh` calls `omarchy-hw-intel-sof`, which just looks for an Intel audio controller in `lspci`. If one is there, `sof-firmware` is installed. The script's own comment is blunt about why: without that firmware the `sof-audio-pci-intel-*` drivers give you a Dummy Output and nothing else. This hook arrived in 3.8.0 for Panther Lake and was widened in 3.8.3 to Arrow Lake, Meteor Lake and Wildcat Lake.
 - **ASUS ROG soft mixer.** `install/user/hardware/asus/fix-audio-mixer.sh` copies `alsa-soft-mixer.conf` into your WirePlumber config, wipes the saved default routes, and sets `Master` to 80 percent unmuted on an ALC285 card. A companion script drops `Internal Mic Boost` to zero and sets capture to 70 percent, because the default boost clips.
@@ -144,7 +149,7 @@ You also get the Quickshell audio panel on `SUPER + CTRL + A`, volume keys route
 | [#6952](https://github.com/omacom/omarchy/issues/6952) shell segfaults when PipeWire nodes vanish | Any, triggered by USB DACs, AirPods on AAC, WirePlumber restarts | open | not yet |
 | [#4821](https://github.com/omacom/omarchy/issues/4821), [#4801](https://github.com/omacom/omarchy/issues/4801) soft mixer leaves ALC285 hardware controls muted | ASUS ROG Strix and Zephyrus G14, G16, G17, Flow | open, workaround known | not yet |
 | [#5557](https://github.com/omacom/omarchy/issues/5557) `sof_sdw` fails to instantiate the card | ASUS Zenbook S14 UX5406AA | open, needs upstream kernel patches | not yet |
-| [#12086](https://github.com/omacom/omarchy/issues/12086) TAS2781 amplifier never binds to the HDA codec | Lenovo Legion Pro 7 16IRX8H | open | not yet |
+| [#12086](https://github.com/omacom/omarchy/issues/12086) TAS2781 amplifier does not bind to the HDA codec at boot | Lenovo Legion Pro 7 16IRX8H | open | not yet |
 | [#12008](https://github.com/omacom/omarchy/issues/12008) CS4208 speakers silent, needs driver plus EFI chime un-mute | MacBook9,1 and 10,1 | open | not yet |
 | [#12131](https://github.com/omacom/omarchy/issues/12131) constant HDMI audio underruns on the Omarchy kernel | MacBookPro11,2 Haswell | open | not yet |
 | [#12188](https://github.com/omacom/omarchy/issues/12188) USB speaker loses volume headroom on the Omarchy kernel | Dell XPS 14 DA14260 | open | not yet |
@@ -152,11 +157,13 @@ You also get the Quickshell audio panel on `SUPER + CTRL + A`, volume keys route
 | [#12191](https://github.com/omacom/omarchy/issues/12191) `fronted-sink` ignores community tuning sinks | Desktops using a third-party calibrator plugin | open | not yet |
 | [#12113](https://github.com/omacom/omarchy/issues/12113) Bluetooth HFP microphone records silence | OnePlus Bullets Wireless Z2, JBL Tune 770NC | open | not yet |
 | [#12047](https://github.com/omacom/omarchy/issues/12047) USB microphone detected but capture clock stays at zero | Blue Yeti 046d:0ab7 | open, workaround known | not yet |
-| [#1818](https://github.com/omacom/omarchy/issues/1818) Bluetooth headsets connect but never appear as sinks | Sony WH-1000XM5, AirPods Pro 2 and others | closed May 2026 | during the 3.x line |
+| [#1818](https://github.com/omacom/omarchy/issues/1818) Bluetooth headsets connect but never appear as sinks | Sony XM5, AirPods Pro 2 and others | closed May 2026 | 3.8.0 |
 
 Two patterns dominate. The first is the ASUS ROG one. Omarchy's own soft-mixer rule stops PipeWire from touching ALSA hardware controls, and on the ALC285 the kernel's jack detection keeps resetting `Headphone Playback Switch` to off. Nothing then unmutes it. The rule exists to avoid other Realtek volume quirks, so it helps some machines and silences others.
 
 The second is the smart amplifier problem. CS35L56 on SoundWire and TAS2781 over I2C both need the right machine description, firmware and topology before the speakers make any noise at all. On the Zenbook S14 the log shows `sof_sdw sof_sdw: ASoC: failed to instantiate card -22` and `aplay -l` reports no soundcards. Pegorim built a kernel with two upstream SOF patches and got speakers, jack, microphone and HDMI all working, which pins the cause outside Omarchy.
+
+The Bluetooth sink problem in #1818 closed when [#5336](https://github.com/omacom/omarchy/pull/5336) added a WirePlumber rule that auto-connects the A2DP sink and source profiles. It merged on 7 May 2026 and shipped two days later in 3.8.0, which is why it is the only row above with a version.
 
 The Quickshell crash in #6952 is not a sound failure but it looks like one, because the bar disappears when a USB DAC or a Bluetooth headset re-registers. Several reporters traced it to the audio panel holding live PipeWire node objects that go null underneath it.
 
@@ -165,14 +172,14 @@ The Quickshell crash in #6952 is not a sound failure but it looks like one, beca
 Try these in order. Stop when sound comes back.
 
 1. `omarchy-restart-audio`. It restarts WirePlumber, PipeWire and pipewire-pulse, and if `wpctl` is still unresponsive it looks for a USB audio device stuck in SETUP state and resets it with `usbreset`. This clears most "it worked an hour ago" cases.
-2. Check the real hardware mixer, not the PipeWire one. `pacman -S alsa-utils` then `amixer -c <n> contents`. PipeWire can report 30 percent volume and no mute while `Master Playback Switch` is off underneath.
-3. On an ASUS ROG laptop, remove the soft-mixer file: `rm ~/.config/wireplumber/wireplumber.conf.d/alsa-soft-mixer.conf` and restart audio. Reporters on the Strix G16, Zephyrus G14, G16, G17 and Flow X13 all confirmed this, and it is the single most reproduced audio fix in the tracker.
+2. Check the real hardware mixer, not the PipeWire one. `amixer -c <n> contents`; alsa-utils is in the base package set. PipeWire can report 30 percent volume and no mute while `Master Playback Switch` is off underneath.
+3. On an ASUS ROG laptop, remove the soft-mixer file: `rm ~/.config/wireplumber/wireplumber.conf.d/alsa-soft-mixer.conf` and restart audio. Reporters on the Strix G16, Zephyrus G14, G16, M16 and Flow X13 confirmed it in #4821, and the Strix G17 reporter in #4801 got the same result by moving the whole WirePlumber config aside.
 4. If you only have a Dummy Output, check `journalctl -b -k | grep -iE 'sof|snd'`. A missing `sof-firmware` package is a one-line fix. A `failed to instantiate card -22` is not, and means waiting on a kernel.
 5. Since 4.0.4, boot the stock Arch `linux` kernel once from the Limine menu and test again. Distortion, underruns and lost volume headroom on the `linux-omarchy` build have all been reported this way.
 6. If a speaker tuning is active and the sound is wrong rather than absent, `omarchy audio tuning status` shows what matched and `omarchy audio tuning off` reverts you to raw speakers.
 7. For a virtual sink, remember that `omarchy-audio-output-sink` resolves through it. With EasyEffects that resolution currently fails, so set the hardware sink volume directly with `pactl set-sink-volume`.
 
-On 3.x the picture differs in two places: the bar was Waybar and the volume popup, not the Quickshell panel, and speaker tunings did not exist before 4.0.0. The SOF firmware hook and the ASUS mixer scripts both predate 4.0 and behave the same.
+On 3.x the picture differs in two places: the bar was Waybar and there was no audio panel, since `SUPER + CTRL + A` arrived with 4.0.0, and speaker tunings did not exist before 4.0.0. The SOF firmware hook and the ASUS mixer scripts both predate 4.0 and behave the same.
 
 ## Report it
 

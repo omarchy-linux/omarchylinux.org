@@ -32,7 +32,7 @@ sources:
   - url: "https://github.com/omacom/omarchy/issues/7360"
     title: "Issue #7360: mise tool wrappers can exec themselves forever: `mise x <pkg> -- <bin>` resolves <bin> back to the wrapper"
     kind: issue
-    author: "pedrosekine"
+    author: "guruthechosen"
     date: "2026-08-18"
   - url: "https://github.com/omacom/omarchy/issues/7234"
     title: "Issue #7234: mise wrappers still exec-loop when mise x falls back to a PATH lookup (residual case of #6349)"
@@ -44,6 +44,11 @@ sources:
     kind: issue
     author: "LukeSkypewalker"
     date: "2026-08-29"
+  - url: "https://github.com/omacom/omarchy/pull/9175"
+    title: "PR #9175: Stop mise wrappers from re-executing themselves (breaks Claude Code detection in T3 Code)"
+    kind: pr
+    author: "lllangWV"
+    date: "2026-08-30"
   - url: "https://github.com/omacom/omarchy/issues/11971"
     title: "Issue #11971: mise wrappers made before --quiet pollute stdout, and the regeneration migration can no longer parse them"
     kind: issue
@@ -70,7 +75,7 @@ sources:
     author: "alvarosaavedra"
     date: "2026-08-14"
   - url: "https://github.com/omacom/omarchy/issues/6887"
-    title: "Issue #6887: Any mise-wrapped tool hits broken aqua attestations: gh wrapper fails on Quattro"
+    title: "Issue #6887: Any mise-wrapped tool hits broken aqua attestations: gh wrapper fails on Quattro (affects omarchy-mise-install defaults)"
     kind: issue
     author: "alvarosaavedra"
     date: "2026-08-14"
@@ -90,7 +95,7 @@ credits:
     for: "The PATH rule that decides whether the loop fires, worked out on issue #7360"
   - name: "guruthechosen"
     url: "https://github.com/guruthechosen"
-    for: "Showing that npm-backed agents still need the mise x environment for node"
+    for: "Filing issue #7360 with the depth-counted proof of the loop, and showing that npm-backed agents still need the mise x environment for node"
   - name: "LukeSkypewalker"
     url: "https://github.com/LukeSkypewalker"
     for: "Reproducing the hang with a throwaway wrapper name"
@@ -142,13 +147,13 @@ Work through these in order. Everything below is for Omarchy 4.x; 3.x is at the 
 
    `~/.local/bin` and `~/.local/share/mise/shims` are appended to PATH by `default/bash/env-bootstrap`, which the login profile, `/etc/skel/.bashrc` and the uwsm session all source. If you never get a login shell, that bootstrap never runs.
 
-4. If the command is found but hangs forever, check PATH order. This is the exec loop, and it is still present on 4.0.4:
+4. If the command is found but hangs forever, check PATH order. This is the exec loop. The 4.0.4 stub template still has it, and the fix in PR #9175 is open and unmerged:
 
    ```bash
    printf '%s\n' "$PATH" | tr : '\n' | grep -n 'local/bin\|mise/shims'
    ```
 
-   If the `.local/bin` line number is lower than the `mise/shims` line, the stub shadows the real binary and execs itself. Fix the thing that prepends `~/.local/bin`. The common offender is the `uv` installer's env snippet in `~/.bashrc`, which prepends `$HOME/.local/share/../bin`, the same directory under a different spelling. Remove that line, or move it above Omarchy's own bootstrap so the shims stay in front.
+   If the `.local/bin` line number is lower than the `mise/shims` line, the stub shadows the real binary and execs itself. Fix the thing that prepends `~/.local/bin`. The common offender is the `uv` installer's env snippet in `~/.bashrc`, which prepends `$HOME/.local/share/../bin`. That path resolves to `~/.local/bin`, but because the string differs, the snippet's own "already on PATH" check does not catch it. Remove that line, or move it above Omarchy's own bootstrap so the shims stay in front.
 
    To get work done right now without touching your rc files, bypass the stub:
 
@@ -206,9 +211,9 @@ mise use -g --quiet "claude" || exit 1
 exec mise x "claude" -- "claude" "$@"
 ```
 
-The last line hands `mise x` a bare command name. `mise x` resolves that name through PATH, and how it builds that PATH is the whole story. smartpbx worked out the rule on issue #7360 and guruthechosen confirmed it: when the shims directory is on PATH, mise inserts the install directories immediately before the first shims entry and leaves everything ahead of it alone. So if `~/.local/bin` sits ahead of the shims, the stub finds itself, execs itself, and never returns. `exec` keeps it in one PID, so `ps` shows a single command burning a core rather than an obvious fork bomb.
+The last line hands `mise x` a bare command name. `mise x` resolves that name through PATH, and how it builds that PATH is the whole story. smartpbx worked out the rule on issue #7360 and guruthechosen confirmed it. With no shims directory on PATH, mise puts the tool's install directory at the very front, and the stub can never win. With the shims directory present, mise slots the install directory in just ahead of it and does not touch anything earlier. So if `~/.local/bin` sits ahead of the shims, the stub finds itself, execs itself, and never returns. `exec` keeps it in one PID, so `ps` shows a single command burning a core rather than an obvious fork bomb.
 
-Stock Omarchy is safe by construction because `env-bootstrap` appends both directories rather than prepending them. It takes an outside prepend to invert the order, which is why this reproduces for some people and not others on identical releases.
+A stock install does not trip this: `env-bootstrap` appends the shims directory first and `~/.local/bin` after it, so the order mise needs is already there. Something else has to push `~/.local/bin` to the front, which is why the loop shows up for some people and not others on identical releases.
 
 Two other paths lead to the same symptom. `omarchy-mise-install` runs `rm -f` on the target before writing, so a hand-written wrapper you put at one of those names is deleted without a prompt when the stubs are refreshed. And a stale mise registry can make the install itself fail, which leaves you with a stub and no binary behind it; that is what the OpenCode and `gh` reports on 4.0.0 turned out to be, cleared by updating mise rather than by any Omarchy change.
 
@@ -216,17 +221,16 @@ Two other paths lead to the same symptom. `omarchy-mise-install` runs `rm -f` on
 
 - npm-backed agents need the mise environment, not just the path. Running `"$(mise which grok)"` directly can fail with `exec: node: not found`, because the npm shim's fallback is a bare `exec node`. Always keep `mise x` in the chain.
 - If `omarchy default agent` prints `Could not install Claude Code with mise`, run `mise use -g claude` by hand and read the full error. A stale registry or a failed attestation shows up there and nowhere else.
-- Update mise itself before blaming Omarchy: `sudo pacman -Syu mise-bin`. Omarchy 4 switched to the `mise-bin` package from its own repo.
+- Update mise itself before blaming Omarchy: `sudo pacman -Syu mise-bin`. Omarchy 4.0.1 swapped Arch's `mise` for the `mise-bin` package from its own repo (migration 1786952219).
 - If you removed the preinstalls, `~/.local/state/omarchy/preinstalls-removed` exists and several migrations deliberately skip writing stubs for you. Install what you want by hand with `omarchy-mise-install`.
 - A wrapper of your own that was overwritten is probably gone for good. Omarchy configures snapper for the root subvolume only, so pre-update snapshots do not cover `/home`.
 
-Evidence on the exec loop is strong and current: three separate open reports on 4.0.0 and 4.0.4, with matching reproductions. Evidence on how often the stub simply goes missing is thinner, and mostly reaches the tracker as a side effect of the other bugs.
+Evidence on the exec loop is strong and current: three separate open reports filed on 4.0.0 and 4.0.1, a confirmation on 4.0.3, matching reproductions in each, and an unmerged PR (#9175) that changes the stub template. Evidence on how often the stub simply goes missing is thinner, and mostly reaches the tracker as a side effect of the other bugs.
 
 ## Related
 
 - [mise command not found or shims](/fix/mise-command-not-found-or-shims/)
 - [Codex invalid value for --ask-for-approval](/fix/codex-invalid-value-ask-for-approval/)
 - [omarchy update fails or hangs](/fix/omarchy-update-fails-or-hangs/)
-- [omarchy-mise-install](/reference/commands/omarchy-mise-install/) and [omarchy-default-agent](/reference/commands/omarchy-default-agent/)
-- [Upgrading 3 to 4](/upgrade/3-to-4-quattro/) and [what is still broken](/releases/still-broken/)
+- [Upgrading 3 to 4](/upgrade/3-to-4-quattro/)
 - The official manual chapter: [omarchy.org/manual/ai/](https://omarchy.org/manual/ai/)

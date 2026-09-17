@@ -1,6 +1,6 @@
 ---
 title: "Printers and printing on Omarchy"
-description: "CUPS ships enabled on Omarchy 4.0.4, but automatic printer discovery was removed in 4.0.2 and no HP or scanner drivers ship at all. What works and what to install."
+description: "CUPS ships enabled on Omarchy 4.0.4, but automatic printer discovery was removed in 4.0.2 and no HP or scanner drivers ship. What works and what to install."
 answer: "CUPS and Avahi are installed and enabled on Omarchy 4.0.4, so printing works once you add the queue yourself in Print Settings. Automatic network discovery was removed in 4.0.2 with cups-browsed. No hplip, gutenprint or SANE packages ship, so HP inkjets and all scanners need manual package installs. Driverless IPP Everywhere queues work best on modern printers."
 appliesTo:
   from: "4.0.0"
@@ -48,6 +48,16 @@ sources:
     kind: pr
     author: "Chessing234"
     date: "2026-08-31"
+  - url: "https://github.com/omacom/omarchy/pull/9650"
+    title: "PR #9650: Force English lpstat messages in cups-browsed migration"
+    kind: pr
+    author: "Chessing234"
+    date: "2026-09-01"
+  - url: "https://github.com/omacom/omarchy/pull/12101"
+    title: "PR #12101: Cups-browsed migration: locale-safe empty queue and CUPS-down"
+    kind: pr
+    author: "Chessing234"
+    date: "2026-09-16"
   - url: "https://github.com/omacom/omarchy/issues/11186"
     title: "Issue #11186: Printing from Firefox to a local USB HP printer produces PJL garbage + blank pages"
     kind: issue
@@ -129,7 +139,7 @@ If your printer speaks IPP Everywhere or AirPrint, which covers most machines so
 Unlike GPUs or fingerprint readers, printing has no `omarchy-hw-*` detection script and no `install/hardware/` quirk file. Nothing probes your printer at install time. What Omarchy does is limited and worth knowing precisely.
 
 - **Installs and enables the stack.** CUPS, cups-filters, the Polkit helper, Avahi and nss-mdns, plus `system-config-printer` as the GUI.
-- **Uses cups-pk-helper instead of group membership.** Migration `1787815267` adds `cups-pk-helper` because the desktop user's `wheel` group is no longer `@SYSTEM` in CUPS. You administer printers through Polkit, not by being in `lp` or `sys`.
+- **Uses cups-pk-helper instead of group membership.** Migration `1787815267` adds `cups-pk-helper` because CUPS on Omarchy no longer treats the `wheel` group as `@SYSTEM`. You administer printers through Polkit, not by being in `lp` or `sys`.
 - **Dropped cups-pdf.** The same migration removes `cups-pdf`, on the reasoning that its backend runs a job-controlled post-processing command as root and that applications have their own print-to-file. Use your app's own Print to File or Save as PDF instead of a `PDF` queue.
 - **Removed cups-browsed.** Migration `1788009111`, shipped by PR #8951 in v4.0.2, disables the service, deletes idle `implicitclass://` queues that discovery created, leaves queues that still have jobs, and drops the package. PR #8951 says manually added IPP and USB printers are left untouched.
 - **Protects one config file.** `install/post-install/pacman.sh` reinstalls Omarchy's `cups-files.conf` override and deletes the `.pacnew` that pacman would otherwise leave. See [/fix/pacnew-and-pacsave-files-after-update/](/fix/pacnew-and-pacsave-files-after-update/) for the general pattern.
@@ -150,7 +160,7 @@ The two migrations above are the source of most 4.x printing reports, and the re
 
 Two of these deserve detail.
 
-**The migration failures (#9377, #9640).** `omarchy-update` runs under `set -e` and migrations run early, so the abort skips the AUR update, mise update and orphan cleanup that come after. joselberg's report and the code both show the script only accepts `lpstat: No destinations added.` as an empty queue list. A stopped scheduler says `Scheduler is not running.` instead, and a Portuguese system says it in Portuguese. rafaelclima traced that to gettext's `LANGUAGE` overriding `LC_ALL`, and confirmed `LC_MESSAGES=C` does force English. PR #9406 proposes the one-line fix for the stopped-scheduler half but was closed unmerged as of today. Neither half is fixed in 4.0.4.
+**The migration failures (#9377, #9640).** `omarchy-update` runs under `set -e` and migrations run early, so the abort skips the AUR update, mise update and orphan cleanup that come after. joselberg's report and the code both show the script only accepts `lpstat: No destinations added.` as an empty queue list. A stopped scheduler says `Scheduler is not running.` instead, and a Portuguese system says it in Portuguese. rafaelclima traced that to gettext's `LANGUAGE` overriding `LC_ALL`, and confirmed `LC_MESSAGES=C` does force English. PR #9406 proposed the one-line fix for the stopped-scheduler half and PR #9650 the locale half. Both were closed unmerged on 2026-09-16 and folded into PR #12101, which covers both cases and is still open. Neither half is fixed in 4.0.4.
 
 **The blank-page regression (#11186).** This one looks like the cups-browsed removal and is not. docPoacher first blamed the migration, then disproved it with a single-variable test: downgrading `libcupsfilters` from 2.2.1-2 back to 2.1.1-4 restored correct two-page output while cups-browsed stayed installed. The report is that `pacman -Syu` pulled libcupsfilters across a major version while `cups-filters` stayed at 2.0.1-2. Command line `lp` jobs printed fine in the broken state, which is why it reads as a browser bug.
 
@@ -161,7 +171,7 @@ Work in this order.
 1. **Check the daemon.** `systemctl status cups.service`. If it is disabled, enable it before you touch anything else, and before you run `omarchy update`.
 2. **Add the queue by hand.** Open Print Settings from the launcher and choose Add. The [manual FAQ](https://omarchy.org/manual/faq/) walks through it: USB and most network printers are found by the wizard, and if yours is not, pick Network Printer then Internet Printing Protocol and enter the address, typically the printer's IP with a queue of `ipp/print`. Modern printers want the driverless IPP Everywhere profile.
 3. **If the update stops on the printer migration**, give it a running scheduler, following joselberg's and arkmpm's workaround: `sudo systemctl start cups.socket cups.service`, rerun `omarchy update`, then stop the units again if you want them off. See [/fix/migration-failed-mid-update/](/fix/migration-failed-mid-update/).
-4. **If GUI dialogs hang but `lp` prints**, reinstall the CUPS libraries so their versions match. EERomeo's fix in #3790 was `sudo pacman -S cups cups-filters libcups --overwrite='*'` followed by `sudo systemctl restart cups`. daviewales noted this downgraded two packages on his machine, which is the tell that the freeze is a version mismatch.
+4. **If GUI dialogs hang but `lp` prints**, reinstall the CUPS libraries so their versions match. EERomeo's fix in #3790 was `sudo pacman -S cups cups-filters libcups --overwrite='*'` followed by `sudo systemctl restart cups`. daviewales noted this downgraded two packages on their machine, which is the tell that the freeze is a version mismatch.
 5. **If pages come out blank or full of PJL text**, check whether `libcupsfilters` is 2.2.x while `cups-filters` is still 2.0.x. docPoacher's workaround is a downgrade from the pacman cache plus an `IgnorePkg` pin.
 6. **For HP hardware**, install the vendor stack. HIMANSHU11827's verified recipe on a Smart Tank 529 installs `hplip`, `gutenprint`, `foomatic-db-gutenprint-ppds` and friends, disables `ipp-usb` so it stops fighting the kernel `usblp` driver, then creates the queue with `lpadmin` against the model's hpcups PPD. curtisspendlove's older guide in discussion #250 covers the `hp-setup -i` route.
 7. **If `.local` names stop resolving after an update**, that is #9311, not your printer. Reorder `files` ahead of `mdns_minimal` in the `hosts:` line of `/etc/nsswitch.conf`.
@@ -170,7 +180,7 @@ Two gaps to set expectations. There is no built-in print dialog for images: jonn
 
 ## Report it
 
-Printing reports are worth filing because the stack has no maintainer attention in the hardware scripts at all.
+Printing reports are worth filing because nothing in the hardware scripts covers printers, so issues are the only place the problems get recorded.
 
 Run `omarchy debug` to collect `inxi`, `dmesg`, the boot journal and your full package list into `/tmp/omarchy-debug.log`. Add `--no-sudo` to skip `dmesg` if you would rather not share it. See [/reference/commands/omarchy-debug/](/reference/commands/omarchy-debug/).
 

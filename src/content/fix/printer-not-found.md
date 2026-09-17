@@ -3,7 +3,7 @@ title: "Printer not found on Omarchy"
 description: "Your printer no longer appears by itself on Omarchy 4.0.2 and later. Add it by hand in Print Settings, or with lpadmin, and pick the right CUPS driver."
 answer: "Omarchy 4.0.2 removed cups-browsed, so nothing is discovered automatically any more. Open Print Settings from the app launcher, choose Add, and wait for the scan. If the printer is still missing, add it manually as Network Printer, Internet Printing Protocol (ipp), using its IP and the queue ipp/print. Make sure cups.service is running first."
 appliesTo:
-  from: "4.0.0"
+  from: "4.0.2"
 status: workaround
 lastVerified: 2026-09-16
 omarchyVersionTested: "4.0.4"
@@ -96,12 +96,12 @@ faq:
   - q: "Do I still need avahi?"
     a: "Yes, if you want to reach a printer by its .local name or let the Add dialog find it over mDNS. avahi-daemon.service is enabled at install time, and the shipped /etc/nsswitch.conf keeps mdns_minimal in the hosts line."
   - q: "Can I print to a PDF without a printer?"
-    a: "Yes. The manual FAQ says printing to a PDF file works with no printer configured, through the print dialog's own file output. Note that 4.0.2 also dropped the cups-pdf package, so there is no longer a PDF queue listed alongside real printers."
+    a: "The manual FAQ says printing to a PDF file works with no printer configured. Note that 4.0.2 also dropped the cups-pdf package, so there is no longer a PDF queue in CUPS. Look for the Print to File or Save as PDF option inside the app's own print dialog instead."
 related: [migration-failed-mid-update, omarchy-update-fails-or-hangs, pacnew-and-pacsave-files-after-update, tailscale-not-connecting]
 draft: false
 ---
 
-Since Omarchy 4.0.2 your printer does not show up on its own. That is deliberate, not a bug. Automatic discovery was pulled out and the manual now tells you to add each printer yourself. Everything below was checked against the 4.0.2, 4.0.3 and 4.0.4 source trees and the 3.8.4 tree for comparison.
+Since Omarchy 4.0.2 your printer does not show up on its own. That is deliberate, not a bug. Automatic discovery was pulled out and the manual now tells you to add each printer yourself.
 
 ## The fix
 
@@ -116,14 +116,14 @@ Since Omarchy 4.0.2 your printer does not show up on its own. That is deliberate
 
    ```bash
    lsusb
-   lpinfo -v
+   sudo lpinfo -v
    ```
 
-   `lpinfo -v` lists every backend and device CUPS can reach. A USB printer shows as a `usb://` or `hp:/usb/` line.
+   `lpinfo -v` lists every backend and device CUPS can reach. A USB printer shows as a `usb://` line, or `hp:/usb/` once `hplip` is installed. The `sudo` is not optional: since 4.0.2 the shipped `/etc/cups/cups-files.conf` limits `SystemGroup` to `cups-browsed sys root`, so your own user gets `lpinfo: Forbidden` and that is expected. Print Settings goes through polkit via `cups-pk-helper` instead, which is why the GUI does not need it.
 
 3. Open _Print Settings_ from the app launcher with `Super + Space`. Choose _Add_ and give the scan a few seconds. USB printers and most network printers turn up here.
 
-4. If it is still not listed, add it by address. In the _Add_ dialog pick _Network Printer_, then _Internet Printing Protocol (ipp)_, and enter the printer's IP with a queue of `ipp/print`. The printer's own panel or its web page tells you the address. The manual FAQ walks through the same path.
+4. If it is still not listed, add it by address. In the _Add_ dialog pick _Network Printer_, then _Internet Printing Protocol (ipp)_, and enter the printer's IP with a queue of `ipp/print`. Most printers show their IP on the front panel or on their own web page. The manual FAQ walks through the same path.
 
    The command line equivalent, if you prefer it:
 
@@ -144,7 +144,7 @@ Since Omarchy 4.0.2 your printer does not show up on its own. That is deliberate
 
    `avahi-browse` is in the `avahi` package, which Omarchy ships. If `getent` fails while `avahi-browse` finds the printer, the problem is the `hosts:` line in `/etc/nsswitch.conf`, not the printer.
 
-6. Pick the driver last. A modern printer works best on driverless IPP Everywhere. An older one wants the model's own driver, which usually means an extra package. For HP hardware that is `hplip`, which Omarchy does not ship.
+6. Pick the driver last. Anything recent should take the driverless _IPP Everywhere_ profile. Older models need a driver for that specific printer, which usually means an extra package. For HP hardware that is `hplip`, which Omarchy does not ship.
 
 ## Verify it worked
 
@@ -164,7 +164,7 @@ Migration `1788009111` does the removal on existing machines. It disables `cups-
 
 `cups`, `cups-filters`, `cups-pk-helper`, `avahi`, `nss-mdns` and `system-config-printer` are all still in the base package list on 4.0.4, and the installer enables both `cups.service` and `avahi-daemon.service`. So the plumbing is there. Only the discovery layer is missing.
 
-On 3.x, and on 4.0.0 and 4.0.1, a printer that vanished was usually an mDNS problem instead. Issue #256 asked for avahi as a core package, and a commenter there described `.local` names failing to resolve while CUPS hung trying to use them. That was addressed by PR #1021, merged well before 4.x.
+Before 4.0.2 the one missing-printer complaint on record was an mDNS problem instead. Issue #256 asked for avahi as a core package, and a commenter there described `.local` names failing to resolve while CUPS hung trying to use them. PR #1021 closed that in September 2025 by adding `mdns_minimal` to the `hosts:` line, well before 4.x.
 
 ## If that did not work
 

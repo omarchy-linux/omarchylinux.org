@@ -1,7 +1,7 @@
 ---
 title: "Screenshot shortcut not working"
 description: "Print Screen does nothing, the picker never appears, or screen recording fails silently on Omarchy 4.x. How to find which part of the capture chain broke."
-answer: "Run the command by hand first: omarchy capture screenshot. If that works, your keybinding is the problem. If it prints jq errors, use omarchy capture screenshot region as a workaround. If the screen looks frozen and clicks are dead, switch to a TTY and run pkill -x hyprpicker slurp. No Print Screen key? Super + Ctrl + C opens the same capture menu."
+answer: "Run the command by hand first: omarchy capture screenshot. If that works, your keybinding is the problem. If it prints jq errors, use omarchy capture screenshot region as a workaround. If the screen looks frozen and clicks are dead, switch to a TTY and run pkill -x slurp, then pkill -x hyprpicker. No Print Screen key? Super + Ctrl + C opens the same capture menu."
 appliesTo:
   from: "3.x"
 status: workaround
@@ -75,7 +75,7 @@ credits:
     for: "Traced the jq tonumber failure to Hyprland dropping .activeWorkspace.id, and found the region and fullscreen workarounds"
   - name: "jeffsidekick"
     url: "https://github.com/jeffsidekick"
-    for: "Symbolized the compositor crash that Print Screen can trigger through hyprctl eval"
+    for: "Reported and captured the stack for the compositor crash that Print Screen can trigger through hyprctl eval"
   - name: "joshualambert"
     url: "https://github.com/joshualambert"
     for: "Identified the hyprpicker freeze layer stealing keyboard focus from slurp"
@@ -127,7 +127,7 @@ omarchy menu keybindings --print
 
 The defaults ship in `default/hypr/bindings/utilities.lua` as `o.bind("PRINT", "Screenshot", "omarchy-capture-screenshot")`. Your own overrides belong in `~/.config/hypr/bindings.lua`.
 
-On 3.x the same binding lived in `~/.config/hypr/bindings.conf` as `bindd = , PRINT, Screenshot, exec, omarchy-capture-screenshot`. If you copied a binding from an older guide that calls `omarchy-cmd-screenshot`, that name is gone. The script has been `omarchy-capture-screenshot` since well before 3.8.4, so an old binding silently runs a command that does not exist. See [custom keybindings lost after Quattro](/fix/custom-keybindings-lost-after-quattro/).
+On 3.x the shipped default was `bindd = , PRINT, Screenshot, exec, omarchy-capture-screenshot` in `default/hypr/bindings/utilities.conf`, with your overrides in `~/.config/hypr/bindings.conf`. If you copied a binding from an older guide that calls `omarchy-cmd-screenshot`, that name is gone. A 3.5.1 report still used the old name and a 3.6.0 report already binds `omarchy-capture-screenshot`, so the rename happened around 3.6 and an old binding silently runs a command that does not exist. See [custom keybindings lost after Quattro](/fix/custom-keybindings-lost-after-quattro/).
 
 ### 3. If you get jq errors and no picker
 
@@ -163,7 +163,7 @@ To add your own binding on 4.x, edit `~/.config/hypr/bindings.lua`:
 o.bind("SUPER + ALT + GRAVE", "Screenshot", "omarchy-capture-screenshot")
 ```
 
-MacBook users in [discussion #611](https://github.com/omacom/omarchy/discussions/611) found that friendly names like `LBRACKET` do not resolve. zailtz reported that the X keysym name works instead, for example `bracketleft`. `GRAVE` worked for several people where the bracket keys did not.
+MacBook users in [discussion #611](https://github.com/omacom/omarchy/discussions/611) found that friendly names like `LBRACKET` do not resolve. zailtz reported that the X keysym name works instead, for example `bracketleft`. Two other commenters found `GRAVE` worked where the bracket keys did not. That thread is written for the 3.x `bindings.conf` syntax, so translate its lines into `o.bind` calls on 4.x.
 
 ### 6. If a screenshot is taken but you never see it
 
@@ -177,7 +177,7 @@ If the file is there but no toast appeared, the bar is your problem, not capture
 
 ### 7. If screen recording specifically does nothing
 
-`Alt + Print Screen` runs `omarchy-capture-screenrecording`. Unlike the screenshot directory, the recording directory is not created for you:
+`Alt + Print Screen` stops a running recording or opens the Screenrecord menu, whose entries run `omarchy-capture-screenrecording`. Unlike the screenshot directory, the recording directory is not created for you:
 
 ```
 Screen recording directory does not exist: /path
@@ -196,7 +196,7 @@ On a hybrid-GPU laptop whose external monitor hangs off the discrete GPU, `gpu-s
 OMARCHY_SCREENRECORD_USE_PORTAL=true omarchy capture screenrecording
 ```
 
-Note that per the same report, the `--fullscreen` branch is evaluated before the portal branch and ignores that variable, so use the picker rather than `--fullscreen` when you enable it.
+Note that per the same report, the `--fullscreen` branch is evaluated before the portal branch and ignores that variable, so drop `--fullscreen` when you enable it.
 
 ## Verify it worked
 
@@ -219,21 +219,21 @@ The Print Screen key does not take a screenshot by itself. It runs a shell scrip
 Every one of those steps has produced a bug report:
 
 - The `hyprctl` JSON parsing breaks when Hyprland changes shape ([#11903](https://github.com/omacom/omarchy/issues/11903)).
-- The `hyprctl eval` that sets cursor mode has taken the whole compositor down with SIGABRT on Hyprland 0.56.2. jeffsidekick symbolized the core and traced the fault to an expired keybind handle upstream, not to the cursor call itself ([#8797](https://github.com/omacom/omarchy/issues/8797)).
-- Forcing hardware cursors on makes the pointer vanish during selection on nouveau and vmwgfx, exactly the hardware where Omarchy's own installer turns software cursors on ([#8240](https://github.com/omacom/omarchy/issues/8240)).
+- Pressing Print Screen has taken the whole compositor down with SIGABRT on Hyprland 0.56.2. jeffsidekick's stack blames the `hyprctl eval` that sets cursor mode; a follow-up analysis in the same thread resolves the faulting frame to an expired keybind handle inside Hyprland's Lua bindings, fixed upstream after 0.56.2, rather than the cursor call itself ([#8797](https://github.com/omacom/omarchy/issues/8797)).
+- Forcing hardware cursors on makes the pointer vanish during selection on nouveau, exactly the hardware where Omarchy's own installer turns software cursors on, and on VMware's vmwgfx ([#8240](https://github.com/omacom/omarchy/issues/8240)).
 - The freeze layer can swallow the input that would dismiss the picker ([#5468](https://github.com/omacom/omarchy/issues/5468)).
 - A bare click snaps to the first containing rectangle, and monitors are listed before windows, so clicking a window gives you the whole monitor ([#8237](https://github.com/omacom/omarchy/issues/8237)).
 
-So "the shortcut is broken" almost never means the key is unbound. Splitting the manual command from the binding tells you which half to chase in one step.
+So "the shortcut is broken" rarely means the key is unbound. Splitting the manual command from the binding tells you which half to chase in one step.
 
 ## If that did not work
 
-- **The editor opens and will not close.** Press Escape. Tensaku saves and copies on Enter but stays open because the wrapper omits `--early-exit` ([#7845](https://github.com/omacom/omarchy/issues/7845)). On 3.x the editor was Satty, which did close on Enter. Set `OMARCHY_SCREENSHOT_EDITOR` to something else if you prefer.
+- **The editor opens and will not close.** Press Escape. Tensaku saves and copies on Enter but stays open because the wrapper omits `--early-exit` ([#7845](https://github.com/omacom/omarchy/issues/7845)). On 3.x the editor was Satty; the reporter describes the change as a regression from it. Set `OMARCHY_SCREENSHOT_EDITOR` to something else if you prefer.
 - **The stop-recording indicator is stuck on.** The bar can show the recording state at boot with no recorder running ([#10311](https://github.com/omacom/omarchy/issues/10311)), and stopping twice can post two toasts with a broken thumbnail ([#11508](https://github.com/omacom/omarchy/issues/11508)). Confirm with `pgrep -af gpu-screen-recorder` before believing the indicator.
 - **The notification icon is a block of purple and black squares.** Cosmetic. The script sends no app icon ([#11506](https://github.com/omacom/omarchy/issues/11506)).
 - **You want the file somewhere else.** `OMARCHY_SCREENSHOT_DIR` and `OMARCHY_SCREENRECORD_DIR` both work, and `omarchy capture screenshot smart copy` puts the shot on the clipboard only.
 
-One caveat on the evidence: several of these are single-reporter issues that are still open, and none of 4.0.1 through 4.0.4 carries a release note fixing any of them. Where a report is one machine's story, this page says so rather than presenting it as the cause.
+Most of these are single-reporter issues that are still open, and none of 4.0.1 through 4.0.4 carries a release note fixing any of them.
 
 ## Related
 

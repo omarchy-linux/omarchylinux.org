@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dell XPS 14/16 2026 on Omarchy Linux</title>
+  <meta name="description" content="Unofficial report: 2026 Dell XPS Panther Lake laptops are the best-supported new machines for Omarchy.">
+  <link rel="stylesheet" href="../css/site.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <p class="unofficial">Unofficial. ISO: <a href="https://omarchy.org">omarchy.org</a></p>
+  <div class="bar">
+    <a class="mark" href="../index.html">omarchy<span>linux</span>.org</a>
+    <nav>
+      <a href="./" aria-current="page">Hardware</a>
+      <a href="../from-mac.html">From Mac</a>
+      <a href="../buy.html">Buy</a>
+      <a href="../about.html">About</a>
+    </nav>
+  </div>
+  <main>
+    <p><a href="./">← Hardware</a></p>
+    <p><span class="badge gold">gold</span></p>
+    <h1>Dell XPS 14 / 16 (2026, Panther Lake)</h1>
+    <p class="lede">If you are buying a new laptop for Omarchy, this is the one the project actually co-developed. Dell published a “Year of the Linux Laptop” post; Omarchy Core includes Dell engineer Spencer Bull.</p>
+    <dl class="kvs">
+      <dt>Status</dt><dd>Day-one enablement in Omarchy 3.5+</dd>
+      <dt>Kernel</dt><dd>Custom <code>linux-ptl</code> until mainline has the backports</dd>
+      <dt>Wi-Fi 7</dt><dd>Patched</dd>
+      <dt>Trackpad</dt><dd>Haptic package <code>dell-xps-touchpad-haptics</code></dd>
+      <dt>Camera</dt><dd>IPU7 via <code>intel-ipu7-camera</code></dd>
+      <dt>Speakers</dt><dd>Tuned; XPS 13 DX13260 has a sidecar-amp quirk package</dd>
+    </dl>
+    <h2>What still bites</h2>
+    <ul>
+      <li>Older XPS (e.g. 7590) with Goodix fingerprint readers often <em>detect</em> the sensor and still cannot enroll. That is a libfprint gap, not Omarchy-specific.</li>
+      <li>If haptics die after sleep, official menu path is <strong>Update → Hardware → Trackpad</strong>.</li>
+    </ul>
+    <h2>Sources</h2>
+    <ul class="sources">
+      <li><a href="https://www.dell.com/en-us/blog/year-of-the-linux-laptop-omarchy-on-xps/">Dell: Year of the Linux Laptop — Omarchy on XPS</a></li>
+      <li><a href="https://github.com/omacom/omarchy/releases/tag/v3.5.0">Omarchy 3.5.0 release notes (Panther Lake)</a></li>
+      <li><a href="https://omarchy.org/manual/troubleshooting/">Official troubleshooting</a></li>
+    </ul>
+  </main>
+  <footer>Unofficial · <a href="../about.html">About</a></footer>
+</body>
+</html>

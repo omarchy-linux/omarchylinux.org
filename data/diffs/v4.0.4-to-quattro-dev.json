@@ -1,0 +1,998 @@
+{
+  "bindings": {
+    "added": [
+      {
+        "chord": "SUPER + CTRL + ALT + F",
+        "label": "Toggle full screen desktop"
+      },
+      {
+        "chord": "SUPER + grave",
+        "label": "Toggle scratchpad"
+      },
+      {
+        "chord": "SUPER + Q",
+        "label": "Close window"
+      },
+      {
+        "chord": "SUPER + SHIFT + grave",
+        "label": "Move window to scratchpad"
+      }
+    ],
+    "changedAction": [],
+    "counts": {
+      "added": 4,
+      "changedAction": 0,
+      "from": 228,
+      "fromRecords": 228,
+      "removed": 0,
+      "to": 232,
+      "toRecords": 232
+    },
+    "note": null,
+    "removed": []
+  },
+  "commands": {
+    "added": [
+      "omarchy-ascii",
+      "omarchy-branding-about-animation",
+      "omarchy-crash-mute",
+      "omarchy-hw-dell-xps13-sidecar-amps",
+      "omarchy-hw-elgato-camlink-4k",
+      "omarchy-install-ai-claude",
+      "omarchy-install-chromium-claude",
+      "omarchy-remove-ai-chatgpt",
+      "omarchy-remove-ai-claude",
+      "omarchy-remove-ai-grok-bot",
+      "omarchy-remove-ai-lm-studio",
+      "omarchy-remove-ai-ollama",
+      "omarchy-toggle-fullscreen-desktop",
+      "omarchy-update-pacman",
+      "omarchy-windows-key"
+    ],
+    "changed": [
+      {
+        "fields": {
+          "args": [
+            "[pi|omp|opencode|claude|codex|grok|gemini|openclaw|hermes|copilot|crush|cursor-agent|muse]",
+            "[pi|omp|opencode|ori|claude|codex|grok|openclaw|agy|hermes|copilot|crush|cursor-agent|muse]"
+          ]
+        },
+        "name": "omarchy-default-agent"
+      },
+      {
+        "fields": {
+          "args": [
+            "<chrome|brave|brave-origin|edge|firefox|zen>",
+            "<chromium|chrome|brave|brave-origin|edge|firefox|zen>"
+          ],
+          "examples": [
+            [
+              "omarchy install browser firefox",
+              "omarchy install browser brave"
+            ],
+            [
+              "omarchy install browser chromium",
+              "omarchy install browser firefox"
+            ]
+          ]
+        },
+        "name": "omarchy-install-browser"
+      },
+      {
+        "fields": {
+          "args": [
+            "[--key=<public-key>]",
+            "[--key=<public-key>] [--gh-keys <github-username>]"
+          ],
+          "examples": [
+            [
+              "omarchy-setup-security-sshd",
+              "omarchy-setup-security-sshd --key=\"ssh-ed25519 AAAA... user@host\""
+            ],
+            [
+              "omarchy-setup-security-sshd",
+              "omarchy-setup-security-sshd --gh-keys dhh",
+              "omarchy-setup-security-sshd --key=\"ssh-ed25519 AAAA... user@host\""
+            ]
+          ]
+        },
+        "name": "omarchy-setup-security-sshd"
+      },
+      {
+        "fields": {
+          "args": [
+            "",
+            "[exit-code]"
+          ],
+          "summary": [
+            "Display a \"Done!\" message and wait for user to press any key.",
+            "Display a \"Done!\" or \"Failed!\" message and wait for user to press any key."
+          ]
+        },
+        "name": "omarchy-show-done"
+      },
+      {
+        "fields": {
+          "args": [
+            "<path-to-image>",
+            "<path-to-media>"
+          ],
+          "summary": [
+            "Set the current background image",
+            "Set the current background image or video"
+          ]
+        },
+        "name": "omarchy-theme-bg-set"
+      }
+    ],
+    "counts": {
+      "added": 15,
+      "changed": 5,
+      "from": 444,
+      "removed": 0,
+      "to": 459
+    },
+    "removed": []
+  },
+  "from": "v4.0.4",
+  "menu": {
+    "added": [
+      "install.ai.claude",
+      "remove.ai.chatgpt",
+      "remove.ai.claude",
+      "remove.ai.dictation",
+      "remove.ai.grok-bot",
+      "remove.ai.lm-studio",
+      "remove.ai.ollama",
+      "setup.default.agent.agy",
+      "setup.default.agent.ori"
+    ],
+    "changed": [
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present openai-codex-desktop",
+            null
+          ]
+        },
+        "id": "install.ai.chatgpt"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present voxtype-bin",
+            null
+          ]
+        },
+        "id": "install.ai.dictation"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present grok-bot",
+            null
+          ]
+        },
+        "id": "install.ai.grok-bot"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present hermes-desktop",
+            null
+          ]
+        },
+        "id": "install.ai.hermes"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present lmstudio-bin",
+            null
+          ]
+        },
+        "id": "install.ai.lm-studio"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-cmd-present ollama",
+            null
+          ]
+        },
+        "id": "install.ai.ollama"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present openclaw",
+            null
+          ]
+        },
+        "id": "install.ai.openclaw"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present perplexity",
+            null
+          ]
+        },
+        "id": "install.ai.perplexity"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present t3code-bin",
+            null
+          ]
+        },
+        "id": "install.ai.t3-code"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present brave-bin",
+            null
+          ]
+        },
+        "id": "install.browser.brave"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present brave-origin-bin",
+            null
+          ]
+        },
+        "id": "install.browser.brave-origin"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present google-chrome",
+            null
+          ]
+        },
+        "id": "install.browser.chrome"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present microsoft-edge-stable-bin",
+            null
+          ]
+        },
+        "id": "install.browser.edge"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present firefox",
+            null
+          ]
+        },
+        "id": "install.browser.firefox"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present zen-browser-bin",
+            null
+          ]
+        },
+        "id": "install.browser.zen"
+      },
+      {
+        "fields": {
+          "when": [
+            "[[ ! -d $HOME/.local/share/mise/installs/clojure ]]",
+            null
+          ]
+        },
+        "id": "install.development.clojure"
+      },
+      {
+        "fields": {
+          "when": [
+            "[[ ! -d $HOME/.local/share/mise/installs/dotnet ]]",
+            null
+          ]
+        },
+        "id": "install.development.dotnet"
+      },
+      {
+        "fields": {
+          "when": [
+            "[[ ! -d $HOME/.local/share/mise/installs/elixir ]]",
+            null
+          ]
+        },
+        "id": "install.development.elixir.elixir"
+      },
+      {
+        "fields": {
+          "when": [
+            "! compgen -G \"$HOME/.mix/archives/phx_new*\"",
+            null
+          ]
+        },
+        "id": "install.development.elixir.phoenix"
+      },
+      {
+        "fields": {
+          "when": [
+            "[[ ! -d $HOME/.local/share/mise/installs/go ]]",
+            null
+          ]
+        },
+        "id": "install.development.go"
+      },
+      {
+        "fields": {
+          "when": [
+            "[[ ! -d $HOME/.local/share/mise/installs/java ]]",
+            null
+          ]
+        },
+        "id": "install.development.java"
+      },
+      {
+        "fields": {
+          "when": [
+            "[[ ! -d $HOME/.local/share/mise/installs/bun ]]",
+            null
+          ]
+        },
+        "id": "install.development.javascript.bun"
+      },
+      {
+        "fields": {
+          "when": [
+            "[[ ! -d $HOME/.local/share/mise/installs/deno ]]",
+            null
+          ]
+        },
+        "id": "install.development.javascript.deno"
+      },
+      {
+        "fields": {
+          "when": [
+            "[[ ! -d $HOME/.local/share/mise/installs/node ]]",
+            null
+          ]
+        },
+        "id": "install.development.javascript.node"
+      },
+      {
+        "fields": {
+          "when": [
+            "[[ ! -d $HOME/.opam ]]",
+            null
+          ]
+        },
+        "id": "install.development.ocaml"
+      },
+      {
+        "fields": {
+          "when": [
+            "[[ ! -x $HOME/.config/composer/vendor/bin/laravel ]]",
+            null
+          ]
+        },
+        "id": "install.development.php.laravel"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present php",
+            null
+          ]
+        },
+        "id": "install.development.php.php"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present symfony-cli",
+            null
+          ]
+        },
+        "id": "install.development.php.symfony"
+      },
+      {
+        "fields": {
+          "when": [
+            "[[ ! -d $HOME/.local/share/mise/installs/python ]]",
+            null
+          ]
+        },
+        "id": "install.development.python"
+      },
+      {
+        "fields": {
+          "when": [
+            "[[ ! -d $HOME/.local/share/mise/installs/ruby ]]",
+            null
+          ]
+        },
+        "id": "install.development.rails"
+      },
+      {
+        "fields": {
+          "when": [
+            "[[ ! -d $HOME/.rustup ]]",
+            null
+          ]
+        },
+        "id": "install.development.rust"
+      },
+      {
+        "fields": {
+          "when": [
+            "[[ ! -d $HOME/.local/share/mise/installs/scala ]]",
+            null
+          ]
+        },
+        "id": "install.development.scala"
+      },
+      {
+        "fields": {
+          "when": [
+            "[[ ! -d $HOME/.local/share/mise/installs/zig ]]",
+            null
+          ]
+        },
+        "id": "install.development.zig"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present cursor-bin",
+            null
+          ]
+        },
+        "id": "install.editor.cursor"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present omarchy-emacs",
+            null
+          ]
+        },
+        "id": "install.editor.emacs"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present helix",
+            null
+          ]
+        },
+        "id": "install.editor.helix"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present sublime-text-4",
+            null
+          ]
+        },
+        "id": "install.editor.sublime"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present vim",
+            null
+          ]
+        },
+        "id": "install.editor.vim"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present visual-studio-code-bin",
+            null
+          ]
+        },
+        "id": "install.editor.vscode"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present zed",
+            null
+          ]
+        },
+        "id": "install.editor.zed"
+      },
+      {
+        "fields": {
+          "when": [
+            "[[ ! -d $HOME/Games/battlenet ]]",
+            null
+          ]
+        },
+        "id": "install.gaming.battlenet"
+      },
+      {
+        "fields": {
+          "when": [
+            "! flatpak info com.nvidia.geforcenow",
+            null
+          ]
+        },
+        "id": "install.gaming.geforce-now"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present heroic-games-launcher-bin",
+            null
+          ]
+        },
+        "id": "install.gaming.heroic"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present lutris",
+            null
+          ]
+        },
+        "id": "install.gaming.lutris"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present minecraft-launcher",
+            null
+          ]
+        },
+        "id": "install.gaming.minecraft"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present retroarch",
+            null
+          ]
+        },
+        "id": "install.gaming.retroarch"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present steam",
+            null
+          ]
+        },
+        "id": "install.gaming.steam"
+      },
+      {
+        "fields": {
+          "when": [
+            "[[ ! -f \"$HOME/.local/share/applications/Xbox Cloud Gaming.desktop\" ]]",
+            null
+          ]
+        },
+        "id": "install.gaming.xbox-cloud"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present xpadneo-dkms",
+            null
+          ]
+        },
+        "id": "install.gaming.xbox-controllers"
+      },
+      {
+        "fields": {
+          "when": [
+            "[[ -f $HOME/.local/state/omarchy/preinstalls-removed ]]",
+            null
+          ]
+        },
+        "id": "install.preinstalls"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present 1password",
+            null
+          ]
+        },
+        "id": "install.service.1password"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present bitwarden",
+            null
+          ]
+        },
+        "id": "install.service.bitwarden"
+      },
+      {
+        "fields": {
+          "when": [
+            "[[ -f ~/.config/chromium-flags.conf ]] && ! grep -q oauth2-client-id ~/.config/chromium-flags.conf",
+            "[[ -f ~/.config/chromium-flags.conf ]]"
+          ]
+        },
+        "id": "install.service.chromium-account"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present dropbox",
+            null
+          ]
+        },
+        "id": "install.service.dropbox"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present nordvpn-bin",
+            null
+          ]
+        },
+        "id": "install.service.nordvpn"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present once-bin",
+            null
+          ]
+        },
+        "id": "install.service.once"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present signal-desktop",
+            null
+          ]
+        },
+        "id": "install.service.signal"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present spotify",
+            null
+          ]
+        },
+        "id": "install.service.spotify"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present tailscale",
+            null
+          ]
+        },
+        "id": "install.service.tailscale"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present alacritty",
+            null
+          ]
+        },
+        "id": "install.terminal.alacritty"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present foot",
+            null
+          ]
+        },
+        "id": "install.terminal.foot"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present ghostty",
+            null
+          ]
+        },
+        "id": "install.terminal.ghostty"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-pkg-present kitty",
+            null
+          ]
+        },
+        "id": "install.terminal.kitty"
+      },
+      {
+        "fields": {
+          "when": [
+            "[[ ! -f $HOME/.local/share/applications/windows-vm.desktop ]]",
+            null
+          ]
+        },
+        "id": "install.windows"
+      },
+      {
+        "fields": {
+          "when": [
+            "omarchy-cmd-present brave",
+            null
+          ]
+        },
+        "id": "setup.default.browser.brave"
+      },
+      {
+        "fields": {
+          "when": [
+            "omarchy-cmd-present brave-origin",
+            null
+          ]
+        },
+        "id": "setup.default.browser.brave-origin"
+      },
+      {
+        "fields": {
+          "when": [
+            "omarchy-cmd-present google-chrome-stable",
+            null
+          ]
+        },
+        "id": "setup.default.browser.chrome"
+      },
+      {
+        "fields": {
+          "when": [
+            "omarchy-cmd-present chromium",
+            null
+          ]
+        },
+        "id": "setup.default.browser.chromium"
+      },
+      {
+        "fields": {
+          "when": [
+            "omarchy-cmd-present microsoft-edge-stable",
+            null
+          ]
+        },
+        "id": "setup.default.browser.edge"
+      },
+      {
+        "fields": {
+          "when": [
+            "omarchy-cmd-present firefox",
+            null
+          ]
+        },
+        "id": "setup.default.browser.firefox"
+      },
+      {
+        "fields": {
+          "when": [
+            "omarchy-cmd-present zen-browser",
+            null
+          ]
+        },
+        "id": "setup.default.browser.zen"
+      },
+      {
+        "fields": {
+          "when": [
+            "omarchy-cmd-present cursor",
+            null
+          ]
+        },
+        "id": "setup.default.editor.cursor"
+      },
+      {
+        "fields": {
+          "when": [
+            "omarchy-cmd-present emacs",
+            null
+          ]
+        },
+        "id": "setup.default.editor.emacs"
+      },
+      {
+        "fields": {
+          "when": [
+            "omarchy-cmd-present helix",
+            null
+          ]
+        },
+        "id": "setup.default.editor.helix"
+      },
+      {
+        "fields": {
+          "when": [
+            "omarchy-cmd-present nvim",
+            null
+          ]
+        },
+        "id": "setup.default.editor.neovim"
+      },
+      {
+        "fields": {
+          "when": [
+            "omarchy-cmd-present sublime_text",
+            null
+          ]
+        },
+        "id": "setup.default.editor.sublime"
+      },
+      {
+        "fields": {
+          "when": [
+            "omarchy-cmd-present vim",
+            null
+          ]
+        },
+        "id": "setup.default.editor.vim"
+      },
+      {
+        "fields": {
+          "when": [
+            "omarchy-cmd-present code",
+            null
+          ]
+        },
+        "id": "setup.default.editor.vscode"
+      },
+      {
+        "fields": {
+          "when": [
+            "omarchy-cmd-present zeditor",
+            null
+          ]
+        },
+        "id": "setup.default.editor.zed"
+      },
+      {
+        "fields": {
+          "when": [
+            "omarchy-cmd-present alacritty",
+            null
+          ]
+        },
+        "id": "setup.default.terminal.alacritty"
+      },
+      {
+        "fields": {
+          "when": [
+            "omarchy-cmd-present foot",
+            null
+          ]
+        },
+        "id": "setup.default.terminal.foot"
+      },
+      {
+        "fields": {
+          "when": [
+            "omarchy-cmd-present ghostty",
+            null
+          ]
+        },
+        "id": "setup.default.terminal.ghostty"
+      },
+      {
+        "fields": {
+          "when": [
+            "omarchy-cmd-present kitty",
+            null
+          ]
+        },
+        "id": "setup.default.terminal.kitty"
+      }
+    ],
+    "counts": {
+      "added": 9,
+      "changed": 83,
+      "from": 333,
+      "removed": 2,
+      "to": 340
+    },
+    "removed": [
+      "remove.dictation",
+      "setup.default.agent.gemini"
+    ]
+  },
+  "migrations": {
+    "counts": {
+      "from": 106,
+      "new": 15,
+      "removed": 0,
+      "to": 121
+    },
+    "new": [
+      {
+        "date": "2026-08-13T08:20:04Z",
+        "description": "Install native video wallpaper playback dependencies",
+        "file": "1786609204.sh"
+      },
+      {
+        "date": "2026-08-14T14:57:59Z",
+        "description": "Replace the Gemini coding agent with Antigravity",
+        "file": "1786719479.sh"
+      },
+      {
+        "date": "2026-08-20T08:50:24Z",
+        "description": "Install hey (hey-cli) via mise wrapper",
+        "file": "1787215824.sh"
+      },
+      {
+        "date": "2026-08-21T20:09:53Z",
+        "description": "Install ori (OpenRouter's agent harness) via mise wrapper",
+        "file": "1787342993.sh"
+      },
+      {
+        "date": "2026-08-24T12:13:49Z",
+        "description": "Regenerate mise wrappers that still print mise's own output to stdout",
+        "file": "1787573629.sh"
+      },
+      {
+        "date": "2026-08-25T14:07:17Z",
+        "description": "Enable Dell XPS 13 sidecar speaker amplifiers",
+        "file": "1787666837.sh"
+      },
+      {
+        "date": "2026-09-05T07:57:40Z",
+        "description": "Register the Chromium extension native messaging hosts for Brave Origin",
+        "file": "1788595060.sh"
+      },
+      {
+        "date": "2026-09-05T08:17:35Z",
+        "description": "Add vi as a standard terminal editor",
+        "file": "1788596255.sh"
+      },
+      {
+        "date": "2026-09-08T10:17:06Z",
+        "description": "Expose the Elgato Cam Link 4K as a 16:9 virtual camera",
+        "file": "1788862626.sh"
+      },
+      {
+        "date": "2026-09-09T08:18:47Z",
+        "description": "Install basecamp (basecamp-cli) via mise wrapper",
+        "file": "1788941927.sh"
+      },
+      {
+        "date": "2026-09-11T01:47:30Z",
+        "description": "Activate the Omarchy theme for existing T3 Code installs",
+        "file": "1789091250.sh"
+      },
+      {
+        "date": "2026-09-11T02:57:36Z",
+        "description": "Remove automatic project bin directories from PATH",
+        "file": "1789095456.sh"
+      },
+      {
+        "date": "2026-09-11T12:46:19Z",
+        "description": "Keep the KEF LSX II LT USB sink from suspending",
+        "file": "1789130779.sh"
+      },
+      {
+        "date": "2026-09-13T10:12:30Z",
+        "description": "Switch TCP congestion control to BBR with fq pacing",
+        "file": "1789294350.sh"
+      },
+      {
+        "date": "2026-09-13T14:45:15Z",
+        "description": "Install cf (Cloudflare CLI) via mise wrapper",
+        "file": "1789310715.sh"
+      }
+    ],
+    "removed": []
+  },
+  "to": "quattro-dev"
+}

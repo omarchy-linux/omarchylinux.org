@@ -1,0 +1,24 @@
+---
+import Base from '../../layouts/Base.astro';
+import { hooks, latestTag } from '../../lib/data';
+import { articleLd } from '../../lib/seo';
+import { renderMd } from '../../lib/md';
+const tag = latestTag();
+const h = hooks(tag);
+const list: any[] = h.events ?? [];
+const docs: any[] = h.docs ?? [];
+---
+<Base title={`Omarchy hooks and extension points (${tag})`} description={`The hook directories Omarchy runs your scripts from (theme-set, post-update, post-boot, battery-low, font-set, pre-refresh-pacman) with the shipped sample scripts, from ${tag}.`} crumbs={[{ name: 'Reference', href: '/reference/' }, { name: 'Hooks', href: '/reference/hooks/' }]} ld={articleLd({ title: 'Omarchy hooks', description: 'Hook directories and samples', path: '/reference/hooks/' })}>
+  <article data-pagefind-body data-pagefind-meta="section:Reference">
+  <div class="art-head"><h1>Hooks and extension points</h1><p class="lede">Omarchy runs every executable in these directories under <code>~/.config/omarchy/hooks/</code> when the matching event happens. Install one with <code>omarchy hook install</code>. Data from <strong>{tag}</strong>.</p></div>
+  {list.length === 0 && <p class="muted">Hook data is being generated.</p>}
+  {list.map((hk: any) => (
+    <section class="prose">
+      <h2 id={hk.event}>{hk.event}</h2>
+      <p>Directory: <code>{hk.userPath}</code>. Fired by {(hk.firedBy ?? []).length ? hk.firedBy.map((f: any, i: number) => <>{i > 0 && ', '}<a href={f.sourceUrl} rel="noopener"><code>{f.file.replace('bin/', '')}</code></a></>) : 'the shell'}.</p>
+      {(hk.samples ?? []).map((sm: any) => <><h3>Shipped sample: <code>{sm.name}</code></h3>{sm.description && <p>{sm.description}</p>}<pre><code>{sm.content}</code></pre><p class="small"><a href={sm.sourceUrl} rel="noopener">Source</a></p></>)}
+    </section>
+  ))}
+  {docs.map((dc: any) => <section class="prose"><h2>{dc.heading ?? 'From the manual'}</h2><div set:html={renderMd(dc.body ?? '')} /><p class="small"><a href={dc.sourceUrl} rel="noopener">Source: {dc.file}</a></p></section>)}
+  </article>
+</Base>

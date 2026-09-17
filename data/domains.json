@@ -1,0 +1,2757 @@
+{
+  "checkedAt": "2026-09-17T00:56:42Z",
+  "summary": {
+    "total": 95,
+    "byClassification": {
+      "official": 53,
+      "community": 26,
+      "for-sale": 5,
+      "suspended": 1,
+      "unregistered": 8,
+      "unknown": 2
+    },
+    "byKind": {
+      "domain": 74,
+      "subdomain": 14,
+      "social": 7
+    },
+    "resolving": 78,
+    "notResolving": 10,
+    "checked": 88,
+    "seedOnly": 7,
+    "discrepancies": 6
+  },
+  "methodology": "Classification is hand-researched and authoritative; every domain and subdomain is re-verified live with dig NS, dig A/AAAA/CNAME, curl -sI -L and whois. Where the live check contradicts the seed the seed classification is kept and a 'discrepancy' field records what was observed. Nothing is marked official unless its nameservers are eva/mario.ns.cloudflare.com, it redirects to an official host, or the seed says so.",
+  "domains": [
+    {
+      "host": "herdr.dev",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Official project domain",
+      "nameservers": [
+        "kyle.ns.cloudflare.com",
+        "vida.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "104.21.36.201",
+        "172.67.199.72"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://herdr.dev/",
+      "redirectChain": [],
+      "whoisCreated": "2026-03-27",
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:43Z",
+      "verification": "checked",
+      "whoisNote": "whois server unreachable from this host",
+      "rdapCreated": "2026-03-27",
+      "rdapStatus": [
+        "client transfer prohibited"
+      ],
+      "rdapRegistered": true,
+      "rdapNote": null,
+      "creationSource": "rdap",
+      "whoisRegistered": true
+    },
+    {
+      "host": "oligarchy.fyi",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Official joke/side domain",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "172.67.161.23",
+        "104.21.90.203"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://oligarchy.fyi/",
+      "redirectChain": [],
+      "whoisCreated": "2026-08-24",
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisNote": "whois unavailable for this TLD",
+      "rdapCreated": "2026-08-24",
+      "rdapStatus": [
+        "client transfer prohibited"
+      ],
+      "rdapRegistered": true,
+      "rdapNote": null,
+      "creationSource": "rdap",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omachee.org",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Common-misspelling joke page run by the project",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "188.114.96.9",
+        "188.114.97.9"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omachee.org/",
+      "redirectChain": [],
+      "whoisCreated": "2026-08-20",
+      "whoisStatus": [
+        "clientTransferProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisRegistrar": "Cloudflare, Inc.",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omacom.io",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Foundation domain; redirects to omarchy.org/foundation",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "188.114.97.9",
+        "188.114.96.9"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.org/foundation/",
+      "redirectChain": [
+        {
+          "from": "https://omacom.io",
+          "status": 301,
+          "to": "https://omarchy.org/foundation"
+        },
+        {
+          "from": "https://omarchy.org/foundation",
+          "status": 307,
+          "to": "/foundation/"
+        }
+      ],
+      "whoisCreated": "2025-07-02",
+      "whoisStatus": [
+        "clientTransferProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisRegistrar": "Cloudflare, Inc",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omacon.org",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Omarchy conference",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "104.21.17.178",
+        "172.67.177.190"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://www.omacon.org/",
+      "redirectChain": [
+        {
+          "from": "https://omacon.org",
+          "status": 301,
+          "to": "https://www.omacon.org/"
+        }
+      ],
+      "whoisCreated": "2025-07-12",
+      "whoisStatus": [
+        "clientTransferProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:43Z",
+      "verification": "checked",
+      "whoisRegistrar": "Cloudflare, Inc.",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omakub.org",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Omarchy's Ubuntu-based predecessor; redirects to omarchy.org/omakub",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "172.67.171.59",
+        "104.21.29.9"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.org/omakub/",
+      "redirectChain": [
+        {
+          "from": "https://omakub.org",
+          "status": 301,
+          "to": "https://omarchy.org/omakub"
+        },
+        {
+          "from": "https://omarchy.org/omakub",
+          "status": 307,
+          "to": "/omakub/"
+        }
+      ],
+      "whoisCreated": "2024-05-26",
+      "whoisStatus": [
+        "clientTransferProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:43Z",
+      "verification": "checked",
+      "whoisRegistrar": "Cloudflare, Inc.",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchs.fyi",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Official side domain",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "104.21.80.44",
+        "172.67.174.19"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchs.fyi/",
+      "redirectChain": [],
+      "whoisCreated": "2026-08-30",
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:43Z",
+      "verification": "checked",
+      "whoisNote": "whois unavailable for this TLD",
+      "rdapCreated": "2026-08-30",
+      "rdapStatus": [
+        "client transfer prohibited"
+      ],
+      "rdapRegistered": true,
+      "rdapNote": null,
+      "creationSource": "rdap",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.ae",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Country domain",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "104.21.82.227",
+        "172.67.164.153"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.ae/",
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": [
+        "ok"
+      ],
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.cn",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Redirects (301) to zh.omarchy.org, the Chinese-language site",
+      "nameservers": [
+        "arctic.ns.atrustdns.com",
+        "matterhorn.ns.atrustdns.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "163.181.131.229"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://zh.omarchy.org/",
+      "redirectChain": [
+        {
+          "from": "https://omarchy.cn",
+          "status": 302,
+          "to": "https://zh.omarchy.org/"
+        }
+      ],
+      "whoisCreated": "2025-10-11",
+      "whoisStatus": [
+        "clientTransferProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:43Z",
+      "verification": "checked",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.co.uk",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Country domain",
+      "nameservers": [
+        "launch1.spaceship.net",
+        "launch2.spaceship.net"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "52.40.42.113",
+        "44.232.173.249"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.co.uk/",
+      "redirectChain": [],
+      "whoisCreated": "2026-08-25",
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:43Z",
+      "verification": "checked",
+      "whoisRegistrar": "Namecheap, Inc. t/a Spaceship [Tag = SPACESHIP]",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.com.au",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Redirects (302) to omarchy.org",
+      "nameservers": [
+        "damon.ns.cloudflare.com",
+        "vita.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "188.114.97.9",
+        "188.114.96.9"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.org/",
+      "redirectChain": [
+        {
+          "from": "https://omarchy.com.au",
+          "status": 302,
+          "to": "https://omarchy.org/"
+        }
+      ],
+      "whoisCreated": null,
+      "whoisStatus": [
+        "serverRenewProhibited",
+        "Reason: Not Currently Eligible For Renewal"
+      ],
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.de",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Country domain; bunny.net nameservers rather than Cloudflare",
+      "nameservers": [
+        "coco.bunny.net",
+        "kiki.bunny.net"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "185.139.158.40"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://www.omarchy.de/",
+      "redirectChain": [
+        {
+          "from": "https://omarchy.de",
+          "status": 301,
+          "to": "https://www.omarchy.de/"
+        }
+      ],
+      "whoisCreated": null,
+      "whoisStatus": [
+        "connect"
+      ],
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.dk",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Country domain",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "188.114.97.9",
+        "188.114.96.9"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.dk/",
+      "redirectChain": [],
+      "whoisCreated": "2026-09-01",
+      "whoisStatus": [
+        "Active"
+      ],
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisRegistrar": "INWX GmbH",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.eu",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Regional domain",
+      "nameservers": [
+        "ns2.inwx.de",
+        "ns3.inwx.eu"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "185.111.111.156"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.eu/",
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisRegistrar": "Name: INWX GmbH",
+      "whoisNote": "no creation date or status published by this registry",
+      "rdapNote": "rdap: HTTP 404 (not proof of availability)"
+    },
+    {
+      "host": "omarchy.fi",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Country domain",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "104.21.46.7",
+        "172.67.221.246"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.fi/",
+      "redirectChain": [],
+      "whoisCreated": "...........: 31.8.2026 14:48:06",
+      "whoisStatus": [
+        "............: Registered"
+      ],
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.fr",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Country domain",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "188.114.97.9",
+        "188.114.96.9"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.fr/",
+      "redirectChain": [],
+      "whoisCreated": "2026-08-31",
+      "whoisStatus": [
+        "ACTIVE"
+      ],
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisRegistrar": "INWX GmbH",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.gr",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Country domain",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "188.114.97.9",
+        "188.114.96.9"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.gr/",
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisNote": "whois unavailable for this TLD",
+      "rdapNote": "rdap: HTTP 404 (not proof of availability)"
+    },
+    {
+      "host": "omarchy.hu",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Country domain",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "188.114.97.9",
+        "188.114.96.9"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.hu/",
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisNote": "no creation date or status published by this registry",
+      "rdapNote": "rdap: HTTP 404 (not proof of availability)"
+    },
+    {
+      "host": "omarchy.in",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Country domain",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "172.67.164.82",
+        "104.21.74.233"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.in/",
+      "redirectChain": [],
+      "whoisCreated": "2026-08-31",
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisNote": "whois server unreachable from this host",
+      "rdapCreated": "2026-08-31",
+      "rdapStatus": [
+        "client transfer prohibited"
+      ],
+      "rdapRegistered": true,
+      "rdapNote": null,
+      "creationSource": "rdap",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.is",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Country domain",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "172.67.144.57",
+        "104.21.28.43"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.is/",
+      "redirectChain": [],
+      "whoisCreated": "August 31 2026",
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.it",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Country domain",
+      "nameservers": [
+        "alberto.ns.cloudflare.com",
+        "olga.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "104.21.44.220",
+        "172.67.204.32"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.it/",
+      "redirectChain": [],
+      "whoisCreated": "2026-08-23",
+      "whoisStatus": [
+        "ok"
+      ],
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.jp",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Country domain",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "172.67.184.227",
+        "104.21.56.117"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.jp/",
+      "redirectChain": [],
+      "whoisCreated": "2026-08-31",
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.kr",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Country domain",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "188.114.97.9",
+        "188.114.96.9"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.kr/",
+      "redirectChain": [],
+      "whoisCreated": "Date             : 2026. 08. 31.",
+      "whoisStatus": [
+        "clientTransferProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.mx",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Country domain",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "188.114.97.9",
+        "188.114.96.9"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.mx/",
+      "redirectChain": [],
+      "whoisCreated": "2026-08-31",
+      "whoisStatus": [
+        "Delaware"
+      ],
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisRegistrar": "INWX GmbH",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.news",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Redirects to omarchy.org/news",
+      "nameservers": [
+        "ns33.domaincontrol.com",
+        "ns34.domaincontrol.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "3.33.251.168",
+        "15.197.225.128"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.org/news/",
+      "redirectChain": [
+        {
+          "from": "https://omarchy.news",
+          "status": 302,
+          "to": "https://omarchy.org/news/"
+        }
+      ],
+      "whoisCreated": "2026-08-31",
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:43Z",
+      "verification": "checked",
+      "whoisNote": "whois unavailable for this TLD",
+      "rdapCreated": "2026-08-31",
+      "rdapStatus": [
+        "client delete prohibited",
+        "client renew prohibited",
+        "client transfer prohibited",
+        "client update prohibited"
+      ],
+      "rdapRegistered": true,
+      "rdapNote": null,
+      "creationSource": "rdap",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.no",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Country domain",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "172.67.168.188",
+        "104.21.70.231"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.no/",
+      "redirectChain": [],
+      "whoisCreated": "2026-09-14",
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.nz",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Country domain",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "188.114.96.9",
+        "188.114.97.9"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.nz/",
+      "redirectChain": [],
+      "whoisCreated": "2026-08-31",
+      "whoisStatus": [
+        "ok"
+      ],
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisRegistrar": "INWX GmbH",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.org",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Primary official site",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "104.18.3.204",
+        "104.18.2.204"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.org/",
+      "redirectChain": [],
+      "whoisCreated": "2025-06-01",
+      "whoisStatus": [
+        "clientTransferProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisRegistrar": "Cloudflare, Inc.",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.ph",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Country domain",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "188.114.96.9",
+        "188.114.97.9"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.ph/",
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisNote": "whois unavailable for this TLD",
+      "rdapNote": "rdap: HTTP 404 (not proof of availability)"
+    },
+    {
+      "host": "omarchy.pt",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Country domain",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "104.21.43.229",
+        "172.67.186.189"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.pt/",
+      "redirectChain": [],
+      "whoisCreated": "31/08/2026 12:57:29",
+      "whoisStatus": [
+        "Registered"
+      ],
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.se",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Country domain",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "188.114.97.9",
+        "188.114.96.9"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.se/",
+      "redirectChain": [],
+      "whoisCreated": "2026-08-31",
+      "whoisStatus": [
+        "active",
+        "ok"
+      ],
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisRegistrar": "INWX GmbH",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.sg",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Country domain",
+      "nameservers": [
+        "ns1.gcorelabs.net",
+        "ns2.gcdn.services"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "172.67.157.75",
+        "104.21.8.105"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.org/",
+      "redirectChain": [
+        {
+          "from": "https://omarchy.sg",
+          "status": 302,
+          "to": "https://omarchy.org/"
+        }
+      ],
+      "whoisCreated": "2026-09-02",
+      "whoisStatus": [
+        "clientTransferProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisRegistrar": "GoCloudEasy Pte. Ltd.",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.tr",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Country domain",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "188.114.97.9",
+        "188.114.96.9"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.tr/",
+      "redirectChain": [],
+      "whoisCreated": ".............: 2026-Aug-31.",
+      "whoisStatus": [
+        "Active"
+      ],
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.us",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Country domain",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "188.114.96.9",
+        "188.114.97.9"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.us/",
+      "redirectChain": [],
+      "whoisCreated": "2026-08-31",
+      "whoisStatus": [
+        "clientTransferProhibited",
+        "serverTransferProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisRegistrar": "INWX GmbH",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchyplugins.com",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "community-registered, redirects to official plugins site",
+      "note": "Community-registered 2026-07-28; now 301 to plugins.omarchy.org",
+      "nameservers": [
+        "cory.ns.cloudflare.com",
+        "kenia.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "104.21.67.224",
+        "172.67.182.15"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://plugins.omarchy.org/",
+      "redirectChain": [
+        {
+          "from": "https://omarchyplugins.com",
+          "status": 301,
+          "to": "https://plugins.omarchy.org/"
+        }
+      ],
+      "whoisCreated": "2026-07-28",
+      "whoisStatus": [
+        "clientTransferProhibited",
+        "clienttransferprohibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:43Z",
+      "verification": "checked",
+      "whoisRegistrar": "Cloudflare, Inc.",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omerchy.org",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Official merch store",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "188.114.97.9",
+        "188.114.96.9"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://supply.37signals.com/collections/omarchy",
+      "redirectChain": [
+        {
+          "from": "https://omerchy.org",
+          "status": 302,
+          "to": "https://supply.37signals.com/collections/omarchy"
+        }
+      ],
+      "whoisCreated": "2025-08-01",
+      "whoisStatus": [
+        "clientTransferProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:43Z",
+      "verification": "checked",
+      "whoisRegistrar": "Cloudflare, Inc.",
+      "whoisRegistered": true
+    },
+    {
+      "host": "tryomarchy.com",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "community-registered, serves official try-omarchy",
+      "note": "Registered by a community member but serves the official try-omarchy experience",
+      "nameservers": [
+        "clark.ns.cloudflare.com",
+        "galilea.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "104.21.28.3",
+        "172.67.170.28"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://tryomarchy.com/",
+      "redirectChain": [],
+      "whoisCreated": "2026-08-28",
+      "whoisStatus": [
+        "clientTransferProhibited",
+        "clienttransferprohibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:43Z",
+      "verification": "checked",
+      "whoisRegistrar": "Cloudflare, Inc.",
+      "whoisRegistered": true
+    },
+    {
+      "host": "wecanfixeverything.com",
+      "kind": "domain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Project slogan page",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "172.67.139.231",
+        "104.21.62.226"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://wecanfixeverything.com/",
+      "redirectChain": [],
+      "whoisCreated": "2026-08-31",
+      "whoisStatus": [
+        "clientTransferProhibited",
+        "clienttransferprohibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "checked",
+      "whoisRegistrar": "Cloudflare, Inc.",
+      "whoisRegistered": true
+    },
+    {
+      "host": "crt.omarchy.org",
+      "kind": "subdomain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Certificate/transparency host",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "parent:omarchy.org",
+      "dnsResolves": true,
+      "addresses": [
+        "omacom.github.io",
+        "185.199.111.153",
+        "185.199.110.153",
+        "185.199.108.153",
+        "185.199.109.153"
+      ],
+      "cname": "omacom.github.io",
+      "httpStatus": 200,
+      "finalUrl": "https://crt.omarchy.org/",
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:43Z",
+      "verification": "checked",
+      "whoisNote": "see parent domain omarchy.org"
+    },
+    {
+      "host": "donate.omarchy.org",
+      "kind": "subdomain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Foundation donations",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "parent:omarchy.org",
+      "dnsResolves": true,
+      "addresses": [
+        "104.18.3.204",
+        "104.18.2.204"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://www.zeffy.com/en-US/donation-form/omarchy-patronage",
+      "redirectChain": [
+        {
+          "from": "https://donate.omarchy.org",
+          "status": 301,
+          "to": "https://www.zeffy.com/en-US/donation-form/omarchy-patronage"
+        }
+      ],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:44Z",
+      "verification": "checked",
+      "whoisNote": "see parent domain omarchy.org"
+    },
+    {
+      "host": "iso.omarchy.org",
+      "kind": "subdomain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "ISO download host",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "parent:omarchy.org",
+      "dnsResolves": true,
+      "addresses": [
+        "104.18.3.204",
+        "104.18.2.204"
+      ],
+      "cname": null,
+      "httpStatus": 404,
+      "finalUrl": "https://iso.omarchy.org/",
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:43Z",
+      "verification": "checked",
+      "whoisNote": "see parent domain omarchy.org"
+    },
+    {
+      "host": "logs.omarchy.org",
+      "kind": "subdomain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Public logs",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "parent:omarchy.org",
+      "dnsResolves": true,
+      "addresses": [
+        "5.78.205.251"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://logs.omarchy.org/",
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:44Z",
+      "verification": "checked",
+      "whoisNote": "see parent domain omarchy.org"
+    },
+    {
+      "host": "mirror.omarchy.org",
+      "kind": "subdomain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Arch package mirror (edge)",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "parent:omarchy.org",
+      "dnsResolves": true,
+      "addresses": [
+        "104.18.3.204",
+        "104.18.2.204"
+      ],
+      "cname": null,
+      "httpStatus": 404,
+      "finalUrl": "https://mirror.omarchy.org/",
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:44Z",
+      "verification": "checked",
+      "whoisNote": "see parent domain omarchy.org"
+    },
+    {
+      "host": "pkgs.omarchy.org",
+      "kind": "subdomain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Pacman repository (stable/rc/edge)",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "parent:omarchy.org",
+      "dnsResolves": true,
+      "addresses": [
+        "104.18.2.204",
+        "104.18.3.204"
+      ],
+      "cname": null,
+      "httpStatus": 404,
+      "finalUrl": "https://pkgs.omarchy.org/",
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:43Z",
+      "verification": "checked",
+      "whoisNote": "see parent domain omarchy.org"
+    },
+    {
+      "host": "plugins.omarchy.org",
+      "kind": "subdomain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Official plugin directory",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "parent:omarchy.org",
+      "dnsResolves": true,
+      "addresses": [
+        "omacom.github.io",
+        "185.199.111.153",
+        "185.199.109.153",
+        "185.199.108.153",
+        "185.199.110.153"
+      ],
+      "cname": "omacom.github.io",
+      "httpStatus": 200,
+      "finalUrl": "https://plugins.omarchy.org/",
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:43Z",
+      "verification": "checked",
+      "whoisNote": "see parent domain omarchy.org"
+    },
+    {
+      "host": "radio.omarchy.org",
+      "kind": "subdomain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Omarchy radio",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "parent:omarchy.org",
+      "dnsResolves": true,
+      "addresses": [
+        "omacom.github.io",
+        "185.199.109.153",
+        "185.199.111.153",
+        "185.199.110.153",
+        "185.199.108.153"
+      ],
+      "cname": "omacom.github.io",
+      "httpStatus": 200,
+      "finalUrl": "https://radio.omarchy.org/",
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:44Z",
+      "verification": "checked",
+      "whoisNote": "see parent domain omarchy.org"
+    },
+    {
+      "host": "rc-mirror.omarchy.org",
+      "kind": "subdomain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Pinned Arch mirror for the rc channel",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "parent:omarchy.org",
+      "dnsResolves": true,
+      "addresses": [
+        "104.18.3.204",
+        "104.18.2.204"
+      ],
+      "cname": null,
+      "httpStatus": 404,
+      "finalUrl": "https://rc-mirror.omarchy.org/",
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:43Z",
+      "verification": "checked",
+      "whoisNote": "see parent domain omarchy.org"
+    },
+    {
+      "host": "stable-mirror.omarchy.org",
+      "kind": "subdomain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Pinned Arch mirror for the stable channel",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "parent:omarchy.org",
+      "dnsResolves": true,
+      "addresses": [
+        "104.18.3.204",
+        "104.18.2.204"
+      ],
+      "cname": null,
+      "httpStatus": 404,
+      "finalUrl": "https://stable-mirror.omarchy.org/",
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:44Z",
+      "verification": "checked",
+      "whoisNote": "see parent domain omarchy.org"
+    },
+    {
+      "host": "themes.omarchy.org",
+      "kind": "subdomain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Official theme directory; may not resolve yet",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "parent:omarchy.org",
+      "dnsResolves": false,
+      "addresses": [],
+      "cname": null,
+      "httpStatus": null,
+      "finalUrl": null,
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:43Z",
+      "verification": "checked",
+      "whoisNote": "see parent domain omarchy.org",
+      "discrepancy": "does not resolve"
+    },
+    {
+      "host": "zh.omarchy.org",
+      "kind": "subdomain",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Chinese-language site",
+      "nameservers": [
+        "eva.ns.cloudflare.com",
+        "mario.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "parent:omarchy.org",
+      "dnsResolves": true,
+      "addresses": [
+        "104.18.2.204",
+        "104.18.3.204"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://zh.omarchy.org/",
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:43Z",
+      "verification": "checked",
+      "whoisNote": "see parent domain omarchy.org"
+    },
+    {
+      "host": "discord.gg/tXFUdasqhY",
+      "kind": "social",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Official \"Omacom\" Discord server",
+      "nameservers": [],
+      "dnsResolves": null,
+      "httpStatus": null,
+      "finalUrl": null,
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "seed-only"
+    },
+    {
+      "host": "github.com/omacom",
+      "kind": "social",
+      "classification": "official",
+      "owner": "Omacom Foundation / 37signals",
+      "note": "Official GitHub org, 54 repos. github.com/omacom-io does not exist; basecamp/omarchy redirects here",
+      "nameservers": [],
+      "dnsResolves": null,
+      "httpStatus": null,
+      "finalUrl": null,
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "seed-only"
+    },
+    {
+      "host": "x.com/dhh",
+      "kind": "social",
+      "classification": "official",
+      "owner": "David Heinemeier Hansson",
+      "note": "Project creator; release announcements",
+      "nameservers": [],
+      "dnsResolves": null,
+      "httpStatus": null,
+      "finalUrl": null,
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "seed-only"
+    },
+    {
+      "host": "0marchy.org",
+      "kind": "domain",
+      "classification": "community",
+      "owner": "community",
+      "note": "Satire site (zero instead of the letter O)",
+      "nameservers": [
+        "dns1.registrar-servers.com",
+        "dns2.registrar-servers.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "76.76.21.21"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://0marchy.org/",
+      "redirectChain": [],
+      "whoisCreated": "2026-08-31",
+      "whoisStatus": [
+        "clientTransferProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:45Z",
+      "verification": "checked",
+      "whoisRegistrar": "NameCheap, Inc.",
+      "whoisRegistered": true
+    },
+    {
+      "host": "awesome-omarchy.com",
+      "kind": "domain",
+      "classification": "community",
+      "owner": "community",
+      "note": "Community awesome-list site",
+      "nameservers": [
+        "dns1.registrar-servers.com",
+        "dns2.registrar-servers.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "185.199.108.153",
+        "185.199.109.153",
+        "185.199.111.153",
+        "185.199.110.153"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://awesome-omarchy.com/",
+      "redirectChain": [],
+      "whoisCreated": "2025-08-16",
+      "whoisStatus": [
+        "clientTransferProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:45Z",
+      "verification": "checked",
+      "whoisRegistrar": "NameCheap, Inc.",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omafied.com",
+      "kind": "domain",
+      "classification": "community",
+      "owner": "community",
+      "note": "Community site",
+      "nameservers": [
+        "clint.ns.cloudflare.com",
+        "ursula.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "104.21.22.120",
+        "172.67.204.204"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omafied.com/",
+      "redirectChain": [],
+      "whoisCreated": "2026-09-05",
+      "whoisStatus": [
+        "clientTransferProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:44Z",
+      "verification": "checked",
+      "whoisRegistrar": "Name.com, Inc.",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omahub.dev",
+      "kind": "domain",
+      "classification": "community",
+      "owner": "community",
+      "note": "Community hub",
+      "nameservers": [
+        "ns1051.ui-dns.de",
+        "ns1074.ui-dns.org",
+        "ns1093.ui-dns.biz",
+        "ns1117.ui-dns.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "116.203.110.105"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omahub.dev/",
+      "redirectChain": [],
+      "whoisCreated": "2026-08-16",
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:45Z",
+      "verification": "checked",
+      "whoisNote": "whois server unreachable from this host",
+      "rdapCreated": "2026-08-16",
+      "rdapStatus": [
+        "client transfer prohibited"
+      ],
+      "rdapRegistered": true,
+      "rdapNote": null,
+      "creationSource": "rdap",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy-official.org",
+      "kind": "domain",
+      "classification": "community",
+      "owner": "community",
+      "note": "Fan-made guide site with a confusingly official-sounding name; registered 2026-09-01. NOT official",
+      "nameservers": [
+        "martin.ns.cloudflare.com",
+        "meiling.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "104.21.26.242",
+        "172.67.168.158"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy-official.org/",
+      "redirectChain": [],
+      "whoisCreated": "2026-09-01",
+      "whoisStatus": [
+        "clientTransferProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:44Z",
+      "verification": "checked",
+      "whoisRegistrar": "Cloudflare, Inc.",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy-weekly.com",
+      "kind": "domain",
+      "classification": "community",
+      "owner": "community",
+      "note": "Community newsletter",
+      "nameservers": [
+        "art.ns.cloudflare.com",
+        "piper.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "188.114.96.9",
+        "188.114.97.9"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy-weekly.com/",
+      "redirectChain": [],
+      "whoisCreated": "2026-08-29",
+      "whoisStatus": [
+        "clientTransferProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:44Z",
+      "verification": "checked",
+      "whoisRegistrar": "Spaceship, Inc.",
+      "whoisRegistered": true,
+      "whoisNote": "registry record read; registrar whois referral unreachable"
+    },
+    {
+      "host": "omarchy.gallery",
+      "kind": "domain",
+      "classification": "community",
+      "owner": "community",
+      "note": "Community screenshot gallery",
+      "nameservers": [
+        "love.ns.cloudflare.com",
+        "memphis.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "188.114.97.9",
+        "188.114.96.9"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.gallery/",
+      "redirectChain": [],
+      "whoisCreated": "2026-09-03",
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:44Z",
+      "verification": "checked",
+      "whoisNote": "whois unavailable for this TLD",
+      "rdapCreated": "2026-09-03",
+      "rdapStatus": [
+        "client transfer prohibited"
+      ],
+      "rdapRegistered": true,
+      "rdapNote": null,
+      "creationSource": "rdap",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.pro",
+      "kind": "domain",
+      "classification": "community",
+      "owner": "community",
+      "note": "Chinese-language community forum; Cloudflare-gated",
+      "nameservers": [
+        "harlan.ns.cloudflare.com",
+        "katja.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "104.21.10.198",
+        "172.67.131.182"
+      ],
+      "cname": null,
+      "httpStatus": 403,
+      "finalUrl": "https://omarchy.pro/",
+      "redirectChain": [],
+      "whoisCreated": "2026-08-22",
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:45Z",
+      "verification": "checked",
+      "whoisNote": "whois unavailable for this TLD",
+      "rdapCreated": "2026-08-22",
+      "rdapStatus": [
+        "client transfer prohibited"
+      ],
+      "rdapRegistered": true,
+      "rdapNote": null,
+      "creationSource": "rdap",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchyapps.com",
+      "kind": "domain",
+      "classification": "community",
+      "owner": "community",
+      "note": "Community app directory",
+      "nameservers": [
+        "dns1.p03.nsone.net",
+        "dns2.p03.nsone.net",
+        "dns3.p03.nsone.net",
+        "dns4.p03.nsone.net"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "35.157.26.135",
+        "63.176.8.218"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchyapps.com/",
+      "redirectChain": [],
+      "whoisCreated": "2026-09-04",
+      "whoisStatus": [
+        "clientTransferProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:44Z",
+      "verification": "checked",
+      "whoisRegistrar": "NameCheap, Inc.",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchyarchive.com",
+      "kind": "domain",
+      "classification": "community",
+      "owner": "community",
+      "note": "Community archive",
+      "nameservers": [
+        "devin.ns.cloudflare.com",
+        "rachel.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "104.21.58.253",
+        "172.67.167.7"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchyarchive.com/",
+      "redirectChain": [],
+      "whoisCreated": "2026-09-06",
+      "whoisStatus": [
+        "clientTransferProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:44Z",
+      "verification": "checked",
+      "whoisRegistrar": "NameCheap, Inc.",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchycentral.com",
+      "kind": "domain",
+      "classification": "community",
+      "owner": "community",
+      "note": "Community portal",
+      "nameservers": [
+        "nsany1.infomaniak.com",
+        "nsany2.infomaniak.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "185.176.225.29"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchycentral.com/",
+      "redirectChain": [],
+      "whoisCreated": "2026-09-01",
+      "whoisStatus": [
+        "clientTransferProhibited",
+        "ok"
+      ],
+      "lastChecked": "2026-09-17T00:56:44Z",
+      "verification": "checked",
+      "whoisRegistrar": "Infomaniak Network SA",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchycompare.com",
+      "kind": "domain",
+      "classification": "community",
+      "owner": "community",
+      "note": "Community comparison site",
+      "nameservers": [
+        "ns1kpv.name.com",
+        "ns2cvx.name.com",
+        "ns3gnv.name.com",
+        "ns4fpy.name.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "69.46.46.119"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchycompare.com/",
+      "redirectChain": [],
+      "whoisCreated": "2026-08-29",
+      "whoisStatus": [
+        "clientTransferProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:44Z",
+      "verification": "checked",
+      "whoisRegistrar": "Name.com, Inc.",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchyguild.com",
+      "kind": "domain",
+      "classification": "community",
+      "owner": "community",
+      "note": "Community guild site",
+      "nameservers": [
+        "nucum.ns.cloudflare.com",
+        "zahir.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "188.114.96.9",
+        "188.114.97.9"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchyguild.com/",
+      "redirectChain": [],
+      "whoisCreated": "2026-08-31",
+      "whoisStatus": [
+        "clientTransferProhibited",
+        "clienttransferprohibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:44Z",
+      "verification": "checked",
+      "whoisRegistrar": "Cloudflare, Inc.",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchyhardware.com",
+      "kind": "domain",
+      "classification": "community",
+      "owner": "community",
+      "note": "Community hardware compatibility site",
+      "nameservers": [
+        "norah.ns.cloudflare.com",
+        "piers.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "172.67.204.56",
+        "104.21.93.38"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchyhardware.com/",
+      "redirectChain": [],
+      "whoisCreated": "2026-09-01",
+      "whoisStatus": [
+        "clientTransferProhibited",
+        "clienttransferprohibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:44Z",
+      "verification": "checked",
+      "whoisRegistrar": "Cloudflare, Inc.",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchylinux.com",
+      "kind": "domain",
+      "classification": "community",
+      "owner": "unknown (likely a fan)",
+      "note": "Registered 2025-09-09, Cloudflare maisie/ruben nameservers, 301 to omarchy.org",
+      "nameservers": [
+        "maisie.ns.cloudflare.com",
+        "ruben.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "188.114.96.9",
+        "188.114.97.9"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.org/",
+      "redirectChain": [
+        {
+          "from": "https://omarchylinux.com",
+          "status": 301,
+          "to": "https://omarchy.org//"
+        },
+        {
+          "from": "https://omarchy.org//",
+          "status": 307,
+          "to": "/"
+        }
+      ],
+      "whoisCreated": "2025-09-09",
+      "whoisStatus": [
+        "clientTransferProhibited",
+        "clienttransferprohibited",
+        "renewperiod"
+      ],
+      "lastChecked": "2026-09-17T00:56:44Z",
+      "verification": "checked",
+      "whoisRegistrar": "Cloudflare, Inc.",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchylinux.org",
+      "kind": "domain",
+      "classification": "community",
+      "owner": "this site",
+      "note": "This site; unofficial reference. Registered 2026-09-11",
+      "nameservers": [
+        "fay.ns.cloudflare.com",
+        "ignacio.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": false,
+      "addresses": [],
+      "cname": null,
+      "httpStatus": null,
+      "finalUrl": null,
+      "redirectChain": [],
+      "whoisCreated": "2026-09-11",
+      "whoisStatus": [
+        "clientTransferProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:44Z",
+      "verification": "checked",
+      "whoisRegistrar": "Cloudflare, Inc.",
+      "whoisRegistered": true,
+      "discrepancy": "no longer resolves"
+    },
+    {
+      "host": "omarchynews.com",
+      "kind": "domain",
+      "classification": "community",
+      "owner": "community",
+      "note": "Community news site",
+      "nameservers": [
+        "maisie.ns.cloudflare.com",
+        "ruben.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "188.114.97.9",
+        "188.114.96.9"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchynews.com/",
+      "redirectChain": [],
+      "whoisCreated": "2025-07-30",
+      "whoisStatus": [
+        "clientTransferProhibited",
+        "clienttransferprohibited",
+        "renewperiod"
+      ],
+      "lastChecked": "2026-09-17T00:56:45Z",
+      "verification": "checked",
+      "whoisRegistrar": "Cloudflare, Inc.",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchypulse.com",
+      "kind": "domain",
+      "classification": "community",
+      "owner": "community",
+      "note": "Community news/stats site",
+      "nameservers": [
+        "igor.ns.cloudflare.com",
+        "marjory.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "104.21.32.107",
+        "172.67.185.144"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchypulse.com/",
+      "redirectChain": [],
+      "whoisCreated": "2026-08-23",
+      "whoisStatus": [
+        "clientTransferProhibited",
+        "clienttransferprohibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:44Z",
+      "verification": "checked",
+      "whoisRegistrar": "Cloudflare, Inc.",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchystories.org",
+      "kind": "domain",
+      "classification": "community",
+      "owner": "community",
+      "note": "Community stories site",
+      "nameservers": [
+        "ns5.kasserver.com",
+        "ns6.kasserver.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "85.13.154.77"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchystories.org/",
+      "redirectChain": [],
+      "whoisCreated": "2026-08-26",
+      "whoisStatus": [
+        "clientTransferProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:45Z",
+      "verification": "checked",
+      "whoisRegistrar": "RegistryGate GmbH",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchytheme.com",
+      "kind": "domain",
+      "classification": "community",
+      "owner": "community",
+      "note": "Community theme site",
+      "nameservers": [
+        "alex.ns.cloudflare.com",
+        "athena.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "104.21.87.150",
+        "172.67.144.28"
+      ],
+      "cname": null,
+      "httpStatus": 403,
+      "finalUrl": "https://omarchytheme.com/",
+      "redirectChain": [],
+      "whoisCreated": "2026-03-08",
+      "whoisStatus": [
+        "clientTransferProhibited",
+        "clienttransferprohibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:44Z",
+      "verification": "checked",
+      "whoisRegistrar": "Cloudflare, Inc.",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchythemes.com",
+      "kind": "domain",
+      "classification": "community",
+      "owner": "community",
+      "note": "Community theme site",
+      "nameservers": [
+        "maisie.ns.cloudflare.com",
+        "ruben.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "172.67.169.166",
+        "104.21.54.243"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchythemes.com/",
+      "redirectChain": [],
+      "whoisCreated": "2025-07-25",
+      "whoisStatus": [
+        "clientTransferProhibited",
+        "clienttransferprohibited",
+        "renewperiod"
+      ],
+      "lastChecked": "2026-09-17T00:56:44Z",
+      "verification": "checked",
+      "whoisRegistrar": "Cloudflare, Inc.",
+      "whoisRegistered": true
+    },
+    {
+      "host": "sudomarchy.com",
+      "kind": "domain",
+      "classification": "community",
+      "owner": "community",
+      "note": "Community site",
+      "nameservers": [
+        "jocelyn.ns.cloudflare.com",
+        "oswald.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "216.198.79.1"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://sudomarchy.com/",
+      "redirectChain": [],
+      "whoisCreated": "2026-01-14",
+      "whoisStatus": [
+        "clientTransferProhibited",
+        "clienttransferprohibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:44Z",
+      "verification": "checked",
+      "whoisRegistrar": "Cloudflare, Inc.",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.deepakness.com",
+      "kind": "subdomain",
+      "classification": "community",
+      "owner": "Deepak Ness",
+      "note": "Personal-site subdomain with Omarchy content",
+      "nameservers": [
+        "jill.ns.cloudflare.com",
+        "major.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "parent:deepakness.com",
+      "dnsResolves": true,
+      "addresses": [
+        "omarchy-hub.netlify.app",
+        "35.157.26.135",
+        "63.176.8.218"
+      ],
+      "cname": "omarchy-hub.netlify.app",
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.deepakness.com/",
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:44Z",
+      "verification": "checked",
+      "whoisNote": "see parent domain deepakness.com"
+    },
+    {
+      "host": "omarchy.iamcheyan.com",
+      "kind": "subdomain",
+      "classification": "community",
+      "owner": "iamcheyan",
+      "note": "Personal-site subdomain with Omarchy content",
+      "nameservers": [
+        "dns10.hichina.com",
+        "dns9.hichina.com"
+      ],
+      "nameserversFrom": "parent:iamcheyan.com",
+      "dnsResolves": true,
+      "addresses": [
+        "iamcheyan.github.io",
+        "185.199.111.153",
+        "185.199.109.153",
+        "185.199.108.153",
+        "185.199.110.153"
+      ],
+      "cname": "iamcheyan.github.io",
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.iamcheyan.com/",
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:45Z",
+      "verification": "checked",
+      "whoisNote": "see parent domain iamcheyan.com"
+    },
+    {
+      "host": "reddit.com/r/omarchy",
+      "kind": "social",
+      "classification": "community",
+      "owner": "community",
+      "note": "Community subreddit, not affiliated with the project",
+      "nameservers": [],
+      "dnsResolves": null,
+      "httpStatus": null,
+      "finalUrl": null,
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "seed-only"
+    },
+    {
+      "host": "x.com/OmarchyLinux",
+      "kind": "social",
+      "classification": "community",
+      "owner": "community",
+      "note": "Self-described unofficial handle, roughly 19k followers",
+      "nameservers": [],
+      "dnsResolves": null,
+      "httpStatus": null,
+      "finalUrl": null,
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "seed-only"
+    },
+    {
+      "host": "getomarchy.com",
+      "kind": "domain",
+      "classification": "for-sale",
+      "owner": "private owner",
+      "note": "Listed for sale via Dynadot",
+      "nameservers": [
+        "ns1.dyna-ns.net",
+        "ns2.dyna-ns.net"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "54.215.31.113"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://forsale.dynadot.com/getomarchy.com?drefid=2071",
+      "redirectChain": [
+        {
+          "from": "https://getomarchy.com",
+          "status": 302,
+          "to": "https://forsale.dynadot.com/getomarchy.com?drefid=2071"
+        }
+      ],
+      "whoisCreated": "2026-09-03",
+      "whoisStatus": [
+        "clientTransferProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:46Z",
+      "verification": "checked",
+      "whoisRegistrar": "Dynadot Inc",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.club",
+      "kind": "domain",
+      "classification": "for-sale",
+      "owner": "private owner",
+      "note": "Listed for sale",
+      "nameservers": [
+        "launch1.spaceship.net",
+        "launch2.spaceship.net"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "44.232.173.249",
+        "52.40.42.113"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.club/",
+      "redirectChain": [],
+      "whoisCreated": "2026-08-25",
+      "whoisStatus": [
+        "serverTransferProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:45Z",
+      "verification": "checked",
+      "whoisRegistrar": "Chengdu West Dimension Digital Technology Co., Ltd.",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.com",
+      "kind": "domain",
+      "classification": "for-sale",
+      "owner": "unrelated third party",
+      "note": "Registered 2016, unrelated to the distro; parked lander",
+      "nameservers": [
+        "ns63.domaincontrol.com",
+        "ns64.domaincontrol.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "15.197.148.33",
+        "3.33.130.190"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.com/",
+      "redirectChain": [],
+      "whoisCreated": "2016-02-19",
+      "whoisStatus": [
+        "clientDeleteProhibited",
+        "clientRenewProhibited",
+        "clientTransferProhibited",
+        "clientUpdateProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:45Z",
+      "verification": "checked",
+      "whoisRegistrar": "GoDaddy.com, LLC",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.io",
+      "kind": "domain",
+      "classification": "for-sale",
+      "owner": "private owner",
+      "note": "Registered 2026-08-24; owner offers it free to the maintainers, otherwise $10,000",
+      "nameservers": [
+        "angela.ns.cloudflare.com",
+        "arnold.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "172.67.205.87",
+        "104.21.22.149"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchy.io/",
+      "redirectChain": [],
+      "whoisCreated": "2026-08-24",
+      "whoisStatus": [
+        "clientTransferProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:45Z",
+      "verification": "checked",
+      "whoisRegistrar": "Cloudflare, Inc",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchyos.com",
+      "kind": "domain",
+      "classification": "for-sale",
+      "owner": "private owner",
+      "note": "Listed for sale",
+      "nameservers": [
+        "carlos.ns.cloudflare.com",
+        "lady.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "188.114.96.9",
+        "188.114.97.9"
+      ],
+      "cname": null,
+      "httpStatus": 200,
+      "finalUrl": "https://omarchyos.com/",
+      "redirectChain": [],
+      "whoisCreated": "2026-08-24",
+      "whoisStatus": [
+        "clientTransferProhibited",
+        "clienttransferprohibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:45Z",
+      "verification": "checked",
+      "whoisRegistrar": "Cloudflare, Inc.",
+      "whoisRegistered": true
+    },
+    {
+      "host": "omarchy.net",
+      "kind": "domain",
+      "classification": "suspended",
+      "owner": "unknown",
+      "note": "AI-generated lookalike site serving a random ZIP download; flagged in github.com/omacom/omarchy/discussions/6160. whois status clientHold since 2026-08-25",
+      "nameservers": [],
+      "nameserversFrom": null,
+      "dnsResolves": false,
+      "addresses": [],
+      "cname": null,
+      "httpStatus": null,
+      "finalUrl": null,
+      "redirectChain": [],
+      "whoisCreated": "2026-04-24",
+      "whoisStatus": [
+        "clientHold",
+        "clientTransferProhibited",
+        "clientUpdateProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:45Z",
+      "verification": "checked",
+      "whoisRegistrar": "Spaceship, Inc.",
+      "whoisRegistered": true,
+      "whoisNote": "registry record read; registrar whois referral unreachable"
+    },
+    {
+      "host": "omarchy-linux.com",
+      "kind": "domain",
+      "classification": "unregistered",
+      "owner": "",
+      "note": "Unregistered at last check",
+      "nameservers": [],
+      "nameserversFrom": null,
+      "dnsResolves": false,
+      "addresses": [],
+      "cname": null,
+      "httpStatus": null,
+      "finalUrl": null,
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:45Z",
+      "verification": "checked",
+      "whoisRegistered": false,
+      "whoisNote": "no matching record"
+    },
+    {
+      "host": "omarchy.ai",
+      "kind": "domain",
+      "classification": "unregistered",
+      "owner": "",
+      "note": "Unregistered at last check",
+      "nameservers": [
+        "maisie.ns.cloudflare.com",
+        "ruben.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": false,
+      "addresses": [],
+      "cname": null,
+      "httpStatus": null,
+      "finalUrl": null,
+      "redirectChain": [],
+      "whoisCreated": "2025-09-24",
+      "whoisStatus": [
+        "clientTransferProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:45Z",
+      "verification": "checked",
+      "whoisRegistrar": "Cloudflare, Inc",
+      "whoisRegistered": true,
+      "discrepancy": "seed says unregistered but it now resolves=False, whoisCreated=2025-09-24, httpStatus=None"
+    },
+    {
+      "host": "omarchy.app",
+      "kind": "domain",
+      "classification": "unregistered",
+      "owner": "",
+      "note": "Unregistered at last check",
+      "nameservers": [
+        "drew.ns.cloudflare.com",
+        "sasha.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": true,
+      "addresses": [
+        "188.114.96.9",
+        "188.114.97.9"
+      ],
+      "cname": null,
+      "httpStatus": 522,
+      "finalUrl": "https://omarchy.app/",
+      "redirectChain": [],
+      "whoisCreated": "2025-10-26",
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:57:05Z",
+      "verification": "checked",
+      "whoisNote": "whois server unreachable from this host",
+      "rdapCreated": "2025-10-26",
+      "rdapStatus": [
+        "client transfer prohibited"
+      ],
+      "rdapRegistered": true,
+      "rdapNote": null,
+      "creationSource": "rdap",
+      "whoisRegistered": true,
+      "discrepancy": "seed says unregistered but it now resolves=True, whoisCreated=2025-10-26, httpStatus=522"
+    },
+    {
+      "host": "omarchy.dev",
+      "kind": "domain",
+      "classification": "unregistered",
+      "owner": "",
+      "note": "Unregistered at last check",
+      "nameservers": [
+        "albert.ns.cloudflare.com",
+        "lucy.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": false,
+      "addresses": [],
+      "cname": null,
+      "httpStatus": null,
+      "finalUrl": null,
+      "redirectChain": [],
+      "whoisCreated": "2025-07-30",
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:45Z",
+      "verification": "checked",
+      "whoisNote": "whois server unreachable from this host",
+      "rdapCreated": "2025-07-30",
+      "rdapStatus": [
+        "client transfer prohibited"
+      ],
+      "rdapRegistered": true,
+      "rdapNote": null,
+      "creationSource": "rdap",
+      "whoisRegistered": true,
+      "discrepancy": "seed says unregistered but it now resolves=False, whoisCreated=2025-07-30, httpStatus=None"
+    },
+    {
+      "host": "omarchy.sh",
+      "kind": "domain",
+      "classification": "unregistered",
+      "owner": "",
+      "note": "Unregistered at last check",
+      "nameservers": [
+        "pedro.ns.cloudflare.com",
+        "sky.ns.cloudflare.com"
+      ],
+      "nameserversFrom": "self",
+      "dnsResolves": false,
+      "addresses": [],
+      "cname": null,
+      "httpStatus": null,
+      "finalUrl": null,
+      "redirectChain": [],
+      "whoisCreated": "2026-08-22",
+      "whoisStatus": [
+        "clientTransferProhibited"
+      ],
+      "lastChecked": "2026-09-17T00:56:45Z",
+      "verification": "checked",
+      "whoisRegistrar": "NameCheap, Inc.",
+      "whoisRegistered": true,
+      "discrepancy": "seed says unregistered but it now resolves=False, whoisCreated=2026-08-22, httpStatus=None"
+    },
+    {
+      "host": "omarchylinux.dev",
+      "kind": "domain",
+      "classification": "unregistered",
+      "owner": "",
+      "note": "Unregistered at last check",
+      "nameservers": [],
+      "nameserversFrom": null,
+      "dnsResolves": false,
+      "addresses": [],
+      "cname": null,
+      "httpStatus": null,
+      "finalUrl": null,
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:45Z",
+      "verification": "checked",
+      "whoisNote": "whois server unreachable from this host",
+      "rdapNote": "rdap: HTTP 404 (not proof of availability)"
+    },
+    {
+      "host": "omarchylinux.io",
+      "kind": "domain",
+      "classification": "unregistered",
+      "owner": "",
+      "note": "Unregistered at last check",
+      "nameservers": [],
+      "nameserversFrom": null,
+      "dnsResolves": false,
+      "addresses": [],
+      "cname": null,
+      "httpStatus": null,
+      "finalUrl": null,
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:45Z",
+      "verification": "checked",
+      "whoisRegistered": false,
+      "whoisNote": "no matching record"
+    },
+    {
+      "host": "omarchylinux.net",
+      "kind": "domain",
+      "classification": "unregistered",
+      "owner": "",
+      "note": "Unregistered at last check",
+      "nameservers": [],
+      "nameserversFrom": null,
+      "dnsResolves": false,
+      "addresses": [],
+      "cname": null,
+      "httpStatus": null,
+      "finalUrl": null,
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:45Z",
+      "verification": "checked",
+      "whoisRegistered": false,
+      "whoisNote": "no matching record"
+    },
+    {
+      "host": "mastodon.social/@omarchy",
+      "kind": "social",
+      "classification": "unknown",
+      "owner": "unknown",
+      "note": "Not official; squatter/parody account",
+      "nameservers": [],
+      "dnsResolves": null,
+      "httpStatus": null,
+      "finalUrl": null,
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "seed-only"
+    },
+    {
+      "host": "youtube.com/@omarchy",
+      "kind": "social",
+      "classification": "unknown",
+      "owner": "unknown",
+      "note": "Not official; squatter/parody account",
+      "nameservers": [],
+      "dnsResolves": null,
+      "httpStatus": null,
+      "finalUrl": null,
+      "redirectChain": [],
+      "whoisCreated": null,
+      "whoisStatus": null,
+      "lastChecked": "2026-09-17T00:56:42Z",
+      "verification": "seed-only"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+---
+import Base from '../../layouts/Base.astro';
+import { SITE } from '../../lib/site';
+import { articleLd } from '../../lib/seo';
+const desc = 'Submit an Omarchy hardware report in two minutes: run one command, paste the output, review exactly what is shared (machine, kernel, and device lines only), mark what works, and send.';
+---
+<Base title="Submit a hardware report" description={desc} crumbs={[{ name: 'Hardware', href: '/hardware/' }, { name: 'Submit', href: '/hardware/submit/' }]} ld={articleLd({ type: 'HowTo', title: 'Submit an Omarchy hardware report', description: desc, path: '/hardware/submit/' })}>
+  <div class="art-head"><h1>Submit a hardware report</h1><p class="lede">Reports become the per-model pages. Nothing is uploaded automatically: this page parses the output in your browser, shows you the exact lines that will be shared, and then opens a pre-filled GitHub issue you submit yourself.</p></div>
+  <div class="prose">
+    <h2>1. Run this on your Omarchy machine</h2>
+    <pre><code>omarchy debug --print --no-sudo</code></pre>
+    <p class="small muted">This is the same command the upstream bug template asks for. It prints hardware info via <code>inxi -Farz</code> (serials already filtered), your kernel, and your Omarchy package version. The parser below keeps only the Machine, Kernel, CPU, Graphics, Audio, Network, Bluetooth, Battery, and Omarchy Package lines. Hostname, IPs, logs, and package lists are discarded before anything leaves this page.</p>
+    <h2>2. Paste the output</h2>
+    <textarea id="raw" rows="10" style="width:100%;font-family:var(--mono);font-size:13px;padding:10px;border:1px solid var(--rule-2);background:var(--paper);color:var(--ink)" placeholder="Paste the full output here"></textarea>
+    <h2>3. Review what will be shared</h2>
+    <pre id="kept" style="min-height:80px"><code>(nothing parsed yet)</code></pre>
+    <h2>4. Mark what works</h2>
+    <div class="tablewrap"><table id="subs"><thead><tr><th>Subsystem</th><th>Works</th><th>Partly</th><th>Broken</th><th>Not tested / n/a</th></tr></thead><tbody></tbody></table></div>
+    <label style="display:block;margin-top:12px">Notes and fixes you applied (optional)<br /><textarea id="notes" rows="4" style="width:100%;font:inherit;padding:8px;border:1px solid var(--rule-2);background:var(--paper);color:var(--ink)"></textarea></label>
+    <h2>5. Send</h2>
+    <p><a id="send" class="btn btn-primary" href="#" target="_blank" rel="noopener">Open pre-filled GitHub issue</a> <button id="copy" class="btn" type="button">Copy report as text</button></p>
+    <p class="small muted">Opens a new issue in the site's public repository with the report body filled in. You need a GitHub account. If you would rather not, copy the text and email it to {SITE.contact}.</p>
+  </div>
+  <script is:inline define:vars={{ repo: SITE.repo }}>
+    (function(){
+      var KEEP=/^\s*(Machine:|System:|Kernel:|CPU:|Graphics:|Device-\d|Display:|Audio:|Network:|Bluetooth:|Battery:|Drives:|Omarchy Package:|Sensors:|Info:)/;
+      var STRIP=/(host:\s*\S+|Hostname:.*|\b\d{1,3}(\.\d{1,3}){3}\b|([0-9A-F]{2}:){5}[0-9A-F]{2}|serial:\s*\S+|uuid:\s*\S+|mac:\s*\S+|IP v[46]:.*)/gi;
+      var subs=['wifi','bluetooth','audio','webcam','fingerprint','gpu','suspend','hibernate','touchpad','display','battery','keyboard'];
+      var tb=document.querySelector('#subs tbody');
+      subs.forEach(function(s){var tr=document.createElement('tr');tr.innerHTML='<td>'+s+'</td>'+['works','partial','broken','unknown'].map(function(v,i){return '<td><input type="radio" name="s-'+s+'" value="'+v+'"'+(i===3?' checked':'')+' aria-label="'+s+' '+v+'"></td>';}).join('');tb.appendChild(tr);});
+      var raw=document.getElementById('raw'),kept=document.getElementById('kept'),send=document.getElementById('send'),notes=document.getElementById('notes');
+      function parse(){var lines=raw.value.split('\n'),out=[],grab=false;lines.forEach(function(l){if(KEEP.test(l)){grab=true;}else if(/^\S/.test(l)&&!/^\s/.test(l)){grab=false;}if(grab){out.push(l.replace(STRIP,'[redacted]'));}});return out.join('\n').trim();}
+      function machine(t){var m=t.match(/product:\s*([^\n]*?)\s+v:/)||t.match(/product:\s*([^\n]*)/);var s=t.match(/System:\s*([^\n]*?)\s+product:/);return ((s?s[1].replace(/\s+/g,' ').trim():'')+' '+(m?m[1].trim():'')).trim()||'Unknown machine';}
+      function build(){var t=parse();kept.innerHTML='<code></code>';kept.querySelector('code').textContent=t||'(nothing parsed yet)';var st={};subs.forEach(function(s){var r=document.querySelector('input[name="s-'+s+'"]:checked');st[s]=r?r.value:'unknown';});var k=t.match(/Kernel:\s*(\S+)/),o=t.match(/Omarchy Package:\s*(\S+)/);var title='[hw-report] '+machine(t)+(o?' on '+o[1]:'');var body='## Hardware report\n\nMachine: '+machine(t)+'\nOmarchy: '+(o?o[1]:'unknown')+'\nKernel: '+(k?k[1]:'unknown')+'\n\n### Subsystems\n'+subs.map(function(s){return '- '+s+': '+st[s];}).join('\n')+'\n\n### Notes\n'+(notes.value||'(none)')+'\n\n### Redacted omarchy debug excerpt\n```\n'+t+'\n```\n\n_Submitted via omarchylinux.org/hardware/submit/. Only the lines above were kept._';send.href=repo+'/issues/new?labels=hardware-report&title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body);send.dataset.body=body;}
+      raw.addEventListener('input',build);notes.addEventListener('input',build);tb.addEventListener('change',build);build();
+      document.getElementById('copy').addEventListener('click',function(){navigator.clipboard.writeText(send.dataset.body||'').then(function(){this.textContent='Copied';}.bind(this));});
+    })();
+  </script>
+</Base>

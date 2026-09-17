@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import Pill from '../../components/Pill.astro';
+import { visible, versionRangeLabel } from '../../lib/content';
+import { issueClusters, issueStats } from '../../lib/data';
+import { itemListLd, faqLd } from '../../lib/seo';
+const fixes = await visible('fix');
+const cats: Record<string, any[]> = {};
+for (const f of fixes) (cats[f.data.category ?? 'other'] ||= []).push(f);
+const labels: Record<string, string> = { boot: 'Boot, login, and disk encryption', update: 'Updates and package errors', display: 'Display, GPU, and scaling', audio: 'Audio', network: 'Wi-Fi, Bluetooth, and networking', input: 'Keyboard, touchpad, fingerprint, webcam', apps: 'Apps', agents: 'AI agents and dev tools', gaming: 'Gaming', shell: 'Shell, bar, menu, and keybindings (Quickshell)', security: 'Security', install: 'Installing', other: 'Other' };
+const order = ['update', 'boot', 'shell', 'display', 'network', 'audio', 'input', 'apps', 'agents', 'gaming', 'install', 'security', 'other'];
+const clusters = (issueClusters().clusters ?? []).filter((c: any) => !c.key.startsWith('err-'));
+const covered = new Set(fixes.flatMap((f: any) => [f.id, ...(f.data.errorStrings ?? []).map((s: string) => s.toLowerCase())]));
+const st = issueStats();
+const faq = [
+  { q: 'Where do Omarchy users get support?', a: 'Officially in the Omacom Discord (#omarchy-help) and GitHub Discussions; GitHub issues are for verified bugs only. Those places are hard to search, so this site rewrites solved problems as one page per error, with credit and links back to the thread.' },
+  { q: 'How do I find the error string?', a: 'Copy the exact text from the terminal, the update log, or the notification. On Omarchy 4 the update log lives under ~/.local/state/omarchy/ and omarchy update prints where it wrote it. Paste the string into the search box.' },
+  { q: 'What if my error is not here?', a: 'Check the "reported errors without a page yet" list below: each links a GitHub search that finds the upstream threads. Then run omarchy debug and ask in the official Discord. If you solve it, tell us and it becomes a page.' },
+];
+const ld = [itemListLd({ name: 'Omarchy error fixes', path: '/fix/', items: fixes.map((f: any) => ({ name: f.data.title, url: `/fix/${f.id}/` })) }), faqLd(faq)];
+---
+<Base title="Omarchy error fixes, one page per problem" description="Searchable fixes for real Omarchy Linux errors: update failures, boot and login problems, NVIDIA and display issues, Wi-Fi, audio, and Quickshell. Fix first, version-stamped, with the source threads." crumbs={[{ name: 'Fixes', href: '/fix/' }]} ld={ld}>
+  <article data-pagefind-body data-pagefind-meta="section:Fixes">
+  <div class="art-head"><h1>Fixes</h1><p class="lede">Paste your error into the search box, or browse by area. Every page says which Omarchy versions it applies to and who found the fix. {st.issues?.total ? `Built against ${st.issues.total.toLocaleString()} upstream issues and ${st.discussions?.total?.toLocaleString()} discussions.` : ''}</p></div>
+  <form class="search-form" action="/search/" method="get" role="search" style="margin:10px 0 20px" data-pagefind-ignore><input name="q" type="search" placeholder="paste an error string" style="width:min(520px,100%)" /><button type="submit">Find the fix</button></form>
+  {order.filter((k) => cats[k]?.length).map((k) => <section><h2 id={k}>{labels[k]}</h2><ul class="list-plain">{cats[k].map((f: any) => <li><a href={`/fix/${f.id}/`}>{f.data.title}</a> <Pill kind={f.data.status} /> <span class="pill pill-version">{versionRangeLabel(f.data.appliesTo)}</span><br /><span class="small muted">{f.data.description}</span></li>)}</ul></section>)}
+  {fixes.length === 0 && <p class="muted">Fix pages are being written.</p>}
+  <h2>Reported errors without a page yet</h2>
+  <p class="small muted">The most-reported topics upstream that we have not written up. Each link runs a GitHub search across the Omarchy issues so you can find the thread.</p>
+  <div class="tablewrap"><table><thead><tr><th>Topic</th><th class="num">Issues</th><th class="num">Open</th><th>Search</th></tr></thead><tbody>
+    {clusters.filter((c: any) => !covered.has(c.key)).slice(0, 40).map((c: any) => <tr><td>{c.label}</td><td class="num">{c.counts?.issues}</td><td class="num">{c.counts?.open}</td><td><a href={`https://github.com/omacom/omarchy/issues?q=${encodeURIComponent((c.query ?? [c.label]).join(' OR '))}`} rel="noopener nofollow">upstream issues</a></td></tr>)}
+  </tbody></table></div>
+  <section class="prose"><h2>Questions people ask</h2><dl class="faq">{faq.map((f) => <><dt>{f.q}</dt><dd>{f.a}</dd></>)}</dl></section>
+  </article>
+</Base>

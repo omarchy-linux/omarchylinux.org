@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Search" description="Search omarchylinux.org for error strings, laptop models, commands, and keybindings." noindex={true}>
+  <link slot="head" rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+  <div class="art-head"><h1>Search</h1><p class="lede">Paste an error string, a laptop model, or a command name.</p></div>
+  <div id="search"></div>
+  <script is:inline src="/pagefind/pagefind-ui.js"></script>
+  <script is:inline>
+    window.addEventListener('DOMContentLoaded', function () {
+      var q = new URLSearchParams(location.search).get('q') || '';
+      if (window.PagefindUI) { new PagefindUI({ element: '#search', showSubResults: true, showImages: false, resetStyles: false }); }
+      if (q) { setTimeout(function(){ var i=document.querySelector('#search input'); if(i){ i.value=q; i.dispatchEvent(new Event('input',{bubbles:true})); } }, 50); }
+    });
+  </script>
+</Base>

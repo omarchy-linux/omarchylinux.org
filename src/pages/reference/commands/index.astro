@@ -1,0 +1,48 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Pill from '../../../components/Pill.astro';
+import { commands, commandsIndex, latestTag } from '../../../lib/data';
+import { itemListLd } from '../../../lib/seo';
+const tag = latestTag();
+const all = commands(tag);
+const groups: Record<string, any[]> = {};
+for (const c of all) (groups[c.group ?? 'other'] ||= []).push(c);
+const gdesc = commandsIndex().groups ?? {};
+const gkeys = Object.keys(groups).sort();
+const ld = itemListLd({ name: `Omarchy commands (${tag})`, path: '/reference/commands/', items: all.map((c: any) => ({ name: c.cli ?? c.name, url: `/reference/commands/${c.name}/` })) });
+---
+<Base title={`All ${all.length} omarchy commands (${tag})`} description={`Every omarchy CLI command in ${tag}, grouped by area, with a one-line summary, arguments, and whether it needs sudo. Searchable, generated from source.`} crumbs={[{ name: 'Reference', href: '/reference/' }, { name: 'Commands', href: '/reference/commands/' }]} ld={ld}>
+  <div class="art-head"><h1>omarchy commands</h1><p class="lede">{all.length} commands in <strong>{tag}</strong>, in {gkeys.length} groups. Type <code>omarchy</code> alone on an Omarchy machine to see the same list; type <code>omarchy &lt;group&gt; --help</code> for a group. Hidden commands are internal helpers the router does not list.</p></div>
+  <div class="filter-bar" data-pagefind-ignore>
+    <label>Filter <input id="cmd-filter" type="search" placeholder="e.g. theme, sudo, monitor" /></label>
+    <label><input type="checkbox" id="cmd-hidden" /> show hidden</label>
+    <span id="cmd-count" class="muted small"></span>
+  </div>
+  {gkeys.map((g) => (
+    <section class="cmd-group" data-group={g}>
+      <h2 id={g}>{g} <span class="muted small">{gdesc[g] ?? ''}</span></h2>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Command</th><th>Summary</th><th>Args</th><th></th></tr></thead>
+        <tbody>
+          {groups[g].sort((a: any, b: any) => a.name.localeCompare(b.name)).map((c: any) => (
+            <tr class="cmd-row" data-hidden={c.hidden ? '1' : '0'} data-text={`${c.cli ?? c.name} ${c.summary ?? ''} ${(c.aliases ?? []).join(' ')}`.toLowerCase()}>
+              <td><a href={`/reference/commands/${c.name}/`}><code>{c.cli ?? c.name}</code></a></td>
+              <td>{c.summary}</td>
+              <td><code class="small">{c.args}</code></td>
+              <td>{c.requiresSudo && <Pill kind="warn" label="sudo" />} {c.hidden && <Pill kind="info" label="hidden" />}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table></div>
+    </section>
+  ))}
+  <script is:inline>
+    (function(){
+      var f=document.getElementById('cmd-filter'),h=document.getElementById('cmd-hidden'),cnt=document.getElementById('cmd-count');
+      var rows=Array.prototype.slice.call(document.querySelectorAll('.cmd-row'));
+      function apply(){var q=(f.value||'').toLowerCase().trim(),sh=h.checked,n=0;rows.forEach(function(r){var ok=(!q||r.dataset.text.indexOf(q)>-1)&&(sh||r.dataset.hidden==='0');r.hidden=!ok;if(ok)n++;});
+        document.querySelectorAll('.cmd-group').forEach(function(g){g.hidden=!g.querySelector('.cmd-row:not([hidden])');});cnt.textContent=n+' shown';}
+      f.addEventListener('input',apply);h.addEventListener('change',apply);apply();
+    })();
+  </script>
+</Base>

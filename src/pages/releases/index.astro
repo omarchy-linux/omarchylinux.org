@@ -1,0 +1,23 @@
+---
+import Base from '../../layouts/Base.astro';
+import Pill from '../../components/Pill.astro';
+import { versions, channels, newMigrationFiles, latestTag } from '../../lib/data';
+import { itemListLd } from '../../lib/seo';
+const v = versions();
+const rels: any[] = (v.releases ?? []).filter((r: any) => !r.prerelease || r.tag.startsWith('v4'));
+const ch = channels();
+const migCount = (tag: string) => { const n = newMigrationFiles(tag); return n.length || null; };
+const omV: Record<string, string> = ch?.omarchyPackage ?? (ch?.channels ? Object.fromEntries(Object.entries(ch.channels).map(([k, c]: any) => [k, c.packages?.omarchy?.version])) : {});
+---
+<Base title="Omarchy releases, migrations, and channels" description="Every Omarchy release with its date and notes, what each upgrade's migrations did to your machine, which package version each channel (stable, rc, edge) ships, and mirror lag." crumbs={[{ name: 'Releases', href: '/releases/' }]} ld={itemListLd({ name: 'Omarchy releases', path: '/releases/', items: rels.map((r) => ({ name: r.tag, url: `/releases/${r.tag}/` })) })}>
+  <div class="art-head"><h1>Releases</h1><p class="lede">Release notes live only on GitHub and omarchy.org has no changelog page. This is the browsable version: each release with its notes, the migrations it ran, and the commands it added or removed. Current: <strong>{latestTag()}</strong>.</p></div>
+  {ch && <div class="stat-strip" data-pagefind-ignore>
+    {['stable', 'rc', 'edge'].map((c) => <div><b>{omV[c] ?? '?'}</b><span>{c} channel · omarchy package</span></div>)}
+    {(ch.mirrors ?? []).map((m: any) => <div><b class="tabular">{m.lagHoursVsUpstream != null ? `${Math.round(m.lagHoursVsUpstream)} h` : '?'}</b><span>{m.name} behind Arch upstream</span></div>)}
+  </div>}
+  <p class="small muted">Channel data fetched {ch?.fetchedAt?.slice(0, 16) ?? 'n/a'}. See <a href="/releases/channels/">channel and mirror status</a> and <a href="/releases/still-broken/">closed issues people still reproduce</a>.</p>
+  <div class="tablewrap"><table><thead><tr><th>Release</th><th>Date</th><th>Notes</th><th class="num">Migrations</th></tr></thead><tbody>
+    {rels.map((r) => <tr><td><a href={`/releases/${r.tag}/`}><code>{r.tag}</code></a> {r.prerelease && <Pill kind="info" label="pre" />}</td><td class="small tabular">{(r.date ?? '').slice(0, 10)}</td><td class="small">{r.summary}</td><td class="num">{migCount(r.tag) ?? ''}</td></tr>)}
+  </tbody></table></div>
+  <section class="prose"><h2>Upgrade guides</h2><ul><li><a href="/upgrade/3-to-4-quattro/">Upgrading from 3.x to 4 (Quattro)</a></li><li><a href="/upgrade/before-you-update-checklist/">Before you run omarchy update</a></li><li><a href="/upgrade/rollback-with-snapper-and-limine/">Rolling back with snapshots</a></li><li><a href="/upgrade/what-migrations-do/">What migrations are</a></li><li><a href="/reference/changes/">Command and keybinding diffs between any two versions</a></li></ul></section>
+</Base>

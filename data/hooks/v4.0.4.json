@@ -1,0 +1,173 @@
+{
+  "count": 6,
+  "docs": [
+    {
+      "body": "Omarchy fires hooks at a handful of moments, and you can hang your own scripts off them. They live in `~/.config/omarchy/hooks/<event>.d/`, one directory per event, and every executable file in there runs when the event happens:\n\n| Event | When it runs |\n| ----- | ------------ |\n| `post-boot` | Right after the desktop has started |\n| `post-update` | During `omarchy update`, after packages and migrations |\n| `pre-refresh-pacman` | Before `omarchy refresh pacman` re-syncs the package config |\n| `theme-set` | After a theme change (theme name in `$1`) |\n| `font-set` | After a font change (font name in `$1`) |\n| `battery-low` | When the battery gets low (percentage in `$1`) |\n\nEach of those directories already holds a `.sample` file showing the shape of a hook — drop the `.sample` from the name to put it to work. To install a script you've written elsewhere, use `omarchy hook install post-boot ~/my-hook`, which copies it in and makes it executable.",
+      "file": "manual/31-dotfiles.md",
+      "heading": "Running scripts on system events",
+      "level": 3,
+      "line": 33,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/manual/31-dotfiles.md#L33"
+    }
+  ],
+  "events": [
+    {
+      "directory": "config/omarchy/hooks/battery-low.d",
+      "event": "battery-low",
+      "firedBy": [
+        {
+          "file": "bin/omarchy-battery-low",
+          "line": 17,
+          "snippet": "omarchy-hook battery-low \"$level\"",
+          "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-battery-low#L17"
+        }
+      ],
+      "samples": [
+        {
+          "content": "#!/bin/bash\n\n# This hook is called with the current battery percentage when the low battery\n# notification is sent. To put it into use, remove .sample from this file name.\n\nSOUND_FILE=\"/usr/share/sounds/freedesktop/stereo/dialog-warning.oga\"\n\nif omarchy-cmd-present mpv && [[ -f $SOUND_FILE ]]; then\n  mpv --no-video \"$SOUND_FILE\" >/dev/null 2>&1\nfi\n",
+          "description": "This hook is called with the current battery percentage when the low battery notification is sent. To put it into use, remove .sample from this file name.",
+          "isSample": true,
+          "lineCount": 10,
+          "name": "play-warning-sound.sample",
+          "path": "config/omarchy/hooks/battery-low.d/play-warning-sound.sample",
+          "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/config/omarchy/hooks/battery-low.d/play-warning-sound.sample"
+        }
+      ],
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/config/omarchy/hooks/battery-low.d",
+      "userPath": "~/.config/omarchy/hooks/battery-low.d"
+    },
+    {
+      "directory": "config/omarchy/hooks/font-set.d",
+      "event": "font-set",
+      "firedBy": [
+        {
+          "file": "bin/omarchy-font-set",
+          "line": 84,
+          "snippet": "omarchy-hook font-set \"$font_name\"",
+          "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-font-set#L84"
+        }
+      ],
+      "samples": [
+        {
+          "content": "#!/bin/bash\n\n# This hook is called with the snake-cased name of the font that has just been set.\n# To put it into use, remove .sample from this file name.\n\n# Example: Show the name of the font that was just set.\n# omarchy-notification-send -u low \"New font\" \"Your new font is $1\"\n",
+          "description": "This hook is called with the snake-cased name of the font that has just been set. To put it into use, remove .sample from this file name.",
+          "isSample": true,
+          "lineCount": 7,
+          "name": "show-font-notification.sample",
+          "path": "config/omarchy/hooks/font-set.d/show-font-notification.sample",
+          "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/config/omarchy/hooks/font-set.d/show-font-notification.sample"
+        }
+      ],
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/config/omarchy/hooks/font-set.d",
+      "userPath": "~/.config/omarchy/hooks/font-set.d"
+    },
+    {
+      "directory": "config/omarchy/hooks/post-boot.d",
+      "event": "post-boot",
+      "firedBy": [
+        {
+          "file": "default/hypr/autostart.lua",
+          "line": 13,
+          "snippet": "hl.exec_cmd(\"sleep 2 && omarchy-hook post-boot\")",
+          "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/default/hypr/autostart.lua#L13"
+        }
+      ],
+      "samples": [
+        {
+          "content": "#!/bin/bash\n\n# Show the weather status notification after Omarchy has started.\n# To put it into use, remove .sample from this file name.\n\nweather=$(omarchy-weather-status 2>/dev/null) || true\n\nif [[ -n $weather && $weather != \"Weather unavailable\" ]]; then\n  omarchy-notification-send -u low \"$weather\"\nfi\n",
+          "description": "Show the weather status notification after Omarchy has started. To put it into use, remove .sample from this file name.",
+          "isSample": true,
+          "lineCount": 10,
+          "name": "weather.sample",
+          "path": "config/omarchy/hooks/post-boot.d/weather.sample",
+          "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/config/omarchy/hooks/post-boot.d/weather.sample"
+        }
+      ],
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/config/omarchy/hooks/post-boot.d",
+      "userPath": "~/.config/omarchy/hooks/post-boot.d"
+    },
+    {
+      "directory": "config/omarchy/hooks/post-update.d",
+      "event": "post-update",
+      "firedBy": [
+        {
+          "file": "bin/omarchy-update",
+          "line": 49,
+          "snippet": "omarchy-hook post-update",
+          "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-update#L49"
+        }
+      ],
+      "samples": [
+        {
+          "content": "#!/bin/bash\n\n# This hook is called after an Omarchy system update has been performed.\n# To put it into use, remove .sample from this file name.\n\n# Example: Show notification after the system has been updated.\n# omarchy-notification-send -u low \"Update Performed\" \"Your system is now up to date\"\n",
+          "description": "This hook is called after an Omarchy system update has been performed. To put it into use, remove .sample from this file name.",
+          "isSample": true,
+          "lineCount": 7,
+          "name": "show-update-notification.sample",
+          "path": "config/omarchy/hooks/post-update.d/show-update-notification.sample",
+          "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/config/omarchy/hooks/post-update.d/show-update-notification.sample"
+        }
+      ],
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/config/omarchy/hooks/post-update.d",
+      "userPath": "~/.config/omarchy/hooks/post-update.d"
+    },
+    {
+      "directory": "config/omarchy/hooks/pre-refresh-pacman.d",
+      "event": "pre-refresh-pacman",
+      "firedBy": [
+        {
+          "file": "bin/omarchy-refresh-pacman",
+          "line": 23,
+          "snippet": "omarchy-hook pre-refresh-pacman",
+          "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-refresh-pacman#L23"
+        }
+      ],
+      "samples": [
+        {
+          "content": "#!/bin/bash\n\n# This hook is called by `omarchy refresh pacman` AFTER the channel template\n# is copied to /etc/pacman.conf and BEFORE `pacman -Syyuu` runs. Use it to\n# layer customizations onto the freshly-written pacman.conf so they're\n# respected by the upgrade — common cases are adding a custom repository\n# (e.g. CachyOS, Chaotic-AUR, an internal company repo) or extra IgnorePkg\n# lines.\n#\n# The hook runs as the invoking user with a warm sudo cache.\n#\n# To put it into use, remove .sample from this file name.\n\n# Example: add an Include line above [core] for a custom repo.\n# Maintain the repo entries in /etc/pacman.d/custom-repos.conf yourself.\n\nCONF=/etc/pacman.conf\nSNIPPET=/etc/pacman.d/custom-repos.conf\nMARKER=\"Include = $SNIPPET\"\n\n[[ -r $SNIPPET ]] || exit 0\ngrep -qxF \"$MARKER\" \"$CONF\" && exit 0\n\nsudo sed -i \"0,/^\\[core\\]/s||$MARKER\\n\\n[core]|\" \"$CONF\"\n",
+          "description": "This hook is called by `omarchy refresh pacman` AFTER the channel template is copied to /etc/pacman.conf and BEFORE `pacman -Syyuu` runs. Use it to layer customizations onto the freshly-written pacman.conf so they're respected by the upgrade — common cases are adding a custom repository (e.g. CachyOS, Chaotic-AUR, an internal company repo) or extra IgnorePkg lines. The hook runs as the invoking user with a warm sudo cache. To put it into use, remove .sample from this file name.",
+          "isSample": true,
+          "lineCount": 24,
+          "name": "add-custom-repo.sample",
+          "path": "config/omarchy/hooks/pre-refresh-pacman.d/add-custom-repo.sample",
+          "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/config/omarchy/hooks/pre-refresh-pacman.d/add-custom-repo.sample"
+        }
+      ],
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/config/omarchy/hooks/pre-refresh-pacman.d",
+      "userPath": "~/.config/omarchy/hooks/pre-refresh-pacman.d"
+    },
+    {
+      "directory": "config/omarchy/hooks/theme-set.d",
+      "event": "theme-set",
+      "firedBy": [
+        {
+          "file": "bin/omarchy-theme-set",
+          "line": 341,
+          "snippet": "omarchy-hook theme-set \"$THEME_NAME\" >/dev/null",
+          "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-theme-set#L341"
+        }
+      ],
+      "samples": [
+        {
+          "content": "#!/bin/bash\n\n# This hook is called with the snake-cased name of the theme that has just been set.\n# To put it into use, remove .sample from this file name.\n\n# Example: Show the name of the theme that was just set.\n# omarchy-notification-send -u low \"New theme\" \"Your new theme is $1\"\n",
+          "description": "This hook is called with the snake-cased name of the theme that has just been set. To put it into use, remove .sample from this file name.",
+          "isSample": true,
+          "lineCount": 7,
+          "name": "show-theme-notification.sample",
+          "path": "config/omarchy/hooks/theme-set.d/show-theme-notification.sample",
+          "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/config/omarchy/hooks/theme-set.d/show-theme-notification.sample"
+        }
+      ],
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/config/omarchy/hooks/theme-set.d",
+      "userPath": "~/.config/omarchy/hooks/theme-set.d"
+    }
+  ],
+  "generatedFrom": "data/source/v4.0.4/config/omarchy/hooks",
+  "prerelease": false,
+  "runner": {
+    "content": "#!/bin/bash\n\n# omarchy:summary=Run a named hook from ~/.config/omarchy/hooks/<name> and ~/.config/omarchy/hooks/<name>.d/.\n# omarchy:args=[name] [args...]\n\nset -e\n\nif (( $# < 1 )); then\n  echo \"Usage: omarchy-hook [name] [args...]\"\n  exit 1\nfi\n\nHOOK=$1\nHOOK_PATH=\"$HOME/.config/omarchy/hooks/$1\"\nHOOK_DIR=\"$HOOK_PATH.d\"\nshift\n\nif [[ -f $HOOK_PATH ]]; then\n  bash \"$HOOK_PATH\" \"$@\" || echo \"Hook failed: $HOOK_PATH\"\nfi\n\nif [[ -d $HOOK_DIR ]]; then\n  for hook in \"$HOOK_DIR\"/*; do\n    [[ -f $hook ]] || continue\n    [[ $hook == *.sample ]] && continue\n    bash \"$hook\" \"$@\" || echo \"Hook failed: $hook\"\n  done\nfi\n",
+    "path": "bin/omarchy-hook",
+    "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-hook"
+  },
+  "tag": "v4.0.4"
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Does it run Omarchy? — unofficial hardware reports</title>
+  <meta name="description" content="Unofficial Omarchy Linux hardware compatibility reports. Not affiliated with omarchy.org. Check laptops, mini PCs, and Intel Macs before you wipe a disk.">
+  <link rel="canonical" href="https://omarchylinux.org/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+  <p class="unofficial">Unofficial community reports. Not affiliated with Omarchy, the Omacom Foundation, 37signals, or DHH. Download the ISO only from <a href="https://omarchy.org">omarchy.org</a>.</p>
+  <div class="bar">
+    <a class="mark" href="index.html">omarchy<span>linux</span>.org</a>
+    <nav>
+      <a href="hardware/">Hardware</a>
+      <a href="from-mac.html">From Mac</a>
+      <a href="from-windows.html">From Windows</a>
+      <a href="buy.html">Buy</a>
+      <a href="verify.html">Verify ISO</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+  <main>
+    <section class="hero">
+      <h1>Will Omarchy run on this machine?</h1>
+      <p class="lede">Omarchy is DHH’s Arch + Hyprland distro. The official site is <a href="https://omarchy.org">omarchy.org</a>. This site is the missing piece: per-model reports, so you don’t find out about a dead Touch Bar after a wipe.</p>
+      <form class="search" action="hardware/" method="get">
+        <input id="q" name="q" type="search" placeholder="XPS 13, SER9, T480, M2 Air, Steam Deck, Flow Z13…" autocomplete="off">
+      </form>
+      <p class="filter-label">Rating</p>
+      <div class="pills" id="pills">
+        <button type="button" class="on" data-rating="all">All</button>
+        <button type="button" data-rating="gold">Gold</button>
+        <button type="button" data-rating="silver">Silver</button>
+        <button type="button" data-rating="bronze">Bronze</button>
+        <button type="button" data-rating="broken">Broken</button>
+        <button type="button" data-rating="experimental">Experimental</button>
+      </div>
+      <p class="filter-label">Brand</p>
+      <div class="pills" id="brands"></div>
+      <p class="tally" id="tally"></p>
+    </section>
+    <div class="grid" id="results"></div>
+    <p id="empty" hidden>No models match. <a href="hardware/">Browse the full matrix</a> or <a href="about.html#report">send a report</a>.</p>
+
+    <div class="actions">
+      <a class="cta" href="https://omarchy.org/#install">Get the official ISO</a>
+      <a class="ghost" href="verify.html">Verify checksums first</a>
+    </div>
+
+    <div class="two">
+      <div class="note">
+        <strong>Gold</strong> means day-one or widely confirmed. Official love is Dell XPS 2026 (Panther Lake) and Slimbook preinstalls. A 2011 ThinkPad X220 is the documented potato.
+      </div>
+      <div class="note">
+        <strong>Never download an ISO from this domain.</strong> We do not host images, mirrors, or “faster” torrents. Official file: <a href="https://iso.omarchy.org/omarchy-4.0.3.iso">iso.omarchy.org</a> with SHA-256 and signature beside it.
+      </div>
+    </div>
+  </main>
+  <footer>
+    Unofficial. Omarchy is a pending trademark of its owners.
+    <a href="about.html">About this site</a> ·
+    <a href="https://omarchy.org">omarchy.org</a> ·
+    <a href="https://plugins.omarchy.org">plugins</a> ·
+    <a href="https://github.com/omacom/omarchy">source</a>
+  </footer>
+  <script src="js/hardware.js"></script>
+  <script src="js/site.js"></script>
+</body>
+</html>

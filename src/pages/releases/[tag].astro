@@ -1,0 +1,38 @@
+---
+import Base from '../../layouts/Base.astro';
+import { versions, migrations, newMigrationFiles, diff, TAG_ORDER, tagsAvailable, isos } from '../../lib/data';
+import { renderMd } from '../../lib/md';
+import { articleLd } from '../../lib/seo';
+export async function getStaticPaths() { return (versions().releases ?? []).map((r: any) => ({ params: { tag: r.tag } })); }
+const { tag } = Astro.params;
+const rel = (versions().releases ?? []).find((r: any) => r.tag === tag);
+const idx = TAG_ORDER.indexOf(tag!);
+const prev = idx > 0 ? TAG_ORDER.slice(0, idx).reverse().find((t) => tagsAvailable().includes(t)) : undefined;
+const d = prev ? diff(prev, tag!) : null;
+const newMig: string[] = newMigrationFiles(tag!);
+const migs = tagsAvailable().includes(tag!) ? migrations(tag!).filter((m: any) => newMig.includes(m.file)) : [];
+const iso = (isos().isos ?? []).find((i: any) => i.tag === tag);
+const path = `/releases/${tag}/`;
+const desc = `Omarchy ${tag} (${(rel?.date ?? '').slice(0, 10)}): release notes, ${migs.length} migrations decoded${d ? `, ${d.commands?.added?.length ?? 0} commands added and ${d.commands?.removed?.length ?? 0} removed since ${prev}` : ''}, and the ISO checksum.`;
+---
+<Base title={`Omarchy ${tag} release notes, migrations, and checksum`} description={desc} crumbs={[{ name: 'Releases', href: '/releases/' }, { name: tag!, href: path }]} ld={articleLd({ title: `Omarchy ${tag}`, description: desc, path, datePublished: rel?.date ? new Date(rel.date) : undefined })} ogType="article" published={rel?.date ? new Date(rel.date) : undefined}>
+  <article data-pagefind-body data-pagefind-meta="section:Releases">
+  <div class="art-head"><h1>Omarchy {tag}</h1><p class="lede">Released {(rel?.date ?? '').slice(0, 10)}. <a href={rel?.url} rel="noopener">Official notes on GitHub</a>{iso?.sha256FromSidecar || iso?.sha256FromRelease ? <> · ISO SHA-256 <code class="small">{iso.sha256FromSidecar ?? iso.sha256FromRelease}</code> (<a href="/verify/">how to verify</a>)</> : null}.</p></div>
+  <div class="two">
+    <div class="prose">
+      <h2>Release notes</h2>
+      <div class="release-body" set:html={renderMd(rel?.body ?? '')} />
+    </div>
+    <div class="prose">
+      {prev && d && <><h2>Changes since {prev}</h2>
+        <p><a href={`/reference/changes/${prev}-to-${tag}/`}>Full diff</a>: {d.commands?.added?.length ?? 0} commands added, {d.commands?.removed?.length ?? 0} removed; {d.bindings?.added?.length ?? 0} keybindings added, {d.bindings?.removed?.length ?? 0} removed.</p>
+        {(d.commands?.removed ?? []).length > 0 && <p>Removed commands: {d.commands.removed.map((n: string) => <><a href={`/reference/commands/${n}/`}><code>{n}</code></a> </>)}</p>}
+      </>}
+      <h2>Migrations this upgrade ran ({migs.length})</h2>
+      <p class="small muted">Each is a script that ran once on your machine during <code>omarchy update</code>. Descriptions are the scripts' own messages.</p>
+      {migs.length === 0 ? <p>No new migrations recorded for this tag.</p> : <ul>{migs.map((m: any) => <li><span class="small tabular muted">{(m.date ?? '').slice(0, 10)}</span> {m.description || <em>(no description)</em>} <a class="small" href={m.sourceUrl} rel="noopener">src</a></li>)}</ul>}
+    </div>
+  </div>
+  <p class="small muted" style="margin-top:24px">Unofficial mirror of public release data. Notes © the Omarchy authors (MIT repository). Bare #numbers are linked to the upstream issue tracker.</p>
+  </article>
+</Base>

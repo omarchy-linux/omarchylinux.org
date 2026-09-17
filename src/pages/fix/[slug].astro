@@ -1,0 +1,38 @@
+---
+import { visible } from '../../lib/content';
+import EntryPage from '../../components/EntryPage.astro';
+import IssueList from '../../components/IssueList.astro';
+import { issueClusters } from '../../lib/data';
+export async function getStaticPaths() {
+  const entries = await visible('fix');
+  return entries.map((e: any) => ({ params: { slug: e.id }, props: { entry: e } }));
+}
+const { slug } = Astro.params;
+const { entry } = Astro.props as any;
+const d = entry.data;
+const CLUSTER_FOR: Record<string, string[]> = {
+  'command-not-found-xdg-terminal-exec': ['xdg-terminal-exec'], 'command-not-found-elephant': ['elephant-not-found'], 'codex-invalid-value-ask-for-approval': ['ask-for-approval', 'codex'],
+  'creating-a-snapshot-failed-snapper': ['snapshot-failed'], 'errors-occurred-no-packages-were-upgraded': ['no-packages-upgraded', 'failed-commit-transaction'], 'failed-to-retrieve-some-files-pacman': ['failed-retrieve-files'],
+  'signature-is-unknown-trust-keyring': ['signature-unknown-trust', 'keyring'], 'you-are-in-emergency-mode-after-update': ['emergency-mode'], 'kernel-panic-after-update-limine': ['kernel-panic'], 'black-screen-after-login': ['black-screen'],
+  'login-loop-or-password-not-accepted-sddm': ['login-loop', 'sddm'], 'lock-screen-wont-unlock': ['lock-screen', 'hyprlock'], 'omarchy-update-fails-or-hangs': ['omarchy-update'], 'migration-failed-mid-update': ['migration'], 'pacnew-and-pacsave-files-after-update': ['pacnew'],
+  'hyprland-lua-attempt-to-index-nil-global-o': ['nil-value-global-o'], 'custom-keybindings-lost-after-quattro': ['bindings-conf'], 'monitors-conf-replaced-by-monitors-lua': ['monitors-lua'], 'where-did-waybar-go': ['waybar'], 'walker-launcher-missing-after-update': ['walker'],
+  'nvidia-drivers-omarchy-4': ['nvidia'], 'hybrid-gpu-laptop-black-screen-aq-drm-devices': ['aq-drm-devices'], 'suspend-wont-resume-s2idle': ['suspend'], 'hibernate-fails-or-hangs': ['hibernate'], 'bluetooth-stops-after-resume': ['bluetooth'], 'wifi-drops-after-kernel-update-iwlwifi': ['iwlwifi', 'wifi'],
+  'no-sound-from-laptop-speakers': ['no-sound', 'cs35l56', 'speaker'], 'fractional-scaling-blurry-or-huge-apps': ['fractional', 'scaling'], 'multi-monitor-layout-not-saved': ['monitors-lua'], 'cursor-invisible-or-wrong-size': ['cursor'], 'fonts-wrong-or-missing-after-update': ['font'],
+  'clipboard-history-not-working': ['clipboard'], 'notifications-not-showing': ['notification'], 'screenshot-shortcut-not-working': ['screenshot'], 'dictation-voxtype-not-working': ['voxtype', 'dictation'], 'theme-not-applied-to-gtk4-apps': ['gtk4', 'libadwaita'], 'plugin-fails-to-load': ['plugin'],
+  'quickshell-crashes-or-bar-missing': ['quickshell'], 'chromium-flicker-hardware-acceleration': ['chromium'], 'claude-code-or-agent-cli-not-found': ['claude'], 'mise-command-not-found-or-shims': ['mise'], 'docker-permission-denied-after-group-change': ['docker'], 'steam-or-proton-game-crashes': ['steam', 'gamescope'],
+  'stuck-at-tty-or-cannot-switch-tty': ['tty'], 'luks-passphrase-not-accepted-at-boot': ['luks', 'azerty', 'keyboard-layout'], 'fingerprint-enrollment-fails': ['fingerprint'], 'battery-drains-fast': ['battery', 'tlp'], 'webcam-not-detected': ['webcam', 'ipu6', 'ipu7'], 'tailscale-not-connecting': ['tailscale'],
+  '1password-not-opening-or-wrong-scale': ['1password'], 'printer-not-found': ['printer', 'cups'], 'secure-boot-violation-or-wont-boot-uefi': [], 'install-fails-or-stalls': [],
+};
+const keys = CLUSTER_FOR[slug!] ?? [];
+const clusters = (issueClusters().clusters ?? []).filter((c: any) => keys.includes(c.key));
+const seen = new Set<number>();
+const issues = clusters.flatMap((c: any) => c.topIssues ?? []).filter((i: any) => (seen.has(i.number) ? false : (seen.add(i.number), true))).sort((a: any, b: any) => (b.reactions ?? 0) + (b.comments ?? 0) - ((a.reactions ?? 0) + (a.comments ?? 0)));
+const total = clusters.reduce((n: number, c: any) => n + (c.counts?.issues ?? 0), 0);
+const answers = clusters.flatMap((c: any) => c.bestAnswers ?? []).slice(0, 4);
+---
+<EntryPage collection="fix" slug={slug!} ldType="HowTo">
+  <div slot="after">
+    <IssueList title="Upstream threads about this error" issues={issues} note={total ? `${total} issues on the Omarchy tracker match this error cluster. Newest fixes often appear as comments on the most-discussed threads.` : ''} limit={10} />
+    {answers.length > 0 && <section data-pagefind-ignore><h2>Accepted answers upstream</h2><ul>{answers.map((a: any) => <li><a href={a.answerUrl ?? a.url} rel="noopener nofollow">{a.title}</a>{a.author && <span class="muted small"> · answered by {a.author}</span>}</li>)}</ul></section>}
+  </div>
+</EntryPage>

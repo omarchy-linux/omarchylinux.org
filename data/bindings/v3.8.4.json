@@ -1,0 +1,3599 @@
+{
+  "bindings": [
+    {
+      "action": "sendshortcut CTRL, Insert, activewindow",
+      "category": "clipboard",
+      "chord": "SUPER + C",
+      "file": "default/hypr/bindings/clipboard.conf",
+      "keys": [
+        "SUPER",
+        "C"
+      ],
+      "kind": "bindd",
+      "label": "Universal copy",
+      "line": 2,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/clipboard.conf#L2"
+    },
+    {
+      "action": "sendshortcut SHIFT, Insert, activewindow",
+      "category": "clipboard",
+      "chord": "SUPER + V",
+      "file": "default/hypr/bindings/clipboard.conf",
+      "keys": [
+        "SUPER",
+        "V"
+      ],
+      "kind": "bindd",
+      "label": "Universal paste",
+      "line": 3,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/clipboard.conf#L3"
+    },
+    {
+      "action": "sendshortcut CTRL, X, activewindow",
+      "category": "clipboard",
+      "chord": "SUPER + X",
+      "file": "default/hypr/bindings/clipboard.conf",
+      "keys": [
+        "SUPER",
+        "X"
+      ],
+      "kind": "bindd",
+      "label": "Universal cut",
+      "line": 4,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/clipboard.conf#L4"
+    },
+    {
+      "action": "omarchy-launch-walker -m clipboard",
+      "category": "clipboard",
+      "chord": "SUPER + CTRL + V",
+      "file": "default/hypr/bindings/clipboard.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "V"
+      ],
+      "kind": "bindd",
+      "label": "Clipboard manager",
+      "line": 5,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/clipboard.conf#L5"
+    },
+    {
+      "action": "omarchy-swayosd-client --output-volume raise",
+      "category": "media",
+      "chord": "XF86AudioRaiseVolume",
+      "file": "default/hypr/bindings/media.conf",
+      "keys": [
+        "XF86AudioRaiseVolume"
+      ],
+      "kind": "bindeld",
+      "label": "Volume up",
+      "line": 2,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/media.conf#L2"
+    },
+    {
+      "action": "omarchy-swayosd-client --output-volume lower",
+      "category": "media",
+      "chord": "XF86AudioLowerVolume",
+      "file": "default/hypr/bindings/media.conf",
+      "keys": [
+        "XF86AudioLowerVolume"
+      ],
+      "kind": "bindeld",
+      "label": "Volume down",
+      "line": 3,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/media.conf#L3"
+    },
+    {
+      "action": "omarchy-swayosd-client --output-volume mute-toggle",
+      "category": "media",
+      "chord": "XF86AudioMute",
+      "file": "default/hypr/bindings/media.conf",
+      "keys": [
+        "XF86AudioMute"
+      ],
+      "kind": "bindeld",
+      "label": "Mute",
+      "line": 4,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/media.conf#L4"
+    },
+    {
+      "action": "omarchy-audio-input-mute",
+      "category": "media",
+      "chord": "XF86AudioMicMute",
+      "file": "default/hypr/bindings/media.conf",
+      "keys": [
+        "XF86AudioMicMute"
+      ],
+      "kind": "bindeld",
+      "label": "Mute microphone",
+      "line": 5,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/media.conf#L5"
+    },
+    {
+      "action": "omarchy-brightness-display +5%",
+      "category": "media",
+      "chord": "XF86MonBrightnessUp",
+      "file": "default/hypr/bindings/media.conf",
+      "keys": [
+        "XF86MonBrightnessUp"
+      ],
+      "kind": "bindeld",
+      "label": "Brightness up",
+      "line": 6,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/media.conf#L6"
+    },
+    {
+      "action": "omarchy-brightness-display 5%-",
+      "category": "media",
+      "chord": "XF86MonBrightnessDown",
+      "file": "default/hypr/bindings/media.conf",
+      "keys": [
+        "XF86MonBrightnessDown"
+      ],
+      "kind": "bindeld",
+      "label": "Brightness down",
+      "line": 7,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/media.conf#L7"
+    },
+    {
+      "action": "omarchy-brightness-display 100%",
+      "category": "media",
+      "chord": "SHIFT + XF86MonBrightnessUp",
+      "file": "default/hypr/bindings/media.conf",
+      "keys": [
+        "SHIFT",
+        "XF86MonBrightnessUp"
+      ],
+      "kind": "bindeld",
+      "label": "Brightness maximum",
+      "line": 8,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/media.conf#L8"
+    },
+    {
+      "action": "omarchy-brightness-display 1%",
+      "category": "media",
+      "chord": "SHIFT + XF86MonBrightnessDown",
+      "file": "default/hypr/bindings/media.conf",
+      "keys": [
+        "SHIFT",
+        "XF86MonBrightnessDown"
+      ],
+      "kind": "bindeld",
+      "label": "Brightness minimum",
+      "line": 9,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/media.conf#L9"
+    },
+    {
+      "action": "omarchy-brightness-keyboard up",
+      "category": "media",
+      "chord": "XF86KbdBrightnessUp",
+      "file": "default/hypr/bindings/media.conf",
+      "keys": [
+        "XF86KbdBrightnessUp"
+      ],
+      "kind": "bindeld",
+      "label": "Keyboard brightness up",
+      "line": 10,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/media.conf#L10"
+    },
+    {
+      "action": "omarchy-brightness-keyboard down",
+      "category": "media",
+      "chord": "XF86KbdBrightnessDown",
+      "file": "default/hypr/bindings/media.conf",
+      "keys": [
+        "XF86KbdBrightnessDown"
+      ],
+      "kind": "bindeld",
+      "label": "Keyboard brightness down",
+      "line": 11,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/media.conf#L11"
+    },
+    {
+      "action": "omarchy-brightness-keyboard cycle",
+      "category": "media",
+      "chord": "XF86KbdLightOnOff",
+      "file": "default/hypr/bindings/media.conf",
+      "keys": [
+        "XF86KbdLightOnOff"
+      ],
+      "kind": "bindld",
+      "label": "Keyboard backlight cycle",
+      "line": 12,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/media.conf#L12"
+    },
+    {
+      "action": "omarchy-toggle-touchpad",
+      "category": "media",
+      "chord": "XF86TouchpadToggle",
+      "file": "default/hypr/bindings/media.conf",
+      "keys": [
+        "XF86TouchpadToggle"
+      ],
+      "kind": "bindld",
+      "label": "Toggle touchpad",
+      "line": 13,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/media.conf#L13"
+    },
+    {
+      "action": "omarchy-toggle-touchpad on",
+      "category": "media",
+      "chord": "XF86TouchpadOn",
+      "file": "default/hypr/bindings/media.conf",
+      "keys": [
+        "XF86TouchpadOn"
+      ],
+      "kind": "bindld",
+      "label": "Enable touchpad",
+      "line": 14,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/media.conf#L14"
+    },
+    {
+      "action": "omarchy-toggle-touchpad off",
+      "category": "media",
+      "chord": "XF86TouchpadOff",
+      "file": "default/hypr/bindings/media.conf",
+      "keys": [
+        "XF86TouchpadOff"
+      ],
+      "kind": "bindld",
+      "label": "Disable touchpad",
+      "line": 15,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/media.conf#L15"
+    },
+    {
+      "action": "omarchy-swayosd-client --output-volume +1",
+      "category": "media",
+      "chord": "ALT + XF86AudioRaiseVolume",
+      "file": "default/hypr/bindings/media.conf",
+      "keys": [
+        "ALT",
+        "XF86AudioRaiseVolume"
+      ],
+      "kind": "bindeld",
+      "label": "Volume up precise",
+      "line": 18,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/media.conf#L18"
+    },
+    {
+      "action": "omarchy-swayosd-client --output-volume -1",
+      "category": "media",
+      "chord": "ALT + XF86AudioLowerVolume",
+      "file": "default/hypr/bindings/media.conf",
+      "keys": [
+        "ALT",
+        "XF86AudioLowerVolume"
+      ],
+      "kind": "bindeld",
+      "label": "Volume down precise",
+      "line": 19,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/media.conf#L19"
+    },
+    {
+      "action": "omarchy-brightness-display +1%",
+      "category": "media",
+      "chord": "ALT + XF86MonBrightnessUp",
+      "file": "default/hypr/bindings/media.conf",
+      "keys": [
+        "ALT",
+        "XF86MonBrightnessUp"
+      ],
+      "kind": "bindeld",
+      "label": "Brightness up precise",
+      "line": 20,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/media.conf#L20"
+    },
+    {
+      "action": "omarchy-brightness-display 1%-",
+      "category": "media",
+      "chord": "ALT + XF86MonBrightnessDown",
+      "file": "default/hypr/bindings/media.conf",
+      "keys": [
+        "ALT",
+        "XF86MonBrightnessDown"
+      ],
+      "kind": "bindeld",
+      "label": "Brightness down precise",
+      "line": 21,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/media.conf#L21"
+    },
+    {
+      "action": "omarchy-swayosd-client --playerctl next",
+      "category": "media",
+      "chord": "XF86AudioNext",
+      "file": "default/hypr/bindings/media.conf",
+      "keys": [
+        "XF86AudioNext"
+      ],
+      "kind": "bindld",
+      "label": "Next track",
+      "line": 24,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/media.conf#L24"
+    },
+    {
+      "action": "omarchy-swayosd-client --playerctl play-pause",
+      "category": "media",
+      "chord": "XF86AudioPause",
+      "file": "default/hypr/bindings/media.conf",
+      "keys": [
+        "XF86AudioPause"
+      ],
+      "kind": "bindld",
+      "label": "Pause",
+      "line": 25,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/media.conf#L25"
+    },
+    {
+      "action": "omarchy-swayosd-client --playerctl play-pause",
+      "category": "media",
+      "chord": "XF86AudioPlay",
+      "file": "default/hypr/bindings/media.conf",
+      "keys": [
+        "XF86AudioPlay"
+      ],
+      "kind": "bindld",
+      "label": "Play",
+      "line": 26,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/media.conf#L26"
+    },
+    {
+      "action": "omarchy-swayosd-client --playerctl previous",
+      "category": "media",
+      "chord": "XF86AudioPrev",
+      "file": "default/hypr/bindings/media.conf",
+      "keys": [
+        "XF86AudioPrev"
+      ],
+      "kind": "bindld",
+      "label": "Previous track",
+      "line": 27,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/media.conf#L27"
+    },
+    {
+      "action": "omarchy-audio-output-switch",
+      "category": "media",
+      "chord": "SUPER + XF86AudioMute",
+      "file": "default/hypr/bindings/media.conf",
+      "keys": [
+        "SUPER",
+        "XF86AudioMute"
+      ],
+      "kind": "bindld",
+      "label": "Switch audio output",
+      "line": 30,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/media.conf#L30"
+    },
+    {
+      "action": "killactive",
+      "category": "tiling-v2",
+      "chord": "SUPER + W",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "W"
+      ],
+      "kind": "bindd",
+      "label": "Close window",
+      "line": 2,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L2"
+    },
+    {
+      "action": "omarchy-hyprland-window-close-all",
+      "category": "tiling-v2",
+      "chord": "CTRL + ALT + DELETE",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "CTRL",
+        "ALT",
+        "DELETE"
+      ],
+      "kind": "bindd",
+      "label": "Close all windows",
+      "line": 3,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L3"
+    },
+    {
+      "action": "layoutmsg togglesplit",
+      "category": "tiling-v2",
+      "chord": "SUPER + J",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "J"
+      ],
+      "kind": "bindd",
+      "label": "Toggle window split",
+      "line": 6,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L6"
+    },
+    {
+      "action": "pseudo",
+      "category": "tiling-v2",
+      "chord": "SUPER + P",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "P"
+      ],
+      "kind": "bindd",
+      "label": "Pseudo window",
+      "line": 7,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L7"
+    },
+    {
+      "action": "togglefloating",
+      "category": "tiling-v2",
+      "chord": "SUPER + T",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "T"
+      ],
+      "kind": "bindd",
+      "label": "Toggle window floating/tiling",
+      "line": 8,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L8"
+    },
+    {
+      "action": "fullscreen 0",
+      "category": "tiling-v2",
+      "chord": "SUPER + F",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "F"
+      ],
+      "kind": "bindd",
+      "label": "Full screen",
+      "line": 9,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L9"
+    },
+    {
+      "action": "fullscreenstate 0 2",
+      "category": "tiling-v2",
+      "chord": "SUPER + CTRL + F",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "F"
+      ],
+      "kind": "bindd",
+      "label": "Tiled full screen",
+      "line": 10,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L10"
+    },
+    {
+      "action": "fullscreen 1",
+      "category": "tiling-v2",
+      "chord": "SUPER + ALT + F",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "ALT",
+        "F"
+      ],
+      "kind": "bindd",
+      "label": "Full width",
+      "line": 11,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L11"
+    },
+    {
+      "action": "omarchy-hyprland-window-pop",
+      "category": "tiling-v2",
+      "chord": "SUPER + O",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "O"
+      ],
+      "kind": "bindd",
+      "label": "Pop window out (float & pin)",
+      "line": 12,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L12"
+    },
+    {
+      "action": "omarchy-hyprland-workspace-layout-toggle",
+      "category": "tiling-v2",
+      "chord": "SUPER + L",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "L"
+      ],
+      "kind": "bindd",
+      "label": "Toggle workspace layout",
+      "line": 13,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L13"
+    },
+    {
+      "action": "movefocus l",
+      "category": "tiling-v2",
+      "chord": "SUPER + LEFT",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "LEFT"
+      ],
+      "kind": "bindd",
+      "label": "Focus on left window",
+      "line": 16,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L16"
+    },
+    {
+      "action": "movefocus r",
+      "category": "tiling-v2",
+      "chord": "SUPER + RIGHT",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "RIGHT"
+      ],
+      "kind": "bindd",
+      "label": "Focus on right window",
+      "line": 17,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L17"
+    },
+    {
+      "action": "movefocus u",
+      "category": "tiling-v2",
+      "chord": "SUPER + UP",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "UP"
+      ],
+      "kind": "bindd",
+      "label": "Focus on above window",
+      "line": 18,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L18"
+    },
+    {
+      "action": "movefocus d",
+      "category": "tiling-v2",
+      "chord": "SUPER + DOWN",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "DOWN"
+      ],
+      "kind": "bindd",
+      "label": "Focus on below window",
+      "line": 19,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L19"
+    },
+    {
+      "action": "workspace 1",
+      "category": "tiling-v2",
+      "chord": "SUPER + code:10",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "code:10"
+      ],
+      "kind": "bindd",
+      "label": "Switch to workspace 1",
+      "line": 22,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L22"
+    },
+    {
+      "action": "workspace 2",
+      "category": "tiling-v2",
+      "chord": "SUPER + code:11",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "code:11"
+      ],
+      "kind": "bindd",
+      "label": "Switch to workspace 2",
+      "line": 23,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L23"
+    },
+    {
+      "action": "workspace 3",
+      "category": "tiling-v2",
+      "chord": "SUPER + code:12",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "code:12"
+      ],
+      "kind": "bindd",
+      "label": "Switch to workspace 3",
+      "line": 24,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L24"
+    },
+    {
+      "action": "workspace 4",
+      "category": "tiling-v2",
+      "chord": "SUPER + code:13",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "code:13"
+      ],
+      "kind": "bindd",
+      "label": "Switch to workspace 4",
+      "line": 25,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L25"
+    },
+    {
+      "action": "workspace 5",
+      "category": "tiling-v2",
+      "chord": "SUPER + code:14",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "code:14"
+      ],
+      "kind": "bindd",
+      "label": "Switch to workspace 5",
+      "line": 26,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L26"
+    },
+    {
+      "action": "workspace 6",
+      "category": "tiling-v2",
+      "chord": "SUPER + code:15",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "code:15"
+      ],
+      "kind": "bindd",
+      "label": "Switch to workspace 6",
+      "line": 27,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L27"
+    },
+    {
+      "action": "workspace 7",
+      "category": "tiling-v2",
+      "chord": "SUPER + code:16",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "code:16"
+      ],
+      "kind": "bindd",
+      "label": "Switch to workspace 7",
+      "line": 28,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L28"
+    },
+    {
+      "action": "workspace 8",
+      "category": "tiling-v2",
+      "chord": "SUPER + code:17",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "code:17"
+      ],
+      "kind": "bindd",
+      "label": "Switch to workspace 8",
+      "line": 29,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L29"
+    },
+    {
+      "action": "workspace 9",
+      "category": "tiling-v2",
+      "chord": "SUPER + code:18",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "code:18"
+      ],
+      "kind": "bindd",
+      "label": "Switch to workspace 9",
+      "line": 30,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L30"
+    },
+    {
+      "action": "workspace 10",
+      "category": "tiling-v2",
+      "chord": "SUPER + code:19",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "code:19"
+      ],
+      "kind": "bindd",
+      "label": "Switch to workspace 10",
+      "line": 31,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L31"
+    },
+    {
+      "action": "movetoworkspace 1",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + code:10",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "code:10"
+      ],
+      "kind": "bindd",
+      "label": "Move window to workspace 1",
+      "line": 34,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L34"
+    },
+    {
+      "action": "movetoworkspace 2",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + code:11",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "code:11"
+      ],
+      "kind": "bindd",
+      "label": "Move window to workspace 2",
+      "line": 35,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L35"
+    },
+    {
+      "action": "movetoworkspace 3",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + code:12",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "code:12"
+      ],
+      "kind": "bindd",
+      "label": "Move window to workspace 3",
+      "line": 36,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L36"
+    },
+    {
+      "action": "movetoworkspace 4",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + code:13",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "code:13"
+      ],
+      "kind": "bindd",
+      "label": "Move window to workspace 4",
+      "line": 37,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L37"
+    },
+    {
+      "action": "movetoworkspace 5",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + code:14",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "code:14"
+      ],
+      "kind": "bindd",
+      "label": "Move window to workspace 5",
+      "line": 38,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L38"
+    },
+    {
+      "action": "movetoworkspace 6",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + code:15",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "code:15"
+      ],
+      "kind": "bindd",
+      "label": "Move window to workspace 6",
+      "line": 39,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L39"
+    },
+    {
+      "action": "movetoworkspace 7",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + code:16",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "code:16"
+      ],
+      "kind": "bindd",
+      "label": "Move window to workspace 7",
+      "line": 40,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L40"
+    },
+    {
+      "action": "movetoworkspace 8",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + code:17",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "code:17"
+      ],
+      "kind": "bindd",
+      "label": "Move window to workspace 8",
+      "line": 41,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L41"
+    },
+    {
+      "action": "movetoworkspace 9",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + code:18",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "code:18"
+      ],
+      "kind": "bindd",
+      "label": "Move window to workspace 9",
+      "line": 42,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L42"
+    },
+    {
+      "action": "movetoworkspace 10",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + code:19",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "code:19"
+      ],
+      "kind": "bindd",
+      "label": "Move window to workspace 10",
+      "line": 43,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L43"
+    },
+    {
+      "action": "movetoworkspacesilent 1",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + ALT + code:10",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "ALT",
+        "code:10"
+      ],
+      "kind": "bindd",
+      "label": "Move window silently to workspace 1",
+      "line": 46,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L46"
+    },
+    {
+      "action": "movetoworkspacesilent 2",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + ALT + code:11",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "ALT",
+        "code:11"
+      ],
+      "kind": "bindd",
+      "label": "Move window silently to workspace 2",
+      "line": 47,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L47"
+    },
+    {
+      "action": "movetoworkspacesilent 3",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + ALT + code:12",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "ALT",
+        "code:12"
+      ],
+      "kind": "bindd",
+      "label": "Move window silently to workspace 3",
+      "line": 48,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L48"
+    },
+    {
+      "action": "movetoworkspacesilent 4",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + ALT + code:13",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "ALT",
+        "code:13"
+      ],
+      "kind": "bindd",
+      "label": "Move window silently to workspace 4",
+      "line": 49,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L49"
+    },
+    {
+      "action": "movetoworkspacesilent 5",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + ALT + code:14",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "ALT",
+        "code:14"
+      ],
+      "kind": "bindd",
+      "label": "Move window silently to workspace 5",
+      "line": 50,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L50"
+    },
+    {
+      "action": "movetoworkspacesilent 6",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + ALT + code:15",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "ALT",
+        "code:15"
+      ],
+      "kind": "bindd",
+      "label": "Move window silently to workspace 6",
+      "line": 51,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L51"
+    },
+    {
+      "action": "movetoworkspacesilent 7",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + ALT + code:16",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "ALT",
+        "code:16"
+      ],
+      "kind": "bindd",
+      "label": "Move window silently to workspace 7",
+      "line": 52,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L52"
+    },
+    {
+      "action": "movetoworkspacesilent 8",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + ALT + code:17",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "ALT",
+        "code:17"
+      ],
+      "kind": "bindd",
+      "label": "Move window silently to workspace 8",
+      "line": 53,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L53"
+    },
+    {
+      "action": "movetoworkspacesilent 9",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + ALT + code:18",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "ALT",
+        "code:18"
+      ],
+      "kind": "bindd",
+      "label": "Move window silently to workspace 9",
+      "line": 54,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L54"
+    },
+    {
+      "action": "movetoworkspacesilent 10",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + ALT + code:19",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "ALT",
+        "code:19"
+      ],
+      "kind": "bindd",
+      "label": "Move window silently to workspace 10",
+      "line": 55,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L55"
+    },
+    {
+      "action": "togglespecialworkspace scratchpad",
+      "category": "tiling-v2",
+      "chord": "SUPER + S",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "S"
+      ],
+      "kind": "bindd",
+      "label": "Toggle scratchpad",
+      "line": 58,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L58"
+    },
+    {
+      "action": "movetoworkspacesilent special:scratchpad",
+      "category": "tiling-v2",
+      "chord": "SUPER + ALT + S",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "ALT",
+        "S"
+      ],
+      "kind": "bindd",
+      "label": "Move window to scratchpad",
+      "line": 59,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L59"
+    },
+    {
+      "action": "workspace e+1",
+      "category": "tiling-v2",
+      "chord": "SUPER + TAB",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "TAB"
+      ],
+      "kind": "bindd",
+      "label": "Next workspace",
+      "line": 62,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L62"
+    },
+    {
+      "action": "workspace e-1",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + TAB",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "TAB"
+      ],
+      "kind": "bindd",
+      "label": "Previous workspace",
+      "line": 63,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L63"
+    },
+    {
+      "action": "workspace previous",
+      "category": "tiling-v2",
+      "chord": "SUPER + CTRL + TAB",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "TAB"
+      ],
+      "kind": "bindd",
+      "label": "Former workspace",
+      "line": 64,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L64"
+    },
+    {
+      "action": "movecurrentworkspacetomonitor l",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + ALT + LEFT",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "ALT",
+        "LEFT"
+      ],
+      "kind": "bindd",
+      "label": "Move workspace to left monitor",
+      "line": 67,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L67"
+    },
+    {
+      "action": "movecurrentworkspacetomonitor r",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + ALT + RIGHT",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "ALT",
+        "RIGHT"
+      ],
+      "kind": "bindd",
+      "label": "Move workspace to right monitor",
+      "line": 68,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L68"
+    },
+    {
+      "action": "movecurrentworkspacetomonitor u",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + ALT + UP",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "ALT",
+        "UP"
+      ],
+      "kind": "bindd",
+      "label": "Move workspace to up monitor",
+      "line": 69,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L69"
+    },
+    {
+      "action": "movecurrentworkspacetomonitor d",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + ALT + DOWN",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "ALT",
+        "DOWN"
+      ],
+      "kind": "bindd",
+      "label": "Move workspace to down monitor",
+      "line": 70,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L70"
+    },
+    {
+      "action": "swapwindow l",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + LEFT",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "LEFT"
+      ],
+      "kind": "bindd",
+      "label": "Swap window to the left",
+      "line": 73,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L73"
+    },
+    {
+      "action": "swapwindow r",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + RIGHT",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "RIGHT"
+      ],
+      "kind": "bindd",
+      "label": "Swap window to the right",
+      "line": 74,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L74"
+    },
+    {
+      "action": "swapwindow u",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + UP",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "UP"
+      ],
+      "kind": "bindd",
+      "label": "Swap window up",
+      "line": 75,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L75"
+    },
+    {
+      "action": "swapwindow d",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + DOWN",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "DOWN"
+      ],
+      "kind": "bindd",
+      "label": "Swap window down",
+      "line": 76,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L76"
+    },
+    {
+      "action": "cyclenext",
+      "category": "tiling-v2",
+      "chord": "ALT + TAB",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "ALT",
+        "TAB"
+      ],
+      "kind": "bindd",
+      "label": "Focus on next window",
+      "line": 79,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L79"
+    },
+    {
+      "action": "cyclenext prev",
+      "category": "tiling-v2",
+      "chord": "ALT + SHIFT + TAB",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "ALT",
+        "SHIFT",
+        "TAB"
+      ],
+      "kind": "bindd",
+      "label": "Focus on previous window",
+      "line": 80,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L80"
+    },
+    {
+      "action": "bringactivetotop",
+      "category": "tiling-v2",
+      "chord": "ALT + TAB",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "ALT",
+        "TAB"
+      ],
+      "kind": "bindd",
+      "label": "Reveal active window on top",
+      "line": 81,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L81"
+    },
+    {
+      "action": "bringactivetotop",
+      "category": "tiling-v2",
+      "chord": "ALT + SHIFT + TAB",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "ALT",
+        "SHIFT",
+        "TAB"
+      ],
+      "kind": "bindd",
+      "label": "Reveal active window on top",
+      "line": 82,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L82"
+    },
+    {
+      "action": "focusmonitor +1",
+      "category": "tiling-v2",
+      "chord": "CTRL + ALT + TAB",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "CTRL",
+        "ALT",
+        "TAB"
+      ],
+      "kind": "bindd",
+      "label": "Focus on next monitor",
+      "line": 85,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L85"
+    },
+    {
+      "action": "focusmonitor -1",
+      "category": "tiling-v2",
+      "chord": "CTRL + ALT + SHIFT + TAB",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "CTRL",
+        "ALT",
+        "SHIFT",
+        "TAB"
+      ],
+      "kind": "bindd",
+      "label": "Focus on previous monitor",
+      "line": 86,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L86"
+    },
+    {
+      "action": "resizeactive -100 0",
+      "category": "tiling-v2",
+      "chord": "SUPER + code:20",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "code:20"
+      ],
+      "kind": "bindd",
+      "label": "Expand window left",
+      "line": 89,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L89"
+    },
+    {
+      "action": "resizeactive 100 0",
+      "category": "tiling-v2",
+      "chord": "SUPER + code:21",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "code:21"
+      ],
+      "kind": "bindd",
+      "label": "Shrink window left",
+      "line": 90,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L90"
+    },
+    {
+      "action": "resizeactive 0 -100",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + code:20",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "code:20"
+      ],
+      "kind": "bindd",
+      "label": "Shrink window up",
+      "line": 91,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L91"
+    },
+    {
+      "action": "resizeactive 0 100",
+      "category": "tiling-v2",
+      "chord": "SUPER + SHIFT + code:21",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "code:21"
+      ],
+      "kind": "bindd",
+      "label": "Expand window down",
+      "line": 92,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L92"
+    },
+    {
+      "action": "workspace e+1",
+      "category": "tiling-v2",
+      "chord": "SUPER + mouse_down",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "mouse_down"
+      ],
+      "kind": "bindd",
+      "label": "Scroll active workspace forward",
+      "line": 95,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L95"
+    },
+    {
+      "action": "workspace e-1",
+      "category": "tiling-v2",
+      "chord": "SUPER + mouse_up",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "mouse_up"
+      ],
+      "kind": "bindd",
+      "label": "Scroll active workspace backward",
+      "line": 96,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L96"
+    },
+    {
+      "action": "movewindow",
+      "category": "tiling-v2",
+      "chord": "SUPER + mouse:272",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "mouse:272"
+      ],
+      "kind": "bindmd",
+      "label": "Move window",
+      "line": 99,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L99"
+    },
+    {
+      "action": "resizewindow",
+      "category": "tiling-v2",
+      "chord": "SUPER + mouse:273",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "mouse:273"
+      ],
+      "kind": "bindmd",
+      "label": "Resize window",
+      "line": 100,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L100"
+    },
+    {
+      "action": "togglegroup",
+      "category": "tiling-v2",
+      "chord": "SUPER + G",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "G"
+      ],
+      "kind": "bindd",
+      "label": "Toggle window grouping",
+      "line": 103,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L103"
+    },
+    {
+      "action": "moveoutofgroup",
+      "category": "tiling-v2",
+      "chord": "SUPER + ALT + G",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "ALT",
+        "G"
+      ],
+      "kind": "bindd",
+      "label": "Move active window out of group",
+      "line": 104,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L104"
+    },
+    {
+      "action": "moveintogroup l",
+      "category": "tiling-v2",
+      "chord": "SUPER + ALT + LEFT",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "ALT",
+        "LEFT"
+      ],
+      "kind": "bindd",
+      "label": "Move window to group on left",
+      "line": 107,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L107"
+    },
+    {
+      "action": "moveintogroup r",
+      "category": "tiling-v2",
+      "chord": "SUPER + ALT + RIGHT",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "ALT",
+        "RIGHT"
+      ],
+      "kind": "bindd",
+      "label": "Move window to group on right",
+      "line": 108,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L108"
+    },
+    {
+      "action": "moveintogroup u",
+      "category": "tiling-v2",
+      "chord": "SUPER + ALT + UP",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "ALT",
+        "UP"
+      ],
+      "kind": "bindd",
+      "label": "Move window to group on top",
+      "line": 109,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L109"
+    },
+    {
+      "action": "moveintogroup d",
+      "category": "tiling-v2",
+      "chord": "SUPER + ALT + DOWN",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "ALT",
+        "DOWN"
+      ],
+      "kind": "bindd",
+      "label": "Move window to group on bottom",
+      "line": 110,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L110"
+    },
+    {
+      "action": "changegroupactive f",
+      "category": "tiling-v2",
+      "chord": "SUPER + ALT + TAB",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "ALT",
+        "TAB"
+      ],
+      "kind": "bindd",
+      "label": "Next window in group",
+      "line": 113,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L113"
+    },
+    {
+      "action": "changegroupactive b",
+      "category": "tiling-v2",
+      "chord": "SUPER + ALT + SHIFT + TAB",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "ALT",
+        "SHIFT",
+        "TAB"
+      ],
+      "kind": "bindd",
+      "label": "Previous window in group",
+      "line": 114,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L114"
+    },
+    {
+      "action": "changegroupactive b",
+      "category": "tiling-v2",
+      "chord": "SUPER + CTRL + LEFT",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "LEFT"
+      ],
+      "kind": "bindd",
+      "label": "Move grouped window focus left",
+      "line": 117,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L117"
+    },
+    {
+      "action": "changegroupactive f",
+      "category": "tiling-v2",
+      "chord": "SUPER + CTRL + RIGHT",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "RIGHT"
+      ],
+      "kind": "bindd",
+      "label": "Move grouped window focus right",
+      "line": 118,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L118"
+    },
+    {
+      "action": "changegroupactive f",
+      "category": "tiling-v2",
+      "chord": "SUPER + ALT + mouse_down",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "ALT",
+        "mouse_down"
+      ],
+      "kind": "bindd",
+      "label": "Next window in group",
+      "line": 121,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L121"
+    },
+    {
+      "action": "changegroupactive b",
+      "category": "tiling-v2",
+      "chord": "SUPER + ALT + mouse_up",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "ALT",
+        "mouse_up"
+      ],
+      "kind": "bindd",
+      "label": "Previous window in group",
+      "line": 122,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L122"
+    },
+    {
+      "action": "changegroupactive 1",
+      "category": "tiling-v2",
+      "chord": "SUPER + ALT + code:10",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "ALT",
+        "code:10"
+      ],
+      "kind": "bindd",
+      "label": "Switch to group window 1",
+      "line": 125,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L125"
+    },
+    {
+      "action": "changegroupactive 2",
+      "category": "tiling-v2",
+      "chord": "SUPER + ALT + code:11",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "ALT",
+        "code:11"
+      ],
+      "kind": "bindd",
+      "label": "Switch to group window 2",
+      "line": 126,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L126"
+    },
+    {
+      "action": "changegroupactive 3",
+      "category": "tiling-v2",
+      "chord": "SUPER + ALT + code:12",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "ALT",
+        "code:12"
+      ],
+      "kind": "bindd",
+      "label": "Switch to group window 3",
+      "line": 127,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L127"
+    },
+    {
+      "action": "changegroupactive 4",
+      "category": "tiling-v2",
+      "chord": "SUPER + ALT + code:13",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "ALT",
+        "code:13"
+      ],
+      "kind": "bindd",
+      "label": "Switch to group window 4",
+      "line": 128,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L128"
+    },
+    {
+      "action": "changegroupactive 5",
+      "category": "tiling-v2",
+      "chord": "SUPER + ALT + code:14",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "ALT",
+        "code:14"
+      ],
+      "kind": "bindd",
+      "label": "Switch to group window 5",
+      "line": 129,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L129"
+    },
+    {
+      "action": "omarchy-hyprland-monitor-scaling-cycle",
+      "category": "tiling-v2",
+      "chord": "SUPER + code:61",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "code:61"
+      ],
+      "kind": "bindd",
+      "label": "Cycle monitor scaling",
+      "line": 132,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L132"
+    },
+    {
+      "action": "omarchy-hyprland-monitor-scaling-cycle --reverse",
+      "category": "tiling-v2",
+      "chord": "SUPER + ALT + code:61",
+      "file": "default/hypr/bindings/tiling-v2.conf",
+      "keys": [
+        "SUPER",
+        "ALT",
+        "code:61"
+      ],
+      "kind": "bindd",
+      "label": "Cycle monitor scaling backwards",
+      "line": 133,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling-v2.conf#L133"
+    },
+    {
+      "action": "killactive",
+      "category": "tiling",
+      "chord": "SUPER + W",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "W"
+      ],
+      "kind": "bindd",
+      "label": "Close window",
+      "line": 5,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L5"
+    },
+    {
+      "action": "omarchy-hyprland-window-close-all",
+      "category": "tiling",
+      "chord": "CTRL + ALT + DELETE",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "CTRL",
+        "ALT",
+        "DELETE"
+      ],
+      "kind": "bindd",
+      "label": "Close all windows",
+      "line": 6,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L6"
+    },
+    {
+      "action": "layoutmsg togglesplit",
+      "category": "tiling",
+      "chord": "SUPER + J",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "J"
+      ],
+      "kind": "bindd",
+      "label": "Toggle window split",
+      "line": 9,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L9"
+    },
+    {
+      "action": "pseudo",
+      "category": "tiling",
+      "chord": "SUPER + P",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "P"
+      ],
+      "kind": "bindd",
+      "label": "Pseudo window",
+      "line": 10,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L10"
+    },
+    {
+      "action": "togglefloating",
+      "category": "tiling",
+      "chord": "SUPER + SHIFT + V",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "V"
+      ],
+      "kind": "bindd",
+      "label": "Toggle window floating/tiling",
+      "line": 11,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L11"
+    },
+    {
+      "action": "fullscreen 0",
+      "category": "tiling",
+      "chord": "SHIFT + F11",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SHIFT",
+        "F11"
+      ],
+      "kind": "bindd",
+      "label": "Force full screen",
+      "line": 12,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L12"
+    },
+    {
+      "action": "fullscreen 1",
+      "category": "tiling",
+      "chord": "ALT + F11",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "ALT",
+        "F11"
+      ],
+      "kind": "bindd",
+      "label": "Full width",
+      "line": 13,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L13"
+    },
+    {
+      "action": "movefocus l",
+      "category": "tiling",
+      "chord": "SUPER + LEFT",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "LEFT"
+      ],
+      "kind": "bindd",
+      "label": "Move focus left",
+      "line": 16,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L16"
+    },
+    {
+      "action": "movefocus r",
+      "category": "tiling",
+      "chord": "SUPER + RIGHT",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "RIGHT"
+      ],
+      "kind": "bindd",
+      "label": "Move focus right",
+      "line": 17,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L17"
+    },
+    {
+      "action": "movefocus u",
+      "category": "tiling",
+      "chord": "SUPER + UP",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "UP"
+      ],
+      "kind": "bindd",
+      "label": "Move focus up",
+      "line": 18,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L18"
+    },
+    {
+      "action": "movefocus d",
+      "category": "tiling",
+      "chord": "SUPER + DOWN",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "DOWN"
+      ],
+      "kind": "bindd",
+      "label": "Move focus down",
+      "line": 19,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L19"
+    },
+    {
+      "action": "workspace 1",
+      "category": "tiling",
+      "chord": "SUPER + code:10",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "code:10"
+      ],
+      "kind": "bindd",
+      "label": "Switch to workspace 1",
+      "line": 22,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L22"
+    },
+    {
+      "action": "workspace 2",
+      "category": "tiling",
+      "chord": "SUPER + code:11",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "code:11"
+      ],
+      "kind": "bindd",
+      "label": "Switch to workspace 2",
+      "line": 23,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L23"
+    },
+    {
+      "action": "workspace 3",
+      "category": "tiling",
+      "chord": "SUPER + code:12",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "code:12"
+      ],
+      "kind": "bindd",
+      "label": "Switch to workspace 3",
+      "line": 24,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L24"
+    },
+    {
+      "action": "workspace 4",
+      "category": "tiling",
+      "chord": "SUPER + code:13",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "code:13"
+      ],
+      "kind": "bindd",
+      "label": "Switch to workspace 4",
+      "line": 25,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L25"
+    },
+    {
+      "action": "workspace 5",
+      "category": "tiling",
+      "chord": "SUPER + code:14",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "code:14"
+      ],
+      "kind": "bindd",
+      "label": "Switch to workspace 5",
+      "line": 26,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L26"
+    },
+    {
+      "action": "workspace 6",
+      "category": "tiling",
+      "chord": "SUPER + code:15",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "code:15"
+      ],
+      "kind": "bindd",
+      "label": "Switch to workspace 6",
+      "line": 27,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L27"
+    },
+    {
+      "action": "workspace 7",
+      "category": "tiling",
+      "chord": "SUPER + code:16",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "code:16"
+      ],
+      "kind": "bindd",
+      "label": "Switch to workspace 7",
+      "line": 28,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L28"
+    },
+    {
+      "action": "workspace 8",
+      "category": "tiling",
+      "chord": "SUPER + code:17",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "code:17"
+      ],
+      "kind": "bindd",
+      "label": "Switch to workspace 8",
+      "line": 29,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L29"
+    },
+    {
+      "action": "workspace 9",
+      "category": "tiling",
+      "chord": "SUPER + code:18",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "code:18"
+      ],
+      "kind": "bindd",
+      "label": "Switch to workspace 9",
+      "line": 30,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L30"
+    },
+    {
+      "action": "workspace 10",
+      "category": "tiling",
+      "chord": "SUPER + code:19",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "code:19"
+      ],
+      "kind": "bindd",
+      "label": "Switch to workspace 10",
+      "line": 31,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L31"
+    },
+    {
+      "action": "movetoworkspace 1",
+      "category": "tiling",
+      "chord": "SUPER + SHIFT + code:10",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "code:10"
+      ],
+      "kind": "bindd",
+      "label": "Move window to workspace 1",
+      "line": 34,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L34"
+    },
+    {
+      "action": "movetoworkspace 2",
+      "category": "tiling",
+      "chord": "SUPER + SHIFT + code:11",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "code:11"
+      ],
+      "kind": "bindd",
+      "label": "Move window to workspace 2",
+      "line": 35,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L35"
+    },
+    {
+      "action": "movetoworkspace 3",
+      "category": "tiling",
+      "chord": "SUPER + SHIFT + code:12",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "code:12"
+      ],
+      "kind": "bindd",
+      "label": "Move window to workspace 3",
+      "line": 36,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L36"
+    },
+    {
+      "action": "movetoworkspace 4",
+      "category": "tiling",
+      "chord": "SUPER + SHIFT + code:13",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "code:13"
+      ],
+      "kind": "bindd",
+      "label": "Move window to workspace 4",
+      "line": 37,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L37"
+    },
+    {
+      "action": "movetoworkspace 5",
+      "category": "tiling",
+      "chord": "SUPER + SHIFT + code:14",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "code:14"
+      ],
+      "kind": "bindd",
+      "label": "Move window to workspace 5",
+      "line": 38,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L38"
+    },
+    {
+      "action": "movetoworkspace 6",
+      "category": "tiling",
+      "chord": "SUPER + SHIFT + code:15",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "code:15"
+      ],
+      "kind": "bindd",
+      "label": "Move window to workspace 6",
+      "line": 39,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L39"
+    },
+    {
+      "action": "movetoworkspace 7",
+      "category": "tiling",
+      "chord": "SUPER + SHIFT + code:16",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "code:16"
+      ],
+      "kind": "bindd",
+      "label": "Move window to workspace 7",
+      "line": 40,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L40"
+    },
+    {
+      "action": "movetoworkspace 8",
+      "category": "tiling",
+      "chord": "SUPER + SHIFT + code:17",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "code:17"
+      ],
+      "kind": "bindd",
+      "label": "Move window to workspace 8",
+      "line": 41,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L41"
+    },
+    {
+      "action": "movetoworkspace 9",
+      "category": "tiling",
+      "chord": "SUPER + SHIFT + code:18",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "code:18"
+      ],
+      "kind": "bindd",
+      "label": "Move window to workspace 9",
+      "line": 42,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L42"
+    },
+    {
+      "action": "movetoworkspace 10",
+      "category": "tiling",
+      "chord": "SUPER + SHIFT + code:19",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "code:19"
+      ],
+      "kind": "bindd",
+      "label": "Move window to workspace 10",
+      "line": 43,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L43"
+    },
+    {
+      "action": "workspace e+1",
+      "category": "tiling",
+      "chord": "SUPER + TAB",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "TAB"
+      ],
+      "kind": "bindd",
+      "label": "Next workspace",
+      "line": 46,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L46"
+    },
+    {
+      "action": "workspace e-1",
+      "category": "tiling",
+      "chord": "SUPER + SHIFT + TAB",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "TAB"
+      ],
+      "kind": "bindd",
+      "label": "Previous workspace",
+      "line": 47,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L47"
+    },
+    {
+      "action": "workspace previous",
+      "category": "tiling",
+      "chord": "SUPER + CTRL + TAB",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "TAB"
+      ],
+      "kind": "bindd",
+      "label": "Former workspace",
+      "line": 48,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L48"
+    },
+    {
+      "action": "swapwindow l",
+      "category": "tiling",
+      "chord": "SUPER + SHIFT + LEFT",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "LEFT"
+      ],
+      "kind": "bindd",
+      "label": "Swap window to the left",
+      "line": 51,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L51"
+    },
+    {
+      "action": "swapwindow r",
+      "category": "tiling",
+      "chord": "SUPER + SHIFT + RIGHT",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "RIGHT"
+      ],
+      "kind": "bindd",
+      "label": "Swap window to the right",
+      "line": 52,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L52"
+    },
+    {
+      "action": "swapwindow u",
+      "category": "tiling",
+      "chord": "SUPER + SHIFT + UP",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "UP"
+      ],
+      "kind": "bindd",
+      "label": "Swap window up",
+      "line": 53,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L53"
+    },
+    {
+      "action": "swapwindow d",
+      "category": "tiling",
+      "chord": "SUPER + SHIFT + DOWN",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "DOWN"
+      ],
+      "kind": "bindd",
+      "label": "Swap window down",
+      "line": 54,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L54"
+    },
+    {
+      "action": "cyclenext",
+      "category": "tiling",
+      "chord": "ALT + TAB",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "ALT",
+        "TAB"
+      ],
+      "kind": "bindd",
+      "label": "Cycle to next window",
+      "line": 57,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L57"
+    },
+    {
+      "action": "cyclenext prev",
+      "category": "tiling",
+      "chord": "ALT + SHIFT + TAB",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "ALT",
+        "SHIFT",
+        "TAB"
+      ],
+      "kind": "bindd",
+      "label": "Cycle to prev window",
+      "line": 58,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L58"
+    },
+    {
+      "action": "bringactivetotop",
+      "category": "tiling",
+      "chord": "ALT + TAB",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "ALT",
+        "TAB"
+      ],
+      "kind": "bindd",
+      "label": "Reveal active window on top",
+      "line": 59,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L59"
+    },
+    {
+      "action": "bringactivetotop",
+      "category": "tiling",
+      "chord": "ALT + SHIFT + TAB",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "ALT",
+        "SHIFT",
+        "TAB"
+      ],
+      "kind": "bindd",
+      "label": "Reveal active window on top",
+      "line": 60,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L60"
+    },
+    {
+      "action": "resizeactive -100 0",
+      "category": "tiling",
+      "chord": "SUPER + code:20",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "code:20"
+      ],
+      "kind": "bindd",
+      "label": "Expand window left",
+      "line": 63,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L63"
+    },
+    {
+      "action": "resizeactive 100 0",
+      "category": "tiling",
+      "chord": "SUPER + code:21",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "code:21"
+      ],
+      "kind": "bindd",
+      "label": "Shrink window left",
+      "line": 64,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L64"
+    },
+    {
+      "action": "resizeactive 0 -100",
+      "category": "tiling",
+      "chord": "SUPER + SHIFT + code:20",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "code:20"
+      ],
+      "kind": "bindd",
+      "label": "Shrink window up",
+      "line": 65,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L65"
+    },
+    {
+      "action": "resizeactive 0 100",
+      "category": "tiling",
+      "chord": "SUPER + SHIFT + code:21",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "code:21"
+      ],
+      "kind": "bindd",
+      "label": "Expand window down",
+      "line": 66,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L66"
+    },
+    {
+      "action": "workspace e+1",
+      "category": "tiling",
+      "chord": "SUPER + MOUSE_DOWN",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "MOUSE_DOWN"
+      ],
+      "kind": "bindd",
+      "label": "Scroll active workspace forward",
+      "line": 69,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L69"
+    },
+    {
+      "action": "workspace e-1",
+      "category": "tiling",
+      "chord": "SUPER + MOUSE_UP",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "MOUSE_UP"
+      ],
+      "kind": "bindd",
+      "label": "Scroll active workspace backward",
+      "line": 70,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L70"
+    },
+    {
+      "action": "movewindow",
+      "category": "tiling",
+      "chord": "SUPER + mouse:272",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "mouse:272"
+      ],
+      "kind": "bindmd",
+      "label": "Move window",
+      "line": 73,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L73"
+    },
+    {
+      "action": "resizewindow",
+      "category": "tiling",
+      "chord": "SUPER + mouse:273",
+      "file": "default/hypr/bindings/tiling.conf",
+      "keys": [
+        "SUPER",
+        "mouse:273"
+      ],
+      "kind": "bindmd",
+      "label": "Resize window",
+      "line": 74,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/tiling.conf#L74"
+    },
+    {
+      "action": "omarchy-launch-walker",
+      "category": "utilities",
+      "chord": "SUPER + SPACE",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "SPACE"
+      ],
+      "kind": "bindd",
+      "label": "Launch apps",
+      "line": 2,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L2"
+    },
+    {
+      "action": "omarchy-launch-walker -m symbols",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + E",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "E"
+      ],
+      "kind": "bindd",
+      "label": "Emoji picker",
+      "line": 3,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L3"
+    },
+    {
+      "action": "omarchy-menu capture",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + C",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "C"
+      ],
+      "kind": "bindd",
+      "label": "Capture menu",
+      "line": 4,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L4"
+    },
+    {
+      "action": "omarchy-menu toggle",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + O",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "O"
+      ],
+      "kind": "bindd",
+      "label": "Toggle menu",
+      "line": 5,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L5"
+    },
+    {
+      "action": "omarchy-menu hardware",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + H",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "H"
+      ],
+      "kind": "bindd",
+      "label": "Hardware menu",
+      "line": 6,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L6"
+    },
+    {
+      "action": "omarchy-menu",
+      "category": "utilities",
+      "chord": "SUPER + ALT + SPACE",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "ALT",
+        "SPACE"
+      ],
+      "kind": "bindd",
+      "label": "Omarchy menu",
+      "line": 7,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L7"
+    },
+    {
+      "action": "omarchy-menu",
+      "category": "utilities",
+      "chord": "SUPER + SHIFT + code:201",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "code:201"
+      ],
+      "kind": "bindd",
+      "label": "Omarchy menu",
+      "line": 8,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L8"
+    },
+    {
+      "action": "omarchy-menu system",
+      "category": "utilities",
+      "chord": "SUPER + ESCAPE",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "ESCAPE"
+      ],
+      "kind": "bindd",
+      "label": "System menu",
+      "line": 9,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L9"
+    },
+    {
+      "action": "omarchy-menu system",
+      "category": "utilities",
+      "chord": "XF86PowerOff",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "XF86PowerOff"
+      ],
+      "kind": "bindld",
+      "label": "Power menu",
+      "line": 10,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L10"
+    },
+    {
+      "action": "omarchy-menu-keybindings",
+      "category": "utilities",
+      "chord": "SUPER + K",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "K"
+      ],
+      "kind": "bindd",
+      "label": "Show key bindings",
+      "line": 11,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L11"
+    },
+    {
+      "action": "gnome-calculator",
+      "category": "utilities",
+      "chord": "XF86Calculator",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "XF86Calculator"
+      ],
+      "kind": "bindd",
+      "label": "Calculator",
+      "line": 12,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L12"
+    },
+    {
+      "action": "omarchy-toggle-waybar",
+      "category": "utilities",
+      "chord": "SUPER + SHIFT + SPACE",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "SPACE"
+      ],
+      "kind": "bindd",
+      "label": "Toggle top bar",
+      "line": 15,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L15"
+    },
+    {
+      "action": "omarchy-menu background",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + SPACE",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "SPACE"
+      ],
+      "kind": "bindd",
+      "label": "Theme background menu",
+      "line": 16,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L16"
+    },
+    {
+      "action": "omarchy-menu theme",
+      "category": "utilities",
+      "chord": "SUPER + SHIFT + CTRL + SPACE",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "CTRL",
+        "SPACE"
+      ],
+      "kind": "bindd",
+      "label": "Theme menu",
+      "line": 17,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L17"
+    },
+    {
+      "action": "omarchy-hyprland-window-transparency-toggle",
+      "category": "utilities",
+      "chord": "SUPER + BACKSPACE",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "BACKSPACE"
+      ],
+      "kind": "bindd",
+      "label": "Toggle window transparency",
+      "line": 18,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L18"
+    },
+    {
+      "action": "omarchy-hyprland-window-gaps-toggle",
+      "category": "utilities",
+      "chord": "SUPER + SHIFT + BACKSPACE",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "BACKSPACE"
+      ],
+      "kind": "bindd",
+      "label": "Toggle window gaps",
+      "line": 19,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L19"
+    },
+    {
+      "action": "omarchy-hyprland-window-single-square-aspect-toggle",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + BACKSPACE",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "BACKSPACE"
+      ],
+      "kind": "bindd",
+      "label": "Toggle single-window square aspect",
+      "line": 20,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L20"
+    },
+    {
+      "action": "makoctl dismiss",
+      "category": "utilities",
+      "chord": "SUPER + COMMA",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "COMMA"
+      ],
+      "kind": "bindd",
+      "label": "Dismiss last notification",
+      "line": 23,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L23"
+    },
+    {
+      "action": "makoctl dismiss --all",
+      "category": "utilities",
+      "chord": "SUPER + SHIFT + COMMA",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "COMMA"
+      ],
+      "kind": "bindd",
+      "label": "Dismiss all notifications",
+      "line": 24,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L24"
+    },
+    {
+      "action": "omarchy-toggle-notification-silencing",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + COMMA",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "COMMA"
+      ],
+      "kind": "bindd",
+      "label": "Toggle silencing notifications",
+      "line": 25,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L25"
+    },
+    {
+      "action": "makoctl invoke",
+      "category": "utilities",
+      "chord": "SUPER + ALT + COMMA",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "ALT",
+        "COMMA"
+      ],
+      "kind": "bindd",
+      "label": "Invoke last notification",
+      "line": 26,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L26"
+    },
+    {
+      "action": "makoctl restore",
+      "category": "utilities",
+      "chord": "SUPER + SHIFT + ALT + COMMA",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "ALT",
+        "COMMA"
+      ],
+      "kind": "bindd",
+      "label": "Restore last notification",
+      "line": 27,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L27"
+    },
+    {
+      "action": "omarchy-toggle-idle",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + I",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "I"
+      ],
+      "kind": "bindd",
+      "label": "Toggle locking on idle",
+      "line": 30,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L30"
+    },
+    {
+      "action": "omarchy-toggle-nightlight",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + N",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "N"
+      ],
+      "kind": "bindd",
+      "label": "Toggle nightlight",
+      "line": 31,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L31"
+    },
+    {
+      "action": "omarchy-hyprland-monitor-internal toggle",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + Delete",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "Delete"
+      ],
+      "kind": "bindd",
+      "label": "Toggle laptop display",
+      "line": 32,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L32"
+    },
+    {
+      "action": "omarchy-hyprland-monitor-internal-mirror toggle",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + ALT + Delete",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "ALT",
+        "Delete"
+      ],
+      "kind": "bindd",
+      "label": "Toggle laptop display mirroring",
+      "line": 33,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L33"
+    },
+    {
+      "action": "omarchy-hw-external-monitors && omarchy-hyprland-monitor-internal off",
+      "category": "utilities",
+      "chord": "switch:on:Lid Switch",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "switch:on:Lid Switch"
+      ],
+      "kind": "bindl",
+      "label": "Hw external monitors",
+      "line": 34,
+      "note": "label derived from the command (bind has no description flag)",
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L34"
+    },
+    {
+      "action": "omarchy-hyprland-monitor-internal on",
+      "category": "utilities",
+      "chord": "switch:off:Lid Switch",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "switch:off:Lid Switch"
+      ],
+      "kind": "bindl",
+      "label": "Hyprland monitor internal",
+      "line": 35,
+      "note": "label derived from the command (bind has no description flag)",
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L35"
+    },
+    {
+      "action": "omarchy-capture-screenshot",
+      "category": "utilities",
+      "chord": "PRINT",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "PRINT"
+      ],
+      "kind": "bindd",
+      "label": "Screenshot",
+      "line": 38,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L38"
+    },
+    {
+      "action": "omarchy-menu screenrecord",
+      "category": "utilities",
+      "chord": "ALT + PRINT",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "ALT",
+        "PRINT"
+      ],
+      "kind": "bindd",
+      "label": "Screenrecording",
+      "line": 39,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L39"
+    },
+    {
+      "action": "pkill hyprpicker || hyprpicker -a",
+      "category": "utilities",
+      "chord": "SUPER + PRINT",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "PRINT"
+      ],
+      "kind": "bindd",
+      "label": "Color picker",
+      "line": 40,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L40"
+    },
+    {
+      "action": "omarchy-capture-text-extraction",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + PRINT",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "PRINT"
+      ],
+      "kind": "bindd",
+      "label": "Extract text (OCR) from screenshot",
+      "line": 41,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L41"
+    },
+    {
+      "action": "omarchy-menu share",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + S",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "S"
+      ],
+      "kind": "bindd",
+      "label": "Share",
+      "line": 44,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L44"
+    },
+    {
+      "action": "omarchy-transcode",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + PERIOD",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "PERIOD"
+      ],
+      "kind": "bindd",
+      "label": "Transcode",
+      "line": 47,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L47"
+    },
+    {
+      "action": "omarchy-menu reminder-set",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + R",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "R"
+      ],
+      "kind": "bindd",
+      "label": "Set reminder",
+      "line": 50,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L50"
+    },
+    {
+      "action": "omarchy-reminder show",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + ALT + R",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "ALT",
+        "R"
+      ],
+      "kind": "bindd",
+      "label": "Show reminders",
+      "line": 51,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L51"
+    },
+    {
+      "action": "omarchy-reminder clear",
+      "category": "utilities",
+      "chord": "SUPER + SHIFT + CTRL + R",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "CTRL",
+        "R"
+      ],
+      "kind": "bindd",
+      "label": "Clear reminders",
+      "line": 52,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L52"
+    },
+    {
+      "action": "notify-send -u low \"    $(date +\"%A %H:%M  ·  %d %B %Y  ·  Week %V\")\"",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + ALT + T",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "ALT",
+        "T"
+      ],
+      "kind": "bindd",
+      "label": "Show time",
+      "line": 55,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L55"
+    },
+    {
+      "action": "notify-send -u low \"$(omarchy-battery-status)\"",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + ALT + B",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "ALT",
+        "B"
+      ],
+      "kind": "bindd",
+      "label": "Show battery remaining",
+      "line": 56,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L56"
+    },
+    {
+      "action": "notify-send -u low \"$(omarchy-weather-status)\"",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + ALT + W",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "ALT",
+        "W"
+      ],
+      "kind": "bindd",
+      "label": "Show weather",
+      "line": 57,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L57"
+    },
+    {
+      "action": "omarchy-launch-audio",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + A",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "A"
+      ],
+      "kind": "bindd",
+      "label": "Audio controls",
+      "line": 60,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L60"
+    },
+    {
+      "action": "omarchy-launch-bluetooth",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + B",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "B"
+      ],
+      "kind": "bindd",
+      "label": "Bluetooth controls",
+      "line": 61,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L61"
+    },
+    {
+      "action": "omarchy-launch-wifi",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + W",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "W"
+      ],
+      "kind": "bindd",
+      "label": "Wifi controls",
+      "line": 62,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L62"
+    },
+    {
+      "action": "omarchy-launch-tui btop",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + T",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "T"
+      ],
+      "kind": "bindd",
+      "label": "Activity",
+      "line": 63,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L63"
+    },
+    {
+      "action": "voxtype record toggle",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + X",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "X"
+      ],
+      "kind": "bindd",
+      "label": "Toggle dictation",
+      "line": 66,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L66"
+    },
+    {
+      "action": "voxtype record start",
+      "category": "utilities",
+      "chord": "F9",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "F9"
+      ],
+      "kind": "bindd",
+      "label": "Start dictation (push-to-talk)",
+      "line": 68,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L68"
+    },
+    {
+      "action": "voxtype record stop",
+      "category": "utilities",
+      "chord": "F9",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "F9"
+      ],
+      "kind": "binddr",
+      "label": "Stop dictation (push-to-talk)",
+      "line": 69,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L69"
+    },
+    {
+      "action": "hyprctl keyword cursor:zoom_factor $(hyprctl getoption cursor:zoom_factor -j | jq '.float + 1')",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + Z",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "Z"
+      ],
+      "kind": "bindd",
+      "label": "Zoom in",
+      "line": 72,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L72"
+    },
+    {
+      "action": "hyprctl keyword cursor:zoom_factor 1",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + ALT + Z",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "ALT",
+        "Z"
+      ],
+      "kind": "bindd",
+      "label": "Reset zoom",
+      "line": 73,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L73"
+    },
+    {
+      "action": "omarchy-system-lock",
+      "category": "utilities",
+      "chord": "SUPER + CTRL + L",
+      "file": "default/hypr/bindings/utilities.conf",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "L"
+      ],
+      "kind": "bindd",
+      "label": "Lock system",
+      "line": 76,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v3.8.4/default/hypr/bindings/utilities.conf#L76"
+    }
+  ],
+  "count": 217,
+  "format": "conf",
+  "generatedFrom": "data/source/v3.8.4/default/hypr/bindings",
+  "prerelease": false,
+  "tag": "v3.8.4"
+}

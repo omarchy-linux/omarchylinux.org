@@ -1,0 +1,20 @@
+---
+import { FOOTER_GROUPS, SITE } from '../lib/site';
+const year = new Date().getFullYear();
+---
+<footer class="ft wrap" data-pagefind-ignore>
+  <div class="cols">
+    {FOOTER_GROUPS.map((g) => <div><h4>{g.title}</h4><ul>{g.links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul></div>)}
+    <div><h4>Official Omarchy</h4><ul>
+      <li><a href={SITE.official.site} rel="noopener">omarchy.org</a></li>
+      <li><a href={SITE.official.manual} rel="noopener">The manual</a></li>
+      <li><a href={SITE.official.github} rel="noopener">github.com/omacom/omarchy</a></li>
+      <li><a href={SITE.official.discord} rel="noopener">Community Discord</a></li>
+      <li><a href={SITE.official.plugins} rel="noopener">Plugin marketplace</a></li>
+    </ul></div>
+  </div>
+  <div class="legal">
+    <p>{SITE.disclaimerLong}</p>
+    <p>Content is original paraphrase with credit and links to the threads where fixes were found. Reference data is generated from the MIT-licensed <a href={SITE.official.github} rel="noopener">omacom/omarchy</a> source. Site text is CC BY 4.0; data exports are CC0. <a href="/about/">About</a> · <a href="/contribute/">Contribute</a> · <a href="/rss.xml">RSS</a> · <a href="/llms.txt">llms.txt</a> · © {year} omarchylinux.org contributors.</p>
+  </div>
+</footer>

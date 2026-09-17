@@ -1,0 +1,18 @@
+---
+import Base from '../../layouts/Base.astro';
+import { menu, latestTag } from '../../lib/data';
+import { articleLd } from '../../lib/seo';
+const tag = latestTag();
+const m = menu(tag);
+const tree: any[] = m.tree ?? [];
+const flat: any[] = m.flat ?? [];
+---
+<Base title={`The Omarchy menu tree (${tag})`} description={`Every path in the Omarchy menu (Super + Alt + Space) in ${tag}: the command each item runs and the condition that hides it on some machines. Generated from omarchy-menu.jsonc.`} crumbs={[{ name: 'Reference', href: '/reference/' }, { name: 'Menu tree', href: '/reference/menu/' }]} ld={articleLd({ title: 'Omarchy menu tree', description: 'Every menu path and the command it runs', path: '/reference/menu/' })}>
+  <article data-pagefind-body data-pagefind-meta="section:Reference">
+  <div class="art-head"><h1>The Omarchy menu tree</h1><p class="lede">{flat.length} menu nodes in <strong>{tag}</strong>. Any node can be opened directly with <code>omarchy menu summon &lt;path&gt;</code>, for example <code>omarchy menu summon style.theme</code>. A "hidden when" condition is a shell test the menu runs on your machine; if it is true, the row does not appear.</p></div>
+  <div class="tablewrap"><table><thead><tr><th>Path</th><th>Label</th><th>Runs</th><th>Hidden when / checked when</th></tr></thead><tbody>
+    {flat.map((n: any) => <tr><td><code>{n.id}</code></td><td>{n.icon && <span>{n.icon} </span>}{n.label}{n.aliases?.length ? <span class="muted small"> (aka {n.aliases.join(', ')})</span> : null}</td><td><code class="small">{n.action ?? n.command ?? n.provider ?? ''}</code></td><td class="small">{n.when && <div>when: <code>{n.when}</code></div>}{n.checked && <div>checked: <code>{n.checked}</code></div>}</td></tr>)}
+  </tbody></table></div>
+  <p class="small muted">Source: <code>default/omarchy/omarchy-menu.jsonc</code> at {tag}. Unofficial; the menu on your machine may differ if you have edited it.</p>
+  </article>
+</Base>

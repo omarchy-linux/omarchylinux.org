@@ -1,0 +1,23 @@
+---
+import Pill from './Pill.astro';
+import { versionRangeLabel } from '../lib/content';
+interface Props { entries: any[]; base: string; groupBy?: string; groupLabels?: Record<string, string>; showStatus?: boolean }
+const { entries, base, groupBy, groupLabels = {}, showStatus = true } = Astro.props;
+const groups: Record<string, any[]> = {};
+for (const e of entries) { const k = groupBy ? (e.data[groupBy] ?? 'other') : 'all'; (groups[k] ||= []).push(e); }
+const keys = Object.keys(groups).sort((a, b) => (groupLabels[a] ?? a).localeCompare(groupLabels[b] ?? b));
+---
+{keys.map((k) => (
+  <section>
+    {groupBy && <h2 id={k}>{groupLabels[k] ?? k}</h2>}
+    <div class="cards">
+      {groups[k].map((e) => (
+        <div class="card">
+          <h3><a href={`${base}${e.id}/`}>{e.data.title}</a></h3>
+          <p>{e.data.description}</p>
+          <div class="k">{showStatus && e.data.status && <Pill kind={e.data.status} />} <Pill kind="version" label={versionRangeLabel(e.data.appliesTo)} /></div>
+        </div>
+      ))}
+    </div>
+  </section>
+))}

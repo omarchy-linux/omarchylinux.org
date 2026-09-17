@@ -1,0 +1,41 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Kbd from '../../../components/Kbd.astro';
+import { bindings, latestTag } from '../../../lib/data';
+import { articleLd, faqLd } from '../../../lib/seo';
+const tag = latestTag();
+const all = bindings(tag);
+const cats: Record<string, any[]> = {};
+for (const b of all) (cats[b.category ?? 'other'] ||= []).push(b);
+const ckeys = Object.keys(cats).sort();
+const faq = [
+  { q: 'How do I see all Omarchy keybindings on my machine?', a: 'Press Super + K on Omarchy 4 to open the keybindings viewer, or read ~/.config/hypr/bindings.lua and the defaults under /usr/share/omarchy/default/hypr/bindings/.' },
+  { q: 'How do I change a keybinding in Omarchy 4?', a: 'Add or override bindings in ~/.config/hypr/bindings.lua using o.bind("SUPER + K", "Label", action) or o.rebind for an existing chord. In 3.x this lived in bindings.conf, which Omarchy 4 no longer loads.' },
+  { q: 'Which Omarchy version do these keybindings describe?', a: `These are the defaults shipped in ${tag}, extracted from default/hypr/bindings/*.lua in the source. Older tags are listed on the version diff pages.` },
+];
+const ld = [articleLd({ title: `Omarchy keybindings (${tag})`, description: 'Every default keybinding', path: '/reference/keybindings/' }), faqLd(faq)];
+---
+<Base title={`Every Omarchy keybinding (${tag})`} description={`All ${all.length} default Omarchy keybindings in ${tag} with their labels, grouped by category, searchable by key or action. Generated from the Lua bindings files.`} crumbs={[{ name: 'Reference', href: '/reference/' }, { name: 'Keybindings', href: '/reference/keybindings/' }]} ld={ld}>
+  <article data-pagefind-body data-pagefind-meta="section:Reference">
+  <div class="art-head"><h1>Omarchy keybindings</h1><p class="lede">{all.length} default bindings in <strong>{tag}</strong>. Super is the Windows or Command key. Filter by a key ("shift", "return") or by what it does ("terminal", "float").</p></div>
+  <div class="filter-bar" data-pagefind-ignore><label>Filter <input id="kb-filter" type="search" placeholder="key or action" /></label><span id="kb-count" class="muted small"></span> <a class="btn" href="javascript:window.print()">Print cheat sheet</a></div>
+  {ckeys.map((c) => (
+    <section class="kb-group">
+      <h2 id={c}>{c}</h2>
+      <div class="tablewrap"><table><thead><tr><th>Keys</th><th>Does</th><th>Action</th></tr></thead><tbody>
+        {cats[c].map((b: any) => <tr class="kb-row" data-text={`${b.chord} ${b.label ?? ''} ${b.action ?? ''}`.toLowerCase()}><td><Kbd chord={b.chord} /></td><td>{b.label}{b.note && <span class="muted small"> ({b.note})</span>}</td><td><code class="small">{b.action}</code></td></tr>)}
+      </tbody></table></div>
+    </section>
+  ))}
+  <section class="prose">
+    <h2>Questions people ask</h2>
+    <dl class="faq">{faq.map((f) => <><dt>{f.q}</dt><dd>{f.a}</dd></>)}</dl>
+    <p class="small muted">Source: <code>default/hypr/bindings/*.lua</code> at {tag}. Loop-generated workspace bindings (Super + 1…9) are summarized in one row. See <a href="/reference/hyprland-conf-to-lua-migration/">migrating a 3.x bindings.conf</a>.</p>
+  </section>
+  </article>
+  <script is:inline>
+    (function(){var f=document.getElementById('kb-filter'),cnt=document.getElementById('kb-count');var rows=Array.prototype.slice.call(document.querySelectorAll('.kb-row'));
+    function apply(){var q=(f.value||'').toLowerCase().trim(),n=0;rows.forEach(function(r){var ok=!q||r.dataset.text.indexOf(q)>-1;r.hidden=!ok;if(ok)n++;});document.querySelectorAll('.kb-group').forEach(function(g){g.hidden=!g.querySelector('.kb-row:not([hidden])');});cnt.textContent=n+' shown';}
+    f.addEventListener('input',apply);apply();})();
+  </script>
+</Base>

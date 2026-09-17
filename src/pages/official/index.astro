@@ -1,0 +1,41 @@
+---
+import Base from '../../layouts/Base.astro';
+import Pill from '../../components/Pill.astro';
+import { domains, facts } from '../../lib/data';
+import { visible } from '../../lib/content';
+import { articleLd, faqLd, datasetLd } from '../../lib/seo';
+const d = domains();
+const entries: any[] = d.domains ?? d.entries ?? [];
+const groups: Record<string, any[]> = { official: [], community: [], 'for-sale': [], suspended: [], unregistered: [], unknown: [] };
+for (const e of entries) (groups[e.classification] ||= []).push(e);
+const labels: Record<string, string> = { official: 'Official (Omacom Foundation / 37signals)', community: 'Community, unofficial', 'for-sale': 'Parked or for sale', suspended: 'Suspended or hostile', unregistered: 'Unregistered at last check', unknown: 'Unknown' };
+const pillFor: Record<string, string> = { official: 'ok', community: 'info', 'for-sale': 'warn', suspended: 'bad', unregistered: 'info', unknown: 'info' };
+const guides = await visible('official');
+const tm = facts().trademark ?? {};
+const faq = [
+  { q: 'Is omarchylinux.org official?', a: 'No. omarchylinux.org is an independent community site. The official site is omarchy.org, run by the Omacom Foundation. This site never hosts installers and carries a disclaimer on every page.' },
+  { q: 'Is omarchy.com the official Omarchy site?', a: 'No. omarchy.com is an unrelated domain registered in 2016 that shows a parked page. The official domain is omarchy.org.' },
+  { q: 'Where do I download Omarchy safely?', a: 'Only from omarchy.org (the install page) or iso.omarchy.org, and verify the SHA-256 and signature against the official signing key. See the verify page on this site.' },
+  { q: 'What is the official Omarchy GitHub organization?', a: 'github.com/omacom. The old basecamp/omarchy address redirects there. There is no omacom-io organization.' },
+];
+const ld = [articleLd({ title: 'Which Omarchy sites are official?', description: 'Registry of Omarchy domains', path: '/official/' }), faqLd(faq), datasetLd({ name: 'Omarchy domain registry', description: 'Classification of domains, subdomains, and accounts using the Omarchy name, re-verified with DNS and HTTP checks.', path: '/official/', distribution: [{ url: '/official/domains.json', format: 'application/json' }] })];
+---
+<Base title="Which Omarchy sites and domains are official?" description="A verified registry of every domain, subdomain, and social account using the Omarchy name: official (Omacom Foundation), community, for sale, or suspended, plus the trademark facts. Re-checked with DNS and HTTP." crumbs={[{ name: 'Is it official?', href: '/official/' }]} ld={ld}>
+  <article data-pagefind-body data-pagefind-meta="section:Trust">
+  <div class="art-head"><h1>Which Omarchy sites are official?</h1><p class="lede">Only <strong>omarchy.org</strong> and its subdomains and country editions are official. This site is not. Below is every domain and account using the name that we know of, with what it actually does, re-verified {d.checkedAt?.slice(0, 10) ?? 'recently'}. One lookalike has already been suspended; more will appear.</p></div>
+  <div class="callout callout-ok"><strong>Download only from</strong> <a href="https://omarchy.org" rel="noopener">omarchy.org</a>. The ISO host is iso.omarchy.org and the code is at github.com/omacom. Anything else offering an Omarchy download is not the project. <a href="/verify/">Verify the checksum</a> either way.</div>
+  <h2>Trademark, in one paragraph</h2>
+  <p>OMARCHY is a registered US trademark (Reg. No. {tm.registration ?? '8250209'}, registered {tm.registered ?? '2026-05-12'}, Class 9, owner of record {tm.owner?.split(',')[0] ?? '37signals LLC'}). The official brand page still says "pending". No assignment to the Omacom Foundation is on the public register. Details and what it means for you: <a href="/official/trademark/">trademark facts</a> and <a href="/official/naming-your-omarchy-project/">naming your project safely</a>.</p>
+  {Object.keys(groups).filter((g) => groups[g]?.length).map((g) => (
+    <section>
+      <h2 id={g}>{labels[g]} <span class="muted small">({groups[g].length})</span></h2>
+      <div class="tablewrap"><table><thead><tr><th>Host</th><th>Status</th><th>What it is</th><th>Checked</th></tr></thead><tbody>
+        {groups[g].map((e: any) => <tr><td><code>{e.host}</code>{e.kind === 'social' && <span class="muted small"> (account)</span>}</td><td><Pill kind={pillFor[g]} label={g} />{e.discrepancy && <div class="small" style="color:var(--warn)">live check differs: {e.discrepancy}</div>}</td><td class="small">{e.note}{e.finalUrl && e.finalUrl !== `https://${e.host}/` && <div class="muted">→ {e.finalUrl}</div>}{e.whoisCreated && <div class="muted">registered {String(e.whoisCreated).slice(0, 10)}</div>}</td><td class="small tabular">{e.httpStatus ?? ''}{e.whoisStatus ? <div class="muted">{String(e.whoisStatus).split(' ')[0]}</div> : null}</td></tr>)}
+      </tbody></table></div>
+    </section>
+  ))}
+  {guides.length > 0 && <><h2>Guides</h2><div class="cards">{guides.map((gd: any) => <div class="card"><h3><a href={`/official/${gd.id}/`}>{gd.data.title}</a></h3><p>{gd.data.description}</p></div>)}</div></>}
+  <section class="prose"><h2>Questions people ask</h2><dl class="faq">{faq.map((f) => <><dt>{f.q}</dt><dd>{f.a}</dd></>)}</dl>
+  <p class="small muted">Method: nameservers via DNS, HTTP status and redirect target via curl, registration date via WHOIS where the registry exposes it. "Official" means the nameservers match the Foundation's Cloudflare account or the site redirects into omarchy.org. Export: <a href="/official/domains.json">domains.json</a> (CC0). Spotted a new one? <a href="/contribute/">Tell us</a>.</p></section>
+  </article>
+</Base>

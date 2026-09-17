@@ -1,0 +1,88 @@
+---
+import '@fontsource/barlow-condensed/600.css';
+import '@fontsource/barlow-condensed/700.css';
+import '@fontsource/source-sans-3/400.css';
+import '@fontsource/source-sans-3/600.css';
+import '@fontsource/source-sans-3/400-italic.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { SITE } from '../lib/site';
+import { websiteLd, breadcrumbLd, truncate, type Crumb } from '../lib/seo';
+
+interface Props {
+  title: string;
+  description: string;
+  crumbs?: Crumb[];
+  ld?: any | any[];
+  ogType?: 'website' | 'article';
+  noindex?: boolean;
+  canonical?: string;
+  published?: Date;
+  modified?: Date;
+  keywords?: string[];
+}
+const { title, description, crumbs = [], ld = [], ogType = 'website', noindex = false, canonical, published, modified, keywords = [] } = Astro.props;
+const fullTitle = title === SITE.name ? `${SITE.name} (unofficial)` : `${title} · ${SITE.shortName}`;
+const desc = truncate(description, 158);
+const url = canonical ?? new URL(Astro.url.pathname, SITE.url).toString();
+const sectionOg = ['hardware', 'fix', 'reference', 'releases', 'official'].find((s) => Astro.url.pathname.startsWith(`/${s}/`));
+const ogImage = new URL(`/og/${sectionOg ?? 'default'}.png`, SITE.url).toString();
+const lds = [websiteLd(), crumbs.length ? breadcrumbLd(crumbs) : null, ...(Array.isArray(ld) ? ld : [ld])].filter(Boolean);
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={desc} />
+  <link rel="canonical" href={url} />
+  {noindex ? <meta name="robots" content="noindex,follow" /> : <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large" />}
+  <meta property="og:type" content={ogType} />
+  <meta property="og:site_name" content={`${SITE.name} (unofficial)`} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={desc} />
+  <meta property="og:url" content={url} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={desc} />
+  <meta name="twitter:image" content={ogImage} />
+  {published && <meta property="article:published_time" content={published.toISOString()} />}
+  {modified && <meta property="article:modified_time" content={modified.toISOString()} />}
+  {keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
+  <meta name="theme-color" content="#F4F6F2" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#151A1F" media="(prefers-color-scheme: dark)" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="alternate" type="application/rss+xml" title="omarchylinux.org updates" href="/rss.xml" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+  <script is:inline>
+    (function(){try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();
+  </script>
+  <JsonLd data={lds} />
+  <slot name="head" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <Header />
+  <main id="main" class="wrap">
+    <slot />
+  </main>
+  <Footer />
+  <script is:inline>
+    (function(){
+      var b=document.querySelector('[data-theme-toggle]'); if(!b) return;
+      function cur(){var t=document.documentElement.getAttribute('data-theme'); if(t) return t; return window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+      function label(){b.textContent = cur()==='dark' ? 'Light' : 'Dark';}
+      label();
+      b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('theme',n);}catch(e){}label();});
+    })();
+  </script>
+</body>
+</html>

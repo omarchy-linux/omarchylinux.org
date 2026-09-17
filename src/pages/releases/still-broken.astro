@@ -1,0 +1,18 @@
+---
+import Base from '../../layouts/Base.astro';
+import { stillBroken, issueStats } from '../../lib/data';
+import { articleLd } from '../../lib/seo';
+const sb = stillBroken();
+const list: any[] = sb.issues ?? sb ?? [];
+const st = issueStats();
+---
+<Base title="Closed Omarchy issues people still reproduce" description="Omarchy issues that were closed as completed but kept collecting reproduction reports afterwards: the number, what was reported after closing, and the last activity. Rebuilt from the issue tracker." crumbs={[{ name: 'Releases', href: '/releases/' }, { name: 'Still broken', href: '/releases/still-broken/' }]} ld={articleLd({ title: 'Closed Omarchy issues people still reproduce', description: 'Closed-but-reproducing issues', path: '/releases/still-broken/' })}>
+  <article data-pagefind-body data-pagefind-meta="section:Releases">
+  <div class="art-head"><h1>Closed, but people still hit it</h1><p class="lede">Omarchy closes issues fast{st.issues?.medianTimeToCloseHoursLast300 ? ` (median ${Math.round(st.issues.medianTimeToCloseHoursLast300)} hours to close across the last 300 closed issues)` : ''}. Some keep collecting "still happens on 4.0.x" comments after the close. This list is generated from those comments so you can find the thread that matches your symptom. It does not mean the maintainers are wrong; it means the report is worth reading before you file a duplicate.</p></div>
+  {list.length === 0 && <p class="muted">No data in this build.</p>}
+  <div class="tablewrap"><table><thead><tr><th>Issue</th><th>Closed</th><th class="num">Post-close reports</th><th>Last activity</th></tr></thead><tbody>
+    {list.map((i: any) => <tr><td><a href={i.url} rel="noopener">#{i.number}</a> {i.title}<div class="small muted">{(i.sampleSnippets ?? []).slice(0, 1).map((sn: any) => typeof sn === 'string' ? sn : `${sn.author ?? ''}${sn.createdAt ? ' (' + String(sn.createdAt).slice(0, 10) + ')' : ''}: ${sn.text ?? sn.body ?? sn.snippet ?? ''}`).join(' ')}</div></td><td class="small tabular">{(i.closedAt ?? '').slice(0, 10)}</td><td class="num">{typeof i.postCloseComments === 'number' ? i.postCloseComments : (i.postCloseComments?.length ?? i.postCloseCount ?? '')}</td><td class="small tabular">{(i.lastActivity ?? '').slice(0, 10)}</td></tr>)}
+  </tbody></table></div>
+  <p class="small muted">Method: closed-as-completed issues with at least two comments after the close date containing phrases like "still", "same issue", "reproduce", "not fixed", or a newer version number. Data as of {st.fetchedAt?.slice(0, 10) ?? 'the last build'}.</p>
+  </article>
+</Base>

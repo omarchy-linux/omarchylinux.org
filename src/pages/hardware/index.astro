@@ -1,0 +1,52 @@
+---
+import Base from '../../layouts/Base.astro';
+import Pill from '../../components/Pill.astro';
+import { visible } from '../../lib/content';
+import { issueComponents, issueModels, issueStats } from '../../lib/data';
+import { itemListLd, faqLd, datasetLd } from '../../lib/seo';
+const all = await visible('hardware');
+const comps = all.filter((e: any) => e.data.kind === 'component');
+const models = all.filter((e: any) => e.data.kind === 'model');
+const ic = issueComponents().components ?? [];
+const im = issueModels();
+const countFor = (key: string) => ic.find((c: any) => c.key === key)?.counts?.issues;
+const vendors: Record<string, any[]> = {};
+for (const m of models) (vendors[m.data.vendor ?? 'Other'] ||= []).push(m);
+const vkeys = Object.keys(vendors).sort();
+const subs = ['wifi', 'bluetooth', 'audio', 'webcam', 'fingerprint', 'gpu', 'suspend', 'display'];
+const st = issueStats();
+const faq = [
+  { q: 'Does Omarchy have an official hardware compatibility list?', a: 'No. omarchy.org has no hardware page; the manual\'s "Omarchy on…" chapter covers a few platforms and points to Discord. Omarchy does ship per-device quirk scripts for specific laptops, which the model pages here list.' },
+  { q: 'Which laptops work best with Omarchy?', a: 'Machines with recent Intel or AMD integrated graphics and mainstream Wi-Fi chips have the fewest reports. Framework laptops and the 2026 Dell XPS line have day-one work upstream. NVIDIA hybrid laptops, T2 Intel Macs, and brand-new audio amplifiers generate most of the issues.' },
+  { q: 'How do I add my laptop to this list?', a: 'Run omarchy debug --print --no-sudo on your machine, paste the output into the submit page, review what will be shared, and mark what works. Only machine, kernel, and device lines are kept.' },
+];
+const ld = [itemListLd({ name: 'Omarchy hardware compatibility', path: '/hardware/', items: [...comps, ...models].map((e: any) => ({ name: e.data.title, url: `/hardware/${e.id}/` })) }), faqLd(faq), datasetLd({ name: 'Omarchy hardware reports', description: 'Per-model and per-component Omarchy Linux compatibility data with version stamps.', path: '/hardware/', distribution: [{ url: '/hardware/data.json', format: 'application/json' }] })];
+---
+<Base title="Does Omarchy run on your hardware? Compatibility index" description="Omarchy Linux hardware compatibility by component (NVIDIA, suspend, Wi-Fi, audio, fingerprint) and by laptop model, built from the issue tracker and community reports, stamped by version." crumbs={[{ name: 'Hardware', href: '/hardware/' }]} ld={ld}>
+  <article data-pagefind-body data-pagefind-meta="section:Hardware">
+  <div class="art-head"><h1>Does Omarchy run on it?</h1><p class="lede">There is no official compatibility list. This one is built from {st.issues?.total?.toLocaleString() ?? 'the'} upstream issues (which mostly say what breaks), the quirk scripts Omarchy ships for specific machines, and reports people submit (which say what works). Every page says which Omarchy and kernel version it was checked on.</p></div>
+  <p><a class="btn btn-primary" href="/hardware/submit/">Submit a report for your machine</a> <span class="small muted">One command, nothing personal leaves your browser unreviewed.</span></p>
+  <h2>By component</h2>
+  <div class="cards">
+    {comps.map((c: any) => <div class="card"><h3><a href={`/hardware/${c.id}/`}>{c.data.title}</a></h3><p>{c.data.description}</p><div class="k">{countFor(c.data.componentKey ?? c.id) ? `${countFor(c.data.componentKey ?? c.id)} upstream issues` : ''} <Pill kind={c.data.status} /></div></div>)}
+  </div>
+  {comps.length === 0 && <p class="muted">Component pages are being written.</p>}
+  <h2>By machine</h2>
+  <div class="filter-bar" data-pagefind-ignore><label>Filter <input id="hw-filter" type="search" placeholder="vendor, model, or CPU" /></label><label>Rating <select id="hw-rating"><option value="">all</option><option>gold</option><option>silver</option><option>bronze</option><option>broken</option><option>experimental</option><option>unrated</option></select></label><span id="hw-count" class="small muted"></span></div>
+  <div class="tablewrap"><table id="hw-table"><thead><tr><th>Machine</th><th>Rating</th>{subs.map((s) => <th>{s}</th>)}<th class="num">Issues</th></tr></thead><tbody>
+    {vkeys.map((v) => vendors[v].map((m: any) => <tr class="hw-row" data-text={`${v} ${m.data.title} ${m.data.cpu ?? ''} ${m.data.gpu ?? ''}`.toLowerCase()} data-rating={m.data.rating}><td><a href={`/hardware/${m.id}/`}>{m.data.title}</a>{m.data.cpu && <div class="small muted">{m.data.cpu}{m.data.gpu ? ` · ${m.data.gpu}` : ''}</div>}</td><td><Pill kind={m.data.rating} /></td>{subs.map((s) => <td><Pill kind={m.data.subsystems?.[s] ?? 'unknown'} label={m.data.subsystems?.[s] ?? '?'} /></td>)}<td class="num">{m.data.issueCount ?? ''}</td></tr>))}
+  </tbody></table></div>
+  {models.length === 0 && <p class="muted">Model pages are being written.</p>}
+  <h2>Machines mentioned upstream without a page yet</h2>
+  <p class="small muted">Models that appear in the issue tracker. Counts are issues mentioning the model, not a judgment of how well it works.</p>
+  <div class="tablewrap"><table><thead><tr><th>Model</th><th class="num">Issues</th><th>Components involved</th></tr></thead><tbody>
+    {(im.models ?? []).filter((x: any) => !models.some((m: any) => m.id === x.key || (m.data.dmi ?? []).some((d: string) => (x.aliases ?? []).includes(d)))).slice(0, 60).map((x: any) => <tr><td>{x.vendor} {x.model}</td><td class="num">{x.counts?.issues}</td><td class="small">{(x.components ?? []).slice(0, 5).map((c: any) => typeof c === 'string' ? c : c.key).join(', ')}</td></tr>)}
+  </tbody></table></div>
+  <section class="prose"><h2>Questions people ask</h2><dl class="faq">{faq.map((f) => <><dt>{f.q}</dt><dd>{f.a}</dd></>)}</dl><p class="small muted">Export: <a href="/hardware/data.json">data.json</a> (CC0). Ratings: gold = confirmed working across subsystems by multiple sources or day-one upstream enablement; silver = works with a known quirk or two; bronze = usable with real problems; broken = major subsystems dead; experimental = ARM, handhelds, or hacks.</p></section>
+  </article>
+  <script is:inline>
+    (function(){var f=document.getElementById('hw-filter'),r=document.getElementById('hw-rating'),c=document.getElementById('hw-count');var rows=Array.prototype.slice.call(document.querySelectorAll('.hw-row'));
+    function apply(){var q=(f.value||'').toLowerCase().trim(),rv=r.value,n=0;rows.forEach(function(x){var ok=(!q||x.dataset.text.indexOf(q)>-1)&&(!rv||x.dataset.rating===rv);x.hidden=!ok;if(ok)n++;});c.textContent=n+' machines';}
+    f.addEventListener('input',apply);r.addEventListener('change',apply);apply();})();
+  </script>
+</Base>

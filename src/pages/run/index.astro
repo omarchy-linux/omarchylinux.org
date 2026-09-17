@@ -1,0 +1,13 @@
+---
+import Base from '../../layouts/Base.astro';
+import SectionIndex from '../../components/SectionIndex.astro';
+import { visible, SECTIONS } from '../../lib/content';
+import { itemListLd } from '../../lib/seo';
+const sec = SECTIONS['run'];
+const entries = await visible('run');
+const ld = itemListLd({ name: sec.label, path: sec.base, items: entries.map((e: any) => ({ name: e.data.title, url: sec.base + e.id + '/' })) });
+---
+<Base title={sec.label} description={sec.description} crumbs={[{ name: sec.label, href: sec.base }]} ld={ld}>
+  <div class="art-head"><h1>{sec.label}</h1><p class="lede">{sec.description}</p></div>
+  <SectionIndex entries={entries} base={sec.base} />
+</Base>

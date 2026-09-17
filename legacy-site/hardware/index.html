@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Omarchy Linux hardware matrix — unofficial</title>
+  <meta name="description" content="Searchable unofficial compatibility matrix for Omarchy Linux: Wi-Fi, audio, webcam, fingerprint, GPU, suspend.">
+  <link rel="canonical" href="https://omarchylinux.org/hardware/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/site.css">
+</head>
+<body>
+  <p class="unofficial">Unofficial community reports. Not affiliated with Omarchy, the Omacom Foundation, 37signals, or DHH. Download the ISO only from <a href="https://omarchy.org">omarchy.org</a>.</p>
+  <div class="bar">
+    <a class="mark" href="../index.html">omarchy<span>linux</span>.org</a>
+    <nav>
+      <a href="./" aria-current="page">Hardware</a>
+      <a href="../from-mac.html">From Mac</a>
+      <a href="../from-windows.html">From Windows</a>
+      <a href="../buy.html">Buy</a>
+      <a href="../verify.html">Verify ISO</a>
+      <a href="../about.html">About</a>
+    </nav>
+  </div>
+  <main>
+    <h1>Hardware matrix</h1>
+    <p class="lede">Community-compiled from official docs, GitHub enablement, Hub setups, and public threads. Ratings are not certifications. Official: <a href="https://omarchy.org/manual/mac-support/">Mac support</a>, <a href="https://learn.omacom.io/3/omacom/74/good-linux-hardware">DHH’s hardware list</a>, <a href="https://omarchy.org/potato/">potato PCs</a>.</p>
+    <form class="search">
+      <input id="q" type="search" placeholder="Filter by model, brand, chipset…" autocomplete="off">
+    </form>
+    <p class="filter-label">Rating</p>
+    <div class="pills" id="pills">
+      <button type="button" class="on" data-rating="all">All</button>
+      <button type="button" data-rating="gold">Gold</button>
+      <button type="button" data-rating="silver">Silver</button>
+      <button type="button" data-rating="bronze">Bronze</button>
+      <button type="button" data-rating="broken">Broken</button>
+      <button type="button" data-rating="experimental">Experimental</button>
+    </div>
+    <p class="filter-label">Brand</p>
+    <div class="pills" id="brands"></div>
+    <p class="filter-label">Type</p>
+    <div class="pills" id="types">
+      <button type="button" class="on" data-type="all">All</button>
+      <button type="button" data-type="laptop">Laptop</button>
+      <button type="button" data-type="desktop">Desktop</button>
+      <button type="button" data-type="mini-pc">Mini PC</button>
+      <button type="button" data-type="2-in-1">2-in-1</button>
+      <button type="button" data-type="handheld">Handheld</button>
+    </div>
+    <p class="tally" id="tally"></p>
+    <div class="grid" id="results"></div>
+    <p id="empty" hidden>Nothing matches.</p>
+
+    <h2>Feature grid</h2>
+    <div class="table-wrap">
+      <table id="matrix">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Brand</th>
+            <th>Rating</th>
+            <th>Wi-Fi</th>
+            <th>Audio</th>
+            <th>Webcam</th>
+            <th>Fingerprint</th>
+            <th>GPU</th>
+            <th>Suspend</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="note">Want a machine listed? <a href="../about.html#report">Send a report</a> with model string from <code>cat /sys/class/dmi/id/product_name</code>, Omarchy version, and what works.</p>
+  </main>
+  <footer>
+    Unofficial. <a href="../about.html">About</a> · <a href="https://omarchy.org">omarchy.org</a>
+  </footer>
+  <script src="../js/hardware.js"></script>
+  <script src="../js/site.js"></script>
+</body>
+</html>

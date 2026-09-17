@@ -1,0 +1,51 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Pill from '../../../components/Pill.astro';
+import { commands, latestTag, tagsAvailable, TAG_ORDER } from '../../../lib/data';
+import { articleLd } from '../../../lib/seo';
+export async function getStaticPaths() {
+  const tag = latestTag();
+  const names = new Set<string>();
+  for (const t of tagsAvailable()) for (const c of commands(t)) names.add(c.name);
+  return [...names].map((name) => ({ params: { name } }));
+}
+const { name } = Astro.params;
+const tag = latestTag();
+const history = TAG_ORDER.filter((t) => tagsAvailable().includes(t)).map((t) => ({ tag: t, cmd: commands(t).find((c: any) => c.name === name) }));
+const current = history.find((h) => h.tag === tag)?.cmd ?? [...history].reverse().find((h) => h.cmd)?.cmd;
+const present = history.filter((h) => h.cmd).map((h) => h.tag);
+const removed = !history.find((h) => h.tag === tag)?.cmd;
+const firstTag = present[0];
+const lastTag = present[present.length - 1];
+const title = current?.cli ?? name!;
+const desc = removed
+  ? `${title} was an Omarchy command present in ${firstTag} through ${lastTag} and is not in ${tag}. ${current?.summary ?? ''}`
+  : `${title}: ${current?.summary ?? 'Omarchy command'}. Arguments, examples, sudo requirement, and the versions it exists in.`;
+const path = `/reference/commands/${name}/`;
+---
+<Base title={`${title}${removed ? ' (removed)' : ''}`} description={desc} crumbs={[{ name: 'Reference', href: '/reference/' }, { name: 'Commands', href: '/reference/commands/' }, { name: title, href: path }]} ld={articleLd({ title: `${title} (Omarchy command)`, description: desc, path, keywords: ['omarchy', 'command', name!] })} ogType="article">
+  <article data-pagefind-body data-pagefind-meta="section:Reference">
+    <div class="art-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/reference/">Reference</a><span>›</span><a href="/reference/commands/">Commands</a><span>›</span><span>{current?.group}</span></nav>
+      <h1><code>{title}</code></h1>
+      <p class="lede">{current?.summary}</p>
+      <div class="meta-row">
+        {removed ? <Pill kind="bad" label={`Removed after ${lastTag}`} /> : <Pill kind="ok" label={`Present in ${tag}`} />}
+        {current?.requiresSudo && <Pill kind="warn" label="Requires sudo" />}
+        {current?.hidden && <Pill kind="info" label="Hidden (internal)" />}
+        <span>First seen: {firstTag}</span>
+      </div>
+    </div>
+    <div class="prose">
+      {current?.args && <><h2>Arguments</h2><pre><code>{title} {current.args}</code></pre></>}
+      {current?.examples?.length > 0 && <><h2>Examples</h2><pre><code>{current.examples.join('\n')}</code></pre></>}
+      {current?.aliases?.length > 0 && <p>Aliases: {current.aliases.map((a: string) => <code>{a}</code>)}</p>}
+      <h2>Version history</h2>
+      <div class="tablewrap"><table><thead><tr><th>Version</th><th>Present</th><th>Summary</th></tr></thead><tbody>
+        {history.map((h) => <tr><td><code>{h.tag}</code></td><td>{h.cmd ? <Pill kind="ok" label="yes" /> : <Pill kind="bad" label="no" />}</td><td>{h.cmd?.summary ?? ''}</td></tr>)}
+      </tbody></table></div>
+      <h2>Source</h2>
+      <p>Script: <a href={current?.sourceUrl ?? `https://github.com/omacom/omarchy/blob/${lastTag}/bin/${name}`} rel="noopener"><code>bin/{name}</code></a> at {lastTag}. Summary and arguments come from the <code># omarchy:</code> metadata header in that file. Run <code>{title} --help</code> on an Omarchy machine for the live version.</p>
+    </div>
+  </article>
+</Base>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Verify the Omarchy ISO — unofficial reminder</title>
+  <link rel="stylesheet" href="css/site.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <p class="unofficial">This domain does not host ISOs. If a button here ever offers a download, treat the site as compromised.</p>
+  <div class="bar">
+    <a class="mark" href="index.html">omarchy<span>linux</span>.org</a>
+    <nav>
+      <a href="hardware/">Hardware</a>
+      <a href="verify.html" aria-current="page">Verify ISO</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+  <main>
+    <h1>Verify the ISO</h1>
+    <p class="lede">Omarchy 4.0.1 patched a real privilege issue (user in the docker group). Do not add a second supply-chain problem by grabbing an image from a random mirror.</p>
+
+    <ol>
+      <li>Get the file from the official installer block: <a href="https://omarchy.org/#install">omarchy.org/#install</a></li>
+      <li>Current image at time of writing: <a href="https://iso.omarchy.org/omarchy-4.0.3.iso">iso.omarchy.org/omarchy-4.0.3.iso</a></li>
+      <li>Download the matching <a href="https://iso.omarchy.org/omarchy-4.0.3.iso.sha256">.sha256</a> and <a href="https://iso.omarchy.org/omarchy-4.0.3.iso.sig">.sig</a> into the same folder.</li>
+    </ol>
+    <pre class="note mono" style="white-space:pre-wrap">sha256sum -c omarchy-4.0.3.iso.sha256</pre>
+    <p>Then check the signature against the Omarchy signing key from the official docs. If either check fails, delete the file. Do not “just try it.”</p>
+    <p>Flash with balenaEtcher (Mac/Windows) or caligula (Linux). Official walkthrough: <a href="https://omarchy.org/manual/getting-started/">Getting Started</a>.</p>
+  </main>
+  <footer>Unofficial · <a href="about.html">About</a></footer>
+</body>
+</html>

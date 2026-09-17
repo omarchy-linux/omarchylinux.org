@@ -1,0 +1,14 @@
+---
+interface Props { title: string; issues: any[]; note?: string; limit?: number }
+const { title, issues = [], note, limit = 10 } = Astro.props;
+const list = issues.slice(0, limit);
+---
+{list.length > 0 && (
+  <section data-pagefind-ignore>
+    <h2>{title}</h2>
+    {note && <p class="small muted">{note}</p>}
+    <div class="tablewrap"><table><thead><tr><th>Issue</th><th>State</th><th class="num">Comments</th><th>Opened</th></tr></thead><tbody>
+      {list.map((i: any) => <tr><td><a href={i.url} rel="noopener nofollow">#{i.number}</a> {i.title}{i.fixedBy?.length > 0 && <span class="small muted"> · fixed by {i.fixedBy.map((n: number) => <a href={`https://github.com/omacom/omarchy/pull/${n}`} rel="noopener nofollow">#{n} </a>)}</span>}</td><td><span class={`pill ${i.state === 'OPEN' ? 'pill-open' : 'pill-fixed'}`}>{i.state === 'OPEN' ? 'open' : 'closed'}</span></td><td class="num">{i.comments ?? ''}</td><td class="small tabular">{(i.createdAt ?? '').slice(0, 10)}</td></tr>)}
+    </tbody></table></div>
+  </section>
+)}

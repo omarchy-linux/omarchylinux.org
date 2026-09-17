@@ -1,0 +1,18 @@
+---
+import { getEntry, render } from 'astro:content';
+import Article from '../layouts/Article.astro';
+import { SECTIONS } from '../lib/content';
+interface Props { collection: string; slug: string; extraCrumbs?: { name: string; href: string }[]; extraLd?: any[]; answerLabel?: string; ldType?: 'TechArticle' | 'Article' | 'HowTo' }
+const { collection, slug, extraCrumbs = [], extraLd = [], answerLabel, ldType } = Astro.props;
+const entry = await getEntry(collection as any, slug);
+if (!entry) return Astro.redirect('/404/');
+const { Content, headings } = await render(entry);
+const sec = SECTIONS[collection];
+const path = `${sec.base}${slug}/`;
+const crumbs = [{ name: sec.label, href: sec.base }, ...extraCrumbs, { name: entry.data.title, href: path }];
+---
+<Article entry={entry} crumbs={crumbs} path={path} headings={headings} sourcePath={`src/content/${collection}/${entry.filePath?.split('/').pop() ?? slug + '.md'}`} extraLd={extraLd} answerLabel={answerLabel} ldType={ldType}>
+  <slot name="before" slot="before" />
+  <Content />
+  <slot name="after" slot="after" />
+</Article>

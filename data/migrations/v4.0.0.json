@@ -1,0 +1,1354 @@
+{
+  "count": 78,
+  "generatedFrom": "data/source/v4.0.0/migrations",
+  "migrations": [
+    {
+      "body": "echo \"Install MPRIS support for mpv\"\n\nomarchy-pkg-add mpv-mpris",
+      "bodyTruncated": false,
+      "date": "2026-05-12T21:58:27Z",
+      "description": "Install MPRIS support for mpv",
+      "file": "1778623107.sh",
+      "lineCount": 3,
+      "packagesAdded": [
+        "mpv-mpris"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1778623107.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1778623107.sh",
+      "timestamp": 1778623107,
+      "touches": []
+    },
+    {
+      "body": "echo \"Make Shift+Enter distinguishable for terminals and Codex\"\n\nalacritty_config=\"$HOME/.config/alacritty/alacritty.toml\"\nfoot_config=\"$HOME/.config/foot/foot.ini\"\nghostty_config=\"$HOME/.config/ghostty/config\"\nkitty_config=\"$HOME/.config/kitty/kitty.conf\"\n\nensure_alacritty_shift_return() {\n  local config=\"$1\"\n\n  [[ -f $config ]] || return 0\n\n  if grep -q 'key = \"Return\", mods = \"Shift\", chars = \"\\\\u001B\\\\r\"' \"$config\"; then\n    sed -i 's/{ key = \"Return\", mods = \"Shift\", chars = \"\\\\u001B\\\\r\" }/{ key = \"Return\", mods = \"Shift\", chars = \"\\\\u001B[13;2u\" }/' \"$config\"\n  elif ! grep -q 'key = \"Return\", mods = \"Shift\", chars = \"\\\\u001B\\[13;2u\"' \"$config\"; then\n    if grep -qxF '{ key = \"Return\", mods = \"Alt|Shift\", chars = \"\\u001B[13;4u\" }' \"$config\"; then\n      sed -i '/^{ key = \"Return\", mods = \"Alt|Shift\", chars = \"\\\\u001B\\[13;4u\" }$/i # Send Shift+Return as CSI-u so TUIs can distinguish it from Return without treating it as Alt+Return.\\n{ key = \"Return\", mods = \"Shift\", chars = \"\\\\u001B[13;2u\" },' \"$config\"\n    elif grep -qxF '{ key = \"Insert\", mods = \"Control\", action = \"Copy\" },' \"$config\"; then\n      sed -i '/^{ key = \"Insert\", mods = \"Control\", action = \"Copy\" },$/a # Send Shift+Return as CSI-u so TUIs can distinguish it from Return without treating it as Alt+Return.\\n{ key = \"Return\", mods = \"Shift\", chars = \"\\\\u001B[13;2u\" },' \"$config\"\n    else\n      printf '\\n# Send Shift+Return as CSI-u so TUIs can distinguish it from Return without treating it as Alt+Return.\\n{ key = \"Return\", mods = \"Shift\", chars = \"\\\\u001B[13;2u\" }\\n' >>\"$config\"\n    fi\n  fi\n}\n\nensure_ghostty_binding() {\n  local config=\"$1\"\n  local key=\"$2\"\n  local binding=\"$3\"\n  local comment=\"$4\"\n  local key_regex\n\n  [[ -f $config ]] || return 0\n\n  key_regex=$(printf '%s\\n' \"$key\" | sed 's/[][\\\\.^$*+?{}|()\\/]/\\\\&/g')\n\n  if grep -Eq \"^keybind = $key_regex=.*13;[24]u\" \"$config\"; then\n    sed -i \"s/^keybind = $key_regex=.*/keybind = $key=$binding/\" \"$config\"\n  elif ! grep -qF \"keybind = $key=\" \"$config\"; then\n    if grep -qxF 'keybind = control+insert=copy_to_clipboard' \"$config\"; then",
+      "bodyTruncated": true,
+      "date": "2026-05-29T12:18:56Z",
+      "description": "Make Shift+Enter distinguishable for terminals and Codex",
+      "file": "1780057136.sh",
+      "lineCount": 172,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1780057136.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1780057136.sh",
+      "timestamp": 1780057136,
+      "touches": [
+        "~/.config/alacritty/alacritty.toml",
+        "~/.config/foot/foot.ini",
+        "~/.config/ghostty/config",
+        "~/.config/kitty/kitty.conf"
+      ]
+    },
+    {
+      "body": "echo \"Remove leading zero from bar clock date\"\n\nconfig_file=\"$HOME/.config/omarchy/shell.json\"\n\nif [[ -f $config_file ]] && omarchy-cmd-present jq; then\n  tmp=$(mktemp)\n  jq '\n    def update_clock_format:\n      if type == \"object\" and (.id // \"\") == \"omarchy.clock\" and (.formatAlt // \"\") == \"dd MMMM \\u0027W\\u0027ww yyyy\" then\n        .formatAlt = \"d MMMM \\u0027W\\u0027ww yyyy\"\n      else\n        .\n      end;\n\n    .bar.layout |= (\n      if type == \"object\" then\n        with_entries(\n          .value |= (\n            if type == \"array\" then\n              map(update_clock_format)\n            else\n              .\n            end\n          )\n        )\n      else\n        .\n      end\n    )\n  ' \"$config_file\" >\"$tmp\" && mv \"$tmp\" \"$config_file\" || rm -f \"$tmp\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-06-01T06:19:34Z",
+      "description": "Remove leading zero from bar clock date",
+      "file": "1780294774.sh",
+      "lineCount": 31,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1780294774.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1780294774.sh",
+      "timestamp": 1780294774,
+      "touches": [
+        "~/.config/omarchy/shell.json"
+      ]
+    },
+    {
+      "body": "echo \"Add yt-dlp download extension (Alt+Shift+D) to Chromium-based browsers\"\n\nYTDLP_EXT=\"$OMARCHY_PATH/default/chromium/extensions/yt-dlp\"\n\nadd_ytdlp_extension() {\n  local file=$1\n\n  [[ -f $file ]] || return 0\n  grep -q \"extensions/yt-dlp\" \"$file\" && return 0\n\n  if grep -q \"^--load-extension=\" \"$file\"; then\n    sed -i --follow-symlinks \"s|^--load-extension=\\(.*\\)$|--load-extension=\\1,$YTDLP_EXT|\" \"$file\"\n  else\n    echo \"--load-extension=$YTDLP_EXT\" >>\"$file\"\n  fi\n}\n\nfor conf in chromium chrome google-chrome brave brave-beta brave-nightly brave-origin-beta microsoft-edge-stable; do\n  add_ytdlp_extension \"$HOME/.config/$conf-flags.conf\"\ndone\n\nomarchy-pkg-add yt-dlp\n\n# Register the native messaging host that runs yt-dlp for the extension.\nomarchy-install-chromium-ytdlp || true",
+      "bodyTruncated": false,
+      "date": "2026-06-03T20:14:49Z",
+      "description": "Add yt-dlp download extension (Alt+Shift+D) to Chromium-based browsers",
+      "file": "1780517689.sh",
+      "lineCount": 25,
+      "packagesAdded": [
+        "yt-dlp"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1780517689.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1780517689.sh",
+      "timestamp": 1780517689,
+      "touches": [
+        "~/.config/"
+      ]
+    },
+    {
+      "body": "echo \"Use dua for Disk Usage TUI\"\n\nomarchy-pkg-add dua-cli\nomarchy-pkg-drop dust\n\nAPP_DIR=\"$HOME/.local/share/applications\"\nICON_DIR=\"$APP_DIR/icons\"\n\nif [ -f \"$APP_DIR/Disk Usage.desktop\" ]; then\n  rm \"$APP_DIR/Disk Usage.desktop\"\n  omarchy-tui-install \"Disk Usage\" \"dua i\" float \"$ICON_DIR/Disk Usage.png\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-06-06T09:58:08Z",
+      "description": "Use dua for Disk Usage TUI",
+      "file": "1780739888.sh",
+      "lineCount": 12,
+      "packagesAdded": [
+        "dua-cli"
+      ],
+      "packagesRemoved": [
+        "dust"
+      ],
+      "path": "migrations/1780739888.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1780739888.sh",
+      "timestamp": 1780739888,
+      "touches": [
+        "~/.local/share/applications"
+      ]
+    },
+    {
+      "body": "echo \"Move current Omarchy theme state to ~/.local/state\"\n\nlegacy_current_dir=\"$HOME/.config/omarchy/current\"\ncurrent_state_dir=\"$HOME/.local/state/omarchy/current\"\n\nmkdir -p \"$HOME/.local/state/omarchy\"\n\nif [[ -e $legacy_current_dir || -L $legacy_current_dir ]]; then\n  if [[ ! -e $current_state_dir && ! -L $current_state_dir ]]; then\n    mv \"$legacy_current_dir\" \"$current_state_dir\"\n  else\n    if [[ -d $legacy_current_dir && -d $current_state_dir ]]; then\n      cp -an \"$legacy_current_dir/.\" \"$current_state_dir/\" 2>/dev/null || true\n    fi\n    rm -rf \"$legacy_current_dir\"\n  fi\nfi\n\nreplace_literal_in_file() {\n  local file=\"$1\"\n  local old=\"$2\"\n  local new=\"$3\"\n  local tmp\n\n  grep -Fq -- \"$old\" \"$file\" || return 0\n\n  tmp=$(mktemp)\n  OLD=\"$old\" NEW=\"$new\" awk '\n    BEGIN {\n      old = ENVIRON[\"OLD\"]\n      new = ENVIRON[\"NEW\"]\n    }\n    {\n      while ((pos = index($0, old)) > 0) {\n        $0 = substr($0, 1, pos - 1) new substr($0, pos + length(old))\n      }\n      print\n    }\n  ' \"$file\" >\"$tmp\"\n  cat \"$tmp\" >\"$file\"",
+      "bodyTruncated": true,
+      "date": "2026-06-09T22:11:47Z",
+      "description": "Move current Omarchy theme state to ~/.local/state",
+      "file": "1781043107.sh",
+      "lineCount": 118,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1781043107.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1781043107.sh",
+      "timestamp": 1781043107,
+      "touches": [
+        "~/.config/alacritty/alacritty.toml",
+        "~/.config/btop/themes/current.theme",
+        "~/.config/foot/foot.ini",
+        "~/.config/ghostty/config",
+        "~/.config/helix/themes/omarchy.toml",
+        "~/.config/hypr/hyprland.conf",
+        "~/.config/hypr/hyprland.lua",
+        "~/.config/hyprland-preview-share-picker/config.yaml",
+        "~/.config/kitty/kitty.conf",
+        "~/.config/omarchy/current",
+        "~/.config/omarchy/current/",
+        "~/.cursor/extensions/omarchy-theme/themes/omarchy-color-theme.json",
+        "~/.local/state",
+        "~/.local/state/omarchy",
+        "~/.local/state/omarchy/current",
+        "~/.vscode-insiders/extensions/omarchy-theme/themes/omarchy-color-theme.json",
+        "~/.vscode-oss/extensions/omarchy-theme/themes/omarchy-color-theme.json",
+        "~/.vscode/extensions/omarchy-theme/themes/omarchy-color-theme.json"
+      ]
+    },
+    {
+      "body": "echo \"Update Hyprland Lua entrypoint to load Omarchy bootstrap\"\n\nhyprland_config=\"$HOME/.config/hypr/hyprland.lua\"\n\nif [[ -f $hyprland_config ]] && ! grep -Fq '/default/hypr/bootstrap.lua' \"$hyprland_config\"; then\n  tmp=$(mktemp)\n\n  awk '\n    BEGIN {\n      replaced = 0\n    }\n\n    !replaced && $0 == \"-- Load user modules from ~/.config and Omarchy defaults from $OMARCHY_PATH.\" {\n      comment = $0\n      got_next = getline next_line\n      if (got_next > 0 && next_line == \"package.path = os.getenv(\\\"HOME\\\")\") {\n        print \"-- Omarchy'\\''s bootstrap keeps path setup out of this user config.\"\n        print \"dofile((os.getenv(\\\"OMARCHY_PATH\\\") or \\\"/usr/share/omarchy\\\") .. \\\"/default/hypr/bootstrap.lua\\\")\"\n        replaced = 1\n\n        while ((getline line) > 0) {\n          if (line ~ /^[[:space:]]*\\.\\. package\\.path$/) {\n            break\n          }\n        }\n\n        next\n      }\n\n      print comment\n      if (got_next > 0) {\n        print next_line\n      }\n      next\n    }\n\n    { print }\n  ' \"$hyprland_config\" >\"$tmp\"\n\n  mv \"$tmp\" \"$hyprland_config\"",
+      "bodyTruncated": true,
+      "date": "2026-06-10T03:55:58Z",
+      "description": "Update Hyprland Lua entrypoint to load Omarchy bootstrap",
+      "file": "1781063758.sh",
+      "lineCount": 41,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1781063758.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1781063758.sh",
+      "timestamp": 1781063758,
+      "touches": [
+        "/usr/share/omarchy",
+        "~/.config",
+        "~/.config/hypr/hyprland.lua"
+      ]
+    },
+    {
+      "body": "echo \"Relink Neovim theme to Omarchy current state\"\n\ntheme_link=\"$HOME/.config/nvim/lua/plugins/theme.lua\"\nlegacy_absolute_target=\"$HOME/.config/omarchy/current/theme/neovim.lua\"\nlegacy_relative_target=\"../../../omarchy/current/theme/neovim.lua\"\nlegacy_home_target=\"~/.config/omarchy/current/theme/neovim.lua\"\ncurrent_relative_target=\"../../../../.local/state/omarchy/current/theme/neovim.lua\"\n\n[[ -L $theme_link ]] || exit 0\n\ntarget=$(readlink \"$theme_link\") || exit 0\n\ncase \"$target\" in\n  \"$legacy_absolute_target\"|\"$legacy_relative_target\"|\"$legacy_home_target\")\n    ln -sfn \"$current_relative_target\" \"$theme_link\"\n    ;;\nesac",
+      "bodyTruncated": false,
+      "date": "2026-06-11T06:08:02Z",
+      "description": "Relink Neovim theme to Omarchy current state",
+      "file": "1781158082.sh",
+      "lineCount": 17,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1781158082.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1781158082.sh",
+      "timestamp": 1781158082,
+      "touches": [
+        "~/.config/nvim/lua/plugins/theme.lua",
+        "~/.config/omarchy/current/theme/neovim.lua"
+      ]
+    },
+    {
+      "body": "echo \"Replace Satty with Tensaku\"\n\nomarchy-pkg-add tensaku\nomarchy-pkg-drop satty",
+      "bodyTruncated": false,
+      "date": "2026-06-12T17:49:46Z",
+      "description": "Replace Satty with Tensaku",
+      "file": "1781286586.sh",
+      "lineCount": 4,
+      "packagesAdded": [
+        "tensaku"
+      ],
+      "packagesRemoved": [
+        "satty"
+      ],
+      "path": "migrations/1781286586.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1781286586.sh",
+      "timestamp": 1781286586,
+      "touches": []
+    },
+    {
+      "body": "echo \"Move stock Hyprland user overrides into package defaults\"\n\nstock_input_sha=\"bf7602d679a31da028528d9b7dac64463217a9df42b254d3baefb7ce35674be5\"\nstock_bindings_sha=\"932d647b07d24907d46c0b7752bb81ad87276ccd057670be6c3a5c5e950c19aa\"\nplain_bindings_sha=\"cde93672f53dad31c13c1a81cad6aae162ab95e0592d362dbf99ca7eabe76d43\"\n\nfile_sha() {\n  sha256sum \"$1\" | awk '{ print $1 }'\n}\n\npackaged_hypr_config() {\n  local omarchy_config=\"$OMARCHY_PATH/config/hypr/$1\"\n\n  if [[ -f $omarchy_config ]]; then\n    printf '%s\\n' \"$omarchy_config\"\n  else\n    printf '/etc/skel/.config/hypr/%s\\n' \"$1\"\n  fi\n}\n\nreplace_with_packaged_config() {\n  local name=\"$1\"\n  local user_file=\"$HOME/.config/hypr/$name\"\n  local packaged_file\n\n  packaged_file=$(packaged_hypr_config \"$name\")\n  [[ -f $user_file && -f $packaged_file ]] || return 0\n\n  cp \"$packaged_file\" \"$user_file\"\n}\n\nvconsole_value() {\n  local key=\"$1\"\n\n  [[ -f /etc/vconsole.conf ]] || return 0\n\n  awk -F= -v key=\"$key\" '\n    $1 == key {\n      value = $2\n      sub(/^[[:space:]]*/, \"\", value)",
+      "bodyTruncated": true,
+      "date": "2026-06-15T01:12:42Z",
+      "description": "Move stock Hyprland user overrides into package defaults",
+      "file": "1781485962.sh",
+      "lineCount": 108,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1781485962.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1781485962.sh",
+      "timestamp": 1781485962,
+      "touches": [
+        "/etc/skel/.config/hypr/",
+        "/etc/vconsole.conf",
+        "~/.config/hypr/",
+        "~/.config/hypr/bindings.lua",
+        "~/.config/hypr/input.lua",
+        "~/.local/state/omarchy",
+        "~/.local/state/omarchy/preinstalls-removed"
+      ]
+    },
+    {
+      "body": "echo \"Enable secure remote Neovim clipboard support\"\n\nnvim_config_dir=\"$HOME/.config/nvim\"\nnvim_options=\"$nvim_config_dir/lua/config/options.lua\"\nnvim_provider=\"$nvim_config_dir/lua/config/remote_clipboard.lua\"\n\nprovider_source=\"/usr/share/omarchy-nvim/config/lua/config/remote_clipboard.lua\"\n\nif [[ -d $nvim_config_dir ]]; then\n  mkdir -p \"$(dirname \"$nvim_provider\")\"\n  install -m 0644 \"$provider_source\" \"$nvim_provider\"\n\n  if [[ -f $nvim_options ]] && ! grep -qF 'config.remote_clipboard' \"$nvim_options\"; then\n    tmp=$(mktemp)\n    {\n      printf '%s\\n' 'require(\"config.remote_clipboard\").setup()'\n      cat \"$nvim_options\"\n    } >\"$tmp\"\n    mv \"$tmp\" \"$nvim_options\"\n  fi\nfi\n\ntmux_config=\"$HOME/.config/tmux/tmux.conf\"\nif [[ -f $tmux_config ]] && ! grep -Eq '(^|[[:space:],\"])\\*:clipboard([[:space:]\",]|$)' \"$tmux_config\"; then\n  printf '\\n# Enable OSC 52 clipboard forwarding for remote Neovim yanks.\\nset -as terminal-features \",*:clipboard\"\\n' >>\"$tmux_config\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-06-16T05:27:43Z",
+      "description": "Enable secure remote Neovim clipboard support",
+      "file": "1781587663.sh",
+      "lineCount": 26,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1781587663.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1781587663.sh",
+      "timestamp": 1781587663,
+      "touches": [
+        "/usr/share/omarchy-nvim/config/lua/config/remote_clipboard.lua",
+        "~/.config/nvim",
+        "~/.config/tmux/tmux.conf"
+      ]
+    },
+    {
+      "body": "echo \"Auto-mount removable drives by default with udiskie\"\n\nomarchy-pkg-add udiskie",
+      "bodyTruncated": false,
+      "date": "2026-06-18T14:36:21Z",
+      "description": "Auto-mount removable drives by default with udiskie",
+      "file": "1781793381.sh",
+      "lineCount": 3,
+      "packagesAdded": [
+        "udiskie"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1781793381.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1781793381.sh",
+      "timestamp": 1781793381,
+      "touches": []
+    },
+    {
+      "body": "echo \"Normalize Snapper snapshot services\"\n\nOMARCHY_PATH=\"${OMARCHY_PATH:-/usr/share/omarchy}\"\nsnapper_config_script=/usr/share/omarchy/install/config/snapper.sh\nif [[ ! -f $snapper_config_script ]]; then\n  snapper_config_script=\"$OMARCHY_PATH/install/config/snapper.sh\"\nfi\n\nas_root() {\n  if (( EUID == 0 )); then\n    \"$@\"\n  else\n    sudo \"$@\"\n  fi\n}\n\nunit_enabled() {\n  systemctl is-enabled --quiet \"$1\" >/dev/null 2>&1\n}\n\nunit_active() {\n  systemctl is-active --quiet \"$1\" >/dev/null 2>&1\n}\n\nneeds_repair=0\n\n[[ -f /etc/snapper/configs/root ]] || needs_repair=1\n\nif ! unit_enabled snapper-cleanup.timer || ! unit_active snapper-cleanup.timer; then\n  needs_repair=1\nfi\n\nif ! unit_enabled limine-snapper-sync.service || ! unit_active limine-snapper-sync.service; then\n  needs_repair=1\nfi\n\n(( needs_repair )) || exit 0\n\nas_root env OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail \"$snapper_config_script\"",
+      "bodyTruncated": false,
+      "date": "2026-06-20T19:44:37Z",
+      "description": "Normalize Snapper snapshot services",
+      "file": "1781984677.sh",
+      "lineCount": 39,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1781984677.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1781984677.sh",
+      "timestamp": 1781984677,
+      "touches": [
+        "/etc/snapper/configs/root",
+        "/usr/share/omarchy",
+        "/usr/share/omarchy/install/config/snapper.sh"
+      ]
+    },
+    {
+      "body": "echo \"Retire systemd-networkd in favor of NetworkManager\"\n\nas_root() {\n  if (( EUID == 0 )); then\n    \"$@\"\n  else\n    sudo \"$@\"\n  fi\n}\n\nstock_networkd_file() {\n  local file=\"$1\"\n\n  [[ -f $file ]] || return 1\n  case \"$(basename \"$file\")\" in\n    20-ethernet.network|20-wlan.network|20-wwan.network) ;;\n    *) return 1 ;;\n  esac\n\n  grep -Eq '^[[:space:]]*DHCP=yes[[:space:]]*$' \"$file\" || return 1\n  grep -Eq '^[[:space:]]*Name=(en\\*|eth\\*|wl\\*|ww\\*)[[:space:]]*$' \"$file\" || return 1\n}\n\nbackup_stock_networkd_files() {\n  local backup_dir=\"/etc/systemd/network/omarchy-networkd-retired-$(date +%Y%m%d%H%M%S)\"\n  local file\n\n  for file in /etc/systemd/network/20-ethernet.network /etc/systemd/network/20-wlan.network /etc/systemd/network/20-wwan.network; do\n    if stock_networkd_file \"$file\"; then\n      as_root install -d -m 0755 \"$backup_dir\"\n      as_root mv \"$file\" \"$backup_dir/\"\n    fi\n  done\n}\n\nnetworkd_units=(\n  systemd-networkd.service\n  systemd-networkd.socket\n  systemd-networkd-varlink.socket\n  systemd-networkd-varlink-metrics.socket",
+      "bodyTruncated": true,
+      "date": "2026-06-21T00:35:56Z",
+      "description": "Retire systemd-networkd in favor of NetworkManager",
+      "file": "1782002156.sh",
+      "lineCount": 88,
+      "packagesAdded": [
+        "networkmanager"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1782002156.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1782002156.sh",
+      "timestamp": 1782002156,
+      "touches": [
+        "/etc/systemd/network/20-ethernet.network",
+        "/etc/systemd/network/20-wlan.network",
+        "/etc/systemd/network/20-wwan.network",
+        "/etc/systemd/network/omarchy-networkd-retired-"
+      ]
+    },
+    {
+      "body": "echo \"Disable Limine Snapper warning notifier\"\n\nautostart_file=\"$HOME/.config/autostart/limine-snapper-notify.desktop\"\n\nmkdir -p \"$(dirname \"$autostart_file\")\"\ncat >\"$autostart_file\" <<'DESKTOP'\n[Desktop Entry]\nHidden=true\nDESKTOP\n\nsystemctl --user stop 'app-limine\\x2dsnapper\\x2dnotify@autostart.service' >/dev/null 2>&1 || true\nsystemctl --user daemon-reload >/dev/null 2>&1 || true",
+      "bodyTruncated": false,
+      "date": "2026-06-21T13:42:24Z",
+      "description": "Disable Limine Snapper warning notifier",
+      "file": "1782049344.sh",
+      "lineCount": 12,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1782049344.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1782049344.sh",
+      "timestamp": 1782049344,
+      "touches": [
+        "~/.config/autostart/limine-snapper-notify.desktop"
+      ]
+    },
+    {
+      "body": "echo \"Backfill hardware support and tmux settings added before Omarchy quattro\"\n\ntmux_config=\"$HOME/.config/tmux/tmux.conf\"\nif [[ -f $tmux_config ]]; then\n  sed -i 's/^set -g terminal-features\\[3\\] \"xterm-kitty:extkeys\"$/set -ag terminal-features \"xterm-kitty:extkeys\"/' \"$tmux_config\"\n\n  if ! grep -q 'M-S-Enter' \"$tmux_config\"; then\n    sed -i '/^# Pane Controls$/a\\bind -n M-Enter split-window -v -c \"#{pane_current_path}\"\\nbind -n M-S-Enter split-window -h -c \"#{pane_current_path}\"\\nbind -n M-Escape kill-pane\\n' \"$tmux_config\"\n  fi\n\n  omarchy-restart-tmux\nfi\n\nhardware_packages=()\nif lspci | grep -iE '(Multimedia audio controller|Audio device).*Intel' >/dev/null && omarchy-pkg-missing sof-firmware; then\n  hardware_packages+=(sof-firmware)\nfi\nif lspci | grep -iE '(VGA|Display).*Intel' >/dev/null && omarchy-pkg-missing vulkan-intel; then\n  hardware_packages+=(vulkan-intel)\nfi\nif lspci | grep -iE '(VGA|Display).*AMD' >/dev/null && omarchy-pkg-missing vulkan-radeon; then\n  hardware_packages+=(vulkan-radeon)\nfi\nif lspci | grep -iE '(VGA|Display).*Apple' >/dev/null && omarchy-pkg-missing vulkan-asahi; then\n  hardware_packages+=(vulkan-asahi)\nfi\n\nif (( ${#hardware_packages[@]} > 0 )); then\n  omarchy-pkg-add \"${hardware_packages[@]}\"\n  omarchy-state set reboot-required\nfi\n\nif omarchy-hw-match \"DX13260\"; then\n  gsettings set org.gnome.desktop.interface text-scaling-factor 0.95\nfi",
+      "bodyTruncated": false,
+      "date": "2026-07-18T19:09:04Z",
+      "description": "Backfill hardware support and tmux settings added before Omarchy quattro",
+      "file": "1784401744.sh",
+      "lineCount": 35,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1784401744.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1784401744.sh",
+      "timestamp": 1784401744,
+      "touches": [
+        "~/.config/tmux/tmux.conf"
+      ]
+    },
+    {
+      "body": "echo \"Keep non-Latin keyboard layouts out of the initramfs so the LUKS passphrase stays typeable\"\n\n# Bundling vconsole.conf in the initramfs makes Plymouth apply the user's\n# layout at the LUKS prompt. For layouts that don't type Latin letters, that\n# makes the (Latin) passphrase untypeable and locks the user out (#6229).\n# Drop the bundling for those layouts and rebuild the UKI. The packaged\n# omarchy_hooks.conf now applies the same condition on every rebuild.\n\nhooks_conf=\"/etc/mkinitcpio.conf.d/omarchy_hooks.conf\"\n\n# vconsole.conf only guarantees KEYMAP, and it need not exist at all. Sourcing\n# one that isn't there fails, and under omarchy-migrate's `bash -euo pipefail`\n# that aborts every migration behind this one. Unset first so an exported\n# XKBLAYOUT can't answer for a file that sets none.\nlayout=\"\"\n[[ -f /etc/vconsole.conf ]] && layout=$(unset XKBLAYOUT; . /etc/vconsole.conf; echo \"${XKBLAYOUT:-}\")\nlayout=\"${layout%%,*}\"\n\nif [[ $layout =~ ^(af|am|ara|bd|bg|by|et|ge|gr|il|in|iq|ir|kg|kh|kz|la|lk|mk|mm|mn|mv|np|rs|ru|sy|th|tj|ua)$ ]] &&\n  [[ -f $hooks_conf ]] && grep -qx 'FILES+=(/etc/vconsole.conf)' \"$hooks_conf\"; then\n  sudo sed -i '\\|^FILES+=(/etc/vconsole.conf)$|d' \"$hooks_conf\"\n\n  if omarchy-cmd-present limine-mkinitcpio; then\n    sudo limine-mkinitcpio\n  fi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-07-19T15:56:04Z",
+      "description": "Keep non-Latin keyboard layouts out of the initramfs so the LUKS passphrase stays typeable",
+      "file": "1784476564.sh",
+      "lineCount": 26,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1784476564.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1784476564.sh",
+      "timestamp": 1784476564,
+      "touches": [
+        "/etc/mkinitcpio.conf.d/omarchy_hooks.conf",
+        "/etc/vconsole.conf"
+      ]
+    },
+    {
+      "body": "echo \"Enable Kitty cwd lookup through a remote control socket\"\n\nkitty_config=\"$HOME/.config/kitty/kitty.conf\"\nlisten_on='listen_on unix:${XDG_RUNTIME_DIR}/omarchy-kitty-{kitty_pid}'\n\nif [[ -f $kitty_config ]] && ! grep -qE '^[[:space:]]*listen_on[[:space:]]' \"$kitty_config\"; then\n  printf '\\n# Allow cwd lookup from global keybindings\\n%s\\n' \"$listen_on\" >>\"$kitty_config\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-07-19T16:50:32Z",
+      "description": "Enable Kitty cwd lookup through a remote control socket",
+      "file": "1784479832.sh",
+      "lineCount": 8,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1784479832.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1784479832.sh",
+      "timestamp": 1784479832,
+      "touches": [
+        "~/.config/kitty/kitty.conf"
+      ]
+    },
+    {
+      "body": "echo \"Pin browser password store to gnome-libsecret (prevents cookie/login loss on Hyprland)\"\n\n# Chromium-based browsers auto-detect their os_crypt backend; on Hyprland the xdg-desktop-portal\n# Secret backend has no provider and fails, so they can fall back to the 'basic' (v10) store.\n# A swap from the gnome-libsecret (v11) key to the basic key makes existing cookies and saved\n# passwords undecryptable, so the browser silently drops them and the user is logged out of\n# everything. Pin gnome-libsecret so the backend is deterministic across reboots and updates.\nfor conf in ~/.config/{chromium,brave,chrome,microsoft-edge-stable}-flags.conf; do\n  if [[ -f $conf ]] && ! grep -q -- '--password-store=' \"$conf\"; then\n    [[ -n $(tail -c1 \"$conf\") ]] && echo >>\"$conf\"\n    echo '--password-store=gnome-libsecret' >>\"$conf\"\n  fi\ndone",
+      "bodyTruncated": false,
+      "date": "2026-07-20T00:49:16Z",
+      "description": "Pin browser password store to gnome-libsecret (prevents cookie/login loss on Hyprland)",
+      "file": "1784508556.sh",
+      "lineCount": 13,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1784508556.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1784508556.sh",
+      "timestamp": 1784508556,
+      "touches": [
+        "~/.config/"
+      ]
+    },
+    {
+      "body": "echo \"Switch Brave Origin from the beta to the stable release\"\n\nif omarchy-pkg-present brave-origin-beta-bin; then\n  default_browser=$(xdg-settings get default-web-browser 2>/dev/null || true)\n\n  omarchy-pkg-aur-add brave-origin-bin\n  omarchy-pkg-drop brave-origin-beta-bin\n\n  mkdir -p ~/.config\n  cp -f \"$OMARCHY_PATH/config/chromium-flags.conf\" ~/.config/brave-origin-flags.conf\n  rm -f ~/.config/brave-origin-beta-flags.conf\n\n  if [[ $default_browser == \"brave-origin-beta.desktop\" ]]; then\n    omarchy-default-browser brave-origin\n  fi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-07-20T01:28:07Z",
+      "description": "Switch Brave Origin from the beta to the stable release",
+      "file": "1784510887.sh",
+      "lineCount": 16,
+      "packagesAdded": [
+        "brave-origin-bin"
+      ],
+      "packagesRemoved": [
+        "brave-origin-beta-bin"
+      ],
+      "path": "migrations/1784510887.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1784510887.sh",
+      "timestamp": 1784510887,
+      "touches": [
+        "~/.config",
+        "~/.config/brave-origin-beta-flags.conf",
+        "~/.config/brave-origin-flags.conf"
+      ]
+    },
+    {
+      "body": "echo \"Stop the migration notifier from re-triggering itself in a loop\"\n\n# The old omarchy-update-user-notify.path used level-triggered PathExistsGlob,\n# which busy-loops the notifier service (or, before r1123, killed the path\n# unit with unit-start-limit-hit). Reload the fixed units, revive and restart\n# the watcher, and enable the once-per-login notifier.\nsystemctl --user daemon-reload >/dev/null 2>&1 || true\nsystemctl --user reset-failed omarchy-update-user-notify.path >/dev/null 2>&1 || true\nsystemctl --user restart omarchy-update-user-notify.path >/dev/null 2>&1 || true\nsystemctl --user enable omarchy-update-user-notify.service >/dev/null 2>&1 || true",
+      "bodyTruncated": false,
+      "date": "2026-07-20T04:31:10Z",
+      "description": "Stop the migration notifier from re-triggering itself in a loop",
+      "file": "1784521870.sh",
+      "lineCount": 10,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1784521870.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1784521870.sh",
+      "timestamp": 1784521870,
+      "touches": []
+    },
+    {
+      "body": "echo \"Stop waiting for the network before showing the desktop\"\n\nas_root() {\n  if (( EUID == 0 )); then\n    \"$@\"\n  else\n    sudo \"$@\"\n  fi\n}\n\n# graphical.target was gated on network-online.target (cups-browsed orders\n# itself after it), so the desktop waited for DHCP/Wi-Fi association at boot.\n# Nothing in the session needs to block on the network; mask the wait so\n# network-online no longer delays boot. Mirrors the systemd-networkd variant.\nas_root systemctl mask NetworkManager-wait-online.service >/dev/null 2>&1 || true",
+      "bodyTruncated": false,
+      "date": "2026-07-20T17:30:52Z",
+      "description": "Stop waiting for the network before showing the desktop",
+      "file": "1784568652.sh",
+      "lineCount": 15,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1784568652.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1784568652.sh",
+      "timestamp": 1784568652,
+      "touches": []
+    },
+    {
+      "body": "echo \"Switch to the Omarchy quickshell-git build so shell restarts wait for instance exit\"\n\nif ! omarchy-pkg-present quickshell-git; then\n  # One transaction with --ask 4 so pacman accepts replacing the conflicting\n  # quickshell package in place; packages depending on quickshell stay\n  # satisfied through the provides.\n  sudo pacman -S --noconfirm --ask 4 quickshell-git\nfi",
+      "bodyTruncated": false,
+      "date": "2026-07-21T22:23:06Z",
+      "description": "Switch to the Omarchy quickshell-git build so shell restarts wait for instance exit",
+      "file": "1784672586.sh",
+      "lineCount": 8,
+      "packagesAdded": [
+        "quickshell-git"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1784672586.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1784672586.sh",
+      "timestamp": 1784672586,
+      "touches": []
+    },
+    {
+      "body": "echo \"Install the native messaging host for the Chromium Copy URL extension\"\n\nomarchy-install-chromium-copy-url",
+      "bodyTruncated": false,
+      "date": "2026-07-22T23:45:17Z",
+      "description": "Install the native messaging host for the Chromium Copy URL extension",
+      "file": "1784763917.sh",
+      "lineCount": 3,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1784763917.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1784763917.sh",
+      "timestamp": 1784763917,
+      "touches": []
+    },
+    {
+      "body": "echo \"Remove the obsolete Voxtype Hyprland toggle\"\n\nrm -f \"$HOME/.local/state/omarchy/toggles/hypr/voxtype.lua\"\n\n# The Quattro upgrade runs the packaged migrations against a still-running\n# Omarchy 3 session whose config is mid-swap, so a reload here only re-parses a\n# config that cannot resolve yet. That paints an error bar Hyprland then keeps\n# up until something reloads cleanly, which the upgrade deliberately never does.\n# Nothing is reading this toggle in that session anyway; the reboot applies it.\nif [[ ${OMARCHY_UPGRADE_TO_QUATTRO_LIVE:-0} != \"1\" ]]; then\n  hyprctl reload >/dev/null 2>&1 || true\nfi",
+      "bodyTruncated": false,
+      "date": "2026-07-23T00:43:26Z",
+      "description": "Remove the obsolete Voxtype Hyprland toggle",
+      "file": "1784767406.sh",
+      "lineCount": 12,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1784767406.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1784767406.sh",
+      "timestamp": 1784767406,
+      "touches": [
+        "~/.local/state/omarchy/toggles/hypr/voxtype.lua"
+      ]
+    },
+    {
+      "body": "echo \"Configure locate to skip Btrfs snapshots and index Btrfs subvolumes\"\n\nOMARCHY_PATH=\"${OMARCHY_PATH:-/usr/share/omarchy}\"\nlocate_config_script=\"$OMARCHY_PATH/install/config/locate.sh\"\nUPDATEDB_CONF_PATH=\"${OMARCHY_UPDATEDB_CONF_PATH:-/etc/updatedb.conf}\"\n\nas_root() {\n  if (( EUID == 0 )); then\n    \"$@\"\n  else\n    sudo \"$@\"\n  fi\n}\n\n[[ -f $UPDATEDB_CONF_PATH ]] || exit 0\n[[ -f $locate_config_script ]] || exit 0\n\nif grep -q '^PRUNE_BIND_MOUNTS = \"no\"' \"$UPDATEDB_CONF_PATH\" &&\n  grep -E '^PRUNEPATHS' \"$UPDATEDB_CONF_PATH\" | grep -E '(^|[[:space:]\"])/\\.snapshots([[:space:]\"]|$)' >/dev/null; then\n  exit 0\nfi\n\nas_root env OMARCHY_UPDATEDB_CONF_PATH=\"$UPDATEDB_CONF_PATH\" bash -euo pipefail \"$locate_config_script\"\n\n# Rebuild the index with the new exclusions; pruning /.snapshots turns\n# multi-hour runs on snapshot-heavy systems back into one-minute runs. Restart\n# rather than start: the machines this targets are the ones with an updatedb\n# already grinding through every snapshot, and a run that started before the\n# rewrite keeps using the config it read at startup.\nas_root systemctl restart --no-block plocate-updatedb.service >/dev/null 2>&1 || true",
+      "bodyTruncated": false,
+      "date": "2026-07-23T12:24:11Z",
+      "description": "Configure locate to skip Btrfs snapshots and index Btrfs subvolumes",
+      "file": "1784809451.sh",
+      "lineCount": 30,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1784809451.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1784809451.sh",
+      "timestamp": 1784809451,
+      "touches": [
+        "/etc/updatedb.conf",
+        "/usr/share/omarchy"
+      ]
+    },
+    {
+      "body": "echo \"Remove Snapper timeline snapshots leaked by earlier defaults\"\n\nSNAPPER_CONFIG_PATH=\"${OMARCHY_SNAPPER_CONFIG_PATH:-/etc/snapper/configs/root}\"\n\nas_root() {\n  if (( EUID == 0 )); then\n    \"$@\"\n  else\n    sudo \"$@\"\n  fi\n}\n\ncommand -v snapper >/dev/null || exit 0\n[[ -f $SNAPPER_CONFIG_PATH ]] || exit 0\n\n# Only clean up when timeline snapshotting is off, as Omarchy configures it.\n# Anyone who deliberately turned it back on keeps their snapshots. Snapper's\n# own create-config leaves the file readable by root alone, and a config this\n# user cannot read must not pass for one that wants its snapshots kept.\nif [[ -r $SNAPPER_CONFIG_PATH ]]; then\n  grep -qFx 'TIMELINE_CREATE=\"no\"' \"$SNAPPER_CONFIG_PATH\" || exit 0\nelse\n  as_root grep -qFx 'TIMELINE_CREATE=\"no\"' \"$SNAPPER_CONFIG_PATH\" || exit 0\nfi\n\n# Earlier installs ran hourly timeline snapshots. Later configs stopped\n# creating them but never deleted the existing ones, and number cleanup\n# skips snapshots marked Cleanup=timeline, so they pile up forever:\n# hundreds of snapshots pinning 100+ GB of extents on long-running machines.\nleaked=$(as_root snapper -c root --csvout list --columns number,cleanup 2>/dev/null | awk -F, '$2 == \"timeline\" { print $1 }' || true)\n[[ -n $leaked ]] || exit 0\n\necho \"Deleting $(wc -w <<<\"$leaked\") leaked timeline snapshots (disk space is reclaimed in the background)\"\n\n# Delete in small batches; one big delete can die on a DBus timeout partway.\n# A failed batch must not take the rest of the migration run down with it, so\n# the drain is best effort. omarchy-migrate records the migration either way,\n# so say what is left rather than counting on a rerun that will not come.\nfailed=0\nbatch=()",
+      "bodyTruncated": true,
+      "date": "2026-07-23T12:24:12Z",
+      "description": "Remove Snapper timeline snapshots leaked by earlier defaults",
+      "file": "1784809452.sh",
+      "lineCount": 56,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1784809452.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1784809452.sh",
+      "timestamp": 1784809452,
+      "touches": [
+        "/etc/snapper/configs/root"
+      ]
+    },
+    {
+      "body": "echo \"Gate sudo and polkit fingerprint auth behind the lid state (password when the lid is shut)\"\n\n# Existing fingerprint setups have pam_fprintd first in /etc/pam.d/sudo and\n# /etc/pam.d/polkit-1 but no lid gate, so a closed-lid sudo or pkexec would\n# block on the unreachable reader for the full pam_fprintd timeout before\n# offering the password. Insert a pam_exec gate before pam_fprintd that skips\n# fingerprint while the lid is closed. New setups already get this from\n# omarchy-setup-security-fingerprint.\n#\n# The gate points at the fixed /usr/bin path the omarchy package always\n# provides, so it keeps working across package installs and dev-link (which\n# overlays $OMARCHY_PATH but leaves /usr/bin untouched). pam_exec needs a\n# literal absolute path — it does not expand env vars.\n\ngate=\"auth      [success=1 default=ignore] pam_exec.so quiet /usr/bin/omarchy-hw-laptop-closed\"\n\nfor pam in /etc/pam.d/sudo /etc/pam.d/polkit-1; do\n  if [[ -f $pam ]] &&\n    grep -q 'pam_fprintd\\.so' \"$pam\" &&\n    ! grep -q 'omarchy-hw-laptop-closed' \"$pam\"; then\n    sudo sed -i \"/pam_fprintd\\.so/i $gate\" \"$pam\"\n  fi\ndone",
+      "bodyTruncated": false,
+      "date": "2026-07-23T14:53:57Z",
+      "description": "Gate sudo and polkit fingerprint auth behind the lid state (password when the lid is shut)",
+      "file": "1784818437.sh",
+      "lineCount": 23,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1784818437.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1784818437.sh",
+      "timestamp": 1784818437,
+      "touches": [
+        "/etc/pam.d/polkit-1",
+        "/etc/pam.d/sudo",
+        "/usr/bin/omarchy-hw-laptop-closed"
+      ]
+    },
+    {
+      "body": "echo \"Regenerate mise wrappers to stop them recursing through PATH\"\n\nfor wrapper in \"$HOME/.local/bin\"/*; do\n  [[ -f $wrapper && -x $wrapper ]] || continue\n\n  package=$(sed -n 's/^mise use -g \"\\(.*\\)\"$/\\1/p' \"$wrapper\")\n  bin=$(sed -n 's/^exec \"\\(.*\\)\" \"\\$@\"$/\\1/p' \"$wrapper\")\n\n  if [[ -n $package && -n $bin ]]; then\n    omarchy-mise-install \"$package\" \"$(basename \"$wrapper\")\" \"$bin\"\n  fi\ndone",
+      "bodyTruncated": false,
+      "date": "2026-07-24T16:19:31Z",
+      "description": "Regenerate mise wrappers to stop them recursing through PATH",
+      "file": "1784909971.sh",
+      "lineCount": 12,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1784909971.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1784909971.sh",
+      "timestamp": 1784909971,
+      "touches": [
+        "~/.local/bin"
+      ]
+    },
+    {
+      "body": "echo \"Keep Wi-Fi power save off for lower latency\"\n\nas_root() {\n  if (( EUID == 0 )); then\n    \"$@\"\n  else\n    sudo \"$@\"\n  fi\n}\n\nas_root nmcli general reload conf >/dev/null 2>&1 || true\n\n# NetworkManager only applies wifi.powersave when a connection activates, so\n# also switch it off directly for the running session.\nshopt -s nullglob\nfor wireless in /sys/class/net/*/wireless; do\n  iface=$(basename \"$(dirname \"$wireless\")\")\n  as_root iw dev \"$iface\" set power_save off 2>/dev/null || true\ndone",
+      "bodyTruncated": false,
+      "date": "2026-07-24T17:33:55Z",
+      "description": "Keep Wi-Fi power save off for lower latency",
+      "file": "1784914435.sh",
+      "lineCount": 19,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1784914435.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1784914435.sh",
+      "timestamp": 1784914435,
+      "touches": []
+    },
+    {
+      "body": "echo \"Unpack the initramfs synchronously so Plymouth survives early boot\"\n\n# Kernel 7.1 unpacks the initramfs asynchronously, which races /init: the\n# early /proc, /sys, /dev, and /run mounts fail while unpacking settles, so\n# plymouthd exits when it can't read /proc/cmdline and encrypted boots fall\n# back to an unthemed text LUKS prompt. Force synchronous unpacking until the\n# race is fixed upstream. The packaged omarchy-defaults.conf now carries the\n# same parameter for fresh installs.\n\nif omarchy-cmd-present limine-mkinitcpio &&\n  [[ -f /etc/limine-entry-tool.d/omarchy-defaults.conf ]] &&\n  ! grep -rqs \"initramfs_async\" /etc/limine-entry-tool.d/ /etc/default/limine; then\n  echo 'KERNEL_CMDLINE[default]+=\" initramfs_async=0\"' |\n    sudo tee -a /etc/limine-entry-tool.d/omarchy-defaults.conf >/dev/null\n\n  sudo limine-mkinitcpio\nfi",
+      "bodyTruncated": false,
+      "date": "2026-07-24T18:25:31Z",
+      "description": "Unpack the initramfs synchronously so Plymouth survives early boot",
+      "file": "1784917531.sh",
+      "lineCount": 17,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1784917531.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1784917531.sh",
+      "timestamp": 1784917531,
+      "touches": [
+        "/etc/default/limine",
+        "/etc/limine-entry-tool.d/",
+        "/etc/limine-entry-tool.d/omarchy-defaults.conf"
+      ]
+    },
+    {
+      "body": "echo \"Install the speaker tuning for XPS 2026 14/16\"\n\n# Speaker tunings are PipeWire filter-chain drop-ins gated on a hardware\n# predicate, so this is a no-op on machines without one. The limiter is an LV2\n# plugin and the graph will not instantiate without it.\n\nif omarchy-audio-tuning match >/dev/null 2>&1; then\n  omarchy-pkg-add lsp-plugins-lv2\n  omarchy-audio-tuning on\nfi",
+      "bodyTruncated": false,
+      "date": "2026-07-25T06:13:20Z",
+      "description": "Install the speaker tuning for XPS 2026 14/16",
+      "file": "1784960000.sh",
+      "lineCount": 10,
+      "packagesAdded": [
+        "lsp-plugins-lv2"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1784960000.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1784960000.sh",
+      "timestamp": 1784960000,
+      "touches": []
+    },
+    {
+      "body": "echo \"Tune reclaim for swap on zram\"\n\n# Everything here only applies the shipped config early; boot picks it up\n# regardless. Nothing is worth failing the migration chain over, so each step\n# falls back to asking for a reboot.\n\n# Load our file specifically rather than --system, which returns nonzero for\n# any invalid key in any admin sysctl file on the machine.\nsudo sysctl -p /etc/sysctl.d/99-omarchy-sysctl.conf >/dev/null || true\n\nif sudo systemctl daemon-reload; then\n  # Resizing swaps the device off first, which faults every stored page back\n  # into memory. That's only cheap while it's empty, so a device under\n  # pressure keeps its old size until the next boot. A device that doesn't\n  # exist yet reads as empty, which is what we want: the restart brings it up\n  # against the unit daemon-reload just generated.\n  zram_used=$(awk '$1 == \"/dev/zram0\" {print $4}' /proc/swaps)\n\n  if [[ ${zram_used:-0} == 0 ]] && sudo systemctl restart dev-zram0.swap; then\n    exit 0\n  fi\nfi\n\nomarchy-state set reboot-required",
+      "bodyTruncated": false,
+      "date": "2026-07-25T06:30:00Z",
+      "description": "Tune reclaim for swap on zram",
+      "file": "1784961000.sh",
+      "lineCount": 24,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1784961000.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1784961000.sh",
+      "timestamp": 1784961000,
+      "touches": [
+        "/etc/sysctl.d/99-omarchy-sysctl.conf"
+      ]
+    },
+    {
+      "body": "echo \"Give the pre-suspend lock a window it can actually finish in\"\n\n# logind's five second default expires while Quickshell is still securing the\n# session on lid close, and it suspends regardless. The shipped drop-in raises\n# InhibitDelayMaxSec, but logind only reads it on reload.\n#\n# Reload rather than restart: restarting systemd-logind tears down the session.\nsudo systemctl reload systemd-logind >/dev/null 2>&1 || true\n\n# Check the property logind actually enforces, not the reload's exit status: a\n# reload that returns success while the drop-in is missing or unparsed leaves\n# the old five second window in place. omarchy-system-sleep-lock reads this same\n# property at runtime, so it stays correct either way -- the reboot flag is only\n# about getting the wider window to take effect.\n#\n# Both reads have to survive failing: a missing drop-in or an unreachable logind\n# is the very condition being tested for, and migrations run under -e.\ndropin=/etc/systemd/logind.conf.d/20-inhibit-delay.conf\nexpected_s=$(sed -n 's/^InhibitDelayMaxSec=//p' \"$dropin\" 2>/dev/null || true)\neffective_us=$(busctl get-property org.freedesktop.login1 /org/freedesktop/login1 \\\n  org.freedesktop.login1.Manager InhibitDelayMaxUSec 2>/dev/null | awk '{print $2}' || true)\n\nif [[ -z $expected_s || $effective_us != $((expected_s * 1000000)) ]]; then\n  omarchy-state set reboot-required\nfi",
+      "bodyTruncated": false,
+      "date": "2026-07-25T09:00:00Z",
+      "description": "Give the pre-suspend lock a window it can actually finish in",
+      "file": "1784970000.sh",
+      "lineCount": 25,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1784970000.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1784970000.sh",
+      "timestamp": 1784970000,
+      "touches": [
+        "/etc/systemd/logind.conf.d/20-inhibit-delay.conf"
+      ]
+    },
+    {
+      "body": "echo \"Move the bar indicators to the left of the clock\"\n\nconfig_file=\"$HOME/.config/omarchy/shell.json\"\n\nif [[ -s $config_file ]]; then\n  tmp=$(mktemp)\n  jq '\n    def entry_id:\n      if type == \"string\" then\n        .\n      elif type == \"object\" then\n        (.id // \"\")\n      else\n        \"\"\n      end;\n\n    def entry_index($id):\n      [range(0; length) as $i | select((.[$i] | entry_id) == $id) | $i][0];\n\n    def place_indicators_before_clock:\n      if type != \"array\" then\n        .\n      else\n        (entry_index(\"omarchy.clock\")) as $clock_index |\n        (entry_index(\"omarchy.indicators\")) as $indicators_index |\n        if $clock_index == null or $indicators_index == null or $indicators_index < $clock_index then\n          .\n        else\n          . as $entries |\n          ($entries[$indicators_index]) as $indicators_entry |\n          ($entries | del(.[$indicators_index])) as $without_indicators |\n          ($without_indicators | entry_index(\"omarchy.clock\")) as $new_clock_index |\n          $without_indicators[0:$new_clock_index] + [$indicators_entry] + $without_indicators[$new_clock_index:]\n        end\n      end;\n\n    .bar.layout.center |= place_indicators_before_clock\n  ' \"$config_file\" >\"$tmp\" && mv \"$tmp\" \"$config_file\" || rm -f \"$tmp\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-07-25T14:16:40Z",
+      "description": "Move the bar indicators to the left of the clock",
+      "file": "1784989000.sh",
+      "lineCount": 39,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1784989000.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1784989000.sh",
+      "timestamp": 1784989000,
+      "touches": [
+        "~/.config/omarchy/shell.json"
+      ]
+    },
+    {
+      "body": "echo \"Repair Neovim theme symlinks the earlier relink missed\"\n\ntheme_link=\"$HOME/.config/nvim/lua/plugins/theme.lua\"\ncurrent_absolute_target=\"$HOME/.local/state/omarchy/current/theme/neovim.lua\"\ncurrent_relative_target=\"../../../../.local/state/omarchy/current/theme/neovim.lua\"\n\n[[ -L $theme_link ]] || exit 0\n\ntarget=$(readlink \"$theme_link\") || exit 0\n\n# Already pointing at the state directory.\n[[ $target == \"$current_relative_target\" || $target == \"$current_absolute_target\" ]] && exit 0\n\n# 1781158082.sh matched an explicit list of legacy spellings and missed at least\n# one (\"../../../../.config/omarchy/current/theme/neovim.lua\"), leaving those\n# links dangling. Match the shared suffix instead so every spelling is repaired.\ncase \"$target\" in\n  */omarchy/current/theme/neovim.lua) ;;\n  *) exit 0 ;;\nesac\n\nln -sfn \"$current_relative_target\" \"$theme_link\"",
+      "bodyTruncated": false,
+      "date": "2026-07-25T17:59:09Z",
+      "description": "Repair Neovim theme symlinks the earlier relink missed",
+      "file": "1785002349.sh",
+      "lineCount": 22,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1785002349.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1785002349.sh",
+      "timestamp": 1785002349,
+      "touches": [
+        "~/.config/nvim/lua/plugins/theme.lua",
+        "~/.local/state/omarchy/current/theme/neovim.lua"
+      ]
+    },
+    {
+      "body": "echo \"Move zram tuning to a vendor drop-in\"\n\nzram_conf=\"${OMARCHY_ZRAM_CONF:-/etc/systemd/zram-generator.conf}\"\nzram_dropin=\"${OMARCHY_ZRAM_DROPIN:-/usr/lib/systemd/zram-generator.conf.d/90-omarchy.conf}\"\n\n# The tuning ships as /usr/lib/systemd/zram-generator.conf.d/90-omarchy.conf.\n# Drop-ins outrank the main config file, so a leftover /etc copy decides nothing\n# and only implies /etc is where zram gets configured.\n\n[[ -f $zram_conf ]] || exit 0\n\n# Only once the replacement is on disk. zram-generator makes no device at all\n# when nothing configures one, so until the drop-in lands the /etc copy is the\n# only thing standing between this machine and no zram swap. The update pipeline\n# installs packages before it runs migrations, but a dev checkout carries\n# migrations from a release the installed package does not have yet.\n[[ -f $zram_dropin ]] || exit 0\n\n# Package-owned copies go away with their package on upgrade.\npacman -Qo \"$zram_conf\" &>/dev/null && exit 0\n\n# archinstall writes exactly a [zram0] section with one compression-algorithm\n# line. Anything else is a deliberate local override. grep exits 1 on a config\n# that sets nothing at all, which omarchy-migrate's -e would take as a failed\n# migration and block every migration behind this one.\nsettings=$(grep -vE '^[[:space:]]*([#;]|$)' \"$zram_conf\" | tr -d '[:space:]') || true\n\nif [[ -z $settings || $settings =~ ^\\[zram0\\]compression-algorithm=[[:alnum:]-]+$ ]]; then\n  # A refused sudo just leaves the file for next time; tidying is not worth\n  # failing the migration chain over.\n  sudo rm -f \"$zram_conf\" || true\nelse\n  echo \"Keeping $zram_conf; it has local edits.\"\n  echo \"Omarchy's drop-in overrides it. Move your changes to\"\n  echo \"/etc/systemd/zram-generator.conf.d/99-local.conf to keep them in effect.\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-07-25T20:56:40Z",
+      "description": "Move zram tuning to a vendor drop-in",
+      "file": "1785013000.sh",
+      "lineCount": 36,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1785013000.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1785013000.sh",
+      "timestamp": 1785013000,
+      "touches": [
+        "/etc/systemd/zram-generator.conf",
+        "/etc/systemd/zram-generator.conf.d/99-local.conf",
+        "/usr/lib/systemd/zram-generator.conf.d/90-omarchy.conf"
+      ]
+    },
+    {
+      "body": "echo \"Switch fingerprint support back to stock libfprint\"\n\n# libfprint-git existed to carry the focaltech_moc driver and the FocalTech\n# FT9349 device ID (2808:a97a) before any release shipped them. libfprint\n# 1.94.100 has both, so fingerprint setups go back to the stock Arch package.\n\n# The remove/install pair below isn't one transaction: if the install failed\n# on a previous run, libfprint-git is already gone but fprintd is left with\n# no libfprint — the elif finishes the job on rerun.\nif pacman -Q libfprint-git &>/dev/null; then\n  # Deps-only removal keeps fprintd installed while its libfprint\n  # dependency is swapped out underneath it.\n  sudo pacman -Rdd --noconfirm libfprint-git\n  omarchy-pkg-add libfprint\nelif pacman -Q fprintd &>/dev/null && ! pacman -Q libfprint &>/dev/null; then\n  omarchy-pkg-add libfprint\nfi",
+      "bodyTruncated": false,
+      "date": "2026-07-26T18:27:53Z",
+      "description": "Switch fingerprint support back to stock libfprint",
+      "file": "1785090473.sh",
+      "lineCount": 17,
+      "packagesAdded": [
+        "libfprint"
+      ],
+      "packagesRemoved": [
+        "libfprint-git"
+      ],
+      "path": "migrations/1785090473.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1785090473.sh",
+      "timestamp": 1785090473,
+      "touches": []
+    },
+    {
+      "body": "echo \"Only check for pending migrations at login, not on every package update\"\n\n# omarchy-update-user-notify.path watched /usr/share/omarchy/migrations, but\n# pacman writes that directory during every update -- including the blessed\n# `omarchy update`, which runs omarchy-migrate a step later. The watcher fired a\n# critical notification for migrations that were already being applied in the\n# visible update terminal. Retire the watcher and keep only the once-per-login\n# check, now named after the command it runs.\n\nwants_dir=\"$HOME/.config/systemd/user/graphical-session.target.wants\"\n\nsystemctl --user daemon-reload >/dev/null 2>&1 || true\n\n# The watcher's unit file is already gone, but it stays loaded in a session that\n# started before this update, so stop it before it can fire again.\nsystemctl --user stop omarchy-update-user-notify.path >/dev/null 2>&1 || true\n\n# Enable the replacement before dropping the old enablement, so a failure here\n# can never leave a user with no notifier at all. Enable without --now: this\n# usually runs from inside `omarchy update`, and starting the notifier here would\n# pop a toast for the migrations running right after it -- the exact behavior\n# being removed. `systemctl enable` also needs a live user manager, which\n# `omarchy update` over SSH does not have, so fall back to writing precisely the\n# symlink it would have written rather than silently doing nothing.\nif ! systemctl --user enable omarchy-migrate-notify.service >/dev/null 2>&1; then\n  mkdir -p \"$wants_dir\"\n  ln -sfn /usr/lib/systemd/user/omarchy-migrate-notify.service \\\n    \"$wants_dir/omarchy-migrate-notify.service\"\nfi\n\n# Drop the retired enablement by hand instead of through `systemctl disable`.\n# The package ships omarchy-update-user-notify.service as a compatibility\n# symlink onto the new unit, for users who have not reached this migration yet,\n# so disabling that name here would disable the replacement along with it.\nrm -f \"$wants_dir/omarchy-update-user-notify.path\" \\\n  \"$wants_dir/omarchy-update-user-notify.service\"\n\nsystemctl --user reset-failed omarchy-update-user-notify.path >/dev/null 2>&1 || true\nsystemctl --user daemon-reload >/dev/null 2>&1 || true",
+      "bodyTruncated": false,
+      "date": "2026-07-26T19:58:02Z",
+      "description": "Only check for pending migrations at login, not on every package update",
+      "file": "1785095882.sh",
+      "lineCount": 39,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1785095882.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1785095882.sh",
+      "timestamp": 1785095882,
+      "touches": [
+        "/usr/lib/systemd/user/omarchy-migrate-notify.service",
+        "~/.config/systemd/user/graphical-session.target.wants"
+      ]
+    },
+    {
+      "body": "echo \"Save incoming Taildrop files to ~/Downloads\"\n\nif omarchy-cmd-present tailscale; then\n  systemctl --user daemon-reload >/dev/null 2>&1 || true\n\n  # Report what systemctl actually said; \"could not enable\" on its own gives\n  # nothing to act on.\n  if ! error=$(systemctl --user enable --now omarchy-tailscale-receive.service 2>&1); then\n    echo \"Could not enable omarchy-tailscale-receive.service: $error\"\n  fi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-07-26T21:23:20Z",
+      "description": "Save incoming Taildrop files to ~/Downloads",
+      "file": "1785101000.sh",
+      "lineCount": 11,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1785101000.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1785101000.sh",
+      "timestamp": 1785101000,
+      "touches": [
+        "~/Downloads"
+      ]
+    },
+    {
+      "body": "echo \"Register the native messaging hosts for the bundled Chromium extensions\"\n\n# Fresh installs stamped 1780517689 and 1784763917 as applied without running\n# them, so the bundled extensions loaded with no host to talk to.\nomarchy-install-chromium-copy-url\nomarchy-install-chromium-ytdlp",
+      "bodyTruncated": false,
+      "date": "2026-07-27T15:39:07Z",
+      "description": "Register the native messaging hosts for the bundled Chromium extensions",
+      "file": "1785166747.sh",
+      "lineCount": 6,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1785166747.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1785166747.sh",
+      "timestamp": 1785166747,
+      "touches": []
+    },
+    {
+      "body": "echo \"Supervise fcitx5 so CapsLock compose sequences can't silently die\"\n\n# fcitx5 was launched fire-and-forget from Hyprland's autostart. Nothing\n# restarted it and nothing noticed when it went away, so a single lost start\n# left every ~/.XCompose sequence (CapsLock m s -> emoji) dead for the rest of\n# the session. It's a systemd user service with Restart=always now.\n\nsystemctl --user daemon-reload >/dev/null 2>&1 || true\n\n# Enable without --now, and start by hand further down only when there is a\n# session to start into. `systemctl enable` needs a live user manager, which an\n# `omarchy update` from a TTY does not have, so fall back to writing exactly the\n# symlink it would have written rather than silently leaving this unenabled.\nif ! systemctl --user enable omarchy-fcitx5.service >/dev/null 2>&1; then\n  wants_dir=\"$HOME/.config/systemd/user/graphical-session.target.wants\"\n  mkdir -p \"$wants_dir\"\n  ln -sfn /usr/lib/systemd/user/omarchy-fcitx5.service \\\n    \"$wants_dir/omarchy-fcitx5.service\"\nfi\n\n# Outside a graphical session -- an update over SSH -- there is nothing to hand\n# over: no autostart-launched fcitx5 to kill, and the unit's own\n# ConditionEnvironment would skip the start anyway. The enablement above is the\n# whole job; the next graphical login starts it.\nif systemctl --user is-active --quiet graphical-session.target; then\n  # The service and the autostart-launched process can't coexist: a second\n  # fcitx5 sees the first owning org.fcitx.Fcitx5 and exits 0, which\n  # Restart=always would turn into a restart loop. Drop the stray first.\n  pkill -x fcitx5 >/dev/null 2>&1 || true\n\n  # Report what systemctl actually said. This kills a fcitx5 that was working a\n  # moment ago, so a start failure here has to be loud instead of leaving the\n  # session with no input method and a migration marked complete.\n  if ! error=$(systemctl --user start omarchy-fcitx5.service 2>&1); then\n    echo \"Could not start omarchy-fcitx5.service: $error\"\n    echo \"Compose sequences (CapsLock m s) will not work until the next login.\"\n  fi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-07-27T15:56:40Z",
+      "description": "Supervise fcitx5 so CapsLock compose sequences can't silently die",
+      "file": "1785167800.sh",
+      "lineCount": 38,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1785167800.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1785167800.sh",
+      "timestamp": 1785167800,
+      "touches": [
+        "/usr/lib/systemd/user/omarchy-fcitx5.service",
+        "~/.config/systemd/user/graphical-session.target.wants"
+      ]
+    },
+    {
+      "body": "echo \"Remove the tmux alert hooks and its bar indicator\"\n\ntmux_config=\"$HOME/.config/tmux/tmux.conf\"\n\n# Drop only the hooks Omarchy installed, wherever the migrations that wrote\n# them left them, and only the blank run around what goes: every other line\n# comes through untouched.\nif [[ -f $tmux_config ]]; then\n  tmp=$(mktemp)\n\n  if awk '\n    function flush(count,   i) { for (i = 0; i < count; i++) print \"\" }\n\n    function keep(line) {\n      if (dropped) { if (printed && blanks) print \"\" }\n      else flush(blanks)\n\n      blanks = 0\n      dropped = 0\n      printed = 1\n      print line\n    }\n\n    # The heading only belongs to the block when a removed hook follows it.\n    /^[[:space:]]*# Alerts$/ && header == \"\" { header = $0; next }\n\n    /^[[:space:]]*set-hook -g alert-(bell|activity|silence) .*omarchy\\.indicators refresh/ ||\n    /^[[:space:]]*set-hook -g (after-select-window|client-session-changed|client-focus-(in|out))(\\[[0-9]+\\])? .*(omarchy-tmux-alert track|omarchy\\.indicators refresh)/ {\n      header = \"\"\n      dropped = 1\n      next\n    }\n\n    /^[[:space:]]*$/ {\n      if (header != \"\") { keep(header); header = \"\" }\n      blanks++\n      next\n    }\n\n    {",
+      "bodyTruncated": true,
+      "date": "2026-07-27T22:00:00Z",
+      "description": "Remove the tmux alert hooks and its bar indicator",
+      "file": "1785189600.sh",
+      "lineCount": 120,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1785189600.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1785189600.sh",
+      "timestamp": 1785189600,
+      "touches": [
+        "~/.config/omarchy/shell.json",
+        "~/.config/tmux/tmux.conf"
+      ]
+    },
+    {
+      "body": "echo \"Rename the T2 Mac BCE module (apple-bce → t2bce) and repair the boot image\"\n\n# linux-t2 7.1.4 replaced the apple-bce driver with t2bce, so the apple-bce the\n# installer put in the mkinitcpio MODULES list no longer resolves and every\n# initramfs/UKI rebuild hard-fails — including the one the kernel upgrade to\n# 7.1.4 just triggered, which left a stale UKI on the ESP.\n#\n# Both names are listed with mkinitcpio's optional '?' suffix because this\n# migration only runs once: if this machine's linux-t2 hasn't reached 7.1.4 yet\n# (lagging mirror, pinned kernel), apple-bce must keep working today and\n# t2bce_vhci must take over on whichever future upgrade delivers the rename.\n# t2bce_core/t2bce_dma come in via module dependencies.\n\nconf=\"${OMARCHY_T2_MKINITCPIO_CONF:-/etc/mkinitcpio.conf.d/apple-t2.conf}\"\nmodules_conf=\"${OMARCHY_T2_MODULES_CONF:-/etc/modules-load.d/t2.conf}\"\n\nif [[ -f $conf ]] && grep -q 'apple-bce ' \"$conf\"; then\n  sudo sed -i 's/apple-bce /apple-bce? t2bce_vhci? /' \"$conf\"\n\n  if [[ -f $modules_conf ]]; then\n    sudo sed -i 's/^apple-bce$/t2bce_vhci/' \"$modules_conf\"\n  fi\n\n  # Rebuild what the failed hook skipped so the ESP matches the installed kernel.\n  sudo limine-update\nfi",
+      "bodyTruncated": false,
+      "date": "2026-07-28T21:14:36Z",
+      "description": "Rename the T2 Mac BCE module (apple-bce → t2bce) and repair the boot image",
+      "file": "1785273276.sh",
+      "lineCount": 26,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1785273276.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1785273276.sh",
+      "timestamp": 1785273276,
+      "touches": [
+        "/etc/mkinitcpio.conf.d/apple-t2.conf",
+        "/etc/modules-load.d/t2.conf"
+      ]
+    },
+    {
+      "body": "echo \"Add the agents widget to the bar\"\n\n# The widget is now in the default layout. It draws nothing until a provider\n# reports usage — Panel.qml is `visible: providers.length > 0`, and Main.qml\n# only counts a provider that is enabled *and* has recorded prompts, sessions,\n# active days, or a rate limit. So adding it to every existing bar is free:\n# machines without Claude Code or Codex never see it.\n\nconfig_file=\"$HOME/.config/omarchy/shell.json\"\n\nif [[ -s $config_file ]]; then\n  tmp=$(mktemp)\n  jq '\n    def entry_id:\n      if type == \"string\" then\n        .\n      elif type == \"object\" then\n        (.id // \"\")\n      else\n        \"\"\n      end;\n\n    def has_widget($id):\n      [(.bar.layout // {}) | to_entries[] | .value | select(type == \"array\") | .[] | entry_id]\n        | any(. == $id);\n\n    def insert_after($anchor; $entry):\n      if type != \"array\" then\n        [$entry]\n      else\n        ([range(0; length) as $i | select((.[$i] | entry_id) == $anchor) | $i][0]) as $anchor_index |\n        if $anchor_index == null then\n          [$entry] + .\n        else\n          .[0:$anchor_index + 1] + [$entry] + .[$anchor_index + 1:]\n        end\n      end;\n\n    # Respect a bar the user already curated: only place the widget when it is\n    # absent from every section, never a second copy.",
+      "bodyTruncated": true,
+      "date": "2026-07-29T17:09:45Z",
+      "description": "Add the agents widget to the bar",
+      "file": "1785344985.sh",
+      "lineCount": 47,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1785344985.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1785344985.sh",
+      "timestamp": 1785344985,
+      "touches": [
+        "~/.config/omarchy/shell.json"
+      ]
+    },
+    {
+      "body": "echo \"Drop Kvantum now that Qt apps follow the theme through the GTK platform theme\"\n\n# QT_STYLE_OVERRIDE is gone, so Kvantum is no longer painting anything -- Qt\n# falls back to built-in Fusion and takes its palette from\n# QT_QPA_PLATFORMTHEME=gtk3, which actually tracks the Omarchy theme. Kvantum\n# never did; we have never shipped a .kvconfig for it to read.\n#\n# kvantum-qt5 has to go in the same transaction: it is the only thing that\n# requires kvantum, so removing kvantum alone fails the dependency check. It has\n# been dead weight since VLC was retired anyway, and it takes qt5-svg and\n# qt5-x11extras with it.\n#\n# What this deliberately does NOT touch is qt5-wayland and qt5-declarative. On a\n# machine whose sddm theme metadata predates QtVersion=6, those are what keep\n# the Qt5 greeter able to start, and removing them is how you end up with no\n# login screen. qt5-wayland is explicitly installed, so the -s cascade leaves it\n# and the qt5-base beneath it alone.\ntargets=()\nfor pkg in kvantum-qt5 kvantum; do\n  pacman -Q \"$pkg\" &>/dev/null && targets+=(\"$pkg\")\ndone\n\nif ((${#targets[@]})); then\n  # Preflight so a surprise reverse dependency prints our sentence rather than a\n  # wall of pacman errors, and so neither outcome exits non-zero -- a failing\n  # migration aborts every migration queued behind it.\n  if pacman -Rs --print \"${targets[@]}\" >/dev/null 2>&1; then\n    sudo pacman -Rns --noconfirm \"${targets[@]}\" ||\n      echo \"Could not remove Kvantum; leaving it installed.\" >&2\n  else\n    echo \"Something still depends on Kvantum; leaving it installed.\" >&2\n  fi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-07-29T18:57:59Z",
+      "description": "Drop Kvantum now that Qt apps follow the theme through the GTK platform theme",
+      "file": "1785351479.sh",
+      "lineCount": 33,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1785351479.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1785351479.sh",
+      "timestamp": 1785351479,
+      "touches": []
+    },
+    {
+      "body": "echo \"Let systemd-oomd kill a runaway app instead of the whole session\"\n\n# New installs get this from install/config/enable-services.sh. Existing ones\n# have never had an OOM daemon, so nothing stands between memory pressure and\n# the session falling over.\n\nas_root() {\n  if (( EUID == 0 )); then\n    \"$@\"\n  else\n    sudo \"$@\"\n  fi\n}\n\n# Machine-wide, so a second user on the same box finds it already done.\nif systemctl is-enabled --quiet systemd-oomd.service 2>/dev/null; then\n  # Already enabled means it started before the package delivered our\n  # thresholds in /etc/systemd/oomd.conf.d/, and oomd only reads that at\n  # startup. Restart so it doesn't run with stale limits until reboot.\n  as_root systemctl try-restart systemd-oomd.service >/dev/null 2>&1 || true\nelse\n  as_root systemctl enable --now systemd-oomd.service >/dev/null 2>&1 ||\n    echo \"Could not enable systemd-oomd.service; memory pressure will still take the session down.\"\nfi\n\n# Pick up /usr/lib/systemd/user/app.slice.d/10-oomd.conf without waiting for\n# the next login. That drop-in is what marks app.slice as a kill candidate;\n# until the user manager reloads and reports it, oomd is running with nothing\n# to act on. An `omarchy update` over SSH or from a TTY has no user manager to\n# reload, and there the next graphical login picks it up on its own.\nsystemctl --user daemon-reload >/dev/null 2>&1 || true",
+      "bodyTruncated": false,
+      "date": "2026-07-30T15:10:56Z",
+      "description": "Let systemd-oomd kill a runaway app instead of the whole session",
+      "file": "1785424256.sh",
+      "lineCount": 31,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1785424256.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1785424256.sh",
+      "timestamp": 1785424256,
+      "touches": []
+    },
+    {
+      "body": "echo \"Install qrencode for Wi-Fi QR sharing\"\n\nomarchy-pkg-add qrencode",
+      "bodyTruncated": false,
+      "date": "2026-07-31T15:22:34Z",
+      "description": "Install qrencode for Wi-Fi QR sharing",
+      "file": "1785511354.sh",
+      "lineCount": 3,
+      "packagesAdded": [
+        "qrencode"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1785511354.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1785511354.sh",
+      "timestamp": 1785511354,
+      "touches": []
+    },
+    {
+      "body": "echo \"Add WhatsApp Slim extension to Chromium-based browsers\"\n\nWHATSAPP_SLIM_EXT=\"$OMARCHY_PATH/default/chromium/extensions/whatsapp-slim\"\n\nadd_whatsapp_slim_extension() {\n  local file=$1\n\n  [[ -f $file ]] || return 0\n  grep -q \"extensions/whatsapp-slim\" \"$file\" && return 0\n\n  if grep -q \"^--load-extension=\" \"$file\"; then\n    sed -i --follow-symlinks \"s|^--load-extension=\\(.*\\)$|--load-extension=\\1,$WHATSAPP_SLIM_EXT|\" \"$file\"\n  else\n    [[ -n $(tail -c1 \"$file\") ]] && echo >>\"$file\"\n    echo \"--load-extension=$WHATSAPP_SLIM_EXT\" >>\"$file\"\n  fi\n}\n\nfor conf in chromium chrome google-chrome brave brave-beta brave-nightly brave-origin microsoft-edge-stable; do\n  add_whatsapp_slim_extension \"$HOME/.config/$conf-flags.conf\"\ndone",
+      "bodyTruncated": false,
+      "date": "2026-08-01T00:22:05Z",
+      "description": "Add WhatsApp Slim extension to Chromium-based browsers",
+      "file": "1785543725.sh",
+      "lineCount": 21,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1785543725.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1785543725.sh",
+      "timestamp": 1785543725,
+      "touches": [
+        "~/.config/"
+      ]
+    },
+    {
+      "body": "echo \"Add WhatsApp Slim extension to Brave Origin flags for existing installs\"\n\nWHATSAPP_SLIM_EXT=\"$OMARCHY_PATH/default/chromium/extensions/whatsapp-slim\"\n\nadd_whatsapp_slim_extension() {\n  local file=$1\n\n  [[ -f $file ]] || return 0\n  grep -q \"extensions/whatsapp-slim\" \"$file\" && return 0\n\n  if grep -q \"^--load-extension=\" \"$file\"; then\n    sed -i --follow-symlinks \"s|^--load-extension=\\(.*\\)$|--load-extension=\\1,$WHATSAPP_SLIM_EXT|\" \"$file\"\n  else\n    [[ -n $(tail -c1 \"$file\") ]] && echo >>\"$file\"\n    echo \"--load-extension=$WHATSAPP_SLIM_EXT\" >>\"$file\"\n  fi\n}\n\nadd_whatsapp_slim_extension \"$HOME/.config/brave-origin-flags.conf\"",
+      "bodyTruncated": false,
+      "date": "2026-08-01T13:42:42Z",
+      "description": "Add WhatsApp Slim extension to Brave Origin flags for existing installs",
+      "file": "1785591762.sh",
+      "lineCount": 19,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1785591762.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1785591762.sh",
+      "timestamp": 1785591762,
+      "touches": [
+        "~/.config/brave-origin-flags.conf"
+      ]
+    },
+    {
+      "body": "echo \"Repair the pre-suspend lock monitor's graphical session environment\"\n\n# The old unit started before UWSM finished importing OMARCHY_PATH and\n# WAYLAND_DISPLAY. A full unit retained from before Omarchy 4 also shadows the\n# corrected package unit, so add the lifecycle constraints as a drop-in without\n# discarding any user customizations.\nuser_config_home=\"${XDG_CONFIG_HOME:-$HOME/.config}\"\nsleep_lock_unit=\"$user_config_home/systemd/user/omarchy-sleep-lock.service\"\nsleep_lock_dropin_dir=\"$user_config_home/systemd/user/omarchy-sleep-lock.service.d\"\nsleep_lock_dropin=\"$sleep_lock_dropin_dir/90-omarchy-session-environment.conf\"\n\nif [[ -f $sleep_lock_unit ]]; then\n  mkdir -p \"$sleep_lock_dropin_dir\"\n  printf '%s\\n' \\\n    '[Unit]' \\\n    'After=dbus.socket wayland-session-waitenv.service' \\\n    'Requires=dbus.socket' \\\n    'PartOf=graphical-session.target' \\\n    'ConditionEnvironment=OMARCHY_PATH' \\\n    'ConditionEnvironment=WAYLAND_DISPLAY' >\"$sleep_lock_dropin\"\nfi\n\n# With no live user manager there cannot be an inherited monitor to replace.\n# The package unit (and compatibility drop-in, when needed) will be loaded by\n# the fresh manager at the next login.\nuser_manager_socket=\"${XDG_RUNTIME_DIR:-/run/user/$UID}/systemd/private\"\nif ! error=$(systemctl --user show-environment 2>&1); then\n  if [[ -S $user_manager_socket ]]; then\n    echo \"Could not reach the running user service manager: $error\"\n    echo \"The pre-suspend lock repair will be retried by omarchy-migrate.\"\n    exit 1\n  fi\n  exit 0\nfi\n\nif ! error=$(systemctl --user daemon-reload 2>&1); then\n  echo \"Could not reload the user service manager: $error\"\n  echo \"The pre-suspend lock repair will be retried by omarchy-migrate.\"\n  exit 1\nfi",
+      "bodyTruncated": true,
+      "date": "2026-08-01T18:16:06Z",
+      "description": "Repair the pre-suspend lock monitor's graphical session environment",
+      "file": "1785608166.sh",
+      "lineCount": 79,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1785608166.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1785608166.sh",
+      "timestamp": 1785608166,
+      "touches": [
+        "~/.config"
+      ]
+    },
+    {
+      "body": "echo \"Install ddcutil for external monitor brightness control\"\n\nomarchy-pkg-add ddcutil",
+      "bodyTruncated": false,
+      "date": "2026-08-01T18:17:31Z",
+      "description": "Install ddcutil for external monitor brightness control",
+      "file": "1785608251.sh",
+      "lineCount": 3,
+      "packagesAdded": [
+        "ddcutil"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1785608251.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1785608251.sh",
+      "timestamp": 1785608251,
+      "touches": []
+    },
+    {
+      "body": "echo \"Install oh-my-pi (omp) via mise wrapper\"\n\nif [[ ! -f $HOME/.local/state/omarchy/preinstalls-removed ]]; then\n  omarchy-mise-install github:can1357/oh-my-pi omp\nfi",
+      "bodyTruncated": false,
+      "date": "2026-08-01T20:44:07Z",
+      "description": "Install oh-my-pi (omp) via mise wrapper",
+      "file": "1785617047.sh",
+      "lineCount": 5,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1785617047.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1785617047.sh",
+      "timestamp": 1785617047,
+      "touches": [
+        "~/.local/state/omarchy/preinstalls-removed"
+      ]
+    },
+    {
+      "body": "echo \"Speed up mouse scrolling in foot\"\n\nfoot_config=\"$HOME/.config/foot/foot.ini\"\n\nif [[ -f $foot_config ]] && ! grep -q '^multiplier=' \"$foot_config\"; then\n  if grep -qxF '[scrollback]' \"$foot_config\"; then\n    tmp=$(mktemp)\n    awk '\n      { print }\n      !inserted && $0 == \"[scrollback]\" {\n        print \"multiplier=7.0\"\n        inserted = 1\n      }\n    ' \"$foot_config\" >\"$tmp\"\n    cat \"$tmp\" >\"$foot_config\"\n    rm -f \"$tmp\"\n  else\n    printf '\\n[scrollback]\\nmultiplier=7.0\\n' >>\"$foot_config\"\n  fi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-08-02T01:13:45Z",
+      "description": "Speed up mouse scrolling in foot",
+      "file": "1785633225.sh",
+      "lineCount": 20,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1785633225.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1785633225.sh",
+      "timestamp": 1785633225,
+      "touches": [
+        "~/.config/foot/foot.ini"
+      ]
+    },
+    {
+      "body": "echo \"Replace GNOME Calculator with Omacalc\"\n\nomarchy-pkg-add omacalc\nomarchy-pkg-drop gnome-calculator",
+      "bodyTruncated": false,
+      "date": "2026-08-02T02:23:46Z",
+      "description": "Replace GNOME Calculator with Omacalc",
+      "file": "1785637426.sh",
+      "lineCount": 4,
+      "packagesAdded": [
+        "omacalc"
+      ],
+      "packagesRemoved": [
+        "gnome-calculator"
+      ],
+      "path": "migrations/1785637426.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1785637426.sh",
+      "timestamp": 1785637426,
+      "touches": []
+    },
+    {
+      "body": "echo \"Install default coding agent mise wrappers\"\n\nif [[ ! -f $HOME/.local/state/omarchy/preinstalls-removed ]]; then\n  omarchy-mise-install github:can1357/oh-my-pi omp\n  omarchy-mise-install npm:@xai-official/grok grok\n  omarchy-mise-install crush\nelif [[ -f $HOME/.local/bin/omp ]] && grep -Fq 'mise use -g \"oh-my-pi\"' \"$HOME/.local/bin/omp\"; then\n  rm -f \"$HOME/.local/bin/omp\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-08-04T12:32:49Z",
+      "description": "Install default coding agent mise wrappers",
+      "file": "1785846769.sh",
+      "lineCount": 9,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1785846769.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1785846769.sh",
+      "timestamp": 1785846769,
+      "touches": [
+        "~/.local/bin/omp",
+        "~/.local/state/omarchy/preinstalls-removed"
+      ]
+    },
+    {
+      "body": "echo \"Update T2 Mac suspend, Touch Bar, and fan defaults\"\n\nif ! lspci -nn | grep \"106b:180[12]\" >/dev/null; then\n  exit 0\nfi\n\nlimine_conf=\"${OMARCHY_T2_LIMINE_CONF:-/etc/limine-entry-tool.d/t2-mac.conf}\"\nfan_conf=\"${OMARCHY_T2_FAN_CONF:-/etc/t2fand.conf}\"\nrunning_cmdline=\"${OMARCHY_T2_RUNNING_CMDLINE:-/proc/cmdline}\"\nrepair_marker=\"${OMARCHY_T2_REPAIR_MARKER:-/var/lib/omarchy/migrations/1785944594}\"\nneeds_limine_rebuild=0\n\nif [[ -f $limine_conf ]] && grep -q 'pcie_ports=compat' \"$limine_conf\"; then\n  sudo sed -i \\\n    's/pcie_ports=compat/pm_async=off mem_sleep_default=deep/' \\\n    \"$limine_conf\"\n  needs_limine_rebuild=1\nfi\n\n# t2fanrd reads one section per detected fan and fails when a section is\n# missing. Extra sections are ignored, so this also remains safe on one-fan\n# models.\nif [[ -f $fan_conf ]] && ! grep -Eq '^[[:space:]]*\\[Fan2\\][[:space:]]*$' \"$fan_conf\"; then\n  sudo tee -a \"$fan_conf\" >/dev/null <<'EOF'\n\n[Fan2]\nlow_temp=55\nhigh_temp=75\nspeed_curve=linear\nalways_full_speed=false\nEOF\nfi\n\n# The kernel's built-in Boot Camp-style Touch Bar works without tiny-dfr. The\n# optional daemon holds stale device descriptors across suspend with t2bce.\nif omarchy-pkg-present tiny-dfr; then\n  sudo systemctl disable --now tiny-dfr.service || true\n  omarchy-pkg-drop tiny-dfr\nfi\n",
+      "bodyTruncated": true,
+      "date": "2026-08-05T15:43:14Z",
+      "description": "Update T2 Mac suspend, Touch Bar, and fan defaults",
+      "file": "1785944594.sh",
+      "lineCount": 57,
+      "packagesAdded": [],
+      "packagesRemoved": [
+        "tiny-dfr"
+      ],
+      "path": "migrations/1785944594.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1785944594.sh",
+      "timestamp": 1785944594,
+      "touches": [
+        "/etc/limine-entry-tool.d/t2-mac.conf",
+        "/etc/t2fand.conf",
+        "/var/lib/omarchy/migrations/1785944594"
+      ]
+    },
+    {
+      "body": "echo \"Relink agent skill symlinks to default/agents/skills/omarchy\"\n\nmkdir -p ~/.agents/skills ~/.claude/skills ~/.codex/skills ~/.pi/agent/skills\nln -sfn \"$OMARCHY_PATH/default/agents/skills/omarchy\" ~/.agents/skills/omarchy\nln -sfn \"$OMARCHY_PATH/default/agents/skills/omarchy\" ~/.claude/skills/omarchy\nln -sfn \"$OMARCHY_PATH/default/agents/skills/omarchy\" ~/.codex/skills/omarchy\nln -sfn \"$OMARCHY_PATH/default/agents/skills/omarchy\" ~/.pi/agent/skills/omarchy",
+      "bodyTruncated": false,
+      "date": "2026-08-07T10:33:27Z",
+      "description": "Relink agent skill symlinks to default/agents/skills/omarchy",
+      "file": "1786098807.sh",
+      "lineCount": 7,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1786098807.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1786098807.sh",
+      "timestamp": 1786098807,
+      "touches": [
+        "~/.agents/skills",
+        "~/.agents/skills/omarchy",
+        "~/.claude/skills",
+        "~/.claude/skills/omarchy",
+        "~/.codex/skills",
+        "~/.codex/skills/omarchy",
+        "~/.pi/agent/skills",
+        "~/.pi/agent/skills/omarchy"
+      ]
+    },
+    {
+      "body": "echo \"Rename the model usage widget to agents and prime its data files\"\n\n# The widget formerly known as omarchy.model-usage is now omarchy.agents, and\n# it no longer scans providers itself: it displays the records that\n# omarchy-agent-usage-update writes under ~/.local/state/omarchy/agents/usage/.\n# Rename the widget wherever a user's config mentions it — bar layout entries\n# keep their settings, a disabled widget stays disabled — then generate the\n# records once so the bar doesn't sit empty until the widget's first refresh\n# timer, and drop the old scanner's cache directory, which nothing reads\n# anymore.\n\nconfig_file=\"$HOME/.config/omarchy/shell.json\"\n\nif [[ -s $config_file ]]; then\n  tmp=$(mktemp)\n  jq '\n    def rename:\n      if . == \"omarchy.model-usage\" then\n        \"omarchy.agents\"\n      elif type == \"object\" and .id == \"omarchy.model-usage\" then\n        .id = \"omarchy.agents\"\n      else\n        .\n      end;\n\n    (if (.bar.layout? | type) == \"object\" then\n      .bar.layout |= map_values(if type == \"array\" then map(rename) else . end)\n    else . end)\n    | (if (.disabledPlugins? | type) == \"array\" then\n      .disabledPlugins |= map(rename)\n    else . end)\n  ' \"$config_file\" >\"$tmp\" && mv \"$tmp\" \"$config_file\" || rm -f \"$tmp\"\nfi\n\nrm -rf \"$HOME/.cache/omarchy/model-usage\"\n\nomarchy-agent-usage-update || true",
+      "bodyTruncated": false,
+      "date": "2026-08-07T10:50:04Z",
+      "description": "Rename the model usage widget to agents and prime its data files",
+      "file": "1786099804.sh",
+      "lineCount": 37,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1786099804.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1786099804.sh",
+      "timestamp": 1786099804,
+      "touches": [
+        "~/.cache/omarchy/model-usage",
+        "~/.config/omarchy/shell.json"
+      ]
+    },
+    {
+      "body": "echo \"Re-run the T2 defaults migration that a broken hardware check skipped\"\n\n# The T2 check in 1785944594 piped lspci into grep -q, which can exit 141 under\n# the runner's pipefail when grep quits at the first match and lspci catches\n# SIGPIPE. That marked the migration applied on the very hardware it targeted.\n# The original is idempotent, so re-running it is safe everywhere.\nsource \"$OMARCHY_PATH/migrations/1785944594.sh\"",
+      "bodyTruncated": false,
+      "date": "2026-08-07T21:19:57Z",
+      "description": "Re-run the T2 defaults migration that a broken hardware check skipped",
+      "file": "1786137597.sh",
+      "lineCount": 7,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1786137597.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1786137597.sh",
+      "timestamp": 1786137597,
+      "touches": []
+    },
+    {
+      "body": "echo \"Give SSH commands the user-level tool paths via the PAM environment\"\n\n# SSH commands (ssh host cmd) run without a login or interactive shell, so the\n# PAM environment is the only place they can inherit PATH from. Same line that\n# install/config/ssh-command-path.sh writes on fresh installs; skip if PATH is\n# already managed there (by us or by the user).\ngrep -qE '^PATH[[:space:]]' /etc/security/pam_env.conf && exit 0\n\nsudo tee -a /etc/security/pam_env.conf >/dev/null <<'EOF'\n\n# Omarchy: give SSH commands and other non-shell logins the user-level tool paths\nPATH DEFAULT=/usr/local/sbin:/usr/local/bin:/usr/bin:@{HOME}/.local/share/mise/shims:@{HOME}/.local/bin\nEOF",
+      "bodyTruncated": false,
+      "date": "2026-08-08T09:38:49Z",
+      "description": "Give SSH commands the user-level tool paths via the PAM environment",
+      "file": "1786181929.sh",
+      "lineCount": 13,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1786181929.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1786181929.sh",
+      "timestamp": 1786181929,
+      "touches": [
+        "/etc/security/pam_env.conf",
+        "/usr/bin",
+        "/usr/local/bin",
+        "/usr/local/sbin"
+      ]
+    },
+    {
+      "body": "echo \"Refresh mise stubs so tools take new releases immediately\"\n\nomarchy-refresh-applications",
+      "bodyTruncated": false,
+      "date": "2026-08-08T10:12:08Z",
+      "description": "Refresh mise stubs so tools take new releases immediately",
+      "file": "1786183928.sh",
+      "lineCount": 3,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1786183928.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1786183928.sh",
+      "timestamp": 1786183928,
+      "touches": []
+    },
+    {
+      "body": "echo \"Install herdr from the Omarchy package repo and seed its config\"\n\n# The package was briefly published as omarchy-herdr; herdr replaces it\nomarchy-pkg-drop omarchy-herdr\nomarchy-pkg-add herdr\n\n# An earlier revision of this migration installed herdr through mise. Drop that\n# install so a stale client can't shadow the packaged /usr/bin/herdr with an\n# older wire protocol.\nrm -f \"$HOME/.local/bin/herdr\"\nif mise ls herdr 2>/dev/null | grep -q herdr; then\n  mise unuse -g herdr &>/dev/null || true\n  mise uninstall -a herdr &>/dev/null || true\nfi\nrm -rf \"$HOME/.local/share/mise/installs/herdr\" \"$HOME/.local/share/mise/shims/herdr\"\n\n# Only seed. A user who already has a herdr config keeps it; omarchy-refresh-herdr\n# is the explicit way to take the shipped defaults.\n[[ -f \"$HOME/.config/herdr/config.toml\" ]] || omarchy-refresh-config herdr/config.toml",
+      "bodyTruncated": false,
+      "date": "2026-08-09T11:12:18Z",
+      "description": "Install herdr from the Omarchy package repo and seed its config",
+      "file": "1786273938.sh",
+      "lineCount": 19,
+      "packagesAdded": [
+        "herdr"
+      ],
+      "packagesRemoved": [
+        "omarchy-herdr"
+      ],
+      "path": "migrations/1786273938.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1786273938.sh",
+      "timestamp": 1786273938,
+      "touches": [
+        "~/.config/herdr/config.toml",
+        "~/.local/bin/herdr",
+        "~/.local/share/mise/installs/herdr",
+        "~/.local/share/mise/shims/herdr"
+      ]
+    },
+    {
+      "body": "echo \"Detect dropped SSH connections quickly instead of leaving terminals hung\"\n\nconf=\"/etc/ssh/ssh_config.d/20-omarchy-keepalive.conf\"\n\nif [[ ! -f $conf ]]; then\n  sudo install -d -m 755 /etc/ssh/ssh_config.d\n  # An explicit mode so a restrictive user umask cannot leave the root-owned\n  # drop-in unreadable to the unprivileged ssh client.\n  sudo tee \"$conf\" >/dev/null <<'EOF'\n# Omarchy: notice dropped connections quickly instead of hanging until TCP\n# times out. Settings in ~/.ssh/config take precedence over these defaults.\nHost *\n  ServerAliveInterval 15\n  ServerAliveCountMax 3\n  ConnectTimeout 10\nEOF\n  sudo chmod 644 \"$conf\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-08-09T12:32:15Z",
+      "description": "Detect dropped SSH connections quickly instead of leaving terminals hung",
+      "file": "1786278735.sh",
+      "lineCount": 18,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1786278735.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1786278735.sh",
+      "timestamp": 1786278735,
+      "touches": [
+        "/etc/ssh/ssh_config.d",
+        "/etc/ssh/ssh_config.d/20-omarchy-keepalive.conf"
+      ]
+    },
+    {
+      "body": "echo \"Add the keyboard layout widget to the bar\"\n\n# The widget is now in the default layout, sitting just right of the clock. It\n# hides itself unless the active keyboard has more than one layout configured,\n# so adding it to every existing bar is free: a machine on a single kb_layout\n# never sees it. A bar that already carries the widget keeps it where the user\n# put it.\n\nomarchy-bar put omarchy.keyboard-layout --after omarchy.clock",
+      "bodyTruncated": false,
+      "date": "2026-08-09T12:38:27Z",
+      "description": "Add the keyboard layout widget to the bar",
+      "file": "1786279107.sh",
+      "lineCount": 9,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1786279107.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1786279107.sh",
+      "timestamp": 1786279107,
+      "touches": []
+    },
+    {
+      "body": "echo \"Replace terminaltexteffects with ttfx\"\n\nomarchy-pkg-add ttfx\nomarchy-pkg-drop python-terminaltexteffects",
+      "bodyTruncated": false,
+      "date": "2026-08-10T09:50:50Z",
+      "description": "Replace terminaltexteffects with ttfx",
+      "file": "1786355450.sh",
+      "lineCount": 4,
+      "packagesAdded": [
+        "ttfx"
+      ],
+      "packagesRemoved": [
+        "python-terminaltexteffects"
+      ],
+      "path": "migrations/1786355450.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1786355450.sh",
+      "timestamp": 1786355450,
+      "touches": []
+    },
+    {
+      "body": "echo \"Remember Bluetooth on and off through the rfkill soft block\"\n\nmarker=\"${OMARCHY_BLUETOOTH_MIGRATION_MARKER:-/var/lib/omarchy/migrations/1786380259}\"\nmain_conf=\"${OMARCHY_BLUETOOTH_MAIN_CONF:-/etc/bluetooth/main.conf}\"\n\n# Machine-wide work, but migration completion is recorded per user, so a second\n# account would run it again and undo whatever an administrator changed in\n# between. Written last, so an interrupted run is retried rather than skipped.\nif [[ -e $marker ]]; then\n  exit 0\nfi\n\n# Read the machine as it stands before anything below changes it. Powered is the\n# only record of what the user chose, and with AutoEnable=false holding the\n# adapter down at every boot, no daemon to ask means off is what they have been\n# living with.\n#\n# sudo because this runs machine-wide and /dev/rfkill is only writable without it\n# from an active graphical seat — an update over SSH would otherwise abort here,\n# before the marker, and abort again on every retry.\nif omarchy-bluetooth-power is-on; then\n  sudo omarchy-bluetooth-power on\nelse\n  sudo omarchy-bluetooth-power off\nfi\n\n# Omarchy set AutoEnable=false believing bluetoothd would then restore the last\n# power state. It has no such behaviour, so all the flag ever did was keep\n# Bluetooth off at every boot. Left in place it would also stop bluetoothd from\n# powering the adapter up when the block above is lifted. Only the exact line\n# Omarchy wrote is reverted, so a hand-edited opt-out survives.\nif [[ -f $main_conf ]]; then\n  sudo sed -i 's/^AutoEnable=false$/#AutoEnable=true/' \"$main_conf\"\nfi\n\nsudo install -Dm644 /dev/null \"$marker\"",
+      "bodyTruncated": false,
+      "date": "2026-08-10T16:44:19Z",
+      "description": "Remember Bluetooth on and off through the rfkill soft block",
+      "file": "1786380259.sh",
+      "lineCount": 36,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1786380259.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1786380259.sh",
+      "timestamp": 1786380259,
+      "touches": [
+        "/etc/bluetooth/main.conf",
+        "/var/lib/omarchy/migrations/1786380259"
+      ]
+    },
+    {
+      "body": "echo \"Generate image picker thumbnails with libvips\"\n\nomarchy-pkg-add libvips",
+      "bodyTruncated": false,
+      "date": "2026-08-10T18:27:40Z",
+      "description": "Generate image picker thumbnails with libvips",
+      "file": "1786386460.sh",
+      "lineCount": 3,
+      "packagesAdded": [
+        "libvips"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1786386460.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1786386460.sh",
+      "timestamp": 1786386460,
+      "touches": []
+    },
+    {
+      "body": "echo \"Run the WPA handshake in software on Macs with Broadcom Wi-Fi\"\n\n# The install-time quirk only reaches machines set up after it shipped, and it\n# never covered Macs without a T2 at all, so an existing install on one still\n# cannot join a WPA2/WPA3 transition-mode network. See\n# install/hardware/apple/fix-brcmfmac-supplicant.sh for the failure it fixes and\n# for where this list of brcmfmac PCI IDs comes from.\ndmi_vendor=\"${OMARCHY_BRCMFMAC_DMI_VENDOR:-/sys/class/dmi/id/sys_vendor}\"\nconf=\"${OMARCHY_BRCMFMAC_CONF:-/etc/modprobe.d/brcmfmac.conf}\"\n\nsys_vendor=\"$(cat \"$dmi_vendor\" 2>/dev/null || true)\"\n\nif ! lspci -nn | grep \"106b:180[12]\" >/dev/null &&\n  ! { [[ $sys_vendor == Apple* ]] &&\n    lspci -nn | grep -E \"14e4:(43ba|43bb|43bc|43a3|43dc|4464|4488|4425|4433)\" >/dev/null; }; then\n  exit 0\nfi\n\n# T2 installs already carry this from the installer, so the common case is a\n# no-op for the first user and every user after them. Only an active options\n# line counts: someone who commented theirs out still needs this.\nif [[ -f $conf ]] &&\n  grep -Eq '^[[:space:]]*options[[:space:]]+brcmfmac[[:space:]].*feature_disable=0x82000' \"$conf\"; then\n  exit 0\nfi\n\nsudo mkdir -p \"$(dirname \"$conf\")\"\n\n# Append rather than overwrite, so anything else a user keeps here survives:\n# modprobe reads every options line for a module, and nothing else sets\n# feature_disable. The leading newline also covers a file that ends without one.\nsudo tee -a \"$conf\" >/dev/null <<'EOF'\n\n# Broadcom's firmware supplicant and authenticator fail the WPA four-way\n# handshake on Apple hardware, which surfaces as a rejected password. Disable\n# both so wpa_supplicant performs the handshake instead.\noptions brcmfmac feature_disable=0x82000\nEOF\n\n# modprobe only reads this when the module loads. Reloading brcmfmac here would",
+      "bodyTruncated": true,
+      "date": "2026-08-10T19:45:00Z",
+      "description": "Run the WPA handshake in software on Macs with Broadcom Wi-Fi",
+      "file": "1786391100.sh",
+      "lineCount": 43,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1786391100.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1786391100.sh",
+      "timestamp": 1786391100,
+      "touches": [
+        "/etc/modprobe.d/brcmfmac.conf"
+      ]
+    },
+    {
+      "body": "echo \"Install QR code scanning support\"\n\nomarchy-pkg-add zbar",
+      "bodyTruncated": false,
+      "date": "2026-08-11T11:26:24Z",
+      "description": "Install QR code scanning support",
+      "file": "1786447584.sh",
+      "lineCount": 3,
+      "packagesAdded": [
+        "zbar"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1786447584.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1786447584.sh",
+      "timestamp": 1786447584,
+      "touches": []
+    },
+    {
+      "body": "echo \"Repair theme symlinks the state-move migration left dangling\"\n\n# 1781043107.sh re-linked legacy theme symlinks whose targets were stored as a\n# literal \"~/.config/omarchy/current/...\" string. The replacement used the same\n# literal tilde, which the filesystem never expands inside a symlink target, so\n# btop, Helix, and VS Code/Cursor would have lost their theme while the\n# migration reported success anyway. That migration is already marked applied\n# everywhere it ran, so this one repairs any link it left dangling.\n#\n# No shipped Omarchy code ever wrote these six targets with a literal tilde, so\n# this is expected to be a no-op almost everywhere, and it stays deliberately\n# narrow to keep it that way. Only a target that starts with a literal \"~/\" is\n# repaired: the filesystem never expands one, so such a link cannot ever have\n# worked, while a custom link into a dotfiles repo is a real path even when that\n# repo happens to be unmounted right now.\n\nrelink_if_dangling() {\n  local link=\"$1\"\n  local expected_target=\"$2\"\n  local target\n\n  [[ -L $link ]] || return 0\n\n  target=$(readlink \"$link\") || return 0\n\n  # Already pointing at the state directory.\n  [[ $target == \"$expected_target\" ]] && return 0\n\n  # Still resolves, so it is a working link we have no business rewriting.\n  [[ -e $link ]] && return 0\n\n  # Only an unexpandable literal-tilde target naming this theme file is ours.\n  case \"$target\" in\n    \"~/\"*/omarchy/current/theme/\"${expected_target##*/}\") ;;\n    *) return 0 ;;\n  esac\n\n  ln -sfn \"$expected_target\" \"$link\"\n}\n",
+      "bodyTruncated": true,
+      "date": "2026-08-11T12:32:47Z",
+      "description": "Repair theme symlinks the state-move migration left dangling",
+      "file": "1786451567.sh",
+      "lineCount": 51,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1786451567.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1786451567.sh",
+      "timestamp": 1786451567,
+      "touches": [
+        "~/.config/btop/themes/current.theme",
+        "~/.config/helix/themes/omarchy.toml",
+        "~/.cursor",
+        "~/.local/state/omarchy/current",
+        "~/.vscode",
+        "~/.vscode-insiders",
+        "~/.vscode-oss"
+      ]
+    },
+    {
+      "body": "echo \"Rebuild the boot image when it predates the Limine kernel command line\"\n\n# 1784917531 gated its rebuild on initramfs_async=0 being present in the Limine\n# config, but omarchy-settings ships omarchy-defaults.conf with that parameter\n# already in it. On a machine that installed the package and ran the migration\n# in the same update, the guard matched the config the package had just\n# written, skipped the rebuild, and left a boot image baked before the config\n# landed. Such a machine boots without any of omarchy-defaults.conf's command\n# line — including initramfs_async=0, so Plymouth still loses the LUKS prompt.\n\ndefaults_conf=\"${OMARCHY_LIMINE_DEFAULTS_CONF:-/etc/limine-entry-tool.d/omarchy-defaults.conf}\"\nrunning_cmdline=\"${OMARCHY_RUNNING_CMDLINE:-/proc/cmdline}\"\nrebuild_marker=\"${OMARCHY_LIMINE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1786482992}\"\n\nomarchy-cmd-present limine-mkinitcpio || exit 0\n[[ -f $defaults_conf && -r $running_cmdline ]] || exit 0\n\n# The running kernel keeps its old command line until reboot, so a marker\n# records the machine-wide rebuild instead: another user's migration must not\n# repeat it before then, while a missing marker still retries an interrupted\n# rebuild.\n[[ ! -e $rebuild_marker ]] || exit 0\n\nbooted=$(<\"$running_cmdline\")\nmissing=()\n\nfor param in $(sed -n 's/^KERNEL_CMDLINE\\[default\\]+=\"\\(.*\\)\"[[:space:]]*$/\\1/p' \"$defaults_conf\"); do\n  [[ \" $booted \" == *\" $param \"* ]] || missing+=(\"$param\")\ndone\n\n(( ${#missing[@]} )) || exit 0\n\necho \"The booted kernel is missing ${missing[*]}; rebuilding the boot image\"\nsudo limine-mkinitcpio\nsudo install -Dm644 /dev/null \"$rebuild_marker\"",
+      "bodyTruncated": false,
+      "date": "2026-08-11T21:16:32Z",
+      "description": "Rebuild the boot image when it predates the Limine kernel command line",
+      "file": "1786482992.sh",
+      "lineCount": 35,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1786482992.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1786482992.sh",
+      "timestamp": 1786482992,
+      "touches": [
+        "/etc/limine-entry-tool.d/omarchy-defaults.conf",
+        "/var/lib/omarchy/migrations/1786482992"
+      ]
+    },
+    {
+      "body": "echo \"Drop the retired notification image cache\"\n\n# Notification history used to be a pair of long-lived lists in\n# notifications.json, and thumbnails for it were copied out of /tmp into this\n# cache so they would outlive the screenshot they came from. History is now the\n# last ten notification files under ~/.local/state/omarchy/notifications/history,\n# which reference their image where it already lives, so nothing writes or reads\n# this directory anymore.\n\nrm -rf \"$HOME/.cache/omarchy/notification-images\"",
+      "bodyTruncated": false,
+      "date": "2026-08-12T06:57:30Z",
+      "description": "Drop the retired notification image cache",
+      "file": "1786517850.sh",
+      "lineCount": 10,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1786517850.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1786517850.sh",
+      "timestamp": 1786517850,
+      "touches": [
+        "~/.cache/omarchy/notification-images"
+      ]
+    },
+    {
+      "body": "echo \"Announce process crashes and offer an AI diagnosis\"\n\n# Both halves are set up in paths that only run once -- omarchy-provision-user\n# exits after finalize-user is marked, and install/user/first-run is skipped\n# after the first login -- so existing installs need them done here.\n\nskills_source=\"$OMARCHY_PATH/default/agents/skills\"\n\nif [[ -d $skills_source/diagnose-crash ]]; then\n  for skills_dir in ~/.agents/skills ~/.claude/skills ~/.codex/skills ~/.pi/agent/skills; do\n    mkdir -p \"$skills_dir\"\n    ln -sfn \"$skills_source/diagnose-crash\" \"$skills_dir/diagnose-crash\"\n  done\nfi\n\nsystemctl --user daemon-reload >/dev/null 2>&1 || true\n\n# `systemctl enable` needs a live user manager, which an update from a TTY does\n# not have, so fall back to writing the symlink it would have written.\nif ! systemctl --user enable omarchy-crash-watch.service >/dev/null 2>&1; then\n  wants_dir=\"$HOME/.config/systemd/user/graphical-session.target.wants\"\n  mkdir -p \"$wants_dir\"\n  ln -sfn /usr/lib/systemd/user/omarchy-crash-watch.service \\\n    \"$wants_dir/omarchy-crash-watch.service\"\nfi\n\n# Nothing to start into over SSH; the next graphical login handles it. A failed\n# start only delays crash toasts, so it stays quiet.\nif systemctl --user is-active --quiet graphical-session.target; then\n  systemctl --user start omarchy-crash-watch.service >/dev/null 2>&1 || true\nfi",
+      "bodyTruncated": false,
+      "date": "2026-08-12T12:55:45Z",
+      "description": "Announce process crashes and offer an AI diagnosis",
+      "file": "1786539345.sh",
+      "lineCount": 31,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1786539345.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1786539345.sh",
+      "timestamp": 1786539345,
+      "touches": [
+        "/usr/lib/systemd/user/omarchy-crash-watch.service",
+        "~/.agents/skills",
+        "~/.claude/skills",
+        "~/.codex/skills",
+        "~/.config/systemd/user/graphical-session.target.wants",
+        "~/.pi/agent/skills"
+      ]
+    },
+    {
+      "body": "echo \"Invite existing installs to pick a default agent\"\n\n# The invitation is installed by first-run, which existing accounts have already\n# marked complete, so they would never receive it. They are also the accounts\n# most likely to need it: the old getter returned opencode implicitly, so most\n# have no agent recorded at all.\n#\n# Post-update hooks run later in this same update, so the invitation appears\n# without waiting for another one. The hook decides whether to notify.\nomarchy-hook-install post-update \"$OMARCHY_PATH/install/user/first-run/setup-agent.hook\"",
+      "bodyTruncated": false,
+      "date": "2026-08-12T15:40:01Z",
+      "description": "Invite existing installs to pick a default agent",
+      "file": "1786549201.sh",
+      "lineCount": 10,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1786549201.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1786549201.sh",
+      "timestamp": 1786549201,
+      "touches": []
+    },
+    {
+      "body": "echo \"Unmask wpa_supplicant so NetworkManager can bring wifi back\"\n\n# iwd-era installs may carry a wpa_supplicant.service mask, which breaks\n# NetworkManager's D-Bus activation of the supplicant and leaves every wifi\n# device unavailable (#6783).\n\nstate=$(systemctl is-enabled wpa_supplicant.service 2>/dev/null || true)\n[[ $state == masked* ]] || exit 0\n\nsudo systemctl unmask wpa_supplicant.service\n\n# Older systemds leave a /run mask behind unless asked explicitly.\nstate=$(systemctl is-enabled wpa_supplicant.service 2>/dev/null || true)\nif [[ $state == \"masked-runtime\" ]]; then\n  sudo systemctl unmask --runtime wpa_supplicant.service\nfi\n\n# No enable needed: NetworkManager D-Bus-activates the supplicant on demand.\n# But it stops retrying after five failures, so restart it when a wifi device\n# sits unavailable — except during the live Quattro upgrade, where iwd may\n# still carry the connection until the reboot.\nif [[ ${OMARCHY_UPGRADE_TO_QUATTRO_LIVE:-0} != \"1\" ]] &&\n  systemctl is-active --quiet NetworkManager.service 2>/dev/null &&\n  [[ $(LC_ALL=C nmcli -t -f TYPE,STATE device 2>/dev/null || true) == *\"wifi:unavailable\"* ]]; then\n  sudo systemctl restart NetworkManager.service || true\nfi",
+      "bodyTruncated": false,
+      "date": "2026-08-12T20:37:16Z",
+      "description": "Unmask wpa_supplicant so NetworkManager can bring wifi back",
+      "file": "1786567036.sh",
+      "lineCount": 26,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1786567036.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1786567036.sh",
+      "timestamp": 1786567036,
+      "touches": []
+    },
+    {
+      "body": "echo \"Rebuild the initramfs so NVIDIA-only systems shed nouveau's unused GSP firmware\"\n\n# omarchy_hooks.conf now filters the kms hook out of HOOKS when the proprietary\n# NVIDIA driver handles early KMS and NVIDIA owns every display controller\n# (#6790). The settings package deploys that conditional, but nothing rebuilds\n# the initramfs for a mkinitcpio drop-in change, so affected machines would\n# carry ~100 MB of dead nouveau firmware until their next kernel update.\n# Rebuild once, and only where the conditional actually changes the outcome:\n# evaluate the installed drop-ins the way mkinitcpio does and check that kms\n# dropped out. A user-edited omarchy_hooks.conf (pacman leaves the packaged\n# update as a .pacnew) keeps kms and correctly skips the rebuild.\n\nhooks_conf=\"${OMARCHY_MKINITCPIO_HOOKS_CONF:-/etc/mkinitcpio.conf.d/omarchy_hooks.conf}\"\nnvidia_conf=\"${OMARCHY_MKINITCPIO_NVIDIA_CONF:-/etc/mkinitcpio.conf.d/nvidia.conf}\"\nrebuild_marker=\"${OMARCHY_KMS_REBUILD_MARKER:-/var/lib/omarchy/migrations/1786605598}\"\n\nomarchy-cmd-present limine-mkinitcpio || exit 0\n[[ -f $hooks_conf && -f $nvidia_conf ]] || exit 0\n\n# The rebuild is machine-wide, but migrations run once per user: a marker\n# records completion so another user's run does not repeat it, while a missing\n# marker still retries an interrupted rebuild.\n[[ ! -e $rebuild_marker ]] || exit 0\n\n# Source the drop-ins in mkinitcpio's order (nvidia.conf sorts first) and read\n# the HOOKS they produce. Skip conservatively if evaluation fails.\nhooks=$(bash -c 'source \"$1\" && source \"$2\" && echo \" ${HOOKS[*]} \"' -- \"$nvidia_conf\" \"$hooks_conf\") || exit 0\n\n[[ $hooks != *\" kms \"* ]] || exit 0\n\necho \"This machine no longer uses the kms hook; rebuilding the initramfs without nouveau\"\nsudo limine-mkinitcpio\nsudo install -Dm644 /dev/null \"$rebuild_marker\"",
+      "bodyTruncated": false,
+      "date": "2026-08-13T07:19:58Z",
+      "description": "Rebuild the initramfs so NVIDIA-only systems shed nouveau's unused GSP firmware",
+      "file": "1786605598.sh",
+      "lineCount": 33,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1786605598.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1786605598.sh",
+      "timestamp": 1786605598,
+      "touches": [
+        "/etc/mkinitcpio.conf.d/nvidia.conf",
+        "/etc/mkinitcpio.conf.d/omarchy_hooks.conf",
+        "/var/lib/omarchy/migrations/1786605598"
+      ]
+    },
+    {
+      "body": "echo \"Repair the Copy URL shortcut for profiles that predate its pinned extension id\"\n\n# Chromium never hands a suggested shortcut to one extension while another —\n# even a long-gone one — still holds the registration. Profiles that first\n# loaded Copy URL before its id was pinned registered Alt+Shift+L under an id\n# derived from the extension's load path at the time, so the pinned extension\n# never receives the shortcut and the keypress does nothing. Those historical\n# ids are unknowable in general (they hash long-gone absolute paths), but the\n# registration itself names the command: rebind any copy-url command that\n# points away from the pinned id, unless that id belongs to an extension that\n# is actually installed.\n\npinned_id=\"bgpiichlckmfanooecilcjemknkcpngb\"\n\nrepair_py=$(cat <<'PY'\nimport json\nimport shutil\nimport sys\nfrom pathlib import Path\n\npath = Path(sys.argv[1])\npinned_id = sys.argv[2]\nmode = sys.argv[3]\n\ntry:\n    preferences = json.loads(path.read_text())\nexcept (OSError, ValueError):\n    sys.exit(1)\n\nextensions = preferences.get(\"extensions\", {})\ncommands = extensions.get(\"commands\", {})\nsettings = extensions.get(\"settings\", {})\n\ndef ghost_id(command):\n    if command.get(\"command_name\") != \"copy-url\":\n        return None\n    extension = command.get(\"extension\")\n    if not extension or extension == pinned_id:\n        return None\n    # An installed extension records its install path in settings; only the",
+      "bodyTruncated": true,
+      "date": "2026-08-13T17:49:06Z",
+      "description": "Repair the Copy URL shortcut for profiles that predate its pinned extension id",
+      "file": "1786643346.sh",
+      "lineCount": 204,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1786643346.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.0/migrations/1786643346.sh",
+      "timestamp": 1786643346,
+      "touches": [
+        "~/.config/BraveSoftware/Brave-Browser",
+        "~/.config/BraveSoftware/Brave-Browser-Beta",
+        "~/.config/BraveSoftware/Brave-Browser-Nightly",
+        "~/.config/chromium",
+        "~/.config/google-chrome",
+        "~/.config/google-chrome-beta",
+        "~/.config/google-chrome-unstable",
+        "~/.config/helium",
+        "~/.config/microsoft-edge",
+        "~/.config/microsoft-edge-beta",
+        "~/.config/microsoft-edge-dev",
+        "~/.config/opera",
+        "~/.config/vivaldi"
+      ]
+    }
+  ],
+  "prerelease": false,
+  "tag": "v4.0.0"
+}

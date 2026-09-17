@@ -1,0 +1,39 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Kbd from '../../../components/Kbd.astro';
+import { allDiffNames, diff, migrations, commands } from '../../../lib/data';
+import { articleLd } from '../../../lib/seo';
+export async function getStaticPaths() { return allDiffNames().map((pair) => ({ params: { pair } })); }
+const { pair } = Astro.params;
+const [from, to] = pair!.split('-to-');
+const d = diff(from, to) ?? {};
+const toCmds = commands(to); const fromCmds = commands(from);
+const byName = (list: any[]) => Object.fromEntries(list.map((c) => [c.name, c]));
+const toMap = byName(toCmds), fromMap = byName(fromCmds);
+const newMigFiles: string[] = (d.migrations?.new ?? []).map((x: any) => (typeof x === 'string' ? x : x.file));
+const migs = migrations(to).filter((m: any) => newMigFiles.includes(m.file));
+const path = `/reference/changes/${pair}/`;
+const desc = `Omarchy ${from} to ${to}: ${d.commands?.added?.length ?? 0} commands added, ${d.commands?.removed?.length ?? 0} removed, ${d.bindings?.added?.length ?? 0} keybindings added, ${d.bindings?.removed?.length ?? 0} removed, and ${migs.length} migrations run on upgrade.`;
+---
+<Base title={`Omarchy ${from} → ${to}: what changed`} description={desc} crumbs={[{ name: 'Reference', href: '/reference/' }, { name: 'Changes', href: '/reference/changes/' }, { name: `${from} → ${to}`, href: path }]} ld={articleLd({ title: `Omarchy ${from} to ${to} changes`, description: desc, path })} ogType="article">
+  <article data-pagefind-body data-pagefind-meta="section:Reference">
+  <div class="art-head"><h1>{from} → {to}</h1><p class="lede">{desc}</p></div>
+  <div class="prose">
+    <h2>Commands removed ({d.commands?.removed?.length ?? 0})</h2>
+    {(d.commands?.removed ?? []).length === 0 ? <p>None.</p> : <ul>{d.commands.removed.map((n: string) => <li><a href={`/reference/commands/${n}/`}><code>{fromMap[n]?.cli ?? n}</code></a>{fromMap[n]?.summary && <span class="muted"> · {fromMap[n].summary}</span>}</li>)}</ul>}
+    <h2>Commands added ({d.commands?.added?.length ?? 0})</h2>
+    {(d.commands?.added ?? []).length === 0 ? <p>None.</p> : <ul>{d.commands.added.map((n: string) => <li><a href={`/reference/commands/${n}/`}><code>{toMap[n]?.cli ?? n}</code></a>{toMap[n]?.summary && <span class="muted"> · {toMap[n].summary}</span>}</li>)}</ul>}
+    {(d.commands?.changed ?? []).length > 0 && <><h2>Commands whose summary or arguments changed ({d.commands.changed.length})</h2><ul>{d.commands.changed.map((c: any) => <li><a href={`/reference/commands/${c.name}/`}><code>{c.name}</code></a>: {Object.keys(c.fields ?? {}).join(', ')}</li>)}</ul></>}
+    <h2>Keybindings removed ({d.bindings?.removed?.length ?? 0})</h2>
+    {(d.bindings?.removed ?? []).length === 0 ? <p>None.</p> : <ul>{d.bindings.removed.map((b: any) => <li><Kbd chord={b.chord} /> {b.label}</li>)}</ul>}
+    <h2>Keybindings added ({d.bindings?.added?.length ?? 0})</h2>
+    {(d.bindings?.added ?? []).length === 0 ? <p>None.</p> : <ul>{d.bindings.added.map((b: any) => <li><Kbd chord={b.chord} /> {b.label}</li>)}</ul>}
+    {(d.bindings?.changedAction ?? []).length > 0 && <><h2>Keybindings whose action changed</h2><ul>{d.bindings.changedAction.map((b: any) => <li><Kbd chord={b.chord} /> {b.label}</li>)}</ul></>}
+    {(d.menu?.added?.length || d.menu?.removed?.length) ? <><h2>Menu entries</h2>{d.menu.removed?.length > 0 && <p>Removed: {d.menu.removed.map((id: string) => <code>{id} </code>)}</p>}{d.menu.added?.length > 0 && <p>Added: {d.menu.added.map((id: string) => <code>{id} </code>)}</p>}</> : null}
+    <h2>Migrations run during this upgrade ({migs.length})</h2>
+    <p>Each migration is a script Omarchy ran once on your machine. The description is the script's own first message.</p>
+    {migs.length === 0 ? <p>None recorded.</p> : <div class="tablewrap"><table><thead><tr><th>Date</th><th>What it did</th><th>Touches</th></tr></thead><tbody>{migs.map((m: any) => <tr><td class="small tabular">{(m.date ?? '').slice(0, 10)}</td><td>{m.description || <span class="muted">(no description)</span>} <a class="small" href={m.sourceUrl} rel="noopener">source</a></td><td class="small"><code>{(m.touches ?? []).slice(0, 4).join(', ')}</code></td></tr>)}</tbody></table></div>}
+    <p class="small muted">Generated from the source tree at each tag. Removed commands often mean a feature moved into the shell (Waybar and Walker were replaced by Quickshell in 4.0.0), not that the feature is gone. See <a href="/upgrade/3-to-4-quattro/">upgrading from 3.x</a>.</p>
+  </div>
+  </article>
+</Base>

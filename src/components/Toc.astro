@@ -1,0 +1,11 @@
+---
+interface Props { headings: { depth: number; slug: string; text: string }[] }
+const { headings = [] } = Astro.props;
+const items = headings.filter((h) => h.depth === 2);
+---
+{items.length > 2 && (
+  <details class="toc" data-pagefind-ignore>
+    <summary>On this page</summary>
+    <ol>{items.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}</ol>
+  </details>
+)}

@@ -1,0 +1,10 @@
+---
+import { visible } from '../../lib/content';
+import EntryPage from '../../components/EntryPage.astro';
+export async function getStaticPaths() {
+  const entries = await visible('keyboard');
+  return entries.map((e: any) => ({ params: { slug: e.id } }));
+}
+const { slug } = Astro.params;
+---
+<EntryPage collection="keyboard" slug={slug!} />

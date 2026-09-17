@@ -1,0 +1,15 @@
+---
+interface Props { sources: { url: string; title: string; kind?: string; author?: string; date?: string }[]; credits?: { name: string; url?: string; for?: string }[] }
+const { sources = [], credits = [] } = Astro.props;
+---
+{(sources.length > 0 || credits.length > 0) && (
+  <section class="sources" id="sources" data-pagefind-ignore>
+    <h2>Sources and credit</h2>
+    {credits.length > 0 && (
+      <p>Fixes on this page were worked out by {credits.map((c, i) => <>{i > 0 && ', '}{c.url ? <a href={c.url} rel="nofollow">{c.name}</a> : c.name}{c.for && <span class="muted"> ({c.for})</span>}</>)}. Text here is our own paraphrase; follow the links for the original threads.</p>
+    )}
+    <ul>
+      {sources.map((s) => <li><span class="k">{s.kind ?? 'source'}</span><a href={s.url} rel="nofollow noopener">{s.title}</a>{s.author && <span class="muted"> · {s.author}</span>}{s.date && <span class="muted"> · {s.date}</span>}</li>)}
+    </ul>
+  </section>
+)}

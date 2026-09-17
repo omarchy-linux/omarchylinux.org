@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Intel Macs on Omarchy Linux</title>
+  <link rel="stylesheet" href="../css/site.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <p class="unofficial">Unofficial. ISO: <a href="https://omarchy.org">omarchy.org</a></p>
+  <div class="bar">
+    <a class="mark" href="../index.html">omarchy<span>linux</span>.org</a>
+    <nav><a href="./" aria-current="page">Hardware</a><a href="../from-mac.html">From Mac</a><a href="../about.html">About</a></nav>
+  </div>
+  <main>
+    <p><a href="./">← Hardware</a></p>
+    <h1>Intel Macs</h1>
+    <p class="lede">Official Mac support is Intel. The installer applies Broadcom, SPI keyboard, linux-t2, tiny-dfr, t2fanrd. Read T1 notes before a wipe. Apple Silicon is a different page.</p>
+
+    <article class="model" id="macbook-white-2007">
+      <p><span class="badge bronze">bronze</span></p>
+      <h2>MacBook White (Late 2007)</h2>
+      <p>Hub 3.0.1 revival. Expect Broadcom Wi-Fi and a slow disk. Fun, not a daily driver unless you like waiting.</p>
+    </article>
+    <article class="model" id="mbp-2009">
+      <p><span class="badge silver">silver</span></p>
+      <h2>MacBook Pro 13" (Mid-2009)</h2>
+      <p>Hub revival on 3.0.1. Official potato energy.</p>
+    </article>
+    <article class="model" id="mbp-2012">
+      <p><span class="badge silver">silver</span></p>
+      <h2>MacBook Pro 13" (2012, i5-3210M)</h2>
+      <p>Several 3.0.2 posts. Replace spinning rust.</p>
+    </article>
+    <article class="model" id="macbook-air-2012">
+      <p><span class="badge silver">silver</span></p>
+      <h2>MacBook Air (2012–2015)</h2>
+      <p>Community four-minute installs. Broadcom is auto-fixed on Apple hardware.</p>
+    </article>
+    <article class="model" id="macbook-12">
+      <p><span class="badge silver">silver</span></p>
+      <h2>MacBook 12" Retina (2015–2017)</h2>
+      <p>Hub ultra-portable. Butterfly keyboard is the hardware risk.</p>
+    </article>
+    <article class="model" id="mbp-2015">
+      <p><span class="badge silver">silver</span></p>
+      <h2>MacBook Pro 13" (Early 2015)</h2>
+      <p>Lab and studio Hub photos. i5-5257U / 8 GB confirmed on 3.2.3.</p>
+    </article>
+    <article class="model" id="mbp-t1">
+      <p><span class="badge bronze">bronze</span></p>
+      <h2>MacBook Pro Touch Bar (T1, 2016–2017)</h2>
+      <p>The T1 has no firmware in ROM. macOS writes <code>EFI/APPLE/EMBEDDEDOS/combined.memboot</code>. Wipe that and Touch Bar, webcam, ambient light, and often audio stay dead until macOS is reinstalled. Dual-boot or don’t.</p>
+    </article>
+    <article class="model" id="mbp-t2">
+      <p><span class="badge silver">silver</span></p>
+      <h2>MacBook Pro (T2, 2018–2020)</h2>
+      <p>Supported. linux-t2 auto-applied. Suspend: T2 does not do S3 — use <code>mem_sleep_default=s2idle</code>. Keep the Apple EFI blob.</p>
+    </article>
+    <article class="model" id="mba-t2">
+      <p><span class="badge silver">silver</span></p>
+      <h2>MacBook Air Retina (T2, 2018–2020)</h2>
+      <p>Same T2 stack as the Pro. Listed in the official Mac chapter.</p>
+    </article>
+    <article class="model" id="mac-mini-2012">
+      <p><span class="badge silver">silver</span></p>
+      <h2>Mac mini (Early 2012)</h2>
+      <p>Community ~19 minute install, cooler than last Catalina.</p>
+    </article>
+    <article class="model" id="mac-mini-2018">
+      <p><span class="badge silver">silver</span></p>
+      <h2>Mac mini (2018, T2)</h2>
+      <p>Good desk Mac-replacement if firmware stays intact.</p>
+    </article>
+    <article class="model" id="imac-2012">
+      <p><span class="badge silver">silver</span></p>
+      <h2>iMac (Late 2012)</h2>
+      <p>Several Fusion Drive deaths turned into SSD + Omarchy resurrections.</p>
+    </article>
+    <article class="model" id="imac-2017-21">
+      <p><span class="badge silver">silver</span></p>
+      <h2>iMac 21.5" (2017)</h2>
+      <p>Hub: six-minute install. Soldered 8 GB is the limiter.</p>
+    </article>
+    <article class="model" id="imac-2017-27">
+      <p><span class="badge silver">silver</span></p>
+      <h2>iMac 27" 5K (2017)</h2>
+      <p>Community native 5120×2880 plus extra GPU/HiDPI work. One write-up got speakers, mic, and EarPods buttons.</p>
+    </article>
+    <article class="model" id="imac-2018-5k">
+      <p><span class="badge silver">silver</span></p>
+      <h2>iMac 5K (2018)</h2>
+      <p>Used as an AI desk, SSH to a bigger box.</p>
+    </article>
+    <article class="model" id="mac-pro-2013">
+      <p><span class="badge silver">silver</span></p>
+      <h2>Mac Pro (Late 2013, cylinder)</h2>
+      <p>Hub install-screen photo. Dual-GPU DisplayPort routing is the homework.</p>
+    </article>
+    <p>M-series: <a href="apple-silicon.html">Apple Silicon / ARM</a>.</p>
+  </main>
+  <footer>Unofficial · <a href="../about.html">About</a></footer>
+</body>
+</html>

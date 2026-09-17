@@ -1,0 +1,11 @@
+---
+import { getEntry, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { articleLd } from '../lib/seo';
+const entry = await getEntry('pages', 'contribute');
+const { Content } = await render(entry!);
+const d = entry!.data;
+---
+<Base title={d.title} description={d.description} crumbs={[{ name: d.title, href: '/contribute/' }]} ld={articleLd({ type: 'Article', title: d.title, description: d.description, path: '/contribute/', dateModified: d.lastVerified })}>
+  <article data-pagefind-body><div class="art-head"><h1>{d.title}</h1><p class="lede">{d.description}</p></div><div class="prose"><Content /></div></article>
+</Base>

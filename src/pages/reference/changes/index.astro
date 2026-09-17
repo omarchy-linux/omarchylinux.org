@@ -1,0 +1,14 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { allDiffNames, diff, TAG_ORDER } from '../../../lib/data';
+import { itemListLd } from '../../../lib/seo';
+const names = allDiffNames().sort((a, b) => TAG_ORDER.indexOf(a.split('-to-')[0]) - TAG_ORDER.indexOf(b.split('-to-')[0]));
+const rows = names.map((n) => { const d = diff(n.split('-to-')[0], n.split('-to-')[1]) ?? {}; return { n, from: n.split('-to-')[0], to: n.split('-to-')[1], cmdAdd: d.commands?.added?.length ?? 0, cmdRem: d.commands?.removed?.length ?? 0, keyAdd: d.bindings?.added?.length ?? 0, keyRem: d.bindings?.removed?.length ?? 0, mig: d.migrations?.new?.length ?? 0 }; });
+---
+<Base title="What changed between Omarchy versions" description="Commands, keybindings, menu items, and migrations added or removed between Omarchy releases, from 3.8.4 through the current release, generated from source." crumbs={[{ name: 'Reference', href: '/reference/' }, { name: 'Changes', href: '/reference/changes/' }]} ld={itemListLd({ name: 'Omarchy version diffs', path: '/reference/changes/', items: rows.map((r) => ({ name: `${r.from} → ${r.to}`, url: `/reference/changes/${r.n}/` })) })}>
+  <div class="art-head"><h1>What changed between versions</h1><p class="lede">Pick a pair of releases. Each page lists the commands, keybindings, and menu entries that were added or removed, plus the migration scripts that ran on your machine during that upgrade.</p></div>
+  <div class="tablewrap"><table><thead><tr><th>From</th><th>To</th><th class="num">Commands +</th><th class="num">Commands −</th><th class="num">Keys +</th><th class="num">Keys −</th><th class="num">Migrations</th></tr></thead><tbody>
+    {rows.map((r) => <tr><td><code>{r.from}</code></td><td><a href={`/reference/changes/${r.n}/`}><code>{r.to}</code></a></td><td class="num">{r.cmdAdd}</td><td class="num">{r.cmdRem}</td><td class="num">{r.keyAdd}</td><td class="num">{r.keyRem}</td><td class="num">{r.mig}</td></tr>)}
+  </tbody></table></div>
+  <p class="small muted">quattro-dev is the unreleased default branch; treat it as a preview of the next release.</p>
+</Base>

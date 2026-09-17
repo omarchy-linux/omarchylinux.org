@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../lib/site';
+import { visible } from '../lib/content';
+import { latestRelease, latestVersion, issueStats, facts, commands, bindings } from '../lib/data';
+const fixes = (await visible('fix')).slice(0, 8);
+const hw = (await visible('hardware')).filter((e: any) => e.data.kind === 'model').slice(0, 6);
+const latest = latestRelease() ?? { tag: 'v' + latestVersion(), date: '' };
+const stats = issueStats();
+const f = facts();
+const nCmd = commands().length;
+const nKeys = bindings().length;
+---
+<Base title={SITE.name} description={SITE.description}>
+  <section class="hero">
+    <div class="eyebrow">Unofficial · version-stamped · built from the source and the issue tracker</div>
+    <h1>Omarchy Linux, with the answers the manual leaves out.</h1>
+    <p class="lede">Does Omarchy run on your laptop? What broke in the last update? What does that error mean? Every page here says which Omarchy version it was checked against, links the thread the fix came from, and never hosts an installer. The official site is <a href={SITE.official.site} rel="noopener">omarchy.org</a>.</p>
+    <div class="qgrid">
+      <a class="q" href="/hardware/"><b>Does it run on my hardware?</b><span>Component and model reports: NVIDIA, suspend, Wi‑Fi, audio, fingerprint, and the machines people actually own.</span></a>
+      <a class="q" href="/fix/"><b>What does this error mean?</b><span>One page per real failure, indexed by the exact error string, fix first, with the version it applies to.</span></a>
+      <a class="q" href="/reference/"><b>Which command or key does that?</b><span>All {nCmd || '440+'} commands, {nKeys || '180+'} keybindings, and the menu tree, generated per release with diffs.</span></a>
+      <a class="q" href="/releases/"><b>What changed in {latest.tag}?</b><span>Release notes, what each migration did to your machine, upgrade guides, and channel status.</span></a>
+    </div>
+  </section>
+
+  <div class="stat-strip" data-pagefind-ignore>
+    <div><b>{latest.tag}</b><span>Current release{latest.date ? ` · ${String(latest.date).slice(0, 10)}` : ''}</span></div>
+    {stats.issues?.open != null && <div><b class="tabular">{stats.issues.open.toLocaleString()}</b><span>Open issues upstream · {stats.issues.openedLast30Days?.toLocaleString()} opened in 30 days</span></div>}
+    {f.discord?.approximateMemberCount && <div><b class="tabular">{f.discord.approximateMemberCount.toLocaleString()}</b><span>Discord members, where support happens (unindexed)</span></div>}
+    {f.momentum?.isoDownloads?.yearOne && <div><b class="tabular">{Number(f.momentum.isoDownloads.yearOne).toLocaleString()}</b><span>ISO downloads, year one (official)</span></div>}
+    <div><b>4.0 → Lua</b><span>Quattro moved Hyprland config to Lua and the shell to Quickshell</span></div>
+  </div>
+
+  <section class="two" style="margin-top:36px">
+    <div>
+      <h2>Recently verified fixes</h2>
+      {fixes.length === 0 && <p class="muted">Fix pages are being written. Check back shortly.</p>}
+      <ul class="list-plain">{fixes.map((e: any) => <li><a href={`/fix/${e.id}/`}>{e.data.title}</a><br /><span class="small muted">{e.data.description}</span></li>)}</ul>
+      <p><a href="/fix/">All fixes →</a></p>
+    </div>
+    <div>
+      <h2>Machines with reports</h2>
+      {hw.length === 0 && <p class="muted">Model pages are being written from the issue tracker and community reports.</p>}
+      <ul class="list-plain">{hw.map((e: any) => <li><a href={`/hardware/${e.id}/`}>{e.data.title}</a> <span class={`pill pill-${e.data.rating}`}>{e.data.rating}</span></li>)}</ul>
+      <p><a href="/hardware/">Full hardware index →</a> · <a href="/hardware/submit/">Submit a report</a></p>
+    </div>
+  </section>
+
+  <section class="prose">
+    <h2>Why this site exists</h2>
+    <p>Omarchy's support happens in a Discord that search engines cannot read, and its issue tracker is for verified bugs only. Fixes get found and then lost. This site turns what people have already solved into pages you can search, with credit to the person who solved it, a link to the thread, and a badge saying which version it was checked on. Reference data is generated from the MIT-licensed source at each release, so the command list is never out of date by more than a build.</p>
+    <p>It is an independent project. Read <a href="/official/">which Omarchy sites are official</a>, the <a href="/official/trademark/">trademark facts</a>, and <a href="/about/">how this site is run</a>.</p>
+  </section>
+</Base>

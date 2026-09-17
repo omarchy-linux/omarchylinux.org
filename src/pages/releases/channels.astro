@@ -1,0 +1,36 @@
+---
+import Base from '../../layouts/Base.astro';
+import { channels } from '../../lib/data';
+import { articleLd, faqLd } from '../../lib/seo';
+const ch = channels();
+const chans = ch?.channels ?? {};
+const names = Object.keys(chans);
+const diffs = ch?.diffs ?? {};
+const faq = [
+  { q: 'What are the Omarchy stable, rc, and edge channels?', a: 'Omarchy ships its own packages from pkgs.omarchy.org on three channels. Edge tracks upstream Arch closely, rc is the release-candidate lane, and stable is deliberately held back. Switch with omarchy-channel-set; check yours with omarchy-channel-current.' },
+  { q: 'How far behind Arch is the Omarchy stable mirror?', a: ch?.mirrors ? `Measured at ${ch.fetchedAt?.slice(0, 16)}: ${ch.mirrors.map((m: any) => `${m.name} ${m.lagHoursVsUpstream != null ? Math.round(m.lagHoursVsUpstream) + ' hours' : 'unknown'}`).join(', ')}. The omarchy-mirror README describes stable as typically about a month behind; the measured number is often much smaller.` : 'This page shows the measured lag for each mirror against geo.mirror.pkgbuild.com.' },
+];
+---
+<Base title="Omarchy channel and mirror status" description="Live status of Omarchy's stable, rc, and edge package channels and mirrors: how far each is behind Arch upstream, which omarchy and kernel versions each ships, and what differs between channels." crumbs={[{ name: 'Releases', href: '/releases/' }, { name: 'Channels', href: '/releases/channels/' }]} ld={[articleLd({ title: 'Omarchy channel and mirror status', description: 'Channel lag and package differences', path: '/releases/channels/' }), faqLd(faq)]}>
+  <article data-pagefind-body data-pagefind-meta="section:Releases">
+  <div class="art-head"><h1>Channel and mirror status</h1><p class="lede">Rebuilt every time this site deploys from the public package databases and mirror timestamps. Fetched {ch?.fetchedAt?.slice(0, 16) ?? 'n/a'} UTC. Nothing official shows this; the CLI only reports which channel your own machine is on.</p></div>
+  {!ch && <p class="callout callout-warn">Channel data is not available in this build.</p>}
+  {ch && <>
+  <h2>Mirror lag</h2>
+  <div class="tablewrap"><table><thead><tr><th>Mirror</th><th>Last update (UTC)</th><th class="num">Behind Arch upstream</th></tr></thead><tbody>
+    {(ch.mirrors ?? []).map((m: any) => <tr><td><code>{m.name}</code></td><td class="tabular small">{m.lastupdate?.iso ?? m.lastupdate}</td><td class="num">{m.lagHoursVsUpstream != null ? `${Math.round(m.lagHoursVsUpstream)} h` : '?'}</td></tr>)}
+    {ch.upstream && <tr><td><code>geo.mirror.pkgbuild.com (Arch)</code></td><td class="tabular small">{ch.upstream.lastupdate?.iso ?? ch.upstream.lastupdate}</td><td class="num">0</td></tr>}
+  </tbody></table></div>
+  <h2>What each channel ships</h2>
+  <div class="tablewrap"><table><thead><tr><th>Channel</th><th class="num">Packages</th><th>omarchy</th><th>Kernels</th></tr></thead><tbody>
+    {names.map((n) => <tr><td><code>{n}</code></td><td class="num">{chans[n].packageCount}</td><td><code>{ch.omarchyPackage?.[n] ?? chans[n].packages?.omarchy?.version ?? '?'}</code></td><td class="small">{Object.entries(ch.kernels?.[n] ?? chans[n].kernels ?? {}).map(([k, v]: any) => <div><code>{k}</code> {v}</div>)}</td></tr>)}
+  </tbody></table></div>
+  {Object.keys(diffs).map((k) => <><h2>{k.replace(/-/g, ' ')}: packages that differ ({(diffs[k] ?? []).length})</h2>
+    <div class="tablewrap"><table><thead><tr><th>Package</th><th>{k.split('-vs-')[0]}</th><th>{k.split('-vs-')[1]}</th></tr></thead><tbody>
+      {(diffs[k] ?? []).slice(0, 200).map((p: any) => <tr><td><code>{p.name}</code></td><td class="small">{p[k.split('-vs-')[0]] ?? p.a ?? '·'}</td><td class="small">{p[k.split('-vs-')[1]] ?? p.b ?? '·'}</td></tr>)}
+    </tbody></table></div></>)}
+  </>}
+  <section class="prose"><h2>Questions people ask</h2><dl class="faq">{faq.map((f) => <><dt>{f.q}</dt><dd>{f.a}</dd></>)}</dl>
+  <p class="small muted">Sources: pkgs.omarchy.org/{'{stable,rc,edge}'}/x86_64/omarchy.db, the mirrors' /lastupdate files, and geo.mirror.pkgbuild.com. Related: <a href="/security/stable-mirror-lag-and-cves/">stable lag and CVEs</a>.</p></section>
+  </article>
+</Base>

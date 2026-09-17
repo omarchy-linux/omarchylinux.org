@@ -1,0 +1,5 @@
+---
+const { data } = Astro.props;
+const list = (Array.isArray(data) ? data : [data]).filter(Boolean);
+---
+{list.map((d) => <script type="application/ld+json" set:html={JSON.stringify(d)} />)}

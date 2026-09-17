@@ -1,0 +1,8 @@
+---
+interface Props { label?: string }
+const { label = 'Short answer' } = Astro.props;
+---
+<div class="answer" data-pagefind-weight="8">
+  <div class="eyebrow">{label}</div>
+  <p><slot /></p>
+</div>

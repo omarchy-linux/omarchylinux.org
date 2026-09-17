@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coming from Windows — unofficial Omarchy notes</title>
+  <link rel="stylesheet" href="css/site.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <p class="unofficial">Unofficial. ISO: <a href="https://omarchy.org">omarchy.org</a></p>
+  <div class="bar">
+    <a class="mark" href="index.html">omarchy<span>linux</span>.org</a>
+    <nav>
+      <a href="hardware/">Hardware</a>
+      <a href="from-mac.html">From Mac</a>
+      <a href="from-windows.html" aria-current="page">From Windows</a>
+      <a href="buy.html">Buy</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+  <main>
+    <h1>From Windows</h1>
+    <p class="lede">You can try before you wipe. You should, if this machine has to boot tomorrow.</p>
+
+    <h2>Try first</h2>
+    <ol>
+      <li><a href="https://github.com/omacom/try-omarchy-windows">Try Omarchy for Windows</a> — official QEMU app, no partition changes. ARM64 Windows (Snapdragon) is not supported.</li>
+      <li>Fan-made browser demo: <a href="https://tryomarchy.dev">tryomarchy.dev</a> (not affiliated; CPU-only, 15-minute sessions).</li>
+    </ol>
+
+    <h2>If you dual-boot</h2>
+    <ul>
+      <li>Official path: <a href="https://omarchy.org/manual/dual-boot-install/">dual-boot install</a>. Full-disk <strong>wipes the drive</strong>.</li>
+      <li>Turn off BitLocker and Windows Fast Startup first. Shrink from Windows, do not let a random YouTube video resize NTFS from Linux.</li>
+      <li>Disable Secure Boot / TPM as the installer asks. This is not a signed Microsoft distro.</li>
+      <li>Limine will show up in the firmware boot menu. That is the Omarchy bootloader. Auto-login after LUKS is intentional.</li>
+    </ul>
+
+    <h2>Muscle memory</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Windows</th><th>Omarchy</th></tr></thead>
+        <tbody>
+          <tr><td>Start / search</td><td><kbd>Super + Space</kbd></td></tr>
+          <tr><td>Win + V clipboard</td><td><kbd>Super + Ctrl + V</kbd> (includes images)</td></tr>
+          <tr><td>Win + Shift + S</td><td>Print Screen</td></tr>
+          <tr><td>Virtual desktops</td><td><kbd>Super + 1–4</kbd></td></tr>
+          <tr><td>Ctrl+C in a terminal kills the job</td><td><kbd>Super + C</kbd> copies; Ctrl+C still interrupts</td></tr>
+          <tr><td>Settings app</td><td>Setup menu → plain config files</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Games and Office</h2>
+    <ul>
+      <li>Steam + Proton is first-class. Battle.net, Lutris, Heroic, RetroArch, Moonlight ship in the gaming menu.</li>
+      <li>NVIDIA 50-series: installer may need <code>nomodeset</code>. See <a href="hardware/nvidia-laptops.html">NVIDIA notes</a>.</li>
+      <li>Windows 11 VM: Office and line-of-business apps. No GPU passthrough, so not a Fortnite box.</li>
+    </ul>
+  </main>
+  <footer>Unofficial · <a href="about.html">About</a></footer>
+</body>
+</html>

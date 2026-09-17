@@ -1,0 +1,49 @@
+---
+import { visible } from '../../lib/content';
+import EntryPage from '../../components/EntryPage.astro';
+import Pill from '../../components/Pill.astro';
+import IssueList from '../../components/IssueList.astro';
+import { issueModels, issueComponents } from '../../lib/data';
+export async function getStaticPaths() {
+  const entries = await visible('hardware');
+  return entries.map((e: any) => ({ params: { slug: e.id }, props: { entry: e } }));
+}
+const { slug } = Astro.params;
+const { entry } = Astro.props as any;
+const d = entry.data;
+const subs = ['wifi', 'bluetooth', 'audio', 'webcam', 'fingerprint', 'gpu', 'display', 'suspend', 'hibernate', 'touchpad', 'keyboard', 'battery'];
+let upstream: any[] = [];
+let upstreamNote = '';
+if (d.kind === 'model') {
+  const im = issueModels();
+  const all = [...(im.models ?? [])];
+  const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '');
+  const wants = new Set([slug, ...(d.dmi ?? []), d.model ?? '', d.title ?? ''].map(norm).filter(Boolean));
+  const hit = all.filter((m: any) => [m.key, m.model, ...(m.aliases ?? []), ...(m.variants ?? [])].some((x: string) => x && (wants.has(norm(x)) || norm(x).includes(norm(d.model ?? '§')))));
+  upstream = hit.flatMap((m: any) => m.issues ?? []).sort((a: any, b: any) => (b.createdAt ?? '').localeCompare(a.createdAt ?? ''));
+  upstreamNote = hit.length ? `Issues on the Omarchy tracker whose title or body names this machine (${hit.map((m: any) => m.model).join(', ')}). Presence here means someone hit a problem, not that the machine is bad.` : '';
+} else if (d.kind === 'component') {
+  const c = (issueComponents().components ?? []).find((x: any) => x.key === (d.componentKey ?? slug));
+  upstream = c?.topIssues ?? [];
+  upstreamNote = c ? `The most-discussed upstream issues for this subsystem (${c.counts?.issues} total, ${c.counts?.open} open).` : '';
+}
+---
+<EntryPage collection="hardware" slug={slug!}>
+  <div slot="before">
+    {d.kind === 'model' && (
+      <div class="callout" data-pagefind-ignore>
+        <div class="meta-row" style="margin-top:0"><Pill kind={d.rating} label={`Rating: ${d.rating}`} />{d.vendor && <span>{d.vendor}{d.model ? ` · ${d.model}` : ''}</span>}{d.cpu && <span>{d.cpu}</span>}{d.gpu && <span>{d.gpu}</span>}{d.year && <span>{d.year}</span>}</div>
+        <div class="tablewrap" style="margin:10px 0 0"><table><tbody>
+          <tr>{subs.map((s) => <th>{s}</th>)}</tr>
+          <tr>{subs.map((s) => <td><Pill kind={d.subsystems?.[s] ?? 'unknown'} label={d.subsystems?.[s] ?? '?'} /></td>)}</tr>
+        </tbody></table></div>
+        {d.quirkScripts?.length > 0 && <p class="small" style="margin:10px 0 0">Omarchy ships hardware-specific scripts for this machine: {d.quirkScripts.map((q: any, i: number) => <>{i > 0 && ', '}<a href={q.url} rel="noopener"><code>{q.name}</code></a>{q.note && <span class="muted"> ({q.note})</span>}</>)}</p>}
+        {d.dmi?.length > 0 && <p class="small muted" style="margin:6px 0 0">DMI product names seen: {d.dmi.map((x: string) => <code>{x} </code>)}</p>}
+      </div>
+    )}
+  </div>
+  <div slot="after">
+    <IssueList title={d.kind === 'model' ? 'Upstream issues mentioning this machine' : 'Most-discussed upstream issues'} issues={upstream} note={upstreamNote} limit={12} />
+    {d.kind === 'model' && <p class="small" data-pagefind-ignore>Own this machine? <a href="/hardware/submit/">Submit a report</a> so the subsystem grid reflects what actually works.</p>}
+  </div>
+</EntryPage>

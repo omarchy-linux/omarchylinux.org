@@ -1,0 +1,144 @@
+{
+  "bindings": {
+    "added": [],
+    "changedAction": [
+      {
+        "action": [
+          "{ tui = \"lazydocker\" }",
+          "{ tui = \"omarchy-launch-docker-tui\" }"
+        ],
+        "chord": "SUPER + SHIFT + D",
+        "label": "Docker"
+      }
+    ],
+    "counts": {
+      "added": 0,
+      "changedAction": 1,
+      "from": 228,
+      "fromRecords": 228,
+      "removed": 0,
+      "to": 228,
+      "toRecords": 228
+    },
+    "note": null,
+    "removed": []
+  },
+  "commands": {
+    "added": [
+      "omarchy-git-url-check",
+      "omarchy-launch-docker-tui",
+      "omarchy-remove-security-sudoless-docker",
+      "omarchy-setup-security-sudoless-docker",
+      "omarchy-sudo-docker",
+      "omarchy-theme-extras"
+    ],
+    "changed": [
+      {
+        "fields": {
+          "args": [
+            "[--exec <command>] [--app-name <app-name>] [-g <glyph>] [-u <low|normal|critical>] [--image <path-or-uri>] <headline> [description] [notify-send options]",
+            "[--app-name <app-name>] [-g <glyph>] [-u <low|normal|critical>] [-i <icon>] [-t <ms>] [-r <id>] [-p] [--image <path-or-uri>] <headline> [description] [--exec <program> [args...]]"
+          ]
+        },
+        "name": "omarchy-notification-send"
+      },
+      {
+        "fields": {
+          "summary": [
+            "Display a \"Done!\" message with a spinner and wait for user to press any key.",
+            "Display a \"Done!\" message and wait for user to press any key."
+          ]
+        },
+        "name": "omarchy-show-done"
+      }
+    ],
+    "counts": {
+      "added": 6,
+      "changed": 2,
+      "from": 425,
+      "removed": 1,
+      "to": 430
+    },
+    "removed": [
+      "omarchy-sudo-reset"
+    ]
+  },
+  "from": "v4.0.0",
+  "menu": {
+    "added": [
+      "remove.security.sudoless-docker",
+      "setup.security.sudoless-docker"
+    ],
+    "changed": [
+      {
+        "fields": {
+          "when": [
+            null,
+            "omarchy-theme-extras"
+          ]
+        },
+        "id": "update.themes"
+      }
+    ],
+    "counts": {
+      "added": 2,
+      "changed": 1,
+      "from": 318,
+      "removed": 0,
+      "to": 320
+    },
+    "removed": []
+  },
+  "migrations": {
+    "counts": {
+      "from": 78,
+      "new": 8,
+      "removed": 0,
+      "to": 86
+    },
+    "new": [
+      {
+        "date": "2026-08-15T08:27:41Z",
+        "description": "Remove the literal \\\\n[text-bindings] line an earlier migration wrote into foot.ini",
+        "file": "1786782461.sh"
+      },
+      {
+        "date": "2026-08-17T07:36:59Z",
+        "description": "Switch mise to the mise-bin package from the Omarchy repo",
+        "file": "1786952219.sh"
+      },
+      {
+        "date": "2026-08-19T09:53:20Z",
+        "description": "Add webp decoding to the shell",
+        "file": "1787133200.sh"
+      },
+      {
+        "date": "2026-08-22T11:48:38Z",
+        "description": "Switch back to the packaged quickshell now that 0.3.1 kills synchronously",
+        "file": "1787399318.sh"
+      },
+      {
+        "date": "2026-08-23T10:35:15Z",
+        "description": "Re-stage the current theme so an installed theme's code is dropped",
+        "file": "1787481315.sh"
+      },
+      {
+        "date": "2026-08-23T14:18:38Z",
+        "description": "Take ownership of the FIDO2 authfile so it cannot be rewritten without root",
+        "file": "1787494718.sh"
+      },
+      {
+        "date": "2026-08-24T14:03:07Z",
+        "description": "Move this install to the opt-in docker group default (the group is root-equivalent)",
+        "file": "1787580187.sh"
+      },
+      {
+        "date": "2026-08-25T00:45:00Z",
+        "description": "Store Hyprland input-device names as data instead of generated Lua",
+        "file": "1787618700.sh"
+      }
+    ],
+    "removed": []
+  },
+  "to": "v4.0.1"
+}

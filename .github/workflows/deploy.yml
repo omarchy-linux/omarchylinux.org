@@ -1,0 +1,29 @@
+name: Build and deploy
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions: { contents: read, deployments: write }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 24, cache: npm }
+      - run: npm ci
+      - name: Validate content
+        run: node scripts/validate-content.mjs
+      - name: Refresh live data (channels, ISOs, domains, facts)
+        run: bash scripts/refresh-live-data.sh || true
+      - name: Build
+        run: npm run build
+      - name: Check internal links
+        run: node scripts/linkcheck.mjs
+      - name: Deploy to Cloudflare Pages
+        if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=omarchylinux-org --branch=main

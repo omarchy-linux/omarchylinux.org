@@ -1,0 +1,8 @@
+---
+// Renders "SUPER + SHIFT + RETURN" as key chips.
+interface Props { chord: string }
+const { chord } = Astro.props;
+const map: Record<string, string> = { SUPER: 'Super', SHIFT: 'Shift', CTRL: 'Ctrl', ALT: 'Alt', RETURN: 'Enter', SPACE: 'Space', ESCAPE: 'Esc', BACKSPACE: 'Backspace', TAB: 'Tab', PRINT: 'PrtSc', LEFT: '←', RIGHT: '→', UP: '↑', DOWN: '↓', COMMA: ',', PERIOD: '.', SLASH: '/', MINUS: '-', EQUAL: '=', GRAVE: '`', APOSTROPHE: "'", SEMICOLON: ';', BRACKETLEFT: '[', BRACKETRIGHT: ']', BACKSLASH: '\\' };
+const parts = chord.split('+').map((p) => p.trim()).filter(Boolean).map((p) => map[p.toUpperCase()] ?? (p.length === 1 ? p.toUpperCase() : p));
+---
+<span class="chord">{parts.map((p, i) => <><kbd class="key">{p}</kbd>{i < parts.length - 1 && <span class="plus">+</span>}</>)}</span>

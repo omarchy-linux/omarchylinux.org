@@ -1,0 +1,21 @@
+---
+import { visible } from '../../lib/content';
+import EntryPage from '../../components/EntryPage.astro';
+import Pill from '../../components/Pill.astro';
+export async function getStaticPaths() {
+  const entries = await visible('security');
+  return entries.map((e: any) => ({ params: { slug: e.id }, props: { entry: e } }));
+}
+const { slug } = Astro.params;
+const { entry } = Astro.props as any;
+const d = entry.data;
+const sevKind: Record<string, string> = { critical: 'bad', high: 'bad', medium: 'warn', low: 'info', info: 'info' };
+---
+<EntryPage collection="security" slug={slug!}>
+  <div slot="before">
+    {(d.severity || d.reported || d.projectResponse) && <div class="callout" data-pagefind-ignore>
+      <div class="meta-row" style="margin-top:0"><Pill kind={sevKind[d.severity] ?? 'info'} label={`Severity: ${d.severity}`} />{d.reported && <span>Reported: {d.reported}</span>}</div>
+      {d.projectResponse && <p class="small" style="margin:8px 0 0"><strong>Project response:</strong> {d.projectResponse}</p>}
+    </div>}
+  </div>
+</EntryPage>

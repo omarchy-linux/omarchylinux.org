@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Apple Silicon and ARM on Omarchy Linux</title>
+  <link rel="stylesheet" href="../css/site.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <p class="unofficial">Unofficial. ISO: <a href="https://omarchy.org">omarchy.org</a></p>
+  <div class="bar">
+    <a class="mark" href="../index.html">omarchy<span>linux</span>.org</a>
+    <nav><a href="./" aria-current="page">Hardware</a><a href="../from-mac.html">From Mac</a><a href="../about.html">About</a></nav>
+  </div>
+  <main>
+    <p><a href="./">← Hardware</a></p>
+    <h1>Apple Silicon and Snapdragon X</h1>
+    <p class="lede">The public 4.0.3 ISO is x86_64. Native ARM is in flight (Omarchy M, aarch64 PRs). Taste-test with official Try Omarchy VMs instead of wiping.</p>
+
+    <h2>Omarchy M (announced 11 Sep 2026)</h2>
+    <p>Official team for Apple Silicon. First-release target is <strong>perfect M1 and M2</strong> (including Pro/Max): installer with install + try, GPU, USB-C displays, Touch ID, MLX, encryption. M3 Air internal display recently went from unusable to usable via Apple’s hardware display controller. This is not “download the current ISO.”</p>
+    <p>Community <strong>Omarchy Mac</strong> already runs on M1/M2 with elbow grease (Discord ~800). <a href="https://github.com/omacom/try-omarchy">Try Omarchy for macOS</a> is the supported VM path today.</p>
+
+    <article class="model" id="mba-m1">
+      <p><span class="badge experimental">experimental</span></p>
+      <h2>MacBook Air M1</h2>
+      <p>In the Omarchy M target set. Not the public ISO.</p>
+    </article>
+    <article class="model" id="mbp-m1">
+      <p><span class="badge experimental">experimental</span></p>
+      <h2>MacBook Pro M1 / Pro / Max</h2>
+      <p>Same target set. Use Try Omarchy if you need to work tomorrow.</p>
+    </article>
+    <article class="model" id="mba-m2">
+      <p><span class="badge experimental">experimental</span></p>
+      <h2>MacBook Air M2</h2>
+      <p>Community USB-C external displays. Still not one-stick official.</p>
+    </article>
+    <article class="model" id="mbp-m2">
+      <p><span class="badge experimental">experimental</span></p>
+      <h2>MacBook Pro M2 / Pro / Max</h2>
+      <p>Hub “Omarchy Mac” photos exist. Native ISO is still in progress.</p>
+    </article>
+    <article class="model" id="mba-m3">
+      <p><span class="badge experimental">experimental</span></p>
+      <h2>MacBook Air M3</h2>
+      <p>Internal display work landed recently. Earlier than M1/M2 in the official plan.</p>
+    </article>
+    <article class="model" id="apple-m4">
+      <p><span class="badge broken">broken</span></p>
+      <h2>M4 Macs</h2>
+      <p>Not a first-release target. Do not wipe expecting 4.0.3 to boot.</p>
+    </article>
+    <article class="model" id="ipad-mini-utm">
+      <p><span class="badge experimental">experimental</span></p>
+      <h2>iPad mini (UTM + JIT)</h2>
+      <p>A VM on iPadOS, not a port.</p>
+    </article>
+
+    <h2 id="snapdragon-x">Snapdragon X</h2>
+    <p>PR #8672 adds Qualcomm detection, device trees, Freedreno Vulkan. Live sessions are not “it ships.”</p>
+    <article class="model" id="yoga-slim-7x">
+      <p><span class="badge experimental">experimental</span></p>
+      <h2>Yoga Slim 7x</h2>
+      <p>Installed report: Limine, Wi-Fi, BT, speakers, mic. Board-specific display/audio still differs.</p>
+    </article>
+    <article class="model" id="hp-elitebook-ultra-g1q">
+      <p><span class="badge experimental">experimental</span></p>
+      <h2>HP EliteBook Ultra G1q</h2>
+      <p>X1E-78-100, linux-aarch64 7.2: native display, Wi-Fi, BT, keyboard, touchpad, touchscreen.</p>
+    </article>
+    <article class="model" id="asus-vivobook-s15-x">
+      <p><span class="badge experimental">experimental</span></p>
+      <h2>ASUS Vivobook S15 (Snapdragon)</h2>
+      <p>Installer welcome + Wi-Fi in a live session. Not a confirmed daily driver.</p>
+    </article>
+  </main>
+  <footer>Unofficial · <a href="../about.html">About</a></footer>
+</body>
+</html>

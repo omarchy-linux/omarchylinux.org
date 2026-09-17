@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coming from Mac — unofficial Omarchy notes</title>
+  <meta name="description" content="Practical Mac-to-Omarchy checklist. Official translation table plus hardware warnings the marketing site buries.">
+  <link rel="stylesheet" href="css/site.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <p class="unofficial">Unofficial. The real translation chapter is on <a href="https://omarchy.org/manual/coming-from-mac-or-windows/">omarchy.org</a>.</p>
+  <div class="bar">
+    <a class="mark" href="index.html">omarchy<span>linux</span>.org</a>
+    <nav>
+      <a href="hardware/">Hardware</a>
+      <a href="from-mac.html" aria-current="page">From Mac</a>
+      <a href="from-windows.html">From Windows</a>
+      <a href="buy.html">Buy</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+  <main>
+    <h1>From Mac</h1>
+    <p class="lede">Omarchy is aimed at you. DHH left macOS, 37signals is moving programmers over, and the Command key is Super. The install is the dangerous part, not the keyboard.</p>
+
+    <h2>Do this in order</h2>
+    <ol>
+      <li><strong>Do not wipe an M1–M4.</strong> Native Omarchy is Intel-only. Use <a href="https://github.com/omacom/try-omarchy">Try Omarchy</a> if you want a taste.</li>
+      <li><strong>T1 Touch Bar (2016–2017):</strong> keep macOS or you lose Touch Bar, webcam, and often audio. Details on <a href="hardware/macbook-intel.html">Intel Macs</a>.</li>
+      <li><strong>T2 (2018–2020):</strong> supported. Expect suspend quirks. Backup first. Encryption is the default.</li>
+      <li>Flash the official ISO with balenaEtcher. Hold Option at boot, pick the orange EFI device. <a href="verify.html">Verify the checksum</a>.</li>
+      <li>Give tiling two weeks. The only hotkey you must memorize is <kbd>Super + K</kbd>.</li>
+    </ol>
+
+    <h2>Muscle memory</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Mac</th><th>Omarchy</th></tr></thead>
+        <tbody>
+          <tr><td>Cmd (thumb)</td><td>Super — same key</td></tr>
+          <tr><td>Spotlight / Raycast</td><td><kbd>Super + Space</kbd></td></tr>
+          <tr><td>Cmd-C / V everywhere</td><td><kbd>Super + C / V</kbd> including the terminal</td></tr>
+          <tr><td>Mission Control / Spaces</td><td><kbd>Super + 1–4</kbd></td></tr>
+          <tr><td>AirDrop</td><td>LocalSend, <kbd>Super + Ctrl + S</kbd></td></tr>
+          <tr><td>Time Machine</td><td>Btrfs snapshots on every Omarchy update</td></tr>
+          <tr><td>App Store</td><td>Install menu, not random .dmg files</td></tr>
+          <tr><td>Close window keeps the app</td><td><kbd>Super + W</kbd> actually quits</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Full table: <a href="https://omarchy.org/manual/coming-from-mac-or-windows/">Coming from Mac or Windows</a>.</p>
+
+    <h2>Apps you will miss</h2>
+    <ul>
+      <li>iMessage, FaceTime, Final Cut, Xcode — gone. Plan around that.</li>
+      <li>Microsoft Office: official Windows 11 VM has <strong>no GPU passthrough</strong>. Fine for Word, not for games.</li>
+      <li>Adobe: mostly the VM or web. Not a Photoshop workstation yet.</li>
+      <li>1Password, Obsidian, Chromium, Neovim, Steam — first-class.</li>
+    </ul>
+  </main>
+  <footer>Unofficial · <a href="about.html">About</a></footer>
+</body>
+</html>

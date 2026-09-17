@@ -1,0 +1,116 @@
+{
+  "bindings": {
+    "added": [],
+    "changedAction": [],
+    "counts": {
+      "added": 0,
+      "changedAction": 0,
+      "from": 228,
+      "fromRecords": 228,
+      "removed": 0,
+      "to": 228,
+      "toRecords": 228
+    },
+    "note": null,
+    "removed": []
+  },
+  "commands": {
+    "added": [
+      "omarchy-theme-set-browser-policy"
+    ],
+    "changed": [],
+    "counts": {
+      "added": 1,
+      "changed": 0,
+      "from": 430,
+      "removed": 0,
+      "to": 431
+    },
+    "removed": []
+  },
+  "from": "v4.0.1",
+  "menu": {
+    "added": [],
+    "changed": [
+      {
+        "fields": {
+          "action": [
+            "unlock=$(omarchy-plymouth-switcher); if [[ $unlock == default ]]; then omarchy-launch-floating-terminal-with-presentation omarchy-plymouth-reset; elif [[ -n $unlock ]]; then omarchy-launch-floating-terminal-with-presentation \"omarchy-plymouth-set-by-theme '$unlock'\"; fi",
+            "unlock=$(omarchy-plymouth-switcher); if [[ $unlock == default ]]; then omarchy-launch-floating-terminal-with-presentation omarchy-plymouth-reset; elif [[ -n $unlock ]]; then omarchy-launch-floating-terminal-with-presentation \"omarchy-plymouth-set-by-theme $(printf %q \"$unlock\")\"; fi"
+          ]
+        },
+        "id": "style.unlock"
+      }
+    ],
+    "counts": {
+      "added": 0,
+      "changed": 1,
+      "from": 320,
+      "removed": 0,
+      "to": 320
+    },
+    "removed": []
+  },
+  "migrations": {
+    "counts": {
+      "from": 86,
+      "new": 10,
+      "removed": 0,
+      "to": 96
+    },
+    "new": [
+      {
+        "date": "2026-08-23T20:12:07Z",
+        "description": "Stop world-writable Chromium and Firefox policy directories",
+        "file": "1787515927.sh"
+      },
+      {
+        "date": "2026-08-24T16:33:26Z",
+        "description": "Require signed packages from the Omarchy repository",
+        "file": "1787589206.sh"
+      },
+      {
+        "date": "2026-08-25T20:53:20Z",
+        "description": "Skip Chromium's new first-run EULA on machines already on Quattro",
+        "file": "1787691200.sh"
+      },
+      {
+        "date": "2026-08-27T07:21:07Z",
+        "description": "Separate printer discovery from root and print-filter access",
+        "file": "1787815267.sh"
+      },
+      {
+        "date": "2026-08-27T21:17:57Z",
+        "description": "Drop the default input group grant, which allowed unprivileged keylogging",
+        "file": "1787865477.sh"
+      },
+      {
+        "date": "2026-08-29T13:11:51Z",
+        "description": "Temporarily remove automatic printer discovery",
+        "file": "1788009111.sh"
+      },
+      {
+        "date": "2026-08-29T17:40:25Z",
+        "description": "Remove privileged files left behind by retired Omarchy installers",
+        "file": "1788025225.sh"
+      },
+      {
+        "date": "2026-08-30T15:15:06Z",
+        "description": "Repair legacy XCompose and remove vulnerable Omarchy 3 power udev rules",
+        "file": "1788102906.sh"
+      },
+      {
+        "date": "2026-08-30T17:51:54Z",
+        "description": "Point rc-channel installs at the rc package repository",
+        "file": "1788112314.sh"
+      },
+      {
+        "date": "2026-08-30T21:10:36Z",
+        "description": "Disable SSH password authentication, or sshd itself when no key is authorized",
+        "file": "1788124236.sh"
+      }
+    ],
+    "removed": []
+  },
+  "to": "v4.0.2"
+}

@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import Pill from '../components/Pill.astro';
+import { isos } from '../lib/data';
+import { articleLd, faqLd } from '../lib/seo';
+const data = isos();
+const list: any[] = (data.isos ?? []).filter((i: any) => i.isoStatus === 200 || i.sha256FromRelease);
+const fp = data.signingKeyFingerprint ?? '40DFB630FF42BCFFB047046CF0134EE680CAC571';
+const latest = list[0];
+const faq = [
+  { q: 'Where is the official Omarchy ISO checksum?', a: 'In the GitHub release notes for each version (github.com/omacom/omarchy/releases) and, for 4.0.1 and later, in a .sha256 file next to the ISO on iso.omarchy.org. This page lists both.' },
+  { q: 'How do I verify the Omarchy ISO signature?', a: `Download the .sig file from iso.omarchy.org next to the ISO, import the Omarchy signing key (fingerprint ${fp}), and run gpg --verify omarchy-<version>.iso.sig omarchy-<version>.iso.` },
+  { q: 'Does omarchylinux.org host the Omarchy ISO?', a: 'No. Never download an ISO from this domain or any domain other than iso.omarchy.org. This page only lists the official checksums and links to the official release pages.' },
+];
+---
+<Base title="Verify an Omarchy ISO checksum and signature" description="Official SHA-256 checksums for every Omarchy ISO, the signing key fingerprint, and copy-paste verification commands for Linux, macOS, and Windows. Links only to iso.omarchy.org and GitHub." crumbs={[{ name: 'Verify an ISO', href: '/verify/' }]} ld={[articleLd({ type: 'HowTo', title: 'Verify an Omarchy ISO', description: 'Checksums and signature verification', path: '/verify/' }), faqLd(faq)]}>
+  <article data-pagefind-body data-pagefind-meta="section:Trust">
+  <div class="art-head"><h1>Verify an Omarchy ISO</h1><p class="lede">Get the ISO from <a href="https://omarchy.org" rel="noopener">omarchy.org</a> only. Then check the file against the official checksum below and the signature against the project key. This site does not host the ISO.</p></div>
+  <div class="callout callout-warn">A lookalike site was suspended in 2026 for offering a fake Omarchy download. If the checksum here does not match your file, delete it. See <a href="/official/how-to-spot-a-fake-omarchy-site/">how to spot a fake Omarchy site</a>.</div>
+  <h2>Signing key</h2>
+  <p>Fingerprint published in the <a href="https://omarchy.org/manual/security/" rel="noopener">official security chapter</a>: <code>{fp}</code></p>
+  <h2>Checksums by version</h2>
+  <div class="tablewrap"><table><thead><tr><th>Version</th><th>Date</th><th>SHA-256</th><th>.sig</th><th>Size</th></tr></thead><tbody>
+    {list.map((i: any) => <tr><td><a href={i.releaseUrl} rel="noopener"><code>{i.version}</code></a></td><td class="small tabular">{(i.releaseDate ?? '').slice(0, 10)}</td><td><code class="small" style="overflow-wrap:anywhere">{i.sha256FromSidecar ?? i.sha256FromRelease ?? '—'}</code>{i.sha256FromSidecar && i.sha256FromRelease && i.sha256FromSidecar !== i.sha256FromRelease && <div class="small" style="color:var(--bad)">sidecar and release notes differ</div>}{!i.sha256FromSidecar && i.sha256FromRelease && <div class="small muted">from release notes; no .sha256 sidecar published</div>}</td><td>{i.sigStatus === 200 ? <Pill kind="ok" label="yes" /> : <Pill kind="info" label="none" />}</td><td class="small tabular">{i.sizeBytes ? `${(i.sizeBytes / 1e9).toFixed(2)} GB` : ''}</td></tr>)}
+  </tbody></table></div>
+  <div class="prose">
+  <h2>Linux</h2>
+  <pre><code>{`sha256sum omarchy-${latest?.version ?? 'X.Y.Z'}.iso
+# compare with the value above, then:
+curl -O https://iso.omarchy.org/omarchy-${latest?.version ?? 'X.Y.Z'}.iso.sig
+gpg --keyserver keys.openpgp.org --recv-keys ${fp}
+gpg --verify omarchy-${latest?.version ?? 'X.Y.Z'}.iso.sig omarchy-${latest?.version ?? 'X.Y.Z'}.iso`}</code></pre>
+  <h2>macOS</h2>
+  <pre><code>{`shasum -a 256 omarchy-${latest?.version ?? 'X.Y.Z'}.iso
+# gpg via Homebrew: brew install gnupg, then the same gpg commands as Linux`}</code></pre>
+  <h2>Windows (PowerShell)</h2>
+  <pre><code>{`Get-FileHash .\\omarchy-${latest?.version ?? 'X.Y.Z'}.iso -Algorithm SHA256
+# or: certutil -hashfile omarchy-${latest?.version ?? 'X.Y.Z'}.iso SHA256`}</code></pre>
+  <h2>Questions people ask</h2><dl class="faq">{faq.map((f) => <><dt>{f.q}</dt><dd>{f.a}</dd></>)}</dl>
+  <p class="small muted">Checksums are read from the official .sha256 sidecar files and from the GitHub release bodies at build time ({data.fetchedAt?.slice(0, 16) ?? 'n/a'}). Always cross-check against the release page; if this table and GitHub disagree, trust GitHub.</p>
+  </div>
+  </article>
+</Base>

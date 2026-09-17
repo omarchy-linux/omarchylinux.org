@@ -1,0 +1,1168 @@
+{
+ "source": "github.com/omacom/omarchy",
+ "fetchedAt": "2026-09-17T00:53:55.311779+00:00",
+ "derivedAt": "2026-09-17T01:04:50.001271+00:00",
+ "criteria": {
+  "stateReason": "COMPLETED",
+  "minPostCloseComments": 2,
+  "commentMarkers": [
+   "still",
+   "same issue",
+   "reproduc",
+   "not fixed",
+   "reopen",
+   "happening again",
+   "4.0.4",
+   "4.0.3"
+  ],
+  "commentWindow": "last 5 comments fetched per closed issue"
+ },
+ "count": 36,
+ "funnel": {
+  "completedIssues": 2292,
+  "withFetchedComments": 1459,
+  "withAtLeastOnePostCloseMarker": 120,
+  "withAtLeastTwoPostCloseMarkers": 36
+ },
+ "issues": [
+  {
+   "number": 12044,
+   "title": "Migration failed due to missing nvidia modules on linux-omarchy",
+   "url": "https://github.com/omacom/omarchy/issues/12044",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2026-09-16T02:35:05Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [
+    "nvidia",
+    "suspend-sleep",
+    "multi-monitor",
+    "boot-limine",
+    "touchpad-input",
+    "thunderbolt-dock"
+   ],
+   "comments": 2,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "ali-afk",
+     "createdAt": "2026-09-16T10:50:44Z",
+     "url": "https://github.com/omacom/omarchy/issues/12044#issuecomment-5696268447",
+     "snippet": "i still have this issue, can anyone please provide details?"
+    },
+    {
+     "author": "codenamekt",
+     "createdAt": "2026-09-16T23:29:07Z",
+     "url": "https://github.com/omacom/omarchy/issues/12044#issuecomment-5706043813",
+     "snippet": "Confirming this is still happening on omarchy 4.0.4 / linux-omarchy 7.2.5-3-omarchy / nvidia-open-dkms 610.57.04. The \"module not found\" message is a consequence — the actual failure is in the dkms build that runs during pacman -S linux-omarchy.\n\n The relevant line from /var/lib/dkms/nvidia/610.57.0"
+    }
+   ],
+   "lastActivity": "2026-09-16T23:29:07Z"
+  },
+  {
+   "number": 1269,
+   "title": "Screensaver activates while running games",
+   "url": "https://github.com/omacom/omarchy/issues/1269",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-08-31T05:59:04Z",
+   "closer": null,
+   "fixedBy": [
+    1303,
+    1348
+   ],
+   "components": [
+    "touchpad-input"
+   ],
+   "comments": 7,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "lukepighetti",
+     "createdAt": "2026-09-05T23:39:41Z",
+     "url": "https://github.com/omacom/omarchy/issues/1269#issuecomment-5555558719",
+     "snippet": "still having this issue on omarchy `4.0.2-1` \n\nclanker added this line to `~/.config/hypr/hyprland.lua`\n\n```lua\n-- Keep the screensaver/lock from kicking in while gaming: inhibit idle for\n-- any window that goes fullscreen (covers Steam games, emulators, etc. that\n-- Omarchy doesn't already special-"
+    },
+    {
+     "author": "JaviBasulto",
+     "createdAt": "2026-09-06T16:13:19Z",
+     "url": "https://github.com/omacom/omarchy/issues/1269#issuecomment-5560491092",
+     "snippet": "Still happening on Omarchy 4.0.2 with a different game and input device — adding my case for the record.\n\n**Game:** Uncrashed : FPV Drone Simulator (Steam App ID 1682970)\n**Input device:** STMicroelectronics BETAFPV Joystick (USB HID, `/dev/input/js0`, drivers: hid-generic + usbhid)\n**Symptom:** Scr"
+    }
+   ],
+   "lastActivity": "2026-09-06T16:13:19Z"
+  },
+  {
+   "number": 1326,
+   "title": "System intermittently freezes post 2.0 update",
+   "url": "https://github.com/omacom/omarchy/issues/1326",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-09-14T11:45:17Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [],
+   "comments": 11,
+   "postCloseComments": 3,
+   "sampleSnippets": [
+    {
+     "author": "EJTP",
+     "createdAt": "2025-10-13T20:26:14Z",
+     "url": "https://github.com/omacom/omarchy/issues/1326#issuecomment-3398955756",
+     "snippet": "Hey guys i still have the same issue in 3.0 and idk how fix it"
+    },
+    {
+     "author": "Dream-Making-Git",
+     "createdAt": "2026-09-05T09:09:25Z",
+     "url": "https://github.com/omacom/omarchy/issues/1326#issuecomment-5550791111",
+     "snippet": "@kanishkdudeja i'm having the same issue on Omarchy Quattro and i suspect is hybrid graphics releated. How did you solved it?"
+    },
+    {
+     "author": "ncr",
+     "createdAt": "2026-09-05T09:25:38Z",
+     "url": "https://github.com/omacom/omarchy/issues/1326#issuecomment-5550870975",
+     "snippet": "Ok, I asked claude to remind me how I fixed the issue, so all below is claude. I hope it helps :)\n\n\n\nIntermittent whole-system freezes — turned out to be the NVMe SSD, not the GPU\n\nMy whole desktop would freeze at random: screen stops, keyboard and mouse dead, fans still running. Since I have an RTX"
+    }
+   ],
+   "lastActivity": "2026-09-05T09:27:45Z"
+  },
+  {
+   "number": 2225,
+   "title": "Chromium keeps crashing when i go to a website",
+   "url": "https://github.com/omacom/omarchy/issues/2225",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-10-05T16:04:17Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [],
+   "comments": 7,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "AndrijaSkontra",
+     "createdAt": "2026-08-25T16:45:32Z",
+     "url": "https://github.com/omacom/omarchy/issues/2225#issuecomment-5413681780",
+     "snippet": "**Reproduces on Omarchy 4.0.0 — Google Search triggers Chromium SIGTRAP**\n\nSame failure mode as this issue: Chromium exits with `SIGTRAP` when opening Google Search (`https://www.google.com/search?...`). Other sites (e.g. GitHub, X, ChatGPT) stay up. Initially looked like Gemini, but history shows S"
+    },
+    {
+     "author": "khimaniz",
+     "createdAt": "2026-08-30T19:08:16Z",
+     "url": "https://github.com/omacom/omarchy/issues/2225#issuecomment-5470682224",
+     "snippet": "**Reproduces on Omarchy 4.0.1 — Google account sign-in triggers Chromium SIGTRAP twice in a row**\n\nSame failure mode as this issue's regression comments: Chromium's main **browser process** (not a renderer/GPU child) exits with SIGTRAP immediately after attempting to sign in to a Google account.\n\n**"
+    }
+   ],
+   "lastActivity": "2026-08-30T19:08:16Z"
+  },
+  {
+   "number": 8032,
+   "title": "AI Agents panel: Codex tab stuck showing \"initialize\" (invalid --ask-for-approval value 'untrusted')",
+   "url": "https://github.com/omacom/omarchy/issues/8032",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2026-08-25T14:11:20Z",
+   "closer": null,
+   "fixedBy": [
+    7649,
+    185
+   ],
+   "components": [],
+   "comments": 5,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "spaceXrace",
+     "createdAt": "2026-08-26T12:06:18Z",
+     "url": "https://github.com/omacom/omarchy/issues/8032#issuecomment-5425013327",
+     "snippet": "Confirmed on Omarchy `4.0.1-1` with `codex-cli 0.149.1`; this is still reproducible after upgrading from the versions in the original report.\n\nThe Agents panel record contains:\n\n```json\n{\n  \"limits\": [],\n  \"tierLabel\": \"\",\n  \"usageStatusText\": \"Codex limits unavailable\",\n  \"authHelpText\": \"initializ"
+    },
+    {
+     "author": "davo42002",
+     "createdAt": "2026-08-26T18:52:57Z",
+     "url": "https://github.com/omacom/omarchy/issues/8032#issuecomment-5429709068",
+     "snippet": "Still present in the packaged `omarchy 4.0.1-1`, which is currently the newest\navailable (`pacman -Si omarchy` reports 4.0.1-1; `checkupdates` shows nothing\npending). The installed collector still carries the old value:\n\n```console\n$ sed -n '531p' /usr/share/omarchy/bin/omarchy-agent-usage-codex\n   "
+    }
+   ],
+   "lastActivity": "2026-08-26T18:52:57Z"
+  },
+  {
+   "number": 6889,
+   "title": "Coding Agent out of Date - Gemini --> Antigravity",
+   "url": "https://github.com/omacom/omarchy/issues/6889",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2026-08-20T20:28:33Z",
+   "closer": {
+    "type": "pull_request",
+    "number": 6900,
+    "url": "https://github.com/omacom/omarchy/pull/6900",
+    "merged": true,
+    "mergedAt": "2026-08-20T20:28:32Z"
+   },
+   "fixedBy": [
+    6900
+   ],
+   "components": [],
+   "comments": 8,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "treeder",
+     "createdAt": "2026-08-21T19:22:32Z",
+     "url": "https://github.com/omacom/omarchy/issues/6889#issuecomment-5374268232",
+     "snippet": "I see it's closed, but how do you fix it? I just installed omarchy, did all the updates and still get this. "
+    },
+    {
+     "author": "matheusdmlopes",
+     "createdAt": "2026-08-21T19:47:58Z",
+     "url": "https://github.com/omacom/omarchy/issues/6889#issuecomment-5374590514",
+     "snippet": "> I see it's closed, but how do you fix it? I just installed omarchy, did all the updates and still get this.\n\nIn stable branch isnt available yet. On edge channel, yes."
+    }
+   ],
+   "lastActivity": "2026-08-21T21:50:13Z"
+  },
+  {
+   "number": 4114,
+   "title": "Slow Typora Lauch",
+   "url": "https://github.com/omacom/omarchy/issues/4114",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2026-01-08T09:37:08Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [
+    "nvidia"
+   ],
+   "comments": 3,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "NicolasDorier",
+     "createdAt": "2026-05-20T07:03:06Z",
+     "url": "https://github.com/omacom/omarchy/issues/4114#issuecomment-4495517462",
+     "snippet": "I am experiencing the same issue. @beaterblank did you open on typora github? couldn't find out the issue there."
+    },
+    {
+     "author": "AmbitiousRealism2025",
+     "createdAt": "2026-08-17T20:11:38Z",
+     "url": "https://github.com/omacom/omarchy/issues/4114#issuecomment-5319707545",
+     "snippet": "This still reproduces on current Omarchy 4.0.0-1.\n\nSystem:\n- Typora 1.13.6-1\n- Mesa 26.1.7-1\n- Linux 7.1.8-arch1-3\n- Intel Tiger Lake iGPU using i915\n- NVIDIA T1200 laptop GPU\n- Native Wayland\n\nOmarchy's stock `/usr/share/omarchy/default/hypr/envs.lua` sets:\n\n```lua\nhl.env(\"ELECTRON_OZONE_PLATFORM_H"
+    }
+   ],
+   "lastActivity": "2026-08-17T20:11:38Z"
+  },
+  {
+   "number": 6762,
+   "title": "ttfx dumps core on every idle lock: omarchy-system-lock kills the screensaver terminal before the renderer",
+   "url": "https://github.com/omacom/omarchy/issues/6762",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2026-08-12T18:05:12Z",
+   "closer": {
+    "type": "pull_request",
+    "number": 6764,
+    "url": "https://github.com/omacom/omarchy/pull/6764",
+    "merged": true,
+    "mergedAt": "2026-08-12T18:05:11Z"
+   },
+   "fixedBy": [
+    6764,
+    6773,
+    18,
+    160
+   ],
+   "components": [
+    "printer"
+   ],
+   "comments": 22,
+   "postCloseComments": 4,
+   "sampleSnippets": [
+    {
+     "author": "rickdronkers",
+     "createdAt": "2026-08-16T13:08:54Z",
+     "url": "https://github.com/omacom/omarchy/issues/6762#issuecomment-5307592020",
+     "snippet": "Still reproduces on the released `omarchy 4.0.0-1` / `ttfx 0.3.1-1` / Ghostty 1.3.1-2 / Hyprland 0.56.2-1, on the idle lock-timeout path. This is the supervisor-respawn race already described here, not #6995 (no second `idle-cycle-start` at lock).\n\nTimeline:\n\n```\n13:37:46.694  idle-cycle-start: scre"
+    },
+    {
+     "author": "alvarosaavedra",
+     "createdAt": "2026-08-16T21:47:15Z",
+     "url": "https://github.com/omacom/omarchy/issues/6762#issuecomment-5309837395",
+     "snippet": "**Still reproduces with the `timeout 1s pidwait` grace in place — the aborted ttfx is one the pkills never see, born during the lock sequence itself.**\n\nSingle ttfx 0.3.1-1 SIGABRT on the idle→lock path today, with `omarchy-system-lock` already containing the #6764 ordering and the `timeout 1s pidwa"
+    },
+    {
+     "author": "seantimm",
+     "createdAt": "2026-08-17T01:40:56Z",
+     "url": "https://github.com/omacom/omarchy/issues/6762#issuecomment-5310844666",
+     "snippet": "**Still reproduces on stock 4.0.0-1 — plus a correction: ttfx does catch SIGTERM, so `sigpend: <>` doesn't prove it was never signalled**\n\nAnother occurrence of the respawn variant on stock `omarchy 4.0.0-1` / `ttfx 0.3.1-1` / foot 1.27.0-2 / Hyprland 0.56.2-1, single monitor (eDP-1), `idle: {screen"
+    }
+   ],
+   "lastActivity": "2026-08-17T07:23:04Z"
+  },
+  {
+   "number": 6154,
+   "title": "Boot-time systemd-stub random-seed warning under Limine",
+   "url": "https://github.com/omacom/omarchy/issues/6154",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2026-07-19T01:32:09Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [
+    "boot-limine"
+   ],
+   "comments": 4,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "kvxnomxyz",
+     "createdAt": "2026-07-21T12:04:03Z",
+     "url": "https://github.com/omacom/omarchy/issues/6154#issuecomment-5033715241",
+     "snippet": "That problen still exists for me, on newest 3.8.4, but my system just stops booting, SSD R/W light is off, and no reinstall can help.\n<img width=\"4000\" height=\"1848\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/18181a56-14f7-48b3-bf8e-644eb6ea4b49\" />"
+    },
+    {
+     "author": "joytsay",
+     "createdAt": "2026-08-10T02:17:30Z",
+     "url": "https://github.com/omacom/omarchy/issues/6154#issuecomment-5235177727",
+     "snippet": "@kvxnomxyz \nomarchy 3.8.4 still fix the systemd version to 261.1-1 which has this annoying warning.\nused this cmd to force update systemd to 261.2-1, and the warning disappears  \n```sh\n  sudo pacman -U \\\n    https://geo.mirror.pkgbuild.com/core/os/x86_64/systemd-261.2-1-x86_64.pkg.tar.zst \\\n    http"
+    }
+   ],
+   "lastActivity": "2026-08-10T02:19:47Z"
+  },
+  {
+   "number": 4284,
+   "title": "systemd-stub prints “Failed to read *.cred, Volume corrupt” on boot (Limine + UKI)",
+   "url": "https://github.com/omacom/omarchy/issues/4284",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2026-02-01T10:34:33Z",
+   "closer": null,
+   "fixedBy": [
+    5448
+   ],
+   "components": [
+    "boot-limine",
+    "storage-nvme"
+   ],
+   "comments": 18,
+   "postCloseComments": 3,
+   "sampleSnippets": [
+    {
+     "author": "FruitPnchSamuraiG",
+     "createdAt": "2026-03-06T14:17:02Z",
+     "url": "https://github.com/omacom/omarchy/issues/4284#issuecomment-4012007430",
+     "snippet": "you do put in your password and login, your system will still boot even after the error so you can then once logged in access the terminal and run this"
+    },
+    {
+     "author": "wizzer129",
+     "createdAt": "2026-03-16T23:51:18Z",
+     "url": "https://github.com/omacom/omarchy/issues/4284#issuecomment-4071373394",
+     "snippet": "> you do put in your password and login, your system will still boot even after the error so you can then once logged in access the terminal and run this\n\nInterestingly enough when I enter my password it doesn't seem to accept it. But I'm getting the same errors as mentioned above. Is there another "
+    },
+    {
+     "author": "wizzer129",
+     "createdAt": "2026-03-17T00:00:50Z",
+     "url": "https://github.com/omacom/omarchy/issues/4284#issuecomment-4071408990",
+     "snippet": "> > you do put in your password and login, your system will still boot even after the error so you can then once logged in access the terminal and run this\n> \n> Interestingly enough when I enter my password it doesn't seem to accept it. But I'm getting the same errors as mentioned above. Is there an"
+    }
+   ],
+   "lastActivity": "2026-07-13T13:32:27Z"
+  },
+  {
+   "number": 2266,
+   "title": "failed retrieving file 'offline.db' when updating Omarchy",
+   "url": "https://github.com/omacom/omarchy/issues/2266",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-10-08T17:19:32Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [],
+   "comments": 6,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "sleftsito",
+     "createdAt": "2026-05-08T19:08:45Z",
+     "url": "https://github.com/omacom/omarchy/issues/2266#issuecomment-4409134162",
+     "snippet": "it had not fixed mine sadly"
+    },
+    {
+     "author": "LuisMelladoDiaz",
+     "createdAt": "2026-06-27T23:03:29Z",
+     "url": "https://github.com/omacom/omarchy/issues/2266#issuecomment-4822755706",
+     "snippet": "> it had not fixed mine sadly\n\nDid you find a solution? Re installing is not workinc for me."
+    }
+   ],
+   "lastActivity": "2026-07-01T01:24:24Z"
+  },
+  {
+   "number": 5650,
+   "title": "Chromium \"managed by your organization\"",
+   "url": "https://github.com/omacom/omarchy/issues/5650",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2026-05-08T06:21:39Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [],
+   "comments": 5,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "yashksaini-coder",
+     "createdAt": "2026-06-24T10:54:48Z",
+     "url": "https://github.com/omacom/omarchy/issues/5650#issuecomment-4788485139",
+     "snippet": "@marcelomgarcia were you able to resolve this problem ? Im facing the same problem in the google-chrome I tried removing from chromium folder, but it still persists"
+    },
+    {
+     "author": "marcelomgarcia",
+     "createdAt": "2026-06-24T12:51:24Z",
+     "url": "https://github.com/omacom/omarchy/issues/5650#issuecomment-4789473608",
+     "snippet": "> [@marcelomgarcia](https://github.com/marcelomgarcia) were you able to resolve this problem ? Im facing the same problem in the google-chrome I tried removing from chromium folder, but it still persists\n\nHi yashksaini-coder. Yes. Removing the folder `policies` solved the problem."
+    }
+   ],
+   "lastActivity": "2026-06-24T12:51:24Z"
+  },
+  {
+   "number": 1972,
+   "title": "Using Zen Browser with webapps",
+   "url": "https://github.com/omacom/omarchy/issues/1972",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-09-26T12:41:27Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [],
+   "comments": 4,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "satyapraneet63",
+     "createdAt": "2025-09-26T13:02:04Z",
+     "url": "https://github.com/omacom/omarchy/issues/1972#issuecomment-3338631633",
+     "snippet": "@ryanrhughes what are your thoughts on using the $browser to launch them as new tabs? Still a very useful shortcut if not as a webapp. I apologise for creating a PR without discussing as an issue.\n\n<img width=\"1121\" height=\"515\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/18400c7f-4d"
+    },
+    {
+     "author": "babu-fr1k",
+     "createdAt": "2026-06-07T20:18:28Z",
+     "url": "https://github.com/omacom/omarchy/issues/1972#issuecomment-4643986690",
+     "snippet": "but launching as $browser uses the default profile, right? so you would still have the side bar available"
+    }
+   ],
+   "lastActivity": "2026-06-07T20:18:28Z"
+  },
+  {
+   "number": 1684,
+   "title": "Slow launches on laptop",
+   "url": "https://github.com/omacom/omarchy/issues/1684",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2026-02-01T19:50:37Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [
+    "battery-power"
+   ],
+   "comments": 39,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "paul-fornage",
+     "createdAt": "2026-02-02T03:12:12Z",
+     "url": "https://github.com/omacom/omarchy/issues/1684#issuecomment-3832678628",
+     "snippet": "Unfortunately this has not been resolved. As the thread indicates, it's not exclusive to walker, and even if it was, I recorded today it took 2.3 seconds. This issue was previously closed and reopened for the same reason.\n\nMaybe I'm missing something but I assume this issue was mixed up with a diffe"
+    },
+    {
+     "author": "Jebarson007",
+     "createdAt": "2026-05-28T09:09:17Z",
+     "url": "https://github.com/omacom/omarchy/issues/1684#issuecomment-4562433209",
+     "snippet": "For me too the same issue the lauches are too slow like example steam taking like 3- 10 secs thats kinda a lot for launching a app if anyone knows how to fix it let me know of it ."
+    }
+   ],
+   "lastActivity": "2026-05-28T09:26:17Z"
+  },
+  {
+   "number": 224,
+   "title": "Better Dropbox support",
+   "url": "https://github.com/omacom/omarchy/issues/224",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-07-20T03:43:43Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [],
+   "comments": 7,
+   "postCloseComments": 3,
+   "sampleSnippets": [
+    {
+     "author": "janusqa",
+     "createdAt": "2026-05-05T00:48:07Z",
+     "url": "https://github.com/omacom/omarchy/issues/224#issuecomment-4375683853",
+     "snippet": "@curtisspendlove I am having the same issue with that popup and it also crashes the waybar I believe.  Can you tell me how you fixed it?  Thanks."
+    },
+    {
+     "author": "ronald2wing",
+     "createdAt": "2026-05-05T01:03:16Z",
+     "url": "https://github.com/omacom/omarchy/issues/224#issuecomment-4375750618",
+     "snippet": "> [@curtisspendlove](https://github.com/curtisspendlove) I am having the same issue with that popup and it also crashes the waybar I believe. Can you tell me how you fixed it? Thanks.\n\nIs it a missing dependencies issue?\nI would like to fix the one in the Install > Package as well.\nBut the one in th"
+    },
+    {
+     "author": "janusqa",
+     "createdAt": "2026-05-05T04:00:30Z",
+     "url": "https://github.com/omacom/omarchy/issues/224#issuecomment-4376440976",
+     "snippet": "I do not know if it is because I installed it the manual way before discovering it could be done via Install > Service.  I tried removing dropbox via remove package, i removed dropbox, dropbox-cli and dropbox-nautilus and then ran the install service but still the same issue.  I am not sure then if "
+    }
+   ],
+   "lastActivity": "2026-05-06T14:56:22Z"
+  },
+  {
+   "number": 2632,
+   "title": "GPU Passthrough on Windows VM",
+   "url": "https://github.com/omacom/omarchy/issues/2632",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-10-21T14:41:21Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [
+    "windows-vm"
+   ],
+   "comments": 7,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "LabGuy94",
+     "createdAt": "2025-10-21T20:26:00Z",
+     "url": "https://github.com/omacom/omarchy/issues/2632#issuecomment-3429436991",
+     "snippet": "> Please do open a PR!\n\nWill do @dhh ! However, my solution requires that the windows VM is run natively instead of in docker, and uses an external script to automatically install the vm/perform the passthrough. Would this still be acceptable to PR?"
+    },
+    {
+     "author": "ArchDevv",
+     "createdAt": "2025-12-05T15:32:08Z",
+     "url": "https://github.com/omacom/omarchy/issues/2632#issuecomment-3617395682",
+     "snippet": "Hi @LabGuy94, this will finally let me install Omarchy on bare metal. I use lots of Autodesk and Adobe apps for ArchiViz production. If this is still in the works this will be the clincher. I'm looking to find a balance btw Linux and Win ArchiViz apps for faster production, having the best of both w"
+    }
+   ],
+   "lastActivity": "2026-04-26T17:19:42Z"
+  },
+  {
+   "number": 1899,
+   "title": "Can't left click after few minutes of rebooting",
+   "url": "https://github.com/omacom/omarchy/issues/1899",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-10-26T03:31:53Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [],
+   "comments": 4,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "shubham-mamodiya-dev",
+     "createdAt": "2026-03-04T10:55:01Z",
+     "url": "https://github.com/omacom/omarchy/issues/1899#issuecomment-3996765733",
+     "snippet": "> how can i solve problem\n\nAre you having the same issue. On my laptop I didn't really know was it a hardware problem or something wrong with operating system. If I open windows back then there was no issue. Maybe windows handled my trackpad differently. I think it was an hardware issue for me. The "
+    },
+    {
+     "author": "shubham-mamodiya-dev",
+     "createdAt": "2026-03-04T11:15:50Z",
+     "url": "https://github.com/omacom/omarchy/issues/1899#issuecomment-3996866544",
+     "snippet": "I just enabled my trackpad from bios and they are working fine. I think it was something wrong with OS. \n\n> > how can i solve problem\n> \n> Are you having the same issue. On my laptop I didn't really know was it a hardware problem or something wrong with operating system. If I open windows back then "
+    }
+   ],
+   "lastActivity": "2026-03-04T11:16:18Z"
+  },
+  {
+   "number": 4164,
+   "title": "Mirrors broken",
+   "url": "https://github.com/omacom/omarchy/issues/4164",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2026-01-11T21:25:05Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [],
+   "comments": 9,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "danielniccoli",
+     "createdAt": "2026-02-15T11:06:42Z",
+     "url": "https://github.com/omacom/omarchy/issues/4164#issuecomment-3904225498",
+     "snippet": "@ryanrhughes I have the same issue. I did not boot Omarchy for maybe 1 month and see these failure on seemingly random packages.\n\nI never hopped branches, always staid on stable.\npacman -Syy does not solve the issue."
+    },
+    {
+     "author": "jamescraig17",
+     "createdAt": "2026-02-15T11:15:50Z",
+     "url": "https://github.com/omacom/omarchy/issues/4164#issuecomment-3904235875",
+     "snippet": "Hi Daniel, Thanks for reporting this—glad you’re seeing the same issue. The\n“random” package failures after a period of inactivity often point to\nupstream changes (e.g., package deprecations, removed releases, or checksum\nmismatches) rather than Omarchy-specific bugs. A few things to check/try: -\n✅ "
+    }
+   ],
+   "lastActivity": "2026-02-15T22:23:00Z"
+  },
+  {
+   "number": 4152,
+   "title": "Limine bootloader entry doesn't get created on nvidia",
+   "url": "https://github.com/omacom/omarchy/issues/4152",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2026-01-08T23:56:19Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [
+    "nvidia",
+    "boot-limine"
+   ],
+   "comments": 28,
+   "postCloseComments": 5,
+   "sampleSnippets": [
+    {
+     "author": "FlyingThaCat",
+     "createdAt": "2026-01-26T12:43:34Z",
+     "url": "https://github.com/omacom/omarchy/issues/4152#issuecomment-3799428354",
+     "snippet": "> Has this fixed with manual installation yet?. Today, I tried `curl -fsSL https://omarchy.org/install | bash` when installing and it still only has EFI Fallback option. I am using NVIDIA too :( \n\nCan you try\n```sh\nexport OMARCHY_REF=dev && curl -fsSL https://omarchy.org/install | bash\n```"
+    },
+    {
+     "author": "GiottoPham",
+     "createdAt": "2026-01-26T12:56:53Z",
+     "url": "https://github.com/omacom/omarchy/issues/4152#issuecomment-3799479124",
+     "snippet": "> > Has this fixed with manual installation yet?. Today, I tried `curl -fsSL https://omarchy.org/install | bash` when installing and it still only has EFI Fallback option. I am using NVIDIA too :(\n> \n> Can you try\n> \n> export OMARCHY_REF=dev && curl -fsSL https://omarchy.org/install | bash\n\nokay I w"
+    },
+    {
+     "author": "gauthiergalon",
+     "createdAt": "2026-01-27T00:36:22Z",
+     "url": "https://github.com/omacom/omarchy/issues/4152#issuecomment-3802469781",
+     "snippet": "> > Has this fixed with manual installation yet?. Today, I tried `curl -fsSL https://omarchy.org/install | bash` when installing and it still only has EFI Fallback option. I am using NVIDIA too :(\n> \n> Can you try\n> \n> export OMARCHY_REF=dev && curl -fsSL https://omarchy.org/install | bash\n\nhello, i"
+    }
+   ],
+   "lastActivity": "2026-02-10T16:18:38Z"
+  },
+  {
+   "number": 4023,
+   "title": "Hyprland config errors after Omarchy update (invalid options and window rules)",
+   "url": "https://github.com/omacom/omarchy/issues/4023",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2026-01-08T08:47:59Z",
+   "closer": null,
+   "fixedBy": [
+    4032
+   ],
+   "components": [
+    "multi-monitor"
+   ],
+   "comments": 36,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "Swader",
+     "createdAt": "2026-02-05T10:00:04Z",
+     "url": "https://github.com/omacom/omarchy/issues/4023#issuecomment-3852446302",
+     "snippet": "I ran omarchy-reinstall-configs but now after a reboot the error is still there and my shortcut for opening the terminal is no longer working for me to run omarchy-update through.\n\n<img width=\"4032\" height=\"3024\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/fd98abd9-5faa-438d-a7e9-b49"
+    },
+    {
+     "author": "numanzahid",
+     "createdAt": "2026-02-05T10:54:33Z",
+     "url": "https://github.com/omacom/omarchy/issues/4023#issuecomment-3852782497",
+     "snippet": "Did you try config reset? \nOmarchy menu > setup > config > defaults\n\n> I ran omarchy-reinstall-configs but now after a reboot the error is still there and my shortcut for opening the terminal is no longer working for me to run omarchy-update through.\n> \n> <img width=\"4032\" height=\"3024\" alt=\"Image\" "
+    }
+   ],
+   "lastActivity": "2026-02-05T11:29:10Z"
+  },
+  {
+   "number": 3500,
+   "title": "Theme Picker no longer working after v3.2.0",
+   "url": "https://github.com/omacom/omarchy/issues/3500",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-11-21T21:51:16Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [],
+   "comments": 8,
+   "postCloseComments": 4,
+   "sampleSnippets": [
+    {
+     "author": "Naresh-Khatri",
+     "createdAt": "2025-11-30T09:22:00Z",
+     "url": "https://github.com/omacom/omarchy/issues/3500#issuecomment-3592381776",
+     "snippet": "same issue\n"
+    },
+    {
+     "author": "mmneimne",
+     "createdAt": "2025-11-30T10:07:10Z",
+     "url": "https://github.com/omacom/omarchy/issues/3500#issuecomment-3592415818",
+     "snippet": "> same issue\n\nI ran `omarchy-migrate` and everything went well, I guess a migration failed during the upgrade at some point"
+    },
+    {
+     "author": "dash-09",
+     "createdAt": "2025-12-05T22:25:40Z",
+     "url": "https://github.com/omacom/omarchy/issues/3500#issuecomment-3618824715",
+     "snippet": "i was also going through the same issue, `omarchy-migrate` i ran this cmd and now my theme section. \nBut I want to know why this worked ? how the pckg manager of this omarchy works."
+    }
+   ],
+   "lastActivity": "2026-01-12T11:16:47Z"
+  },
+  {
+   "number": 1934,
+   "title": "omarchy unresponsive in vmware workstation",
+   "url": "https://github.com/omacom/omarchy/issues/1934",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-09-26T00:09:25Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [
+    "touchpad-input",
+    "vm"
+   ],
+   "comments": 11,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "wilk3ns",
+     "createdAt": "2025-10-15T17:42:15Z",
+     "url": "https://github.com/omacom/omarchy/issues/1934#issuecomment-3407586989",
+     "snippet": "+1 vmware shortcuts does not work with 3d accel on, when turned of it is black screen after login. Virtualbox however, there is somewhat success without 3d accel, but still not in a vm usable state"
+    },
+    {
+     "author": "ca555nider",
+     "createdAt": "2025-12-13T08:49:48Z",
+     "url": "https://github.com/omacom/omarchy/issues/1934#issuecomment-3649125524",
+     "snippet": "Having the exact same issue"
+    }
+   ],
+   "lastActivity": "2025-12-13T23:01:02Z"
+  },
+  {
+   "number": 1808,
+   "title": "Touch Bar not working + thermal shutdown after latest Omarchy update (MacBook Pro T2)",
+   "url": "https://github.com/omacom/omarchy/issues/1808",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-09-23T22:24:37Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [
+    "t2-mac"
+   ],
+   "comments": 7,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "ciprimarian",
+     "createdAt": "2025-10-29T13:28:37Z",
+     "url": "https://github.com/omacom/omarchy/issues/1808#issuecomment-3461525031",
+     "snippet": "I did a fresh installation on a Macbook Pro 2017, and the touch bar and speakers do not work at all. Also the entire computer freezes and goes black if I close and reopen the lid(only unplugged mode). I've tried the [roadrunner2 ](https://github.com/roadrunner2)/ [macbook12-spi-driver](https://githu"
+    },
+    {
+     "author": "conradovilaca0-pixel",
+     "createdAt": "2025-11-24T19:40:06Z",
+     "url": "https://github.com/omacom/omarchy/issues/1808#issuecomment-3572429485",
+     "snippet": "> I did a fresh installation on a Macbook Pro 2017, and the touch bar and speakers do not work at all. Also the entire computer freezes and goes black if I close and reopen the lid(only unplugged mode). I've tried the [roadrunner2 ](https://github.com/roadrunner2)/ [macbook12-spi-driver](https://git"
+    }
+   ],
+   "lastActivity": "2025-11-24T19:40:06Z"
+  },
+  {
+   "number": 2536,
+   "title": "Alacritty fails to start after 0.16 update",
+   "url": "https://github.com/omacom/omarchy/issues/2536",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-10-20T13:50:09Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [],
+   "comments": 15,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "dpointeck",
+     "createdAt": "2025-11-03T19:37:07Z",
+     "url": "https://github.com/omacom/omarchy/issues/2536#issuecomment-3482185950",
+     "snippet": "@gangaasoonu  I had the same issue after switching back to alacritty from kitty. I had to change this line in the keybindings config\n\n`bindd = SUPER, RETURN, Terminal, exec, $terminal --working-directory=$(omarchy-cmd-terminal-cwd)`\nthe important detail is the `--working-dir` parameter kitty uses `-"
+    },
+    {
+     "author": "4M-0-R3",
+     "createdAt": "2025-11-12T03:54:00Z",
+     "url": "https://github.com/omacom/omarchy/issues/2536#issuecomment-3519799254",
+     "snippet": "\n\n\n\n> [@gangaasoonu](https://github.com/gangaasoonu) I had the same issue after switching back to alacritty from kitty. I had to change this line in the keybindings config\n> \n> `bindd = SUPER, RETURN, Terminal, exec, $terminal --working-directory=$(omarchy-cmd-terminal-cwd)` the important detail is "
+    }
+   ],
+   "lastActivity": "2025-11-12T03:54:00Z"
+  },
+  {
+   "number": 2548,
+   "title": "Walker and Elephant missing after upgrade. Not open and show error. press win+space or win+alt+space",
+   "url": "https://github.com/omacom/omarchy/issues/2548",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-10-19T15:36:26Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [],
+   "comments": 22,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "cvuorinen",
+     "createdAt": "2025-10-22T05:21:22Z",
+     "url": "https://github.com/omacom/omarchy/issues/2548#issuecomment-3430548699",
+     "snippet": "I had this same issues. I had added some wallpapers to the theme background folder as symlinks, and that caused omarchy update to fail. After removing the symlinks the update went through ok.\n\nThis was the error message during `omarchy-update`:\n\n```\nUpdate Omarchy\nUpdating f634bfe..38f5a00\nerror: 't"
+    },
+    {
+     "author": "RavinduRepo",
+     "createdAt": "2025-10-24T18:44:12Z",
+     "url": "https://github.com/omacom/omarchy/issues/2548#issuecomment-3444436102",
+     "snippet": "> [`1758107879.sh`](https://github.com/basecamp/omarchy/blob/master/migrations/1758107879.sh)\n\nyes this worked, \nfirst I ran omarchy-refresh-walker, but that missed emoji menu (i think , not sure)\nbut after running \nbash $OMARCHY_PATH/migrations/1758107879.sh\nall worked perfectly well.\nbut still whe"
+    }
+   ],
+   "lastActivity": "2025-10-26T18:51:37Z"
+  },
+  {
+   "number": 1133,
+   "title": "wezterm doesnt work at all",
+   "url": "https://github.com/omacom/omarchy/issues/1133",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-09-16T14:12:02Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [],
+   "comments": 8,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "akthe-at",
+     "createdAt": "2025-10-02T16:21:36Z",
+     "url": "https://github.com/omacom/omarchy/issues/1133#issuecomment-3362060889",
+     "snippet": "> even if i put enable_wayland=false or true or remove my config or anything, still doesnt launch at all\n\nSorry to interrupt and talk inside a closed issue, DHH, but i thought I might be able to help those above that were having an issue like @David-pog  and @dharmavagabond \n\n wezterm doesnt use  `-"
+    },
+    {
+     "author": "Davilonchi",
+     "createdAt": "2025-10-02T17:13:34Z",
+     "url": "https://github.com/omacom/omarchy/issues/1133#issuecomment-3362230210",
+     "snippet": "Will try it out when I have the time, thanks still "
+    }
+   ],
+   "lastActivity": "2025-10-21T14:03:45Z"
+  },
+  {
+   "number": 2558,
+   "title": "Major keybinds broke after omarchy update",
+   "url": "https://github.com/omacom/omarchy/issues/2558",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-10-20T13:39:11Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [],
+   "comments": 18,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "dhh",
+     "createdAt": "2025-10-20T13:42:49Z",
+     "url": "https://github.com/omacom/omarchy/issues/2558#issuecomment-3422121148",
+     "snippet": "I think in some cases we might have an issue with folks who've been on the dev branch, and missed updates to the migration. You can run the Walker migration directly again safely if you're still having trouble with:\n\n`bash $OMARCHY_PATH/migrations/1758107878.sh`"
+    },
+    {
+     "author": "sepulworld",
+     "createdAt": "2025-10-21T02:46:45Z",
+     "url": "https://github.com/omacom/omarchy/issues/2558#issuecomment-3424460531",
+     "snippet": "> I think in some cases we might have an issue with folks who've been on the dev branch, and missed updates to the migration. You can run the Walker migration directly again safely if you're still having trouble with:\n> \n> `bash $OMARCHY_PATH/migrations/1758107878.sh`\n\nYes, I'm thinking older instal"
+    }
+   ],
+   "lastActivity": "2025-10-21T02:46:45Z"
+  },
+  {
+   "number": 2286,
+   "title": "Wifi adapter not detecting",
+   "url": "https://github.com/omacom/omarchy/issues/2286",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-10-11T15:32:11Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [
+    "wifi"
+   ],
+   "comments": 7,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "nelsons-coder",
+     "createdAt": "2025-10-13T18:13:48Z",
+     "url": "https://github.com/omacom/omarchy/issues/2286#issuecomment-3398576009",
+     "snippet": "> [@JAMSHEDD2](https://github.com/JAMSHEDD2), Now you can simply update via pacman. This package has been fixed. I currently have version 20251011-1, and it works.\n\nJust installed a fresh copy of omarchy, using 20251011-1 but still no adapter"
+    },
+    {
+     "author": "Sabadon",
+     "createdAt": "2025-10-13T20:03:13Z",
+     "url": "https://github.com/omacom/omarchy/issues/2286#issuecomment-3398897143",
+     "snippet": "> > [@JAMSHEDD2](https://github.com/JAMSHEDD2), Now you can simply update via pacman. This package has been fixed. I currently have version 20251011-1, and it works.\n> \n> Just installed a fresh copy of omarchy, using 20251011-1 but still no adapter\n\nDo you still get \"WM Firmware Version: ____000000\""
+    }
+   ],
+   "lastActivity": "2025-10-14T00:20:47Z"
+  },
+  {
+   "number": 704,
+   "title": "Clicking Setup → Power profile closes the Omarchy menu and prevents it from reopening",
+   "url": "https://github.com/omacom/omarchy/issues/704",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-08-22T11:18:48Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [
+    "battery-power"
+   ],
+   "comments": 17,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "alexandru-calinoiu",
+     "createdAt": "2025-09-10T09:49:26Z",
+     "url": "https://github.com/omacom/omarchy/issues/704#issuecomment-3274190430",
+     "snippet": "This still does not work and I've updated the the system already."
+    },
+    {
+     "author": "wardakla",
+     "createdAt": "2025-10-04T12:28:00Z",
+     "url": "https://github.com/omacom/omarchy/issues/704#issuecomment-3368183261",
+     "snippet": "Hi, I have the same issue. I can’t select the Power Profile — it always resets to Power Saver. How did you fix it, or did you manage to fix it at all?"
+    }
+   ],
+   "lastActivity": "2025-10-04T15:28:49Z"
+  },
+  {
+   "number": 1768,
+   "title": "macbook 12 2015 keyboard, bluetooth and touchpad do not work",
+   "url": "https://github.com/omacom/omarchy/issues/1768",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-09-29T13:51:39Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [
+    "bluetooth",
+    "touchpad-input"
+   ],
+   "comments": 5,
+   "postCloseComments": 3,
+   "sampleSnippets": [
+    {
+     "author": "meceo",
+     "createdAt": "2025-09-29T14:20:20Z",
+     "url": "https://github.com/omacom/omarchy/issues/1768#issuecomment-3347258419",
+     "snippet": "I am installing Omarchy 3.0.2 now, but already in installation process the keyboard is not working. Is that expected behavior?\n\nI continue with the installation using external keyboard and see if it's still the case once Omarchy is installed."
+    },
+    {
+     "author": "meceo",
+     "createdAt": "2025-09-29T14:32:21Z",
+     "url": "https://github.com/omacom/omarchy/issues/1768#issuecomment-3347327847",
+     "snippet": "The OS is installed, I installed all the updates - keyboard and touchpad still don't work. The keyboard works until I select omarchy to start booting, on password screen it does not work."
+    },
+    {
+     "author": "alock",
+     "createdAt": "2025-09-30T05:59:37Z",
+     "url": "https://github.com/omacom/omarchy/issues/1768#issuecomment-3350091656",
+     "snippet": "I have the same issue with the same hardware.  (MacBook8,1)\n\nWhen I attempted to update an existing omarchy install to 3.0.2 I noticed that it didn't create the `/etc/mkinitcpio.conf.d/macbook_spi_modules.conf` file.  After running the the script myself I do see the file but the built-in keyboard an"
+    }
+   ],
+   "lastActivity": "2025-10-01T03:44:25Z"
+  },
+  {
+   "number": 716,
+   "title": "Omarchy conflicts with SDDM by ocupying tty1 first",
+   "url": "https://github.com/omacom/omarchy/issues/716",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-08-14T07:56:47Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [],
+   "comments": 37,
+   "postCloseComments": 3,
+   "sampleSnippets": [
+    {
+     "author": "hoclun-rigsep",
+     "createdAt": "2025-09-30T20:22:30Z",
+     "url": "https://github.com/omacom/omarchy/issues/716#issuecomment-3353675396",
+     "snippet": "Please excuse me but I'm still not sure what exactly/specfically you two are suggesting. And what is that first screenshot?"
+    },
+    {
+     "author": "dwilliam62",
+     "createdAt": "2025-09-30T20:36:28Z",
+     "url": "https://github.com/omacom/omarchy/issues/716#issuecomment-3353721371",
+     "snippet": "> Please excuse me but I'm still not sure what exactly/specfically you two are suggesting. And what is that first screenshot?\n\nOmarchy uses a service to do the auto login.   You can disable it,, and then you can add in a login manager like SDDM which is what the first screenshot is.  A custom SDDM t"
+    },
+    {
+     "author": "dwilliam62",
+     "createdAt": "2025-09-30T21:27:44Z",
+     "url": "https://github.com/omacom/omarchy/issues/716#issuecomment-3353864027",
+     "snippet": "> Please excuse me but I'm still not sure what exactly/specfically you two are suggesting. And what is that first screenshot?\n\nBTW  You don't have to use SDDM.  You can use LightDM, GDM, ly, tui, etc...   I happen to like SDDM "
+    }
+   ],
+   "lastActivity": "2025-09-30T21:28:59Z"
+  },
+  {
+   "number": 1666,
+   "title": "Built-in MacBook Pro 2016 (13,1) Keyboard Not Working at LUKS Password Prompt",
+   "url": "https://github.com/omacom/omarchy/issues/1666",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-09-16T14:35:23Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [
+    "boot-limine",
+    "touchpad-input"
+   ],
+   "comments": 5,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "tjosten",
+     "createdAt": "2025-09-18T07:30:29Z",
+     "url": "https://github.com/omacom/omarchy/issues/1666#issuecomment-3305824142",
+     "snippet": "With a fresh 3.0.1 install, it still does not work for me (2017 12\" MacBook). I need to plug in a USB keyboard in order to enter the LUKS password."
+    },
+    {
+     "author": "dc-shimla",
+     "createdAt": "2025-09-26T23:47:54Z",
+     "url": "https://github.com/omacom/omarchy/issues/1666#issuecomment-3340818605",
+     "snippet": "I'm on a Macbook Pro 2016 13.3\". Upgraded to Omarchy v3.0.1. Macbook keyboard still not working for the LUKS encryption password. Ran the fix-apple-spi-keyboard.sh above. It executed successfully, but still did not fix the issue. Still need to plug in the USB keyboard to login successfully."
+    }
+   ],
+   "lastActivity": "2025-09-26T23:47:54Z"
+  },
+  {
+   "number": 240,
+   "title": "omarchy-update command is throwing git errors",
+   "url": "https://github.com/omacom/omarchy/issues/240",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-07-19T15:34:24Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [],
+   "comments": 3,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "spencerflagg",
+     "createdAt": "2025-08-07T13:33:23Z",
+     "url": "https://github.com/omacom/omarchy/issues/240#issuecomment-3164230462",
+     "snippet": "FYI - I had the same issue, and I hadn't done anything to the OS. \nYet, there was one spurious change in one of the theme directories. 🤷‍♂️ "
+    },
+    {
+     "author": "dhh",
+     "createdAt": "2025-08-07T13:54:33Z",
+     "url": "https://github.com/omacom/omarchy/issues/240#issuecomment-3164306943",
+     "snippet": "Yeah, that was a bug for a second. It's been fixed now. If you're somehow still seeing problems, run this:\n\n```\ngit -C ~/.local/share/omarchy co -f themes/osaka-jade\nln -nfs ~/.local/share/omarchy/themes/osaka-jade ~/.config/omarchy/themes/osaka-jade\n```\n\nThen run `omarchy-update` and you should be "
+    }
+   ],
+   "lastActivity": "2025-08-31T16:31:14Z"
+  },
+  {
+   "number": 73,
+   "title": "1Password 2FA Code fails to save",
+   "url": "https://github.com/omacom/omarchy/issues/73",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-07-09T17:34:34Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [],
+   "comments": 9,
+   "postCloseComments": 3,
+   "sampleSnippets": [
+    {
+     "author": "rossvz",
+     "createdAt": "2025-07-25T13:39:39Z",
+     "url": "https://github.com/omacom/omarchy/issues/73#issuecomment-3117862202",
+     "snippet": "I installed omarchy yesterday (v1.6.1) and ran into this. 1password still failed to store the 2FA even with gnome-keyring installed - I had to call `secret-tool` commands listed above to initialize it properly.\n\nIt's possible the `systemctl` commands listed above would have also initialized the keyr"
+    },
+    {
+     "author": "ahkohd",
+     "createdAt": "2025-08-01T01:11:18Z",
+     "url": "https://github.com/omacom/omarchy/issues/73#issuecomment-3141813077",
+     "snippet": "> I installed omarchy yesterday (v1.6.1) and ran into this. 1password still failed to store the 2FA even with gnome-keyring installed - I had to call `secret-tool` commands listed above to initialize it properly.\n> \n> It's possible the `systemctl` commands listed above would have also initialized th"
+    },
+    {
+     "author": "jamessimas",
+     "createdAt": "2025-08-23T22:25:57Z",
+     "url": "https://github.com/omacom/omarchy/issues/73#issuecomment-3217450341",
+     "snippet": "> I installed omarchy yesterday (v1.6.1) and ran into this. 1password still failed to store the 2FA even with gnome-keyring installed - I had to call `secret-tool` commands listed above to initialize it properly.\n> \n> It's possible the `systemctl` commands listed above would have also initialized th"
+    }
+   ],
+   "lastActivity": "2025-08-23T22:25:57Z"
+  },
+  {
+   "number": 196,
+   "title": "Waybar stacks when waking from sleep",
+   "url": "https://github.com/omacom/omarchy/issues/196",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-07-23T20:26:51Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [
+    "suspend-sleep"
+   ],
+   "comments": 13,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "zaneschepke",
+     "createdAt": "2025-07-29T20:37:33Z",
+     "url": "https://github.com/omacom/omarchy/issues/196#issuecomment-3133994988",
+     "snippet": "I still see two stacked waybars when waking up from sleep + session unlock. \n\nAnyone else?\n\nOmarchy 1.7.0"
+    },
+    {
+     "author": "martin-ro",
+     "createdAt": "2025-07-29T23:37:25Z",
+     "url": "https://github.com/omacom/omarchy/issues/196#issuecomment-3134389751",
+     "snippet": "> I still see two stacked waybars when waking up from sleep + session unlock.\n> \n> Anyone else?\n> \n> Omarchy 1.7.0\n\nYep, me. The longer the computer sleeps the more waybars it seems."
+    }
+   ],
+   "lastActivity": "2025-07-29T23:37:25Z"
+  },
+  {
+   "number": 39,
+   "title": "Browsers have poor wayland support on Nvidia, lots of visual glitches.",
+   "url": "https://github.com/omacom/omarchy/issues/39",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-07-04T15:28:46Z",
+   "closer": null,
+   "fixedBy": [
+    15
+   ],
+   "components": [
+    "nvidia"
+   ],
+   "comments": 7,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "dhh",
+     "createdAt": "2025-07-04T17:07:56Z",
+     "url": "https://github.com/omacom/omarchy/issues/39#issuecomment-3036898091",
+     "snippet": "@BigMitchGit When did you install Omarchy? Curious whether you ran our install/nvidia.sh setup and it still didn't work right. Or if you installed before we had that?"
+    },
+    {
+     "author": "BigMitchGit",
+     "createdAt": "2025-07-04T17:22:19Z",
+     "url": "https://github.com/omacom/omarchy/issues/39#issuecomment-3036920819",
+     "snippet": "> @BigMitchGit When did you install Omarchy? Curious whether you ran our install/nvidia.sh setup and it still didn't work right. Or if you installed before we had that?\n\n@dhh About 2 days ago but this one's probably on me. I already had a hyprland setup running on EndeavorOS instead of pure arch.\n\nI"
+    }
+   ],
+   "lastActivity": "2025-07-04T17:38:02Z"
+  }
+ ]
+}

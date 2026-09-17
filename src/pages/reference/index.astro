@@ -1,0 +1,25 @@
+---
+import Base from '../../layouts/Base.astro';
+import { visible } from '../../lib/content';
+import { commands, bindings, menu, migrations, latestTag, tagsAvailable, hooks } from '../../lib/data';
+import { itemListLd } from '../../lib/seo';
+const tag = latestTag();
+const nCmd = commands(tag).length, nKeys = bindings(tag).length, nMenu = (menu(tag).flat ?? []).length, nMig = migrations(tag).length;
+const nHooks = Object.keys(hooks(tag).hooks ?? hooks(tag) ?? {}).length;
+const guides = await visible('reference');
+const items = [
+  { href: '/reference/commands/', title: `All ${nCmd || ''} omarchy commands`, desc: 'Every omarchy CLI command with its summary, arguments, examples, and whether it needs sudo. Generated per release.' },
+  { href: '/reference/keybindings/', title: `${nKeys || 'All'} default keybindings`, desc: 'Every default Hyprland binding with the label the shell gives it, searchable by key or by action.' },
+  { href: '/reference/menu/', title: 'The Omarchy menu tree', desc: `Every menu path (${nMenu || 'all'} nodes), the command each runs, and the condition that hides it on some machines.` },
+  { href: '/reference/hooks/', title: 'Hooks and extension points', desc: 'The hook directories Omarchy runs scripts from, with the shipped samples.' },
+  { href: '/reference/changes/', title: 'What changed between versions', desc: 'Commands, keybindings, and menu items added or removed between any two releases, and the migrations each release ran.' },
+  { href: '/releases/', title: 'Releases, migrations decoded, channels', desc: `${nMig || ''} migration scripts explained in plain language, per release.` },
+];
+const ld = itemListLd({ name: 'Omarchy reference', path: '/reference/', items: [...items.map((i) => ({ name: i.title, url: i.href })), ...guides.map((g: any) => ({ name: g.data.title, url: `/reference/${g.id}/` }))] });
+---
+<Base title="Omarchy reference: commands, keybindings, menu, changes" description={`Generated from the Omarchy source at ${tag}: every command, keybinding, menu path, and hook, with diffs between releases. Unofficial, regenerated each release.`} crumbs={[{ name: 'Reference', href: '/reference/' }]} ld={ld}>
+  <div class="art-head"><h1>Reference</h1><p class="lede">Generated from the MIT-licensed Omarchy source at each release tag. Current data: <strong>{tag}</strong>. Available versions: {tagsAvailable().join(', ')}.</p></div>
+  <div class="cards">{items.map((i) => <div class="card"><h3><a href={i.href}>{i.title}</a></h3><p>{i.desc}</p></div>)}</div>
+  {guides.length > 0 && <><h2>Guides</h2><div class="cards">{guides.map((g: any) => <div class="card"><h3><a href={`/reference/${g.id}/`}>{g.data.title}</a></h3><p>{g.data.description}</p></div>)}</div></>}
+  <p class="small muted" style="margin-top:28px">Machine-readable: <a href="/reference/commands.json">commands.json</a> · <a href="/reference/keybindings.json">keybindings.json</a>. The official CLI can print the same data locally with <code>omarchy commands --json</code>.</p>
+</Base>

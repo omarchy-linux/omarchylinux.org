@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NVIDIA machines on Omarchy Linux</title>
+  <link rel="stylesheet" href="../css/site.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <p class="unofficial">Unofficial. ISO: <a href="https://omarchy.org">omarchy.org</a></p>
+  <div class="bar">
+    <a class="mark" href="../index.html">omarchy<span>linux</span>.org</a>
+    <nav><a href="./" aria-current="page">Hardware</a><a href="../about.html">About</a></nav>
+  </div>
+  <main>
+    <p><a href="./">← Hardware</a></p>
+    <h1>NVIDIA laptops and desktops</h1>
+    <p class="lede">Omarchy installs NVIDIA when it sees a supported GPU (open-dkms on Turing+, 580xx on Maxwell/Pascal/Volta). Muxed laptops are where people get hurt. <code>asusctl</code> is on the ISO.</p>
+
+    <article class="model" id="asus-g14-2023">
+      <p><span class="badge silver">silver</span></p>
+      <h2>Zephyrus G14 (2023)</h2>
+      <p>Reddit: 4050-class units run well. Kill the dGPU for battery (envycontrol / asusctl).</p>
+    </article>
+    <article class="model" id="asus-g14-2024">
+      <p><span class="badge silver">silver</span></p>
+      <h2>Zephyrus G14 (2024, GA403, 4060)</h2>
+      <p>Long 2026 write-up: second SSD install, dual kernel to flip mux, asusctl armoury, <code>nvidia_drm.modeset=0</code> on the g14 kernel. Works; battery is a project.</p>
+    </article>
+    <article class="model" id="asus-g16">
+      <p><span class="badge bronze">bronze</span></p>
+      <h2>Zephyrus G16 (2023–2024, 4060/4070)</h2>
+      <p>Installs, then some units black-screen in Hyprland. nomodeset on the ISO, then NVIDIA env overrides.</p>
+    </article>
+    <article class="model" id="asus-strix-g18">
+      <p><span class="badge silver">silver</span></p>
+      <h2>ROG Strix G18</h2>
+      <p>Reddit: stock install, no issues on that machine.</p>
+    </article>
+    <article class="model" id="asus-tuf-f15">
+      <p><span class="badge silver">silver</span></p>
+      <h2>TUF F15</h2>
+      <p>Hub student setup. NVIDIA laptop caveats.</p>
+    </article>
+    <article class="model" id="lenovo-legion">
+      <p><span class="badge silver">silver</span></p>
+      <h2>Lenovo Legion</h2>
+      <p>Hub dual-external Legion. Same hybrid GPU story as ROG.</p>
+    </article>
+    <article class="model" id="dell-alienware-x17-r1">
+      <p><span class="badge silver">silver</span></p>
+      <h2>Alienware x17 R1</h2>
+      <p>Hub gaming laptop + dual displays.</p>
+    </article>
+    <article class="model" id="nvidia-40-desktop">
+      <p><span class="badge silver">silver</span></p>
+      <h2>Desktop, RTX 40-series</h2>
+      <p>Turing+ <code>nvidia-open-dkms</code>. Desktops are easier than muxed laptops.</p>
+    </article>
+    <article class="model" id="nvidia-50-desktop">
+      <p><span class="badge bronze">bronze</span></p>
+      <h2>RTX 50-series (desktop or laptop)</h2>
+      <p>Issue #7045: installer black screen without <code>nomodeset</code>. Issue #11141: muxless hybrids force <code>LIBVA_DRIVER_NAME=nvidia</code> and stutter browser video — override to <code>iHD</code> / mesa in <code>~/.config/hypr/envs.lua</code>.</p>
+    </article>
+    <article class="model" id="sff-5090">
+      <p><span class="badge bronze">bronze</span></p>
+      <h2>SFF 9800X3D + RTX 5090</h2>
+      <p>Hub 9.95 L backpack box. Same 50-series installer issue.</p>
+    </article>
+  </main>
+  <footer>Unofficial · <a href="../about.html">About</a></footer>
+</body>
+</html>

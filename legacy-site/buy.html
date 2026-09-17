@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>What to buy for Omarchy Linux</title>
+  <meta name="description" content="Unofficial buying guide: XPS, Framework, Slimbook, ThinkPad, Beelink. What to skip (Apple Silicon, Snapdragon X).">
+  <link rel="stylesheet" href="css/site.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <p class="unofficial">Unofficial. We do not sell hardware and we do not wrap the ISO in affiliate links.</p>
+  <div class="bar">
+    <a class="mark" href="index.html">omarchy<span>linux</span>.org</a>
+    <nav>
+      <a href="hardware/">Hardware</a>
+      <a href="from-mac.html">From Mac</a>
+      <a href="buy.html" aria-current="page">Buy</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+  <main>
+    <h1>What to buy</h1>
+    <p class="lede">If the goal is “Omarchy with the fewest surprises,” buy boring x86_64 with an AMD or Intel iGPU. NVIDIA hybrids and ARM are hobbies.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>If you want…</th><th>Buy</th><th>Why</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>The officially loved new laptop</td>
+            <td><a href="hardware/dell-xps-14-2026.html">Dell XPS 14/16 2026</a></td>
+            <td>Panther Lake work landed before the hardware shipped. Pricey.</td>
+          </tr>
+          <tr>
+            <td>Cheaper new XPS</td>
+            <td><a href="hardware/dell.html#dell-xps-13-2026">Dell XPS 13 2026 (Wildcat)</a></td>
+            <td>DHH’s value pick vs MacBook Neo. ~$699 US. SSH out for heavy compiles.</td>
+          </tr>
+          <tr>
+            <td>Repairable, long-lived</td>
+            <td><a href="hardware/framework.html">Framework 13 Pro / Desktop</a></td>
+            <td>13 Pro Panther Lake on the official list. Desktop 395+ is DHH’s top desk machine.</td>
+          </tr>
+          <tr>
+            <td>Linux-vendor laptop</td>
+            <td><a href="hardware/tuxedo.html#tuxedo-infinitebook-pro-14">Tuxedo InfiniteBook Pro 14</a></td>
+            <td>3K matte, 80 Wh, dual NVMe, ethernet. On DHH’s list.</td>
+          </tr>
+          <tr>
+            <td>No USB flashing</td>
+            <td><a href="hardware/slimbook.html">Slimbook preinstall</a></td>
+            <td>Vendor image. Confirm the SKU.</td>
+          </tr>
+          <tr>
+            <td>Desk machine under $500</td>
+            <td><a href="hardware/minipc.html">Beelink EQ / SER8–10 / GTR9 Pro</a></td>
+            <td>AMD mini PC + any good display. EQ Wildcat if cheap; SER10 or GTR9 if not.</td>
+          </tr>
+          <tr>
+            <td>Used / cheap / student</td>
+            <td><a href="hardware/thinkpad.html">ThinkPad T480 / T14 / X220</a></td>
+            <td>Linux’s comfort food. X220 is the official potato.</td>
+          </tr>
+          <tr>
+            <td>Revive a drawer Mac</td>
+            <td><a href="hardware/macbook-intel.html">Intel Mac 2012–2019</a></td>
+            <td>Works. Read T1/T2 notes before wiping.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Skip for now</h2>
+    <ul>
+      <li><strong>Apple Silicon.</strong> VM only.</li>
+      <li><strong>Snapdragon X / Copilot+ PCs.</strong> Experimental aarch64, not the public ISO.</li>
+      <li><strong>Brand-new NVIDIA 50-series laptops</strong> unless you like <code>nomodeset</code> and mux fights.</li>
+    </ul>
+    <p class="note">This page will take disclosed hardware affiliates later if they stay off the download path. Today: zero.</p>
+  </main>
+  <footer>Unofficial · <a href="about.html">About</a></footer>
+</body>
+</html>

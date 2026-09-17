@@ -1,0 +1,6 @@
+---
+interface Props { kind: string; label?: string; title?: string }
+const { kind, label, title } = Astro.props;
+const text = label ?? kind;
+---
+<span class={`pill pill-${kind}`} title={title}>{text}</span>

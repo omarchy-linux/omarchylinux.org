@@ -1,0 +1,139 @@
+{
+  "bindings": {
+    "added": [],
+    "changedAction": [],
+    "counts": {
+      "added": 0,
+      "changedAction": 0,
+      "from": 228,
+      "fromRecords": 228,
+      "removed": 0,
+      "to": 228,
+      "toRecords": 228
+    },
+    "note": null,
+    "removed": []
+  },
+  "commands": {
+    "added": [
+      "omarchy-install-ai-hermes",
+      "omarchy-install-ai-openclaw",
+      "omarchy-install-ai-t3-code",
+      "omarchy-install-hermes-cli",
+      "omarchy-install-openclaw-cli",
+      "omarchy-launch-openclaw",
+      "omarchy-openclaw-onboard",
+      "omarchy-remove-ai-hermes",
+      "omarchy-remove-ai-openclaw",
+      "omarchy-remove-ai-perplexity",
+      "omarchy-remove-ai-t3-code",
+      "omarchy-theme-set-hermes",
+      "omarchy-theme-set-t3code"
+    ],
+    "changed": [
+      {
+        "fields": {
+          "args": [
+            "[pi|omp|opencode|claude|codex|grok|gemini|copilot|crush]",
+            "[pi|omp|opencode|claude|codex|grok|gemini|openclaw|hermes|copilot|crush|cursor-agent|muse]"
+          ]
+        },
+        "name": "omarchy-default-agent"
+      }
+    ],
+    "counts": {
+      "added": 13,
+      "changed": 1,
+      "from": 431,
+      "removed": 0,
+      "to": 444
+    },
+    "removed": []
+  },
+  "from": "v4.0.2",
+  "menu": {
+    "added": [
+      "install.ai.hermes",
+      "install.ai.openclaw",
+      "install.ai.perplexity",
+      "install.ai.t3-code",
+      "remove.ai",
+      "remove.ai.hermes",
+      "remove.ai.openclaw",
+      "remove.ai.perplexity",
+      "remove.ai.t3-code",
+      "setup.default.agent.cursor-agent",
+      "setup.default.agent.hermes",
+      "setup.default.agent.muse",
+      "setup.default.agent.openclaw"
+    ],
+    "changed": [],
+    "counts": {
+      "added": 13,
+      "changed": 0,
+      "from": 320,
+      "removed": 0,
+      "to": 333
+    },
+    "removed": []
+  },
+  "migrations": {
+    "counts": {
+      "from": 96,
+      "new": 9,
+      "removed": 1,
+      "to": 104
+    },
+    "new": [
+      {
+        "date": "2026-08-20T08:44:43Z",
+        "description": "Stop mise upgrades from pruning versions still in use",
+        "file": "1787215483.sh"
+      },
+      {
+        "date": "2026-08-26T16:04:41Z",
+        "description": "Install the Hermes CLI wrapper for existing installs",
+        "file": "1787760281.sh"
+      },
+      {
+        "date": "2026-08-27T15:18:25Z",
+        "description": "Link Omarchy agent skills into Hermes skill directories",
+        "file": "1787843905.sh"
+      },
+      {
+        "date": "2026-09-05T03:05:53Z",
+        "description": "Install Cursor CLI via mise wrapper",
+        "file": "1788577553.sh"
+      },
+      {
+        "date": "2026-09-05T14:44:22Z",
+        "description": "Hand Hermes Desktop the Omarchy theme as a skin",
+        "file": "1788619462.sh"
+      },
+      {
+        "date": "2026-09-06T02:39:10Z",
+        "description": "Repair user-owned system-sleep hooks and hybrid GPU service configuration",
+        "file": "1788662350.sh"
+      },
+      {
+        "date": "2026-09-06T20:00:25Z",
+        "description": "Install Muse Code via mise wrapper",
+        "file": "1788724825.sh"
+      },
+      {
+        "date": "2026-09-07T01:52:21Z",
+        "description": "Update Kitty configuration",
+        "file": "1788745941.sh"
+      },
+      {
+        "date": "2026-09-08T06:25:26Z",
+        "description": "Retire the stock user icon font missed by the Quattro upgrade",
+        "file": "1788848726.sh"
+      }
+    ],
+    "removed": [
+      "1784809451.sh"
+    ]
+  },
+  "to": "v4.0.3"
+}

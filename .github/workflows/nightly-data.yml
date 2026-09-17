@@ -1,0 +1,30 @@
+name: Nightly data refresh
+on:
+  schedule:
+    - cron: '23 4 * * *'
+  workflow_dispatch:
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    permissions: { contents: write }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - name: Install tools
+        run: sudo apt-get update && sudo apt-get install -y zstd dnsutils whois jq
+      - name: Fetch source snapshots for new tags and rebuild reference data
+        env: { GH_TOKEN: ${{ github.token }} }
+        run: bash scripts/build-data.sh --fetch
+      - name: Refresh issue-derived data
+        env: { GH_TOKEN: ${{ github.token }} }
+        run: bash scripts/build-issue-data.sh
+      - name: Refresh live data
+        run: bash scripts/refresh-live-data.sh
+      - name: Commit data
+        run: |
+          git config user.name "omarchylinux-bot"
+          git config user.email "bot@omarchylinux.org"
+          git add data
+          git diff --cached --quiet || git commit -m "data: nightly refresh $(date -u +%F)"
+          git push

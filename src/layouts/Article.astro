@@ -1,0 +1,61 @@
+---
+import Base from './Base.astro';
+import AnswerBox from '../components/AnswerBox.astro';
+import Pill from '../components/Pill.astro';
+import Sources from '../components/Sources.astro';
+import Faq from '../components/Faq.astro';
+import Toc from '../components/Toc.astro';
+import { articleLd, faqLd, type Crumb } from '../lib/seo';
+import { SITE } from '../lib/site';
+import { versionRangeLabel } from '../lib/content';
+
+interface Props {
+  entry: any;               // collection entry
+  crumbs: Crumb[];
+  path: string;             // canonical path, with trailing slash
+  headings?: { depth: number; slug: string; text: string }[];
+  sourcePath?: string;      // repo-relative path for edit link
+  extraLd?: any[];
+  answerLabel?: string;
+  ldType?: 'TechArticle' | 'Article' | 'HowTo';
+}
+const { entry, crumbs, path, headings = [], sourcePath, extraLd = [], answerLabel, ldType = 'TechArticle' } = Astro.props;
+const d = entry.data;
+const statusLabels: Record<string, string> = { open: 'Still open upstream', fixed: 'Fixed upstream', workaround: 'Workaround available', 'by-design': 'By design', info: 'Reference', works: 'Works', partial: 'Partly works', broken: 'Broken', unknown: 'No reports yet' };
+const ld = [
+  articleLd({ type: ldType, title: d.title, description: d.description, path, dateModified: d.updated ?? d.lastVerified, datePublished: d.lastVerified, keywords: d.tags, about: 'Omarchy' }),
+  faqLd([{ q: d.title, a: d.answer }, ...d.faq]),
+  ...extraLd,
+];
+const md = path.replace(/\/$/, '') + '.md';
+---
+<Base title={d.title} description={d.description} crumbs={crumbs} ld={ld} ogType="article" published={d.lastVerified} modified={d.updated ?? d.lastVerified} keywords={d.tags}>
+  <article data-pagefind-body data-pagefind-meta={`section:${crumbs[0]?.name ?? ''}`}>
+    <div class="art-head">
+      <nav class="crumbs" aria-label="Breadcrumb" data-pagefind-ignore>{crumbs.map((c, i) => <>{i > 0 && <span>›</span>}<a href={c.href}>{c.name}</a></>)}</nav>
+      <h1>{d.title}</h1>
+      <p class="lede">{d.description}</p>
+      <div class="meta-row" data-pagefind-ignore>
+        {d.status && <Pill kind={d.status} label={statusLabels[d.status] ?? d.status} />}
+        <Pill kind="version" label={`Applies to Omarchy ${versionRangeLabel(d.appliesTo)}`} />
+        {d.fixedIn && <Pill kind="fixed" label={`Fixed in ${d.fixedIn}`} />}
+        <span>Last verified {d.lastVerified.toISOString().slice(0, 10)}{d.omarchyVersionTested && ` on ${d.omarchyVersionTested}`}</span>
+      </div>
+    </div>
+    <AnswerBox label={answerLabel}>{d.answer}</AnswerBox>
+    <slot name="before" />
+    <Toc headings={headings} />
+    <div class="prose">
+      <slot />
+    </div>
+    <slot name="after" />
+    <Faq items={d.faq} />
+    <Sources sources={d.sources} credits={d.credits} />
+    <div class="art-foot" data-pagefind-ignore>
+      <span>Unofficial. Verify against the <a href={SITE.official.manual} rel="noopener">official manual</a> for your version.</span>
+      {sourcePath && <a href={SITE.editBase + sourcePath}>Improve this page</a>}
+      <a href={md}>Markdown version</a>
+      <a href="#sources">Sources</a>
+    </div>
+  </article>
+</Base>

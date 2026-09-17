@@ -7,7 +7,7 @@ const list: any[] = sb.issues ?? sb ?? [];
 const st = issueStats();
 ---
 <Base title="Closed Omarchy issues people still reproduce" description="Omarchy issues that were closed as completed but kept collecting reproduction reports afterwards: the number, what was reported after closing, and the last activity. Rebuilt from the issue tracker." crumbs={[{ name: 'Releases', href: '/releases/' }, { name: 'Still broken', href: '/releases/still-broken/' }]} ld={articleLd({ title: 'Closed Omarchy issues people still reproduce', description: 'Closed-but-reproducing issues', path: '/releases/still-broken/' })}>
-  <article data-pagefind-body data-pagefind-meta="section:Releases">
+  <article data-pagefind-body data-pagefind-filter="section:Releases">
   <div class="art-head"><h1>Closed, but people still hit it</h1><p class="lede">Omarchy closes issues fast{st.issues?.medianTimeToCloseHoursLast300 ? ` (median ${Math.round(st.issues.medianTimeToCloseHoursLast300)} hours to close across the last 300 closed issues)` : ''}. Some keep collecting "still happens on 4.0.x" comments after the close. This list is generated from those comments so you can find the thread that matches your symptom. It does not mean the maintainers are wrong; it means the report is worth reading before you file a duplicate.</p></div>
   {list.length === 0 && <p class="muted">No data in this build.</p>}
   <div class="tablewrap"><table><thead><tr><th>Issue</th><th>Closed</th><th class="num">Post-close reports</th><th>Last activity</th></tr></thead><tbody>

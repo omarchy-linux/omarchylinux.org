@@ -68,6 +68,9 @@ sources:
   - url: "https://wiki.cachyos.org/features/kernel/"
     title: "CachyOS Wiki: CachyOS Kernel"
     kind: docs
+  - url: "https://wiki.cachyos.org/features/kernel_manager/"
+    title: "CachyOS Wiki: Kernel Manager"
+    kind: docs
   - url: "https://wiki.cachyos.org/features/optimized_repos/"
     title: "CachyOS Wiki: Optimized Repositories"
     kind: docs
@@ -77,6 +80,10 @@ sources:
   - url: "https://packages.cachyos.org/package/cachyos/x86_64/linux-cachyos"
     title: "CachyOS package: linux-cachyos"
     kind: docs
+  - url: "https://x.com/dhh/status/2097236884531351700"
+    title: "DHH: next version of Omarchy is going to be Quattro RS 4.5"
+    kind: blog
+    author: "dhh"
 credits:
   - name: "inffy"
     url: "https://github.com/inffy"
@@ -116,7 +123,7 @@ Checked against Omarchy 4.0.4 (released 2026-09-15) and the CachyOS August 2026 
 
 CachyOS calls itself "Performance-First Linux, Built on Arch". Its product is the base: kernel patches, repositories rebuilt with x86-64-v3, x86-64-v4 and znver4 instruction sets plus LTO, and a mirror and installer around that. The desktop is your choice, and the list is long.
 
-Omarchy's product is the desktop. There is exactly one: Hyprland, with a Quickshell based shell that since 4.0.0 replaced Waybar, Walker, Mako, SwayOSD, hyprlock, hypridle, swaybg and polkit-gnome. Configuration moved from `~/.config/hypr/*.conf` to Lua files with a small binding DSL, so a keybinding now looks like `o.bind("SUPER + K", "Label", action)`. If you want KDE, you are in the wrong distro. See [the hyprland.conf to Lua migration](/reference/hyprland-conf-to-lua-migration/) for what that change costs you.
+Omarchy's product is the desktop. There is exactly one: Hyprland, with a Quickshell based shell that since 4.0.0 replaced Waybar, Walker, Mako, SwayOSD, hyprlock, hypridle, swaybg and polkit-gnome. Configuration moved from `~/.config/hypr/*.conf` to Lua files with a small binding DSL, so a keybinding now looks like `o.bind("SUPER + RETURN", "Terminal", { omarchy = "terminal" })`. If you want KDE, you are in the wrong distro. See [the hyprland.conf to Lua migration](/reference/hyprland-conf-to-lua-migration/) for what that change costs you.
 
 Both are Arch underneath. Neither is a fork.
 
@@ -124,13 +131,13 @@ Both are Arch underneath. Neither is a fork.
 
 CachyOS gives you choices at install time: bootloader, filesystem, encryption, desktop, extra package groups. That flexibility is why it works as a base for other setups.
 
-Omarchy's ISO makes those choices for you. Btrfs, LUKS, Limine, Snapper, no display manager by default. It is fewer screens and fewer ways to get it wrong, and it is also why the installer assumes a whole disk. If you need to keep another operating system, read [should you dual boot](/switch/should-you-dual-boot/) first.
+Omarchy's ISO makes those choices for you: Btrfs with Snapper snapshots, LUKS encryption unless you opt out, Limine, SDDM. It is fewer screens and fewer ways to get it wrong. The only real choice is full disk, which wipes the drive, or a free-space install into unallocated space, which is how Quattro added dual boot. If you need to keep another operating system, read [should you dual boot](/switch/should-you-dual-boot/) first.
 
 ## Kernel
 
 This is the comparison that changed most recently, so old articles get it wrong.
 
-Until 4.0.3, Omarchy ran stock Arch kernels and CachyOS's tuned kernel was a real reason to prefer CachyOS. Release 4.0.4 on 2026-09-15 shipped `linux-omarchy` to everyone and made it the first Limine boot entry. The release notes describe it as tuned to keep the desktop responsive under load, with gaming compatibility fixes and AMD HDMI improvements.
+Through 4.0.3, a normal Omarchy install booted Arch's own `linux` package, with `linux-ptl` and `linux-t2` only for Panther Lake and T2 Mac hardware, and CachyOS's tuned kernel was a real reason to prefer CachyOS. Release 4.0.4 on 2026-09-15 shipped `linux-omarchy` to everyone and made it the first Limine boot entry. The release notes describe it as tuned to keep the desktop responsive under load, with gaming compatibility fixes and AMD HDMI improvements.
 
 As of 2026-09-16 the stable Omarchy channel carried `linux-omarchy` 7.2.5-3, plus `linux-omarchy-bore` and `linux-omarchy-muqss` variants, and `linux-ptl` for Panther Lake hardware. CachyOS's `linux-cachyos` was 7.2.5-1, built the same day. Same upstream kernel, different patch sets.
 
@@ -140,9 +147,9 @@ Wanting the CachyOS kernel on Omarchy is a request upstream has had since discus
 
 ## Gaming
 
-Omarchy's gaming story is a menu of installers under _Install > Gaming_: Steam, RetroArch preconfigured with CRT Royale, Battle.net under GE-Proton, Lutris, Heroic, Moonlight, Xbox Cloud Gaming, GeForce NOW and Minecraft. MangoHud is available on some launchers. That covers a normal desktop gamer.
+Omarchy's gaming story is a menu of installers under _Install > Gaming_: Steam, RetroArch preconfigured with CRT Royale, Battle.net under GE-Proton, Lutris, Heroic, Moonlight, Xbox Cloud Gaming, GeForce NOW and Minecraft. The Battle.net launcher has a `--with-mangohud` flag for an FPS overlay. That covers a normal desktop gamer.
 
-CachyOS goes deeper on the plumbing: `proton-cachyos` with Wine staging patches and FSR, `cachyos-gaming-meta` and `cachyos-gaming-applications`, `gamescope-session-cachyos`, and a `game-performance` wrapper that switches CPU governors for the duration of a game. Handheld detection is built into `chwd`.
+CachyOS goes deeper on the plumbing: `proton-cachyos` with Wine staging patches and FSR, `cachyos-gaming-meta` and `cachyos-gaming-applications`, `gamescope-session-cachyos`, and a `game-performance` wrapper that switches the power profile to performance for the duration of a game.
 
 If you are choosing a distro because of games, CachyOS is the better fit. If you want a good desktop that also plays games, Omarchy is fine.
 
@@ -158,7 +165,7 @@ Those two update models are the deep reason the hybrid is awkward. Omarchy wants
 
 ## Support
 
-Omarchy has an active Discord and a very busy GitHub tracker, and the project ships fast, which means fixes arrive quickly and so do regressions. CachyOS has a forum, a wiki that is genuinely good, and a slower release cadence built around monthly ISO snapshots.
+Omarchy has an active Discord and a very busy GitHub tracker, and the project ships fast, which means fixes arrive quickly and so do regressions. CachyOS has a forum, a wiki that is genuinely good, and a slower cadence of ISO snapshots, the August 2026 ISO being its fifth of the year.
 
 Neither supports the other. The official Omarchy manual chapter [Omarchy on...](https://omarchy.org/manual/omarchy-on/) lists Asahi, Parallels, VirtualBox, VMware, Steam Deck and NixOS. CachyOS is not on that list.
 
@@ -168,7 +175,7 @@ Two community efforts exist, and both are behind.
 
 **Discussion #650** by inffy, from August 2025, walks through a CachyOS base install with no desktop, unticking the CachyOS shell configuration box to avoid a `tealdeer` versus `tldr` conflict, then running the Omarchy installer. It has 18 upvotes and 11 comments. It ends with `wget -qO- https://omarchy.org/install | bash`. On 2026-09-16 that URL still returns a one line script that evaluates `boot.sh` from the repository's master branch, and that file returns 404. It is also absent from the 4.0.4 source tree, though it is present in 3.8.4. So the last step of the guide no longer does anything.
 
-**mroboff/omarchy-on-cachyos** is the maintained script, 657 stars, MIT licensed. Its README says it supports Omarchy 3.0 and later. Its last commit is from 2026-06-01, which is before Omarchy 4.0.0 shipped on 2026-08-14. There are 32 open issues.
+**mroboff/omarchy-on-cachyos** is the maintained script, 657 stars, MIT licensed. Its README says it supports Omarchy 3.0 and later. Its last commit is from 2026-06-01, which is before Omarchy 4.0.0 shipped on 2026-08-14. There are 22 open issues and 10 open pull requests.
 
 Issue #74, filed by isaac30503 in August 2026 and still open, is the one to read before you try anything. Two findings:
 
@@ -177,7 +184,7 @@ Issue #74, filed by isaac30503 in August 2026 and still open, is the one to read
 
 Pull request #77 by marlo4220mc, opened 2026-09-06, adds 4.x support, boot guards and a version picker that filters pre-release tags. It was still open on 2026-09-16.
 
-There is one more structural problem. Omarchy's `install/post-install/pacman.sh` copies its own `pacman.conf` and mirrorlist over whatever is there. On CachyOS that mirrorlist feeds core, extra and multilib while the CachyOS repositories use their own, so the overwrite is a partial upgrade hazard.
+There is one more structural problem. Omarchy's `install/post-install/pacman.sh` copies its own `pacman.conf` and mirrorlist over whatever is there. Omarchy's stable `pacman.conf` defines only core, extra, multilib and the omarchy repository, so on CachyOS the overwrite removes the CachyOS repository sections entirely and points core, extra and multilib at Omarchy's lagging mirror. Every package that came from a CachyOS repository is then stranded, which is a partial upgrade hazard.
 
 If you want both, the honest options today are: run CachyOS and copy the Omarchy themes and Hyprland ideas you like by hand, or run Omarchy and use `linux-omarchy-bore` rather than chasing the CachyOS kernel.
 

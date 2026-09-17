@@ -71,7 +71,7 @@ credits:
     for: "Matched the missing monitors in the Outputs tab to a stale share picker package build"
 faq:
   - q: "Does screen sharing work in Google Meet on Omarchy 4?"
-    a: "Yes. On a single monitor with no NVIDIA GPU in the mix, sharing a screen, a window or a region in Meet, the bundled Zoom web app or Teams on the web works on 4.0.4 with no configuration. The bugs that remain are multi monitor and hybrid GPU bugs."
+    a: "Yes. On a single monitor with no NVIDIA GPU in the mix, sharing a screen, a window or a region in Meet or the bundled Zoom web app works on 4.0.4 with no configuration. Teams on the web takes the same portal path, but nobody has filed a Teams report either way. The bugs that remain are multi monitor and hybrid GPU bugs."
   - q: "Why can I not dismiss the bar that says a site is sharing your screen?"
     a: "The Hide button on that Chromium bar does nothing under Wayland. Omarchy works around it with a window rule that moves any window whose title contains \"is sharing\" to a silent special workspace. If your browser is not in English the title will not match and the bar stays visible."
   - q: "Why is one of my monitors missing from the picker?"
@@ -86,7 +86,7 @@ Video calls are the first thing most people test after switching, and on Omarchy
 
 ## How sharing actually works here
 
-There is no Google Meet client, no Zoom client and no Teams client on Omarchy. All three run in a browser, and the two Zoom entries you get out of the box are Chromium web app wrappers: `Zoom.desktop` runs `omarchy-webapp-handler-zoom`, which turns a `zoommtg://` or `zoomus://` link into a `https://app.zoom.us/wc/join/...` URL and opens it frameless. The [Web Apps manual chapter](https://omarchy.org/manual/web-apps/) covers that side.
+There is no Google Meet client, no Zoom client and no Teams client on Omarchy. All three run in a browser, and the Zoom entry you get out of the box is a Chromium web app wrapper: `Zoom.desktop` runs `omarchy-webapp-handler-zoom`, which turns a `zoommtg://` or `zoomus://` link into a `https://app.zoom.us/wc/join/...` URL and opens it frameless. The [Web Apps manual chapter](https://omarchy.org/manual/web-apps/) covers that side.
 
 Because everything runs under Wayland, the browser does not draw its own source list. It calls `xdg-desktop-portal-hyprland`, which Omarchy installs as a base package, and the portal opens a picker window. So when Meet says to choose what to share, the window that appears is not part of Chromium. It is `hyprland-preview-share-picker`, wired up in `~/.config/hypr/xdph.conf`:
 
@@ -99,7 +99,7 @@ screencopy {
 
 The picker has three tabs. Outputs is the default page and covers whole monitors. Windows lists live previews of every open window, one click to pick. Region runs `slurp` so you can drag a rectangle. Its settings live in `~/.config/hyprland-preview-share-picker/config.yaml` if you want bigger previews or a different default tab.
 
-One thing that trips up people following old guides: because `allow_token_by_default` is on and the picker sets `hide_token_restore: true`, the restore token is already granted for you. Advice from 2025 about ticking a box to allow a restore token so Meet stops asking on every share no longer applies. That file is identical in 3.8.4 and in 4.0.4.
+One thing that trips up people following old guides: because `allow_token_by_default` is on and the picker sets `hide_token_restore: true`, the restore token is already granted for you. Advice from 2025 about ticking a box to allow a restore token so Meet stops asking on every share, which is how a contributor on #1862 solved it on 3.0.x, no longer applies: the box is hidden and the token is granted. `xdph.conf` is identical in 3.8.4 and in 4.0.4.
 
 `xdph.conf` is read by the portal, not by Hyprland, so `hyprctl reload` does nothing to it. Changes land when the portal restarts, which normally means your next login.
 
@@ -111,7 +111,7 @@ pacman -Qs hyprland-preview-share-picker
 systemctl --user status xdg-desktop-portal-hyprland --no-pager
 ```
 
-`XDG_CURRENT_DESKTOP` is set to `Hyprland` in Omarchy's `envs.lua` specifically so the portal picks the right backend. If it prints something else, a custom session or a launcher is overriding it, and the portal will either fall back to the GTK backend or fail outright.
+`XDG_CURRENT_DESKTOP` is set to `Hyprland` in Omarchy's `envs.lua` specifically so the portal picks the right backend. If it prints something else, a custom session or a launcher is overriding it, and the portal may not select the Hyprland backend at all.
 
 ## The sharing bar you cannot dismiss
 
@@ -137,15 +137,15 @@ o.window({ title = ".*compartiendo.*" }, { workspace = "special silent" })
 hyprctl reload && hyprctl configerrors
 ```
 
-On 3.x the same rule was a `windowrule = workspace special silent, match:title .*is sharing.*` line in `~/.config/hypr/apps/browser.conf`. If you carried a hand edited 3.x config through the Quattro upgrade, that line is gone and the Lua one may not have replaced it. Run `omarchy refresh hyprland` to restore the defaults.
+On 3.x the same rule was a `windowrule = workspace special silent, match:title .*is sharing.*` line in `~/.local/share/omarchy/default/hypr/apps/browser.conf`, sourced from the defaults rather than from your own config. On 4.x it only loads if your `~/.config/hypr/hyprland.lua` still carries the `require("default.hypr.omarchy")` line. If a hand edited config lost it, `omarchy refresh hyprland` restores the defaults.
 
 ## A monitor is missing from the picker
 
-The Outputs tab lays monitor cards out starting at coordinate 0,0. If your Hyprland monitor layout has every output at a positive offset, which is easy to end up with after dragging displays around, the cards render off screen and those monitors silently disappear from the picker. Issue #11221 documents this in detail and ties it to an upstream bug that was fixed on 2026-08-24, upstream issues 15 and 24, both now closed. Omarchy's package is still built from a December 2025 commit, so the fix has not reached you on 4.0.4. Issue #10057 looks like the same symptom.
+The Outputs tab lays monitor cards out starting at coordinate 0,0. If your Hyprland monitor layout has every output at a positive offset, which is easy to end up with after dragging displays around, the cards are drawn outside the visible window and the picker looks like it has fewer monitors than you do. Issue #11221 documents this in detail and ties it to an upstream bug that was fixed on 2026-08-24, upstream issues 15 and 24, both now closed. The `hyprland-preview-share-picker` package Omarchy installs is 0.2.1-1, built in December 2025, and the `-git` variant is pinned to a commit from the same month, so the fix has not reached you on 4.0.4. Issue #10057 looks like the same symptom.
 
 Two workarounds:
 
-1. Re-anchor your layout in `~/.config/hypr/monitors.lua` so at least one output sits at x=0, y=0. Keep the relative positions, just shift everything.
+1. Move your layout in `~/.config/hypr/monitors.lua` so one output has position 0x0, and shift the others by the same amount so nothing overlaps.
 2. Or skip the Outputs tab. The Windows tab and the Region tab do not use that layout maths, so they still list everything.
 
 ## Glitching and artifacts once you start sharing
@@ -170,7 +170,7 @@ Evidence for Microsoft Teams specifically is thin. A search of the issue tracker
 
 ## What to watch for on newer versions
 
-The next release is announced as Quattro RS 4.5. The share picker package pin from #11221 is the one to check first after any update: if Omarchy rebuilds `hyprland-preview-share-picker-git` past the upstream origin offset fix, the missing monitor workaround stops being necessary. The `LIBVA_DRIVER_NAME` detection in `nvidia.lua` is the other one. If it learns to ask which GPU drives the displays, remove your override rather than leaving a stale one behind.
+The next release is announced as Quattro RS 4.5. The share picker package pin from #11221 is the one to check first after any update: if the `hyprland-preview-share-picker` package moves past the upstream origin offset fix, the missing monitor workaround stops being necessary. The `LIBVA_DRIVER_NAME` detection in `nvidia.lua` is the other one. If it learns to ask which GPU drives the displays, remove your override rather than leaving a stale one behind.
 
 ## Related
 

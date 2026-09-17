@@ -16,7 +16,7 @@ const path = `/reference/changes/${pair}/`;
 const desc = `Omarchy ${from} to ${to}: ${d.commands?.added?.length ?? 0} commands added, ${d.commands?.removed?.length ?? 0} removed, ${d.bindings?.added?.length ?? 0} keybindings added, ${d.bindings?.removed?.length ?? 0} removed, and ${migs.length} migrations run on upgrade.`;
 ---
 <Base title={`Omarchy ${from} → ${to}: what changed`} description={desc} crumbs={[{ name: 'Reference', href: '/reference/' }, { name: 'Changes', href: '/reference/changes/' }, { name: `${from} → ${to}`, href: path }]} ld={articleLd({ title: `Omarchy ${from} to ${to} changes`, description: desc, path })} ogType="article">
-  <article data-pagefind-body data-pagefind-meta="section:Reference">
+  <article data-pagefind-body data-pagefind-filter="section:Reference">
   <div class="art-head"><h1>{from} → {to}</h1><p class="lede">{desc}</p></div>
   <div class="prose">
     <h2>Commands removed ({d.commands?.removed?.length ?? 0})</h2>

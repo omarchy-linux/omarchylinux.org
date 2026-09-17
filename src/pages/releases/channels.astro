@@ -12,7 +12,7 @@ const faq = [
 ];
 ---
 <Base title="Omarchy channel and mirror status" description="Live status of Omarchy's stable, rc, and edge package channels and mirrors: how far each is behind Arch upstream, which omarchy and kernel versions each ships, and what differs between channels." crumbs={[{ name: 'Releases', href: '/releases/' }, { name: 'Channels', href: '/releases/channels/' }]} ld={[articleLd({ title: 'Omarchy channel and mirror status', description: 'Channel lag and package differences', path: '/releases/channels/' }), faqLd(faq)]}>
-  <article data-pagefind-body data-pagefind-meta="section:Releases">
+  <article data-pagefind-body data-pagefind-filter="section:Releases">
   <div class="art-head"><h1>Channel and mirror status</h1><p class="lede">Rebuilt every time this site deploys from the public package databases and mirror timestamps. Fetched {ch?.fetchedAt?.slice(0, 16) ?? 'n/a'} UTC. Nothing official shows this; the CLI only reports which channel your own machine is on.</p></div>
   {!ch && <p class="callout callout-warn">Channel data is not available in this build.</p>}
   {ch && <>

@@ -68,9 +68,19 @@ sources:
     kind: discussion
     author: "920four4"
     date: "2026-08-23"
+  - url: "https://github.com/omacom/omarchy/pull/6611"
+    title: "PR #6611: Add native workspace overview (closed, not merged)"
+    kind: pr
+    author: "sanjyay"
+    date: "2026-08-07"
   - url: "https://wiki.hypr.land/Configuring/Layouts/Dwindle-Layout/"
     title: "Hyprland Wiki: Dwindle Layout"
     kind: docs
+  - url: "https://x.com/dhh/status/2097236884531351700"
+    title: "DHH: next version of Omarchy is going to be Quattro RS 4.5"
+    kind: blog
+    author: "dhh"
+    date: "2026-09-08"
 credits:
   - name: "johnwu"
     url: "https://github.com/johnwu"
@@ -84,28 +94,28 @@ faq:
   - q: "How do I make one app always float?"
     a: "Add a window rule at the bottom of ~/.config/hypr/hyprland.lua, for example o.window(\"^(org\\\\.gnome\\\\.Calculator)$\", { float = true }). Find the class with hyprctl clients. Omarchy already floats portal dialogs, 1Password, Bitwarden, mpv, imv and its own TUI windows."
   - q: "Is there a Mission Control or Task View equivalent?"
-    a: "Not in 4.0.4. There is no workspace overview screen, and it has been requested in discussion #6624. The nearest thing is Super + K for the full binding list and the workspace numbers on the top bar."
+    a: "Not built in as of 4.0.4. A workspace overview was requested in discussion #6624, and a native one proposed in PR #6611 was closed without being merged. The nearest thing is Super + K for the full binding list and the workspace numbers on the top bar."
   - q: "Did the keybindings change in Omarchy 4?"
     a: "The tiling keys themselves are essentially the same as the tiling-v2 set in 3.8.4. What changed is where they live: Hyprland config moved from ~/.config/hypr/*.conf to Lua files, so you now write o.bind(...) instead of bindd = lines."
 related: [from-macos, day-one-checklist, what-replaces-what]
 draft: false
 ---
 
-If you have spent twenty years dragging windows by their title bars, the first hour in Omarchy feels like the mouse broke. It did not. The model is just different, and it is small enough to learn in an afternoon. This page is checked against Omarchy 4.0.4 on Hyprland 0.56.2.
+If you have spent twenty years dragging windows by their title bars, the first hour in Omarchy feels like the mouse broke. It did not. The model is just different, and it is small enough to learn in an afternoon. This page is checked against the Omarchy 4.0.4 source. The bug reports cited below were filed on Hyprland 0.56.2; Omarchy does not pin a Hyprland point release, so yours may differ.
 
 ## The mechanism: windows do not have positions
 
 In macOS and Windows a window has coordinates. You put it somewhere, it stays there, and it overlaps whatever was underneath.
 
-In Omarchy a window has a slot in a tree. Open one app and it fills the screen. Open a second and the screen splits. Open a third and one of those halves splits again. You never choose a position, you choose a neighbour. Nothing overlaps, so nothing ever gets lost behind anything else.
+In Omarchy a window has a slot in a tree. Launch one app and it takes every pixel. Launch a second and the screen divides in two. Launch a third and one of those halves divides again. You never choose a position, you choose a neighbour. Nothing overlaps, so nothing ever gets lost behind anything else.
 
 Four concepts carry the whole system.
 
-**Workspaces.** Ten of them, numbered 1 to 10, each with its own set of tiles. These do the job your overlapping windows used to do. Instead of stacking a browser on top of an editor, you put the browser on workspace 2 and jump between them instantly. The manual's [Navigation chapter](https://omarchy.org/manual/navigation/) makes the same point, and it is the single habit that makes tiling click.
+**Workspaces.** Ten of them, numbered 1 to 10, each with its own set of tiles. These do the job your overlapping windows used to do. Instead of stacking a browser on top of an editor, you put the browser on workspace 2 and jump between them instantly. The manual's [Coming From Mac or Windows chapter](https://omarchy.org/manual/coming-from-mac-or-windows/) makes the same point, that windows never overlap and workspaces are the Spaces or virtual desktops you will actually use, and it is the single habit that makes tiling click.
 
 **The tiling layout.** The default is dwindle: every new window splits the focused one, and every window on the workspace stays visible even as they shrink. Omarchy configures dwindle with `preserve_split = true` and `force_split = 2` in `/usr/share/omarchy/default/hypr/looknfeel.lua`. Per the [Hyprland wiki](https://wiki.hypr.land/Configuring/Layouts/Dwindle-Layout/), `force_split = 2` means a new window always lands to the right of or below the focused one, so placement is predictable rather than cursor-dependent. `preserve_split` means a split keeps its orientation, which is also what makes `Super + J` work at all.
 
-The alternative is the scrolling layout, a side-scrolling tape of columns that runs past the edge of the screen. `Super + L` toggles it, the choice is per workspace, and it persists across restarts.
+The alternative is the scrolling layout, a side-scrolling tape of columns that runs past the edge of the screen. `Super + L` toggles it, the choice is per workspace, and it persists across restarts. The manual's [Navigation chapter](https://omarchy.org/manual/navigation/) walks through both layouts with screenshots.
 
 **Floating.** The escape hatch. A floating window sits on top of the tiles with a free position and size, exactly like the desktop you came from. Omarchy already floats the things that should float: portal file dialogs, 1Password, Bitwarden, mpv, imv, and its own terminal utility windows, per `default/hypr/apps/system.lua`. Everything else tiles unless you say otherwise.
 
@@ -140,9 +150,9 @@ The mouse is not dead either. Hold `Super` and drag with the left button to move
 
 **"Super + Arrow does nothing on this window."** Directional focus is built for tiles. Moving focus between a floating window and the tiled ones is not smooth, and it is an open request in [discussion #4039](https://github.com/omacom/omarchy/discussions/4039). Use `Alt + Tab` to reach a floating window, or `Super + T` to tile it.
 
-**"Alt + Tab is not an app switcher."** It cycles windows on the current workspace only, not applications across the system. There is no macOS-style command-tab switcher in 4.0.4; someone proposed one as an external plugin in [discussion #7849](https://github.com/omacom/omarchy/discussions/7849). There is also no workspace overview screen, requested in [discussion #6624](https://github.com/omacom/omarchy/discussions/6624). Workspace numbers plus `Super + 1` to `0` is the intended replacement, and it is faster once it is muscle memory.
+**"Alt + Tab is not an app switcher."** It cycles windows on the current workspace only, not applications across the system. There is no macOS-style command-tab switcher in 4.0.4; someone proposed one as an external plugin in [discussion #7849](https://github.com/omacom/omarchy/discussions/7849). There is also no built-in workspace overview: it was requested in [discussion #6624](https://github.com/omacom/omarchy/discussions/6624), and a native one proposed in [PR #6611](https://github.com/omacom/omarchy/pull/6611) was closed without being merged. Workspace numbers plus `Super + 1` to `0` is the intended replacement, and it is faster once it is muscle memory.
 
-**"Super + J threw a red error."** You are on a scrolling workspace. `Super + J` sends `togglesplit`, which only exists in dwindle, so Hyprland raises "no such layoutmsg for scrolling". This is open and reported several times over, including [#8220](https://github.com/omacom/omarchy/issues/8220) and [#9726](https://github.com/omacom/omarchy/issues/9726). Press `Super + L` to go back to dwindle, or just do not use `Super + J` there. Scrolling has a couple of other rough edges: `Alt + Tab` follows internal order rather than the visible left-to-right order ([#12117](https://github.com/omacom/omarchy/issues/12117)), and widening the last column is reported broken in [#5101](https://github.com/omacom/omarchy/issues/5101).
+**"Super + J threw a red error."** You are on a scrolling workspace. `Super + J` sends `togglesplit`, which only exists in dwindle, so Hyprland raises "no such layoutmsg for scrolling". This is open and reported several times over, including [#8220](https://github.com/omacom/omarchy/issues/8220) and [#9726](https://github.com/omacom/omarchy/issues/9726). Press `Super + L` to go back to dwindle, or just do not use `Super + J` there. Scrolling has a couple of other rough edges: `Alt + Tab` follows internal order rather than the visible left-to-right order ([#12117](https://github.com/omacom/omarchy/issues/12117)), and widening the right-hand column was reported broken in [#5101](https://github.com/omacom/omarchy/issues/5101), filed on 3.4.2 and still open.
 
 **"This app opened tiny, or in the wrong mode."** Some apps guess wrong. Inkscape's file dialogs tile and become unusable because Inkscape draws its own GTK chooser instead of calling the portal ([#11995](https://github.com/omacom/omarchy/issues/11995)), and Steam's main window opens small and floating ([#9271](https://github.com/omacom/omarchy/issues/9271)). Both are window-rule problems, not tiling problems. Find the class with `hyprctl clients`, then add a rule at the bottom of `~/.config/hypr/hyprland.lua`:
 
@@ -190,7 +200,7 @@ If you are still reaching for a dock, do not add one. Give it the two weeks the 
 
 ## What to watch for on newer versions
 
-The tiling keys have been stable across 3.8.4 and the whole 4.0.x line, so muscle memory carries forward. What changed in 4.0.0 is the config format: Hyprland moved from `~/.config/hypr/*.conf` to Lua, and `bindd =` lines became `o.bind("SUPER + K", "Label", action)`. Old blog posts and videos showing `.conf` snippets still describe the right keys but the wrong syntax. See [the conf to Lua migration](/reference/hyprland-conf-to-lua-migration/) and [upgrading 3 to 4](/upgrade/3-to-4-quattro/).
+The twelve keys above are identical in 3.8.4's `tiling-v2.conf` and in every 4.0.x release, and `tiling.lua` has not changed between 4.0.0 and 4.0.4. Omarchy 4 only added bindings (the window-width save and restore, the finer Alt and Ctrl resize steps), so muscle memory carries forward. What changed in 4.0.0 is the config format: Hyprland moved from `~/.config/hypr/*.conf` to Lua, and `bindd =` lines became `o.bind("SUPER + K", "Label", action)`. Old blog posts and videos showing `.conf` snippets still describe the right keys but the wrong syntax. See [the conf to Lua migration](/reference/hyprland-conf-to-lua-migration/) and [upgrading 3 to 4](/upgrade/3-to-4-quattro/).
 
 Two live bugs are worth knowing before you lean on a feature. `Super + T` on a grouped window can segfault Hyprland 0.56.2 ([#10342](https://github.com/omacom/omarchy/issues/10342)), so ungroup before floating. And the scrolling layout is clearly less finished than dwindle; if you are new, stay on dwindle until the reports above close.
 

@@ -4,6 +4,7 @@ description: "What actually changes moving from Windows 11 to Omarchy 4.0.4: try
 answer: "Try Omarchy in a window on Windows first with Try Omarchy for Windows, which needs no partitioning. If you commit, turn off BitLocker and Secure Boot before installing, and shrink the Windows partition from Disk Management, never from the installer's cfdisk. Then relearn one key: Super replaces the Windows key and drives everything."
 appliesTo:
   from: "4.0.0"
+  to: "4.0.4"
 status: info
 lastVerified: 2026-09-16
 omarchyVersionTested: "4.0.4"
@@ -57,6 +58,10 @@ sources:
     kind: issue
     author: "zakkoo"
     date: "2026-09-01"
+  - url: "https://x.com/dhh/status/2097236884531351700"
+    title: "DHH: next version of Omarchy is going to be Quattro RS 4.5"
+    kind: blog
+    author: "dhh"
 credits:
   - name: "alkevintan"
     url: "https://github.com/alkevintan"
@@ -71,7 +76,7 @@ faq:
   - q: "Can I keep Windows and install Omarchy next to it?"
     a: "Yes. The installer has a free-space option that puts Omarchy in unallocated space and still encrypts it with LUKS. Shrink the Windows partition from Windows Disk Management first, and turn BitLocker off, because the dual-boot path is not compatible with full-drive BitLocker encryption."
   - q: "Do I have to disable Secure Boot?"
-    a: "Yes. The Omarchy manual states plainly that Secure Boot and TPM must be off in the BIOS to install. That is the supported path as of 4.0.4, and Secure Boot related boot failures are still open issues."
+    a: "Yes. The Omarchy manual states plainly that Secure Boot and/or TPM must be off in the BIOS to install. That is the supported path as of 4.0.4, and Secure Boot related boot failures are still open issues."
   - q: "Where did my Windows key go?"
     a: "It is Super, and it is now the anchor for almost every shortcut. Super + Space opens the Omarchy menu, Super + K lists every binding, Super + Ctrl + V is the clipboard history that used to be Win + V."
   - q: "Can I still run Microsoft Office?"
@@ -98,9 +103,9 @@ Before you boot the ISO, do three things in Windows.
 
 1. Turn BitLocker off. The dual-boot install is not compatible with it, because BitLocker encrypts the whole drive rather than a partition. Settings, then Privacy and Security, then Device encryption. Decryption takes a while.
 2. Shrink the Windows volume from Disk Management, not from the installer. Type `disk management` in the Start menu, right click the partition, choose Shrink Volume.
-3. Turn off Secure Boot and TPM in the BIOS. The manual is explicit that both must be off to install.
+3. Turn off Secure Boot in the BIOS, and TPM as well if the installer still complains. The manual's wording is that Secure Boot and/or TPM must be off to install.
 
-Step 2 is the one that eats people. The installer's guided partitioning drops you into `cfdisk`, and `cfdisk`'s Resize only rewrites the GPT entry. It does not shrink the NTFS filesystem inside. Issue [#7903](https://github.com/omacom/omarchy/issues/7903), open as of 2026-09-16, reports Windows then refusing to boot with `UNMOUNTABLE_BOOT_VOLUME`, and data beyond the new boundary already gone. Shrink from Windows, leave the free space unallocated, and let the installer use it.
+Step 2 is the one that eats people. Issue [#7903](https://github.com/omacom/omarchy/issues/7903), filed against 4.0.0 and still open as of 2026-09-16, describes the installer's guided partitioning dropping the user into `cfdisk`, whose Resize only rewrites the GPT entry. It does not shrink the NTFS filesystem inside. Windows then refused to boot with `UNMOUNTABLE_BOOT_VOLUME`, and data beyond the new boundary was already gone. Shrink from Windows, leave the free space unallocated, and let the installer use it.
 
 After the install, expect boot menu work. Three separate open issues describe the same family of problems:
 
@@ -137,7 +142,7 @@ FancyZones has no equivalent because it has no job. Windows do not overlap and y
 
 - **Explorer:** Nautilus, branded Files, on `Super + Shift + F`. USB sticks automount. Disks handles formatting and SMART.
 - **PowerToys:** split across the bindings above plus `~/.config/hypr/input.lua` for keyboard remapping. There is no single settings panel.
-- **Office:** LibreOffice is preinstalled and reads Office formats. Microsoft 365 in the browser works. For the genuine desktop suite, Install > Windows builds a Windows 11 Pro VM in Docker with shared clipboard, sound and a `~/Windows` shared folder. It arrives unactivated, needs KVM enabled in the BIOS, and has no GPU passthrough.
+- **Office:** LibreOffice is preinstalled and reads Office formats. Microsoft 365 in the browser is the other route, and Install > Web App will pin it as a frameless app. For the genuine desktop suite, Install > Windows builds a Windows 11 Pro VM in Docker with shared clipboard, sound and a `~/Windows` shared folder. It arrives unactivated, needs KVM enabled in the BIOS, and has no GPU passthrough.
 - **OneDrive:** nothing ships for it. Omarchy's base install deliberately stays off the AUR, and there is no OneDrive installer in the menu. Your realistic options are the web client as a web app, or Dropbox, which does have an Install > Service entry.
 - **Settings app:** plain text files, opened through the Setup section of the Omarchy menu.
 - **Windows Update:** one command, Update > Omarchy, which snapshots the system first.
@@ -146,11 +151,11 @@ A fuller table lives at [what replaces what](/switch/what-replaces-what/).
 
 ## Gaming expectations
 
-Omarchy ships the whole spread: Steam, Lutris, Heroic, Battle.net, RetroArch, Xbox Cloud Gaming, GeForce NOW, and Moonlight preinstalled for streaming from a Windows PC running Sunshine. All of it installs from Install > Gaming.
+Omarchy covers the whole spread: Steam, Lutris, Heroic, Battle.net, RetroArch, Minecraft, Xbox Cloud Gaming and GeForce NOW all install from Install > Gaming, and Moonlight comes preinstalled for streaming from a Windows PC running Sunshine.
 
-The honest limit is anti-cheat, not performance. The [gaming chapter](https://omarchy.org/manual/gaming/) says outright that Fortnite and Rocket League are out. Check your specific library on ProtonDB before you commit, because that single answer decides the migration for a lot of people. The Windows VM is not a workaround here: no GPU passthrough means it is for Office, not for games.
+The honest limit is anti-cheat, not performance. The [gaming chapter](https://omarchy.org/manual/gaming/) says outright that Fortnite and Rocket League do not run natively, and points at Xbox Cloud Gaming or Moonlight streaming from a Windows PC as the way to play Fortnite. Check your specific library on ProtonDB before you commit, because that single answer decides the migration for a lot of people. The Windows VM is not a workaround here: no GPU passthrough means it is for Office, not for games.
 
-If you have an NVIDIA card, sort the driver out first. See [NVIDIA](/hardware/nvidia/).
+If you have an NVIDIA card, sort the driver out first. See [NVIDIA drivers on Omarchy 4](/fix/nvidia-drivers-omarchy-4/).
 
 ## Day one blockers to plan for
 
@@ -158,12 +163,12 @@ If you have an NVIDIA card, sort the driver out first. See [NVIDIA](/hardware/nv
 - Omarchy assumes a 2x display. On a 1080p or 1440p monitor set `omarchy_gdk_scale` and `omarchy_monitor_scale` to 1 in `~/.config/hypr/monitors.lua`, or step through scales with `Super + /`. See [fractional scaling and HiDPI apps](/switch/fractional-scaling-hidpi-apps/).
 - Caps Lock is the compose key by default, which surprises everyone once.
 - Printers are not auto-discovered right now. You add each one from Print Settings. See [printers and scanners](/switch/printers-and-scanners/).
-- If you use the Windows VM, `omarchy windows vm launch` can start failing after the first session with "Failed to start Windows VM!". Issue [#9630](https://github.com/omacom/omarchy/issues/9630) traces it to the container leaving a setgid bit on `~/Windows` that a numeric `chmod 0700` cannot clear. The workaround is `chmod g-s ~/Windows` before relaunching. The numeric chmod is still in `bin/omarchy-windows-vm` in 4.0.4, and this is the single most reported bug in the tracker right now.
+- If you use the Windows VM, `omarchy windows vm launch` can start failing after the first session with "Failed to start Windows VM!". Issue [#9630](https://github.com/omacom/omarchy/issues/9630) traces it to the container leaving a setgid bit on `~/Windows` that a numeric `chmod 0700` cannot clear. The workaround is `chmod g-s ~/Windows` before relaunching. The numeric chmod is still in `bin/omarchy-windows-vm` in 4.0.4, and a search of the tracker on 2026-09-16 found more than thirty open issues describing the same failure, so expect to hit it.
 
 Work through [the day one checklist](/switch/day-one-checklist/) on your first evening.
 
 ## What to watch for on newer versions
 
-The next release is announced as "Quattro RS 4.5". The dual-boot bugs above are all open against 4.0.x, so check the issue numbers before assuming they still apply.
+DHH has announced the next release as "Quattro RS 4.5". The dual-boot bugs above are all open against 4.0.x, so check the issue numbers before assuming they still apply.
 
 Secure Boot remains the weakest area. The manual says to disable it, and the people who try to re-enable it with their own keys run into trouble. Issue [#10945](https://github.com/omacom/omarchy/issues/10945), open, reports that a Limine-only package update overwrites the signed `limine_x64.efi` with the unsigned stock binary, which locks the machine out with a Secure Boot Violation on the next boot. Do not turn Secure Boot back on after installing and assume it will keep working across updates.

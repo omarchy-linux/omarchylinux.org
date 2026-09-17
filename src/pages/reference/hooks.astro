@@ -9,7 +9,7 @@ const list: any[] = h.events ?? [];
 const docs: any[] = h.docs ?? [];
 ---
 <Base title={`Omarchy hooks and extension points (${tag})`} description={`The hook directories Omarchy runs your scripts from (theme-set, post-update, post-boot, battery-low, font-set, pre-refresh-pacman) with the shipped sample scripts, from ${tag}.`} crumbs={[{ name: 'Reference', href: '/reference/' }, { name: 'Hooks', href: '/reference/hooks/' }]} ld={articleLd({ title: 'Omarchy hooks', description: 'Hook directories and samples', path: '/reference/hooks/' })}>
-  <article data-pagefind-body data-pagefind-meta="section:Reference">
+  <article data-pagefind-body data-pagefind-filter="section:Reference">
   <div class="art-head"><h1>Hooks and extension points</h1><p class="lede">Omarchy runs every executable in these directories under <code>~/.config/omarchy/hooks/</code> when the matching event happens. Install one with <code>omarchy hook install</code>. Data from <strong>{tag}</strong>.</p></div>
   {list.length === 0 && <p class="muted">Hook data is being generated.</p>}
   {list.map((hk: any) => (

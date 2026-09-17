@@ -1,6 +1,6 @@
 ---
 title: "Errors occurred, no packages were upgraded."
-description: "Why pacman aborts an Omarchy update with \"failed to commit transaction\" and no packages were upgraded, and the order to try mirror, keyring and file-conflict fixes."
+description: "Why pacman aborts an Omarchy update with \"failed to commit transaction\" and nothing upgraded, and the order to try mirror, keyring and file-conflict fixes."
 answer: "Nothing was installed, so your system is intact. Read the real pacman error above the summary line in /tmp/omarchy-update.log. Mirror or 404 errors: run omarchy-refresh-pacman, then omarchy update. Signature or corrupted-package errors: clear /var/cache/pacman/pkg and refresh the keyrings. Conflicting files: find the unowned path with pacman -Qo and move it aside."
 appliesTo:
   from: "3.x"
@@ -91,7 +91,7 @@ This is pacman's summary line, not the error. It means the transaction was rolle
 
 ## The fix
 
-1. Find the real error. On Omarchy 4 the whole update run is recorded, so open the log rather than scrolling the terminal:
+1. Find the real error. The whole update run is recorded to a log, so open that rather than scrolling the terminal:
 
    ```bash
    grep -nE "^error:|exists in filesystem|is corrupted|404|signature" /tmp/omarchy-update.log | tail -40
@@ -125,14 +125,14 @@ This is pacman's summary line, not the error. It means the transaction was rolle
    omarchy update
    ```
 
-   That sequence is what finally cleared issue #4197 for the reporter. If the missing key is the Omarchy one, import it by hand:
+   Clearing the cache was DHH's next suggestion in issue #4197, and the keyring reinit is what finally cleared it for the reporter. In issue #4594 a plain `sudo pacman -Sy archlinux-keyring` was enough. If the missing key is the Omarchy one (`F0134EE680CAC571`), import it by hand:
 
    ```bash
    sudo pacman-key --recv-keys 40DFB630FF42BCFFB047046CF0134EE680CAC571 --keyserver keys.openpgp.org
    sudo pacman-key --lsign-key 40DFB630FF42BCFFB047046CF0134EE680CAC571
    ```
 
-   Since 3.1.4 `omarchy-update-keyring` runs those two commands for you when the key is absent, so needing them by hand usually means the keyserver fetch failed.
+   Since 3.1.4 the update's keyring step installs `omarchy-keyring` and fetches that key itself when it is absent, so needing the commands by hand usually means the keyserver fetch failed. When `--recv-keys` fails with "Server indicated a failure", download the key as a file from keys.openpgp.org and import it with `sudo pacman-key -a <file>.asc`, then run the `--lsign-key` line. That is the workaround from issue #2916.
 
 5. If the error is `conflicting files` with lines like `pkg: /some/path exists in filesystem`, check who owns each path before touching it:
 
@@ -165,13 +165,13 @@ omarchy-version
 
 Pacman is all or nothing. It resolves the transaction, downloads every package, verifies every signature, and checks every file it is about to write. Any failure in that sequence aborts the whole thing and prints `Errors occurred, no packages were upgraded.` So the summary is always the same regardless of cause, and there are four common causes.
 
-Mirror and network problems. Omarchy serves packages from its own mirrors, and the stable channel runs about a month behind Arch, so a package that exists upstream can be missing from the Omarchy mirror. Issue #3650 is a plain 404 from the stable mirror. Issue #3357 is the other shape: repeated download stalls during the update, where commenters got further by setting `ParallelDownloads = 1` in `/etc/pacman.conf`, and one reporter got through by temporarily disabling IPv6.
+Mirror and network problems. Omarchy serves packages from its own mirrors, and the stable channel runs about a month behind Arch, so a package that exists upstream can be missing from the Omarchy mirror. Issue #3650 is a plain 404 from the stable mirror, hit during a `yay` install rather than an update, but the same mirror serves both. Issue #3357 is the other shape: repeated download stalls during the update. One commenter suggested setting `ParallelDownloads = 1` in `/etc/pacman.conf` so pacman fetches sequentially, and two got through by temporarily disabling IPv6.
 
 Signature and keyring drift. `SigLevel = Required DatabaseOptional` is the shipped default, and 4.0.2 tightened this further by requiring signed packages from the Omarchy repository. A stale `archlinux-keyring`, a cached package that was truncated mid-download, or a maintainer key you have never trusted all produce a corruption or trust error. Issue #4594 is a clean example, where a marginal-trust signature on `libvpl` ended the transaction.
 
-File conflicts. Pacman refuses to write over a file no package owns. Omarchy 4 handles the common case itself: `omarchy-update-system-pkgs` runs `pacman -Syu --noconfirm --overwrite '/usr/share/omarchy/*'`, captures stderr, and on failure hands off to a retry helper that moves unowned files reported against the `omarchy` and `omarchy-settings` packages into `/var/lib/omarchy/replaced` and tries again, putting anything the upgrade did not take back afterwards. That helper only acts when every reported conflict belongs to those packages, which is why issue #9142 stays wedged: thousands of unowned files under `/usr/lib/modules/` left behind by `kernel-modules-hook` are outside its remit. That issue is still open, with a proposed fix in PR #9285.
+File conflicts. Pacman refuses to write over a file no package owns. Omarchy 4 handles the common case itself: `omarchy-update-system-pkgs` runs `pacman -Syu --noconfirm --overwrite '/usr/share/omarchy/*'`, captures stderr, and on failure hands off to a retry helper that moves unowned files reported against Omarchy's own packages (`omarchy`, `omarchy-settings` and their `-dev` variants) into `/var/lib/omarchy/replaced` and tries again, putting anything the upgrade did not take back afterwards. That helper only acts when every reported conflict belongs to those packages, which is why issue #9142 stays wedged: thousands of unowned files under `/usr/lib/modules/` left behind by `kernel-modules-hook` are outside its remit. That issue is still open, with a proposed fix in PR #9285.
 
-Package conflicts. Two packages that cannot coexist need a human decision. Issue #7059 is the textbook case: `bitwarden-cli` wants `nodejs-lts-jod` while an earlier Zed install pulled in `nodejs`, and `--noconfirm` answers the replacement prompt with No.
+Package conflicts. Two packages that cannot coexist need a human decision. Issue #7059 is the textbook case, from a menu install rather than an update but through the same `--noconfirm` path: `bitwarden-cli` wants `nodejs-lts-jod` while an earlier Zed install pulled in `nodejs`, and `--noconfirm` answers the replacement prompt with No.
 
 3.x behaved differently here. `omarchy-update-system-pkgs` on v3.8.4 is two lines, a plain `pacman -Syyu --noconfirm`, with no conflict handler and no retry. On 3.x every one of these failures lands in your lap.
 

@@ -39,6 +39,9 @@ sources:
   - url: "https://omarchy.org/manual/filling-out-pdfs/"
     title: "Omarchy manual: Filling out PDFs"
     kind: manual
+  - url: "https://omarchy.org/manual/tuis/"
+    title: "Omarchy manual: TUIs"
+    kind: manual
   - url: "https://github.com/omacom/omarchy/issues/8340"
     title: "Issue #8340: omarchy share clipboard sends an empty file when the clipboard holds an image (e.g. a screenshot)"
     kind: issue
@@ -74,6 +77,10 @@ sources:
     kind: issue
     author: "kurtome"
     date: "2026-09-02"
+  - url: "https://x.com/dhh/status/2097236884531351700"
+    title: "DHH: next version of Omarchy is going to be Quattro RS 4.5"
+    kind: blog
+    author: "dhh"
 credits:
   - name: "dima-engineer"
     url: "https://github.com/dima-engineer"
@@ -162,7 +169,7 @@ Most rows are the same. These are the ones where the Windows habit differs.
 
 **Time Machine is the one to get right.** Snapshots are a system rollback, not a backup. The manual says restoring brings back your root filesystem but not `/home`, so a snapshot will undo a bad update and will not bring back a deleted document. Nothing in the base install does file backup either. There is no restic, borg or timeshift in the 4.0.4 package list. Dropbox and Tailscale are available under _Install > Service_ if sync is enough for you, otherwise pick your own backup tool on day one. See [rollback with snapper and limine](/upgrade/rollback-with-snapper-and-limine/).
 
-**LocalSend is close to AirDrop, with three rough edges.** Sharing the clipboard sends an empty file when the clipboard holds an image, because the share script calls `wl-paste` with no type and gets nothing back for a screenshot (issue #8340, still open, and the code is unchanged in 4.0.4). The shipped window rule does not match LocalSend's actual window class `org.localsend.localsend_app`, so it can open tiled instead of floating, and clicks can stop registering until you float it with `Super + T` (issues #7482 and #8817; the rule in `default/hypr/apps/localsend.lua` is identical in 4.0.0 through 4.0.4). And the installer opens port 53317 to Anywhere on both IPv4 and IPv6 rather than to local ranges (issue #11560). See [LUKS and ufw defaults](/security/luks-and-ufw-defaults/).
+**LocalSend is close to AirDrop, with three rough edges.** Sharing the clipboard sends an empty file when the clipboard holds an image, because the share script calls `wl-paste` with no type and gets nothing back for a screenshot (issue #8340, still open, and the code is unchanged in 4.0.4). The shipped window rule does not match LocalSend's actual window class `org.localsend.localsend_app`, so it can open tiled instead of floating, and clicks can stop registering until you float it with `Super + T` (issues #7482 and #8817, the second closed by its author as a duplicate; the rule in `default/hypr/apps/localsend.lua` is identical in 4.0.0 through 4.0.4). And the installer opens port 53317 to Anywhere on both IPv4 and IPv6 rather than to local ranges (issue #11560). See [LUKS and ufw defaults](/security/luks-and-ufw-defaults/).
 
 **Keychain has two layers.** The password manager you actually use is 1Password or Bitwarden, both installed on demand. Underneath, the GNOME keyring holds browser and Docker secrets, and issue #9235 reports it being reset at login when two start paths race the same keyring file, which shows up as Chrome asking you to sign in again. The 1Password unlock popup from the browser extension is also clipped under fractional scaling, which is an upstream 1Password sizing bug rather than an Omarchy one (issue #9904). See [fractional scaling and HiDPI apps](/switch/fractional-scaling-hidpi-apps/).
 
@@ -172,9 +179,9 @@ Most rows are the same. These are the ones where the Windows habit differs.
 
 ## What to watch for on newer versions
 
-The shipped list changes between releases, so verify rather than trust this table after an upgrade. Omacalc, Omawrite, Omacut, Tensaku and Herdr are all 4.x additions and none of them exist in 3.8.4. The base terminal changed too: 3.x shipped Alacritty, 4.0.x ships foot, and both are selectable under _Setup > Defaults > Terminal_. Clipboard history moved from Walker in 3.x to the Quickshell based Omarchy shell in 4.0.0, which is why the 3.x keybinding docs point at a program that is no longer installed.
+The shipped list changes between releases, so verify rather than trust this table after an upgrade. Omacalc, Omawrite, Omacut, Tensaku and Herdr are all 4.x additions and none of them exist in 3.8.4. The base terminal changed too: 3.x shipped Alacritty, 4.0.x ships foot, and both are selectable under _Setup > Defaults > Terminal_. Clipboard history moved from Walker in 3.x to the Quickshell based Omarchy shell in 4.0.0, and Walker is not in the 4.0.4 package list at all.
 
-The next release is announced as Quattro RS 4.5. Nothing about the replacement list is confirmed for it yet, so check the preinstall list again after you update. The fastest way to see what your own machine actually has is `Super + K` for every binding and _Install > Preinstalls_ for what Omarchy considers optional.
+The next release is announced as Quattro RS 4.5. Nothing about the replacement list is confirmed for it yet, so check the preinstall list again after you update. The fastest way to see what your own machine actually has is `Super + K` for every binding. What Omarchy considers optional is the set that _Remove > Preinstalls_ strips: LibreOffice, Xournal++, Pinta, Obsidian, OBS Studio, Kdenlive, Cliamp, Aether, Moonlight, lazydocker, Omacut, Omacalc and Omawrite, plus the shipped web apps and TUI launchers. Their keybindings are disabled along with them, and _Install > Preinstalls_ only appears in the menu after you have removed them.
 
 ## Related
 

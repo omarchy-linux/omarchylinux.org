@@ -16,7 +16,7 @@ const path = `/releases/${tag}/`;
 const desc = `Omarchy ${tag} (${(rel?.date ?? '').slice(0, 10)}): release notes, ${migs.length} migrations decoded${d ? `, ${d.commands?.added?.length ?? 0} commands added and ${d.commands?.removed?.length ?? 0} removed since ${prev}` : ''}, and the ISO checksum.`;
 ---
 <Base title={`Omarchy ${tag} release notes, migrations, and checksum`} description={desc} crumbs={[{ name: 'Releases', href: '/releases/' }, { name: tag!, href: path }]} ld={articleLd({ title: `Omarchy ${tag}`, description: desc, path, datePublished: rel?.date ? new Date(rel.date) : undefined })} ogType="article" published={rel?.date ? new Date(rel.date) : undefined}>
-  <article data-pagefind-body data-pagefind-meta="section:Releases">
+  <article data-pagefind-body data-pagefind-filter="section:Releases">
   <div class="art-head"><h1>Omarchy {tag}</h1><p class="lede">Released {(rel?.date ?? '').slice(0, 10)}. <a href={rel?.url} rel="noopener">Official notes on GitHub</a>{iso?.sha256FromSidecar || iso?.sha256FromRelease ? <> · ISO SHA-256 <code class="small">{iso.sha256FromSidecar ?? iso.sha256FromRelease}</code> (<a href="/verify/">how to verify</a>)</> : null}.</p></div>
   <div class="two">
     <div class="prose">

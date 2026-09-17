@@ -4,7 +4,7 @@ import { glob } from 'astro/loaders';
 const source = z.object({
   url: z.string().url(),
   title: z.string(),
-  kind: z.enum(['issue', 'discussion', 'pr', 'manual', 'release', 'commit', 'blog', 'reddit', 'video', 'docs', 'other']).default('other'),
+  kind: z.string().default('other'),
   author: z.string().optional(),
   date: z.string().optional(),
 });
@@ -21,7 +21,7 @@ const base = {
   fixedIn: z.string().optional(),
   lastVerified: z.coerce.date(),
   omarchyVersionTested: z.string().optional(),
-  tags: z.array(z.string()).default([]),
+  tags: z.array(z.coerce.string()).default([]),
   sources: z.array(source).default([]),
   credits: z.array(credit).default([]),
   faq: z.array(faq).default([]),
@@ -36,7 +36,7 @@ const fix = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/fix' }),
   schema: z.object({
     ...base,
-    errorStrings: z.array(z.string()).default([]),
+    errorStrings: z.array(z.coerce.string()).default([]),
     category: z.enum(['boot', 'update', 'display', 'audio', 'network', 'input', 'apps', 'agents', 'gaming', 'shell', 'security', 'install', 'other']).default('other'),
     issueCount: z.number().int().optional(),
   }),
@@ -52,7 +52,7 @@ const hardware = defineCollection({
     componentKey: z.string().optional(),
     vendor: z.string().optional(),
     model: z.string().optional(),
-    dmi: z.array(z.string()).default([]),
+    dmi: z.array(z.coerce.string()).default([]),
     year: z.string().optional(),
     cpu: z.string().optional(),
     gpu: z.string().optional(),

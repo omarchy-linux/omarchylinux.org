@@ -59,7 +59,7 @@ sources:
 credits:
   - name: "ryanrhughes"
     url: "https://github.com/ryanrhughes"
-    for: "Introduced the omarchy-walker meta package in v3.1.5 so walker and the elephant providers stop disappearing one by one, and pinned the intermittent 3.x failure to a service restart"
+    for: "Introduced the omarchy-walker meta package in v3.1.5 so walker and the elephant providers stop disappearing one by one, and pointed people at omarchy-restart-walker for the intermittent 3.x failure while its cause was traced"
   - name: "Balmisjutas"
     url: "https://github.com/Balmisjutas"
     for: "Documented which elephant provider behaviour did not survive the move to the native Quattro menu"
@@ -74,7 +74,7 @@ related: [walker-launcher-missing-after-update, where-did-waybar-go, migration-f
 draft: false
 ---
 
-Elephant was the data backend behind Walker, the launcher Omarchy used from v1.6.0 through the 3.x series. Walker drew the window, elephant supplied the results: desktop applications, the calculator, clipboard history, emoji and symbols, files, bluetooth devices, web search, and the Omarchy menu entries themselves. If a shell, a keybinding, or a script tries to run `elephant` and the binary is not installed, you get `command not found: elephant`.
+Elephant was the data backend behind Walker, the launcher Omarchy used from v1.6.0 through the 3.x series. Walker drew the window, elephant supplied the results: desktop applications, the calculator, clipboard history, emoji and symbols, files, bluetooth devices, web search, and the theme, background and unlock pickers inside the Omarchy menu. If a shell, a keybinding, or a script tries to run `elephant` and the binary is not installed, you get `command not found: elephant`.
 
 What you do about it depends entirely on which major version you are on. Run `omarchy-version` first.
 
@@ -93,18 +93,19 @@ Elephant is supposed to be missing. Quattro removed it deliberately, so the goal
 2. If the hits are in your own scripts, aliases, or Hyprland Lua bindings, repoint them at the Quattro equivalents:
 
    ```bash
-   omarchy-menu             # Super + Space, replaces walker and elephant-menus
-   omarchy-menu-clipboard   # replaces elephant-clipboard
-   omarchy-menu-emoji       # replaces elephant-symbols and elephant-unicode
-   omarchy-menu-file        # replaces elephant-files
+   omarchy-menu toggle        # Super + Space, replaces omarchy-launch-walker
+   omarchy-menu toggle apps   # Super + Alt + Space, the app list on its own
+   omarchy-menu-clipboard     # replaces omarchy-launch-walker -m clipboard
+   omarchy-menu-emoji         # replaces omarchy-launch-walker -m symbols
+   omarchy-menu-file          # file picker
    ```
 
-3. If the hits are only in leftover `~/.config/hypr/*.conf` files, ignore them. Quattro moved Hyprland config to Lua and leaves the old `.conf` files on disk for reference, unloaded. See [the conf to Lua migration notes](/reference/hyprland-conf-to-lua-migration/).
+3. If the hits are only in leftover `~/.config/hypr/*.conf` files, ignore them. Quattro moved Hyprland config to Lua and leaves the old `.conf` files on disk, but it no longer loads them. See [the conf to Lua migration notes](/reference/hyprland-conf-to-lua-migration/).
 
 4. If nothing in your config matches and the menu itself is broken, your upgrade probably stopped partway: the retired packages came off but the new shell never landed. Rerun the upgrade, which is written to be rerun:
 
    ```bash
-   sudo omarchy-upgrade-to-quattro
+   omarchy upgrade to quattro
    ```
 
 5. Then restart the shell:
@@ -135,10 +136,10 @@ On 4.x:
 ```bash
 omarchy-version                  # expect 4.0.4 or later
 command -v elephant              # expect no output, that is correct
-systemctl --user status omarchy-shell.service
+omarchy-shell shell ping         # the shell answers if it is running
 ```
 
-Then press `Super + Space`. You should get the native Omarchy menu, and typing should filter apps and commands in the same box.
+There is no `omarchy-shell.service` to check on 4.x. The upgrade script lists that unit among the ones it retires, and Hyprland starts the shell itself through `omarchy-launch-shell` at login. Then press `Super + Space`. You should get the native Omarchy menu, and typing should filter apps and commands in the same box.
 
 On 3.x:
 
@@ -153,9 +154,9 @@ Both units should be active. `Super + Space` should open Walker without a "waiti
 
 Two different causes share one error string.
 
-The 3.x cause was packaging. Walker and elephant were split across sixteen separate packages, and an interrupted or partially applied update could leave some installed and some gone. Several people hit this within hours of each other on 2025-10-19, including [#2546](https://github.com/omacom/omarchy/issues/2546) and [#2548](https://github.com/omacom/omarchy/issues/2548), and [#1738](https://github.com/omacom/omarchy/issues/1738) reported the same shape a month earlier on 3.0.1. In 3.x, `omarchy-launch-walker` starts `elephant` directly before launching Walker, so a missing binary surfaces the error the moment you press `Super + Space`. There was also an intermittent variant where both packages were present but the service had died. On [#2638](https://github.com/omacom/omarchy/issues/2638), collaborator ryanrhughes said the issue was solved by `omarchy-restart-walker` while the root cause was still being traced with Walker's author. v3.1.5 addressed the packaging half by adding the `omarchy-walker` meta package.
+The 3.x cause was packaging. Walker and elephant were split across more than a dozen separate packages, and an interrupted or partially applied update could leave some installed and some gone. Several people hit this within hours of each other on 2025-10-19, including [#2546](https://github.com/omacom/omarchy/issues/2546) and [#2548](https://github.com/omacom/omarchy/issues/2548), and [#1738](https://github.com/omacom/omarchy/issues/1738) reported the same shape a month earlier on 3.0.1. In 3.x, `omarchy-launch-walker` starts `elephant` directly before launching Walker, so a missing binary surfaces the error the moment you press `Super + Space`. There was also an intermittent variant where both packages were present but Walker sat on its "Waiting for elephant..." placeholder. On [#2638](https://github.com/omacom/omarchy/issues/2638), collaborator ryanrhughes said that case was solved by `omarchy-restart-walker` while the root cause was still being traced with Walker's author. v3.1.5 addressed the packaging half by adding the `omarchy-walker` meta package.
 
-The 4.x cause is by design. The v4.0.0 release notes state that Walker is gone and `Super + Space` now opens the Omarchy menu itself, a native filterable command palette inside the shell. `omarchy-upgrade-to-quattro` lists `elephant` and all thirteen `elephant-*` providers among the retired packages it uninstalls, removes `elephant.service` and `app-walker@autostart.service`, deletes `~/.config/elephant`, and drops the pacman hook that used to restart Walker. So on a 4.x box, anything calling `elephant` is either your own leftover customisation or an upgrade that did not finish.
+The 4.x cause is by design. The v4.0.0 release notes state that Walker is gone and `Super + Space` now opens the Omarchy menu itself, with a native launcher merged into that menu inside the shell process. `omarchy-upgrade-to-quattro` lists `elephant` and thirteen `elephant-*` packages among the retired packages it uninstalls, removes `elephant.service` and `app-walker@autostart.service`, deletes `~/.config/elephant`, and drops the pacman hook that used to restart Walker. So on a 4.x box, anything calling `elephant` is either your own leftover customisation or an upgrade that did not finish.
 
 ## If that did not work
 
@@ -163,8 +164,6 @@ The 4.x cause is by design. The v4.0.0 release notes state that Walker is gone a
 - The upgrade rerun fails. `omarchy-upgrade-to-quattro` stops with a message telling you to fix the error and rerun before rebooting. Work that error first, then see [migration failed mid-update](/fix/migration-failed-mid-update/).
 - `Super + Space` does nothing at all on 4.x. That is a shell problem rather than an elephant problem. See [Quickshell crashes or bar missing](/fix/quickshell-crashes-or-bar-missing/).
 - You are looking for the old launcher generally rather than this one error. See [Walker launcher missing after update](/fix/walker-launcher-missing-after-update/).
-
-Evidence for the 4.x half of this page is thin by design: only a handful of issues mention elephant at all after 2026-08-01, and none of them report the command being unexpectedly absent. That matches the removal being intentional rather than a regression.
 
 ## Related
 

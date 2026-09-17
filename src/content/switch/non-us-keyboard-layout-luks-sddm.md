@@ -58,7 +58,7 @@ credits:
     for: "Traced the US greeter to the SDDM compositor config having no input block"
   - name: "tecknozic"
     url: "https://github.com/tecknozic"
-    for: "Worked out a greeter layout fix that lives under /etc and survives updates"
+    for: "Documented the standalone greeter-hyprland.lua plus 20- drop-in form of the greeter fix"
   - name: "Asknorway"
     url: "https://github.com/Asknorway"
     for: "Showed that a fresh install writes KEYMAP but no XKBLAYOUT"
@@ -71,7 +71,7 @@ faq:
   - q: "Why did nobody notice the greeter bug sooner?"
     a: "Encrypted installs turn on autologin, and the autologin PAM stack does not actually check the password. The greeter only appears after you log out, which is when authentication starts failing for real."
   - q: "I use Hebrew, Greek, Cyrillic or Arabic. Why is the LUKS prompt still US?"
-    a: "That is deliberate. Omarchy keeps non-Latin layouts out of the initramfs so a Latin passphrase stays typeable, after issue #6229 locked people out. Your session also gets us prepended to kb_layout, and Left Alt plus Right Alt switches."
+    a: "That is deliberate. Omarchy keeps non-Latin layouts out of the initramfs so a Latin passphrase stays typeable, after issue #6229 locked a Hebrew user out. Your session also gets us prepended to kb_layout, and Left Alt plus Right Alt switches."
   - q: "Will omarchy update undo my fix?"
     a: "Only if you edited a packaged file. Anything under /usr/share is owned by a package and gets replaced. Changes in /etc/vconsole.conf, /etc/sddm.conf.d and ~/.config/hypr/input.lua survive updates."
 related: [day-one-checklist, what-replaces-what]
@@ -86,13 +86,13 @@ There are three separate places, and only one of them is set for you reliably.
 
 1. The console and the LUKS unlock prompt read `KEYMAP` in `/etc/vconsole.conf`. These are console keymap names such as `fr`, `be-latin1` or `no-latin1`. Omarchy's `/etc/mkinitcpio.conf.d/omarchy_hooks.conf` keeps the `keymap` and `consolefont` hooks and adds `FILES+=(/etc/vconsole.conf)` so Plymouth applies the layout at the prompt, unless your layout is non-Latin.
 2. The Hyprland session reads `XKBLAYOUT` and `XKBVARIANT` from the same file. The packaged `/usr/share/omarchy/default/hypr/input.lua` does `local kb_layout = vconsole.XKBLAYOUT or "us"`. No `XKBLAYOUT` means US, no matter what `KEYMAP` says.
-3. The SDDM greeter reads neither. Its compositor config, `/usr/share/sddm/hyprland.lua`, sets only `misc` and `animations`. With no `input` block, Hyprland uses its own default, which is US. Four separate reports say the same thing: [#6880](https://github.com/omacom/omarchy/issues/6880), [#9421](https://github.com/omacom/omarchy/issues/9421), [#10269](https://github.com/omacom/omarchy/issues/10269) and [#10454](https://github.com/omacom/omarchy/issues/10454), all open on 4.0.4.
+3. The SDDM greeter reads neither. Its compositor config, `/usr/share/sddm/hyprland.lua`, sets only `misc` and `animations`. With no `input` block, Hyprland uses its own default, which is US. Four separate reports say the same thing: [#6880](https://github.com/omacom/omarchy/issues/6880), [#9421](https://github.com/omacom/omarchy/issues/9421), [#10269](https://github.com/omacom/omarchy/issues/10269) and [#10454](https://github.com/omacom/omarchy/issues/10454), all still open as of 2026-09-16.
 
 ## Before you install, pick a safe passphrase
 
 The dangerous moment is full-disk encryption on a fresh install. In [#8196](https://github.com/omacom/omarchy/issues/8196) an AZERTY user picked French in the installer, used digits in the password, and found the LUKS prompt rejecting it on every boot. On AZERTY the digits are the shifted top row, so a passphrase enrolled with the layout applied is untypeable when the prompt falls back to US. Reinstalling was the only way out.
 
-Until that is fixed, use a disk passphrase built from characters that do not move between your layout and US: lowercase letters, avoiding `a`, `q`, `z`, `w` and `m` on AZERTY and `y` and `z` on QWERTZ, with no digits and no symbols. Change it to something stronger after first boot, once you have confirmed the prompt uses your layout.
+Until that is fixed, pick a disk passphrase from keys that sit in the same place on your layout and on US. In practice that means lowercase letters only. Leave out `a`, `q`, `z`, `w` and `m` on AZERTY, `y` and `z` on QWERTZ, and skip digits and punctuation entirely. Change it to something stronger after first boot, once you have confirmed the prompt uses your layout.
 
 ## The fix
 
@@ -114,7 +114,7 @@ sudo localectl set-x11-keymap fr pc105
 grep -E 'KEYMAP|XKB' /etc/vconsole.conf
 ```
 
-If that `grep` shows no `XKBLAYOUT`, add it yourself. This is the missing piece on fresh installs, reported in [#7049](https://github.com/omacom/omarchy/issues/7049), and on machines upgraded from 3.x, reported in [#6878](https://github.com/omacom/omarchy/issues/6878).
+If that `grep` shows no `XKBLAYOUT`, add it yourself. This is the missing piece on the fresh 4.0.0 install in [#7049](https://github.com/omacom/omarchy/issues/7049), and on machines upgraded from 3.x, reported in [#6878](https://github.com/omacom/omarchy/issues/6878).
 
 ```bash
 printf 'XKBLAYOUT=fr\n' | sudo tee -a /etc/vconsole.conf
@@ -137,7 +137,7 @@ hl.config({
 })
 ```
 
-5. Fix the SDDM greeter. Do not edit `/usr/share/sddm/hyprland.lua`, because it belongs to the `omarchy-settings` package and `omarchy update` or `omarchy refresh sddm` will put the stock file back. Put your own copy under `/etc` and point SDDM at it.
+5. Fix the SDDM greeter. Do not edit `/usr/share/sddm/hyprland.lua`, because it belongs to the `omarchy-settings` package and the next `omarchy update` that ships that package will put the stock file back. Put your own copy under `/etc` and point SDDM at it.
 
 ```bash
 sudo mkdir -p /etc/sddm
@@ -162,7 +162,7 @@ CompositorCommand=start-hyprland -- --config /etc/sddm/greeter-hyprland.lua
 EOF
 ```
 
-SDDM merges everything in `sddm.conf.d` in filename order, so `20-keyboard.conf` wins over the shipped `10-wayland.conf`. Both files live under `/etc`, so updates leave them alone.
+SDDM merges everything in `sddm.conf.d` in filename order, so `20-keyboard.conf` wins over the shipped `10-wayland.conf`. Neither new file is owned by a package, so a package update has no reason to touch them.
 
 ## Verify it worked
 
@@ -178,11 +178,11 @@ The top bar carries a keyboard layout widget, but it stays hidden while only one
 
 ## Why it happens
 
-The installer records your choice as a console keymap only. Omarchy's first boot setup calls `systemd-firstboot --keymap`, which lands in `KEYMAP`. Nothing writes `XKBLAYOUT`, so the packaged `input.lua` falls through to its `"us"` default even though the console is correct. That is the whole of [#7049](https://github.com/omacom/omarchy/issues/7049).
+On the fresh 4.0.0 install in [#7049](https://github.com/omacom/omarchy/issues/7049), the installer recorded the choice as a console keymap only: `vconsole.conf` had `KEYMAP=no-latin1` and nothing else, so the packaged `input.lua` fell through to its `"us"` default even though the console was correct. A later report in the same thread, on 4.0.2, did get `XKBLAYOUT=ch` written, and the 4.0.4 first boot provisioner's own comments say `systemd-firstboot --keymap` is expected to set both values. So whether you are missing `XKBLAYOUT` depends on which release installed your machine, which is why step 2 has you check rather than assume.
 
 Upgrades from 3.x fail differently. On 3.8.4 the layout lived in `~/.config/hypr/input.conf` as `kb_layout = fr`. Quattro moved Hyprland config to Lua, installs a stock `input.lua`, and does not copy the old value across. If `vconsole.conf` has only `KEYMAP`, the session silently becomes US. That is [#6878](https://github.com/omacom/omarchy/issues/6878).
 
-The greeter is a third code path. It runs its own Hyprland instance through `CompositorCommand` in `/etc/sddm.conf.d/10-wayland.conf`, and that instance never reads `/etc/vconsole.conf`.
+The greeter is a third code path. It runs its own Hyprland instance through `CompositorCommand` in `/etc/sddm.conf.d/10-wayland.conf`, and the config that instance loads never reads `/etc/vconsole.conf`.
 
 ## If the LUKS prompt already rejects your passphrase
 
@@ -203,15 +203,17 @@ Rolling back to an earlier boot entry is another route if a rebuild broke a prom
 
 ## If that did not work
 
-Check whether your layout is non-Latin. Omarchy treats `af am ara bd bg by et ge gr il in iq ir kg kh kz la lk mk mm mn mv np rs ru sy th tj ua` as a special case: `vconsole.conf` is deliberately kept out of the initramfs so a Latin passphrase stays typeable, after [#6229](https://github.com/omacom/omarchy/issues/6229) locked Hebrew users out of their own machines. The session also gets `us` prepended to `kb_layout`, with `grp:alts_toggle` so Left Alt plus Right Alt switches. A US LUKS prompt on those layouts is intended behaviour, not a bug to fix.
+Check whether your layout is non-Latin. Omarchy treats `af am ara bd bg by et ge gr il in iq ir kg kh kz la lk mk mm mn mv np rs ru sy th tj ua` as a special case: `vconsole.conf` is deliberately kept out of the initramfs so a Latin passphrase stays typeable, after [#6229](https://github.com/omacom/omarchy/issues/6229) locked a Hebrew user out of their own machine. The session also gets `us` prepended to `kb_layout`, with `grp:alts_toggle` so Left Alt plus Right Alt switches. A US LUKS prompt on those layouts is intended behaviour, not a bug to fix.
 
 If the session ignores `input.lua`, check that you are editing `~/.config/hypr/input.lua` and not the old `input.conf`, which Quattro no longer reads. See the [Hyprland conf to Lua migration](/reference/hyprland-conf-to-lua-migration/) for what moved where.
 
-If the greeter is still US, confirm the drop-in is being read. SDDM parses every file in `/etc/sddm.conf.d` regardless of extension, so a disabled file renamed in place is still parsed.
+If Hyprland reports the right layout but the on-screen keyboard or fcitx5 still types US, look at `~/.config/fcitx5/profile`. Both reports in [#7049](https://github.com/omacom/omarchy/issues/7049) found it pinned to `keyboard-us` regardless of the installer choice. Stop fcitx5 before editing it, because it rewrites the file on exit.
+
+If the greeter is still US, confirm the drop-in is being read, and check that nothing else in `/etc/sddm.conf.d` sets `CompositorCommand` later in sort order. SDDM does not filter that directory by extension, so an old file you renamed to `.bak` or `.disabled` is still loaded.
 
 ## What to watch for on newer versions
 
-All seven issues behind this page were open on 2026-09-16, and neither the 4.0.3 nor the 4.0.4 release notes mention keyboard layout. The packaged `default/sddm/hyprland.lua` in the 4.0.4 snapshot still has no `input` block, and the development branch for the announced Quattro RS 4.5 did not have one either at the time of checking. When a fix does land, the shipped greeter config will start reading `/etc/vconsole.conf`, at which point your `/etc/sddm.conf.d/20-keyboard.conf` drop-in becomes redundant but harmless. Remove it then so you are not pinning an old copy of the greeter config.
+The seven open issues behind this page were all still open on 2026-09-16, and neither the 4.0.3 nor the 4.0.4 release notes mention keyboard layout. The packaged `default/sddm/hyprland.lua` in the 4.0.4 snapshot still has no `input` block, and the quattro-dev development branch did not have one either at the time of checking. When a fix does land, the shipped greeter config will start reading `/etc/vconsole.conf`, at which point your `/etc/sddm.conf.d/20-keyboard.conf` drop-in becomes redundant but harmless. Remove it then so you are not pinning an old copy of the greeter config.
 
 ## Related
 

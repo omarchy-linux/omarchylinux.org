@@ -30,7 +30,7 @@ const ld = [
 const md = path.replace(/\/$/, '') + '.md';
 ---
 <Base title={d.title} description={d.description} crumbs={crumbs} ld={ld} ogType="article" published={d.lastVerified} modified={d.updated ?? d.lastVerified} keywords={d.tags}>
-  <article data-pagefind-body data-pagefind-meta={`section:${crumbs[0]?.name ?? ''}`}>
+  <article data-pagefind-body data-pagefind-filter={`section:${crumbs[0]?.name ?? "Pages"}`}>
     <div class="art-head">
       <nav class="crumbs" aria-label="Breadcrumb" data-pagefind-ignore>{crumbs.map((c, i) => <>{i > 0 && <span>›</span>}<a href={c.href}>{c.name}</a></>)}</nav>
       <h1>{d.title}</h1>

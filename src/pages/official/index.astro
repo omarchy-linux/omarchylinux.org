@@ -21,7 +21,7 @@ const faq = [
 const ld = [articleLd({ title: 'Which Omarchy sites are official?', description: 'Registry of Omarchy domains', path: '/official/' }), faqLd(faq), datasetLd({ name: 'Omarchy domain registry', description: 'Classification of domains, subdomains, and accounts using the Omarchy name, re-verified with DNS and HTTP checks.', path: '/official/', distribution: [{ url: '/official/domains.json', format: 'application/json' }] })];
 ---
 <Base title="Which Omarchy sites and domains are official?" description="A verified registry of every domain, subdomain, and social account using the Omarchy name: official (Omacom Foundation), community, for sale, or suspended, plus the trademark facts. Re-checked with DNS and HTTP." crumbs={[{ name: 'Is it official?', href: '/official/' }]} ld={ld}>
-  <article data-pagefind-body data-pagefind-meta="section:Trust">
+  <article data-pagefind-body data-pagefind-filter="section:Trust">
   <div class="art-head"><h1>Which Omarchy sites are official?</h1><p class="lede">Only <strong>omarchy.org</strong> and its subdomains and country editions are official. This site is not. Below is every domain and account using the name that we know of, with what it actually does, re-verified {d.checkedAt?.slice(0, 10) ?? 'recently'}. One lookalike has already been suspended; more will appear.</p></div>
   <div class="callout callout-ok"><strong>Download only from</strong> <a href="https://omarchy.org" rel="noopener">omarchy.org</a>. The ISO host is iso.omarchy.org and the code is at github.com/omacom. Anything else offering an Omarchy download is not the project. <a href="/verify/">Verify the checksum</a> either way.</div>
   <h2>Trademark, in one paragraph</h2>

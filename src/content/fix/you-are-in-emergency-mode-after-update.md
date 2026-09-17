@@ -52,7 +52,7 @@ sources:
     author: "acraig78"
     date: "2026-02-14"
   - url: "https://github.com/omacom/omarchy/issues/8637"
-    title: "Issue #8637: Hyprland reload-pause guard silently fails to prevent mid-update Lua reload"
+    title: "Issue #8637: Hyprland reload-pause guard silently fails to prevent mid-update Lua reload, emergency mode banner during omarchy update"
     kind: issue
     author: "tecnarchico"
     date: "2026-08-27"
@@ -61,6 +61,11 @@ sources:
     kind: manual
     author: "omarchy"
     date: "2026-09-16"
+  - url: "https://gitlab.com/Zesko/limine-snapper-sync"
+    title: "limine-snapper-sync README: btrfs-overlayfs hook and snapshot restore"
+    kind: docs
+    author: "Zesko"
+    date: "2026-09-17"
 credits:
   - name: "fowlie"
     url: "https://github.com/fowlie"
@@ -70,7 +75,7 @@ credits:
     for: "Traced the rd.luks.name against encrypt hook mismatch on encrypted roots"
   - name: "rubas"
     url: "https://github.com/rubas"
-    for: "Reported that adding btrfs and dm_crypt to MODULES fixed the rebuild"
+    for: "Reported that adding btrfs, md_mod, raid0 and dm_crypt to MODULES fixed the rebuild"
   - name: "amlucas0xff"
     url: "https://github.com/amlucas0xff"
     for: "Documented the depmod before DKMS hook ordering race"
@@ -80,7 +85,7 @@ faq:
   - q: "Does restoring a snapshot roll back my home directory?"
     a: "No. The Omarchy manual states a restore replaces the root filesystem only and leaves /home alone. Your ~/.config is also kept as-is, so config written by the newer version stays behind."
   - q: "Should I just reinstall?"
-    a: "Not yet. A snapshot boot plus one limine-mkinitcpio run has fixed this for most reporters. Reinstalling is only worth it if the ESP itself was emptied."
+    a: "Not yet. Every tracked report was fixed by rebuilding the boot image, from a snapshot boot or a live USB chroot. Even the reporter on issue #4781 whose ESP was left empty recovered from the live USB without reinstalling."
 related: [kernel-panic-after-update-limine, migration-failed-mid-update, omarchy-update-fails-or-hangs, luks-passphrase-not-accepted-at-boot, creating-a-snapshot-failed-snapper]
 draft: false
 ---
@@ -96,22 +101,27 @@ A third thing also uses the word: Hyprland 0.56 shows an emergency binds banner 
 ## The fix
 
 1. Power cycle the machine and stop at the Limine menu. If you turned on direct boot, pick Limine from your firmware boot menu first.
-2. Choose a dated snapshot entry from before the update instead of the normal Omarchy entry. Omarchy takes a snapshot on every update, and snapshot entries point at a complete kernel and boot image, so they usually boot when the main entry does not. In issue #6894, @fowlie recovered this way after an upgrade was interrupted mid transaction.
-3. The snapshot boots read-only. Make it writable:
+2. Choose a dated snapshot entry from before the update instead of the normal Omarchy entry. Omarchy takes a snapshot on every update, and snapshot entries point at a complete kernel and boot image, so they usually boot when the main entry does not. In issue #6894, @fowlie recovered this way after an upgrade was interrupted mid transaction. Not every snapshot is good: the reporter on issue #4781 had to go back to the second oldest one. On 4.0.4 there is a second option, since the kernel migration leaves your previous kernel installed as its own Limine entry next to `linux-omarchy`.
+3. In @fowlie's report the snapshot came up read-only. Make it writable:
 
 ```
 sudo mount -o remount,rw /
 ```
+
+One thing to know before you edit anything. Omarchy 4's initramfs boots snapshots through the `btrfs-overlayfs` hook, and limine-snapper-sync documents that writes made in that session land in a temporary layer and are discarded on reboot. The ESP is a separate partition, so a rebuilt UKI and `/boot/limine.conf` do survive. A line you add to `/etc/default/limine` does not. Plan to repeat step 5 once you are back on the real root, or do the repair from a live USB chroot as described below, where edits land on the real root.
 
 4. Find out what actually broke:
 
 ```
 systemctl --failed
 sudo journalctl -xb -p err
-sudo cat /proc/cmdline
+sudo limine-entry-tool --get-cmdline default
+sudo grep cmdline: /boot/limine.conf
 ```
 
-5. If `/proc/cmdline` has no `root=`, or `/boot/limine.conf` has a `cmdline:` line with nothing but boot cosmetics on it, pin the parameters yourself. Add a line to `/etc/default/limine`:
+Do not read `/proc/cmdline` here. You booted the snapshot entry, so it shows the snapshot's parameters, not the broken ones.
+
+5. If the `default` cmdline from `limine-entry-tool` has no `root=`, or the normal entry's `cmdline:` line in `/boot/limine.conf` has nothing but boot cosmetics on it, pin the parameters yourself. This is the same check `omarchy-upgrade-to-quattro` runs. Add a line to `/etc/default/limine`:
 
 ```
 KERNEL_CMDLINE[default]+=" root=UUID=<your-root-uuid> rw rootflags=subvol=@"
@@ -131,15 +141,15 @@ cryptdevice=UUID=<luks-uuid>:root root=/dev/mapper/root rw
 
 This is issue #7222, still open as of 4.0.4.
 
-7. If the failure is a failed `boot.mount` rather than root, your kernel modules or boot image are incomplete. Reinstall the kernel and rebuild everything:
+7. If the failure is a failed `boot.mount` rather than root, your kernel modules or boot image are incomplete. Reinstall the kernel package behind the entry you boot and rebuild everything. On 4.0.4 that is `linux-omarchy`, which the kernel migration installs and puts first in `BOOT_ORDER`. On 4.0.3 and earlier it is `linux`:
 
 ```
-sudo pacman -S linux
+sudo pacman -S linux-omarchy    # or: sudo pacman -S linux
 sudo mkinitcpio -P
 sudo limine-update
 ```
 
-8. Reboot into the normal entry. If you ran `limine-update` while running from a snapshot, the new entry may be rooted on the snapshot. Restore the snapshot you were running from with `omarchy-snapshot restore` before you trust it, or check `mount | grep " / "` shows `subvol=/@`.
+8. Reboot into the normal entry. If you ran `limine-update` while running from a snapshot, the new entry may be rooted on the snapshot. Restore the snapshot you were running from with `omarchy-snapshot restore` before you trust it, then check `mount | grep " / "` shows `subvol=/@`. Once you are on the real root, redo step 5 if you needed it, since that edit did not survive the snapshot session.
 
 On 3.x the same steps apply, except the Quattro cmdline problem in step 5 and 6 does not exist. The 3.x reports are about a failed `mkinitcpio` run leaving stale modules, so start at step 7.
 
@@ -150,7 +160,7 @@ Boot the normal Omarchy entry with no menu tricks. Then run:
 ```
 mount | grep " / "
 systemctl --failed
-sudo cat /proc/cmdline
+cat /proc/cmdline
 ```
 
 You want `subvol=/@` on root, an empty failed list, and a command line that names your root filesystem. Confirm the UKI carries it too:
@@ -164,11 +174,11 @@ That is the same check `omarchy-upgrade-to-quattro` runs on itself in 4.0.4.
 
 ## Why it happens
 
-Omarchy boots a unified kernel image through Limine, so the command line that matters is baked into the UKI on the EFI partition, not read at boot time.
+Omarchy boots a unified kernel image through Limine, so the command line that matters is the one embedded in the UKI on the EFI partition. `/boot/limine.conf` mirrors it, and the upgrade script checks both.
 
-For the Quattro upgrade, dhh reproduced the failure in PR #6951 and measured it. The `omarchy-defaults.conf` drop-in appends to `KERNEL_CMDLINE[default]`, which makes `limine-entry-tool` stop falling back to `/proc/cmdline`. On installs that predate the ISO pinning `root=`, a kernel bump in the same transaction can bake a UKI with no `root=` at all. His instrumented run measured roughly ten seconds where that state existed before the upgrade repaired it. Ten seconds is short, but anything that interrupts the upgrade there leaves the machine stranded. That PR is still open.
+For the Quattro upgrade, PR #6951 (posted on behalf of dhh) reproduced the failure in a VM and measured it. The `omarchy-defaults.conf` drop-in appends to `KERNEL_CMDLINE[default]`, which makes `limine-entry-tool` stop falling back to `/proc/cmdline`. On installs that predate the ISO pinning `root=`, a kernel bump in the same transaction can bake a UKI with no `root=` at all. The instrumented run found roughly ten seconds where that state existed before the upgrade repaired it. Ten seconds is short, but an upgrade that dies inside that window cannot boot. That PR was still open in September 2026.
 
-The other family is a boot image that was never rebuilt. In issue #5026, @amlucas0xff traced pacman hook ordering: `depmod` runs before DKMS builds its modules, so `mkinitcpio` cannot find them, fails, and skips the UKI rebuild. The old image stays on the ESP pointing at a kernel version whose modules directory no longer exists. Issue #4605 is the same shape from a different angle, with the UKI build crashing on an x86-64-v2 only CPU. Issue #4192 is the same again, with `vfat` missing so `/boot` could not mount.
+The other family is a boot image that was never rebuilt. In issue #5026, @amlucas0xff traced pacman hook ordering: `depmod` runs before DKMS builds its modules, so `mkinitcpio` cannot find them, fails, and skips the UKI rebuild. What stays on the ESP is the previous image, and it wants a modules directory the kernel upgrade already removed. Issue #4605 is the same shape from a different angle, with the UKI build crashing on an x86-64-v2 only CPU. Issue #4192 is the same again, with `vfat` missing so `/boot` could not mount.
 
 Collaborator @ryanrhughes said in issue #4781 that the update does check whether `mkinitcpio` succeeded, and that the fix for essentially everyone has been to trigger a rebuild. That matches what the reports show.
 
@@ -189,7 +199,7 @@ If `/etc/kernel/cmdline` and the Limine files are missing altogether, one report
 
 If you are on NVIDIA and the rebuild reports missing `nvidia` modules, install the matching DKMS package before rebuilding. Note that modules belong in a drop-in under `/etc/mkinitcpio.conf.d/`, not in `/etc/mkinitcpio.conf` itself, per @ryanrhughes in issue #4781.
 
-Evidence for the 4.x cmdline cases is thin in one respect: both #7222 and #6951 are open, no 4.0.x release notes list a fix for them, and the cluster holds only eleven issues with most of them from 3.x. Treat the 4.x guidance as a repair, not a permanent fix.
+Evidence for the 4.x cmdline cases is thin in one respect: both #7222 and #6951 are open, no 4.0.x release notes list a fix for them, and most of the tracked reports are from 3.x. Treat the 4.x guidance as a repair, not a permanent fix.
 
 ## Related
 

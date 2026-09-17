@@ -8,7 +8,7 @@ status: info
 lastVerified: 2026-09-16
 omarchyVersionTested: "4.0.4"
 other: "Debian, Ubuntu, and Linux Mint"
-otherVersion: "Debian 13.7, Ubuntu 26.04 LTS, Linux Mint 22.x"
+otherVersion: "Debian 13.7, Ubuntu 26.04 LTS, Linux Mint 22.3"
 tags: [debian, ubuntu, mint, pacman, rolling-release, switching]
 sources:
   - url: "https://omarchy.org/manual/updates/"
@@ -60,10 +60,43 @@ sources:
     title: "Debian 13 trixie released"
     kind: other
     date: "2025-08-09"
+  - url: "https://www.debian.org/News/2026/20260912"
+    title: "Updated Debian 13: 13.7 released"
+    kind: other
+    date: "2026-09-12"
   - url: "https://lists.ubuntu.com/archives/ubuntu-announce/2026-April/000323.html"
     title: "Ubuntu 26.04 LTS (Resolute Raccoon) released"
     kind: other
     date: "2026-04-23"
+  - url: "https://www.omgubuntu.co.uk/2026/04/ubuntu-26-04-lts-released"
+    title: "OMG! Ubuntu: Ubuntu 26.04 LTS is Now Available to Download"
+    kind: blog
+    author: "Joey Sneddon"
+    date: "2026-04-24"
+  - url: "https://www.omgubuntu.co.uk/2026/04/linux-mint-next-release-christmas-2026"
+    title: "OMG! Ubuntu: Linux Mint's next release won't be until Christmas 2026"
+    kind: blog
+    author: "Joey Sneddon"
+    date: "2026-04-22"
+  - url: "https://linuxmint.com/rel_zena_cinnamon.php"
+    title: "Linux Mint 22.3 Zena release notes"
+    kind: docs
+  - url: "https://blog.linuxmint.com/?p=4991"
+    title: "Linux Mint blog: Monthly News, January 2026 (Wayland support still experimental, not the default)"
+    kind: blog
+    date: "2026-02-11"
+  - url: "https://blog.linuxmint.com/?p=5050"
+    title: "Linux Mint blog: Monthly News, July 2026 (Wayland session probably not default in Mint 23)"
+    kind: blog
+    date: "2026-08-10"
+  - url: "https://omabuntu.omakasui.org/"
+    title: "Omabuntu: a fork of Omakub for Ubuntu 24.04"
+    kind: docs
+  - url: "https://x.com/dhh/status/2097236884531351700"
+    title: "DHH on X: next version of Omarchy is going to be Quattro RS 4.5"
+    kind: other
+    author: "dhh"
+    date: "2026-09-08"
 credits:
   - name: "SuleymanSuleymanzade"
     url: "https://github.com/SuleymanSuleymanzade"
@@ -104,15 +137,15 @@ Short version. Omarchy is rolling Arch with Hyprland and a Quickshell desktop. D
 
 ## Rolling versus point releases
 
-Debian 13 "trixie" shipped on 9 August 2025 with kernel 6.12 and is still on that kernel at 13.7. Ubuntu 26.04 LTS arrived on 23 April 2026 with kernel 7.0 and GNOME 50. Linux Mint 23 is not out yet, so Mint users are on a 22.x built against Ubuntu 24.04. In all three cases the version numbers you run today were decided by somebody else months or years ago, and only security fixes move.
+Debian 13 "trixie" shipped on 9 August 2025 with kernel 6.12 and is still on that kernel at 13.7, released 12 September 2026. Ubuntu 26.04 LTS arrived on 23 April 2026 with kernel 7.0 and GNOME 50. Linux Mint 23 is scheduled for December 2026 on an Ubuntu 26.04 base, so Mint users today are on 22.3, which is built against Ubuntu 24.04. In all three cases the version numbers you run today were decided by somebody else months or years ago, and only security fixes move.
 
-Arch has no such freeze, and neither does Omarchy. By late August 2026 Arch was on kernel 7.2, which is two major kernel releases ahead of Debian stable.
+Arch has no such freeze, and neither does Omarchy. The pacman log in [issue #9386](https://github.com/omacom/omarchy/issues/9386) shows a routine update moving from kernel 7.1.9 to 7.2.2 on 31 August 2026, while Debian stable was still on the 6.12 line.
 
 Omarchy adds three brakes that plain Arch does not have.
 
 The first is the stable channel. New installs track the official Omarchy releases plus the Omarchy Arch mirror, which the manual says deliberately runs one month behind upstream Arch so incompatibilities get caught before they reach you. There are four channels in total: stable, RC, edge and dev. You move between them with _Update > Channel_ or `omarchy-channel-set`.
 
-The second is snapshots. Every `omarchy update` takes a Btrfs snapshot first, and you can boot the previous one from the Limine boot menu. Note the limit: restoring brings back the root filesystem, not `/home`. That is a system rollback, not a backup, so keep doing whatever you did on Debian for your files.
+The second is snapshots. Every `omarchy update` takes a snapper snapshot first (and carries on with a warning if snapper is missing), and you can boot the previous one from the Limine boot menu. Note the limit: restoring brings back the root filesystem, not `/home`. That is a system rollback, not a backup, so keep doing whatever you did on Debian for your files.
 
 The third is that updates are a deliberate act. There is no `unattended-upgrades` equivalent running quietly at 6am. A circle arrow appears next to the clock when a release lands, and you choose when to click it.
 
@@ -144,20 +177,20 @@ AUR builds also break in ways apt never did, usually because something in your s
 
 ## Hyprland instead of GNOME or Cinnamon
 
-This is the change that actually decides whether you stay. Omarchy 4.0.0 "Quattro", released 14 August 2026, replaced Waybar, Walker, Mako, SwayOSD, hyprlock, hypridle, swaybg and polkit-gnome with a single Quickshell-based shell. There is no dock, no desktop icons, no overlapping windows to drag. Windows tile themselves and you move between them with the keyboard.
+This is the change that actually decides whether you stay. Omarchy 4.0.0 "Quattro", released 14 August 2026, replaced Waybar, Walker, Mako, SwayOSD, hyprlock, hypridle, swaybg and polkit-gnome with a single Quickshell-based shell. There is no dock and no desktop icons. Windows tile themselves and you move between them with the keyboard; floating a window is a per-window toggle on `Super + T`, not the normal state.
 
 Practical consequences for a Mint or Ubuntu user:
 
 - GNOME Shell extensions and Cinnamon applets do not transfer. Nothing in Hyprland loads them.
 - GNOME Tweaks, dconf-editor and the Cinnamon settings panels are gone. Configuration is files. Since 4.0.0 the Hyprland configuration is Lua under `~/.config/hypr/*.lua`, not the old `*.conf` syntax you may have seen in 3.x guides and videos.
-- Mint's Cinnamon is still X11 by default. Omarchy is Wayland only. Screen sharing, global hotkeys in some apps, and a few X11-era utilities behave differently. See [screen sharing](/switch/screen-sharing-meet-zoom-teams/).
+- Mint's Cinnamon still defaults to X11, and the Mint team has said the Wayland session probably will not be the default in Mint 23 either. Omarchy is Wayland only. Screen sharing, global hotkeys in some apps, and a few X11-era utilities behave differently. See [screen sharing](/switch/screen-sharing-meet-zoom-teams/).
 - Ubuntu 26.04 users have already crossed the Wayland line, since GNOME 50 there ships a Wayland-only session. That part of the move costs you less.
 
 ## Hardware support cuts both ways
 
 The standard pitch is that a newer kernel means better hardware support, and for recent laptops that is usually true. It is not a guarantee.
 
-[Issue #7909](https://github.com/omacom/omarchy/issues/7909) is a ThinkPad X1 Carbon Gen 11 that hard reboots at random on Omarchy across multiple kernels while Ubuntu on the same machine stays up. It was open on 16 September 2026. [Issue #9386](https://github.com/omacom/omarchy/issues/9386) is the other failure mode of rolling: a kernel 7.2 update left Broadcom BCM4360 Macs with no Wi-Fi because the `wl` module was gone and the DKMS build failed. On Debian that class of regression waits for the next major release. Here it arrives on a Tuesday.
+[Issue #7909](https://github.com/omacom/omarchy/issues/7909) is a ThinkPad X1 Carbon Gen 11 that hard reboots at random on Omarchy across multiple kernels while Ubuntu on the same machine stays up. It was open on 16 September 2026. [Issue #9386](https://github.com/omacom/omarchy/issues/9386) is the other failure mode of rolling: a kernel 7.2 update left Broadcom BCM4360 Macs with no Wi-Fi because the `wl` module was gone and the DKMS build failed. On Debian that class of regression waits for the next major release. Here it arrived on a Monday morning with a routine update.
 
 Two more differences worth knowing before you commit. Omarchy installs with full-disk LUKS encryption by default and a ufw firewall that blocks inbound traffic except port 53317 for LocalSend, which is stricter than a stock Ubuntu desktop. And Docker ships in the base package list, but the install user is deliberately not added to the `docker` group, because that group is equivalent to passwordless root. The `usermod -aG docker $USER` line from your Ubuntu notes is a security decision here, not a setup step. See [docker group escalation](/security/docker-group-root-escalation/).
 
@@ -167,11 +200,11 @@ If you found this project through Omakub, the Ubuntu version of the same idea, i
 
 ## If you dual boot instead of replacing
 
-Keeping Debian or Mint on the same machine is a reasonable hedge, but Omarchy uses Limine rather than GRUB and does not probe for your other systems. In [issue #7846](https://github.com/omacom/omarchy/issues/7846), open since 23 August 2026, an install left an existing Ubuntu plus Windows pair missing from the boot menu, and Ubuntu's own `update-grub` did not see Omarchy either. Read [should you dual boot](/switch/should-you-dual-boot/) before you touch the disk.
+Keeping Debian or Mint on the same machine is a reasonable hedge, but Omarchy boots through Limine rather than GRUB by default, and the installer does not add your other systems to the boot menu for you. The manual has you run `limine-scan` afterwards to add Windows or other installs. [Issue #7846](https://github.com/omacom/omarchy/issues/7846), open since 23 August 2026, shows how this goes wrong: after the Omarchy install the boot menu listed only Omarchy, the existing Ubuntu plus Windows pair had vanished from it, and running `update-grub` from Ubuntu did not pick up Omarchy either. Read [should you dual boot](/switch/should-you-dual-boot/) before you touch the disk.
 
 ## What to watch for on newer versions
 
-The next release is announced as "Quattro RS 4.5", so expect more Quickshell surface area to move. Anything written for 3.x, the last of which was v3.8.4 in July 2026, still describes Waybar and `.conf` Hyprland files and should be read with that in mind. The stable mirror's one-month lag is documented behaviour, not a bug, so a package that exists in Arch today may not be installable on your machine for a few weeks. If you need it sooner, that is what the edge channel is for, and the manual is blunt that you should only run it if you can recover a broken system yourself.
+DHH said on 8 September 2026 that the next version will be "Quattro RS 4.5" rather than a 4.1, with a bespoke kernel build, so expect more Quickshell surface area to move. Anything written for 3.x, the last of which was v3.8.4 in July 2026, still describes Waybar and `.conf` Hyprland files and should be read with that in mind. The stable mirror's one-month lag is documented behaviour, not a bug, so a package that exists in Arch today may not be installable on your machine for a few weeks. If you need it sooner, that is what the edge channel is for, and the manual is blunt that you should only run it if you can recover a broken system yourself.
 
 ## Related
 

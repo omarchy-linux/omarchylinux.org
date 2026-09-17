@@ -20,7 +20,7 @@ const faq = [
 const ld = [itemListLd({ name: 'Omarchy error fixes', path: '/fix/', items: fixes.map((f: any) => ({ name: f.data.title, url: `/fix/${f.id}/` })) }), faqLd(faq)];
 ---
 <Base title="Omarchy error fixes, one page per problem" description="Searchable fixes for real Omarchy Linux errors: update failures, boot and login problems, NVIDIA and display issues, Wi-Fi, audio, and Quickshell. Fix first, version-stamped, with the source threads." crumbs={[{ name: 'Fixes', href: '/fix/' }]} ld={ld}>
-  <article data-pagefind-body data-pagefind-meta="section:Fixes">
+  <article data-pagefind-body data-pagefind-filter="section:Fixes">
   <div class="art-head"><h1>Fixes</h1><p class="lede">Paste your error into the search box, or browse by area. Every page says which Omarchy versions it applies to and who found the fix. {st.issues?.total ? `Built against ${st.issues.total.toLocaleString()} upstream issues and ${st.discussions?.total?.toLocaleString()} discussions.` : ''}</p></div>
   <form class="search-form" action="/search/" method="get" role="search" style="margin:10px 0 20px" data-pagefind-ignore><input name="q" type="search" placeholder="paste an error string" style="width:min(520px,100%)" /><button type="submit">Find the fix</button></form>
   {order.filter((k) => cats[k]?.length).map((k) => <section><h2 id={k}>{labels[k]}</h2><ul class="list-plain">{cats[k].map((f: any) => <li><a href={`/fix/${f.id}/`}>{f.data.title}</a> <Pill kind={f.data.status} /> <span class="pill pill-version">{versionRangeLabel(f.data.appliesTo)}</span><br /><span class="small muted">{f.data.description}</span></li>)}</ul></section>)}

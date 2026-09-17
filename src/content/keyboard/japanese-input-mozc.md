@@ -1,7 +1,7 @@
 ---
 title: "Japanese input on Omarchy 4 with fcitx5-mozc"
 description: "Set up Japanese typing on Omarchy 4.0.x: install fcitx5-mozc, register it with the running fcitx5, pick a toggle key, and fix the Chromium and fullscreen gaps."
-answer: "Omarchy already runs fcitx5 in every session, so you only add the engine. Run `omarchy pkg add fcitx5-mozc fcitx5-configtool`, restart the service with `omarchy restart xcompose`, then run `fcitx5-configtool` from a terminal and add Mozc to your input method group. Toggle with Ctrl+Space. Chromium needs `--enable-wayland-ime` separately."
+answer: "fcitx5 is already running in every Omarchy 4 session, so you only add the engine. Run `omarchy pkg add fcitx5-mozc fcitx5-configtool`, restart the service with `omarchy restart xcompose`, then run `fcitx5-configtool` from a terminal and add Mozc to your input method group. Toggle with Ctrl+Space. If Chromium ignores the IME, add `--enable-wayland-ime` to its flags file."
 appliesTo:
   from: "4.0.0"
 status: workaround
@@ -47,6 +47,7 @@ sources:
   - url: "https://github.com/omacom/omarchy/issues/10050"
     title: "Issue #10050: Default Voxtype type mode can corrupt longer Japanese/CJK dictation through wtype"
     kind: issue
+    author: "komagata"
     date: "2026-09-03"
   - url: "https://github.com/omacom/omarchy/issues/10452"
     title: "Issue #10452: [JIS keyboard] Window resize shortcuts are misleading because they use US physical key labels"
@@ -79,6 +80,9 @@ sources:
     title: "Praveensenpai/omarchy-japanese-ime: Japanese (Mozc) and English input method toggle widget"
     kind: other
     author: "Praveensenpai"
+  - url: "https://github.com/fcitx/fcitx5/blob/master/src/lib/fcitx/globalconfig.cpp"
+    title: "fcitx5 globalconfig.cpp: default trigger and group-enumerate keys"
+    kind: other
   - url: "https://docs.komagata.org/6462"
     title: "Omarchyの日本語対応を手伝いたい人のためのまとめ"
     kind: blog
@@ -90,7 +94,7 @@ credits:
     for: "Wrote the one-step Mozc setup PR and the D-Bus group registration it uses"
   - name: "akitaonrails"
     url: "https://github.com/akitaonrails"
-    for: "Found that fcitx5-configtool is hidden from the launcher and that Chromium needs --enable-wayland-ime"
+    for: "Pointed out that fcitx5-configtool is hidden from the launcher and reported Chromium dropping the IME until --enable-wayland-ime was set"
   - name: "a-lang"
     url: "https://github.com/a-lang"
     for: "Traced the broken Shift toggle to Omarchy's default shift:both_capslock_cancel"
@@ -101,7 +105,7 @@ faq:
   - q: "Do I need to install fcitx5 first?"
     a: "No. Omarchy ships fcitx5, fcitx5-gtk and fcitx5-qt in the base package list and runs fcitx5 as a supervised user service, because the CapsLock compose sequences depend on it. You only add the Japanese engine."
   - q: "Why does Japanese input work everywhere except my browser?"
-    a: "Chromium only speaks the Wayland text-input protocol when it is started with --enable-wayland-ime, and Omarchy 4.0.4 does not put that flag in config/chromium-flags.conf. PR #12139 proposes adding it. Until then, add the flag yourself."
+    a: "Possibly because it needs --enable-wayland-ime, which Omarchy 4.0.4 does not put in config/chromium-flags.conf. PR #12139 proposes shipping it; PR #11719 argues current Chromium no longer needs it. If your browser drops the IME, add the flag to ~/.config/chromium-flags.conf and restart it."
   - q: "Can I just edit ~/.config/fcitx5/profile by hand?"
     a: "It usually does not stick. fcitx5 rewrites that file from its live state when it exits, so an edit made while fcitx5 is running gets overwritten. Use fcitx5-configtool, or stop fcitx5 before editing."
   - q: "Is there a one-click setup in the Omarchy menu?"
@@ -110,9 +114,9 @@ related: [layouts-and-locale, chinese-input-fcitx5, korean-input-hangul]
 draft: false
 ---
 
-Omarchy does most of the work for you already, and that is the part people miss. Since 4.0.0, fcitx5 is not an optional extra. It ships in the base package list, it runs as a supervised systemd user service, and the whole CapsLock compose system depends on it. The fonts are there too: `noto-fonts-cjk` is in the base package list, so Japanese renders before you type any of it.
+Omarchy does most of the work for you already, and that is the part people miss. fcitx5 is not an optional extra. It has been in the base package list since the 3.x releases, and since 4.0.0 it runs as a supervised systemd user service, because the whole CapsLock compose system depends on it. The fonts are there too: `noto-fonts-cjk` is in the base package list, so Japanese renders before you type any of it.
 
-What is missing is the engine and one line in a config file. The official manual covers this in about 76 words in the [Keyboard, Mouse, Trackpad chapter](https://omarchy.org/manual/keyboard-mouse-trackpad/), which tells you to install `fcitx5-mozc` and `fcitx5-configtool` and stops there. This page fills in the rest.
+What is missing is the engine and one line in a config file. The official manual covers this in one paragraph of the [Keyboard, Mouse, Trackpad chapter](https://omarchy.org/manual/keyboard-mouse-trackpad/), which tells you to install `fcitx5-mozc` and `fcitx5-configtool` and stops there. This page fills in the rest.
 
 Checked against v4.0.4 (2026-09-15).
 
@@ -130,7 +134,7 @@ omarchy pkg add fcitx5-mozc fcitx5-configtool
 omarchy restart xcompose
 ```
 
-That wrapper stops `omarchy-fcitx5.service`, kills any stray `fcitx5` process, and starts the unit again. The stray-kill matters: a second fcitx5 that finds the D-Bus name already taken exits cleanly, so a naive restart reports success and changes nothing.
+That wrapper stops `omarchy-fcitx5.service`, kills any stray `fcitx5` process, and starts the unit again. The stray-kill matters: a second fcitx5 that finds the D-Bus name already taken exits cleanly, so if a copy started outside the unit is still alive, systemd will report a successful restart while the old process keeps serving.
 
 3. Add Mozc to your input method group.
 
@@ -140,7 +144,7 @@ fcitx5-configtool
 
 In the left pane, add **Mozc** to the current group. Keep a keyboard layout entry (`Keyboard - English (US)`, or `Keyboard - Japanese` on a JIS board) as the first entry, so plain Latin typing stays the default and Mozc is what you switch into.
 
-4. Apply, close, and log out and back in if any already-running app ignores the new engine. Toggle with `Ctrl + Space`, which is fcitx5's stock trigger key.
+4. Apply, close, and log out and back in if any already-running app ignores the new engine. Toggle with `Ctrl + Space`, which is fcitx5's stock trigger key. On a JIS board, `Zenkaku_Hankaku` is in the same default trigger list.
 
 ## Verify it worked
 
@@ -164,7 +168,7 @@ busctl --user --json=short call org.fcitx.Fcitx5 /controller \
 
 ## Why it happens
 
-Omarchy sets `INPUT_METHOD`, `QT_IM_MODULE`, `XMODIFIERS` and `SDL_IM_MODULE` to `fcitx` in `/usr/lib/environment.d/10-omarchy-fcitx.conf`. It deliberately does not set `GTK_IM_MODULE`. On Wayland, GTK uses the `text-input` protocol instead of an im-module, and a 3.x migration actually stripped `GTK_IM_MODULE=fcitx` out of existing configs. If you find a guide or a plugin README telling you to add it back, skip that line. It is a leftover from X11 setups and on Omarchy 4 it can make GTK apps worse, not better.
+Omarchy sets `INPUT_METHOD`, `QT_IM_MODULE`, `XMODIFIERS` and `SDL_IM_MODULE` to `fcitx` in `/usr/lib/environment.d/10-omarchy-fcitx.conf`. It does not set `GTK_IM_MODULE`. On Wayland, GTK uses the `text-input` protocol instead of an im-module, and an older migration (the one that moved logins to UWSM, still shipped in 3.8.4) strips `GTK_IM_MODULE=fcitx` out of `~/.config/environment.d/fcitx.conf`. If you find a guide or a plugin README telling you to add it back, skip that line. It is a leftover from X11 setups, and Omarchy's own migration removes it.
 
 This is also why nothing about the framework needs installing. The only thing `omarchy pkg add fcitx5-mozc` changes is which engines fcitx5 can offer.
 
@@ -172,23 +176,23 @@ This is also why nothing about the framework needs installing. The only thing `o
 
 **`fcitx5-configtool` will not appear in the launcher.** Omarchy hides it on purpose: `fcitx5-configtool`, `org.fcitx.Fcitx5` and the other fcitx desktop entries are all listed in `default/omarchy/launcher.hides`. Run it from a terminal. akitaonrails flagged exactly this on PR #9634 as a few confused minutes of hunting.
 
-**Chromium ignores the IME.** Chromium-based browsers only take the Wayland text-input path with `--enable-wayland-ime`, and Omarchy 4.0.4 does not ship that flag. So you install Mozc, every terminal and GTK and Qt app starts accepting Japanese, and the default browser silently does not. Add it yourself:
+**Chromium may ignore the IME.** Whether Chromium-based browsers need `--enable-wayland-ime` to take the Wayland text-input path is contested. akitaonrails reported on PR #9634 that on 4.0.4 every terminal and GTK and Qt app accepted Japanese after setup while the browser did not until the flag was set, and opened [PR #12139](https://github.com/omacom/omarchy/pull/12139) to ship it. [PR #11719](https://github.com/omacom/omarchy/pull/11719) argues that current Chromium enables text-input-v3 by default and the flag is redundant, and [issue #7559](https://github.com/omacom/omarchy/issues/7559) lists only the stock ozone flags for Chromium and reports conversion working. Omarchy 4.0.4 does not ship the flag. If your browser drops the IME, add it yourself:
 
 ```bash
 echo '--enable-wayland-ime' >> ~/.config/chromium-flags.conf
 ```
 
-Restart the browser afterwards. [PR #12139](https://github.com/omacom/omarchy/pull/12139) proposes shipping the flag plus a migration for existing installs, because the per-browser flags files are only copied at install time. It was open on 2026-09-16.
+Restart the browser afterwards. PR #12139 also carries a migration for existing installs, because `omarchy-install-browser` copies the flags file once, at install time. It was open on 2026-09-16.
 
 **The candidate window is misplaced in native Wayland Chromium and Electron apps.** [Issue #7559](https://github.com/omacom/omarchy/issues/7559) reports the popup not following the caret in Chromium and Obsidian, while the same apps behave under XWayland. Input and conversion still work. Open as of this writing.
 
-**The candidate popup is invisible in true fullscreen.** [Issue #11303](https://github.com/omacom/omarchy/issues/11303) covers a native Wayland terminal put into Hyprland's internal fullscreen with `SUPER + F`. Composition and commit still work, but you cannot see the candidate list. Use maximise instead of true fullscreen while typing Japanese.
+**The candidate popup is invisible in true fullscreen.** [Issue #11303](https://github.com/omacom/omarchy/issues/11303) covers a native Wayland terminal put into Hyprland's internal fullscreen with `SUPER + F`. Composition and commit still work, but you cannot see the candidate list. The issue points at Omarchy's `SUPER + CTRL + F` tiled fullscreen binding, which avoids the failing internal fullscreen state, as the workaround.
 
-**Do not expect a Shift-key toggle.** Omarchy's default `kb_options` is `compose:caps,shift:both_capslock_cancel`. [Issue #7440](https://github.com/omacom/omarchy/issues/7440) traced why fcitx5's modifier-only Shift trigger never fires under it: the Shift release arrives with a `Caps_Lock` keysym, so fcitx5's release matching fails. Stick with `Ctrl + Space`, or bind the `Zenkaku_Hankaku` key.
+**Do not expect a Shift-key toggle.** Omarchy's default `kb_options` is `compose:caps,shift:both_capslock_cancel`. [Issue #7440](https://github.com/omacom/omarchy/issues/7440) traced why fcitx5's modifier-only Shift trigger never fires under it: the Shift release arrives with a `Caps_Lock` keysym, so fcitx5's release matching fails. Stick with `Ctrl + Space` or, on a JIS board, the `Zenkaku_Hankaku` key.
 
 **`Super + Space` is not available as a switch key.** Hyprland grabs it for the Omarchy menu, and `Super + Shift + Space` toggles the top bar. Those are fcitx5's usual group-enumerate defaults, so they never reach fcitx5.
 
-**Do not switch layouts through Hyprland once fcitx5 is running.** [Issue #9552](https://github.com/omacom/omarchy/issues/9552) describes the trap: a `grp:` xkb toggle or the bar widget changes the label and `hyprctl devices` agrees, but typed characters stay in the old layout in most apps. Put both layouts in the fcitx5 group instead and switch there.
+**Do not switch layouts through Hyprland once fcitx5 is running.** [Issue #9552](https://github.com/omacom/omarchy/issues/9552) describes the trap: a `grp:` xkb toggle or the bar widget changes the label and `hyprctl devices` agrees, but typed characters stay in the old layout in most apps. The issue's own workaround is disabling `omarchy-fcitx5.service`, which also takes Mozc and the compose sequences with it. For a Japanese setup, keep the layouts you need as keyboard entries in the fcitx5 group next to Mozc and switch there.
 
 **The Omarchy menu search field does not accept composed text.** [Issue #11682](https://github.com/omacom/omarchy/issues/11682) reports the Quickshell menu collecting raw key events instead of going through Qt's input method, so CJK preedit never reaches it. Filed against Hangul, and the same code path applies to Mozc.
 
@@ -208,7 +212,7 @@ If Mozc shows up in the config tool but disappears after a reboot, you probably 
 
 [PR #9634](https://github.com/omacom/omarchy/pull/9634) by komagata adds *Setup > Input Method > Mozc (Japanese)* to the Omarchy menu, backed by a small `omarchy-setup-input-mozc` script that installs the package, restarts fcitx5, waits for it to answer, and appends `mozc` to the current group over D-Bus. It also rewrites the manual paragraph to point at the menu. It was open on 2026-09-16. A Korean sibling, [PR #11719](https://github.com/omacom/omarchy/pull/11719), takes the same shape, and [PR #12142](https://github.com/omacom/omarchy/pull/12142) would make the candidate window follow your Omarchy theme. None of these are merged, so treat the manual steps above as the current path.
 
-For a bar indicator, two third-party Quickshell plugins exist. [komagata/omarchy-input-method](https://github.com/komagata/omarchy-input-method) builds its list from the active fcitx5 group, so it covers Mozc, Rime and Hangul alike. [Praveensenpai/omarchy-japanese-ime](https://github.com/Praveensenpai/omarchy-japanese-ime) is Japanese-specific and shows あ or a keyboard glyph. Both are MIT licensed and were last pushed in early September 2026. Note that the Praveensenpai README recommends setting `GTK_IM_MODULE=fcitx` and hand-editing the fcitx5 profile, and neither is right on Omarchy 4. Third-party plugins run as unsandboxed code inside your long-lived shell process, so read them before you enable them. See [plugins run unsandboxed](/security/plugins-run-unsandboxed/).
+For a bar indicator, two third-party Quickshell plugins exist. [komagata/omarchy-input-method](https://github.com/komagata/omarchy-input-method) builds its list from the active fcitx5 group, so it covers Mozc, Rime and Hangul alike. [Praveensenpai/omarchy-japanese-ime](https://github.com/Praveensenpai/omarchy-japanese-ime) is Japanese-specific and shows あ or a keyboard glyph. Both are MIT licensed; komagata's was last pushed on 2026-09-06 and Praveensenpai's on 2026-08-29. Note that the Praveensenpai README recommends setting `GTK_IM_MODULE=fcitx` and hand-editing the fcitx5 profile, and neither is right on Omarchy 4. Third-party plugins run as unsandboxed code inside your long-lived shell process, so read them before you enable them. See [plugins run unsandboxed](/security/plugins-run-unsandboxed/).
 
 ## Related
 

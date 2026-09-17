@@ -1,0 +1,186 @@
+---
+title: "Notifications not showing"
+description: "No notification toasts on Omarchy 4? Check do-not-disturb, find out which daemon owns org.freedesktop.Notifications, and test with notify-send."
+answer: "Check do-not-disturb first: run omarchy-shell notifications dndState, and press Super + Ctrl + comma to turn it off. If it is already off, another daemon such as xfce4-notifyd or dunst has claimed org.freedesktop.Notifications; kill it and mask its D-Bus activation file. If nothing owns the name, the Quickshell shell is down, so run omarchy restart shell."
+appliesTo:
+  from: "4.0.0"
+status: workaround
+lastVerified: 2026-09-16
+omarchyVersionTested: "4.0.4"
+category: shell
+issueCount: 231
+errorStrings:
+  - "--exec takes the command as separate words, not one quoted string."
+  - "Usage: omarchy-notification-send"
+tags: [notifications, quickshell, do-not-disturb, shell, quattro]
+sources:
+  - url: "https://github.com/omacom/omarchy/issues/9149"
+    title: "Issue #9149: Notifications are not showing up properly"
+    kind: issue
+    author: "Danannme"
+    date: "2026-08-30"
+  - url: "https://github.com/omacom/omarchy/issues/10023"
+    title: "Issue #10023: Cloning a service plugin silently breaks its bar indicator"
+    kind: issue
+    author: "simonlomax"
+    date: "2026-09-03"
+  - url: "https://github.com/omacom/omarchy/issues/8638"
+    title: "Issue #8638: 4.0.1 breaks the invitation hooks 4.0.0 installed in user config"
+    kind: issue
+    author: "tecnarchico"
+    date: "2026-08-27"
+  - url: "https://github.com/omacom/omarchy/issues/9394"
+    title: "Issue #9394: v4.0.2 package missing hover-revealed notification close button"
+    kind: issue
+    author: "johnpippett"
+    date: "2026-08-31"
+  - url: "https://github.com/omacom/omarchy/issues/9671"
+    title: "Issue #9671: Shell restores unbounded backlog of stale never-expiring critical popups after power loss"
+    kind: issue
+    author: "calumol"
+    date: "2026-09-01"
+  - url: "https://github.com/omacom/omarchy/pull/7926"
+    title: "PR #7926: Run notification click actions as safe argv"
+    kind: pr
+    author: "ryanrhughes"
+    date: "2026-08-23"
+  - url: "https://omarchy.org/manual/toggles-idle-screensaver/"
+    title: "Omarchy manual: Toggles, Idle & the Screensaver"
+    kind: manual
+    date: "2026-09-16"
+  - url: "https://omarchy.org/manual/notices/"
+    title: "Omarchy manual: Notices"
+    kind: manual
+    date: "2026-09-16"
+credits:
+  - name: "Rockeyxx"
+    url: "https://github.com/Rockeyxx"
+    for: "Traced silent, unstyled notifications to xfce4-notifyd hijacking the org.freedesktop.Notifications bus name, and published the D-Bus masking workaround"
+  - name: "simonlomax"
+    url: "https://github.com/simonlomax"
+    for: "Showed that a cloned notifications plugin leaves the do-not-disturb indicator dead, so the desktop looks broken rather than silenced"
+  - name: "tecnarchico"
+    url: "https://github.com/tecnarchico"
+    for: "Found that 4.0.1 tightened omarchy-notification-send --exec and broke the hooks 4.0.0 had already written into user config"
+faq:
+  - q: "Is Mako still the notification daemon on Omarchy 4?"
+    a: "No. Omarchy 4.0.0 replaced Mako with a notifications plugin inside the single Quickshell shell process. makoctl is gone, and the Quattro upgrade removes the mako package, disables mako.service, and backs up ~/.config/mako."
+  - q: "How do I see notifications I missed?"
+    a: "Press Super + Shift + Alt + comma, or run omarchy-shell notifications showHistory. The shell keeps the last ten, including the ones do-not-disturb silenced."
+  - q: "Why did notify-send show nothing while a critical notify-send worked?"
+    a: "That is do-not-disturb. The 4.x daemon lets a notify-send message through DND only when its urgency is critical, and it does not even record a silenced plain notify-send in history."
+related: [quickshell-crashes-or-bar-missing, where-did-waybar-go, plugin-fails-to-load, clipboard-history-not-working]
+draft: false
+---
+
+Omarchy 4 has no Mako. Since 4.0.0 "Quattro" the notification daemon is a plugin called `omarchy.notifications` living inside the one long-running Quickshell process that also draws the bar, the menu, the OSDs and the lock screen. So when no toast appears, the cause is nearly always one of four things: do-not-disturb is on, a foreign daemon grabbed the D-Bus name, the shell is not running, or the plugin is off. Work them in that order.
+
+Checked on v4.0.4 source, with v4.0.0 through v4.0.3 and v3.8.4 compared.
+
+## The fix
+
+### 1. Check do-not-disturb
+
+```bash
+omarchy-shell notifications dndState
+```
+
+`on` means every popup is being suppressed. Turn it off with `Super + Ctrl + comma`, from _Trigger > Toggle > Notifications_, or:
+
+```bash
+omarchy toggle notification silencing
+```
+
+Nothing was lost. Replay the last ten with `Super + Shift + Alt + comma`, which is `omarchy-shell notifications showHistory`. If the history is full of what you were waiting for, DND was the whole story. See the manual chapter on [toggles, idle and the screensaver](https://omarchy.org/manual/toggles-idle-screensaver/).
+
+On 3.x this switch was Mako's: `makoctl mode -t do-not-disturb`. Neither `makoctl` nor that mode exists on 4.x.
+
+### 2. Send one message DND cannot swallow
+
+```bash
+notify-send -u critical "critical test"
+notify-send "plain test"
+```
+
+The 4.x daemon lets a `notify-send` message past DND only when its urgency is critical. If the critical one appears and the plain one does not, you are still in DND no matter what step 1 printed. If neither appears, carry on.
+
+### 3. Find out who owns the notification bus name
+
+```bash
+busctl --user call org.freedesktop.Notifications /org/freedesktop/Notifications \
+  org.freedesktop.Notifications GetServerInformation
+```
+
+That returns the server name, vendor and version of whatever currently answers. If it errors, nothing is listening. If it names something that is not the Omarchy shell, a stray daemon took the name:
+
+```bash
+pgrep -a 'dunst|mako|swaync|xfce4-notifyd'
+```
+
+On issue #9149 the reporter had dead notification keybindings and unstyled popups. Rockeyxx traced the same symptoms to `xfce4-notifyd` auto-activating on D-Bus and hijacking `org.freedesktop.Notifications`. Kill the process, then shadow its activation file so it cannot come back:
+
+```bash
+mkdir -p ~/.local/share/dbus-1/services
+ln -sf /dev/null ~/.local/share/dbus-1/services/org.xfce.xfce4-notifyd.Notifications.service
+```
+
+The same shadowing works for any other daemon: find its `.service` file under `/usr/share/dbus-1/services/` and symlink a file of that exact name to `/dev/null` in your user directory. Then restart the shell. The Quattro upgrade already uninstalls the `mako` package, retires `mako.service` and moves `~/.config/mako` aside, so a surviving Mako only happens if you reinstalled it yourself.
+
+### 4. Restart the shell
+
+If the Quickshell process died you lose the bar, the menu and notifications together.
+
+```bash
+omarchy restart shell
+```
+
+### 5. Confirm the plugin is enabled
+
+```bash
+omarchy plugin list | grep notifications
+```
+
+`omarchy.notifications` is first party and on by default. It only turns off by being listed in `disabledPlugins[]` in `~/.config/omarchy/shell.json`. Delete it from that array and restart the shell.
+
+## Verify it worked
+
+Wait for the server to claim the bus, then send one of each kind:
+
+```bash
+omarchy-notification-wait 10 && echo "server up"
+notify-send "hello" "body text"
+omarchy notification send "Hello" "From omarchy" -u normal
+```
+
+A low-urgency toast lasts 5 seconds, a normal one 8, and a critical one does not auto-expire at all. Dismiss the newest with `Super + comma`, clear them all with `Super + Shift + comma`, and open history with `Super + Shift + Alt + comma`. The date, battery and weather notices on `Super + Ctrl + Alt + T`, `B` and `W` are a quick second check, since they go through the same daemon. They are documented in the [notices chapter](https://omarchy.org/manual/notices/).
+
+## Why it happens
+
+The DND preference is persistent user state, stored as a `dnd` key in `~/.local/state/omarchy/notifications.json` and read back at shell startup, so it survives reboots and updates. That is the single most common reason a desktop has "gone quiet" for days.
+
+Two categories still get through DND by design. Omarchy's own confirmation toasts, which use the app name `omarchy-action`, and command-line alerts sent with urgency critical and the default `notify-send` app name. Chat apps that mark everything critical do not qualify, because they set their own app name.
+
+There is a trap in testing here. The daemon treats `notify-send` and `omarchy-action` as ephemeral senders, so a plain `notify-send` that DND silences is not even written to history. "I tested with notify-send, nothing appeared, and history was empty" is exactly what DND looks like, not a second bug.
+
+The visual cue for DND is a crossed-out bell among the indicators next to the clock. If you have run `omarchy plugin clone omarchy.notifications`, that indicator stops working. simonlomax documented the cause on issue #10023: `firstPartyServiceFor()` does a plain map lookup on the built-in plugin id and returns null once the clone takes over, while the IPC path resolves clones correctly. So the hotkey and the menu entry still toggle DND, but the bar shows nothing and clicking where the bell should be does nothing. Open as of 4.0.4.
+
+## If that did not work
+
+Your own scripts stopped notifying after 4.0.1. PR #7926 tightened `omarchy-notification-send` so `--exec` takes the command as separate words. The old quoted single-string form now prints `--exec takes the command as separate words, not one quoted string.` and exits. tecnarchico reported on issue #8638 that this broke the first-run hooks 4.0.0 had itself written into `~/.config/omarchy/hooks/post-update.d/`. Rewrite any `--exec "prog arg"` as `--exec prog arg`.
+
+A message that starts with a dash or contains a space right after `-g` can be eaten as a flag value, and you get the `Usage: omarchy-notification-send` line instead of a toast. Put the headline first and the flags after it.
+
+Toasts that show but seem to vanish are a different set of open bugs: identical notifications are no longer grouped, and senders that update a toast in place stack a new one per update instead. Popups also render on every connected monitor at once rather than the focused one.
+
+Stuck toasts are the inverse problem and are also open. Critical notifications never auto-expire, and the hover-revealed close button that landed on the development branch is still absent from the packaged tree in v4.0.4, so right-click or `Super + comma` is the only way to clear one. calumol showed on issue #9671 that a hard power-off can leave the shell rehydrating hundreds of stale critical toasts on the next boot, plus zero-byte state files under `~/.local/state/omarchy/notifications/` that come back as blank popups. Deleting those files by hand is the only cleanup today.
+
+If none of this applies, gather `omarchy-shell notifications dndState`, the `GetServerInformation` output and your Omarchy version before filing, because those three lines separate all four causes above.
+
+## Related
+
+- [Quickshell crashes or bar missing](/fix/quickshell-crashes-or-bar-missing/)
+- [Where did Waybar go](/fix/where-did-waybar-go/)
+- [Plugin fails to load](/fix/plugin-fails-to-load/)
+- [Upgrading 3 to 4 Quattro](/upgrade/3-to-4-quattro/)
+- [Omarchy commands reference](/reference/commands/)
+- [Keybindings reference](/reference/keybindings/)

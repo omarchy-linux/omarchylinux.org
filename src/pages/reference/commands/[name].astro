@@ -24,7 +24,7 @@ const desc = removed
 const path = `/reference/commands/${name}/`;
 ---
 <Base title={`${title}${removed ? ' (removed)' : ''}`} description={desc} crumbs={[{ name: 'Reference', href: '/reference/' }, { name: 'Commands', href: '/reference/commands/' }, { name: title, href: path }]} ld={articleLd({ title: `${title} (Omarchy command)`, description: desc, path, keywords: ['omarchy', 'command', name!] })} ogType="article">
-  <article data-pagefind-body data-pagefind-meta="section:Reference">
+  <article data-pagefind-body data-pagefind-filter="section:Reference">
     <div class="art-head">
       <nav class="crumbs" aria-label="Breadcrumb"><a href="/reference/">Reference</a><span>›</span><a href="/reference/commands/">Commands</a><span>›</span><span>{current?.group}</span></nav>
       <h1><code>{title}</code></h1>

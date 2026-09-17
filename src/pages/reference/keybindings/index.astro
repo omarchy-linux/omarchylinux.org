@@ -16,7 +16,7 @@ const faq = [
 const ld = [articleLd({ title: `Omarchy keybindings (${tag})`, description: 'Every default keybinding', path: '/reference/keybindings/' }), faqLd(faq)];
 ---
 <Base title={`Every Omarchy keybinding (${tag})`} description={`All ${all.length} default Omarchy keybindings in ${tag} with their labels, grouped by category, searchable by key or action. Generated from the Lua bindings files.`} crumbs={[{ name: 'Reference', href: '/reference/' }, { name: 'Keybindings', href: '/reference/keybindings/' }]} ld={ld}>
-  <article data-pagefind-body data-pagefind-meta="section:Reference">
+  <article data-pagefind-body data-pagefind-filter="section:Reference">
   <div class="art-head"><h1>Omarchy keybindings</h1><p class="lede">{all.length} default bindings in <strong>{tag}</strong>. Super is the Windows or Command key. Filter by a key ("shift", "return") or by what it does ("terminal", "float").</p></div>
   <div class="filter-bar" data-pagefind-ignore><label>Filter <input id="kb-filter" type="search" placeholder="key or action" /></label><span id="kb-count" class="muted small"></span> <a class="btn" href="javascript:window.print()">Print cheat sheet</a></div>
   {ckeys.map((c) => (

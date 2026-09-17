@@ -23,7 +23,7 @@ const faq = [
 const ld = [itemListLd({ name: 'Omarchy hardware compatibility', path: '/hardware/', items: [...comps, ...models].map((e: any) => ({ name: e.data.title, url: `/hardware/${e.id}/` })) }), faqLd(faq), datasetLd({ name: 'Omarchy hardware reports', description: 'Per-model and per-component Omarchy Linux compatibility data with version stamps.', path: '/hardware/', distribution: [{ url: '/hardware/data.json', format: 'application/json' }] })];
 ---
 <Base title="Does Omarchy run on your hardware? Compatibility index" description="Omarchy Linux hardware compatibility by component (NVIDIA, suspend, Wi-Fi, audio, fingerprint) and by laptop model, built from the issue tracker and community reports, stamped by version." crumbs={[{ name: 'Hardware', href: '/hardware/' }]} ld={ld}>
-  <article data-pagefind-body data-pagefind-meta="section:Hardware">
+  <article data-pagefind-body data-pagefind-filter="section:Hardware">
   <div class="art-head"><h1>Does Omarchy run on it?</h1><p class="lede">There is no official compatibility list. This one is built from {st.issues?.total?.toLocaleString() ?? 'the'} upstream issues (which mostly say what breaks), the quirk scripts Omarchy ships for specific machines, and reports people submit (which say what works). Every page says which Omarchy and kernel version it was checked on.</p></div>
   <p><a class="btn btn-primary" href="/hardware/submit/">Submit a report for your machine</a> <span class="small muted">One command, nothing personal leaves your browser unreviewed.</span></p>
   <h2>By component</h2>

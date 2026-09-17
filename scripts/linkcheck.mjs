@@ -10,6 +10,7 @@ for (const f of files) {
   const html = readFileSync(f, 'utf8');
   for (const m of html.matchAll(/href="(\/[^"#?]*)/g)) {
     const href = m[1]; total++;
+    if (href.startsWith('/pagefind/')) continue;
     let target;
     if (href.endsWith('/')) target = path.join(root, href, 'index.html');
     else target = path.join(root, href);

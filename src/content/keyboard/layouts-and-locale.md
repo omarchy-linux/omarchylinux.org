@@ -70,13 +70,17 @@ sources:
     kind: pr
     author: "sbelcl"
     date: "2026-09-09"
+  - url: "https://x.com/dhh/status/2097236884531351700"
+    title: "DHH: next version of Omarchy is going to be Quattro RS 4.5"
+    kind: blog
+    author: "dhh"
 credits:
   - name: "elpddev"
     url: "https://github.com/elpddev"
     for: "Traced the LUKS lockout to vconsole.conf being bundled into the initramfs on a non-Latin layout"
   - name: "JDavidCarreno"
     url: "https://github.com/JDavidCarreno"
-    for: "Pinned the English clock on Qt.formatDateTime rendering format specifiers through the C locale"
+    for: "Listed all three Qt.formatDate and Qt.formatDateTime call sites in the clock plugin behind the English-only output"
 faq:
   - q: "Why is my clock in English when the rest of my system is not?"
     a: "It is deliberate. DHH closed issue #6934 as not planned, because the whole Omarchy shell is English and localizing only the clock would have made it the odd surface out. PR #6988 went the other way and made the calendar English too."
@@ -90,7 +94,7 @@ related: [chinese-input-fcitx5, japanese-input-mozc, korean-input-hangul]
 draft: false
 ---
 
-Checked against Omarchy v4.0.4 (2026-09-15).
+Checked against Omarchy v4.0.4 (2026-09-16).
 
 Omarchy 4 has one source of truth for your keyboard layout, and it is not a file in your home directory. It is `/etc/vconsole.conf`. Everything else reads from there, or deliberately ignores it. Once you know that, the rest of this page is detail.
 
@@ -100,7 +104,7 @@ Setup asks you one keyboard question. The list of choices lives in `install/prov
 
 Then Omarchy's packaged `/usr/share/omarchy/default/hypr/input.lua` opens that file at every Hyprland start and reads `XKBLAYOUT` and `XKBVARIANT` out of it, falling back to `us`. No per-user rewrite happens.
 
-This is new in 4.0.0. On 3.x, `install/config/detect-keyboard-layout.sh` ran once at install time and used `sed` to splice a `kb_layout` line into your `~/.config/hypr/input.conf`. After that the two files could drift apart forever. If you upgraded from 3.x, migration `1781485962.sh` replaced your `input.lua` with the packaged one when it was still stock or still matched `vconsole.conf`, so the live read took over. If you had customized it, your file was left alone and your old hardcoded layout still wins.
+This is new in 4.0.0. On 3.x, `install/config/detect-keyboard-layout.sh` ran once at install time and used `sed` to splice a `kb_layout` line into your `~/.config/hypr/input.conf`. After that the two files could drift apart forever. If you upgraded from 3.x, migration `1781485962.sh` replaced your `input.lua` with the packaged one, but only if the file was otherwise stock and any `kb_layout` or `kb_variant` it carried matched `vconsole.conf`. Then the live read took over. If you had customized anything else in it, your file was left alone and your old hardcoded layout still wins.
 
 The packaged defaults you inherit are `repeat_rate = 40`, `repeat_delay = 250`, `numlock_by_default = true`, and `kb_options = "compose:caps,shift:both_capslock_cancel"`. Caps Lock is the compose key, and both Shift keys together give you Caps Lock back, self-cancelling on the next lone Shift.
 
@@ -145,7 +149,7 @@ One trap worth spelling out. `kb_options` is a replacement, not an addition. If 
 
 With two or more layouts configured, `grp:alts_toggle` cycles them on Left Alt plus Right Alt. That is the option the manual and the FAQ both use.
 
-The bar also carries a keyboard layout widget, `omarchy.keyboard-layout`, added to the default layout by migration `1786279107.sh` and placed just right of the clock. It hides itself when the active keyboard has only one layout, so a single-layout machine never sees it. Clicking it runs `hyprctl switchxkblayout <keyboard> next` on the keyboard the widget is describing. If yours is missing:
+The bar also carries a keyboard layout widget, `omarchy.keyboard-layout`, added to the default layout by migration `1786279107.sh` and placed just right of the clock. It only renders when the active keyboard has more than one layout, so on a single-layout machine there is nothing to see. Clicking it runs `hyprctl switchxkblayout <keyboard> next` on the keyboard the widget is describing. If yours is missing:
 
 ```bash
 omarchy bar put omarchy.keyboard-layout --after omarchy.clock
@@ -159,17 +163,17 @@ Omarchy 4 handles this in two places. `etc/mkinitcpio.conf.d/omarchy_hooks.conf`
 
 So on a non-Latin layout the unlock prompt stays US QWERTY by design. Type the passphrase as if you were on a US keyboard. The guard is not in v3.8.4, which still bundles unconditionally via migration `1783355853.sh`.
 
-The same list appears a second time in `default/hypr/input.lua`, for a different reason. Hyprland resolves keybindings against the first entry in `kb_layout`, not the active one, so a non-Latin layout in front would break `SUPER + W` and everything like it. Omarchy prepends `us,` and appends `grp:alts_toggle` so your real layout is one Alt-Alt away.
+The same list appears a second time in `default/hypr/input.lua`, for a different reason. Hyprland matches keybindings against whichever layout is listed first in `kb_layout`, regardless of which one you are typing on, so a non-Latin layout in front would break `SUPER + W` and everything like it. Omarchy prepends `us,` and appends `grp:alts_toggle` so your real layout is one Alt-Alt away.
 
 ## Why the clock and calendar are English
 
-This is settled, not broken. `Qt.formatDateTime` and `Qt.formatDate` render `dddd`, `MMMM` and `AP` through the C locale whatever `Qt.locale()` resolves to, so the Quickshell bar clock comes out English even with `LANG=sv_SE.UTF-8`.
+This is settled, not broken. The clock plugin formats its dates with `Qt.formatDateTime` and `Qt.formatDate`, and those two calls take their weekday names, month names and AM/PM markers from the C locale. `Qt.locale()` can report `sv_SE` all it likes; the Quickshell bar clock still comes out English.
 
-isaac30503 reported it as issue #6934 and diagnosed it correctly. DHH closed it as not planned on the same day, with the reasoning that the entire shell is English already, so localizing the clock alone would make it the one localized surface on an English desktop. The calendar popup was treated as the accident, and PR #6988 by DHH, merged 2026-08-15, made the calendar's day names English too by pinning `labelLocale` to `Qt.locale("en_US")` in `shell/plugins/panels/clock/Panel.qml`. Where the week starts still follows your locale, since that is a regional convention rather than a translation, and it is overridable with `weekStartDay`.
+isaac30503 reported it as issue #6934 and diagnosed it correctly. DHH closed it as not planned on the same day. His reasoning: menus, panels and notifications are all English, so a translated clock would not make the desktop consistent, it would just be the single translated thing on it. The calendar popup, which had been reading day names from the system locale, was treated as the accident. PR #6988 by DHH, merged 2026-08-15, made the calendar's day names English too by pinning `labelLocale` to `Qt.locale("en_US")` in `shell/plugins/panels/clock/Panel.qml`. The first day of the week was left alone because it is a regional setting rather than a piece of text, and you can still set it yourself with `weekStartDay`.
 
 Issues #7211, #7760 and #8600 all report the same surface from different angles and are all still open on 4.0.4. Treat English dates as current behaviour, not as a bug waiting on you.
 
-There is also no language question at setup. Nothing in the omarchy repository writes `/etc/locale.gen` or `/etc/locale.conf`. Setup asks for keyboard layout, hostname and timezone only.
+There is also no language question at setup. Nothing in the omarchy repository writes `/etc/locale.gen` or `/etc/locale.conf`. Setup asks for keyboard layout, your account details, hostname and timezone, and that is all.
 
 ## Input methods: what is already installed
 
@@ -198,7 +202,7 @@ Five relevant pull requests were open against `omacom/omarchy` on 2026-09-16. No
 
 The last one is worth watching closely, because it points the opposite way from the decision in #6934. If it merges, English dates stop being the answer. Until then they are.
 
-"Quattro RS 4.5" is the announced next release. Nothing published about it commits to any of these, so do not plan around them.
+DHH has said on X that the next release will be called "Quattro RS 4.5" rather than 4.1. I found nothing published about it that commits to any of these five, so do not plan around them.
 
 ## Related
 

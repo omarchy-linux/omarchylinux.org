@@ -1,7 +1,7 @@
 {
  "source": "github.com/omacom/omarchy",
  "fetchedAt": "2026-09-17T00:53:55.311779+00:00",
- "derivedAt": "2026-09-17T01:04:32.203882+00:00",
+ "derivedAt": "2026-09-17T01:06:24.809155+00:00",
  "quirkScriptRef": "v4.0.4",
  "counts": {
   "models": 143,
@@ -4130,8 +4130,6 @@
     "MSI B550",
     "MSI Bravo",
     "MSI Cooler",
-    "MSI Detection",
-    "MSI Embedded",
     "MSI G321Q",
     "MSI GL63",
     "MSI GS60",
@@ -4139,7 +4137,9 @@
     "MSI Laptop",
     "MSI MAG",
     "MSI MP271",
-    "MSI MP275Q"
+    "MSI MP275Q",
+    "MSI MP341CQ",
+    "MSI MPG"
    ],
    "variants": [
     "600-series",
@@ -4147,8 +4147,6 @@
     "B550",
     "Bravo",
     "Cooler",
-    "Detection",
-    "Embedded",
     "G321Q",
     "GL63",
     "GS60",
@@ -4161,42 +4159,44 @@
     "Optimus",
     "Prestige",
     "Stealth",
-    "Titan"
+    "Titan",
+    "X370",
+    "X570"
    ],
    "counts": {
-    "issues": 32,
-    "open": 19,
-    "closed": 13,
-    "discussions": 5
+    "issues": 30,
+    "open": 18,
+    "closed": 12,
+    "discussions": 4
    },
    "components": [
     {
      "key": "nvidia",
-     "issues": 19
-    },
-    {
-     "key": "multi-monitor",
-     "issues": 18
-    },
-    {
-     "key": "boot-limine",
      "issues": 17
     },
     {
+     "key": "multi-monitor",
+     "issues": 17
+    },
+    {
+     "key": "boot-limine",
+     "issues": 15
+    },
+    {
      "key": "battery-power",
-     "issues": 9
+     "issues": 8
     },
     {
      "key": "hybrid-gpu",
-     "issues": 9
-    },
-    {
-     "key": "storage-nvme",
-     "issues": 7
+     "issues": 8
     },
     {
      "key": "wifi",
      "issues": 7
+    },
+    {
+     "key": "storage-nvme",
+     "issues": 6
     },
     {
      "key": "amd-gpu",
@@ -4208,19 +4208,19 @@
     },
     {
      "key": "suspend-sleep",
-     "issues": 5
-    },
-    {
-     "key": "intel-gpu",
      "issues": 4
     },
     {
-     "key": "thunderbolt-dock",
+     "key": "intel-gpu",
      "issues": 3
     },
     {
-     "key": "bluetooth",
+     "key": "thunderbolt-dock",
      "issues": 2
+    },
+    {
+     "key": "bluetooth",
+     "issues": 1
     },
     {
      "key": "audio",
@@ -4239,24 +4239,6 @@
       "boot-limine"
      ],
      "createdAt": "2026-09-16T02:35:05Z"
-    },
-    {
-     "number": 11873,
-     "title": "Hyprland crash-loop on boot (aquamarine DRM backend teardown), bar position corrupted",
-     "url": "https://github.com/omacom/omarchy/issues/11873",
-     "state": "OPEN",
-     "components": [
-      "nvidia",
-      "intel-gpu",
-      "hybrid-gpu",
-      "suspend-sleep",
-      "multi-monitor",
-      "bluetooth",
-      "boot-limine",
-      "battery-power",
-      "thunderbolt-dock"
-     ],
-     "createdAt": "2026-09-15T00:38:09Z"
     },
     {
      "number": 11834,
@@ -4603,18 +4585,6 @@
       "multi-monitor"
      ],
      "createdAt": "2025-10-24T03:25:22Z"
-    },
-    {
-     "number": 2522,
-     "title": "External SSD not detected as bootable after update (reappeared after multiple reboots)",
-     "url": "https://github.com/omacom/omarchy/issues/2522",
-     "state": "CLOSED",
-     "components": [
-      "nvidia",
-      "boot-limine",
-      "storage-nvme"
-     ],
-     "createdAt": "2025-10-18T05:28:47Z"
     },
     {
      "number": 2021,

@@ -27,7 +27,7 @@ sources:
   - url: "https://github.com/omacom/omarchy/issues/8776"
     title: "Issue #8776: Dual-GPU AMD: PCI by-path in AQ_DRM_DEVICES silently login-loops SDDM autologin"
     kind: issue
-    author: "Elshayib"
+    author: "mowgli42"
     date: "2026-08-28"
   - url: "https://github.com/omacom/omarchy/issues/10700"
     title: "Issue #10700: Silent lock-screen login loop when ~/.config/uwsm/env.d has a shell error (UWSM preloader fails with no UI)"
@@ -48,10 +48,22 @@ sources:
     title: "Issue #8438: Omarchy 4.0.1 migration 1787399318 installs a Qt 6.11.2-built quickshell that cannot start on the Qt 6.11.1 pin from #7750"
     kind: issue
     author: "greencubator1"
+    date: "2026-08-26"
+  - url: "https://github.com/omacom/omarchy/issues/7750"
+    title: "Issue #7750: Qt 6.11.2 SIGSEGV in QUntypedPropertyBinding on Omarchy shell startup (Variants / Repeater)"
+    kind: issue
+    author: "rliessum"
+    date: "2026-08-22"
   - url: "https://github.com/omacom/omarchy/issues/10930"
     title: "Issue #10930: omarchy-launch-shell exits silently when compositor_alive() false-negatives during output reconfiguration, leaving no bar"
     kind: issue
     author: "matti-lamppu"
+    date: "2026-09-09"
+  - url: "https://github.com/omacom/omarchy/issues/11213"
+    title: "Issue #11213: omarchy-shell crashes (exit 255) on resume when FALLBACK monitor is removed, briefly showing Hyprland's lock-crashed screen"
+    kind: issue
+    author: "coloradobum"
+    date: "2026-09-10"
   - url: "https://github.com/omacom/omarchy/discussions/7758"
     title: "Discussion #7758: Omarchy on VirtualBox"
     kind: discussion
@@ -67,9 +79,15 @@ credits:
   - name: "sanity"
     url: "https://github.com/sanity"
     for: "Traced the SDDM loop to a stale UKI carrying an old NVIDIA module, and posted the modprobe recovery"
+  - name: "mowgli42"
+    url: "https://github.com/mowgli42"
+    for: "Found that Aquamarine splits AQ_DRM_DEVICES on every colon, so by-path GPU pins kill Hyprland"
   - name: "Elshayib"
     url: "https://github.com/Elshayib"
-    for: "Found that Aquamarine splits AQ_DRM_DEVICES on every colon, so by-path GPU pins kill Hyprland"
+    for: "Wrote PR #8786, the proposed by-path sanitizer for AQ_DRM_DEVICES"
+  - name: "greencubator1"
+    url: "https://github.com/greencubator1"
+    for: "Separated the exit 127 symbol lookup failure from the Qt 6.11.2 SIGSEGV and posted the keep-the-pin workaround"
   - name: "austrasien"
     url: "https://github.com/austrasien"
     for: "Showed that one bad line in ~/.config/uwsm/env.d loops the login screen with no visible error"
@@ -83,14 +101,14 @@ faq:
   - q: "How do I get a terminal when the screen is black?"
     a: "Press Ctrl+Alt+F2, and try F3 through F6 if F2 does nothing. You get a text login. If no console key works, reboot and pick an older snapshot from the Limine menu, which boots the same way but with an older system state."
   - q: "Is a black screen with a visible mouse cursor the same problem as a black screen with nothing at all?"
-    a: "No. A cursor means Hyprland is running and the Quickshell shell died, so there is no bar, no wallpaper and no lock screen. No cursor usually means Hyprland never started, which is almost always a GPU or session environment problem."
+    a: "Usually not. A cursor most often means Hyprland is running and the Quickshell shell died, so there is no bar, no wallpaper and no lock screen. No cursor usually means Hyprland never started, which is almost always a GPU or session environment problem. The cursor is not proof, though: the VirtualBox report in discussion #7758 had a cursor with Hyprland dead, so check with pgrep rather than trusting the pointer."
   - q: "Will rolling back a snapshot fix it?"
-    a: "Only if the cause is in the system tree. Both issue #10700 and issue #8776 note that the offending file lives under /home, which snapshots of the root subvolume do not revert, so every snapshot in the Limine menu inherits the same broken value."
+    a: "Only if the cause is in the system tree. Issue #10700 and a comment in issue #8776 both note that the offending file lives under /home, which snapshots of the root subvolume do not revert, so every snapshot in the Limine menu inherits the same broken value."
 related: [quickshell-crashes-or-bar-missing, hybrid-gpu-laptop-black-screen-aq-drm-devices, nvidia-drivers-omarchy-4, login-loop-or-password-not-accepted-sddm, stuck-at-tty-or-cannot-switch-tty]
 draft: false
 ---
 
-A black screen after login is two different failures wearing the same face. Either Hyprland never started, or Hyprland started and the Quickshell shell that draws everything died. Telling them apart takes one command and decides everything else you do. All versions below were checked against the 4.0.4 source tree.
+A black screen after login is two different failures wearing the same face. Either Hyprland never started, or Hyprland started and the Quickshell shell that draws everything died. Telling them apart takes one command and decides everything else you do. Every script name and journal message below was checked against the 4.0.4 source tree.
 
 ## The fix
 
@@ -107,14 +125,20 @@ Every step here runs from a text console. Nothing can be done from the black scr
 
    A running Hyprland with an instance directory means the compositor is fine and the shell is gone. Go to step 3. Nothing listed means Hyprland aborted. Go to step 4.
 
-3. **Hyprland is alive, the shell is not.** This is the cursor-on-black case. Restart the shell:
+3. **Hyprland is alive, the shell is not.** This is usually the cursor-on-black case. Restart the shell:
 
    ```bash
    omarchy-restart-shell
    journalctl -b -t omarchy-shell
    ```
 
-   The `omarchy-shell` journal tag is where Quickshell's output goes, because `omarchy-launch-shell` pipes it through `systemd-cat`. Two signatures matter. `exited with status 127` plus `symbol lookup error` is the Qt pin problem in issue [#8438](https://github.com/omacom/omarchy/issues/8438): the packaged quickshell is built against a newer Qt than the one held back on your machine. Remove any `IgnorePkg` line for `qt6-*` in `/etc/pacman.conf` and run a full `sudo pacman -Syu`. `exited with status 255` after a Wayland fatal error is the supervisor problem in issues [#10930](https://github.com/omacom/omarchy/issues/10930) and #11213, usually after a dock hotplug or a resume; the restart above is the recovery, and there is no fix in 4.0.4.
+   The `omarchy-shell` journal tag is where Quickshell's output goes, because `omarchy-launch-shell` pipes it through `systemd-cat`. Three signatures matter.
+
+   `exited with status 127` plus `symbol lookup error`, with nothing in `coredumpctl list`, means the quickshell binary and the installed Qt do not match. In issue [#8438](https://github.com/omacom/omarchy/issues/8438) that happened because the reporter had pinned `qt6-*` at 6.11.1 in `/etc/pacman.conf` to dodge issue [#7750](https://github.com/omacom/omarchy/issues/7750), and the 4.0.1 migration then installed a quickshell built against 6.11.2. The reporter's workaround is to keep the pin and reinstall the matching `quickshell-git` package from the pacman cache with `sudo pacman -U`, then `omarchy restart shell`, all from the TTY because the polkit agent lives inside the dead shell. Dropping the pin instead brings back the #7750 crash, which was closed as an upstream Qt bug rather than fixed. If you never pinned anything and still see exit 127, the triage in the same thread points at mirror skew, and a full `sudo pacman -Syu` once your mirror has caught up is the answer.
+
+   A run of SIGSEGVs with coredumps, ending in `Giving up on the Omarchy shell after 6 relaunches`, is #7750 itself: Qt 6.11.2 crashes the shell on first graph load.
+
+   `WARN: The Wayland connection experienced a fatal error` as the last `omarchy-shell` line is the supervisor problem in issues [#10930](https://github.com/omacom/omarchy/issues/10930) and [#11213](https://github.com/omacom/omarchy/issues/11213), usually after a dock hotplug or a resume. Sometimes it is followed by `exited with status 255; relaunching` and the shell comes back on its own; in #10930 the supervisor gave up silently because Hyprland was busy reconfiguring outputs and missed the liveness check. The restart above is the recovery. The 4.0.4 `omarchy-launch-shell` still has that silent exit path, so there is no fix in 4.0.4.
 
 4. **Hyprland never started.** Read the journal before changing anything:
 
@@ -128,12 +152,12 @@ Every step here runs from a text console. Nothing can be done from the black scr
    **`drm: Found no gpus to use, cannot continue`.** Something set `AQ_DRM_DEVICES` to a value Aquamarine cannot parse. It splits the variable on every colon, so any `/dev/dri/by-path/pci-0000:13:00.0-card` string becomes three nonexistent paths and the compositor dies with no message on screen. Find it and remove it:
 
    ```bash
-   grep -rn AQ_DRM_DEVICES ~/.config/uwsm/ /etc/environment 2>/dev/null
+   grep -rn AQ_DRM_DEVICES ~/.config/uwsm/ ~/.config/hypr/ /etc/environment 2>/dev/null
    ```
 
-   Delete the line, or replace the value with a plain `/dev/dri/cardN` path that contains no colon. This was reported in issue [#8776](https://github.com/omacom/omarchy/issues/8776) on a dual-AMD desktop and again on an MSI hybrid laptop. PR [#8786](https://github.com/omacom/omarchy/pull/8786) proposes a sanitizer but was still open when this page was written, and there is no `AQ_` handling anywhere in the 4.0.4 tree.
+   Delete the line. If you genuinely need to pin a GPU, do not swap in `/dev/dri/cardN` either: the reporter of issue [#8776](https://github.com/omacom/omarchy/issues/8776) found those numbers rotate between boots on their hardware, and used a udev rule that gives each card a colon-free name like `/dev/dri/igpu` instead. The same failure was reported in that thread on a dual-AMD desktop and again on an MSI hybrid laptop running 4.0.3. PR [#8786](https://github.com/omacom/omarchy/pull/8786) proposes a sanitizer but was still open when this page was written, and there is no `AQ_` handling anywhere in the 4.0.4 tree.
 
-   **`uwsm_env-preloader` errors, or `Env output mark ... not found in shell output`.** A shell syntax error in any file under `~/.config/uwsm/env.d/` aborts the session environment preloader, and you bounce straight back to the login screen. Move the file out of the directory, not just rename it, because uwsm sources every entry it finds:
+   **`uwsm_env-preloader` errors, or `Env output mark ... not found in shell output`.** A shell syntax error in any file under `~/.config/uwsm/env.d/` aborts the session environment preloader, and you bounce straight back to the lock or login screen with no error. Move the file out of the directory, not just rename it, because uwsm sources every entry it finds:
 
    ```bash
    mkdir -p ~/uwsm-broken && mv ~/.config/uwsm/env.d/99-bad ~/uwsm-broken/
@@ -152,9 +176,9 @@ Every step here runs from a text console. Nothing can be done from the black scr
 
    That recovery is from the reporter of issue [#5706](https://github.com/omacom/omarchy/issues/5706). It gets you logged in now, but the boot image is still stale, so rebuild it before you reboot. Another user in the same thread reported that `sudo pacman -Syyu nvidia` from a TTY was what fixed it for them.
 
-   **`[AQ] atomic drm request: failed to commit` on an AMD Strix Point laptop.** Add `AQ_NO_ATOMIC=1` to the session environment, not to `hyprland.lua`. Aquamarine reads it before Hyprland parses Lua, so `hl.env()` is too late. Put it in `~/.config/uwsm/env-hyprland` and reboot. See issue [#9720](https://github.com/omacom/omarchy/issues/9720).
+   **`[AQ] atomic drm request: failed to commit` on an AMD Strix Point laptop.** The reporter of issue [#9720](https://github.com/omacom/omarchy/issues/9720), on a ROG Zephyrus G14 with a Radeon 890M, got past this with `AQ_NO_ATOMIC=1` in the session environment, not in `hyprland.lua`. Their finding is that Aquamarine reads it before Hyprland parses Lua, so `hl.env()` is too late. Put `export AQ_NO_ATOMIC=1` in `~/.config/uwsm/env-hyprland` and reboot. They also set `WLR_NO_HARDWARE_CURSORS=1` alongside it.
 
-   **You are in a VM.** In VirtualBox use the VMSVGA controller with 128 MB of video memory and 3D acceleration on, install `virtualbox-guest-utils`, enable `vboxservice`, and force software GL by adding `hl.env("LIBGL_ALWAYS_SOFTWARE", "1")` to `~/.config/hypr/hyprland.lua` right after the bootstrap line. Editing `hyprland.conf` does nothing on 4.x. VMware Workstation with 3D acceleration is an open bug. See [running Omarchy in VirtualBox](/run/virtualbox/) and [VMware](/run/vmware-workstation-fusion/).
+   **You are in a VM.** In VirtualBox, a commenter on discussion [#7758](https://github.com/omacom/omarchy/discussions/7758) traced a cursor-on-black to Hyprland aborting at GPU init with `vmwgfx` channel errors, on 4.0.2. Their fix is all three of: the VMSVGA controller with 128 MB of video memory and 3D acceleration on, `virtualbox-guest-utils` installed with `vboxservice` enabled, and software GL forced by adding `hl.env("LIBGL_ALWAYS_SOFTWARE", "1")` to `~/.config/hypr/hyprland.lua` right after the bootstrap line. Editing `hyprland.conf` does nothing on 4.x. VMware Workstation with 3D acceleration is a different shape: Hyprland runs but the shell dies on a Wayland protocol error, tracked as an open bug in issue [#8113](https://github.com/omacom/omarchy/issues/8113), where a commenter reports `hl.env("QT_QUICK_BACKEND", "software")` keeps the shell up without pushing the compositor onto llvmpipe. See [running Omarchy in VirtualBox](/run/virtualbox/) and [VMware](/run/vmware-workstation-fusion/).
 
 ## Verify it worked
 
@@ -172,9 +196,9 @@ Collect the evidence before asking anywhere. `omarchy-debug` writes `/tmp/omarch
 
 If the black screen only appears when an external display or a dock is attached, it is more likely a monitor layout problem than a GPU one; see [multi-monitor layout not saved](/fix/multi-monitor-layout-not-saved/) and the manual chapter on [monitors](https://omarchy.org/manual/monitors/). If the screen goes black on resume rather than at login, that is [suspend](/fix/suspend-wont-resume-s2idle/), not this. If the bar comes back but keeps dying, read [Quickshell crashes or bar missing](/fix/quickshell-crashes-or-bar-missing/).
 
-Rolling back is a reasonable move when an update caused this, but be careful about what a rollback actually restores. Both issue #10700 and issue #8776 point out that the file at fault sits under `/home`, so every snapshot in the Limine menu inherits it. See [rollback with Snapper and Limine](/upgrade/rollback-with-snapper-and-limine/).
+Rolling back is a reasonable move when an update caused this, but be careful about what a rollback actually restores. Issue #10700 and a comment in issue #8776 both point out that the file at fault sits under `/home`, so every snapshot in the Limine menu inherits it. In the NVIDIA thread, one user reported an older snapshot booted fine while another said none of theirs did. See [rollback with Snapper and Limine](/upgrade/rollback-with-snapper-and-limine/).
 
-Evidence for 3.x is thinner and mostly historical. The black-screen cluster mentions 3.x more often than any 4.x release, but those reports are dominated by ISO-era install failures and by hyprlock crashes, and hyprlock no longer exists in 4.x. The NVIDIA and hybrid-GPU causes above apply to both series.
+Evidence for 3.x is thinner and mostly historical. The black-screen reports on GitHub mention 3.x more often than any single 4.x release, but the most-discussed ones are install and first-boot failures on older ISOs, and the shell-side causes above cannot apply because Quickshell did not exist before 4.0.0. The NVIDIA recovery above comes from a 3.x-era report, issue #5706, and the mechanism it describes, a UKI that was not rebuilt after a failed DKMS build, is the same Limine and mkinitcpio setup 4.0.4 installs.
 
 ## Related
 

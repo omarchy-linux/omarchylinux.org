@@ -41,6 +41,11 @@ sources:
     kind: issue
     author: "rafaelclima"
     date: "2026-09-01"
+  - url: "https://github.com/omacom/omarchy/pull/9406"
+    title: "PR #9406: Let cups-browsed removal proceed when CUPS isn't running (closed unmerged)"
+    kind: pr
+    author: "Chessing234"
+    date: "2026-09-16"
 credits:
   - name: "docPoacher"
     url: "https://github.com/docPoacher"
@@ -54,11 +59,14 @@ credits:
   - name: "rafaelclima"
     url: "https://github.com/rafaelclima"
     for: "Found that the printer migration parses an English-only lpstat string"
+  - name: "arkmpm"
+    url: "https://github.com/arkmpm"
+    for: "Confirmed the stopped-scheduler failure blocks the rest of the update and verified the start-CUPS-then-retry workaround"
 faq:
   - q: "Why does my printer no longer appear by itself after updating to 4.0.2 or later?"
-    a: "Automatic discovery was removed on purpose in 4.0.2. The cups-browsed daemon came out of the default package set and a migration removes it from machines that already had it. Add the printer once in Print Settings and it stays."
+    a: "Automatic discovery was removed on purpose in 4.0.2. Fresh installs no longer get the cups-browsed daemon, and updated machines lose it through a migration. Add the printer once in Print Settings and it stays."
   - q: "Does Omarchy ship a Print to PDF printer?"
-    a: "Not since 4.0.2. The cups-pdf package was dropped because its backend runs as root and accepts a job-controlled post-processing command. Use the application's own Print to File option in the GTK print dialog instead."
+    a: "Not since 4.0.2. The cups-pdf package was dropped for security reasons: CUPS ran its backend as root, and a print job could steer what that backend executed afterwards. Use the application's own Print to File option in the print dialog instead."
   - q: "Can I scan out of the box?"
     a: "No. Nothing scanner related is in the base package set on 4.0.4. Install sane, sane-airscan and a front end such as simple-scan yourself."
   - q: "Do I need sudo to add a printer?"
@@ -81,9 +89,9 @@ Nothing for scanning ships. There is no `sane`, no `sane-airscan`, no `simple-sc
 
 1. Press `Super + Space` and launch Print Settings.
 2. Choose _Add_ and give it several seconds. A USB printer that is plugged in and powered on, and most network printers, are found during that probe.
-3. If yours is not listed, pick _Network Printer > Internet Printing Protocol (ipp)_ and type the address. The printer's own display or its web page will tell you. It is usually a plain IP with a queue path of `ipp/print`.
-4. _Forward_ offers a driver. Per the official manual, a modern printer is best left on the driverless _IPP Everywhere_ profile, and an older one wants its model driver.
-5. Right-click the finished printer and choose _Set as Default_. _Properties_ is where paper size, duplex and quality live.
+3. If yours is not listed, pick _Network Printer > Internet Printing Protocol (ipp)_ and type the address. Get it from the printer's front panel or its web interface. It is usually a plain IP with a queue path of `ipp/print`.
+4. _Forward_ offers a driver. The manual's advice is to leave a modern printer on the driverless _IPP Everywhere_ profile and to give an older one its model driver.
+5. Right-click the finished printer and choose _Set as Default_. Paper size, duplex and print quality are under _Properties_.
 
 Print Settings asks for your password through polkit when it needs administrator rights. That is `cups-pk-helper` doing its job.
 
@@ -115,11 +123,11 @@ One result that looks like a failure is not one. Running `lpinfo -v` without `su
 
 ## Why discovery is off
 
-Omarchy 4.0.2, released 2026-08-31, lists "Temporarily remove automatic printer discovery" under Deprecations. PR #8951 took `cups-browsed` out of the default package set and added migration `1788009111`, which stops and removes the daemon on machines that already had it, clears idle discovery queues, and leaves manually added IPP and USB printers in place. The same release dropped `cups-pdf`, whose backend runs as root and accepts a job-controlled post-processing command, and added `cups-pk-helper` so printer administration goes through polkit instead of a privileged group.
+Omarchy 4.0.2, released 2026-08-31, lists "Temporarily remove automatic printer discovery" under Deprecations. PR #8951 took `cups-browsed` out of the default package set and added migration `1788009111`, which stops and removes the daemon on machines that already had it, clears idle discovery queues, and leaves manually added IPP and USB printers in place. The same release dropped `cups-pdf`, because CUPS launched its backend as root and a print job could influence the command that backend ran afterwards, and added `cups-pk-helper` so printer administration goes through polkit instead of a privileged group.
 
 That is a real behaviour change between point releases. On 3.8.4 and on 4.0.0 and 4.0.1, `cups-browsed` was installed and enabled, so network printers tended to show up unprompted. From 4.0.2 onward they do not. The hardened discovery configuration still sits in the repository, unused, which is a fair signal that the project intends to bring discovery back rather than drop it for good.
 
-If `omarchy update` itself failed at this migration rather than after it, there are two known causes: it exits nonzero when the CUPS scheduler is not running (#9377), and it fails on non-English locales because it matches an English `lpstat` string while `LANGUAGE` overrides `LC_ALL` (#9640). Both were still open when this page was checked.
+If `omarchy update` itself failed at this migration rather than after it, there are two known causes: it exits nonzero when the CUPS scheduler is not running (#9377), and it fails on non-English locales because it matches an English `lpstat` string while `LANGUAGE` overrides `LC_ALL` (#9640). Both were still open when this page was checked, the 4.0.4 migration script still only recognises the English `No destinations added.` message, and the pull request that addressed the stopped-scheduler case (#9406) was closed without being merged on 2026-09-16. Because the migration runner stops at the first failure, a machine hitting either bug also skips every later update step until the migration passes. For the stopped-scheduler case a second reporter on #9377 confirmed a workaround: start `cups.socket` and `cups.service`, rerun `omarchy update`, then stop them again if you do not want CUPS running.
 
 ## If that did not work
 
@@ -140,8 +148,8 @@ scanimage -L
 
 `sane-airscan` is the piece that matters for anything modern. It speaks eSCL and WSD over the network, which is the scanning equivalent of driverless printing, and it means most recent all-in-one devices work without a vendor driver. `avahi-daemon` is already running, which is what airscan uses to find them. If `scanimage -L` lists your device, `simple-scan` will too.
 
-USB-only scanners are less predictable. `sane` ships its own udev rules and a `scanner` group, and an HP all-in-one generally wants `hplip` as well. We have not tested a USB scanner on 4.0.4 hardware, and there are no open Omarchy issues about scanning at all, so that part is standard Arch behaviour rather than anything Omarchy specific.
+USB-only scanners are less predictable. Device permissions come from the udev rules the `sane` package installs, and an HP all-in-one generally wants `hplip` as well. We have not tested a USB scanner on 4.0.4 hardware, and there are no open Omarchy issues about scanning at all, so that part is standard Arch behaviour rather than anything Omarchy specific.
 
 ## What to watch for on newer versions
 
-The next release is announced as Quattro RS 4.5. Automatic discovery was removed as a temporary measure, and the hardened `cups-browsed` configuration, sysusers entry and service drop-in were deliberately kept in the repository, so discovery returning is the change to expect. If it does, network printers may start appearing on their own again and any queue you added by hand will simply sit alongside them.
+The next release is announced as Quattro RS 4.5. Automatic discovery was removed as a temporary measure, and the 4.0.4 tree still carries `etc/cups/cups-browsed.conf`, a sysusers file for a dedicated `cups-browsed` account and a locked-down service drop-in, none of which anything installs. That is the strongest hint about what comes next: discovery coming back in a hardened form. If it does, network printers may start appearing on their own again and any queue you added by hand will simply sit alongside them.

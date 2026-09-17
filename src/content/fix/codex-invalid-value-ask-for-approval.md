@@ -10,7 +10,7 @@ fixedIn: "4.0.2"
 lastVerified: 2026-09-16
 omarchyVersionTested: "4.0.4"
 category: agents
-issueCount: 20
+issueCount: 19
 errorStrings:
   - "error: invalid value 'untrusted' for '--ask-for-approval <APPROVAL_POLICY>'"
   - "[possible values: on-request, never]"
@@ -73,7 +73,7 @@ credits:
     for: "Measured that the approval policy is never consulted on the limits probe"
 faq:
   - q: "Is my Codex CLI broken?"
-    a: "No. Only the Omarchy agents panel probe fails. The `codex`, `cx` and `cy` commands launch Codex with `--approve-for-me`, which current Codex CLI still accepts."
+    a: "No. Only the Omarchy agents panel probe fails. Plain `codex` passes no approval flag at all, and the `cy` alias and `omarchy agent` launch Codex with `--approve-for-me`, which current Codex CLI still accepts."
   - q: "Should I downgrade Codex CLI to make the panel work?"
     a: "No. Update Omarchy to 4.0.2 or newer instead. Downgrading to a Codex build that still accepts `untrusted` fixes the symptom but leaves you on an old CLI."
   - q: "Why does the panel say `initialize` instead of a real error?"
@@ -129,7 +129,7 @@ Check that the shipped collector no longer carries the retired value:
 grep -n 'app-server' /usr/bin/omarchy-agent-usage-codex
 ```
 
-On 4.0.2 and later that line reads `[codex, "-s", "read-only", "-a", "on-request", "app-server"]`. I confirmed the same line in the v4.0.2, v4.0.3 and v4.0.4 source snapshots.
+On 4.0.2 and later that line reads `[codex, "-s", "read-only", "-a", "on-request", "app-server"]`. The same line is present in the v4.0.2, v4.0.3 and v4.0.4 source.
 
 Then look at the record the panel actually reads:
 
@@ -143,11 +143,11 @@ You can also drive the probe by hand. `codex -s read-only -a on-request app-serv
 
 ## Why it happens
 
-Codex CLI retired `untrusted` as an approval policy. On issue #7648 the maintainer bot posted the accepted values read back from four builds: 0.100.0 and 0.130.0 took `untrusted`, `on-failure`, `on-request` and `never`; 0.146.1 had dropped `on-failure`; and 0.149.0 accepts only `on-request` and `never`.
+Codex CLI retired `untrusted` as an approval policy. On issue #9283 the maintainer bot posted the accepted values read back from four builds: 0.100.0 and 0.130.0 took `untrusted`, `on-failure`, `on-request` and `never`; 0.146.1 had dropped `on-failure`; and 0.149.0 accepts only `on-request` and `never`.
 
 Quattro's agents panel, new in 4.0.0, asks Codex for your plan and limits by spawning the Codex app server and sending three calls: `initialize`, `account/read` and `account/rateLimits/read`. Line 531 of `bin/omarchy-agent-usage-codex` hardcoded `-a untrusted`. Once you had a Codex CLI at 0.149 or newer, the process died on argument parsing before the handshake started.
 
-Omarchy does not pin the Codex CLI, so the two move independently. The early reports all came from people who installed Codex through mise rather than from the Omarchy package set, which is why this looked patchy at first.
+Omarchy does not pin the Codex CLI, so the two move independently. When the first reports came in, the packaged `openai-codex-bin` was still on 0.148.0, the last build that accepted `untrusted`, so the early reporters were people who had installed Codex another way, mostly through mise. That is why this looked patchy at first.
 
 The opaque `initialize` text is a second, separate defect. The collector sends the subprocess stderr to `subprocess.DEVNULL`, and its RPC helper raises `TimeoutError(method)` when the pipe closes, so the exception message is the RPC method name. The handler assigns that string to `authHelpText`, which is exactly what the panel renders. That code is unchanged in 4.0.4, so the real Codex error is still hidden if the handshake fails for some other reason.
 
@@ -160,10 +160,10 @@ One detail worth knowing: the approval policy is never actually used on this pat
 - **Confirm the panel is looking at the right failure.** If `authHelpText` says `codex not found in PATH`, the collector could not find the `codex` binary at all. That is a mise shim or PATH problem, not this bug.
 - **Check you are signed in.** Run `codex login status`. An unauthenticated CLI cannot return a plan or limits no matter which approval policy is passed.
 - **Run the probe by hand.** Because stderr is discarded, the panel will keep saying `initialize` for any handshake failure. `codex -s read-only -a on-request app-server` prints the real error.
-- **Check you actually updated.** Several reports filed in September, including #10727 on 2026-09-07 and #11254 on 2026-09-11, are from machines still running 4.0.0-1 or 4.0.1-1. I found no report of this error from anyone on 4.0.2 or later.
+- **Check you actually updated.** Several reports filed in September, including #10727 on 2026-09-07 and #11254 on 2026-09-11, are from machines still running 4.0.0-1 or 4.0.1-1. No report of this exact error has come from anyone on 4.0.2 or later.
 - **Expect the tab to vanish, not just break, on a fresh machine.** The panel admits a provider only when it has local usage, limits or a balance, so a new install with no Codex session history and a failing limits probe shows no Codex chip at all.
 
-Evidence note: everything above comes from the Omarchy issue tracker and from reading `bin/omarchy-agent-usage-codex` in the v4.0.0 through v4.0.4 source snapshots. I did not run Codex CLI myself, so the claim that `on-request` works on every Codex build from 0.100 forward rests on the maintainer bot's posted output on issue #9283.
+Evidence note: the mechanism and steps above come from the Omarchy issue tracker and from `bin/omarchy-agent-usage-codex` in the v4.0.0 through v4.0.4 source. The claim that `on-request` is accepted by every Codex build from 0.100 forward rests on the maintainer bot's posted output on issue #9283.
 
 ## Related
 

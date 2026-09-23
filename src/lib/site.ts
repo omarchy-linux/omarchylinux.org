@@ -5,8 +5,8 @@ export const SITE = {
   tagline: 'Does it run on my hardware? What broke in this version? How do I fix this error?',
   description:
     'Unofficial, version-stamped reference for Omarchy Linux: hardware compatibility reports, error fixes, the full command and keybinding reference, and what changed between releases. Not affiliated with 37signals or the Omacom Foundation.',
-  repo: 'https://github.com/singhjp006/omarchylinux.org',
-  editBase: 'https://github.com/singhjp006/omarchylinux.org/edit/main/',
+  repo: 'https://github.com/omarchy-linux/omarchylinux.org',
+  editBase: 'https://github.com/omarchy-linux/omarchylinux.org/edit/main/',
   contact: 'hello@omarchylinux.org',
   official: {
     site: 'https://omarchy.org',

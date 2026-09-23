@@ -30,7 +30,7 @@ node scripts/og.mjs                     # regenerate Open Graph images
 
 Five things need your input. Everything else is done.
 
-1. ~~Create the GitHub repository.~~ Done: <https://github.com/singhjp006/omarchylinux.org>. If you later move it to an organization, change `repo` and `editBase` in `src/lib/site.ts`.
+1. ~~Create the GitHub repository.~~ Done: <https://github.com/omarchy-linux/omarchylinux.org>. If you later move it to an organization, change `repo` and `editBase` in `src/lib/site.ts`.
 2. **Set the contact address.** `src/lib/site.ts` has `contact: 'hello@omarchylinux.org'`. Point it somewhere you read, or change it to a GitHub discussions link.
 3. **Point DNS at the host.** The domain is already on Cloudflare nameservers. Create the Pages project (below), then add the custom domain `omarchylinux.org` in the Pages dashboard, which writes the DNS record for you.
 4. **Email the Omacom Foundation before launch.** Draft is in the research brief: tell them what the site is, that you will never host installers or use their logo, and that the domain is theirs on request. Keep the reply.

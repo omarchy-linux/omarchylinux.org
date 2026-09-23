@@ -10,7 +10,8 @@
     "build": "astro build && pagefind --site dist",
     "preview": "astro preview",
     "check": "astro check",
-    "linkcheck": "node scripts/linkcheck.mjs"
+    "linkcheck": "node scripts/linkcheck.mjs",
+    "deploy": "bash scripts/deploy-cloudflare.sh"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",
@@ -24,5 +25,8 @@
   },
   "allowScripts": {
     "esbuild@0.28.2": true
+  },
+  "devDependencies": {
+    "wrangler": "^4.137.0"
   }
 }

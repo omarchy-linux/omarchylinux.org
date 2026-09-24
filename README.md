@@ -38,7 +38,31 @@ Five things need your input. Everything else is done.
 
 ## Deploy
 
-The domain is on Cloudflare. Create a Cloudflare Pages project named `omarchylinux-org`, connect this repository (build command `npm run build`, output `dist`), or set the `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` secrets and let `.github/workflows/deploy.yml` deploy on push to `main`. `public/_headers` and `public/_redirects` are picked up by Pages automatically. Any static host works; `dist/` is plain files.
+Cloudflare Pages, connected to this repository, is the intended setup. In the
+Cloudflare dashboard: **Workers & Pages → Create → Pages → Connect to Git**, pick
+this repo, and use:
+
+| Setting | Value |
+|---|---|
+| Framework preset | Astro (or None) |
+| Build command | `npm run build` |
+| Build output directory | `dist` |
+| Root directory | *(leave empty)* |
+
+Node is pinned to 24 by `.node-version`; Astro needs 22.12 or newer and the Pages
+default is older. `public/_headers` and `public/_redirects` are applied
+automatically. Every push to `main` then rebuilds and deploys.
+
+Nothing at build time needs Python, `gh`, or network access beyond npm: all
+generated data under `data/` and the Open Graph images in `public/og/` are
+committed.
+
+`.github/workflows/deploy.yml` builds, validates content and checks links on every
+push. It only deploys if `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`
+secrets exist, so with the Git integration above it just acts as CI. `npm run
+deploy` is the manual alternative and needs the same token.
+
+Any static host works; `dist/` is plain files.
 
 `.github/workflows/nightly-data.yml` refreshes `data/` every night and commits, which triggers a rebuild.
 

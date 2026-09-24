@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-24T01:13:55Z",
+  "fetchedAt": "2026-09-24T09:30:27Z",
   "mirrors": [
     {
       "name": "stable-mirror",
@@ -12,7 +12,7 @@
         "unix": 1788802790,
         "iso": "2026-09-07T17:39:50Z"
       },
-      "lagHoursVsUpstream": 390.61
+      "lagHoursVsUpstream": 400.76
     },
     {
       "name": "rc-mirror",
@@ -25,32 +25,32 @@
         "unix": 1788802790,
         "iso": "2026-09-07T17:39:50Z"
       },
-      "lagHoursVsUpstream": 390.61
+      "lagHoursVsUpstream": 400.76
     },
     {
       "name": "mirror",
       "url": "https://mirror.omarchy.org",
       "lastupdate": {
-        "unix": 1790205570,
-        "iso": "2026-09-23T23:19:30Z"
+        "unix": 1790239580,
+        "iso": "2026-09-24T08:46:20Z"
       },
       "lastsync": {
-        "unix": 1790208761,
-        "iso": "2026-09-24T00:12:41Z"
+        "unix": 1790241913,
+        "iso": "2026-09-24T09:25:13Z"
       },
-      "lagHoursVsUpstream": 0.0
+      "lagHoursVsUpstream": 0.7
     }
   ],
   "upstream": {
     "name": "arch-geo-mirror",
     "url": "https://geo.mirror.pkgbuild.com",
     "lastupdate": {
-      "unix": 1790205570,
-      "iso": "2026-09-23T23:19:30Z"
+      "unix": 1790242112,
+      "iso": "2026-09-24T09:28:32Z"
     },
     "lastsync": {
-      "unix": 1790212380,
-      "iso": "2026-09-24T01:13:00Z"
+      "unix": 1790242203,
+      "iso": "2026-09-24T09:30:03Z"
     }
   },
   "channels": {
@@ -3832,7 +3832,7 @@
       "arch": "aarch64",
       "url": "https://pkgs.omarchy.org/edge/aarch64/omarchy.db",
       "ok": true,
-      "packageCount": 139,
+      "packageCount": 143,
       "packages": {
         "1password": {
           "version": "8.12.34-35",
@@ -4199,6 +4199,11 @@
           "desc": "NVIDIA drivers utilities",
           "builddate": 1789926231
         },
+        "obsidian": {
+          "version": "1.13.7-2",
+          "desc": "Knowledge base on top of a local folder of plain-text Markdown files",
+          "builddate": 1790230396
+        },
         "omacalc": {
           "version": "0.2.2-1",
           "desc": "Dead-simple calculator built with Qt Quick",
@@ -4364,6 +4369,16 @@
           "desc": "Visual effects engine applied to text in the terminal.",
           "builddate": 1788559226
         },
+        "qemu-user-static": {
+          "version": "1:1.10.0.13+ds.0+deb13u1-1",
+          "desc": "A generic and open source machine emulator and virtualizer - static user-mode emulation",
+          "builddate": 1790230395
+        },
+        "qemu-user-static-binfmt": {
+          "version": "1:1.10.0.13+ds.0+deb13u1-1",
+          "desc": "Binary format rules for the static QEMU user-mode emulators",
+          "builddate": 1790230395
+        },
         "qmk-hid": {
           "version": "0.1.13-1",
           "desc": "Commandline tool for interacting with QMK devices over HID",
@@ -4528,6 +4543,11 @@
           "version": "13.0.1-1",
           "desc": "Yet another yogurt. Pacman wrapper and AUR helper written in go.",
           "builddate": 1788563489
+        },
+        "zed": {
+          "version": "1.20.2-1",
+          "desc": "A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter",
+          "builddate": 1790215321
         }
       }
     }

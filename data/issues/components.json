@@ -1,7 +1,7 @@
 {
  "source": "github.com/omacom/omarchy",
- "fetchedAt": "2026-09-24T01:07:11.111927+00:00",
- "derivedAt": "2026-09-24T01:13:20.479697+00:00",
+ "fetchedAt": "2026-09-24T09:22:54.634193+00:00",
+ "derivedAt": "2026-09-24T09:29:51.323310+00:00",
  "quirkScriptRef": "v4.0.4",
  "matchScope": "issue/discussion title + body (opening post only)",
  "components": [
@@ -10,8 +10,8 @@
    "title": "Displays and multi-monitor",
    "matchPattern": "\\bmonitor\\w*|\\bdisplay\\w*|hidpi|scaling|fractional|external\\s+display|\\bdock\\w*|thunderbolt",
    "counts": {
-    "issues": 1246,
-    "open": 681,
+    "issues": 1250,
+    "open": 685,
     "closed": 565,
     "discussions": 363
    },
@@ -281,6 +281,46 @@
    ],
    "recentIssues": [
     {
+     "number": 13119,
+     "title": "linux-omarchy 7.2.5-3: amdgpu MST link enable regression — external monitor via USB-C dock stays black (works on 7.2.3)",
+     "url": "https://github.com/omacom/omarchy/issues/13119",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-24T06:13:43Z",
+     "closedAt": null
+    },
+    {
+     "number": 13089,
+     "title": "[Plugin]: Musicfox",
+     "url": "https://github.com/omacom/omarchy/issues/13089",
+     "state": "OPEN",
+     "comments": 2,
+     "reactions": 0,
+     "createdAt": "2026-09-24T04:30:24Z",
+     "closedAt": null
+    },
+    {
+     "number": 13081,
+     "title": "Hybrid GPU: nvidia.lua exports NVIDIA env vars even when the display runs on the iGPU → Chromium video flicker (reverse PRIME)",
+     "url": "https://github.com/omacom/omarchy/issues/13081",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-24T01:39:14Z",
+     "closedAt": null
+    },
+    {
+     "number": 13078,
+     "title": "omarchy-restart-bluetooth does not restart bluetooth.service, leaving wedged adapters unrecoverable via GUI or menu",
+     "url": "https://github.com/omacom/omarchy/issues/13078",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-24T01:30:45Z",
+     "closedAt": null
+    },
+    {
      "number": 13073,
      "title": "NVIDIA DisplayPort outputs stay at 0x0; modeless reload cannot fix the atomic CRTC mismatch",
      "url": "https://github.com/omacom/omarchy/issues/13073",
@@ -335,7 +375,7 @@
      "title": "Apple Silicon regression: top bar no longer reserves the camera notch",
      "url": "https://github.com/omacom/omarchy/issues/13058",
      "state": "OPEN",
-     "comments": 0,
+     "comments": 1,
      "reactions": 0,
      "createdAt": "2026-09-23T20:00:58Z",
      "closedAt": null
@@ -388,46 +428,6 @@
      "comments": 0,
      "reactions": 0,
      "createdAt": "2026-09-23T03:29:00Z",
-     "closedAt": null
-    },
-    {
-     "number": 12980,
-     "title": "Aether underpaints large Wayland allocations: content stuck ~1800x1200 top-left, rest transparent (Hyprland, AMD, scale 1)",
-     "url": "https://github.com/omacom/omarchy/issues/12980",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-23T01:01:44Z",
-     "closedAt": null
-    },
-    {
-     "number": 12959,
-     "title": "Cloning the omarchy.background service plugin fails to load (No such file or directory)",
-     "url": "https://github.com/omacom/omarchy/issues/12959",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-22T22:40:56Z",
-     "closedAt": null
-    },
-    {
-     "number": 12949,
-     "title": "Idle lock: second monitor gets no working lock surface and never unlocks — 500ms sessionLockStabilizeTimer races output geometry (1500ms fixes it)",
-     "url": "https://github.com/omacom/omarchy/issues/12949",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-22T20:55:31Z",
-     "closedAt": null
-    },
-    {
-     "number": 12942,
-     "title": "Keyboard backlight stays off after unlock: second `omarchy-brightness-keyboard off` saves 0 as the restore value",
-     "url": "https://github.com/omacom/omarchy/issues/12942",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-22T19:35:45Z",
      "closedAt": null
     }
    ],
@@ -600,8 +600,8 @@
    "title": "NVIDIA GPUs",
    "matchPattern": "nvidia|geforce|\\brtx\\s?\\d{3,4}\\b|\\bgtx\\s?\\d{3,4}\\b|nouveau|\\bcuda\\b|nvidia-open|nvidia-dkms|\\bnvk\\b",
    "counts": {
-    "issues": 861,
-    "open": 428,
+    "issues": 864,
+    "open": 431,
     "closed": 433,
     "discussions": 114
    },
@@ -868,6 +868,36 @@
    ],
    "recentIssues": [
     {
+     "number": 13125,
+     "title": "Background reveal never animates: revealMask is `visible: false` with `layer.enabled` used as MultiEffect maskSource",
+     "url": "https://github.com/omacom/omarchy/issues/13125",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-24T08:46:47Z",
+     "closedAt": null
+    },
+    {
+     "number": 13124,
+     "title": "Theme change breaks terminal transparency in tmux panes (window-style + OSC 11 into pane ttys)",
+     "url": "https://github.com/omacom/omarchy/issues/13124",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-24T08:46:39Z",
+     "closedAt": null
+    },
+    {
+     "number": 13081,
+     "title": "Hybrid GPU: nvidia.lua exports NVIDIA env vars even when the display runs on the iGPU → Chromium video flicker (reverse PRIME)",
+     "url": "https://github.com/omacom/omarchy/issues/13081",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-24T01:39:14Z",
+     "closedAt": null
+    },
+    {
      "number": 13073,
      "title": "NVIDIA DisplayPort outputs stay at 0x0; modeless reload cannot fix the atomic CRTC mismatch",
      "url": "https://github.com/omacom/omarchy/issues/13073",
@@ -985,36 +1015,6 @@
      "comments": 1,
      "reactions": 0,
      "createdAt": "2026-09-22T00:34:46Z",
-     "closedAt": null
-    },
-    {
-     "number": 12855,
-     "title": "Idle screensaver/lock never triggers: Quickshell IdleMonitor never reports idle",
-     "url": "https://github.com/omacom/omarchy/issues/12855",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-22T00:26:00Z",
-     "closedAt": null
-    },
-    {
-     "number": 12852,
-     "title": "omarchy-menu-keybindings: embedded lua runs the Hyprland config and balloons to ~18GB, OOM-kills, and takes Hyprland down (NVIDIA teardown SIGSEGV)",
-     "url": "https://github.com/omacom/omarchy/issues/12852",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-21T23:23:27Z",
-     "closedAt": null
-    },
-    {
-     "number": 12821,
-     "title": "Virtual sinks/sources (like Easy Effects) force volume to 100% on creation/destruction and trigger audio scripts with empty arguments.",
-     "url": "https://github.com/omacom/omarchy/issues/12821",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-21T18:11:43Z",
      "closedAt": null
     }
    ],
@@ -1139,10 +1139,10 @@
    "title": "Boot, Limine and LUKS",
    "matchPattern": "limine|\\bboot\\b|\\bgrub\\b|\\buefi\\b|secure\\s+boot|\\bluks\\b|emergency\\s+mode|kernel\\s+panic",
    "counts": {
-    "issues": 765,
-    "open": 423,
+    "issues": 768,
+    "open": 426,
     "closed": 342,
-    "discussions": 202
+    "discussions": 203
    },
    "topIssues": [
     {
@@ -1412,6 +1412,36 @@
    ],
    "recentIssues": [
     {
+     "number": 13119,
+     "title": "linux-omarchy 7.2.5-3: amdgpu MST link enable regression — external monitor via USB-C dock stays black (works on 7.2.3)",
+     "url": "https://github.com/omacom/omarchy/issues/13119",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-24T06:13:43Z",
+     "closedAt": null
+    },
+    {
+     "number": 13118,
+     "title": "bluez 5.87-2 ships a broken A2DP SEP cache (upstream regression, fix already in BlueZ master) — consider carrying the one-commit fix in the Omarchy repo",
+     "url": "https://github.com/omacom/omarchy/issues/13118",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-24T06:09:27Z",
+     "closedAt": null
+    },
+    {
+     "number": 13108,
+     "title": "Power panel shows ~-1100W discharge: firmware reports battery current as 16-bit two's complement, sysfs rate overrides UPower",
+     "url": "https://github.com/omacom/omarchy/issues/13108",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-24T05:09:23Z",
+     "closedAt": null
+    },
+    {
      "number": 13073,
      "title": "NVIDIA DisplayPort outputs stay at 0x0; modeless reload cannot fix the atomic CRTC mismatch",
      "url": "https://github.com/omacom/omarchy/issues/13073",
@@ -1529,36 +1559,6 @@
      "comments": 0,
      "reactions": 0,
      "createdAt": "2026-09-22T04:36:45Z",
-     "closedAt": null
-    },
-    {
-     "number": 12848,
-     "title": "windows-vm launch fails repeatedly: container chmods ~/Windows to 2777, wrapper requires 700 and chmod 0700 never clears setgid",
-     "url": "https://github.com/omacom/omarchy/issues/12848",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-21T22:18:23Z",
-     "closedAt": null
-    },
-    {
-     "number": 12805,
-     "title": "power-profiles-daemon fails on amd_pstate desktop APU (Ryzen 5 5600G) — same root cause as #6898, no platform_profile fallback available",
-     "url": "https://github.com/omacom/omarchy/issues/12805",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-21T17:16:17Z",
-     "closedAt": null
-    },
-    {
-     "number": 12773,
-     "title": "Omarchy 4.0.3 / 4.0.4 installer does not start",
-     "url": "https://github.com/omacom/omarchy/issues/12773",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-21T11:45:57Z",
      "closedAt": null
     }
    ],
@@ -1704,7 +1704,7 @@
     "issues": 580,
     "open": 298,
     "closed": 282,
-    "discussions": 233
+    "discussions": 234
    },
    "topIssues": [
     {
@@ -2270,8 +2270,8 @@
    "title": "Suspend, sleep and resume",
    "matchPattern": "\\bsuspend\\w*|\\bsleep\\b|s2idle|\\bhibernat\\w*|\\bresume\\b|\\blid\\b",
    "counts": {
-    "issues": 515,
-    "open": 340,
+    "issues": 516,
+    "open": 341,
     "closed": 175,
     "discussions": 80
    },
@@ -2538,6 +2538,16 @@
    ],
    "recentIssues": [
     {
+     "number": 13078,
+     "title": "omarchy-restart-bluetooth does not restart bluetooth.service, leaving wedged adapters unrecoverable via GUI or menu",
+     "url": "https://github.com/omacom/omarchy/issues/13078",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-24T01:30:45Z",
+     "closedAt": null
+    },
+    {
      "number": 13066,
      "title": "Lock screen re-blanks a slow-waking external monitor before it shows a picture (5 s blank timer), so wake needs several tries",
      "url": "https://github.com/omacom/omarchy/issues/13066",
@@ -2680,16 +2690,6 @@
       12853,
       12861
      ]
-    },
-    {
-     "number": 12710,
-     "title": "omarchy-windows-vm: a single launch click can never work from a cold start — RDP connects before the guest finishes booting, then the launch stops the VM",
-     "url": "https://github.com/omacom/omarchy/issues/12710",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-21T01:37:15Z",
-     "closedAt": null
     }
    ],
    "commonErrorStrings": [
@@ -2724,11 +2724,6 @@
      "example": "Bluetooth: hci0: Opcode 0x0c1a failed: -71"
     },
     {
-     "signature": "pm: some devices failed to suspend, or early wake event detected",
-     "issues": 2,
-     "example": "PM: Some devices failed to suspend, or early wake event detected"
-    },
-    {
      "signature": "brcmfmac <n>:<n>:<n>.<n>: brcmf_pcie_pm_enter_d<n>: timeout on response for entering d<n> substate",
      "issues": 2,
      "example": "brcmfmac 0000:01:00.0: brcmf_pcie_pm_enter_D3: Timeout on response for entering D3 substate"
@@ -2739,6 +2734,16 @@
      "example": "brcmfmac 0000:01:00.0: PM: failed to suspend: error -5"
     },
     {
+     "signature": "pm: some devices failed to suspend, or early wake event detected",
+     "issues": 2,
+     "example": "PM: Some devices failed to suspend, or early wake event detected"
+    },
+    {
+     "signature": "pm: hibernation: failed to load image, recovering.",
+     "issues": 2,
+     "example": "PM: hibernation: Failed to load image, recovering."
+    },
+    {
      "signature": "cannot find any crtc or sizes",
      "issues": 2,
      "example": "Cannot find any crtc or sizes"
@@ -2747,11 +2752,6 @@
      "signature": "pm: hibernation: resume failed (-<n>)",
      "issues": 2,
      "example": "PM: hibernation: resume failed (-5)"
-    },
-    {
-     "signature": "pm: hibernation: failed to load image, recovering.",
-     "issues": 2,
-     "example": "PM: hibernation: Failed to load image, recovering."
     },
     {
      "signature": "failed to inhibit: the operation inhibition has been requested for is already running",
@@ -2831,8 +2831,8 @@
    "title": "AMD GPUs",
    "matchPattern": "\\bamdgpu\\b|\\bradeon\\b|\\brx\\s?[5-9]\\d{3}\\b|\\bvega\\b|\\brdna\\s?\\d?\\b|amd\\s+(gpu|graphics|igpu|apu)|strix\\s+halo|\\b(680m|780m|880m|890m)\\b",
    "counts": {
-    "issues": 473,
-    "open": 267,
+    "issues": 475,
+    "open": 269,
     "closed": 206,
     "discussions": 37
    },
@@ -3103,6 +3103,26 @@
    ],
    "recentIssues": [
     {
+     "number": 13119,
+     "title": "linux-omarchy 7.2.5-3: amdgpu MST link enable regression — external monitor via USB-C dock stays black (works on 7.2.3)",
+     "url": "https://github.com/omacom/omarchy/issues/13119",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-24T06:13:43Z",
+     "closedAt": null
+    },
+    {
+     "number": 13080,
+     "title": "Agents widget: Codex limits intermittently fail with \"account/read\" (select/readline race)",
+     "url": "https://github.com/omacom/omarchy/issues/13080",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-24T01:38:36Z",
+     "closedAt": null
+    },
+    {
      "number": 13069,
      "title": "Clock calendar repeats a day and shifts weekdays in timezones with a midnight DST switch (e.g. America/Santiago)",
      "url": "https://github.com/omacom/omarchy/issues/13069",
@@ -3231,26 +3251,6 @@
      "reactions": 0,
      "createdAt": "2026-09-21T16:46:59Z",
      "closedAt": null
-    },
-    {
-     "number": 12791,
-     "title": "Desktop AMD iGPU + NVIDIA dGPU: Aquamarine opens the idle iGPU, so Hyprland uses software cursors on NVIDIA",
-     "url": "https://github.com/omacom/omarchy/issues/12791",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-21T15:05:11Z",
-     "closedAt": null
-    },
-    {
-     "number": 12773,
-     "title": "Omarchy 4.0.3 / 4.0.4 installer does not start",
-     "url": "https://github.com/omacom/omarchy/issues/12773",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-21T11:45:57Z",
-     "closedAt": null
     }
    ],
    "commonErrorStrings": [
@@ -3300,14 +3300,14 @@
      "example": "Unit sunshine.service does not exist"
     },
     {
-     "signature": "error: failed to prepare transaction (conflicting dependencies)",
-     "issues": 2,
-     "example": "error: failed to prepare transaction (conflicting dependencies)"
-    },
-    {
      "signature": "error: unresolvable package conflicts detected",
      "issues": 2,
      "example": "error: unresolvable package conflicts detected"
+    },
+    {
+     "signature": "error: failed to prepare transaction (conflicting dependencies)",
+     "issues": 2,
+     "example": "error: failed to prepare transaction (conflicting dependencies)"
     },
     {
      "signature": "shell.failedbarid = shell.activebarid",
@@ -3356,10 +3356,10 @@
    "title": "Battery and power management",
    "matchPattern": "battery|\\bpower\\b|\\btlp\\b|charging",
    "counts": {
-    "issues": 402,
-    "open": 241,
+    "issues": 404,
+    "open": 243,
     "closed": 161,
-    "discussions": 123
+    "discussions": 124
    },
    "topIssues": [
     {
@@ -3625,6 +3625,26 @@
    ],
    "recentIssues": [
     {
+     "number": 13118,
+     "title": "bluez 5.87-2 ships a broken A2DP SEP cache (upstream regression, fix already in BlueZ master) — consider carrying the one-commit fix in the Omarchy repo",
+     "url": "https://github.com/omacom/omarchy/issues/13118",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-24T06:09:27Z",
+     "closedAt": null
+    },
+    {
+     "number": 13108,
+     "title": "Power panel shows ~-1100W discharge: firmware reports battery current as 16-bit two's complement, sysfs rate overrides UPower",
+     "url": "https://github.com/omacom/omarchy/issues/13108",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-24T05:09:23Z",
+     "closedAt": null
+    },
+    {
      "number": 13072,
      "title": "Idle wake recreates shell panel components without destroying the old ones (duplicate IpcHandlers, leaked child processes)",
      "url": "https://github.com/omacom/omarchy/issues/13072",
@@ -3753,26 +3773,6 @@
      "reactions": 0,
      "createdAt": "2026-09-21T07:22:59Z",
      "closedAt": null
-    },
-    {
-     "number": 12699,
-     "title": "External display hot-plug leaves Intel outputs at 0x0 after dock reconnect",
-     "url": "https://github.com/omacom/omarchy/issues/12699",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-20T22:16:46Z",
-     "closedAt": null
-    },
-    {
-     "number": 12661,
-     "title": "Bar Nerd Font icons render tiny with Iosevka Nerd Font Mono (except Bluetooth and menu)",
-     "url": "https://github.com/omacom/omarchy/issues/12661",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-20T18:50:12Z",
-     "closedAt": null
     }
    ],
    "commonErrorStrings": [
@@ -3797,11 +3797,6 @@
      "example": "ERR from aquamarine ]: drm: Cannot commit when a page-flip is awaiting"
     },
     {
-     "signature": "pm: some devices failed to suspend, or early wake event detected",
-     "issues": 2,
-     "example": "PM: Some devices failed to suspend, or early wake event detected"
-    },
-    {
      "signature": "brcmfmac <n>:<n>:<n>.<n>: brcmf_pcie_pm_enter_d<n>: timeout on response for entering d<n> substate",
      "issues": 2,
      "example": "brcmfmac 0000:01:00.0: brcmf_pcie_pm_enter_D3: Timeout on response for entering D3 substate"
@@ -3810,6 +3805,11 @@
      "signature": "brcmfmac <n>:<n>:<n>.<n>: pm: failed to suspend: error -<n>",
      "issues": 2,
      "example": "brcmfmac 0000:01:00.0: PM: failed to suspend: error -5"
+    },
+    {
+     "signature": "pm: some devices failed to suspend, or early wake event detected",
+     "issues": 2,
+     "example": "PM: Some devices failed to suspend, or early wake event detected"
     },
     {
      "signature": "ucsi_acpi usbc<n>:<n>: unknown error <n>",
@@ -3848,8 +3848,8 @@
    "title": "Intel GPUs",
    "matchPattern": "intel\\s+(gpu|graphics|arc|igpu)|\\bi915\\b|intel\\s+arc|iris\\s+xe|\\bxe\\s+driver\\b|xe\\s+kernel|intel_gpu",
    "counts": {
-    "issues": 330,
-    "open": 213,
+    "issues": 332,
+    "open": 215,
     "closed": 117,
     "discussions": 19
    },
@@ -4070,6 +4070,16 @@
      "closedAt": null
     },
     {
+     "number": 11019,
+     "title": "External monitors on a USB-C dock never return after undocking (aquamarine 0.15.0 regression)",
+     "url": "https://github.com/omacom/omarchy/issues/11019",
+     "state": "OPEN",
+     "comments": 10,
+     "reactions": 0,
+     "createdAt": "2026-09-09T18:48:10Z",
+     "closedAt": null
+    },
+    {
      "number": 4891,
      "title": "Suspend/resume causes compositor freeze on NVIDIA hybrid GPU laptops",
      "url": "https://github.com/omacom/omarchy/issues/4891",
@@ -4108,19 +4118,29 @@
      "reactions": 3,
      "createdAt": "2026-09-02T00:38:22Z",
      "closedAt": "2026-09-20T20:04:49Z"
-    },
-    {
-     "number": 9890,
-     "title": "hypr/nvidia.lua: LIBVA_DRIVER_NAME=nvidia corrupts hardware video decode on hybrid laptops where the compositor renders on the iGPU",
-     "url": "https://github.com/omacom/omarchy/issues/9890",
-     "state": "CLOSED",
-     "comments": 9,
-     "reactions": 0,
-     "createdAt": "2026-09-02T20:28:56Z",
-     "closedAt": "2026-09-20T20:04:53Z"
     }
    ],
    "recentIssues": [
+    {
+     "number": 13108,
+     "title": "Power panel shows ~-1100W discharge: firmware reports battery current as 16-bit two's complement, sysfs rate overrides UPower",
+     "url": "https://github.com/omacom/omarchy/issues/13108",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-24T05:09:23Z",
+     "closedAt": null
+    },
+    {
+     "number": 13081,
+     "title": "Hybrid GPU: nvidia.lua exports NVIDIA env vars even when the display runs on the iGPU → Chromium video flicker (reverse PRIME)",
+     "url": "https://github.com/omacom/omarchy/issues/13081",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-24T01:39:14Z",
+     "closedAt": null
+    },
     {
      "number": 13020,
      "title": "omarchy-update's shell/monitor-daemon restart leaves external monitor stuck at 0x0 (blank)",
@@ -4249,26 +4269,6 @@
      "comments": 0,
      "reactions": 0,
      "createdAt": "2026-09-20T19:01:45Z",
-     "closedAt": null
-    },
-    {
-     "number": 12639,
-     "title": "Tracking: Raptor Lake SR-IOV Breakage on kernel 7.2 / 7.3 (i915-sriov-dkms incompatibility)",
-     "url": "https://github.com/omacom/omarchy/issues/12639",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-20T14:35:39Z",
-     "closedAt": null
-    },
-    {
-     "number": 12628,
-     "title": "linux-omarchy 7.2.5-3: HDMI audio crackles continuously while the mouse is moving (Haswell iGPU)",
-     "url": "https://github.com/omacom/omarchy/issues/12628",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-20T11:41:58Z",
      "closedAt": null
     }
    ],
@@ -4450,8 +4450,8 @@
    "title": "Audio",
    "matchPattern": "\\baudio\\b|\\bsound\\b|speaker\\w*|microphone|pipewire|wireplumber|headphone\\w*",
    "counts": {
-    "issues": 297,
-    "open": 177,
+    "issues": 299,
+    "open": 179,
     "closed": 120,
     "discussions": 88
    },
@@ -4722,6 +4722,26 @@
    ],
    "recentIssues": [
     {
+     "number": 13118,
+     "title": "bluez 5.87-2 ships a broken A2DP SEP cache (upstream regression, fix already in BlueZ master) — consider carrying the one-commit fix in the Omarchy repo",
+     "url": "https://github.com/omacom/omarchy/issues/13118",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-24T06:09:27Z",
+     "closedAt": null
+    },
+    {
+     "number": 13078,
+     "title": "omarchy-restart-bluetooth does not restart bluetooth.service, leaving wedged adapters unrecoverable via GUI or menu",
+     "url": "https://github.com/omacom/omarchy/issues/13078",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-24T01:30:45Z",
+     "closedAt": null
+    },
+    {
      "number": 13072,
      "title": "Idle wake recreates shell panel components without destroying the old ones (duplicate IpcHandlers, leaked child processes)",
      "url": "https://github.com/omacom/omarchy/issues/13072",
@@ -4850,43 +4870,18 @@
      "reactions": 0,
      "createdAt": "2026-09-20T15:16:00Z",
      "closedAt": null
-    },
-    {
-     "number": 12641,
-     "title": "omarchy restart shell cannot recover an IPC-wedged shell: no signal fallback",
-     "url": "https://github.com/omacom/omarchy/issues/12641",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-20T15:11:14Z",
-     "closedAt": null
-    },
-    {
-     "number": 12640,
-     "title": "Leaving fullscreen from a tiled-fullscreen window restores the wrong column geometry on the scrolling layout",
-     "url": "https://github.com/omacom/omarchy/issues/12640",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-20T15:09:04Z",
-     "closedAt": null
     }
    ],
    "commonErrorStrings": [
-    {
-     "signature": "can't read tuning ids",
-     "issues": 3,
-     "example": "Can't read tuning IDs"
-    },
     {
      "signature": "calibration disabled due to missing firmware controls",
      "issues": 3,
      "example": "Calibration disabled due to missing firmware controls"
     },
     {
-     "signature": "gsr info: pipewire: stream <hex> previous state: \"connecting\", new state: \"paused\" (error: none)",
-     "issues": 2,
-     "example": "gsr info: pipewire: stream 0x557003f75ff0 previous state: \"connecting\", new state: \"paused\" (error: none)"
+     "signature": "can't read tuning ids",
+     "issues": 3,
+     "example": "Can't read tuning IDs"
     },
     {
      "signature": "gsr info: pipewire: stream <hex> previous state: \"paused\", new state: \"streaming\" (error: none)",
@@ -4894,14 +4889,19 @@
      "example": "gsr info: pipewire: stream 0x557003f75ff0 previous state: \"paused\", new state: \"streaming\" (error: none)"
     },
     {
-     "signature": "gsr info: pipewire: stream <hex> previous state: \"unconnected\", new state: \"connecting\" (error: none)",
+     "signature": "gsr info: pipewire: stream <hex> previous state: \"connecting\", new state: \"paused\" (error: none)",
      "issues": 2,
-     "example": "gsr info: pipewire: stream 0x557003f75ff0 previous state: \"unconnected\", new state: \"connecting\" (error: none)"
+     "example": "gsr info: pipewire: stream 0x557003f75ff0 previous state: \"connecting\", new state: \"paused\" (error: none)"
     },
     {
      "signature": "gsr info: pipewire: stream <hex> previous state: \"paused\", new state: \"unconnected\" (error: none)",
      "issues": 2,
      "example": "gsr info: pipewire: stream 0x557003f75ff0 previous state: \"paused\", new state: \"unconnected\" (error: none)"
+    },
+    {
+     "signature": "gsr info: pipewire: stream <hex> previous state: \"unconnected\", new state: \"connecting\" (error: none)",
+     "issues": 2,
+     "example": "gsr info: pipewire: stream 0x557003f75ff0 previous state: \"unconnected\", new state: \"connecting\" (error: none)"
     },
     {
      "signature": "sof_sdw sof_sdw: asoc: failed to instantiate card -<n>",
@@ -4914,14 +4914,14 @@
      "example": "cs35l56 spi-cs35l56-left:  Calibration disabled due to missing firmware controls"
     },
     {
-     "signature": "cs<n>l<n> spi-cs<n>l<n>-right: can't read tuning ids",
-     "issues": 2,
-     "example": "cs35l56 spi-cs35l56-right: Can't read tuning IDs"
-    },
-    {
      "signature": "cs<n>l<n> spi-cs<n>l<n>-right: calibration disabled due to missing firmware controls",
      "issues": 2,
      "example": "cs35l56 spi-cs35l56-right: Calibration disabled due to missing firmware controls"
+    },
+    {
+     "signature": "cs<n>l<n> spi-cs<n>l<n>-left: can't read tuning ids",
+     "issues": 2,
+     "example": "cs35l56 spi-cs35l56-left:  Can't read tuning IDs"
     },
     {
      "signature": "cs<n>l<n> spi-cs<n>l<n>-right: firmware_missing",
@@ -4934,9 +4934,9 @@
      "example": "cs35l56 spi-cs35l56-left:  FIRMWARE_MISSING"
     },
     {
-     "signature": "cs<n>l<n> spi-cs<n>l<n>-left: can't read tuning ids",
+     "signature": "cs<n>l<n> spi-cs<n>l<n>-right: can't read tuning ids",
      "issues": 2,
-     "example": "cs35l56 spi-cs35l56-left:  Can't read tuning IDs"
+     "example": "cs35l56 spi-cs35l56-right: Can't read tuning IDs"
     }
    ],
    "relatedQuirkScripts": [
@@ -4995,8 +4995,8 @@
    "title": "Wi-Fi",
    "matchPattern": "\\bwifi\\b|wi-fi|\\bwlan\\b|iwlwifi|brcmfmac|mt7921|network\\s+manager",
    "counts": {
-    "issues": 252,
-    "open": 127,
+    "issues": 253,
+    "open": 128,
     "closed": 125,
     "discussions": 81
    },
@@ -5269,6 +5269,16 @@
    ],
    "recentIssues": [
     {
+     "number": 13078,
+     "title": "omarchy-restart-bluetooth does not restart bluetooth.service, leaving wedged adapters unrecoverable via GUI or menu",
+     "url": "https://github.com/omacom/omarchy/issues/13078",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-24T01:30:45Z",
+     "closedAt": null
+    },
+    {
      "number": 13073,
      "title": "NVIDIA DisplayPort outputs stay at 0x0; modeless reload cannot fix the atomic CRTC mismatch",
      "url": "https://github.com/omacom/omarchy/issues/13073",
@@ -5407,16 +5417,6 @@
      "reactions": 0,
      "createdAt": "2026-09-18T00:39:03Z",
      "closedAt": null
-    },
-    {
-     "number": 12310,
-     "title": "RTL8821CU (rtw88_8821cu): scan aborts and association timeouts on Omarchy 4.0.4-1",
-     "url": "https://github.com/omacom/omarchy/issues/12310",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-17T18:25:56Z",
-     "closedAt": null
     }
    ],
    "commonErrorStrings": [
@@ -5431,11 +5431,6 @@
      "example": "Could not set interface wlp2s0 flags (UP): Connection timed out"
     },
     {
-     "signature": "pm: some devices failed to suspend, or early wake event detected",
-     "issues": 2,
-     "example": "PM: Some devices failed to suspend, or early wake event detected"
-    },
-    {
      "signature": "brcmfmac <n>:<n>:<n>.<n>: brcmf_pcie_pm_enter_d<n>: timeout on response for entering d<n> substate",
      "issues": 2,
      "example": "brcmfmac 0000:01:00.0: brcmf_pcie_pm_enter_D3: Timeout on response for entering D3 substate"
@@ -5444,6 +5439,11 @@
      "signature": "brcmfmac <n>:<n>:<n>.<n>: pm: failed to suspend: error -<n>",
      "issues": 2,
      "example": "brcmfmac 0000:01:00.0: PM: failed to suspend: error -5"
+    },
+    {
+     "signature": "pm: some devices failed to suspend, or early wake event detected",
+     "issues": 2,
+     "example": "PM: Some devices failed to suspend, or early wake event detected"
     }
    ],
    "relatedQuirkScripts": [
@@ -5478,8 +5478,8 @@
    "title": "Hybrid / dual GPU",
    "matchPattern": "hybrid\\s+(gpu|graphics)|\\boptimus\\b|prime-?run|\\bdgpu\\b|\\bigpu\\b|muxless|\\bmux\\b|aq_drm_devices|dual\\s+gpu|discrete\\s+gpu",
    "counts": {
-    "issues": 239,
-    "open": 155,
+    "issues": 240,
+    "open": 156,
     "closed": 84,
     "discussions": 29
    },
@@ -5740,6 +5740,16 @@
    ],
    "recentIssues": [
     {
+     "number": 13081,
+     "title": "Hybrid GPU: nvidia.lua exports NVIDIA env vars even when the display runs on the iGPU → Chromium video flicker (reverse PRIME)",
+     "url": "https://github.com/omacom/omarchy/issues/13081",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-24T01:39:14Z",
+     "closedAt": null
+    },
+    {
      "number": 13032,
      "title": "linux-omarchy completely lacks Android Binder IPC support (CONFIG_ANDROID_BINDER_IPC), breaking Waydroid out-of-the-box",
      "url": "https://github.com/omacom/omarchy/issues/13032",
@@ -5878,16 +5888,6 @@
      "reactions": 1,
      "createdAt": "2026-09-20T03:06:54Z",
      "closedAt": null
-    },
-    {
-     "number": 12593,
-     "title": "Omarchy 4.0.4 on 2019 T2 MacBook Pro: post-login black screen, full-speed fans and shutdown; hybrid graphics workaround succeeds",
-     "url": "https://github.com/omacom/omarchy/issues/12593",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-20T03:04:38Z",
-     "closedAt": null
     }
    ],
    "commonErrorStrings": [
@@ -5922,6 +5922,11 @@
      "example": "gsr error: display \"HDMI-A-1\" not found, expected one of:"
     },
     {
+     "signature": "pm: hibernation: failed to load image, recovering.",
+     "issues": 2,
+     "example": "PM: hibernation: Failed to load image, recovering."
+    },
+    {
      "signature": "cannot find any crtc or sizes",
      "issues": 2,
      "example": "Cannot find any crtc or sizes"
@@ -5930,11 +5935,6 @@
      "signature": "pm: hibernation: resume failed (-<n>)",
      "issues": 2,
      "example": "PM: hibernation: resume failed (-5)"
-    },
-    {
-     "signature": "pm: hibernation: failed to load image, recovering.",
-     "issues": 2,
-     "example": "PM: hibernation: Failed to load image, recovering."
     },
     {
      "signature": "failed to enable unit: unit sunshine.service does not exist",
@@ -6000,8 +6000,8 @@
    "title": "Thunderbolt and docks",
    "matchPattern": "thunderbolt|\\bdock\\w*|docking\\s+station|usb-?c\\s+hub|displaylink",
    "counts": {
-    "issues": 183,
-    "open": 105,
+    "issues": 184,
+    "open": 106,
     "closed": 78,
     "discussions": 59
    },
@@ -6110,6 +6110,16 @@
      ]
     },
     {
+     "number": 11019,
+     "title": "External monitors on a USB-C dock never return after undocking (aquamarine 0.15.0 regression)",
+     "url": "https://github.com/omacom/omarchy/issues/11019",
+     "state": "OPEN",
+     "comments": 10,
+     "reactions": 0,
+     "createdAt": "2026-09-09T18:48:10Z",
+     "closedAt": null
+    },
+    {
      "number": 805,
      "title": "Allow multi-selection in uninstall menu",
      "url": "https://github.com/omacom/omarchy/issues/805",
@@ -6134,16 +6144,6 @@
      "fixedBy": [
       1124
      ]
-    },
-    {
-     "number": 11019,
-     "title": "External monitors on a USB-C dock never return after undocking (aquamarine 0.15.0 regression)",
-     "url": "https://github.com/omacom/omarchy/issues/11019",
-     "state": "OPEN",
-     "comments": 9,
-     "reactions": 0,
-     "createdAt": "2026-09-09T18:48:10Z",
-     "closedAt": null
     },
     {
      "number": 2158,
@@ -6273,6 +6273,16 @@
     }
    ],
    "recentIssues": [
+    {
+     "number": 13119,
+     "title": "linux-omarchy 7.2.5-3: amdgpu MST link enable regression — external monitor via USB-C dock stays black (works on 7.2.3)",
+     "url": "https://github.com/omacom/omarchy/issues/13119",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-24T06:13:43Z",
+     "closedAt": null
+    },
     {
      "number": 13027,
      "title": "Bar: allow the bar to be inset from the screen edges so it lines up with tiled windows",
@@ -6412,16 +6422,6 @@
      "reactions": 0,
      "createdAt": "2026-09-17T22:23:13Z",
      "closedAt": null
-    },
-    {
-     "number": 12322,
-     "title": "Windows VM launch fails silently when ~/Windows is setgid (chmod 0700 leaves 2700)",
-     "url": "https://github.com/omacom/omarchy/issues/12322",
-     "state": "CLOSED",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-17T20:32:09Z",
-     "closedAt": "2026-09-18T11:29:16Z"
     }
    ],
    "commonErrorStrings": [
@@ -6502,8 +6502,8 @@
    "title": "Bluetooth",
    "matchPattern": "bluetooth|\\bbluez\\b",
    "counts": {
-    "issues": 169,
-    "open": 92,
+    "issues": 171,
+    "open": 94,
     "closed": 77,
     "discussions": 57
    },
@@ -6768,6 +6768,26 @@
    ],
    "recentIssues": [
     {
+     "number": 13118,
+     "title": "bluez 5.87-2 ships a broken A2DP SEP cache (upstream regression, fix already in BlueZ master) — consider carrying the one-commit fix in the Omarchy repo",
+     "url": "https://github.com/omacom/omarchy/issues/13118",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-24T06:09:27Z",
+     "closedAt": null
+    },
+    {
+     "number": 13078,
+     "title": "omarchy-restart-bluetooth does not restart bluetooth.service, leaving wedged adapters unrecoverable via GUI or menu",
+     "url": "https://github.com/omacom/omarchy/issues/13078",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-24T01:30:45Z",
+     "closedAt": null
+    },
+    {
      "number": 13072,
      "title": "Idle wake recreates shell panel components without destroying the old ones (duplicate IpcHandlers, leaked child processes)",
      "url": "https://github.com/omacom/omarchy/issues/13072",
@@ -6895,26 +6915,6 @@
      "comments": 0,
      "reactions": 0,
      "createdAt": "2026-09-19T13:01:51Z",
-     "closedAt": null
-    },
-    {
-     "number": 12494,
-     "title": "Bluetooth bar widget disappears entirely when turned off, with no way to turn it back on from the UI",
-     "url": "https://github.com/omacom/omarchy/issues/12494",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-19T07:14:30Z",
-     "closedAt": null
-    },
-    {
-     "number": 12442,
-     "title": "Hibernation doesn't hibernate. The battery goes dead when checked on next day",
-     "url": "https://github.com/omacom/omarchy/issues/12442",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-18T18:17:31Z",
      "closedAt": null
     }
    ],
@@ -7821,14 +7821,14 @@
    ],
    "commonErrorStrings": [
     {
-     "signature": "[<hex>] <panic+<hex>>",
-     "issues": 2,
-     "example": "[0x117cf] <panic+0x7e>"
-    },
-    {
      "signature": "panic: failed to load stage <n>.",
      "issues": 2,
      "example": "PANIC: Failed to load stage 3."
+    },
+    {
+     "signature": "[<hex>] <panic+<hex>>",
+     "issues": 2,
+     "example": "[0x117cf] <panic+0x7e>"
     }
    ],
    "relatedQuirkScripts": []
@@ -8273,24 +8273,24 @@
      "example": "Authentication service cannot retrieve authentication info"
     },
     {
-     "signature": "error: failed to prepare transaction (conflicting dependencies)",
-     "issues": 2,
-     "example": "error: failed to prepare transaction (conflicting dependencies)"
-    },
-    {
-     "signature": "warning: usbutils-<n>-<n> is up to date -- skipping",
-     "issues": 2,
-     "example": "warning: usbutils-018-1 is up to date -- skipping"
-    },
-    {
      "signature": "warning: fprintd-<n>.<n>.<n>-<n> is up to date -- skipping",
      "issues": 2,
      "example": "warning: fprintd-1.94.5-1 is up to date -- skipping"
     },
     {
+     "signature": "error: failed to prepare transaction (conflicting dependencies)",
+     "issues": 2,
+     "example": "error: failed to prepare transaction (conflicting dependencies)"
+    },
+    {
      "signature": "error: unresolvable package conflicts detected",
      "issues": 2,
      "example": "error: unresolvable package conflicts detected"
+    },
+    {
+     "signature": "warning: usbutils-<n>-<n> is up to date -- skipping",
+     "issues": 2,
+     "example": "warning: usbutils-018-1 is up to date -- skipping"
     },
     {
      "signature": "verification timed out",
@@ -9135,7 +9135,7 @@
      "title": "Idle blank is undone by the idle wake path when the monitor's link flaps, strobing black/lock screen",
      "url": "https://github.com/omacom/omarchy/issues/12327",
      "state": "OPEN",
-     "comments": 0,
+     "comments": 1,
      "reactions": 0,
      "createdAt": "2026-09-17T21:26:25Z",
      "closedAt": null
@@ -9243,11 +9243,6 @@
    ],
    "commonErrorStrings": [
     {
-     "signature": "pm: some devices failed to suspend, or early wake event detected",
-     "issues": 2,
-     "example": "PM: Some devices failed to suspend, or early wake event detected"
-    },
-    {
      "signature": "brcmfmac <n>:<n>:<n>.<n>: brcmf_pcie_pm_enter_d<n>: timeout on response for entering d<n> substate",
      "issues": 2,
      "example": "brcmfmac 0000:01:00.0: brcmf_pcie_pm_enter_D3: Timeout on response for entering D3 substate"
@@ -9256,6 +9251,11 @@
      "signature": "brcmfmac <n>:<n>:<n>.<n>: pm: failed to suspend: error -<n>",
      "issues": 2,
      "example": "brcmfmac 0000:01:00.0: PM: failed to suspend: error -5"
+    },
+    {
+     "signature": "pm: some devices failed to suspend, or early wake event detected",
+     "issues": 2,
+     "example": "PM: Some devices failed to suspend, or early wake event detected"
     }
    ],
    "relatedQuirkScripts": [
@@ -9596,7 +9596,7 @@
      "title": "Apple Silicon regression: top bar no longer reserves the camera notch",
      "url": "https://github.com/omacom/omarchy/issues/13058",
      "state": "OPEN",
-     "comments": 0,
+     "comments": 1,
      "reactions": 0,
      "createdAt": "2026-09-23T20:00:58Z",
      "closedAt": null
@@ -10188,14 +10188,14 @@
      "example": "Enrollment failed. Please try again."
     },
     {
-     "signature": "warning: usbutils-<n>-<n> is up to date -- skipping",
-     "issues": 2,
-     "example": "warning: usbutils-018-1 is up to date -- skipping"
-    },
-    {
      "signature": "warning: fprintd-<n>.<n>.<n>-<n> is up to date -- skipping",
      "issues": 2,
      "example": "warning: fprintd-1.94.5-1 is up to date -- skipping"
+    },
+    {
+     "signature": "warning: usbutils-<n>-<n> is up to date -- skipping",
+     "issues": 2,
+     "example": "warning: usbutils-018-1 is up to date -- skipping"
     },
     {
      "signature": "universal filter failed.",

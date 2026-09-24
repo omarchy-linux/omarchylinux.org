@@ -2488,7 +2488,7 @@
       "provider": null,
       "target": null,
       "title": null,
-      "when": "[[ -x $HOME/.config/composer/vendor/bin/laravel ]]"
+      "when": "[[ -x $HOME/.local/bin/laravel || -x $HOME/.config/composer/vendor/bin/laravel ]]"
     },
     {
       "action": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-dev-env php'",
@@ -2506,7 +2506,7 @@
       "provider": null,
       "target": null,
       "title": null,
-      "when": "omarchy-pkg-present php"
+      "when": "[[ -d $HOME/.local/share/mise/installs/php ]] || omarchy-pkg-present php"
     },
     {
       "action": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-dev-env symfony'",
@@ -3618,7 +3618,7 @@
       "command": null,
       "declared": true,
       "depth": 3,
-      "icon": "",
+      "icon": " ",
       "iconFont": null,
       "id": "setup.default.editor.emacs",
       "kind": "action",
@@ -3668,11 +3668,11 @@
     {
       "action": "omarchy-default-editor sublime_text",
       "aliases": [],
-      "checked": "[[ \"$(omarchy-default-editor)\" == \"sublime_text\" ]]",
+      "checked": "[[ \"$(omarchy-default-editor)\" == \"subl\" ]]",
       "command": null,
       "declared": true,
       "depth": 3,
-      "icon": "",
+      "icon": "",
       "iconFont": null,
       "id": "setup.default.editor.sublime",
       "kind": "action",
@@ -8563,12 +8563,12 @@
                 {
                   "action": "omarchy-default-editor sublime_text",
                   "aliases": [],
-                  "checked": "[[ \"$(omarchy-default-editor)\" == \"sublime_text\" ]]",
+                  "checked": "[[ \"$(omarchy-default-editor)\" == \"subl\" ]]",
                   "children": [],
                   "command": null,
                   "declared": true,
                   "depth": 3,
-                  "icon": "",
+                  "icon": "",
                   "iconFont": null,
                   "id": "setup.default.editor.sublime",
                   "kind": "action",
@@ -8625,7 +8625,7 @@
                   "command": null,
                   "declared": true,
                   "depth": 3,
-                  "icon": "",
+                  "icon": " ",
                   "iconFont": null,
                   "id": "setup.default.editor.emacs",
                   "kind": "action",
@@ -11226,7 +11226,7 @@
                   "provider": null,
                   "target": null,
                   "title": null,
-                  "when": "omarchy-pkg-present php"
+                  "when": "[[ -d $HOME/.local/share/mise/installs/php ]] || omarchy-pkg-present php"
                 },
                 {
                   "action": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-dev-env laravel'",
@@ -11245,7 +11245,7 @@
                   "provider": null,
                   "target": null,
                   "title": null,
-                  "when": "[[ -x $HOME/.config/composer/vendor/bin/laravel ]]"
+                  "when": "[[ -x $HOME/.local/bin/laravel || -x $HOME/.config/composer/vendor/bin/laravel ]]"
                 },
                 {
                   "action": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-dev-env symfony'",

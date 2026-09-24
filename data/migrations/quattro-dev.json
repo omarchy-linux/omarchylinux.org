@@ -1,5 +1,5 @@
 {
-  "count": 121,
+  "count": 124,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -1302,16 +1302,13 @@
       ]
     },
     {
-      "body": "echo \"Install native video wallpaper playback dependencies\"\n\nomarchy-pkg-add qt6-multimedia qt6-multimedia-ffmpeg",
+      "body": "echo \"Native video dependencies are superseded by the OWE migration\"",
       "bodyTruncated": false,
       "date": "2026-08-13T08:20:04Z",
-      "description": "Install native video wallpaper playback dependencies",
+      "description": "Native video dependencies are superseded by the OWE migration",
       "file": "1786609204.sh",
-      "lineCount": 3,
-      "packagesAdded": [
-        "qt6-multimedia",
-        "qt6-multimedia-ffmpeg"
-      ],
+      "lineCount": 1,
+      "packagesAdded": [],
       "packagesRemoved": [],
       "path": "migrations/1786609204.sh",
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1786609204.sh",
@@ -1796,6 +1793,28 @@
       ]
     },
     {
+      "body": "echo \"Replace Satty and Tensaku with Omasnap\"\n\nomarchy-pkg-add omasnap\n\n# The old source installer left a NoDisplay entry that overrides the packaged launcher.\nrm -f \"$HOME/.local/share/applications/omasnap.desktop\"\n\nimv_config=\"$HOME/.config/imv/config\"\nif [[ -f $imv_config ]]; then\n  sed -i --follow-symlinks \\\n    -e 's/^# Edit the current image in Tensaku and quit the viewer$/# Edit the current image in Omasnap and quit the viewer/' \\\n    -e 's/^# Edit the current image in Satty and quit the viewer$/# Edit the current image in Omasnap and quit the viewer/' \\\n    -e 's|^<Ctrl+e> = exec tensaku-edit \"$imv_current_file\" & ; quit$|<Ctrl+e> = exec omasnap \"$imv_current_file\" \\& ; quit|' \\\n    -e 's|^<Ctrl+e> = exec satty --filename \"$imv_current_file\" & ; quit$|<Ctrl+e> = exec omasnap \"$imv_current_file\" \\& ; quit|' \\\n    \"$imv_config\"\nfi\n\nomarchy-pkg-drop satty tensaku",
+      "bodyTruncated": false,
+      "date": "2026-08-30T22:46:35Z",
+      "description": "Replace Satty and Tensaku with Omasnap",
+      "file": "1788129995.sh",
+      "lineCount": 18,
+      "packagesAdded": [
+        "omasnap"
+      ],
+      "packagesRemoved": [
+        "satty",
+        "tensaku"
+      ],
+      "path": "migrations/1788129995.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1788129995.sh",
+      "timestamp": 1788129995,
+      "touches": [
+        "~/.config/imv/config",
+        "~/.local/share/applications/omasnap.desktop"
+      ]
+    },
+    {
       "body": "echo \"Install Cursor CLI via mise wrapper\"\n\n# Cursor's own installer links ~/.local/bin/cursor-agent, so an existing\n# command is the user's and stays. The wrapper resolves cursor-agent through\n# mise's registry, which lists it from 2026.8.15 on.\nif omarchy-cmd-missing cursor-agent && [[ ! -f $HOME/.local/state/omarchy/preinstalls-removed ]]; then\n  omarchy-mise-install cursor-agent\nfi",
       "bodyTruncated": false,
       "date": "2026-09-05T03:05:53Z",
@@ -2073,6 +2092,48 @@
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1789444024.sh",
       "timestamp": 1789444024,
       "touches": []
+    },
+    {
+      "body": "echo \"Enable OWE desktop video backgrounds and lock feed\"\n\nomarchy-pkg-add owe owe-lockfeed\nomarchy-hook-install theme-set /usr/share/owe/10-owe-sync\n\nsystemctl --user daemon-reload >/dev/null 2>&1 || true\nif ! systemctl --user enable owed.service; then\n  wants_dir=\"$HOME/.config/systemd/user/graphical-session.target.wants\"\n  mkdir -p \"$wants_dir\"\n  ln -sfn /usr/lib/systemd/user/owed.service \"$wants_dir/owed.service\"\nfi\n\n# A TTY update enables the next graphical login without starting a renderer\n# against a missing Wayland session. A failed live start leaves this pending.\nif [[ ${OMARCHY_UPGRADE_TO_QUATTRO_LIVE:-0} != 1 ]] && systemctl --user is-active --quiet graphical-session.target; then\n  systemctl --user start owed.service\nfi",
+      "bodyTruncated": false,
+      "date": "2026-09-18T20:55:27Z",
+      "description": "Enable OWE desktop video backgrounds and lock feed",
+      "file": "1789764927.sh",
+      "lineCount": 17,
+      "packagesAdded": [
+        "owe",
+        "owe-lockfeed"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1789764927.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1789764927.sh",
+      "timestamp": 1789764927,
+      "touches": [
+        "/usr/lib/systemd/user/owed.service",
+        "/usr/share/owe/10-owe-sync",
+        "~/.config/systemd/user/graphical-session.target.wants"
+      ]
+    },
+    {
+      "body": "echo \"Install Elsewhen, the world clock plugin\"\n\nomarchy-pkg-add elsewhen\n\npackaged_plugin=\"/usr/share/omarchy/shell/plugins/omacom.elsewhen\"\nuser_plugin=\"$HOME/.config/omarchy/plugins/omacom.elsewhen\"\n\n# The package moved from plugins/ to shell/plugins/ once, stranding the link an\n# earlier run made to the old path. A link the user made is left alone.\nif [[ -L $user_plugin && ! -e $user_plugin && $(readlink \"$user_plugin\") == /usr/share/omarchy/* && -d $packaged_plugin ]]; then\n  ln -sfn \"$packaged_plugin\" \"$user_plugin\"\nfi\n\n# Dev checkouts do not contain plugins installed by system packages.\nif [[ ! $OMARCHY_PATH -ef /usr/share/omarchy && -d $packaged_plugin && ! -e $user_plugin && ! -L $user_plugin ]]; then\n  mkdir -p \"${user_plugin%/*}\"\n  ln -s \"$packaged_plugin\" \"$user_plugin\"\nfi\n\n# Best-effort, like the put below: an update whose shell cannot be asked still\n# finishes, and restarts the shell once the migrations are through.\nomarchy-shell -q shell rescanPlugins\nomarchy-bar put omacom.elsewhen --before omarchy.clock",
+      "bodyTruncated": false,
+      "date": "2026-09-22T02:09:32Z",
+      "description": "Install Elsewhen, the world clock plugin",
+      "file": "1790042972.sh",
+      "lineCount": 23,
+      "packagesAdded": [
+        "elsewhen"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1790042972.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790042972.sh",
+      "timestamp": 1790042972,
+      "touches": [
+        "/usr/share/omarchy",
+        "/usr/share/omarchy/",
+        "/usr/share/omarchy/shell/plugins/omacom.elsewhen",
+        "~/.config/omarchy/plugins/omacom.elsewhen"
+      ]
     }
   ],
   "prerelease": true,

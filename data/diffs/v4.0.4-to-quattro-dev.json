@@ -2,6 +2,10 @@
   "bindings": {
     "added": [
       {
+        "chord": "SUPER + A",
+        "label": "Select all"
+      },
+      {
         "chord": "SUPER + CTRL + ALT + F",
         "label": "Toggle full screen desktop"
       },
@@ -18,15 +22,32 @@
         "label": "Move window to scratchpad"
       }
     ],
-    "changedAction": [],
+    "changedAction": [
+      {
+        "action": [
+          "universal_clipboard_shortcut(\"CTRL\", \"C\", \"CTRL\", \"Insert\")",
+          "universal_clipboard_shortcut(\"CTRL\", \"C\", \"CTRL SHIFT\", \"C\")"
+        ],
+        "chord": "SUPER + C",
+        "label": "Universal copy"
+      },
+      {
+        "action": [
+          "universal_clipboard_shortcut(\"CTRL\", \"V\", \"SHIFT\", \"Insert\")",
+          "universal_clipboard_shortcut(\"CTRL\", \"V\", \"CTRL SHIFT\", \"V\")"
+        ],
+        "chord": "SUPER + V",
+        "label": "Universal paste"
+      }
+    ],
     "counts": {
-      "added": 4,
-      "changedAction": 0,
+      "added": 5,
+      "changedAction": 2,
       "from": 228,
       "fromRecords": 228,
       "removed": 0,
-      "to": 232,
-      "toRecords": 232
+      "to": 233,
+      "toRecords": 233
     },
     "note": null,
     "removed": []
@@ -50,6 +71,15 @@
       "omarchy-windows-key"
     ],
     "changed": [
+      {
+        "fields": {
+          "args": [
+            "[smart|region|windows|fullscreen] [slurp|copy|save] [--editor=<name>]",
+            "[smart|region|windows|fullscreen|scroll] [copy|save]"
+          ]
+        },
+        "name": "omarchy-capture-screenshot"
+      },
       {
         "fields": {
           "args": [
@@ -77,6 +107,15 @@
           ]
         },
         "name": "omarchy-install-browser"
+      },
+      {
+        "fields": {
+          "requiresSudo": [
+            false,
+            true
+          ]
+        },
+        "name": "omarchy-install-service-dropbox"
       },
       {
         "fields": {
@@ -123,11 +162,22 @@
           ]
         },
         "name": "omarchy-theme-bg-set"
+      },
+      {
+        "fields": {
+          "aliases": [
+            [],
+            [
+              "omarchy up"
+            ]
+          ]
+        },
+        "name": "omarchy-update"
       }
     ],
     "counts": {
       "added": 15,
-      "changed": 5,
+      "changed": 8,
       "from": 444,
       "removed": 0,
       "to": 459
@@ -727,6 +777,24 @@
       {
         "fields": {
           "when": [
+            "[[ -x $HOME/.config/composer/vendor/bin/laravel ]]",
+            "[[ -x $HOME/.local/bin/laravel || -x $HOME/.config/composer/vendor/bin/laravel ]]"
+          ]
+        },
+        "id": "remove.development.php.laravel"
+      },
+      {
+        "fields": {
+          "when": [
+            "omarchy-pkg-present php",
+            "[[ -d $HOME/.local/share/mise/installs/php ]] || omarchy-pkg-present php"
+          ]
+        },
+        "id": "remove.development.php.php"
+      },
+      {
+        "fields": {
+          "when": [
             "omarchy-cmd-present brave",
             null
           ]
@@ -825,6 +893,10 @@
       },
       {
         "fields": {
+          "checked": [
+            "[[ \"$(omarchy-default-editor)\" == \"sublime_text\" ]]",
+            "[[ \"$(omarchy-default-editor)\" == \"subl\" ]]"
+          ],
           "when": [
             "omarchy-cmd-present sublime_text",
             null
@@ -898,7 +970,7 @@
     ],
     "counts": {
       "added": 9,
-      "changed": 83,
+      "changed": 85,
       "from": 333,
       "removed": 2,
       "to": 340
@@ -911,14 +983,14 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 15,
+      "new": 18,
       "removed": 0,
-      "to": 121
+      "to": 124
     },
     "new": [
       {
         "date": "2026-08-13T08:20:04Z",
-        "description": "Install native video wallpaper playback dependencies",
+        "description": "Native video dependencies are superseded by the OWE migration",
         "file": "1786609204.sh"
       },
       {
@@ -945,6 +1017,11 @@
         "date": "2026-08-25T14:07:17Z",
         "description": "Enable Dell XPS 13 sidecar speaker amplifiers",
         "file": "1787666837.sh"
+      },
+      {
+        "date": "2026-08-30T22:46:35Z",
+        "description": "Replace Satty and Tensaku with Omasnap",
+        "file": "1788129995.sh"
       },
       {
         "date": "2026-09-05T07:57:40Z",
@@ -990,6 +1067,16 @@
         "date": "2026-09-13T14:45:15Z",
         "description": "Install cf (Cloudflare CLI) via mise wrapper",
         "file": "1789310715.sh"
+      },
+      {
+        "date": "2026-09-18T20:55:27Z",
+        "description": "Enable OWE desktop video backgrounds and lock feed",
+        "file": "1789764927.sh"
+      },
+      {
+        "date": "2026-09-22T02:09:32Z",
+        "description": "Install Elsewhen, the world clock plugin",
+        "file": "1790042972.sh"
       }
     ],
     "removed": []

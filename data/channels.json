@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-17T00:49:52Z",
+  "fetchedAt": "2026-09-24T01:13:55Z",
   "mirrors": [
     {
       "name": "stable-mirror",
@@ -12,7 +12,7 @@
         "unix": 1788802790,
         "iso": "2026-09-07T17:39:50Z"
       },
-      "lagHoursVsUpstream": 224.06
+      "lagHoursVsUpstream": 390.61
     },
     {
       "name": "rc-mirror",
@@ -25,32 +25,32 @@
         "unix": 1788802790,
         "iso": "2026-09-07T17:39:50Z"
       },
-      "lagHoursVsUpstream": 224.06
+      "lagHoursVsUpstream": 390.61
     },
     {
       "name": "mirror",
       "url": "https://mirror.omarchy.org",
       "lastupdate": {
-        "unix": 1789603255,
-        "iso": "2026-09-17T00:00:55Z"
+        "unix": 1790205570,
+        "iso": "2026-09-23T23:19:30Z"
       },
       "lastsync": {
-        "unix": 1789603434,
-        "iso": "2026-09-17T00:03:54Z"
+        "unix": 1790208761,
+        "iso": "2026-09-24T00:12:41Z"
       },
-      "lagHoursVsUpstream": 0.77
+      "lagHoursVsUpstream": 0.0
     }
   ],
   "upstream": {
     "name": "arch-geo-mirror",
     "url": "https://geo.mirror.pkgbuild.com",
     "lastupdate": {
-      "unix": 1789606016,
-      "iso": "2026-09-17T00:46:56Z"
+      "unix": 1790205570,
+      "iso": "2026-09-23T23:19:30Z"
     },
     "lastsync": {
-      "unix": 1789606083,
-      "iso": "2026-09-17T00:48:03Z"
+      "unix": 1790212380,
+      "iso": "2026-09-24T01:13:00Z"
     }
   },
   "channels": {
@@ -58,7 +58,7 @@
       "arch": "x86_64",
       "url": "https://pkgs.omarchy.org/stable/x86_64/omarchy.db",
       "ok": true,
-      "packageCount": 235,
+      "packageCount": 246,
       "packages": {
         "1password": {
           "version": "8.12.36-2",
@@ -76,14 +76,14 @@
           "builddate": 1787590827
         },
         "aether": {
-          "version": "4.29.8-1",
+          "version": "4.30.0-1",
           "desc": "Desktop theming application - extract colors from wallpapers and apply cohesive themes",
-          "builddate": 1788243494
+          "builddate": 1789939461
         },
         "aether-debug": {
-          "version": "4.29.8-1",
+          "version": "4.30.0-1",
           "desc": "Detached debugging symbols for aether",
-          "builddate": 1788243494
+          "builddate": 1789939461
         },
         "asdcontrol": {
           "version": "1:0.6.0-2",
@@ -99,6 +99,11 @@
           "version": "6.4.0-1",
           "desc": "Detached debugging symbols for asusctl",
           "builddate": 1788320203
+        },
+        "bambustudio-bin": {
+          "version": "02.08.02.61-1",
+          "desc": "PC Software for BambuLab's 3D printers",
+          "builddate": 1789884282
         },
         "basecamp-cli": {
           "version": "0.11.0-2",
@@ -126,14 +131,14 @@
           "builddate": 1785110135
         },
         "claude-code": {
-          "version": "2.1.273-1",
+          "version": "2.1.278-1",
           "desc": "An agentic coding tool that lives in your terminal",
-          "builddate": 1789574301
+          "builddate": 1789939469
         },
         "claude-desktop": {
-          "version": "2.110.0-1",
+          "version": "2.2553.1-1",
           "desc": "Official Claude desktop app with Claude Code",
-          "builddate": 1789574314
+          "builddate": 1789748150
         },
         "cliamp": {
           "version": "2.0.1-1",
@@ -146,29 +151,29 @@
           "builddate": 1788462695
         },
         "crush-bin": {
-          "version": "0.95.0-1",
+          "version": "0.96.0-1",
           "desc": "A powerful terminal-based AI assistant for developers, providing intelligent coding assistance directly in your terminal.",
-          "builddate": 1789574631
+          "builddate": 1790006260
         },
         "crush-bin-debug": {
-          "version": "0.95.0-1",
+          "version": "0.96.0-1",
           "desc": "Detached debugging symbols for crush-bin",
-          "builddate": 1789574631
+          "builddate": 1790006260
         },
         "cua-driver-bin": {
-          "version": "0.28.1-1",
+          "version": "0.28.2-1",
           "desc": "Computer-use driver for native GUI apps: accessibility-tree snapshots and input injection",
-          "builddate": 1789369149
+          "builddate": 1789658050
         },
         "cursor-bin": {
-          "version": "3.20.21-2",
+          "version": "3.21.16-3",
           "desc": "AI-first coding environment",
-          "builddate": 1789439363
+          "builddate": 1790122374
         },
         "cursor-cli": {
-          "version": "1:2026.09.10.1.fd3934a-1",
+          "version": "1:2026.09.18.1.9a7762b-1",
           "desc": "CLI tool for Cursor, the AI-first coding agent",
-          "builddate": 1789445645
+          "builddate": 1789941656
         },
         "cursor-cli-debug": {
           "version": "1:2026.07.23.1.e383d2b-1",
@@ -355,15 +360,20 @@
           "desc": "Detached debugging symbols for elephant-websearch",
           "builddate": 1785109726
         },
+        "elsewhen": {
+          "version": "1.0.0-2",
+          "desc": "World clock plugin for the Omarchy shell",
+          "builddate": 1789928261
+        },
         "fcitx5-debug": {
           "version": "5.1.16-1",
           "desc": "Detached debugging symbols for fcitx5",
           "builddate": 1763739184
         },
         "flea": {
-          "version": "0.2.1-3",
+          "version": "0.3.1-2",
           "desc": "Fast, keyboard-first file manager for Omarchy",
-          "builddate": 1789237886
+          "builddate": 1789972075
         },
         "ghostty": {
           "version": "1.3.1-3",
@@ -391,9 +401,9 @@
           "builddate": 1789525997
         },
         "github-copilot-cli": {
-          "version": "1.0.85-1",
+          "version": "1.0.86-1",
           "desc": "GitHub Copilot CLI brings the power of Copilot coding agent directly to your terminal.",
-          "builddate": 1789574660
+          "builddate": 1789748228
         },
         "gpu-screen-recorder": {
           "version": "5.12.3-2",
@@ -474,6 +484,11 @@
           "version": "0.1.0-2",
           "desc": "Detached debugging symbols for intel-lpmd",
           "builddate": 1778238085
+        },
+        "learn-omarchy": {
+          "version": "0.2.2-1",
+          "desc": "Interactive, theme-aware courses for learning Omarchy",
+          "builddate": 1790000472
         },
         "lib32-nvidia-580xx-utils": {
           "version": "580.178.04-1.1",
@@ -600,6 +615,11 @@
           "desc": "Native Linux controller for Insta360 Link webcams",
           "builddate": 1788465250
         },
+        "linux-firmware-cirrus": {
+          "version": "20260810-3",
+          "desc": "Firmware files for Linux - Firmware for Cirrus Logic audio devices (Arch - payload, stable-snapshot shim)",
+          "builddate": 1789664428
+        },
         "linux-mainline-panther-lake": {
           "version": "7.0rc4-2",
           "desc": "The Linux Mainline (Panther Lake audio support) kernel and modules",
@@ -666,9 +686,9 @@
           "builddate": 1765826152
         },
         "lmstudio-bin": {
-          "version": "0.4.24-2",
+          "version": "0.4.25-1",
           "desc": "LM Studio - A desktop app for exploring and running large language models locally",
-          "builddate": 1789439403
+          "builddate": 1789939981
         },
         "localsend": {
           "version": "1.18.2-1",
@@ -716,9 +736,9 @@
           "builddate": 1763739709
         },
         "mise-bin": {
-          "version": "2026.9.9-1",
+          "version": "2026.9.12-1",
           "desc": "dev tools, env vars, task runner",
-          "builddate": 1789574678
+          "builddate": 1790006278
         },
         "nautilus-dropbox": {
           "version": "2026.05.06-1",
@@ -766,9 +786,9 @@
           "builddate": 1786100428
         },
         "omakade": {
-          "version": "1.9.2-1",
+          "version": "1.10.0-1",
           "desc": "A beautiful, local-first game library for Omarchy",
-          "builddate": 1789439454
+          "builddate": 1789658206
         },
         "omapresent": {
           "version": "0.1.3-1",
@@ -784,6 +804,11 @@
           "version": "0.1.0-1",
           "desc": "Tools for authoring Omarchy laptop speaker tunings",
           "builddate": 1784943321
+        },
+        "omarchy-billboard-generator": {
+          "version": "0.2.0-1",
+          "desc": "Desktop app and CLI that renders animated OMARCHY domain videos",
+          "builddate": 1789939725
         },
         "omarchy-chromium": {
           "version": "148.0.7778.96-21",
@@ -860,10 +885,20 @@
           "desc": "Native Wayland screenshot and annotation overlay for Hyprland",
           "builddate": 1787843201
         },
+        "omaspeak-bin": {
+          "version": "0.0.3-4",
+          "desc": "Local-first text-to-speech application and daemon (pre-built binary)",
+          "builddate": 1789780699
+        },
         "omatrack": {
           "version": "1.2.0-1",
           "desc": "Cross-format motorsport telemetry analysis workstation",
           "builddate": 1787134125
+        },
+        "omawake-bin": {
+          "version": "0.0.3-4",
+          "desc": "Configurable local wake-word daemon (pre-built binary)",
+          "builddate": 1789780697
         },
         "omawrite": {
           "version": "0.5.0-1",
@@ -881,19 +916,19 @@
           "builddate": 1787887918
         },
         "openai-codex-bin": {
-          "version": "0.154.0-1",
+          "version": "0.155.1-1",
           "desc": "Arch Linux package for OpenAI's Codex CLI - Auto Updated",
-          "builddate": 1789099597
+          "builddate": 1789941539
         },
         "openai-codex-bin-debug": {
-          "version": "0.154.0-1",
+          "version": "0.155.1-1",
           "desc": "Detached debugging symbols for openai-codex-bin",
-          "builddate": 1789099597
+          "builddate": 1789941539
         },
         "openai-codex-desktop": {
-          "version": "26.908.70816-1",
+          "version": "26.915.31945-1",
           "desc": "Official ChatGPT desktop app with Codex",
-          "builddate": 1789439587
+          "builddate": 1789940684
         },
         "opencl-nvidia-580xx": {
           "version": "580.178.04-1.1",
@@ -901,14 +936,34 @@
           "builddate": 1786647872
         },
         "openclaw": {
-          "version": "2026.9.4-1",
+          "version": "2026.9.5-1",
           "desc": "Multi-channel AI gateway with extensible messaging integrations",
-          "builddate": 1789369315
+          "builddate": 1789939981
         },
         "opencode": {
           "version": "1.1.51-1",
           "desc": "The open source coding agent",
           "builddate": 1770195182
+        },
+        "owe": {
+          "version": "0.2.6-1",
+          "desc": "High-performance wallpaper engine for Omarchy (mp4, gif, stills)",
+          "builddate": 1790058929
+        },
+        "owe-debug": {
+          "version": "0.2.6-1",
+          "desc": "Detached debugging symbols for owe",
+          "builddate": 1790058929
+        },
+        "owe-lockfeed": {
+          "version": "0.2.6-1",
+          "desc": "Lock screen video feed module for the OWE wallpaper engine",
+          "builddate": 1790058930
+        },
+        "owe-lockfeed-debug": {
+          "version": "0.2.6-1",
+          "desc": "Detached debugging symbols for owe-lockfeed",
+          "builddate": 1790058930
         },
         "perplexity": {
           "version": "26.9.4+build72244-1",
@@ -981,9 +1036,9 @@
           "builddate": 1788484056
         },
         "schist-bin": {
-          "version": "0.13.0-1",
+          "version": "0.14.0-1",
           "desc": "Layered image editor with PSD and Affinity support (binary release)",
-          "builddate": 1789500505
+          "builddate": 1789941930
         },
         "slap-notes-bin": {
           "version": "0.2.3-1",
@@ -996,19 +1051,19 @@
           "builddate": 1789440310
         },
         "strata": {
-          "version": "0.18.0-1",
+          "version": "0.19.0-2",
           "desc": "Fast, keyboard-first file manager for modern Linux desktops",
-          "builddate": 1789574691
+          "builddate": 1789972071
         },
         "sublime-text-4": {
-          "version": "4.4200-1",
+          "version": "4.4213-1",
           "desc": "Sophisticated text editor for code, html and prose - stable build",
-          "builddate": 1763739855
+          "builddate": 1790006277
         },
         "sublime-text-4-debug": {
-          "version": "4.4200-1",
+          "version": "4.4213-1",
           "desc": "Detached debugging symbols for sublime-text-4",
-          "builddate": 1763739855
+          "builddate": 1790006277
         },
         "sunshine": {
           "version": "2026.516.143833-4.1",
@@ -1036,9 +1091,9 @@
           "builddate": 1788488590
         },
         "t3code-bin": {
-          "version": "0.0.42-1",
+          "version": "0.0.42-2",
           "desc": "Open-source control plane for coding agents",
-          "builddate": 1789575470
+          "builddate": 1789667725
         },
         "t3code-patched-bin": {
           "version": "0.0.35-5",
@@ -1241,7 +1296,7 @@
       "arch": "x86_64",
       "url": "https://pkgs.omarchy.org/rc/x86_64/omarchy.db",
       "ok": true,
-      "packageCount": 233,
+      "packageCount": 244,
       "packages": {
         "1password": {
           "version": "8.12.36-2",
@@ -1259,14 +1314,14 @@
           "builddate": 1787590827
         },
         "aether": {
-          "version": "4.29.8-1",
+          "version": "4.30.0-1",
           "desc": "Desktop theming application - extract colors from wallpapers and apply cohesive themes",
-          "builddate": 1788241337
+          "builddate": 1789939461
         },
         "aether-debug": {
-          "version": "4.29.8-1",
+          "version": "4.30.0-1",
           "desc": "Detached debugging symbols for aether",
-          "builddate": 1788241337
+          "builddate": 1789939461
         },
         "asdcontrol": {
           "version": "1:0.6.0-2",
@@ -1282,6 +1337,11 @@
           "version": "6.4.0-1",
           "desc": "Detached debugging symbols for asusctl",
           "builddate": 1788320203
+        },
+        "bambustudio-bin": {
+          "version": "02.08.02.61-1",
+          "desc": "PC Software for BambuLab's 3D printers",
+          "builddate": 1789884282
         },
         "basecamp-cli": {
           "version": "0.11.0-2",
@@ -1309,14 +1369,14 @@
           "builddate": 1785110135
         },
         "claude-code": {
-          "version": "2.1.273-1",
+          "version": "2.1.278-1",
           "desc": "An agentic coding tool that lives in your terminal",
-          "builddate": 1789572740
+          "builddate": 1789939469
         },
         "claude-desktop": {
-          "version": "2.110.0-1",
+          "version": "2.2553.1-1",
           "desc": "Official Claude desktop app with Claude Code",
-          "builddate": 1789572750
+          "builddate": 1789748150
         },
         "cliamp": {
           "version": "2.0.1-1",
@@ -1329,29 +1389,29 @@
           "builddate": 1788462695
         },
         "crush-bin": {
-          "version": "0.95.0-1",
+          "version": "0.96.0-1",
           "desc": "A powerful terminal-based AI assistant for developers, providing intelligent coding assistance directly in your terminal.",
-          "builddate": 1789573056
+          "builddate": 1790006260
         },
         "crush-bin-debug": {
-          "version": "0.95.0-1",
+          "version": "0.96.0-1",
           "desc": "Detached debugging symbols for crush-bin",
-          "builddate": 1789573056
+          "builddate": 1790006260
         },
         "cua-driver-bin": {
-          "version": "0.28.1-1",
+          "version": "0.28.2-1",
           "desc": "Computer-use driver for native GUI apps: accessibility-tree snapshots and input injection",
-          "builddate": 1789366390
+          "builddate": 1789659181
         },
         "cursor-bin": {
-          "version": "3.20.21-2",
+          "version": "3.21.16-3",
           "desc": "AI-first coding environment",
-          "builddate": 1789445286
+          "builddate": 1790122374
         },
         "cursor-cli": {
-          "version": "1:2026.09.10.1.fd3934a-1",
+          "version": "1:2026.09.18.1.9a7762b-1",
           "desc": "CLI tool for Cursor, the AI-first coding agent",
-          "builddate": 1789445323
+          "builddate": 1789941656
         },
         "cursor-cli-debug": {
           "version": "1:2026.07.23.1.e383d2b-1",
@@ -1538,15 +1598,20 @@
           "desc": "Detached debugging symbols for elephant-websearch",
           "builddate": 1785109726
         },
+        "elsewhen": {
+          "version": "1.0.0-2",
+          "desc": "World clock plugin for the Omarchy shell",
+          "builddate": 1789928261
+        },
         "fcitx5-debug": {
           "version": "5.1.16-1",
           "desc": "Detached debugging symbols for fcitx5",
           "builddate": 1763739184
         },
         "flea": {
-          "version": "0.2.1-3",
+          "version": "0.3.1-2",
           "desc": "Fast, keyboard-first file manager for Omarchy",
-          "builddate": 1789235640
+          "builddate": 1789972075
         },
         "ghostty": {
           "version": "1.3.1-3",
@@ -1574,9 +1639,9 @@
           "builddate": 1789525641
         },
         "github-copilot-cli": {
-          "version": "1.0.85-1",
+          "version": "1.0.86-1",
           "desc": "GitHub Copilot CLI brings the power of Copilot coding agent directly to your terminal.",
-          "builddate": 1789573079
+          "builddate": 1789748228
         },
         "gpu-screen-recorder": {
           "version": "5.12.3-2",
@@ -1657,6 +1722,11 @@
           "version": "0.1.0-2",
           "desc": "Detached debugging symbols for intel-lpmd",
           "builddate": 1778238085
+        },
+        "learn-omarchy": {
+          "version": "0.2.2-1",
+          "desc": "Interactive, theme-aware courses for learning Omarchy",
+          "builddate": 1790000472
         },
         "lib32-nvidia-580xx-utils": {
           "version": "580.178.04-1.1",
@@ -1783,6 +1853,11 @@
           "desc": "Native Linux controller for Insta360 Link webcams",
           "builddate": 1788464003
         },
+        "linux-firmware-cirrus": {
+          "version": "20260810-3",
+          "desc": "Firmware files for Linux - Firmware for Cirrus Logic audio devices (Arch - payload, stable-snapshot shim)",
+          "builddate": 1789664075
+        },
         "linux-mainline-panther-lake": {
           "version": "7.0rc4-2",
           "desc": "The Linux Mainline (Panther Lake audio support) kernel and modules",
@@ -1849,9 +1924,9 @@
           "builddate": 1765826152
         },
         "lmstudio-bin": {
-          "version": "0.4.24-2",
+          "version": "0.4.25-1",
           "desc": "LM Studio - A desktop app for exploring and running large language models locally",
-          "builddate": 1789445350
+          "builddate": 1789939981
         },
         "localsend": {
           "version": "1.18.2-1",
@@ -1899,9 +1974,9 @@
           "builddate": 1763739709
         },
         "mise-bin": {
-          "version": "2026.9.9-1",
+          "version": "2026.9.12-1",
           "desc": "dev tools, env vars, task runner",
-          "builddate": 1789573094
+          "builddate": 1790006278
         },
         "nautilus-dropbox": {
           "version": "2026.05.06-1",
@@ -1949,9 +2024,9 @@
           "builddate": 1786100428
         },
         "omakade": {
-          "version": "1.9.2-1",
+          "version": "1.10.0-1",
           "desc": "A beautiful, local-first game library for Omarchy",
-          "builddate": 1789431816
+          "builddate": 1789659331
         },
         "omapresent": {
           "version": "0.1.3-1",
@@ -1967,6 +2042,11 @@
           "version": "0.1.0-1",
           "desc": "Tools for authoring Omarchy laptop speaker tunings",
           "builddate": 1784943321
+        },
+        "omarchy-billboard-generator": {
+          "version": "0.2.0-1",
+          "desc": "Desktop app and CLI that renders animated OMARCHY domain videos",
+          "builddate": 1789939725
         },
         "omarchy-chromium": {
           "version": "148.0.7778.96-21",
@@ -2033,10 +2113,20 @@
           "desc": "Native Wayland screenshot and annotation overlay for Hyprland",
           "builddate": 1787843201
         },
+        "omaspeak-bin": {
+          "version": "0.0.3-4",
+          "desc": "Local-first text-to-speech application and daemon (pre-built binary)",
+          "builddate": 1789780699
+        },
         "omatrack": {
           "version": "1.2.0-1",
           "desc": "Cross-format motorsport telemetry analysis workstation",
           "builddate": 1787134125
+        },
+        "omawake-bin": {
+          "version": "0.0.3-4",
+          "desc": "Configurable local wake-word daemon (pre-built binary)",
+          "builddate": 1789780697
         },
         "omawrite": {
           "version": "0.5.0-1",
@@ -2054,19 +2144,19 @@
           "builddate": 1787887918
         },
         "openai-codex-bin": {
-          "version": "0.154.0-1",
+          "version": "0.155.1-1",
           "desc": "Arch Linux package for OpenAI's Codex CLI - Auto Updated",
-          "builddate": 1789099169
+          "builddate": 1789941539
         },
         "openai-codex-bin-debug": {
-          "version": "0.154.0-1",
+          "version": "0.155.1-1",
           "desc": "Detached debugging symbols for openai-codex-bin",
-          "builddate": 1789099169
+          "builddate": 1789941539
         },
         "openai-codex-desktop": {
-          "version": "26.908.70816-1",
+          "version": "26.915.31945-1",
           "desc": "Official ChatGPT desktop app with Codex",
-          "builddate": 1789431914
+          "builddate": 1789940684
         },
         "opencl-nvidia-580xx": {
           "version": "580.178.04-1.1",
@@ -2074,14 +2164,34 @@
           "builddate": 1786647872
         },
         "openclaw": {
-          "version": "2026.9.4-1",
+          "version": "2026.9.5-1",
           "desc": "Multi-channel AI gateway with extensible messaging integrations",
-          "builddate": 1789366546
+          "builddate": 1789939981
         },
         "opencode": {
           "version": "1.1.51-1",
           "desc": "The open source coding agent",
           "builddate": 1770195182
+        },
+        "owe": {
+          "version": "0.2.6-1",
+          "desc": "High-performance wallpaper engine for Omarchy (mp4, gif, stills)",
+          "builddate": 1790058929
+        },
+        "owe-debug": {
+          "version": "0.2.6-1",
+          "desc": "Detached debugging symbols for owe",
+          "builddate": 1790058929
+        },
+        "owe-lockfeed": {
+          "version": "0.2.6-1",
+          "desc": "Lock screen video feed module for the OWE wallpaper engine",
+          "builddate": 1790058930
+        },
+        "owe-lockfeed-debug": {
+          "version": "0.2.6-1",
+          "desc": "Detached debugging symbols for owe-lockfeed",
+          "builddate": 1790058930
         },
         "perplexity": {
           "version": "26.9.4+build72244-1",
@@ -2154,9 +2264,9 @@
           "builddate": 1788484056
         },
         "schist-bin": {
-          "version": "0.13.0-1",
+          "version": "0.14.0-1",
           "desc": "Layered image editor with PSD and Affinity support (binary release)",
-          "builddate": 1789500145
+          "builddate": 1789941930
         },
         "slap-notes-bin": {
           "version": "0.2.3-1",
@@ -2169,19 +2279,19 @@
           "builddate": 1789445433
         },
         "strata": {
-          "version": "0.18.0-1",
+          "version": "0.19.0-2",
           "desc": "Fast, keyboard-first file manager for modern Linux desktops",
-          "builddate": 1789573103
+          "builddate": 1789972071
         },
         "sublime-text-4": {
-          "version": "4.4200-1",
+          "version": "4.4213-1",
           "desc": "Sophisticated text editor for code, html and prose - stable build",
-          "builddate": 1763739855
+          "builddate": 1790006277
         },
         "sublime-text-4-debug": {
-          "version": "4.4200-1",
+          "version": "4.4213-1",
           "desc": "Detached debugging symbols for sublime-text-4",
-          "builddate": 1763739855
+          "builddate": 1790006277
         },
         "sunshine": {
           "version": "2026.516.143833-4.1",
@@ -2209,9 +2319,9 @@
           "builddate": 1788488836
         },
         "t3code-bin": {
-          "version": "0.0.42-1",
+          "version": "0.0.42-2",
           "desc": "Open-source control plane for coding agents",
-          "builddate": 1789573882
+          "builddate": 1789667363
         },
         "t3code-patched-bin": {
           "version": "0.0.35-5",
@@ -2414,7 +2524,7 @@
       "arch": "x86_64",
       "url": "https://pkgs.omarchy.org/edge/x86_64/omarchy.db",
       "ok": true,
-      "packageCount": 243,
+      "packageCount": 260,
       "packages": {
         "1password": {
           "version": "8.12.36-2",
@@ -2432,14 +2542,14 @@
           "builddate": 1787590830
         },
         "aether": {
-          "version": "4.29.8-1",
+          "version": "4.30.0-1",
           "desc": "Desktop theming application - extract colors from wallpapers and apply cohesive themes",
-          "builddate": 1788240402
+          "builddate": 1789939461
         },
         "aether-debug": {
-          "version": "4.29.8-1",
+          "version": "4.30.0-1",
           "desc": "Detached debugging symbols for aether",
-          "builddate": 1788240402
+          "builddate": 1789939461
         },
         "asdcontrol": {
           "version": "1:0.6.0-2",
@@ -2465,6 +2575,11 @@
           "version": "6.5.0-1",
           "desc": "Detached debugging symbols for asusctl",
           "builddate": 1789441304
+        },
+        "bambustudio-bin": {
+          "version": "02.08.02.61-1",
+          "desc": "PC Software for BambuLab's 3D printers",
+          "builddate": 1789884282
         },
         "basecamp-cli": {
           "version": "0.11.0-2",
@@ -2492,14 +2607,14 @@
           "builddate": 1789442302
         },
         "claude-code": {
-          "version": "2.1.273-1",
+          "version": "2.1.278-1",
           "desc": "An agentic coding tool that lives in your terminal",
-          "builddate": 1789571192
+          "builddate": 1789939469
         },
         "claude-desktop": {
-          "version": "2.110.0-1",
+          "version": "2.2553.1-1",
           "desc": "Official Claude desktop app with Claude Code",
-          "builddate": 1789571205
+          "builddate": 1789748150
         },
         "cliamp": {
           "version": "2.2.0-1",
@@ -2512,34 +2627,34 @@
           "builddate": 1789098691
         },
         "crush-bin": {
-          "version": "0.95.0-1",
+          "version": "0.96.0-1",
           "desc": "A powerful terminal-based AI assistant for developers, providing intelligent coding assistance directly in your terminal.",
-          "builddate": 1789571526
+          "builddate": 1790006260
         },
         "crush-bin-debug": {
-          "version": "0.95.0-1",
+          "version": "0.96.0-1",
           "desc": "Detached debugging symbols for crush-bin",
-          "builddate": 1789571526
+          "builddate": 1790006260
         },
         "cua-driver-bin": {
-          "version": "0.28.1-1",
+          "version": "0.28.2-1",
           "desc": "Computer-use driver for native GUI apps: accessibility-tree snapshots and input injection",
-          "builddate": 1789370533
+          "builddate": 1789644072
         },
         "cua-hyprland-plugin": {
-          "version": "0.26.1-5",
-          "desc": "Cua input candidate for reviewed profile omarchy-hyprland-0562r3-remaps",
-          "builddate": 1789535490
+          "version": "0.26.1-6",
+          "desc": "Cua input candidate for reviewed profile omarchy-hypr0562r3-aq0151-remaps",
+          "builddate": 1789714590
         },
         "cursor-bin": {
-          "version": "3.20.21-2",
+          "version": "3.21.16-3",
           "desc": "AI-first coding environment",
-          "builddate": 1789442060
+          "builddate": 1790122374
         },
         "cursor-cli": {
-          "version": "1:2026.09.10.1.fd3934a-1",
+          "version": "1:2026.09.18.1.9a7762b-1",
           "desc": "CLI tool for Cursor, the AI-first coding agent",
-          "builddate": 1789442101
+          "builddate": 1789941656
         },
         "cursor-cli-debug": {
           "version": "1:2026.07.23.1.e383d2b-1",
@@ -2557,9 +2672,9 @@
           "builddate": 1789442121
         },
         "dell-xps-touchpad-haptics": {
-          "version": "1.0.0-3",
+          "version": "1.0.0-4",
           "desc": "Synaptics haptic touchpad presets for Dell XPS on Omarchy",
-          "builddate": 1778238082
+          "builddate": 1789737974
         },
         "dell-xps13-sidecar-amps": {
           "version": "1.0.0-2",
@@ -2751,15 +2866,20 @@
           "desc": "Detached debugging symbols for elephant-websearch",
           "builddate": 1785109726
         },
+        "elsewhen": {
+          "version": "1.0.0-2",
+          "desc": "World clock plugin for the Omarchy shell",
+          "builddate": 1789928261
+        },
         "fcitx5-debug": {
           "version": "5.1.16-1",
           "desc": "Detached debugging symbols for fcitx5",
           "builddate": 1762884848
         },
         "flea": {
-          "version": "0.2.1-3",
+          "version": "0.3.1-2",
           "desc": "Fast, keyboard-first file manager for Omarchy",
-          "builddate": 1789222561
+          "builddate": 1789972075
         },
         "ghostty": {
           "version": "1.3.1-3",
@@ -2787,9 +2907,14 @@
           "builddate": 1789503685
         },
         "github-copilot-cli": {
-          "version": "1.0.85-1",
+          "version": "1.0.86-1",
           "desc": "GitHub Copilot CLI brings the power of Copilot coding agent directly to your terminal.",
-          "builddate": 1789571557
+          "builddate": 1789748228
+        },
+        "gliff": {
+          "version": "0.1.0-1",
+          "desc": "Hyprland remote desktop over SSH (Vulkan Video, 4:4:4)",
+          "builddate": 1789982016
         },
         "gpu-screen-recorder": {
           "version": "5.12.3-2",
@@ -2807,9 +2932,9 @@
           "builddate": 1789500378
         },
         "herdr": {
-          "version": "0.9.0-1",
+          "version": "0.9.1-1",
           "desc": "Herdr terminal workspace manager for AI coding agents",
-          "builddate": 1789031756
+          "builddate": 1789653796
         },
         "hermes-desktop": {
           "version": "2026.9.7-1",
@@ -2817,9 +2942,9 @@
           "builddate": 1789222684
         },
         "heroic-games-launcher-bin": {
-          "version": "2.22.2-1",
+          "version": "2.22.3-1",
           "desc": "An Open source Launcher for Epic, Amazon and GOG Games",
-          "builddate": 1789499774
+          "builddate": 1789644105
         },
         "hey-cli": {
           "version": "1.3.0-1",
@@ -2831,15 +2956,20 @@
           "desc": "Detached debugging symbols for hey-cli",
           "builddate": 1788019880
         },
+        "hype": {
+          "version": "0.4.1-1",
+          "desc": "Simple Markdown presentations with a visual slide editor",
+          "builddate": 1789993031
+        },
         "hyprland-preview-share-picker": {
-          "version": "0.2.1-1",
+          "version": "0.2.1-2",
           "desc": "An alternative share picker for hyprland with window and monitor previews",
-          "builddate": 1765664313
+          "builddate": 1789858989
         },
         "hyprland-preview-share-picker-debug": {
-          "version": "0.2.1-1",
+          "version": "0.2.1-2",
           "desc": "Detached debugging symbols for hyprland-preview-share-picker",
-          "builddate": 1765664313
+          "builddate": 1789858989
         },
         "hyprland-preview-share-picker-git": {
           "version": "0.2.1.r0.g211b789-1",
@@ -2870,6 +3000,11 @@
           "version": "0.1.0-2",
           "desc": "Detached debugging symbols for intel-lpmd",
           "builddate": 1778238085
+        },
+        "learn-omarchy": {
+          "version": "0.2.2-1",
+          "desc": "Interactive, theme-aware courses for learning Omarchy",
+          "builddate": 1790000472
         },
         "lib32-nvidia-580xx-utils": {
           "version": "580.178.04-1.1",
@@ -2987,14 +3122,19 @@
           "builddate": 1789442175
         },
         "limine-snapper-sync": {
-          "version": "1.31.0-1.1",
+          "version": "1.32.0-1",
           "desc": "Integrates Limine boot entries with Snapper snapshots.",
-          "builddate": 1788589720
+          "builddate": 1789941215
         },
         "link-studio": {
           "version": "1.0.4-1",
           "desc": "Native Linux controller for Insta360 Link webcams",
           "builddate": 1788462979
+        },
+        "linux-firmware-cirrus": {
+          "version": "20260810-3",
+          "desc": "Firmware files for Linux - Firmware for Cirrus Logic audio devices (Arch - payload, stable-snapshot shim)",
+          "builddate": 1789663737
         },
         "linux-mainline-panther-lake": {
           "version": "7.0rc4-2",
@@ -3072,9 +3212,9 @@
           "builddate": 1765675713
         },
         "lmstudio-bin": {
-          "version": "0.4.24-2",
+          "version": "0.4.25-1",
           "desc": "LM Studio - A desktop app for exploring and running large language models locally",
-          "builddate": 1789442233
+          "builddate": 1789939981
         },
         "localsend": {
           "version": "1.18.2-1",
@@ -3122,9 +3262,14 @@
           "builddate": 1762885455
         },
         "mise-bin": {
-          "version": "2026.9.9-1",
+          "version": "2026.9.12-1",
           "desc": "dev tools, env vars, task runner",
-          "builddate": 1789571575
+          "builddate": 1790006278
+        },
+        "monologue": {
+          "version": "0.1.0-3",
+          "desc": "A simple, theme-synced webcam recorder for Omarchy",
+          "builddate": 1789660138
         },
         "nautilus-dropbox": {
           "version": "2026.05.06-1",
@@ -3172,9 +3317,9 @@
           "builddate": 1786100428
         },
         "omakade": {
-          "version": "1.9.2-1",
+          "version": "1.10.0-1",
           "desc": "A beautiful, local-first game library for Omarchy",
-          "builddate": 1789442316
+          "builddate": 1789644128
         },
         "omapresent": {
           "version": "0.1.3-1",
@@ -3190,6 +3335,11 @@
           "version": "0.1.0-1",
           "desc": "Tools for authoring Omarchy laptop speaker tunings",
           "builddate": 1784943321
+        },
+        "omarchy-billboard-generator": {
+          "version": "0.2.0-1",
+          "desc": "Desktop app and CLI that renders animated OMARCHY domain videos",
+          "builddate": 1789939725
         },
         "omarchy-chromium": {
           "version": "148.0.7778.96-21",
@@ -3207,9 +3357,9 @@
           "builddate": 1789442417
         },
         "omarchy-dev": {
-          "version": "4.0.0.r2153.g9c5482c-1",
+          "version": "4.0.0.r2186.gee8ebf6-1",
           "desc": "Beautiful, modern, and opinionated Arch Linux by DHH (quattro branch tip)",
-          "builddate": 1789576012
+          "builddate": 1789972191
         },
         "omarchy-emacs": {
           "version": "1.10.1-1",
@@ -3232,9 +3382,9 @@
           "builddate": 1762885481
         },
         "omarchy-nvim": {
-          "version": "2026.8.13-1",
+          "version": "2026.9.21-1",
           "desc": "Pre-built LazyVim configuration with cached plugins",
-          "builddate": 1786625448
+          "builddate": 1790001033
         },
         "omarchy-settings": {
           "version": "4.0.4-1",
@@ -3242,9 +3392,19 @@
           "builddate": 1789506674
         },
         "omarchy-settings-dev": {
-          "version": "4.0.0.r2153.g9c5482c-1",
+          "version": "4.0.0.r2186.gee8ebf6-1",
           "desc": "Omarchy user defaults, /etc/skel content, fonts, plymouth theme, and support helpers (quattro branch tip)",
-          "builddate": 1789575976
+          "builddate": 1789972767
+        },
+        "omarchy-task-manager": {
+          "version": "0.0.3-3",
+          "desc": "Floating native task manager for Omarchy (preview)",
+          "builddate": 1790011944
+        },
+        "omarchy-task-manager-debug": {
+          "version": "0.0.3-3",
+          "desc": "Detached debugging symbols for omarchy-task-manager",
+          "builddate": 1790011944
         },
         "omarchy-walker": {
           "version": "1.0.0-2",
@@ -3262,14 +3422,24 @@
           "builddate": 1788642712
         },
         "omasnap": {
-          "version": "1.20.1-1",
+          "version": "1.21.0-1",
           "desc": "Native Wayland screenshot and annotation overlay for Hyprland",
-          "builddate": 1787843201
+          "builddate": 1789944683
+        },
+        "omaspeak-bin": {
+          "version": "0.0.3-4",
+          "desc": "Local-first text-to-speech application and daemon (pre-built binary)",
+          "builddate": 1789780699
         },
         "omatrack": {
           "version": "1.2.0-1",
           "desc": "Cross-format motorsport telemetry analysis workstation",
           "builddate": 1787134125
+        },
+        "omawake-bin": {
+          "version": "0.0.3-4",
+          "desc": "Configurable local wake-word daemon (pre-built binary)",
+          "builddate": 1789780697
         },
         "omawrite": {
           "version": "0.5.0-1",
@@ -3282,24 +3452,24 @@
           "builddate": 1788761925
         },
         "once-bin": {
-          "version": "0.3.2-1",
+          "version": "0.3.3-1",
           "desc": "CLI/TUI for installing and managing self-hosted web applications",
-          "builddate": 1787887918
+          "builddate": 1789644231
         },
         "openai-codex-bin": {
-          "version": "0.154.0-1",
+          "version": "0.155.1-1",
           "desc": "Arch Linux package for OpenAI's Codex CLI - Auto Updated",
-          "builddate": 1789098865
+          "builddate": 1789941539
         },
         "openai-codex-bin-debug": {
-          "version": "0.154.0-1",
+          "version": "0.155.1-1",
           "desc": "Detached debugging symbols for openai-codex-bin",
-          "builddate": 1789098865
+          "builddate": 1789941539
         },
         "openai-codex-desktop": {
-          "version": "26.908.70816-1",
+          "version": "26.915.31945-1",
           "desc": "Official ChatGPT desktop app with Codex",
-          "builddate": 1789442483
+          "builddate": 1789940684
         },
         "opencl-nvidia-580xx": {
           "version": "580.178.04-1.1",
@@ -3307,9 +3477,34 @@
           "builddate": 1786647872
         },
         "openclaw": {
-          "version": "2026.9.4-1",
+          "version": "2026.9.5-1",
           "desc": "Multi-channel AI gateway with extensible messaging integrations",
-          "builddate": 1789370742
+          "builddate": 1789939981
+        },
+        "openvino-genai": {
+          "version": "2026.3.1.0-3",
+          "desc": "OpenVINO GenAI C and C++ runtime libraries",
+          "builddate": 1789790205
+        },
+        "owe": {
+          "version": "0.2.6-1",
+          "desc": "High-performance wallpaper engine for Omarchy (mp4, gif, stills)",
+          "builddate": 1790058929
+        },
+        "owe-debug": {
+          "version": "0.2.6-1",
+          "desc": "Detached debugging symbols for owe",
+          "builddate": 1790058929
+        },
+        "owe-lockfeed": {
+          "version": "0.2.6-1",
+          "desc": "Lock screen video feed module for the OWE wallpaper engine",
+          "builddate": 1790058930
+        },
+        "owe-lockfeed-debug": {
+          "version": "0.2.6-1",
+          "desc": "Detached debugging symbols for owe-lockfeed",
+          "builddate": 1790058930
         },
         "perplexity": {
           "version": "26.9.4+build72244-1",
@@ -3382,9 +3577,9 @@
           "builddate": 1788484056
         },
         "schist-bin": {
-          "version": "0.13.0-1",
+          "version": "0.14.0-1",
           "desc": "Layered image editor with PSD and Affinity support (binary release)",
-          "builddate": 1789499799
+          "builddate": 1789941930
         },
         "slap-notes-bin": {
           "version": "0.2.3-1",
@@ -3397,19 +3592,19 @@
           "builddate": 1789444055
         },
         "strata": {
-          "version": "0.18.0-1",
+          "version": "0.19.0-2",
           "desc": "Fast, keyboard-first file manager for modern Linux desktops",
-          "builddate": 1789571588
+          "builddate": 1789972071
         },
         "sublime-text-4": {
-          "version": "4.4200-1",
+          "version": "4.4213-1",
           "desc": "Sophisticated text editor for code, html and prose - stable build",
-          "builddate": 1762885617
+          "builddate": 1790006277
         },
         "sublime-text-4-debug": {
-          "version": "4.4200-1",
+          "version": "4.4213-1",
           "desc": "Detached debugging symbols for sublime-text-4",
-          "builddate": 1762885617
+          "builddate": 1790006277
         },
         "sunshine": {
           "version": "2026.914.233613-1",
@@ -3437,9 +3632,9 @@
           "builddate": 1788488514
         },
         "t3code-bin": {
-          "version": "0.0.42-1",
+          "version": "0.0.42-2",
           "desc": "Open-source control plane for coding agents",
-          "builddate": 1789572377
+          "builddate": 1789667003
         },
         "tensaku": {
           "version": "0.29.0-1",
@@ -3472,9 +3667,9 @@
           "builddate": 1788477993
         },
         "ttfx": {
-          "version": "0.3.2-1",
+          "version": "0.3.3-1",
           "desc": "Terminal text effects as a single static binary — Rust port of terminaltexteffects",
-          "builddate": 1786953936
+          "builddate": 1789980201
         },
         "tuxedo-drivers-nocompatcheck-dkms": {
           "version": "4.22.1-2",
@@ -3637,7 +3832,7 @@
       "arch": "aarch64",
       "url": "https://pkgs.omarchy.org/edge/aarch64/omarchy.db",
       "ok": true,
-      "packageCount": 115,
+      "packageCount": 139,
       "packages": {
         "1password": {
           "version": "8.12.34-35",
@@ -3655,14 +3850,29 @@
           "builddate": 1788548681
         },
         "aether": {
-          "version": "4.29.8-1",
+          "version": "4.30.0-1",
           "desc": "Desktop theming application - extract colors from wallpapers and apply cohesive themes",
-          "builddate": 1788548739
+          "builddate": 1789939586
         },
         "asdcontrol": {
           "version": "1:0.6.0-2",
           "desc": "Control brightness on Apple Displays connected via USB-C",
           "builddate": 1788548827
+        },
+        "aspnet-runtime-bin": {
+          "version": "10.0.401-2",
+          "desc": "The ASP.NET Core runtime (binary)",
+          "builddate": 1790123325
+        },
+        "aspnet-targeting-pack-bin": {
+          "version": "10.0.401-2",
+          "desc": "The ASP.NET Core targeting pack (binary)",
+          "builddate": 1790123325
+        },
+        "avd-fw": {
+          "version": "0.1-1",
+          "desc": "Open replacement firmware for the Apple Video Decoder (AVD) on Apple Silicon",
+          "builddate": 1790122507
         },
         "basecamp-cli": {
           "version": "0.9.1-1",
@@ -3680,9 +3890,14 @@
           "builddate": 1788556018
         },
         "claude-code": {
-          "version": "2.1.259-1",
+          "version": "2.1.278-1",
           "desc": "An agentic coding tool that lives in your terminal",
-          "builddate": 1788548931
+          "builddate": 1789941345
+        },
+        "claude-desktop": {
+          "version": "2.2553.1-1",
+          "desc": "Official Claude desktop app with Claude Code",
+          "builddate": 1789747691
         },
         "cliamp": {
           "version": "2.0.1-1",
@@ -3690,19 +3905,44 @@
           "builddate": 1788548969
         },
         "crush-bin": {
-          "version": "0.92.0-1",
+          "version": "0.96.0-1",
           "desc": "A powerful terminal-based AI assistant for developers, providing intelligent coding assistance directly in your terminal.",
-          "builddate": 1788549133
+          "builddate": 1790006394
+        },
+        "cursor-bin": {
+          "version": "3.21.16-3",
+          "desc": "AI-first coding environment",
+          "builddate": 1790122504
         },
         "cursor-cli": {
-          "version": "1:2026.08.25.1.3e8eec8-1",
+          "version": "1:2026.09.18.1.9a7762b-1",
           "desc": "CLI tool for Cursor, the AI-first coding agent",
-          "builddate": 1788549203
+          "builddate": 1789940887
         },
         "dbxcli-bin": {
           "version": "3.7.2-1",
           "desc": "A command line client for Dropbox built using the Go SDK",
           "builddate": 1788549241
+        },
+        "dotnet-host-bin": {
+          "version": "10.0.401-2",
+          "desc": "A generic driver for the .NET Core Command Line Interface (binary)",
+          "builddate": 1790123325
+        },
+        "dotnet-runtime-bin": {
+          "version": "10.0.401-2",
+          "desc": "The .NET Core runtime (binary)",
+          "builddate": 1790123325
+        },
+        "dotnet-sdk-bin": {
+          "version": "10.0.401-2",
+          "desc": "The .NET Core SDK (binary)",
+          "builddate": 1790123325
+        },
+        "dotnet-targeting-pack-bin": {
+          "version": "10.0.401-2",
+          "desc": "The .NET Core targeting pack (binary)",
+          "builddate": 1790123325
         },
         "elephant": {
           "version": "2.22.0-1",
@@ -3779,15 +4019,30 @@
           "desc": "websearch provider for elephant",
           "builddate": 1788550365
         },
+        "elsewhen": {
+          "version": "1.0.0-2",
+          "desc": "World clock plugin for the Omarchy shell",
+          "builddate": 1789928261
+        },
+        "flea": {
+          "version": "0.3.1-2",
+          "desc": "Fast, keyboard-first file manager for Omarchy",
+          "builddate": 1789972194
+        },
         "github-copilot-cli": {
-          "version": "1.0.82-1",
+          "version": "1.0.86-1",
           "desc": "GitHub Copilot CLI brings the power of Copilot coding agent directly to your terminal.",
-          "builddate": 1788550403
+          "builddate": 1789747685
         },
         "herdr": {
           "version": "0.8.2-1",
           "desc": "Herdr terminal workspace manager for AI coding agents",
           "builddate": 1788550480
+        },
+        "hype": {
+          "version": "0.4.1-1",
+          "desc": "Simple Markdown presentations with a visual slide editor",
+          "builddate": 1789993154
         },
         "hyprland": {
           "version": "0.56.2-3",
@@ -3800,9 +4055,9 @@
           "builddate": 1788569959
         },
         "hyprland-preview-share-picker": {
-          "version": "0.2.1-1",
+          "version": "0.2.1-2",
           "desc": "An alternative share picker for hyprland with window and monitor previews",
-          "builddate": 1788571356
+          "builddate": 1789858349
         },
         "hyprpm": {
           "version": "0.56.2-3",
@@ -3818,6 +4073,11 @@
           "version": "0.5.4-5.1",
           "desc": "A modern C++ Wayland-native GUI toolkit",
           "builddate": 1788569783
+        },
+        "learn-omarchy": {
+          "version": "0.2.2-1",
+          "desc": "Interactive, theme-aware courses for learning Omarchy",
+          "builddate": 1790000472
         },
         "libretro-cap32-git": {
           "version": "1:4.5.4.r51.g4abfb8b-1",
@@ -3884,15 +4144,30 @@
           "desc": "Commodore VIC-20 core",
           "builddate": 1788552508
         },
+        "libva-v4l2_request-avd": {
+          "version": "1.3-1",
+          "desc": "VA-API driver for V4L2 stateless decoders, with Apple Video Decoder (AVD) support",
+          "builddate": 1790122504
+        },
         "limine-mkinitcpio-hook": {
           "version": "1.38.0-1.1",
           "desc": "Install kernels for the Limine bootloader.",
           "builddate": 1788573922
         },
         "limine-snapper-sync": {
-          "version": "1.31.0-1.1",
+          "version": "1.32.0-1",
           "desc": "Integrates Limine boot entries with Snapper snapshots.",
-          "builddate": 1788574651
+          "builddate": 1789941147
+        },
+        "linux-aurora": {
+          "version": "7.1.12.aurora2-9",
+          "desc": "The kernel and modules",
+          "builddate": 1790065647
+        },
+        "linux-aurora-headers": {
+          "version": "7.1.12.aurora2-9",
+          "desc": "Headers and scripts for building modules for the kernel",
+          "builddate": 1790065647
         },
         "localsend": {
           "version": "1.18.2-1",
@@ -3905,9 +4180,9 @@
           "builddate": 1788555927
         },
         "mise-bin": {
-          "version": "2026.9.1-1",
+          "version": "2026.9.12-1",
           "desc": "dev tools, env vars, task runner",
-          "builddate": 1788555983
+          "builddate": 1790006391
         },
         "nautilus-open-any-terminal": {
           "version": "0.8.2-1",
@@ -3918,6 +4193,11 @@
           "version": "5.3.0-1",
           "desc": "NordVPN CLI tool for Linux",
           "builddate": 1788556059
+        },
+        "nvidia-utils": {
+          "version": "615.71.09-1.1",
+          "desc": "NVIDIA drivers utilities",
+          "builddate": 1789926231
         },
         "omacalc": {
           "version": "0.2.2-1",
@@ -3939,6 +4219,11 @@
           "desc": "Tools for authoring Omarchy laptop speaker tunings",
           "builddate": 1788556248
         },
+        "omarchy-billboard-generator": {
+          "version": "0.2.0-1",
+          "desc": "Desktop app and CLI that renders animated OMARCHY domain videos",
+          "builddate": 1789939725
+        },
         "omarchy-chromium": {
           "version": "148.0.7778.96-21",
           "desc": "A web browser built for speed, simplicity, and security, with patches for Omarchy",
@@ -3950,9 +4235,9 @@
           "builddate": 1788556287
         },
         "omarchy-dev": {
-          "version": "4.0.0.r2015.g4930677-1",
+          "version": "4.0.0.r2186.gee8ebf6-1",
           "desc": "Beautiful, modern, and opinionated Arch Linux by DHH (quattro branch tip)",
-          "builddate": 1788572940
+          "builddate": 1789972485
         },
         "omarchy-emacs": {
           "version": "1.10.1-1",
@@ -3970,9 +4255,9 @@
           "builddate": 1788556415
         },
         "omarchy-nvim": {
-          "version": "2026.8.13-1",
+          "version": "2026.9.21-1",
           "desc": "Pre-built LazyVim configuration with cached plugins",
-          "builddate": 1788556435
+          "builddate": 1790001033
         },
         "omarchy-settings": {
           "version": "4.0.2-1",
@@ -3980,9 +4265,14 @@
           "builddate": 1788556939
         },
         "omarchy-settings-dev": {
-          "version": "4.0.0.r2015.g4930677-1",
+          "version": "4.0.0.r2186.gee8ebf6-1",
           "desc": "Omarchy user defaults, /etc/skel content, fonts, plymouth theme, and support helpers (quattro branch tip)",
-          "builddate": 1788557016
+          "builddate": 1789972816
+        },
+        "omarchy-steam-fex": {
+          "version": "1.0.0-3",
+          "desc": "Steam launcher with login workarounds for Apple Silicon using muvm and FEX",
+          "builddate": 1790123327
         },
         "omarchy-walker": {
           "version": "1.0.0-2",
@@ -3995,14 +4285,24 @@
           "builddate": 1788557088
         },
         "omasnap": {
-          "version": "1.20.1-1",
+          "version": "1.21.0-1",
           "desc": "Native Wayland screenshot and annotation overlay for Hyprland",
-          "builddate": 1788571978
+          "builddate": 1789944785
+        },
+        "omaspeak-bin": {
+          "version": "0.0.3-4",
+          "desc": "Local-first text-to-speech application and daemon (pre-built binary)",
+          "builddate": 1789780810
         },
         "omatrack": {
           "version": "1.2.0-1",
           "desc": "Cross-format motorsport telemetry analysis workstation",
           "builddate": 1788557128
+        },
+        "omawake-bin": {
+          "version": "0.0.3-4",
+          "desc": "Configurable local wake-word daemon (pre-built binary)",
+          "builddate": 1789780815
         },
         "omawrite": {
           "version": "0.5.0-1",
@@ -4020,24 +4320,39 @@
           "builddate": 1788557749
         },
         "openai-codex-bin": {
-          "version": "0.153.0-1",
+          "version": "0.155.1-1",
           "desc": "Arch Linux package for OpenAI's Codex CLI - Auto Updated",
-          "builddate": 1788557792
+          "builddate": 1789939910
         },
         "openai-codex-desktop": {
-          "version": "26.901.20858-1",
+          "version": "26.915.31945-1",
           "desc": "Official ChatGPT desktop app with Codex",
-          "builddate": 1788557833
+          "builddate": 1789940682
         },
         "openclaw": {
-          "version": "2026.9.1-1",
+          "version": "2026.9.5-1",
           "desc": "Multi-channel AI gateway with extensible messaging integrations",
-          "builddate": 1788579782
+          "builddate": 1789939598
+        },
+        "owe": {
+          "version": "0.2.6-1",
+          "desc": "High-performance wallpaper engine for Omarchy (mp4, gif, stills)",
+          "builddate": 1790059062
+        },
+        "owe-lockfeed": {
+          "version": "0.2.6-1",
+          "desc": "Lock screen video feed module for the OWE wallpaper engine",
+          "builddate": 1790059049
         },
         "perplexity": {
           "version": "26.9.1+build61614-2",
           "desc": "Official Perplexity desktop app",
           "builddate": 1788579904
+        },
+        "pinta": {
+          "version": "3.1.2-1",
+          "desc": "Drawing/editing program modeled after Paint.NET. It's goal is to provide a simplified alternative to GIMP for casual users",
+          "builddate": 1790157119
         },
         "python-sounddevice": {
           "version": "0.5.5-1",
@@ -4065,19 +4380,19 @@
           "builddate": 1788559845
         },
         "schist-bin": {
-          "version": "0.11.0-1",
+          "version": "0.14.0-1",
           "desc": "Layered image editor with PSD and Affinity support (binary release)",
-          "builddate": 1788580933
+          "builddate": 1789940427
         },
         "strata": {
-          "version": "0.8.0-2",
+          "version": "0.19.0-2",
           "desc": "Fast, keyboard-first file manager for modern Linux desktops",
-          "builddate": 1788563665
+          "builddate": 1789972212
         },
         "sublime-text-4": {
-          "version": "4.4200-1",
+          "version": "4.4213-1",
           "desc": "Sophisticated text editor for code, html and prose - stable build",
-          "builddate": 1788559904
+          "builddate": 1790006402
         },
         "sunshine": {
           "version": "2026.516.143833-4.1",
@@ -4110,9 +4425,9 @@
           "builddate": 1788560728
         },
         "ttfx": {
-          "version": "0.3.2-1",
+          "version": "0.3.3-1",
           "desc": "Terminal text effects as a single static binary — Rust port of terminaltexteffects",
-          "builddate": 1788560753
+          "builddate": 1789980471
         },
         "typora": {
           "version": "1.14.9-1",
@@ -4257,7 +4572,7 @@
       {
         "name": "cua-hyprland-plugin",
         "stable": null,
-        "edge": "0.26.1-5"
+        "edge": "0.26.1-6"
       },
       {
         "name": "dbxcli-bin",
@@ -4268,6 +4583,11 @@
         "name": "dbxcli-bin-debug",
         "stable": "3.7.2-1",
         "edge": "3.7.3-1"
+      },
+      {
+        "name": "dell-xps-touchpad-haptics",
+        "stable": "1.0.0-3",
+        "edge": "1.0.0-4"
       },
       {
         "name": "dotnet-core-bin-debug",
@@ -4295,6 +4615,11 @@
         "edge": "10.0.401-1"
       },
       {
+        "name": "gliff",
+        "stable": null,
+        "edge": "0.1.0-1"
+      },
+      {
         "name": "grok-bot",
         "stable": "0.29.0-1",
         "edge": "0.47.0-1"
@@ -4302,7 +4627,7 @@
       {
         "name": "herdr",
         "stable": "0.8.2-1",
-        "edge": "0.9.0-1"
+        "edge": "0.9.1-1"
       },
       {
         "name": "hermes-desktop",
@@ -4312,12 +4637,32 @@
       {
         "name": "heroic-games-launcher-bin",
         "stable": "2.22.1-1",
-        "edge": "2.22.2-1"
+        "edge": "2.22.3-1"
+      },
+      {
+        "name": "hype",
+        "stable": null,
+        "edge": "0.4.1-1"
+      },
+      {
+        "name": "hyprland-preview-share-picker",
+        "stable": "0.2.1-1",
+        "edge": "0.2.1-2"
+      },
+      {
+        "name": "hyprland-preview-share-picker-debug",
+        "stable": "0.2.1-1",
+        "edge": "0.2.1-2"
       },
       {
         "name": "limine-mkinitcpio-hook",
         "stable": "1.38.0-1.1",
         "edge": "1.39.0-1"
+      },
+      {
+        "name": "limine-snapper-sync",
+        "stable": "1.31.0-1.1",
+        "edge": "1.32.0-1"
       },
       {
         "name": "linux-omarchy",
@@ -4365,6 +4710,11 @@
         "edge": "0.10.3-1"
       },
       {
+        "name": "monologue",
+        "stable": null,
+        "edge": "0.1.0-3"
+      },
+      {
         "name": "nautilus-open-any-terminal",
         "stable": "0.8.2-1",
         "edge": "0.8.3-1"
@@ -4372,17 +4722,47 @@
       {
         "name": "omarchy-dev",
         "stable": "4.0.0.r1832.g23dab9e-1",
-        "edge": "4.0.0.r2153.g9c5482c-1"
+        "edge": "4.0.0.r2186.gee8ebf6-1"
+      },
+      {
+        "name": "omarchy-nvim",
+        "stable": "2026.8.13-1",
+        "edge": "2026.9.21-1"
       },
       {
         "name": "omarchy-settings-dev",
         "stable": "4.0.0.r1832.g23dab9e-1",
-        "edge": "4.0.0.r2153.g9c5482c-1"
+        "edge": "4.0.0.r2186.gee8ebf6-1"
+      },
+      {
+        "name": "omarchy-task-manager",
+        "stable": null,
+        "edge": "0.0.3-3"
+      },
+      {
+        "name": "omarchy-task-manager-debug",
+        "stable": null,
+        "edge": "0.0.3-3"
+      },
+      {
+        "name": "omasnap",
+        "stable": "1.20.1-1",
+        "edge": "1.21.0-1"
+      },
+      {
+        "name": "once-bin",
+        "stable": "0.3.2-1",
+        "edge": "0.3.3-1"
       },
       {
         "name": "opencode",
         "stable": "1.1.51-1",
         "edge": null
+      },
+      {
+        "name": "openvino-genai",
+        "stable": null,
+        "edge": "2026.3.1.0-3"
       },
       {
         "name": "rog-control-center",
@@ -4418,6 +4798,11 @@
         "name": "ttf-ia-writer",
         "stable": "20181225-1",
         "edge": "20230616.r62-1"
+      },
+      {
+        "name": "ttfx",
+        "stable": "0.3.2-1",
+        "edge": "0.3.3-1"
       },
       {
         "name": "tuxedo-drivers-nocompatcheck-dkms",
@@ -4514,7 +4899,7 @@
       {
         "name": "cua-hyprland-plugin",
         "rc": null,
-        "edge": "0.26.1-5"
+        "edge": "0.26.1-6"
       },
       {
         "name": "dbxcli-bin",
@@ -4525,6 +4910,11 @@
         "name": "dbxcli-bin-debug",
         "rc": "3.7.2-1",
         "edge": "3.7.3-1"
+      },
+      {
+        "name": "dell-xps-touchpad-haptics",
+        "rc": "1.0.0-3",
+        "edge": "1.0.0-4"
       },
       {
         "name": "dotnet-core-bin-debug",
@@ -4552,6 +4942,11 @@
         "edge": "10.0.401-1"
       },
       {
+        "name": "gliff",
+        "rc": null,
+        "edge": "0.1.0-1"
+      },
+      {
         "name": "grok-bot",
         "rc": "0.29.0-1",
         "edge": "0.47.0-1"
@@ -4559,7 +4954,7 @@
       {
         "name": "herdr",
         "rc": "0.8.2-1",
-        "edge": "0.9.0-1"
+        "edge": "0.9.1-1"
       },
       {
         "name": "hermes-desktop",
@@ -4569,12 +4964,32 @@
       {
         "name": "heroic-games-launcher-bin",
         "rc": "2.22.1-1",
-        "edge": "2.22.2-1"
+        "edge": "2.22.3-1"
+      },
+      {
+        "name": "hype",
+        "rc": null,
+        "edge": "0.4.1-1"
+      },
+      {
+        "name": "hyprland-preview-share-picker",
+        "rc": "0.2.1-1",
+        "edge": "0.2.1-2"
+      },
+      {
+        "name": "hyprland-preview-share-picker-debug",
+        "rc": "0.2.1-1",
+        "edge": "0.2.1-2"
       },
       {
         "name": "limine-mkinitcpio-hook",
         "rc": "1.38.0-1.1",
         "edge": "1.39.0-1"
+      },
+      {
+        "name": "limine-snapper-sync",
+        "rc": "1.31.0-1.1",
+        "edge": "1.32.0-1"
       },
       {
         "name": "linux-omarchy-ptl-novrr-mm",
@@ -4602,6 +5017,11 @@
         "edge": "0.10.3-1"
       },
       {
+        "name": "monologue",
+        "rc": null,
+        "edge": "0.1.0-3"
+      },
+      {
         "name": "nautilus-open-any-terminal",
         "rc": "0.8.2-1",
         "edge": "0.8.3-1"
@@ -4609,17 +5029,47 @@
       {
         "name": "omarchy-dev",
         "rc": null,
-        "edge": "4.0.0.r2153.g9c5482c-1"
+        "edge": "4.0.0.r2186.gee8ebf6-1"
+      },
+      {
+        "name": "omarchy-nvim",
+        "rc": "2026.8.13-1",
+        "edge": "2026.9.21-1"
       },
       {
         "name": "omarchy-settings-dev",
         "rc": null,
-        "edge": "4.0.0.r2153.g9c5482c-1"
+        "edge": "4.0.0.r2186.gee8ebf6-1"
+      },
+      {
+        "name": "omarchy-task-manager",
+        "rc": null,
+        "edge": "0.0.3-3"
+      },
+      {
+        "name": "omarchy-task-manager-debug",
+        "rc": null,
+        "edge": "0.0.3-3"
+      },
+      {
+        "name": "omasnap",
+        "rc": "1.20.1-1",
+        "edge": "1.21.0-1"
+      },
+      {
+        "name": "once-bin",
+        "rc": "0.3.2-1",
+        "edge": "0.3.3-1"
       },
       {
         "name": "opencode",
         "rc": "1.1.51-1",
         "edge": null
+      },
+      {
+        "name": "openvino-genai",
+        "rc": null,
+        "edge": "2026.3.1.0-3"
       },
       {
         "name": "rog-control-center",
@@ -4655,6 +5105,11 @@
         "name": "ttf-ia-writer",
         "rc": "20181225-1",
         "edge": "20230616.r62-1"
+      },
+      {
+        "name": "ttfx",
+        "rc": "0.3.2-1",
+        "edge": "0.3.3-1"
       },
       {
         "name": "tuxedo-drivers-nocompatcheck-dkms",
@@ -4747,6 +5202,7 @@
   },
   "kernels": {
     "stable": {
+      "linux-firmware-cirrus": "20260810-3",
       "linux-mainline-panther-lake": "7.0rc4-2",
       "linux-mainline-panther-lake-headers": "7.0rc4-2",
       "linux-omarchy": "7.2.5-3",
@@ -4761,6 +5217,7 @@
       "linux-ptl-headers": "7.1.8.arch1-2"
     },
     "rc": {
+      "linux-firmware-cirrus": "20260810-3",
       "linux-mainline-panther-lake": "7.0rc4-2",
       "linux-mainline-panther-lake-headers": "7.0rc4-2",
       "linux-omarchy": "7.2.5-4",
@@ -4775,6 +5232,7 @@
       "linux-ptl-headers": "7.1.8.arch1-2"
     },
     "edge": {
+      "linux-firmware-cirrus": "20260810-3",
       "linux-mainline-panther-lake": "7.0rc4-2",
       "linux-mainline-panther-lake-headers": "7.0rc4-2",
       "linux-omarchy": "7.2.5-4",
@@ -4790,7 +5248,10 @@
       "linux-ptl-audio-headers": "6.19.9.arch1-1",
       "linux-ptl-headers": "7.1.8.arch1-2"
     },
-    "edge-aarch64": {}
+    "edge-aarch64": {
+      "linux-aurora": "7.1.12.aurora2-9",
+      "linux-aurora-headers": "7.1.12.aurora2-9"
+    }
   },
   "omarchyPackage": {
     "stable": "4.0.4-1",

@@ -38,9 +38,15 @@ Five things need your input. Everything else is done.
 
 ## Deploy
 
-Cloudflare Pages, connected to this repository, is the intended setup. In the
-Cloudflare dashboard: **Workers & Pages → Create → Pages → Connect to Git**, pick
-this repo, and use:
+Cloudflare, connected to this repository. The dashboard now funnels everything
+through **Workers & Pages → Create application**, where either path works:
+
+- **Import a repository** (Workers with static assets). Uses `wrangler.jsonc` in
+  this repo, which points at `dist/` and serves `404.html` for unknown paths.
+- **Pages → Connect to Git** (the older flow, still available). Ignores
+  `wrangler.jsonc` and uses the dashboard's build settings instead.
+
+Either way the build settings are:
 
 | Setting | Value |
 |---|---|

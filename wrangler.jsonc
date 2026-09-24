@@ -1,0 +1,24 @@
+{
+  // Deploys the prebuilt static site in dist/ as a Cloudflare Worker with
+  // static assets. This is the "Workers" path in the Cloudflare dashboard's
+  // "Create application" flow. The older "Pages" path ignores this file and
+  // uses the build command and output directory from the dashboard instead;
+  // both produce the same site.
+  //
+  // Build first:  npm run build
+  // Deploy:       npx wrangler deploy
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "omarchylinux-org",
+  "compatibility_date": "2026-09-23",
+  "assets": {
+    "directory": "./dist",
+    // Serve dist/404.html for unknown paths instead of a bare Worker error.
+    "not_found_handling": "404-page",
+    // The site builds directory-style URLs (/fix/<slug>/), so keep the trailing
+    // slash rather than redirecting to the extensionless path.
+    "html_handling": "auto-trailing-slash"
+  },
+  "observability": {
+    "enabled": true
+  }
+}

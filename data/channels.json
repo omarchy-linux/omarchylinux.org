@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-24T09:30:27Z",
+  "fetchedAt": "2026-09-25T09:47:56Z",
   "mirrors": [
     {
       "name": "stable-mirror",
@@ -12,7 +12,7 @@
         "unix": 1788802790,
         "iso": "2026-09-07T17:39:50Z"
       },
-      "lagHoursVsUpstream": 400.76
+      "lagHoursVsUpstream": 424.67
     },
     {
       "name": "rc-mirror",
@@ -25,32 +25,32 @@
         "unix": 1788802790,
         "iso": "2026-09-07T17:39:50Z"
       },
-      "lagHoursVsUpstream": 400.76
+      "lagHoursVsUpstream": 424.67
     },
     {
       "name": "mirror",
       "url": "https://mirror.omarchy.org",
       "lastupdate": {
-        "unix": 1790239580,
-        "iso": "2026-09-24T08:46:20Z"
+        "unix": 1790327502,
+        "iso": "2026-09-25T09:11:42Z"
       },
       "lastsync": {
-        "unix": 1790241913,
-        "iso": "2026-09-24T09:25:13Z"
+        "unix": 1790327878,
+        "iso": "2026-09-25T09:17:58Z"
       },
-      "lagHoursVsUpstream": 0.7
+      "lagHoursVsUpstream": 0.2
     }
   ],
   "upstream": {
     "name": "arch-geo-mirror",
     "url": "https://geo.mirror.pkgbuild.com",
     "lastupdate": {
-      "unix": 1790242112,
-      "iso": "2026-09-24T09:28:32Z"
+      "unix": 1790328216,
+      "iso": "2026-09-25T09:23:36Z"
     },
     "lastsync": {
-      "unix": 1790242203,
-      "iso": "2026-09-24T09:30:03Z"
+      "unix": 1790329621,
+      "iso": "2026-09-25T09:47:01Z"
     }
   },
   "channels": {
@@ -2524,7 +2524,7 @@
       "arch": "x86_64",
       "url": "https://pkgs.omarchy.org/edge/x86_64/omarchy.db",
       "ok": true,
-      "packageCount": 260,
+      "packageCount": 261,
       "packages": {
         "1password": {
           "version": "8.12.36-2",
@@ -3380,6 +3380,11 @@
           "version": "20251027-1",
           "desc": "Omarchy keyring",
           "builddate": 1762885481
+        },
+        "omarchy-meeting-recorder-bin": {
+          "version": "1.0.2-1",
+          "desc": "Meeting Recorder for Omarchy: record the mic and the computer audio, transcribed on your own machine with speakers, chapters and a player",
+          "builddate": 1790274465
         },
         "omarchy-nvim": {
           "version": "2026.9.21-1",
@@ -4745,6 +4750,11 @@
         "edge": "4.0.0.r2186.gee8ebf6-1"
       },
       {
+        "name": "omarchy-meeting-recorder-bin",
+        "stable": null,
+        "edge": "1.0.2-1"
+      },
+      {
         "name": "omarchy-nvim",
         "stable": "2026.8.13-1",
         "edge": "2026.9.21-1"
@@ -5050,6 +5060,11 @@
         "name": "omarchy-dev",
         "rc": null,
         "edge": "4.0.0.r2186.gee8ebf6-1"
+      },
+      {
+        "name": "omarchy-meeting-recorder-bin",
+        "rc": null,
+        "edge": "1.0.2-1"
       },
       {
         "name": "omarchy-nvim",

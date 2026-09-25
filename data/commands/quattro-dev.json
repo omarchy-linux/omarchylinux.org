@@ -1099,7 +1099,7 @@
       "groupDescription": "Default application selection",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 101,
+      "lineCount": 103,
       "name": "omarchy-default-agent",
       "path": "bin/omarchy-default-agent",
       "requiresSudo": false,
@@ -2072,6 +2072,23 @@
     {
       "aliases": [],
       "args": "",
+      "cli": "omarchy hw nvidia display",
+      "examples": [],
+      "executable": true,
+      "group": "hw",
+      "groupDescription": "Hardware detection and controls",
+      "hasMetadata": true,
+      "hidden": false,
+      "lineCount": 45,
+      "name": "omarchy-hw-nvidia-display",
+      "path": "bin/omarchy-hw-nvidia-display",
+      "requiresSudo": false,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-hw-nvidia-display",
+      "summary": "Detect whether NVIDIA drives the display (rather than a hybrid iGPU)."
+    },
+    {
+      "aliases": [],
+      "args": "",
       "cli": "omarchy hw nvidia gsp",
       "examples": [],
       "executable": true,
@@ -2667,7 +2684,7 @@
       "groupDescription": "Optional software installers",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 162,
+      "lineCount": 20,
       "name": "omarchy-install-ai-hermes",
       "path": "bin/omarchy-install-ai-hermes",
       "requiresSudo": true,
@@ -3113,23 +3130,23 @@
     },
     {
       "aliases": [],
-      "args": "[--check|--now|--owns|--remove]",
+      "args": "<--check|--now|--retire-mise>",
       "cli": "omarchy install hermes cli",
       "examples": [
-        "omarchy install hermes cli",
-        "omarchy install hermes cli --now"
+        "omarchy install hermes cli --now",
+        "omarchy install hermes cli --check"
       ],
       "executable": true,
       "group": "install",
       "groupDescription": "Optional software installers",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 280,
+      "lineCount": 544,
       "name": "omarchy-install-hermes-cli",
       "path": "bin/omarchy-install-hermes-cli",
-      "requiresSudo": false,
+      "requiresSudo": true,
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-install-hermes-cli",
-      "summary": "Install the Hermes CLI as a mise-backed wrapper in ~/.local/bin"
+      "summary": "Install Hermes Desktop for the default agent; its runtime provides the hermes command"
     },
     {
       "aliases": [],
@@ -5228,7 +5245,7 @@
       "groupDescription": "Removal workflows",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 147,
+      "lineCount": 241,
       "name": "omarchy-remove-ai-hermes",
       "path": "bin/omarchy-remove-ai-hermes",
       "requiresSudo": true,
@@ -5537,7 +5554,7 @@
       "groupDescription": "Removal workflows",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 55,
+      "lineCount": 47,
       "name": "omarchy-remove-preinstalls",
       "path": "bin/omarchy-remove-preinstalls",
       "requiresSudo": false,
@@ -6878,7 +6895,7 @@
       "groupDescription": "Theme management",
       "hasMetadata": true,
       "hidden": true,
-      "lineCount": 233,
+      "lineCount": 234,
       "name": "omarchy-theme-set-hermes",
       "path": "bin/omarchy-theme-set-hermes",
       "requiresSudo": false,
@@ -8157,7 +8174,7 @@
       "summary": "Install, launch, stop, inspect, or remove the Windows VM"
     }
   ],
-  "count": 459,
+  "count": 460,
   "generatedFrom": "data/source/quattro-dev/bin",
   "groups": {
     "agent": "AI coding agent usage data",

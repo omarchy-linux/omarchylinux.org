@@ -59,6 +59,7 @@
       "omarchy-crash-mute",
       "omarchy-hw-dell-xps13-sidecar-amps",
       "omarchy-hw-elgato-camlink-4k",
+      "omarchy-hw-nvidia-display",
       "omarchy-install-ai-claude",
       "omarchy-install-chromium-claude",
       "omarchy-remove-ai-chatgpt",
@@ -107,6 +108,33 @@
           ]
         },
         "name": "omarchy-install-browser"
+      },
+      {
+        "fields": {
+          "args": [
+            "[--check|--now|--owns|--remove]",
+            "<--check|--now|--retire-mise>"
+          ],
+          "examples": [
+            [
+              "omarchy install hermes cli",
+              "omarchy install hermes cli --now"
+            ],
+            [
+              "omarchy install hermes cli --now",
+              "omarchy install hermes cli --check"
+            ]
+          ],
+          "requiresSudo": [
+            false,
+            true
+          ],
+          "summary": [
+            "Install the Hermes CLI as a mise-backed wrapper in ~/.local/bin",
+            "Install Hermes Desktop for the default agent; its runtime provides the hermes command"
+          ]
+        },
+        "name": "omarchy-install-hermes-cli"
       },
       {
         "fields": {
@@ -176,11 +204,11 @@
       }
     ],
     "counts": {
-      "added": 15,
-      "changed": 8,
+      "added": 16,
+      "changed": 9,
       "from": 444,
       "removed": 0,
-      "to": 459
+      "to": 460
     },
     "removed": []
   },
@@ -983,9 +1011,9 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 18,
+      "new": 20,
       "removed": 0,
-      "to": 124
+      "to": 126
     },
     "new": [
       {
@@ -1074,9 +1102,19 @@
         "file": "1789764927.sh"
       },
       {
+        "date": "2026-09-21T19:06:40Z",
+        "description": "Retire the Hermes that mise built; Hermes now updates itself",
+        "file": "1790017600.sh"
+      },
+      {
         "date": "2026-09-22T02:09:32Z",
         "description": "Install Elsewhen, the world clock plugin",
         "file": "1790042972.sh"
+      },
+      {
+        "date": "2026-09-24T20:47:46Z",
+        "description": "Apply the NVIDIA video driver fix on hybrid laptops",
+        "file": "1790282866.sh"
       }
     ],
     "removed": []

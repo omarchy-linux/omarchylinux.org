@@ -1,5 +1,5 @@
 {
-  "count": 124,
+  "count": 126,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -1616,21 +1616,18 @@
       ]
     },
     {
-      "body": "echo \"Install the Hermes CLI wrapper for existing installs\"\n\n# Users who removed the preinstalls opted out of the mise wrappers, and Hermes\n# is one of them.\n[[ -f $HOME/.local/state/omarchy/preinstalls-removed ]] && exit 0\n\n# Hermes Desktop provides its own Hermes. The installer stands aside for it,\n# removing the mise copy and the Omarchy wrapper an earlier install may have\n# left beside the app. It also reports when the app has not finished setting\n# Hermes up, which is the app's to finish, not this migration's to fail on.\nif omarchy-pkg-present hermes-desktop; then\n  omarchy-install-hermes-cli || true\n  exit 0\nfi\n\n# Anything already answering to hermes that this installer did not write --\n# an official install, a hand-rolled wrapper, even a dangling link -- belongs to\n# the user and stays exactly as it is. The installer is asked rather than\n# matched against here, so there is one answer to who owns that wrapper.\nwrapper=\"$HOME/.local/bin/hermes\"\nif [[ -e $wrapper || -L $wrapper ]] && ! omarchy-install-hermes-cli --owns; then\n  exit 0\nfi\n\nomarchy-install-hermes-cli",
+      "body": "echo \"Install the Hermes CLI wrapper for existing installs\"\n\n# Nothing to install any more: the mise-backed wrapper this wrote was retired in favour of the self-updating runtime, and the migration that retired it clears any it had already written.",
       "bodyTruncated": false,
       "date": "2026-08-26T16:04:41Z",
       "description": "Install the Hermes CLI wrapper for existing installs",
       "file": "1787760281.sh",
-      "lineCount": 25,
+      "lineCount": 3,
       "packagesAdded": [],
       "packagesRemoved": [],
       "path": "migrations/1787760281.sh",
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1787760281.sh",
       "timestamp": 1787760281,
-      "touches": [
-        "~/.local/bin/hermes",
-        "~/.local/state/omarchy/preinstalls-removed"
-      ]
+      "touches": []
     },
     {
       "body": "echo \"Separate printer discovery from root and print-filter access\"\n\nmachine_marker=\"${OMARCHY_CUPS_MIGRATION_MARKER:-/var/lib/omarchy/migrations/1787815267}\"\n\n[[ ! -e $machine_marker ]] || exit 0\n\n# Existing releases allowed a desktop user or shared group named cups-browsed,\n# which systemd-sysusers would silently reuse for passwordless CUPS access.\nif omarchy-pkg-present cups; then\n  cups_browsed_account=$(getent passwd cups-browsed || true)\n  cups_browsed_group=$(getent group cups-browsed || true)\n\n  if [[ -n $cups_browsed_account || -n $cups_browsed_group ]]; then\n    IFS=: read -r _ _ cups_browsed_uid cups_browsed_gid cups_browsed_description cups_browsed_home cups_browsed_shell <<<\"$cups_browsed_account\"\n    IFS=: read -r _ _ cups_browsed_group_gid cups_browsed_group_members <<<\"$cups_browsed_group\"\n    other_primary_user=$(getent passwd | awk -F: -v gid=\"$cups_browsed_gid\" '$1 != \"cups-browsed\" && $4 == gid { print $1; exit }')\n\n    if [[ ! $cups_browsed_uid =~ ^[0-9]+$ || ! $cups_browsed_group_gid =~ ^[0-9]+$ ]] ||\n      ((cups_browsed_uid <= 0 || cups_browsed_uid >= 1000)) ||\n      [[ $cups_browsed_gid != $cups_browsed_group_gid ]] ||\n      [[ $cups_browsed_description != \"CUPS printer discovery\" || $cups_browsed_home != \"/\" || $cups_browsed_shell != \"/usr/bin/nologin\" ]] ||\n      [[ -n $cups_browsed_group_members || -n $other_primary_user ]]; then\n      echo \"Cannot harden printer discovery: the existing cups-browsed user or group is not a dedicated system account.\" >&2\n      false\n    fi\n  fi\nfi\n\n# CUPS-PDF accepts a job-controlled post-processing command in a backend that\n# CUPS launches as root. Native application print-to-file support replaces it.\nomarchy-pkg-drop cups-pdf\n\n# system-config-printer uses this helper to request printer administration\n# through Polkit now that the desktop user's wheel group is no longer @SYSTEM.\nif omarchy-pkg-present cups; then\n  omarchy-pkg-add cups-pk-helper\nfi\n\n# Stop the root-running daemon before changing the authorization it relies on.\nif systemctl is-active --quiet cups-browsed.service 2>/dev/null; then",
@@ -2115,6 +2112,20 @@
       ]
     },
     {
+      "body": "echo \"Retire the Hermes that mise built; Hermes now updates itself\"\n\n# Hermes installs the way Hermes Desktop does now: upstream's installer makes a checkout under ~/.hermes that `hermes update` fast-forwards. The wrapper that built Hermes through mise had nothing an update could move, so it goes, with the mise environment it built. The wrapper, the environment and what proves them Omarchy's are known to the installer and nowhere else, so it is asked rather than matched against here; it leaves a hermes the user set up themselves, and a mise environment without the wrapper, as they are, and exits non-zero with the commands to finish by hand when the environment cannot be removed, which keeps this pending rather than done.\nomarchy-install-hermes-cli --retire-mise\n\n# Choosing Hermes again is what installs the runtime, and nothing else will.\nif [[ $(omarchy-default-agent) == \"hermes\" ]] && ! omarchy-install-hermes-cli --check; then\n  echo \"Hermes is the default agent but is no longer installed. Choose it again under Setup > Default Agent, or run: omarchy default agent hermes\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-09-21T19:06:40Z",
+      "description": "Retire the Hermes that mise built; Hermes now updates itself",
+      "file": "1790017600.sh",
+      "lineCount": 9,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1790017600.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790017600.sh",
+      "timestamp": 1790017600,
+      "touches": []
+    },
+    {
       "body": "echo \"Install Elsewhen, the world clock plugin\"\n\nomarchy-pkg-add elsewhen\n\npackaged_plugin=\"/usr/share/omarchy/shell/plugins/omacom.elsewhen\"\nuser_plugin=\"$HOME/.config/omarchy/plugins/omacom.elsewhen\"\n\n# The package moved from plugins/ to shell/plugins/ once, stranding the link an\n# earlier run made to the old path. A link the user made is left alone.\nif [[ -L $user_plugin && ! -e $user_plugin && $(readlink \"$user_plugin\") == /usr/share/omarchy/* && -d $packaged_plugin ]]; then\n  ln -sfn \"$packaged_plugin\" \"$user_plugin\"\nfi\n\n# Dev checkouts do not contain plugins installed by system packages.\nif [[ ! $OMARCHY_PATH -ef /usr/share/omarchy && -d $packaged_plugin && ! -e $user_plugin && ! -L $user_plugin ]]; then\n  mkdir -p \"${user_plugin%/*}\"\n  ln -s \"$packaged_plugin\" \"$user_plugin\"\nfi\n\n# Best-effort, like the put below: an update whose shell cannot be asked still\n# finishes, and restarts the shell once the migrations are through.\nomarchy-shell -q shell rescanPlugins\nomarchy-bar put omacom.elsewhen --before omarchy.clock",
       "bodyTruncated": false,
       "date": "2026-09-22T02:09:32Z",
@@ -2134,6 +2145,20 @@
         "/usr/share/omarchy/shell/plugins/omacom.elsewhen",
         "~/.config/omarchy/plugins/omacom.elsewhen"
       ]
+    },
+    {
+      "body": "echo \"Apply the NVIDIA video driver fix on hybrid laptops\"\n\nif omarchy-hw-nvidia && ! omarchy-hw-nvidia-display; then\n  # Hyprland applies env at startup. Reloading the updated defaults cannot\n  # clear the old overrides inherited by the compositor and its applications.\n  omarchy-state set reboot-required\n  echo \"Reboot to stop forcing NVIDIA VA-API/GLX drivers on the integrated GPU.\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-09-24T20:47:46Z",
+      "description": "Apply the NVIDIA video driver fix on hybrid laptops",
+      "file": "1790282866.sh",
+      "lineCount": 8,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1790282866.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790282866.sh",
+      "timestamp": 1790282866,
+      "touches": []
     }
   ],
   "prerelease": true,

@@ -1,7 +1,7 @@
 {
  "source": "github.com/omacom/omarchy",
- "fetchedAt": "2026-09-25T09:40:49.462643+00:00",
- "derivedAt": "2026-09-25T09:47:53.252133+00:00",
+ "fetchedAt": "2026-09-26T09:25:18.284789+00:00",
+ "derivedAt": "2026-09-26T09:32:06.782867+00:00",
  "criteria": {
   "stateReason": "COMPLETED",
   "minPostCloseComments": 2,
@@ -17,14 +17,42 @@
   ],
   "commentWindow": "last 5 comments fetched per closed issue"
  },
- "count": 36,
+ "count": 37,
  "funnel": {
-  "completedIssues": 2666,
-  "withFetchedComments": 1674,
-  "withAtLeastOnePostCloseMarker": 129,
-  "withAtLeastTwoPostCloseMarkers": 36
+  "completedIssues": 2667,
+  "withFetchedComments": 1676,
+  "withAtLeastOnePostCloseMarker": 130,
+  "withAtLeastTwoPostCloseMarkers": 37
  },
  "issues": [
+  {
+   "number": 1846,
+   "title": "unable to write 3.0.1 ISO using balenaEtcher",
+   "url": "https://github.com/omacom/omarchy/issues/1846",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-09-29T13:46:38Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [],
+   "comments": 12,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "dtellz",
+     "createdAt": "2026-09-25T09:44:16Z",
+     "url": "https://github.com/omacom/omarchy/issues/1846#issuecomment-5830291235",
+     "snippet": "This is back with v4.0.4"
+    },
+    {
+     "author": "alaycock",
+     "createdAt": "2026-09-25T18:54:05Z",
+     "url": "https://github.com/omacom/omarchy/issues/1846#issuecomment-5837899104",
+     "snippet": "For what it's worth, writing it via `dd` worked fine when BalenaEtcher did not:\n`sudo dd if=/path/to/omarchy-4.0.4.iso of=/dev/disk4 bs=1m status=progress`\n\nFind your disk number via `diskutil list`"
+    }
+   ],
+   "lastActivity": "2026-09-25T18:54:33Z"
+  },
   {
    "number": 12044,
    "title": "Migration failed due to missing nvidia modules on linux-omarchy",

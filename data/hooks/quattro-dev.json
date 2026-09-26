@@ -2,7 +2,7 @@
   "count": 6,
   "docs": [
     {
-      "body": "Omarchy fires hooks at a handful of moments, and you can hang your own scripts off them. They live in `~/.config/omarchy/hooks/<event>.d/`, one directory per event, and every executable file in there runs when the event happens:\n\n| Event | When it runs |\n| ----- | ------------ |\n| `post-boot` | Right after the desktop has started |\n| `post-update` | During `omarchy update`, after packages and migrations |\n| `pre-refresh-pacman` | Before `omarchy refresh pacman` re-syncs the package config |\n| `theme-set` | After a theme change (theme name in `$1`) |\n| `font-set` | After a font change (font name in `$1`) |\n| `battery-low` | When the battery gets low (percentage in `$1`) |\n\nEach of those directories already holds a `.sample` file showing the shape of a hook — drop the `.sample` from the name to put it to work. To install a script you've written elsewhere, use `omarchy hook install post-boot ~/my-hook`, which copies it in and makes it executable.",
+      "body": "Omarchy fires hooks at a handful of moments, and you can hang your own scripts off them. They live in `~/.config/omarchy/hooks/<event>.d/`, one directory per event, and every executable file in there runs when the event happens:\n\n| Event | When it runs |\n| ----- | ------------ |\n| `post-boot` | Right after the desktop has started |\n| `post-update` | Near the end of `omarchy update`, after packages, migrations, and service restarts, before mise tools are updated |\n| `pre-refresh-pacman` | After `omarchy refresh pacman` re-syncs the package config, before it updates packages; a channel switch runs it during that same refresh step |\n| `theme-set` | After a theme change (theme name in `$1`) |\n| `font-set` | After a font change (font name in `$1`) |\n| `battery-low` | When the battery gets low (percentage in `$1`) |\n\nThe `pre-refresh-pacman` hook is where custom repositories or `IgnorePkg` lines belong, since it runs before the package transaction. Both update-related hooks run as your user after Omarchy clears its cached sudo authorization, so a hook that uses `sudo` needs its own authorization and may ask for your password.\n\nEach of those directories already holds a `.sample` file showing the shape of a hook — drop the `.sample` from the name to put it to work. To install a script you've written elsewhere, use `omarchy hook install post-boot ~/my-hook`, which copies it in and makes it executable.",
       "file": "manual/31-dotfiles.md",
       "heading": "Running scripts on system events",
       "level": 3,
@@ -89,14 +89,7 @@
     {
       "directory": "config/omarchy/hooks/post-update.d",
       "event": "post-update",
-      "firedBy": [
-        {
-          "file": "bin/omarchy-update",
-          "line": 50,
-          "snippet": "omarchy-hook post-update",
-          "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-update#L50"
-        }
-      ],
+      "firedBy": [],
       "samples": [
         {
           "content": "#!/bin/bash\n\n# This hook is called after an Omarchy system update has been performed.\n# To put it into use, remove .sample from this file name.\n\n# Example: Show notification after the system has been updated.\n# omarchy-notification-send -u low \"Update Performed\" \"Your system is now up to date\"\n",
@@ -114,18 +107,11 @@
     {
       "directory": "config/omarchy/hooks/pre-refresh-pacman.d",
       "event": "pre-refresh-pacman",
-      "firedBy": [
-        {
-          "file": "bin/omarchy-refresh-pacman",
-          "line": 23,
-          "snippet": "omarchy-hook pre-refresh-pacman",
-          "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-refresh-pacman#L23"
-        }
-      ],
+      "firedBy": [],
       "samples": [
         {
-          "content": "#!/bin/bash\n\n# This hook is called by `omarchy refresh pacman` AFTER the channel template\n# is copied to /etc/pacman.conf and BEFORE `pacman -Syyuu` runs. Use it to\n# layer customizations onto the freshly-written pacman.conf so they're\n# respected by the upgrade — common cases are adding a custom repository\n# (e.g. CachyOS, Chaotic-AUR, an internal company repo) or extra IgnorePkg\n# lines.\n#\n# The hook runs as the invoking user with a warm sudo cache.\n#\n# To put it into use, remove .sample from this file name.\n\n# Example: add an Include line above [core] for a custom repo.\n# Maintain the repo entries in /etc/pacman.d/custom-repos.conf yourself.\n\nCONF=/etc/pacman.conf\nSNIPPET=/etc/pacman.d/custom-repos.conf\nMARKER=\"Include = $SNIPPET\"\n\n[[ -r $SNIPPET ]] || exit 0\ngrep -qxF \"$MARKER\" \"$CONF\" && exit 0\n\nsudo sed -i \"0,/^\\[core\\]/s||$MARKER\\n\\n[core]|\" \"$CONF\"\n",
-          "description": "This hook is called by `omarchy refresh pacman` AFTER the channel template is copied to /etc/pacman.conf and BEFORE `pacman -Syyuu` runs. Use it to layer customizations onto the freshly-written pacman.conf so they're respected by the upgrade — common cases are adding a custom repository (e.g. CachyOS, Chaotic-AUR, an internal company repo) or extra IgnorePkg lines. The hook runs as the invoking user with a warm sudo cache. To put it into use, remove .sample from this file name.",
+          "content": "#!/bin/bash\n\n# This hook is called by `omarchy refresh pacman` AFTER the channel template\n# is copied and BEFORE the package transaction runs, so your changes shape\n# that transaction. Use it to layer customizations onto the freshly-written\n# pacman.conf — common cases are adding a custom repository (e.g. CachyOS,\n# Chaotic-AUR, an internal company repo) or extra IgnorePkg lines.\n#\n# The hook runs as the invoking user after Omarchy invalidates its sudo cache.\n# A sudo command here therefore requires its own explicit authorization.\n#\n# To put it into use, remove .sample from this file name.\n\n# Example: add an Include line above [core].\n# Maintain the repo entries in /etc/pacman.d/custom-repos.conf yourself.\n\nCONF=/etc/pacman.conf\nSNIPPET=/etc/pacman.d/custom-repos.conf\nMARKER=\"Include = $SNIPPET\"\n\n[[ -r $SNIPPET ]] || exit 0\ngrep -qxF \"$MARKER\" \"$CONF\" && exit 0\n\nsudo sed -i \"0,/^\\[core\\]/s||$MARKER\\n\\n[core]|\" \"$CONF\"\n",
+          "description": "This hook is called by `omarchy refresh pacman` AFTER the channel template is copied and BEFORE the package transaction runs, so your changes shape that transaction. Use it to layer customizations onto the freshly-written pacman.conf — common cases are adding a custom repository (e.g. CachyOS, Chaotic-AUR, an internal company repo) or extra IgnorePkg lines. The hook runs as the invoking user after Omarchy invalidates its sudo cache. A sudo command here therefore requires its own explicit authorization. To put it into use, remove .sample from this file name.",
           "isSample": true,
           "lineCount": 24,
           "name": "add-custom-repo.sample",

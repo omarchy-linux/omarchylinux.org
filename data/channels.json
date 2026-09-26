@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-25T09:47:56Z",
+  "fetchedAt": "2026-09-26T09:32:10Z",
   "mirrors": [
     {
       "name": "stable-mirror",
@@ -12,7 +12,7 @@
         "unix": 1788802790,
         "iso": "2026-09-07T17:39:50Z"
       },
-      "lagHoursVsUpstream": 424.67
+      "lagHoursVsUpstream": 448.37
     },
     {
       "name": "rc-mirror",
@@ -25,32 +25,32 @@
         "unix": 1788802790,
         "iso": "2026-09-07T17:39:50Z"
       },
-      "lagHoursVsUpstream": 424.67
+      "lagHoursVsUpstream": 448.37
     },
     {
       "name": "mirror",
       "url": "https://mirror.omarchy.org",
       "lastupdate": {
-        "unix": 1790327502,
-        "iso": "2026-09-25T09:11:42Z"
+        "unix": 1790413516,
+        "iso": "2026-09-26T09:05:16Z"
       },
       "lastsync": {
-        "unix": 1790327878,
-        "iso": "2026-09-25T09:17:58Z"
+        "unix": 1790413838,
+        "iso": "2026-09-26T09:10:38Z"
       },
-      "lagHoursVsUpstream": 0.2
+      "lagHoursVsUpstream": 0.0
     }
   ],
   "upstream": {
     "name": "arch-geo-mirror",
     "url": "https://geo.mirror.pkgbuild.com",
     "lastupdate": {
-      "unix": 1790328216,
-      "iso": "2026-09-25T09:23:36Z"
+      "unix": 1790413516,
+      "iso": "2026-09-26T09:05:16Z"
     },
     "lastsync": {
-      "unix": 1790329621,
-      "iso": "2026-09-25T09:47:01Z"
+      "unix": 1790415062,
+      "iso": "2026-09-26T09:31:02Z"
     }
   },
   "channels": {
@@ -58,7 +58,7 @@
       "arch": "x86_64",
       "url": "https://pkgs.omarchy.org/stable/x86_64/omarchy.db",
       "ok": true,
-      "packageCount": 246,
+      "packageCount": 248,
       "packages": {
         "1password": {
           "version": "8.12.36-2",
@@ -865,6 +865,16 @@
           "desc": "Omarchy user defaults, /etc/skel content, fonts, plymouth theme, and support helpers (quattro branch tip)",
           "builddate": 1787653371
         },
+        "omarchy-task-manager": {
+          "version": "0.1.1-1",
+          "desc": "Floating native task manager for Omarchy",
+          "builddate": 1790331934
+        },
+        "omarchy-task-manager-debug": {
+          "version": "0.1.1-1",
+          "desc": "Detached debugging symbols for omarchy-task-manager",
+          "builddate": 1790331934
+        },
         "omarchy-walker": {
           "version": "1.0.0-2",
           "desc": "Meta package for walker with Elephant providers for Omarchy",
@@ -1296,7 +1306,7 @@
       "arch": "x86_64",
       "url": "https://pkgs.omarchy.org/rc/x86_64/omarchy.db",
       "ok": true,
-      "packageCount": 244,
+      "packageCount": 246,
       "packages": {
         "1password": {
           "version": "8.12.36-2",
@@ -2092,6 +2102,16 @@
           "version": "4.0.4-1",
           "desc": "Omarchy user defaults, /etc/skel content, fonts, plymouth theme, and support helpers",
           "builddate": 1789506256
+        },
+        "omarchy-task-manager": {
+          "version": "0.1.1-1",
+          "desc": "Floating native task manager for Omarchy",
+          "builddate": 1790331934
+        },
+        "omarchy-task-manager-debug": {
+          "version": "0.1.1-1",
+          "desc": "Detached debugging symbols for omarchy-task-manager",
+          "builddate": 1790331934
         },
         "omarchy-walker": {
           "version": "1.0.0-2",
@@ -3117,9 +3137,9 @@
           "builddate": 1784653213
         },
         "limine-mkinitcpio-hook": {
-          "version": "1.39.0-1",
+          "version": "1.39.0-2",
           "desc": "Install kernels for the Limine bootloader.",
-          "builddate": 1789442175
+          "builddate": 1790324746
         },
         "limine-snapper-sync": {
           "version": "1.32.0-1",
@@ -3357,9 +3377,9 @@
           "builddate": 1789442417
         },
         "omarchy-dev": {
-          "version": "4.0.0.r2186.gee8ebf6-1",
+          "version": "4.0.0.r2304.g7b336b1-1",
           "desc": "Beautiful, modern, and opinionated Arch Linux by DHH (quattro branch tip)",
-          "builddate": 1789972191
+          "builddate": 1790384850
         },
         "omarchy-emacs": {
           "version": "1.10.1-1",
@@ -3387,29 +3407,29 @@
           "builddate": 1790274465
         },
         "omarchy-nvim": {
-          "version": "2026.9.21-1",
+          "version": "2026.9.21-2",
           "desc": "Pre-built LazyVim configuration with cached plugins",
-          "builddate": 1790001033
+          "builddate": 1790365176
         },
         "omarchy-settings": {
-          "version": "4.0.4-1",
+          "version": "4.0.4-2",
           "desc": "Omarchy user defaults, /etc/skel content, fonts, plymouth theme, and support helpers",
-          "builddate": 1789506674
+          "builddate": 1790334174
         },
         "omarchy-settings-dev": {
-          "version": "4.0.0.r2186.gee8ebf6-1",
+          "version": "4.0.0.r2304.g7b336b1-1",
           "desc": "Omarchy user defaults, /etc/skel content, fonts, plymouth theme, and support helpers (quattro branch tip)",
-          "builddate": 1789972767
+          "builddate": 1790385970
         },
         "omarchy-task-manager": {
-          "version": "0.0.3-3",
-          "desc": "Floating native task manager for Omarchy (preview)",
-          "builddate": 1790011944
+          "version": "0.1.1-1",
+          "desc": "Floating native task manager for Omarchy",
+          "builddate": 1790331934
         },
         "omarchy-task-manager-debug": {
-          "version": "0.0.3-3",
+          "version": "0.1.1-1",
           "desc": "Detached debugging symbols for omarchy-task-manager",
-          "builddate": 1790011944
+          "builddate": 1790331934
         },
         "omarchy-walker": {
           "version": "1.0.0-2",
@@ -3837,7 +3857,7 @@
       "arch": "aarch64",
       "url": "https://pkgs.omarchy.org/edge/aarch64/omarchy.db",
       "ok": true,
-      "packageCount": 143,
+      "packageCount": 148,
       "packages": {
         "1password": {
           "version": "8.12.34-35",
@@ -3858,6 +3878,11 @@
           "version": "4.30.0-1",
           "desc": "Desktop theming application - extract colors from wallpapers and apply cohesive themes",
           "builddate": 1789939586
+        },
+        "aquamarine": {
+          "version": "0.15.1-1.1",
+          "desc": "a very light linux rendering backend library",
+          "builddate": 1790333390
         },
         "asdcontrol": {
           "version": "1:0.6.0-2",
@@ -4155,9 +4180,9 @@
           "builddate": 1790122504
         },
         "limine-mkinitcpio-hook": {
-          "version": "1.38.0-1.1",
+          "version": "1.39.0-2",
           "desc": "Install kernels for the Limine bootloader.",
-          "builddate": 1788573922
+          "builddate": 1790324880
         },
         "limine-snapper-sync": {
           "version": "1.32.0-1",
@@ -4165,14 +4190,14 @@
           "builddate": 1789941147
         },
         "linux-aurora": {
-          "version": "7.1.12.aurora2-9",
+          "version": "7.1.12.aurora2-10",
           "desc": "The kernel and modules",
-          "builddate": 1790065647
+          "builddate": 1790321714
         },
         "linux-aurora-headers": {
-          "version": "7.1.12.aurora2-9",
+          "version": "7.1.12.aurora2-10",
           "desc": "Headers and scripts for building modules for the kernel",
-          "builddate": 1790065647
+          "builddate": 1790321714
         },
         "localsend": {
           "version": "1.18.2-1",
@@ -4183,6 +4208,11 @@
           "version": "1.18.0-1",
           "desc": "An open source cross-platform alternative to AirDrop",
           "builddate": 1788555927
+        },
+        "m1n1-aurora": {
+          "version": "1.6.1.aurora1-3",
+          "desc": "Omarchy Aurora m1n1 with compatible USB4 tunable aliases",
+          "builddate": 1790322314
         },
         "mise-bin": {
           "version": "2026.9.12-1",
@@ -4220,9 +4250,9 @@
           "builddate": 1788556188
         },
         "omarchy": {
-          "version": "4.0.2-1",
+          "version": "4.0.4-1",
           "desc": "Beautiful, modern, and opinionated Arch Linux by DHH",
-          "builddate": 1788572250
+          "builddate": 1790383235
         },
         "omarchy-audio-tuner": {
           "version": "0.1.0-1",
@@ -4245,9 +4275,9 @@
           "builddate": 1788556287
         },
         "omarchy-dev": {
-          "version": "4.0.0.r2186.gee8ebf6-1",
+          "version": "4.0.0.r2304.g7b336b1-1",
           "desc": "Beautiful, modern, and opinionated Arch Linux by DHH (quattro branch tip)",
-          "builddate": 1789972485
+          "builddate": 1790385152
         },
         "omarchy-emacs": {
           "version": "1.10.1-1",
@@ -4264,20 +4294,30 @@
           "desc": "Omarchy keyring",
           "builddate": 1788556415
         },
+        "omarchy-mac": {
+          "version": "0.1.0-5",
+          "desc": "Apple Silicon configuration and support services for Omarchy",
+          "builddate": 1790322180
+        },
+        "omarchy-mac-boot": {
+          "version": "20260925-4",
+          "desc": "Apple Silicon boot support for Omarchy: initramfs, in-place encryption, first boot and Limine activation",
+          "builddate": 1790379437
+        },
         "omarchy-nvim": {
-          "version": "2026.9.21-1",
+          "version": "2026.9.21-2",
           "desc": "Pre-built LazyVim configuration with cached plugins",
-          "builddate": 1790001033
+          "builddate": 1790365176
         },
         "omarchy-settings": {
-          "version": "4.0.2-1",
+          "version": "4.0.4-2",
           "desc": "Omarchy user defaults, /etc/skel content, fonts, plymouth theme, and support helpers",
-          "builddate": 1788556939
+          "builddate": 1790334114
         },
         "omarchy-settings-dev": {
-          "version": "4.0.0.r2186.gee8ebf6-1",
+          "version": "4.0.0.r2304.g7b336b1-1",
           "desc": "Omarchy user defaults, /etc/skel content, fonts, plymouth theme, and support helpers (quattro branch tip)",
-          "builddate": 1789972816
+          "builddate": 1790386085
         },
         "omarchy-steam-fex": {
           "version": "1.0.0-3",
@@ -4458,6 +4498,11 @@
           "version": "3.1.0-1",
           "desc": "Set the system timezone based on IP geolocation",
           "builddate": 1788561153
+        },
+        "uboot-asahi": {
+          "version": "2026.07.asahi2-4",
+          "desc": "U-Boot for Apple Silicon Macs (Omarchy build: silent console)",
+          "builddate": 1790322307
         },
         "ufw-docker": {
           "version": "251123-1",
@@ -4682,7 +4727,7 @@
       {
         "name": "limine-mkinitcpio-hook",
         "stable": "1.38.0-1.1",
-        "edge": "1.39.0-1"
+        "edge": "1.39.0-2"
       },
       {
         "name": "limine-snapper-sync",
@@ -4747,7 +4792,7 @@
       {
         "name": "omarchy-dev",
         "stable": "4.0.0.r1832.g23dab9e-1",
-        "edge": "4.0.0.r2186.gee8ebf6-1"
+        "edge": "4.0.0.r2304.g7b336b1-1"
       },
       {
         "name": "omarchy-meeting-recorder-bin",
@@ -4757,22 +4802,17 @@
       {
         "name": "omarchy-nvim",
         "stable": "2026.8.13-1",
-        "edge": "2026.9.21-1"
+        "edge": "2026.9.21-2"
+      },
+      {
+        "name": "omarchy-settings",
+        "stable": "4.0.4-1",
+        "edge": "4.0.4-2"
       },
       {
         "name": "omarchy-settings-dev",
         "stable": "4.0.0.r1832.g23dab9e-1",
-        "edge": "4.0.0.r2186.gee8ebf6-1"
-      },
-      {
-        "name": "omarchy-task-manager",
-        "stable": null,
-        "edge": "0.0.3-3"
-      },
-      {
-        "name": "omarchy-task-manager-debug",
-        "stable": null,
-        "edge": "0.0.3-3"
+        "edge": "4.0.0.r2304.g7b336b1-1"
       },
       {
         "name": "omasnap",
@@ -5014,7 +5054,7 @@
       {
         "name": "limine-mkinitcpio-hook",
         "rc": "1.38.0-1.1",
-        "edge": "1.39.0-1"
+        "edge": "1.39.0-2"
       },
       {
         "name": "limine-snapper-sync",
@@ -5059,7 +5099,7 @@
       {
         "name": "omarchy-dev",
         "rc": null,
-        "edge": "4.0.0.r2186.gee8ebf6-1"
+        "edge": "4.0.0.r2304.g7b336b1-1"
       },
       {
         "name": "omarchy-meeting-recorder-bin",
@@ -5069,22 +5109,17 @@
       {
         "name": "omarchy-nvim",
         "rc": "2026.8.13-1",
-        "edge": "2026.9.21-1"
+        "edge": "2026.9.21-2"
+      },
+      {
+        "name": "omarchy-settings",
+        "rc": "4.0.4-1",
+        "edge": "4.0.4-2"
       },
       {
         "name": "omarchy-settings-dev",
         "rc": null,
-        "edge": "4.0.0.r2186.gee8ebf6-1"
-      },
-      {
-        "name": "omarchy-task-manager",
-        "rc": null,
-        "edge": "0.0.3-3"
-      },
-      {
-        "name": "omarchy-task-manager-debug",
-        "rc": null,
-        "edge": "0.0.3-3"
+        "edge": "4.0.0.r2304.g7b336b1-1"
       },
       {
         "name": "omasnap",
@@ -5284,14 +5319,14 @@
       "linux-ptl-headers": "7.1.8.arch1-2"
     },
     "edge-aarch64": {
-      "linux-aurora": "7.1.12.aurora2-9",
-      "linux-aurora-headers": "7.1.12.aurora2-9"
+      "linux-aurora": "7.1.12.aurora2-10",
+      "linux-aurora-headers": "7.1.12.aurora2-10"
     }
   },
   "omarchyPackage": {
     "stable": "4.0.4-1",
     "rc": "4.0.4-1",
     "edge": "4.0.4-1",
-    "edge-aarch64": "4.0.2-1"
+    "edge-aarch64": "4.0.4-1"
   }
 }

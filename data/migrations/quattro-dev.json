@@ -1,5 +1,5 @@
 {
-  "count": 126,
+  "count": 128,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -1812,6 +1812,22 @@
       ]
     },
     {
+      "body": "echo \"Remove legacy temporary passwordless sudo grants\"\n\n# Migration queues are per-user; the privileged repair is once per machine.\nif ! /usr/bin/omarchy-sudo-passwordless __migration-complete; then\n  sudo /usr/bin/omarchy-sudo-passwordless __migrate\nfi",
+      "bodyTruncated": false,
+      "date": "2026-08-31T08:07:15Z",
+      "description": "Remove legacy temporary passwordless sudo grants",
+      "file": "1788163635.sh",
+      "lineCount": 6,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1788163635.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1788163635.sh",
+      "timestamp": 1788163635,
+      "touches": [
+        "/usr/bin/omarchy-sudo-passwordless"
+      ]
+    },
+    {
       "body": "echo \"Install Cursor CLI via mise wrapper\"\n\n# Cursor's own installer links ~/.local/bin/cursor-agent, so an existing\n# command is the user's and stays. The wrapper resolves cursor-agent through\n# mise's registry, which lists it from 2026.8.15 on.\nif omarchy-cmd-missing cursor-agent && [[ ! -f $HOME/.local/state/omarchy/preinstalls-removed ]]; then\n  omarchy-mise-install cursor-agent\nfi",
       "bodyTruncated": false,
       "date": "2026-09-05T03:05:53Z",
@@ -1978,6 +1994,23 @@
       "timestamp": 1788941927,
       "touches": [
         "~/.local/state/omarchy/preinstalls-removed"
+      ]
+    },
+    {
+      "body": "echo \"Repair remote Neovim clipboard yanks and paste\"\n\nnvim_provider=\"$HOME/.config/nvim/lua/config/remote_clipboard.lua\"\nprovider_source=\"/usr/share/omarchy-nvim/config/lua/config/remote_clipboard.lua\"\n\n# Dotfile managers may own either the file or a parent directory through a\n# symlink. Preserve that layout rather than detaching or editing its target.\nprovider_path=\"$nvim_provider\"\nwhile [[ $provider_path != \"$HOME\" && $provider_path != / ]]; do\n  if [[ -L $provider_path ]]; then\n    echo \"Preserving symlink-managed Neovim provider: $nvim_provider\"\n    echo \"Review remote clipboard settings in your dotfile configuration manually.\"\n    exit 0\n  fi\n  provider_path=$(dirname \"$provider_path\")\ndone\n\n[[ -f $nvim_provider ]] || exit 0\n\n# Replace only known Omarchy versions, including the June file-backed provider\n# and the two earlier proposed fixes. Preserve all user-authored changes.\nprovider_hash=$(sha256sum \"$nvim_provider\")\ncase ${provider_hash%% *} in\n  c0c15941ed7cf97a1a3d3c60f0b13875e85f641bdb7431c3283e6f86fbc95f4e|bac8268c3dde4e747772467d6671e626aa4982478551d8fc8ebe1259a4854f2c|7f012a235c05e3c559b48211c1534af2f4c919750b76db88ec3d5b7814259d30|8b371d0f271e522b27696f1b71083d0a6ba7896cd3ff7b0a938b7327fcb06a46) ;;\n  *)\n    if [[ -f $provider_source ]] && cmp -s \"$nvim_provider\" \"$provider_source\"; then\n      exit 0\n    fi\n    echo \"Preserving customized Neovim provider: $nvim_provider\"\n    echo \"Review remote clipboard settings manually, or use omarchy-nvim-refresh to reset them.\"\n    exit 0\n    ;;\nesac\n\n# Updates install packages before migrations. Refuse an older package so this\n# migration remains pending instead of installing the provider it must repair.\nnvim_package=$(pacman -Q omarchy-nvim)\nif [[ $(vercmp \"${nvim_package#* }\" \"2026.9.21-2\") == -* ]] || [[ ! -f $provider_source ]]; then\n  echo \"Update omarchy-nvim to 2026.9.21-2 or newer before rerunning this migration.\" >&2\n  exit 1",
+      "bodyTruncated": true,
+      "date": "2026-09-09T23:24:44Z",
+      "description": "Repair remote Neovim clipboard yanks and paste",
+      "file": "1788996284.sh",
+      "lineCount": 51,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1788996284.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1788996284.sh",
+      "timestamp": 1788996284,
+      "touches": [
+        "/usr/share/omarchy-nvim/config/lua/config/remote_clipboard.lua",
+        "~/.config/nvim/lua/config/remote_clipboard.lua"
       ]
     },
     {

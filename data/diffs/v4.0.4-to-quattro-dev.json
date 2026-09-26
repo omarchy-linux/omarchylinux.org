@@ -67,6 +67,7 @@
       "omarchy-remove-ai-grok-bot",
       "omarchy-remove-ai-lm-studio",
       "omarchy-remove-ai-ollama",
+      "omarchy-security-functions",
       "omarchy-toggle-fullscreen-desktop",
       "omarchy-update-pacman",
       "omarchy-windows-key"
@@ -201,14 +202,23 @@
           ]
         },
         "name": "omarchy-update"
+      },
+      {
+        "fields": {
+          "args": [
+            "",
+            "[--services-only|--reboot-only]"
+          ]
+        },
+        "name": "omarchy-update-restart"
       }
     ],
     "counts": {
-      "added": 16,
-      "changed": 9,
+      "added": 17,
+      "changed": 10,
       "from": 444,
       "removed": 0,
-      "to": 460
+      "to": 461
     },
     "removed": []
   },
@@ -1011,9 +1021,9 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 20,
+      "new": 22,
       "removed": 0,
-      "to": 126
+      "to": 128
     },
     "new": [
       {
@@ -1052,6 +1062,11 @@
         "file": "1788129995.sh"
       },
       {
+        "date": "2026-08-31T08:07:15Z",
+        "description": "Remove legacy temporary passwordless sudo grants",
+        "file": "1788163635.sh"
+      },
+      {
         "date": "2026-09-05T07:57:40Z",
         "description": "Register the Chromium extension native messaging hosts for Brave Origin",
         "file": "1788595060.sh"
@@ -1070,6 +1085,11 @@
         "date": "2026-09-09T08:18:47Z",
         "description": "Install basecamp (basecamp-cli) via mise wrapper",
         "file": "1788941927.sh"
+      },
+      {
+        "date": "2026-09-09T23:24:44Z",
+        "description": "Repair remote Neovim clipboard yanks and paste",
+        "file": "1788996284.sh"
       },
       {
         "date": "2026-09-11T01:47:30Z",

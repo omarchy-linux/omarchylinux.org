@@ -1,11 +1,11 @@
 {
  "source": "github.com/omacom/omarchy",
- "fetchedAt": "2026-09-26T09:25:18.284789+00:00",
- "derivedAt": "2026-09-26T09:32:06.743517+00:00",
+ "fetchedAt": "2026-09-27T10:04:33.185607+00:00",
+ "derivedAt": "2026-09-27T10:11:39.718411+00:00",
  "counts": {
-  "clusters": 127,
+  "clusters": 131,
   "seed": 74,
-  "auto": 53
+  "auto": 57
  },
  "clusters": [
   {
@@ -17,18 +17,18 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 864,
-    "open": 443,
-    "closed": 421,
-    "discussions": 106
+    "issues": 871,
+    "open": 448,
+    "closed": 423,
+    "discussions": 107
    },
    "versionsMentioned": {
-    "3.x": 249,
+    "3.x": 250,
     "4.0.0": 165,
-    "4.0.2": 155,
+    "4.0.2": 157,
     "4.0.1": 137,
+    "4.0.4": 111,
     "4.0.3": 101,
-    "4.0.4": 99,
     "4.22.x": 7,
     "4.6.x": 2,
     "4.20.x": 1,
@@ -151,7 +151,7 @@
      "title": "4.0.1: `shell_succeeds` fix enables NVDEC VAAPI routing on hybrid laptops with Intel-driven displays, corrupting browser video",
      "url": "https://github.com/omacom/omarchy/issues/8215",
      "state": "OPEN",
-     "comments": 27,
+     "comments": 28,
      "reactions": 14,
      "createdAt": "2026-08-25T14:14:21Z",
      "closedAt": null
@@ -271,17 +271,17 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 634,
-    "open": 449,
+    "issues": 637,
+    "open": 452,
     "closed": 185,
-    "discussions": 70
+    "discussions": 71
    },
    "versionsMentioned": {
     "4.0.2": 206,
     "4.0.0": 190,
     "4.0.3": 164,
     "4.0.1": 138,
-    "4.0.4": 112,
+    "4.0.4": 120,
     "3.x": 25,
     "4.22.x": 3,
     "4.25.x": 3,
@@ -304,8 +304,8 @@
      "title": "[Quattro] D-Bus idle inhibits are silently dropped since hypridle was replaced — screensaver fires during video playback (reproduced with Zen browser)",
      "url": "https://github.com/omacom/omarchy/issues/6475",
      "state": "OPEN",
-     "comments": 7,
-     "reactions": 22,
+     "comments": 8,
+     "reactions": 23,
      "createdAt": "2026-08-01T08:33:54Z",
      "closedAt": null
     },
@@ -366,6 +366,16 @@
      ]
     },
     {
+     "number": 7284,
+     "title": "Feature request: add an i18n/localization system for Omarchy",
+     "url": "https://github.com/omacom/omarchy/issues/7284",
+     "state": "OPEN",
+     "comments": 9,
+     "reactions": 10,
+     "createdAt": "2026-08-17T14:46:08Z",
+     "closedAt": null
+    },
+    {
      "number": 6956,
      "title": "Bluetooth widget disappears from shell when turned off",
      "url": "https://github.com/omacom/omarchy/issues/6956",
@@ -374,16 +384,6 @@
      "reactions": 4,
      "createdAt": "2026-08-15T10:58:30Z",
      "closedAt": "2026-09-23T02:27:28Z"
-    },
-    {
-     "number": 7284,
-     "title": "Feature request: add an i18n/localization system for Omarchy",
-     "url": "https://github.com/omacom/omarchy/issues/7284",
-     "state": "OPEN",
-     "comments": 9,
-     "reactions": 9,
-     "createdAt": "2026-08-17T14:46:08Z",
-     "closedAt": null
     },
     {
      "number": 7229,
@@ -473,6 +473,17 @@
      "snippet": "I'd like to contribute FIDO2 (YubiKey / security key) unlock support for the Quattro lock screen, and before opening a PR I want to check direction and a few design decisions with maintainers. I've gone through the current `quattro` code (lock plugin, `omarchy-apply-lock`, the `omarchy setup security fido2` scripts, and the migration/upgrade paths), so each question below comes with my current read and -- where I have one -- a suggestion.\n\n```mermaid\nflowchart LR\n    LOCK([Locked]) --> PW[Passwo"
     },
     {
+     "discussion": 7669,
+     "title": "Quattro bar: named bar profiles assigned per screen (`bars` + `screens`)",
+     "url": "https://github.com/omacom/omarchy/discussions/7669",
+     "category": "Ideas",
+     "upvoteCount": 6,
+     "kind": "top-comment",
+     "author": "elMestre",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/7669#discussioncomment-18622749",
+     "snippet": "+1, same problem here with a 3440x1440 ultrawide next to a 1920x1080 monitor in portrait. The ultrawide's layout doesn't fit on the portrait screen, and moving the bar to a vertical edge doesn't help: on an ultrawide that wastes horizontal space and squeezes the widgets into a narrow column.\n\nMy workaround is a cloned `omarchy.bar` that filters `Quickshell.screens` by monitor model. That has a side effect for plugin widgets, which I wrote up in #13392. Even a per-screen `enabled` flag would let "
+    },
+    {
      "discussion": 3725,
      "title": "Add UsbGuard support",
      "url": "https://github.com/omacom/omarchy/discussions/3725",
@@ -512,17 +523,17 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 501,
-    "open": 327,
+    "issues": 504,
+    "open": 330,
     "closed": 174,
-    "discussions": 166
+    "discussions": 169
    },
    "versionsMentioned": {
     "4.0.2": 137,
     "4.0.3": 123,
     "4.0.0": 118,
     "4.0.1": 93,
-    "4.0.4": 79,
+    "4.0.4": 84,
     "3.x": 33,
     "4.25.x": 2,
     "4.22.x": 1,
@@ -656,7 +667,7 @@
      "url": "https://github.com/omacom/omarchy/issues/7284",
      "state": "OPEN",
      "comments": 9,
-     "reactions": 9,
+     "reactions": 10,
      "createdAt": "2026-08-17T14:46:08Z",
      "closedAt": null
     },
@@ -775,18 +786,18 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 416,
-    "open": 152,
-    "closed": 264,
-    "discussions": 69
+    "issues": 426,
+    "open": 159,
+    "closed": 267,
+    "discussions": 72
    },
    "versionsMentioned": {
     "3.x": 137,
-    "4.0.0": 76,
+    "4.0.0": 79,
     "4.0.2": 48,
-    "4.0.3": 42,
+    "4.0.3": 43,
+    "4.0.4": 37,
     "4.0.1": 35,
-    "4.0.4": 31,
     "4.50.x": 2,
     "4.22.x": 2,
     "4.20.x": 1,
@@ -1024,18 +1035,18 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 382,
-    "open": 169,
-    "closed": 213,
-    "discussions": 102
+    "issues": 385,
+    "open": 171,
+    "closed": 214,
+    "discussions": 103
    },
    "versionsMentioned": {
     "3.x": 107,
     "4.0.2": 61,
-    "4.0.0": 53,
-    "4.0.1": 46,
+    "4.0.0": 54,
+    "4.0.1": 47,
     "4.0.3": 46,
-    "4.0.4": 32,
+    "4.0.4": 35,
     "4.2.x": 1,
     "4.22.x": 1
    },
@@ -1131,7 +1142,7 @@
      "title": "4.0.1: `shell_succeeds` fix enables NVDEC VAAPI routing on hybrid laptops with Intel-driven displays, corrupting browser video",
      "url": "https://github.com/omacom/omarchy/issues/8215",
      "state": "OPEN",
-     "comments": 27,
+     "comments": 28,
      "reactions": 14,
      "createdAt": "2026-08-25T14:14:21Z",
      "closedAt": null
@@ -1180,6 +1191,16 @@
      "closedAt": "2026-07-18T19:42:58Z"
     },
     {
+     "number": 4821,
+     "title": "# No Sound Fix: ASUS ROG Strix G16 (2025) on Omarchy 3.4.1",
+     "url": "https://github.com/omacom/omarchy/issues/4821",
+     "state": "OPEN",
+     "comments": 10,
+     "reactions": 24,
+     "createdAt": "2026-02-28T19:50:13Z",
+     "closedAt": null
+    },
+    {
      "number": 2307,
      "title": "Complete System Brick after Omarchy Update",
      "url": "https://github.com/omacom/omarchy/issues/2307",
@@ -1188,16 +1209,6 @@
      "reactions": 10,
      "createdAt": "2025-10-08T06:20:27Z",
      "closedAt": "2025-10-26T00:03:21Z"
-    },
-    {
-     "number": 4821,
-     "title": "# No Sound Fix: ASUS ROG Strix G16 (2025) on Omarchy 3.4.1",
-     "url": "https://github.com/omacom/omarchy/issues/4821",
-     "state": "OPEN",
-     "comments": 9,
-     "reactions": 24,
-     "createdAt": "2026-02-28T19:50:13Z",
-     "closedAt": null
     }
    ],
    "bestAnswers": [
@@ -1274,14 +1285,14 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 368,
+    "issues": 369,
     "open": 136,
-    "closed": 232,
-    "discussions": 169
+    "closed": 233,
+    "discussions": 172
    },
    "versionsMentioned": {
     "3.x": 94,
-    "4.0.0": 50,
+    "4.0.0": 51,
     "4.0.2": 39,
     "4.0.1": 27,
     "4.0.3": 25,
@@ -1517,17 +1528,17 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 360,
-    "open": 238,
+    "issues": 363,
+    "open": 241,
     "closed": 122,
     "discussions": 39
    },
    "versionsMentioned": {
-    "4.0.2": 86,
+    "4.0.2": 87,
+    "4.0.4": 73,
     "4.0.3": 72,
     "4.0.0": 71,
     "3.x": 70,
-    "4.0.4": 69,
     "4.0.1": 57,
     "4.22.x": 2
    },
@@ -1760,18 +1771,18 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 316,
-    "open": 157,
+    "issues": 318,
+    "open": 159,
     "closed": 159,
     "discussions": 39
    },
    "versionsMentioned": {
     "3.x": 89,
-    "4.0.0": 80,
+    "4.0.0": 81,
     "4.0.1": 48,
-    "4.0.2": 42,
+    "4.0.2": 43,
     "4.0.3": 29,
-    "4.0.4": 21,
+    "4.0.4": 23,
     "4.50.x": 1,
     "4.1.x": 1,
     "4.28.x": 1
@@ -2010,18 +2021,18 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 279,
-    "open": 174,
+    "issues": 283,
+    "open": 178,
     "closed": 105,
-    "discussions": 86
+    "discussions": 87
    },
    "versionsMentioned": {
     "4.0.2": 79,
-    "4.0.0": 62,
+    "4.0.0": 63,
     "4.0.1": 55,
     "4.0.3": 53,
     "3.x": 49,
-    "4.0.4": 43,
+    "4.0.4": 47,
     "4.22.x": 4,
     "4.25.x": 1,
     "4.16.x": 1,
@@ -2063,7 +2074,7 @@
      "title": "# No Sound Fix: ASUS ROG Strix G16 (2025) on Omarchy 3.4.1",
      "url": "https://github.com/omacom/omarchy/issues/4821",
      "state": "OPEN",
-     "comments": 9,
+     "comments": 10,
      "reactions": 24,
      "createdAt": "2026-02-28T19:50:13Z",
      "closedAt": null
@@ -2254,13 +2265,13 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 278,
-    "open": 165,
-    "closed": 113,
-    "discussions": 73
+    "issues": 281,
+    "open": 167,
+    "closed": 114,
+    "discussions": 76
    },
    "versionsMentioned": {
-    "4.0.4": 52,
+    "4.0.4": 56,
     "4.0.2": 50,
     "3.x": 48,
     "4.0.3": 45,
@@ -2316,6 +2327,16 @@
      "closedAt": null
     },
     {
+     "number": 4821,
+     "title": "# No Sound Fix: ASUS ROG Strix G16 (2025) on Omarchy 3.4.1",
+     "url": "https://github.com/omacom/omarchy/issues/4821",
+     "state": "OPEN",
+     "comments": 10,
+     "reactions": 24,
+     "createdAt": "2026-02-28T19:50:13Z",
+     "closedAt": null
+    },
+    {
      "number": 1818,
      "title": "Bluetooth Audio Devices Doesn't Work",
      "url": "https://github.com/omacom/omarchy/issues/1818",
@@ -2328,16 +2349,6 @@
       5336,
       130
      ]
-    },
-    {
-     "number": 4821,
-     "title": "# No Sound Fix: ASUS ROG Strix G16 (2025) on Omarchy 3.4.1",
-     "url": "https://github.com/omacom/omarchy/issues/4821",
-     "state": "OPEN",
-     "comments": 9,
-     "reactions": 24,
-     "createdAt": "2026-02-28T19:50:13Z",
-     "closedAt": null
     },
     {
      "number": 4169,
@@ -2524,7 +2535,7 @@
     "4.0.0": 49,
     "4.0.3": 31,
     "4.0.1": 25,
-    "4.0.4": 22,
+    "4.0.4": 24,
     "4.22.x": 3,
     "4.0.x": 1,
     "4.25.x": 1
@@ -2545,7 +2556,7 @@
      "title": "4.0.1: `shell_succeeds` fix enables NVDEC VAAPI routing on hybrid laptops with Intel-driven displays, corrupting browser video",
      "url": "https://github.com/omacom/omarchy/issues/8215",
      "state": "OPEN",
-     "comments": 27,
+     "comments": 28,
      "reactions": 14,
      "createdAt": "2026-08-25T14:14:21Z",
      "closedAt": null
@@ -2725,6 +2736,17 @@
      "snippet": "This would be great, my ISP makes my omarchy waybar weather show a location 300 km away now. "
     },
     {
+     "discussion": 7669,
+     "title": "Quattro bar: named bar profiles assigned per screen (`bars` + `screens`)",
+     "url": "https://github.com/omacom/omarchy/discussions/7669",
+     "category": "Ideas",
+     "upvoteCount": 6,
+     "kind": "top-comment",
+     "author": "elMestre",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/7669#discussioncomment-18622749",
+     "snippet": "+1, same problem here with a 3440x1440 ultrawide next to a 1920x1080 monitor in portrait. The ultrawide's layout doesn't fit on the portrait screen, and moving the bar to a vertical edge doesn't help: on an ultrawide that wastes horizontal space and squeezes the widgets into a narrow column.\n\nMy workaround is a cloned `omarchy.bar` that filters `Quickshell.screens` by monitor model. That has a side effect for plugin widgets, which I wrote up in #13392. Even a per-screen `enabled` flag would let "
+    },
+    {
      "discussion": 6054,
      "title": "Prevent terminal alert notifications from stealing focus, or add a supported toggle",
      "url": "https://github.com/omacom/omarchy/discussions/6054",
@@ -2734,17 +2756,6 @@
      "author": "jmx",
      "answerUrl": "https://github.com/omacom/omarchy/discussions/6054#discussioncomment-17324892",
      "snippet": "I agree with this one. I actually ended up disabling it for all windows, but Codex was particularly annoying - especially as I would frequently end up accidentally cancelling the thing because it grabbed focus just as I issued a ctrl+c thing"
-    },
-    {
-     "discussion": 3047,
-     "title": "Screenrecording after wake up",
-     "url": "https://github.com/omacom/omarchy/discussions/3047",
-     "category": "Support",
-     "upvoteCount": 4,
-     "kind": "accepted-answer",
-     "author": "ds-ed",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/3047#discussioncomment-14908620",
-     "snippet": "I was having the same problem, but this seems to be solved in the version I'm on - v3.1.5."
     }
    ],
    "exampleErrorLines": [
@@ -2773,8 +2784,8 @@
     "4.0.2": 56,
     "4.0.0": 52,
     "4.0.3": 44,
+    "4.0.4": 43,
     "4.0.1": 43,
-    "4.0.4": 41,
     "3.x": 35,
     "4.22.x": 1
    },
@@ -3013,8 +3024,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 230,
-    "open": 87,
+    "issues": 231,
+    "open": 88,
     "closed": 143,
     "discussions": 98
    },
@@ -3024,7 +3035,7 @@
     "4.0.2": 29,
     "4.0.0": 27,
     "4.0.1": 24,
-    "4.0.4": 21,
+    "4.0.4": 22,
     "4.2.x": 1,
     "4.22.x": 1
    },
@@ -3138,8 +3149,8 @@
      "title": "[Quattro] D-Bus idle inhibits are silently dropped since hypridle was replaced — screensaver fires during video playback (reproduced with Zen browser)",
      "url": "https://github.com/omacom/omarchy/issues/6475",
      "state": "OPEN",
-     "comments": 7,
-     "reactions": 22,
+     "comments": 8,
+     "reactions": 23,
      "createdAt": "2026-08-01T08:33:54Z",
      "closedAt": null
     },
@@ -3514,7 +3525,7 @@
     "4.0.2": 18,
     "4.0.3": 18,
     "4.0.1": 14,
-    "4.0.4": 11
+    "4.0.4": 12
    },
    "topIssues": [
     {
@@ -3748,15 +3759,15 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 210,
-    "open": 106,
+    "issues": 211,
+    "open": 107,
     "closed": 104,
-    "discussions": 61
+    "discussions": 62
    },
    "versionsMentioned": {
     "3.x": 51,
+    "4.0.4": 32,
     "4.0.0": 31,
-    "4.0.4": 31,
     "4.0.2": 31,
     "4.0.3": 28,
     "4.0.1": 21,
@@ -4238,16 +4249,16 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 198,
-    "open": 88,
+    "issues": 202,
+    "open": 92,
     "closed": 110,
     "discussions": 56
    },
    "versionsMentioned": {
     "3.x": 47,
     "4.0.0": 38,
+    "4.0.4": 28,
     "4.0.2": 26,
-    "4.0.4": 24,
     "4.0.3": 15,
     "4.0.1": 12,
     "4.22.x": 1,
@@ -4491,8 +4502,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 198,
-    "open": 101,
+    "issues": 199,
+    "open": 102,
     "closed": 97,
     "discussions": 59
    },
@@ -4502,7 +4513,7 @@
     "4.0.1": 28,
     "4.0.3": 25,
     "4.0.2": 25,
-    "4.0.4": 22,
+    "4.0.4": 23,
     "4.18.x": 1,
     "4.14.x": 1
    },
@@ -4738,8 +4749,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 178,
-    "open": 78,
+    "issues": 180,
+    "open": 80,
     "closed": 100,
     "discussions": 19
    },
@@ -4749,7 +4760,7 @@
     "4.0.1": 18,
     "4.0.2": 18,
     "4.0.3": 17,
-    "4.0.4": 13,
+    "4.0.4": 14,
     "4.22.x": 1
    },
    "topIssues": [
@@ -4978,8 +4989,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 165,
-    "open": 109,
+    "issues": 166,
+    "open": 110,
     "closed": 56,
     "discussions": 49
    },
@@ -4988,7 +4999,7 @@
     "4.0.0": 54,
     "4.0.1": 51,
     "4.0.3": 31,
-    "4.0.4": 26,
+    "4.0.4": 28,
     "3.x": 14,
     "4.22.x": 1,
     "4.9.x": 1
@@ -5234,17 +5245,17 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 163,
-    "open": 78,
+    "issues": 164,
+    "open": 79,
     "closed": 85,
     "discussions": 37
    },
    "versionsMentioned": {
     "3.x": 45,
     "4.0.0": 22,
-    "4.0.2": 20,
+    "4.0.2": 21,
     "4.0.3": 18,
-    "4.0.4": 14,
+    "4.0.4": 15,
     "4.0.1": 13
    },
    "topIssues": [
@@ -5481,14 +5492,14 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 146,
-    "open": 56,
+    "issues": 147,
+    "open": 57,
     "closed": 90,
     "discussions": 49
    },
    "versionsMentioned": {
     "3.x": 50,
-    "4.0.0": 18,
+    "4.0.0": 19,
     "4.0.2": 15,
     "4.0.1": 13,
     "4.0.3": 13,
@@ -5719,8 +5730,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 138,
-    "open": 82,
+    "issues": 139,
+    "open": 83,
     "closed": 56,
     "discussions": 26
    },
@@ -5730,7 +5741,7 @@
     "4.0.0": 26,
     "4.0.3": 23,
     "4.0.1": 20,
-    "4.0.4": 12,
+    "4.0.4": 13,
     "4.8.x": 1
    },
    "topIssues": [
@@ -5955,6 +5966,246 @@
    ]
   },
   {
+   "key": "black-screen",
+   "label": "black screen",
+   "query": [
+    "black screen"
+   ],
+   "discovered": "seed",
+   "searchScope": "title+body+comments",
+   "counts": {
+    "issues": 138,
+    "open": 52,
+    "closed": 86,
+    "discussions": 25
+   },
+   "versionsMentioned": {
+    "3.x": 51,
+    "4.0.4": 21,
+    "4.0.0": 15,
+    "4.0.2": 13,
+    "4.0.1": 12,
+    "4.0.3": 7,
+    "4.22.x": 1
+   },
+   "topIssues": [
+    {
+     "number": 3891,
+     "title": "Videos not playing after recent update (Omarchy v3.2.3)",
+     "url": "https://github.com/omacom/omarchy/issues/3891",
+     "state": "CLOSED",
+     "comments": 92,
+     "reactions": 25,
+     "createdAt": "2025-12-16T07:01:07Z",
+     "closedAt": "2026-07-18T21:58:57Z"
+    },
+    {
+     "number": 688,
+     "title": "After upgrade to 1.13 and reboot, I am asked for LUKS password, then Hyprland doesn't start",
+     "url": "https://github.com/omacom/omarchy/issues/688",
+     "state": "CLOSED",
+     "comments": 73,
+     "reactions": 34,
+     "createdAt": "2025-08-11T23:15:01Z",
+     "closedAt": "2025-08-14T12:08:28Z"
+    },
+    {
+     "number": 1150,
+     "title": "Blank black screen using new 2.0 ISO - blinking cursor - `libabsl_log_internal_check_op.so.2565.0.0: cannot open shared file`",
+     "url": "https://github.com/omacom/omarchy/issues/1150",
+     "state": "CLOSED",
+     "comments": 32,
+     "reactions": 17,
+     "createdAt": "2025-08-26T23:55:41Z",
+     "closedAt": "2025-08-31T06:17:21Z"
+    },
+    {
+     "number": 4097,
+     "title": "No output to select entire screen in portal share picker ",
+     "url": "https://github.com/omacom/omarchy/issues/4097",
+     "state": "CLOSED",
+     "comments": 44,
+     "reactions": 1,
+     "createdAt": "2026-01-06T15:01:58Z",
+     "closedAt": "2026-07-18T19:42:47Z"
+    },
+    {
+     "number": 1776,
+     "title": "Laptop / Hybrid GPU Power Management Issue (NVIDIA, iGPU + dGPU)",
+     "url": "https://github.com/omacom/omarchy/issues/1776",
+     "state": "CLOSED",
+     "comments": 15,
+     "reactions": 29,
+     "createdAt": "2025-09-18T15:55:23Z",
+     "closedAt": "2026-02-01T19:59:32Z"
+    },
+    {
+     "number": 1151,
+     "title": "Black screen right after login instead of Hyprland | Omarchy ISO 2.0",
+     "url": "https://github.com/omacom/omarchy/issues/1151",
+     "state": "CLOSED",
+     "comments": 25,
+     "reactions": 16,
+     "createdAt": "2025-08-26T23:56:39Z",
+     "closedAt": "2025-08-27T11:03:57Z"
+    },
+    {
+     "number": 1840,
+     "title": "Omarchy lid/sleep/suspend issue on MacBook (bug + solution to be tested)",
+     "url": "https://github.com/omacom/omarchy/issues/1840",
+     "state": "CLOSED",
+     "comments": 14,
+     "reactions": 27,
+     "createdAt": "2025-09-20T21:28:20Z",
+     "closedAt": "2026-02-21T06:21:44Z"
+    },
+    {
+     "number": 4152,
+     "title": "Limine bootloader entry doesn't get created on nvidia",
+     "url": "https://github.com/omacom/omarchy/issues/4152",
+     "state": "CLOSED",
+     "comments": 28,
+     "reactions": 6,
+     "createdAt": "2026-01-08T12:52:01Z",
+     "closedAt": "2026-01-08T23:56:19Z"
+    },
+    {
+     "number": 1485,
+     "title": "The system doesn't boot after install",
+     "url": "https://github.com/omacom/omarchy/issues/1485",
+     "state": "CLOSED",
+     "comments": 33,
+     "reactions": 0,
+     "createdAt": "2025-09-06T21:43:20Z",
+     "closedAt": "2025-10-26T02:18:14Z"
+    },
+    {
+     "number": 2307,
+     "title": "Complete System Brick after Omarchy Update",
+     "url": "https://github.com/omacom/omarchy/issues/2307",
+     "state": "CLOSED",
+     "comments": 23,
+     "reactions": 10,
+     "createdAt": "2025-10-08T06:20:27Z",
+     "closedAt": "2025-10-26T00:03:21Z"
+    },
+    {
+     "number": 2635,
+     "title": "Omarchy 3.1 No Signal to Monitors When Waking from Sleep",
+     "url": "https://github.com/omacom/omarchy/issues/2635",
+     "state": "OPEN",
+     "comments": 18,
+     "reactions": 13,
+     "createdAt": "2025-10-20T17:46:16Z",
+     "closedAt": null
+    },
+    {
+     "number": 1887,
+     "title": "Black screen after post installation update on Thinkpad T460s",
+     "url": "https://github.com/omacom/omarchy/issues/1887",
+     "state": "CLOSED",
+     "comments": 28,
+     "reactions": 1,
+     "createdAt": "2025-09-22T18:22:52Z",
+     "closedAt": "2025-10-26T03:34:03Z"
+    },
+    {
+     "number": 3293,
+     "title": "Hyprlock sometimes crashes after opening laptop, 3.1.5",
+     "url": "https://github.com/omacom/omarchy/issues/3293",
+     "state": "CLOSED",
+     "comments": 16,
+     "reactions": 13,
+     "createdAt": "2025-11-10T10:05:21Z",
+     "closedAt": "2026-02-02T19:55:52Z"
+    },
+    {
+     "number": 2543,
+     "title": "Walker and terminal unavailable, 'Error Command not found: \"--working-directory\"'",
+     "url": "https://github.com/omacom/omarchy/issues/2543",
+     "state": "CLOSED",
+     "comments": 18,
+     "reactions": 10,
+     "createdAt": "2025-10-19T11:23:00Z",
+     "closedAt": "2025-10-23T06:58:35Z"
+    },
+    {
+     "number": 4901,
+     "title": "Hybrid Intel+NVIDIA: Chromium hardware acceleration requires manual workarounds",
+     "url": "https://github.com/omacom/omarchy/issues/4901",
+     "state": "CLOSED",
+     "comments": 21,
+     "reactions": 4,
+     "createdAt": "2026-03-04T21:25:56Z",
+     "closedAt": "2026-09-21T09:55:07Z"
+    }
+   ],
+   "bestAnswers": [
+    {
+     "discussion": 2495,
+     "title": "Changing Your Shell to Zsh or Fish in Omarchy Without Breaking Everything",
+     "url": "https://github.com/omacom/omarchy/discussions/2495",
+     "category": "Manual",
+     "upvoteCount": 20,
+     "kind": "top-comment",
+     "author": "Jerry1098",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/2495#discussioncomment-14923461",
+     "snippet": "Thank you for this guide :)\n\nProbably because of a new change to `alacritty`:\nAfter setting \n```toml\n[shell]\nprogram = \"/usr/bin/fish\"\n```\nI get a config warning stating that the `[shell]` option has been deprecated. The new correct config option is:\n```toml\n[terminal.shell]\nprogram = \"/usr/bin/fish\"\n```\n\nTo load zoxide into your fish shell you would need to add:\n```fish\nzoxide init fish | source\n```\nat the end of your `~/.config/fish/config.fish` or install the [`zoxide.fish`](https://github.co"
+    },
+    {
+     "discussion": 7855,
+     "title": "[GUIDE] Working boot + suspend of Omarchy v4 on MBP 2019",
+     "url": "https://github.com/omacom/omarchy/discussions/7855",
+     "category": "General",
+     "upvoteCount": 8,
+     "kind": "top-comment",
+     "author": "TAR5",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/7855#discussioncomment-18141327",
+     "snippet": "plugging in a studio display is also not working. had codex try to fix it by building a linux-t2 kernel with a patch for studio display support, but it did not work. "
+    },
+    {
+     "discussion": 572,
+     "title": "Omarchy on VMware Workstation on windows 11 host",
+     "url": "https://github.com/omacom/omarchy/discussions/572",
+     "category": "Manual",
+     "upvoteCount": 5,
+     "kind": "top-comment",
+     "author": "dragonovs",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/572#discussioncomment-14566629",
+     "snippet": "1. All these can be automated with `archinstall` that comes with arch iso. So most of these tutorial is reinventing the wheel. Grok seems to be outdated for suggesting these steps to you in the first place.\n\n2. You mentioned that `Super + return` didn't work. How did you manage to open a terminal then? How did you manage to install `foot` and how did you edit `~/.config/hypr/bindings.conf` without Neovim (`Super + N`) or opening file (`Super + F`)"
+    },
+    {
+     "discussion": 7758,
+     "title": "Omarchy on VirtualBox",
+     "url": "https://github.com/omacom/omarchy/discussions/7758",
+     "category": "Manual",
+     "upvoteCount": 3,
+     "kind": "top-comment",
+     "author": "rodolfoghi",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/7758#discussioncomment-18320006",
+     "snippet": "Confirming this works, and adding the diagnosis in case it helps someone land here from a search.\n\n**Setup:** Omarchy 4.0.2, kernel 7.1.9-arch1-2, Hyprland 0.56.2, VirtualBox on a Windows 11 Pro host, 12 GB RAM / 6 vCPU, UEFI.\n\n**Symptom:** after install, logging in gives a black screen with only the mouse pointer. `Ctrl+Alt+F3` into a TTY works fine.\n\n### Diagnosis\n\n- `/tmp/hypr` and `$XDG_RUNTIME_DIR/hypr` were both missing, so Hyprland was never reaching a running state.\n- Running `Hyprland` "
+    },
+    {
+     "discussion": 4722,
+     "title": "Black screen / system sleep after login on 2025 Razer Blade 16 — Omarchy 3.4 Not Opening",
+     "url": "https://github.com/omacom/omarchy/discussions/4722",
+     "category": "Support",
+     "upvoteCount": 3,
+     "kind": "top-comment",
+     "author": "pilarskiasu",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/4722#discussioncomment-15925879",
+     "snippet": "Any ideas?"
+    }
+   ],
+   "exampleErrorLines": [
+    "Enter password -> black screen with blinking cursor (some error message blinking for 1ms), unable to Ctll+Alt+f2 it switches back to primary tty. Completely stuck with inaccessible system.",
+    "Fresh ISO install tonight with Omarchy 2.0 on a Thinkpad X240. Hyprland failed start and I was presented with a blank black screen with a blinking cursor visible. I changed TTYs and was able to find an error using `journalctl -xe`.",
+    "**Result: Partially successful.** `chrome://gpu` showed \"Video Decode: Hardware accelerated\" and `chrome://media-internals` confirmed `VaapiVideoDecoder` was being used. However, the `eglCreateImage` errors persisted, causing **black screen and flickering**.",
+    "So I just updated omarchy, mid-way it started giving some errors then every program got closed. I tried launching programs but they crashed after few seconds so I rebooted and now it shows the omarchy loading screen then boots into a black screen. I can use tty however.",
+    "I get the error but I black screen after giving my credentials on the Omarchy password screen"
+   ]
+  },
+  {
    "key": "font",
    "label": "font",
    "query": [
@@ -5963,17 +6214,17 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 137,
-    "open": 52,
+    "issues": 138,
+    "open": 53,
     "closed": 85,
-    "discussions": 47
+    "discussions": 48
    },
    "versionsMentioned": {
     "3.x": 40,
     "4.0.1": 14,
     "4.0.2": 12,
     "4.0.0": 11,
-    "4.0.4": 10,
+    "4.0.4": 11,
     "4.0.3": 8,
     "4.22.x": 2,
     "4.18.x": 1
@@ -6208,68 +6459,38 @@
    ]
   },
   {
-   "key": "black-screen",
-   "label": "black screen",
+   "key": "mise",
+   "label": "mise",
    "query": [
-    "black screen"
+    "mise"
    ],
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 135,
-    "open": 49,
-    "closed": 86,
-    "discussions": 25
+    "issues": 119,
+    "open": 52,
+    "closed": 67,
+    "discussions": 40
    },
    "versionsMentioned": {
-    "3.x": 51,
-    "4.0.4": 18,
-    "4.0.0": 15,
-    "4.0.2": 12,
-    "4.0.1": 12,
-    "4.0.3": 7,
+    "4.0.0": 40,
+    "3.x": 24,
+    "4.0.1": 20,
+    "4.0.4": 14,
+    "4.0.3": 13,
+    "4.0.2": 11,
     "4.22.x": 1
    },
    "topIssues": [
     {
-     "number": 3891,
-     "title": "Videos not playing after recent update (Omarchy v3.2.3)",
-     "url": "https://github.com/omacom/omarchy/issues/3891",
+     "number": 2870,
+     "title": "Steam won't start",
+     "url": "https://github.com/omacom/omarchy/issues/2870",
      "state": "CLOSED",
-     "comments": 92,
-     "reactions": 25,
-     "createdAt": "2025-12-16T07:01:07Z",
-     "closedAt": "2026-07-18T21:58:57Z"
-    },
-    {
-     "number": 688,
-     "title": "After upgrade to 1.13 and reboot, I am asked for LUKS password, then Hyprland doesn't start",
-     "url": "https://github.com/omacom/omarchy/issues/688",
-     "state": "CLOSED",
-     "comments": 73,
-     "reactions": 34,
-     "createdAt": "2025-08-11T23:15:01Z",
-     "closedAt": "2025-08-14T12:08:28Z"
-    },
-    {
-     "number": 1150,
-     "title": "Blank black screen using new 2.0 ISO - blinking cursor - `libabsl_log_internal_check_op.so.2565.0.0: cannot open shared file`",
-     "url": "https://github.com/omacom/omarchy/issues/1150",
-     "state": "CLOSED",
-     "comments": 32,
-     "reactions": 17,
-     "createdAt": "2025-08-26T23:55:41Z",
-     "closedAt": "2025-08-31T06:17:21Z"
-    },
-    {
-     "number": 4097,
-     "title": "No output to select entire screen in portal share picker ",
-     "url": "https://github.com/omacom/omarchy/issues/4097",
-     "state": "CLOSED",
-     "comments": 44,
-     "reactions": 1,
-     "createdAt": "2026-01-06T15:01:58Z",
-     "closedAt": "2026-07-18T19:42:47Z"
+     "comments": 28,
+     "reactions": 31,
+     "createdAt": "2025-10-26T11:59:06Z",
+     "closedAt": "2025-10-28T15:12:09Z"
     },
     {
      "number": 1776,
@@ -6282,169 +6503,173 @@
      "closedAt": "2026-02-01T19:59:32Z"
     },
     {
-     "number": 1151,
-     "title": "Black screen right after login instead of Hyprland | Omarchy ISO 2.0",
-     "url": "https://github.com/omacom/omarchy/issues/1151",
+     "number": 4263,
+     "title": "missing module TerminalTextEffects after update",
+     "url": "https://github.com/omacom/omarchy/issues/4263",
      "state": "CLOSED",
-     "comments": 25,
-     "reactions": 16,
-     "createdAt": "2025-08-26T23:56:39Z",
-     "closedAt": "2025-08-27T11:03:57Z"
-    },
-    {
-     "number": 1840,
-     "title": "Omarchy lid/sleep/suspend issue on MacBook (bug + solution to be tested)",
-     "url": "https://github.com/omacom/omarchy/issues/1840",
-     "state": "CLOSED",
-     "comments": 14,
-     "reactions": 27,
-     "createdAt": "2025-09-20T21:28:20Z",
-     "closedAt": "2026-02-21T06:21:44Z"
-    },
-    {
-     "number": 4152,
-     "title": "Limine bootloader entry doesn't get created on nvidia",
-     "url": "https://github.com/omacom/omarchy/issues/4152",
-     "state": "CLOSED",
-     "comments": 28,
-     "reactions": 6,
-     "createdAt": "2026-01-08T12:52:01Z",
-     "closedAt": "2026-01-08T23:56:19Z"
-    },
-    {
-     "number": 1485,
-     "title": "The system doesn't boot after install",
-     "url": "https://github.com/omacom/omarchy/issues/1485",
-     "state": "CLOSED",
-     "comments": 33,
-     "reactions": 0,
-     "createdAt": "2025-09-06T21:43:20Z",
-     "closedAt": "2025-10-26T02:18:14Z"
-    },
-    {
-     "number": 2307,
-     "title": "Complete System Brick after Omarchy Update",
-     "url": "https://github.com/omacom/omarchy/issues/2307",
-     "state": "CLOSED",
-     "comments": 23,
-     "reactions": 10,
-     "createdAt": "2025-10-08T06:20:27Z",
-     "closedAt": "2025-10-26T00:03:21Z"
-    },
-    {
-     "number": 2635,
-     "title": "Omarchy 3.1 No Signal to Monitors When Waking from Sleep",
-     "url": "https://github.com/omacom/omarchy/issues/2635",
-     "state": "OPEN",
      "comments": 18,
-     "reactions": 13,
-     "createdAt": "2025-10-20T17:46:16Z",
+     "reactions": 25,
+     "createdAt": "2026-01-14T17:44:13Z",
+     "closedAt": "2026-07-18T19:42:50Z"
+    },
+    {
+     "number": 7648,
+     "title": "Codex 0.149 breaks Agents panel limit display",
+     "url": "https://github.com/omacom/omarchy/issues/7648",
+     "state": "CLOSED",
+     "comments": 8,
+     "reactions": 12,
+     "createdAt": "2026-08-21T01:23:56Z",
+     "closedAt": "2026-08-25T14:07:19Z",
+     "fixedBy": [
+      7649
+     ]
+    },
+    {
+     "number": 2831,
+     "title": "mise python installation breaks AUR packages installations",
+     "url": "https://github.com/omacom/omarchy/issues/2831",
+     "state": "CLOSED",
+     "comments": 9,
+     "reactions": 10,
+     "createdAt": "2025-10-25T01:52:15Z",
+     "closedAt": "2026-09-21T09:50:52Z"
+    },
+    {
+     "number": 704,
+     "title": "Clicking Setup → Power profile closes the Omarchy menu and prevents it from reopening",
+     "url": "https://github.com/omacom/omarchy/issues/704",
+     "state": "CLOSED",
+     "comments": 17,
+     "reactions": 0,
+     "createdAt": "2025-08-12T12:05:44Z",
+     "closedAt": "2025-08-22T11:18:48Z"
+    },
+    {
+     "number": 432,
+     "title": "terminaltexteffects not detected",
+     "url": "https://github.com/omacom/omarchy/issues/432",
+     "state": "CLOSED",
+     "comments": 16,
+     "reactions": 0,
+     "createdAt": "2025-08-01T11:52:57Z",
+     "closedAt": "2025-08-12T17:08:24Z"
+    },
+    {
+     "number": 1632,
+     "title": "Power Profile options are not showing",
+     "url": "https://github.com/omacom/omarchy/issues/1632",
+     "state": "CLOSED",
+     "comments": 15,
+     "reactions": 0,
+     "createdAt": "2025-09-12T12:34:55Z",
+     "closedAt": "2025-09-14T14:08:07Z"
+    },
+    {
+     "number": 2728,
+     "title": "Mise Python conflicting with system  python",
+     "url": "https://github.com/omacom/omarchy/issues/2728",
+     "state": "OPEN",
+     "comments": 9,
+     "reactions": 5,
+     "createdAt": "2025-10-22T16:04:00Z",
      "closedAt": null
     },
     {
-     "number": 1887,
-     "title": "Black screen after post installation update on Thinkpad T460s",
-     "url": "https://github.com/omacom/omarchy/issues/1887",
+     "number": 4147,
+     "title": "Theme mechanism broken after an upgrade to Omarchy 3.3.0",
+     "url": "https://github.com/omacom/omarchy/issues/4147",
      "state": "CLOSED",
-     "comments": 28,
-     "reactions": 1,
-     "createdAt": "2025-09-22T18:22:52Z",
-     "closedAt": "2025-10-26T03:34:03Z"
+     "comments": 11,
+     "reactions": 3,
+     "createdAt": "2026-01-08T10:56:32Z",
+     "closedAt": "2026-01-08T12:51:49Z"
     },
     {
-     "number": 3293,
-     "title": "Hyprlock sometimes crashes after opening laptop, 3.1.5",
-     "url": "https://github.com/omacom/omarchy/issues/3293",
+     "number": 5451,
+     "title": "Agent npx wrappers leak node@latest runtime into workspace commands",
+     "url": "https://github.com/omacom/omarchy/issues/5451",
      "state": "CLOSED",
-     "comments": 16,
-     "reactions": 13,
-     "createdAt": "2025-11-10T10:05:21Z",
-     "closedAt": "2026-02-02T19:55:52Z"
+     "comments": 12,
+     "reactions": 0,
+     "createdAt": "2026-04-26T11:57:17Z",
+     "closedAt": "2026-04-27T15:57:19Z",
+     "fixedBy": [
+      5341,
+      6350
+     ]
     },
     {
-     "number": 2543,
-     "title": "Walker and terminal unavailable, 'Error Command not found: \"--working-directory\"'",
-     "url": "https://github.com/omacom/omarchy/issues/2543",
+     "number": 7596,
+     "title": "Quickshell unable to restart after latest update on Edge branch",
+     "url": "https://github.com/omacom/omarchy/issues/7596",
      "state": "CLOSED",
-     "comments": 18,
-     "reactions": 10,
-     "createdAt": "2025-10-19T11:23:00Z",
-     "closedAt": "2025-10-23T06:58:35Z"
+     "comments": 7,
+     "reactions": 5,
+     "createdAt": "2026-08-20T09:26:35Z",
+     "closedAt": "2026-08-21T11:19:13Z"
     },
     {
-     "number": 4901,
-     "title": "Hybrid Intel+NVIDIA: Chromium hardware acceleration requires manual workarounds",
-     "url": "https://github.com/omacom/omarchy/issues/4901",
+     "number": 956,
+     "title": "[SOLVED] screensaver does not work, even after yay command",
+     "url": "https://github.com/omacom/omarchy/issues/956",
      "state": "CLOSED",
-     "comments": 21,
-     "reactions": 4,
-     "createdAt": "2026-03-04T21:25:56Z",
-     "closedAt": "2026-09-21T09:55:07Z"
+     "comments": 11,
+     "reactions": 0,
+     "createdAt": "2025-08-21T14:46:55Z",
+     "closedAt": "2025-08-22T15:51:33Z"
+    },
+    {
+     "number": 8108,
+     "title": "Default Agent: Gemini entry cannot sign in since Google ended individual access on 2026-06-18",
+     "url": "https://github.com/omacom/omarchy/issues/8108",
+     "state": "CLOSED",
+     "comments": 6,
+     "reactions": 5,
+     "createdAt": "2026-08-24T21:28:54Z",
+     "closedAt": "2026-09-06T15:31:25Z"
+    },
+    {
+     "number": 8460,
+     "title": "Agents widget: Codex collector hardcodes stale --ask-for-approval value, breaks limits fetch",
+     "url": "https://github.com/omacom/omarchy/issues/8460",
+     "state": "OPEN",
+     "comments": 6,
+     "reactions": 3,
+     "createdAt": "2026-08-26T20:25:38Z",
+     "closedAt": null
     }
    ],
    "bestAnswers": [
     {
-     "discussion": 2495,
-     "title": "Changing Your Shell to Zsh or Fish in Omarchy Without Breaking Everything",
-     "url": "https://github.com/omacom/omarchy/discussions/2495",
-     "category": "Manual",
-     "upvoteCount": 20,
+     "discussion": 4481,
+     "title": "feat(editor): Add install option for the Google Antigravity",
+     "url": "https://github.com/omacom/omarchy/discussions/4481",
+     "category": "Suggestions",
+     "upvoteCount": 21,
      "kind": "top-comment",
-     "author": "Jerry1098",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/2495#discussioncomment-14923461",
-     "snippet": "Thank you for this guide :)\n\nProbably because of a new change to `alacritty`:\nAfter setting \n```toml\n[shell]\nprogram = \"/usr/bin/fish\"\n```\nI get a config warning stating that the `[shell]` option has been deprecated. The new correct config option is:\n```toml\n[terminal.shell]\nprogram = \"/usr/bin/fish\"\n```\n\nTo load zoxide into your fish shell you would need to add:\n```fish\nzoxide init fish | source\n```\nat the end of your `~/.config/fish/config.fish` or install the [`zoxide.fish`](https://github.co"
+     "author": "luiscamaral",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/4481#discussioncomment-18117006",
+     "snippet": "gemini cli is not an option anymore. We should replace it with `agy` cli ASAP, for better experience."
     },
     {
-     "discussion": 7855,
-     "title": "[GUIDE] Working boot + suspend of Omarchy v4 on MBP 2019",
-     "url": "https://github.com/omacom/omarchy/discussions/7855",
-     "category": "General",
-     "upvoteCount": 8,
-     "kind": "top-comment",
-     "author": "TAR5",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/7855#discussioncomment-18141327",
-     "snippet": "plugging in a studio display is also not working. had codex try to fix it by building a linux-t2 kernel with a patch for studio display support, but it did not work. "
-    },
-    {
-     "discussion": 572,
-     "title": "Omarchy on VMware Workstation on windows 11 host",
-     "url": "https://github.com/omacom/omarchy/discussions/572",
-     "category": "Manual",
+     "discussion": 2973,
+     "title": "How should Topgrade update omarchy?",
+     "url": "https://github.com/omacom/omarchy/discussions/2973",
+     "category": "Q&A",
      "upvoteCount": 5,
      "kind": "top-comment",
-     "author": "dragonovs",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/572#discussioncomment-14566629",
-     "snippet": "1. All these can be automated with `archinstall` that comes with arch iso. So most of these tutorial is reinventing the wheel. Grok seems to be outdated for suggesting these steps to you in the first place.\n\n2. You mentioned that `Super + return` didn't work. How did you manage to open a terminal then? How did you manage to install `foot` and how did you edit `~/.config/hypr/bindings.conf` without Neovim (`Super + N`) or opening file (`Super + F`)"
-    },
-    {
-     "discussion": 7758,
-     "title": "Omarchy on VirtualBox",
-     "url": "https://github.com/omacom/omarchy/discussions/7758",
-     "category": "Manual",
-     "upvoteCount": 3,
-     "kind": "top-comment",
-     "author": "rodolfoghi",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/7758#discussioncomment-18320006",
-     "snippet": "Confirming this works, and adding the diagnosis in case it helps someone land here from a search.\n\n**Setup:** Omarchy 4.0.2, kernel 7.1.9-arch1-2, Hyprland 0.56.2, VirtualBox on a Windows 11 Pro host, 12 GB RAM / 6 vCPU, UEFI.\n\n**Symptom:** after install, logging in gives a black screen with only the mouse pointer. `Ctrl+Alt+F3` into a TTY works fine.\n\n### Diagnosis\n\n- `/tmp/hypr` and `$XDG_RUNTIME_DIR/hypr` were both missing, so Hyprland was never reaching a running state.\n- Running `Hyprland` "
-    },
-    {
-     "discussion": 4722,
-     "title": "Black screen / system sleep after login on 2025 Razer Blade 16 — Omarchy 3.4 Not Opening",
-     "url": "https://github.com/omacom/omarchy/discussions/4722",
-     "category": "Support",
-     "upvoteCount": 3,
-     "kind": "top-comment",
-     "author": "pilarskiasu",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/4722#discussioncomment-15925879",
-     "snippet": "Any ideas?"
+     "author": "tyvsmith",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/2973#discussioncomment-16443818",
+     "snippet": "Using Topgrade during the omarchy update process could also be interesting, similar to what the Bazzite/Bluefin do. Otherwise, you end up with stale versions in other stacks that may be popular including flatpaks, mise, hyprpm, distroboxes, etc.."
     }
    ],
    "exampleErrorLines": [
-    "Enter password -> black screen with blinking cursor (some error message blinking for 1ms), unable to Ctll+Alt+f2 it switches back to primary tty. Completely stuck with inaccessible system.",
-    "Fresh ISO install tonight with Omarchy 2.0 on a Thinkpad X240. Hyprland failed start and I was presented with a blank black screen with a blinking cursor visible. I changed TTYs and was able to find an error using `journalctl -xe`.",
-    "**Result: Partially successful.** `chrome://gpu` showed \"Video Decode: Hardware accelerated\" and `chrome://media-internals` confirmed `VaapiVideoDecoder` was being used. However, the `eglCreateImage` errors persisted, causing **black screen and flickering**.",
-    "So I just updated omarchy, mid-way it started giving some errors then every program got closed. I tried launching programs but they crashed after few seconds so I rebooted and now it shows the omarchy loading screen then boots into a black screen. I can use tty however.",
-    "I get the error but I black screen after giving my credentials on the Omarchy password screen"
+    "We have fix for the missing PyGObject on default systems in the next version. But yes, we still do have a lingering conflict with uv/mise pythons. Like the idea of exploring a wrapper. We need something for tte too.",
+    "/home/aly/.local/share/mise/installs/ruby/3.4.4/include/ruby-3.4.0/ruby/internal/special_consts.h:137:15: error: unknown type name ‘bool’",
+    "/home/aly/.local/share/mise/installs/ruby/3.4.4/include/ruby-3.4.0/ruby/internal/special_consts.h:172:15: error: unknown type name ‘bool’",
+    "mise ERROR gpg failed",
+    "mise ERROR Failed to install core:node@lts:"
    ]
   },
   {
@@ -6465,8 +6690,8 @@
     "4.0.2": 34,
     "4.0.3": 24,
     "4.0.1": 23,
+    "4.0.4": 22,
     "4.0.0": 21,
-    "4.0.4": 20,
     "3.x": 15
    },
    "topIssues": [
@@ -6531,6 +6756,16 @@
      "closedAt": "2025-10-22T10:22:53Z"
     },
     {
+     "number": 6858,
+     "title": "Lock screen auto-focus not working",
+     "url": "https://github.com/omacom/omarchy/issues/6858",
+     "state": "OPEN",
+     "comments": 6,
+     "reactions": 5,
+     "createdAt": "2026-08-14T08:30:42Z",
+     "closedAt": null
+    },
+    {
      "number": 856,
      "title": "Fingerprint fallback to password auth failing",
      "url": "https://github.com/omacom/omarchy/issues/856",
@@ -6538,16 +6773,6 @@
      "comments": 7,
      "reactions": 3,
      "createdAt": "2025-08-16T19:46:18Z",
-     "closedAt": null
-    },
-    {
-     "number": 6858,
-     "title": "Lock screen auto-focus not working",
-     "url": "https://github.com/omacom/omarchy/issues/6858",
-     "state": "OPEN",
-     "comments": 5,
-     "reactions": 5,
-     "createdAt": "2026-08-14T08:30:42Z",
      "closedAt": null
     },
     {
@@ -6765,7 +6990,7 @@
      "url": "https://github.com/omacom/omarchy/issues/7284",
      "state": "OPEN",
      "comments": 9,
-     "reactions": 9,
+     "reactions": 10,
      "createdAt": "2026-08-17T14:46:08Z",
      "closedAt": null
     },
@@ -6936,220 +7161,6 @@
    ]
   },
   {
-   "key": "mise",
-   "label": "mise",
-   "query": [
-    "mise"
-   ],
-   "discovered": "seed",
-   "searchScope": "title+body+comments",
-   "counts": {
-    "issues": 115,
-    "open": 50,
-    "closed": 65,
-    "discussions": 39
-   },
-   "versionsMentioned": {
-    "4.0.0": 38,
-    "3.x": 24,
-    "4.0.1": 20,
-    "4.0.3": 13,
-    "4.0.4": 11,
-    "4.0.2": 11,
-    "4.22.x": 1
-   },
-   "topIssues": [
-    {
-     "number": 2870,
-     "title": "Steam won't start",
-     "url": "https://github.com/omacom/omarchy/issues/2870",
-     "state": "CLOSED",
-     "comments": 28,
-     "reactions": 31,
-     "createdAt": "2025-10-26T11:59:06Z",
-     "closedAt": "2025-10-28T15:12:09Z"
-    },
-    {
-     "number": 1776,
-     "title": "Laptop / Hybrid GPU Power Management Issue (NVIDIA, iGPU + dGPU)",
-     "url": "https://github.com/omacom/omarchy/issues/1776",
-     "state": "CLOSED",
-     "comments": 15,
-     "reactions": 29,
-     "createdAt": "2025-09-18T15:55:23Z",
-     "closedAt": "2026-02-01T19:59:32Z"
-    },
-    {
-     "number": 4263,
-     "title": "missing module TerminalTextEffects after update",
-     "url": "https://github.com/omacom/omarchy/issues/4263",
-     "state": "CLOSED",
-     "comments": 18,
-     "reactions": 25,
-     "createdAt": "2026-01-14T17:44:13Z",
-     "closedAt": "2026-07-18T19:42:50Z"
-    },
-    {
-     "number": 7648,
-     "title": "Codex 0.149 breaks Agents panel limit display",
-     "url": "https://github.com/omacom/omarchy/issues/7648",
-     "state": "CLOSED",
-     "comments": 8,
-     "reactions": 12,
-     "createdAt": "2026-08-21T01:23:56Z",
-     "closedAt": "2026-08-25T14:07:19Z",
-     "fixedBy": [
-      7649
-     ]
-    },
-    {
-     "number": 2831,
-     "title": "mise python installation breaks AUR packages installations",
-     "url": "https://github.com/omacom/omarchy/issues/2831",
-     "state": "CLOSED",
-     "comments": 9,
-     "reactions": 10,
-     "createdAt": "2025-10-25T01:52:15Z",
-     "closedAt": "2026-09-21T09:50:52Z"
-    },
-    {
-     "number": 704,
-     "title": "Clicking Setup → Power profile closes the Omarchy menu and prevents it from reopening",
-     "url": "https://github.com/omacom/omarchy/issues/704",
-     "state": "CLOSED",
-     "comments": 17,
-     "reactions": 0,
-     "createdAt": "2025-08-12T12:05:44Z",
-     "closedAt": "2025-08-22T11:18:48Z"
-    },
-    {
-     "number": 432,
-     "title": "terminaltexteffects not detected",
-     "url": "https://github.com/omacom/omarchy/issues/432",
-     "state": "CLOSED",
-     "comments": 16,
-     "reactions": 0,
-     "createdAt": "2025-08-01T11:52:57Z",
-     "closedAt": "2025-08-12T17:08:24Z"
-    },
-    {
-     "number": 1632,
-     "title": "Power Profile options are not showing",
-     "url": "https://github.com/omacom/omarchy/issues/1632",
-     "state": "CLOSED",
-     "comments": 15,
-     "reactions": 0,
-     "createdAt": "2025-09-12T12:34:55Z",
-     "closedAt": "2025-09-14T14:08:07Z"
-    },
-    {
-     "number": 2728,
-     "title": "Mise Python conflicting with system  python",
-     "url": "https://github.com/omacom/omarchy/issues/2728",
-     "state": "OPEN",
-     "comments": 9,
-     "reactions": 5,
-     "createdAt": "2025-10-22T16:04:00Z",
-     "closedAt": null
-    },
-    {
-     "number": 4147,
-     "title": "Theme mechanism broken after an upgrade to Omarchy 3.3.0",
-     "url": "https://github.com/omacom/omarchy/issues/4147",
-     "state": "CLOSED",
-     "comments": 11,
-     "reactions": 3,
-     "createdAt": "2026-01-08T10:56:32Z",
-     "closedAt": "2026-01-08T12:51:49Z"
-    },
-    {
-     "number": 5451,
-     "title": "Agent npx wrappers leak node@latest runtime into workspace commands",
-     "url": "https://github.com/omacom/omarchy/issues/5451",
-     "state": "CLOSED",
-     "comments": 12,
-     "reactions": 0,
-     "createdAt": "2026-04-26T11:57:17Z",
-     "closedAt": "2026-04-27T15:57:19Z",
-     "fixedBy": [
-      5341,
-      6350
-     ]
-    },
-    {
-     "number": 7596,
-     "title": "Quickshell unable to restart after latest update on Edge branch",
-     "url": "https://github.com/omacom/omarchy/issues/7596",
-     "state": "CLOSED",
-     "comments": 7,
-     "reactions": 5,
-     "createdAt": "2026-08-20T09:26:35Z",
-     "closedAt": "2026-08-21T11:19:13Z"
-    },
-    {
-     "number": 956,
-     "title": "[SOLVED] screensaver does not work, even after yay command",
-     "url": "https://github.com/omacom/omarchy/issues/956",
-     "state": "CLOSED",
-     "comments": 11,
-     "reactions": 0,
-     "createdAt": "2025-08-21T14:46:55Z",
-     "closedAt": "2025-08-22T15:51:33Z"
-    },
-    {
-     "number": 8108,
-     "title": "Default Agent: Gemini entry cannot sign in since Google ended individual access on 2026-06-18",
-     "url": "https://github.com/omacom/omarchy/issues/8108",
-     "state": "CLOSED",
-     "comments": 6,
-     "reactions": 5,
-     "createdAt": "2026-08-24T21:28:54Z",
-     "closedAt": "2026-09-06T15:31:25Z"
-    },
-    {
-     "number": 8460,
-     "title": "Agents widget: Codex collector hardcodes stale --ask-for-approval value, breaks limits fetch",
-     "url": "https://github.com/omacom/omarchy/issues/8460",
-     "state": "OPEN",
-     "comments": 6,
-     "reactions": 3,
-     "createdAt": "2026-08-26T20:25:38Z",
-     "closedAt": null
-    }
-   ],
-   "bestAnswers": [
-    {
-     "discussion": 4481,
-     "title": "feat(editor): Add install option for the Google Antigravity",
-     "url": "https://github.com/omacom/omarchy/discussions/4481",
-     "category": "Suggestions",
-     "upvoteCount": 21,
-     "kind": "top-comment",
-     "author": "luiscamaral",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/4481#discussioncomment-18117006",
-     "snippet": "gemini cli is not an option anymore. We should replace it with `agy` cli ASAP, for better experience."
-    },
-    {
-     "discussion": 2973,
-     "title": "How should Topgrade update omarchy?",
-     "url": "https://github.com/omacom/omarchy/discussions/2973",
-     "category": "Q&A",
-     "upvoteCount": 5,
-     "kind": "top-comment",
-     "author": "tyvsmith",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/2973#discussioncomment-16443818",
-     "snippet": "Using Topgrade during the omarchy update process could also be interesting, similar to what the Bazzite/Bluefin do. Otherwise, you end up with stale versions in other stacks that may be popular including flatpaks, mise, hyprpm, distroboxes, etc.."
-    }
-   ],
-   "exampleErrorLines": [
-    "We have fix for the missing PyGObject on default systems in the next version. But yes, we still do have a lingering conflict with uv/mise pythons. Like the idea of exploring a wrapper. We need something for tte too.",
-    "/home/aly/.local/share/mise/installs/ruby/3.4.4/include/ruby-3.4.0/ruby/internal/special_consts.h:137:15: error: unknown type name ‘bool’",
-    "/home/aly/.local/share/mise/installs/ruby/3.4.4/include/ruby-3.4.0/ruby/internal/special_consts.h:172:15: error: unknown type name ‘bool’",
-    "mise ERROR gpg failed",
-    "mise ERROR Failed to install core:node@lts:"
-   ]
-  },
-  {
    "key": "steam",
    "label": "steam",
    "query": [
@@ -7158,8 +7169,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 110,
-    "open": 48,
+    "issues": 111,
+    "open": 49,
     "closed": 62,
     "discussions": 36
    },
@@ -7168,8 +7179,8 @@
     "4.0.0": 21,
     "4.0.2": 16,
     "4.0.1": 14,
+    "4.0.4": 10,
     "4.0.3": 10,
-    "4.0.4": 9,
     "4.9.x": 1,
     "4.7.x": 1
    },
@@ -7215,6 +7226,16 @@
      "closedAt": "2026-02-01T20:34:23Z"
     },
     {
+     "number": 6475,
+     "title": "[Quattro] D-Bus idle inhibits are silently dropped since hypridle was replaced — screensaver fires during video playback (reproduced with Zen browser)",
+     "url": "https://github.com/omacom/omarchy/issues/6475",
+     "state": "OPEN",
+     "comments": 8,
+     "reactions": 23,
+     "createdAt": "2026-08-01T08:33:54Z",
+     "closedAt": null
+    },
+    {
      "number": 483,
      "title": "Improve documentation for adding another keyboard layout",
      "url": "https://github.com/omacom/omarchy/issues/483",
@@ -7227,16 +7248,6 @@
       760,
       12157
      ]
-    },
-    {
-     "number": 6475,
-     "title": "[Quattro] D-Bus idle inhibits are silently dropped since hypridle was replaced — screensaver fires during video playback (reproduced with Zen browser)",
-     "url": "https://github.com/omacom/omarchy/issues/6475",
-     "state": "OPEN",
-     "comments": 7,
-     "reactions": 22,
-     "createdAt": "2026-08-01T08:33:54Z",
-     "closedAt": null
     },
     {
      "number": 4554,
@@ -7403,8 +7414,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 108,
-    "open": 48,
+    "issues": 109,
+    "open": 49,
     "closed": 60,
     "discussions": 27
    },
@@ -7413,7 +7424,7 @@
     "4.0.0": 29,
     "4.0.2": 16,
     "4.0.1": 10,
-    "4.0.4": 7,
+    "4.0.4": 8,
     "4.0.3": 5,
     "4.29.x": 1
    },
@@ -7663,8 +7674,8 @@
     "3.x": 24,
     "4.0.2": 20,
     "4.0.1": 16,
+    "4.0.4": 16,
     "4.0.0": 14,
-    "4.0.4": 14,
     "4.0.3": 12
    },
    "topIssues": [
@@ -8357,6 +8368,253 @@
    ]
   },
   {
+   "key": "snapshot-failed",
+   "label": "Creating a snapshot failed / snapper",
+   "query": [
+    "Creating a snapshot failed",
+    "snapper"
+   ],
+   "discovered": "seed",
+   "searchScope": "title+body+comments",
+   "counts": {
+    "issues": 77,
+    "open": 43,
+    "closed": 34,
+    "discussions": 16
+   },
+   "versionsMentioned": {
+    "3.x": 32,
+    "4.0.0": 17,
+    "4.0.4": 9,
+    "4.0.1": 6,
+    "4.0.2": 6,
+    "4.0.3": 5,
+    "4.29.x": 1
+   },
+   "topIssues": [
+    {
+     "number": 1571,
+     "title": "Can't become sudo sometimes, password not accepted",
+     "url": "https://github.com/omacom/omarchy/issues/1571",
+     "state": "CLOSED",
+     "comments": 29,
+     "reactions": 16,
+     "createdAt": "2025-09-10T14:40:29Z",
+     "closedAt": "2025-11-25T16:36:16Z"
+    },
+    {
+     "number": 3231,
+     "title": "Kernel panic after update",
+     "url": "https://github.com/omacom/omarchy/issues/3231",
+     "state": "CLOSED",
+     "comments": 25,
+     "reactions": 15,
+     "createdAt": "2025-11-07T16:23:35Z",
+     "closedAt": "2025-11-07T21:42:52Z"
+    },
+    {
+     "number": 1887,
+     "title": "Black screen after post installation update on Thinkpad T460s",
+     "url": "https://github.com/omacom/omarchy/issues/1887",
+     "state": "CLOSED",
+     "comments": 28,
+     "reactions": 1,
+     "createdAt": "2025-09-22T18:22:52Z",
+     "closedAt": "2025-10-26T03:34:03Z"
+    },
+    {
+     "number": 4554,
+     "title": "Upgrade issues on older CPU",
+     "url": "https://github.com/omacom/omarchy/issues/4554",
+     "state": "CLOSED",
+     "comments": 27,
+     "reactions": 0,
+     "createdAt": "2026-02-08T17:31:09Z",
+     "closedAt": "2026-02-22T07:29:06Z"
+    },
+    {
+     "number": 2805,
+     "title": "unable to boot after 3.1.3 update",
+     "url": "https://github.com/omacom/omarchy/issues/2805",
+     "state": "CLOSED",
+     "comments": 20,
+     "reactions": 0,
+     "createdAt": "2025-10-24T14:36:04Z",
+     "closedAt": "2025-10-26T21:21:05Z"
+    },
+    {
+     "number": 1068,
+     "title": "Docs Addition: Limine + Snapper",
+     "url": "https://github.com/omacom/omarchy/issues/1068",
+     "state": "CLOSED",
+     "comments": 8,
+     "reactions": 10,
+     "createdAt": "2025-08-25T14:35:13Z",
+     "closedAt": "2025-10-25T18:24:29Z"
+    },
+    {
+     "number": 3055,
+     "title": "/.snapshots takes up all my space",
+     "url": "https://github.com/omacom/omarchy/issues/3055",
+     "state": "CLOSED",
+     "comments": 7,
+     "reactions": 9,
+     "createdAt": "2025-11-01T20:54:00Z",
+     "closedAt": "2025-12-15T22:09:40Z",
+     "fixedBy": [
+      6354
+     ]
+    },
+    {
+     "number": 3543,
+     "title": "install fails on omarchy 3.2 with limine-snapper script expecting /boot/limine/limine.conf",
+     "url": "https://github.com/omacom/omarchy/issues/3543",
+     "state": "OPEN",
+     "comments": 12,
+     "reactions": 3,
+     "createdAt": "2025-11-22T15:05:44Z",
+     "closedAt": null
+    },
+    {
+     "number": 722,
+     "title": "Improving resilience around upgrades and improving recovery mode",
+     "url": "https://github.com/omacom/omarchy/issues/722",
+     "state": "CLOSED",
+     "comments": 7,
+     "reactions": 7,
+     "createdAt": "2025-08-12T17:46:13Z",
+     "closedAt": "2025-09-16T14:06:10Z",
+     "fixedBy": [
+      998
+     ]
+    },
+    {
+     "number": 4403,
+     "title": "`btrfs-cleaner` is overly aggressive and causes system to become unresponsive",
+     "url": "https://github.com/omacom/omarchy/issues/4403",
+     "state": "CLOSED",
+     "comments": 13,
+     "reactions": 1,
+     "createdAt": "2026-01-31T21:41:16Z",
+     "closedAt": "2026-07-18T19:42:53Z"
+    },
+    {
+     "number": 3335,
+     "title": "Kernel panic after update: /boot/EFI/Limine/limine.conf not synced with /boot/limine.conf",
+     "url": "https://github.com/omacom/omarchy/issues/3335",
+     "state": "CLOSED",
+     "comments": 9,
+     "reactions": 3,
+     "createdAt": "2025-11-11T14:04:16Z",
+     "closedAt": "2025-11-21T04:47:08Z"
+    },
+    {
+     "number": 6209,
+     "title": "System becomes unusable after update: libgcc_s.so.1 missing during gcc-libs upgrade",
+     "url": "https://github.com/omacom/omarchy/issues/6209",
+     "state": "OPEN",
+     "comments": 11,
+     "reactions": 0,
+     "createdAt": "2026-07-12T18:20:23Z",
+     "closedAt": null
+    },
+    {
+     "number": 5706,
+     "title": "Login loop after update if nvidia DKMS fails to build for the new kernel",
+     "url": "https://github.com/omacom/omarchy/issues/5706",
+     "state": "OPEN",
+     "comments": 6,
+     "reactions": 4,
+     "createdAt": "2026-05-09T17:41:02Z",
+     "closedAt": null
+    },
+    {
+     "number": 1691,
+     "title": "Remove hash from limine.conf",
+     "url": "https://github.com/omacom/omarchy/issues/1691",
+     "state": "CLOSED",
+     "comments": 8,
+     "reactions": 1,
+     "createdAt": "2025-09-16T08:22:18Z",
+     "closedAt": "2025-09-22T05:05:19Z"
+    },
+    {
+     "number": 6365,
+     "title": "Use sudo for /boot file checks in limine-snapper.sh",
+     "url": "https://github.com/omacom/omarchy/issues/6365",
+     "state": "CLOSED",
+     "comments": 7,
+     "reactions": 1,
+     "createdAt": "2026-07-24T05:41:53Z",
+     "closedAt": "2026-07-31T16:38:39Z"
+    }
+   ],
+   "bestAnswers": [
+    {
+     "discussion": 1247,
+     "title": "Thoughts After a Line-By-Line Install of Omarchy (on CachyOS)",
+     "url": "https://github.com/omacom/omarchy/discussions/1247",
+     "category": "General",
+     "upvoteCount": 14,
+     "kind": "top-comment",
+     "author": "mroboff",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/1247#discussioncomment-14399776",
+     "snippet": "Update: As requested, I've created a script to install Omarchy on a fresh CachyOS installation. The script is available at  \n[https://github.com/mroboff/omarchy-on-cachyos](https://github.com/mroboff/omarchy-on-cachyos).\n\nYou can clone the script's repository to your computer to get going. (The script is in the project's bin directory.) Just be sure to read the README.md file before proceeding. Feedback and contributions are welcome.\n\nNOTE: Unlike other installation scripts that merge Omarchy wi"
+    },
+    {
+     "discussion": 1325,
+     "title": "Limine/Snapper update for pre-2.0 Omarchy installs",
+     "url": "https://github.com/omacom/omarchy/discussions/1325",
+     "category": "Manual",
+     "upvoteCount": 4,
+     "kind": "top-comment",
+     "author": "inffy",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/1325#discussioncomment-14263279",
+     "snippet": "They are not done yet. No idea where they will post these, propably here in the github when they are done."
+    },
+    {
+     "discussion": 3292,
+     "title": "Free disk space remains the same, regardless of any changes made to the system",
+     "url": "https://github.com/omacom/omarchy/discussions/3292",
+     "category": "Support",
+     "upvoteCount": 2,
+     "kind": "top-comment",
+     "author": "morsontologica",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/3292#discussioncomment-14922647",
+     "snippet": "@maxguzenski the problem isn't lack of space, I think you might have misunderstood me. Just deleted a 119gb file and my machine still claims to only have 43.1gb free disk space. \n\nMy machine incorrectly lists my free disk space as whatever the size of /.snapshots folder is, if that makes any sense at all"
+    },
+    {
+     "discussion": 7397,
+     "title": "Quattro upgrade Blockers for those who start before v2.0.0",
+     "url": "https://github.com/omacom/omarchy/discussions/7397",
+     "category": "General",
+     "upvoteCount": 1,
+     "kind": "top-comment",
+     "author": "rsd",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/7397#discussioncomment-18068844",
+     "snippet": "### FIREWALL\n\njust run:\n`bash ~/.local/share/omarchy/install/first-run/firewall.sh`\n\nYou probably will want to open some ports later with `ufw` like:\n`sudo ufw limit 22/tcp comment 'SSH'`\n"
+    },
+    {
+     "discussion": 3168,
+     "title": "Creating snapshot failed",
+     "url": "https://github.com/omacom/omarchy/discussions/3168",
+     "category": "Support",
+     "upvoteCount": 1,
+     "kind": "top-comment",
+     "author": "davemaier",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/3168#discussioncomment-14879586",
+     "snippet": "I'm having the same problem on 3.1.4, could not find any helpful logs so far. "
+    }
+   ],
+   "exampleErrorLines": [
+    "## **Guide: Fixing Limine UKI Build Failure and Snapper Errors on x86-64-v2 CPUs**",
+    "Failed script: /home/zark/.local/share/omarchy/install/login/limine-snapper.sh",
+    "On systems where /boot is a vfat partition mounted with fmask=0077 (the default in Omarchy's fstab), the install fails at limine-snapper.sh with \"Error: Limine config not found\" even though limine.conf exists and limine is installed.",
+    "Creating a snapshot failed.",
+    "limine-snapper-sync[5371]: Command failed: cp /boot/EFI/Linux/omarchy_linux.efi with exit code: 1"
+   ]
+  },
+  {
    "key": "polkit",
    "label": "polkit",
    "query": [
@@ -8611,13 +8869,13 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 75,
-    "open": 51,
+    "issues": 76,
+    "open": 52,
     "closed": 24,
     "discussions": 11
    },
    "versionsMentioned": {
-    "4.0.4": 18,
+    "4.0.4": 20,
     "3.x": 14,
     "4.0.3": 14,
     "4.0.1": 10,
@@ -8633,7 +8891,7 @@
      "title": "# No Sound Fix: ASUS ROG Strix G16 (2025) on Omarchy 3.4.1",
      "url": "https://github.com/omacom/omarchy/issues/4821",
      "state": "OPEN",
-     "comments": 9,
+     "comments": 10,
      "reactions": 24,
      "createdAt": "2026-02-28T19:50:13Z",
      "closedAt": null
@@ -8644,7 +8902,7 @@
      "url": "https://github.com/omacom/omarchy/issues/7284",
      "state": "OPEN",
      "comments": 9,
-     "reactions": 9,
+     "reactions": 10,
      "createdAt": "2026-08-17T14:46:08Z",
      "closedAt": null
     },
@@ -8851,253 +9109,6 @@
    ]
   },
   {
-   "key": "snapshot-failed",
-   "label": "Creating a snapshot failed / snapper",
-   "query": [
-    "Creating a snapshot failed",
-    "snapper"
-   ],
-   "discovered": "seed",
-   "searchScope": "title+body+comments",
-   "counts": {
-    "issues": 72,
-    "open": 39,
-    "closed": 33,
-    "discussions": 15
-   },
-   "versionsMentioned": {
-    "3.x": 32,
-    "4.0.0": 16,
-    "4.0.1": 6,
-    "4.0.2": 6,
-    "4.0.4": 6,
-    "4.0.3": 4,
-    "4.29.x": 1
-   },
-   "topIssues": [
-    {
-     "number": 1571,
-     "title": "Can't become sudo sometimes, password not accepted",
-     "url": "https://github.com/omacom/omarchy/issues/1571",
-     "state": "CLOSED",
-     "comments": 29,
-     "reactions": 16,
-     "createdAt": "2025-09-10T14:40:29Z",
-     "closedAt": "2025-11-25T16:36:16Z"
-    },
-    {
-     "number": 3231,
-     "title": "Kernel panic after update",
-     "url": "https://github.com/omacom/omarchy/issues/3231",
-     "state": "CLOSED",
-     "comments": 25,
-     "reactions": 15,
-     "createdAt": "2025-11-07T16:23:35Z",
-     "closedAt": "2025-11-07T21:42:52Z"
-    },
-    {
-     "number": 1887,
-     "title": "Black screen after post installation update on Thinkpad T460s",
-     "url": "https://github.com/omacom/omarchy/issues/1887",
-     "state": "CLOSED",
-     "comments": 28,
-     "reactions": 1,
-     "createdAt": "2025-09-22T18:22:52Z",
-     "closedAt": "2025-10-26T03:34:03Z"
-    },
-    {
-     "number": 4554,
-     "title": "Upgrade issues on older CPU",
-     "url": "https://github.com/omacom/omarchy/issues/4554",
-     "state": "CLOSED",
-     "comments": 27,
-     "reactions": 0,
-     "createdAt": "2026-02-08T17:31:09Z",
-     "closedAt": "2026-02-22T07:29:06Z"
-    },
-    {
-     "number": 2805,
-     "title": "unable to boot after 3.1.3 update",
-     "url": "https://github.com/omacom/omarchy/issues/2805",
-     "state": "CLOSED",
-     "comments": 20,
-     "reactions": 0,
-     "createdAt": "2025-10-24T14:36:04Z",
-     "closedAt": "2025-10-26T21:21:05Z"
-    },
-    {
-     "number": 1068,
-     "title": "Docs Addition: Limine + Snapper",
-     "url": "https://github.com/omacom/omarchy/issues/1068",
-     "state": "CLOSED",
-     "comments": 8,
-     "reactions": 10,
-     "createdAt": "2025-08-25T14:35:13Z",
-     "closedAt": "2025-10-25T18:24:29Z"
-    },
-    {
-     "number": 3055,
-     "title": "/.snapshots takes up all my space",
-     "url": "https://github.com/omacom/omarchy/issues/3055",
-     "state": "CLOSED",
-     "comments": 7,
-     "reactions": 9,
-     "createdAt": "2025-11-01T20:54:00Z",
-     "closedAt": "2025-12-15T22:09:40Z",
-     "fixedBy": [
-      6354
-     ]
-    },
-    {
-     "number": 3543,
-     "title": "install fails on omarchy 3.2 with limine-snapper script expecting /boot/limine/limine.conf",
-     "url": "https://github.com/omacom/omarchy/issues/3543",
-     "state": "OPEN",
-     "comments": 12,
-     "reactions": 3,
-     "createdAt": "2025-11-22T15:05:44Z",
-     "closedAt": null
-    },
-    {
-     "number": 722,
-     "title": "Improving resilience around upgrades and improving recovery mode",
-     "url": "https://github.com/omacom/omarchy/issues/722",
-     "state": "CLOSED",
-     "comments": 7,
-     "reactions": 7,
-     "createdAt": "2025-08-12T17:46:13Z",
-     "closedAt": "2025-09-16T14:06:10Z",
-     "fixedBy": [
-      998
-     ]
-    },
-    {
-     "number": 4403,
-     "title": "`btrfs-cleaner` is overly aggressive and causes system to become unresponsive",
-     "url": "https://github.com/omacom/omarchy/issues/4403",
-     "state": "CLOSED",
-     "comments": 13,
-     "reactions": 1,
-     "createdAt": "2026-01-31T21:41:16Z",
-     "closedAt": "2026-07-18T19:42:53Z"
-    },
-    {
-     "number": 3335,
-     "title": "Kernel panic after update: /boot/EFI/Limine/limine.conf not synced with /boot/limine.conf",
-     "url": "https://github.com/omacom/omarchy/issues/3335",
-     "state": "CLOSED",
-     "comments": 9,
-     "reactions": 3,
-     "createdAt": "2025-11-11T14:04:16Z",
-     "closedAt": "2025-11-21T04:47:08Z"
-    },
-    {
-     "number": 6209,
-     "title": "System becomes unusable after update: libgcc_s.so.1 missing during gcc-libs upgrade",
-     "url": "https://github.com/omacom/omarchy/issues/6209",
-     "state": "OPEN",
-     "comments": 11,
-     "reactions": 0,
-     "createdAt": "2026-07-12T18:20:23Z",
-     "closedAt": null
-    },
-    {
-     "number": 5706,
-     "title": "Login loop after update if nvidia DKMS fails to build for the new kernel",
-     "url": "https://github.com/omacom/omarchy/issues/5706",
-     "state": "OPEN",
-     "comments": 6,
-     "reactions": 4,
-     "createdAt": "2026-05-09T17:41:02Z",
-     "closedAt": null
-    },
-    {
-     "number": 1691,
-     "title": "Remove hash from limine.conf",
-     "url": "https://github.com/omacom/omarchy/issues/1691",
-     "state": "CLOSED",
-     "comments": 8,
-     "reactions": 1,
-     "createdAt": "2025-09-16T08:22:18Z",
-     "closedAt": "2025-09-22T05:05:19Z"
-    },
-    {
-     "number": 6365,
-     "title": "Use sudo for /boot file checks in limine-snapper.sh",
-     "url": "https://github.com/omacom/omarchy/issues/6365",
-     "state": "CLOSED",
-     "comments": 7,
-     "reactions": 1,
-     "createdAt": "2026-07-24T05:41:53Z",
-     "closedAt": "2026-07-31T16:38:39Z"
-    }
-   ],
-   "bestAnswers": [
-    {
-     "discussion": 1247,
-     "title": "Thoughts After a Line-By-Line Install of Omarchy (on CachyOS)",
-     "url": "https://github.com/omacom/omarchy/discussions/1247",
-     "category": "General",
-     "upvoteCount": 14,
-     "kind": "top-comment",
-     "author": "mroboff",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/1247#discussioncomment-14399776",
-     "snippet": "Update: As requested, I've created a script to install Omarchy on a fresh CachyOS installation. The script is available at  \n[https://github.com/mroboff/omarchy-on-cachyos](https://github.com/mroboff/omarchy-on-cachyos).\n\nYou can clone the script's repository to your computer to get going. (The script is in the project's bin directory.) Just be sure to read the README.md file before proceeding. Feedback and contributions are welcome.\n\nNOTE: Unlike other installation scripts that merge Omarchy wi"
-    },
-    {
-     "discussion": 1325,
-     "title": "Limine/Snapper update for pre-2.0 Omarchy installs",
-     "url": "https://github.com/omacom/omarchy/discussions/1325",
-     "category": "Manual",
-     "upvoteCount": 4,
-     "kind": "top-comment",
-     "author": "inffy",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/1325#discussioncomment-14263279",
-     "snippet": "They are not done yet. No idea where they will post these, propably here in the github when they are done."
-    },
-    {
-     "discussion": 3292,
-     "title": "Free disk space remains the same, regardless of any changes made to the system",
-     "url": "https://github.com/omacom/omarchy/discussions/3292",
-     "category": "Support",
-     "upvoteCount": 2,
-     "kind": "top-comment",
-     "author": "morsontologica",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/3292#discussioncomment-14922647",
-     "snippet": "@maxguzenski the problem isn't lack of space, I think you might have misunderstood me. Just deleted a 119gb file and my machine still claims to only have 43.1gb free disk space. \n\nMy machine incorrectly lists my free disk space as whatever the size of /.snapshots folder is, if that makes any sense at all"
-    },
-    {
-     "discussion": 7397,
-     "title": "Quattro upgrade Blockers for those who start before v2.0.0",
-     "url": "https://github.com/omacom/omarchy/discussions/7397",
-     "category": "General",
-     "upvoteCount": 1,
-     "kind": "top-comment",
-     "author": "rsd",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/7397#discussioncomment-18068844",
-     "snippet": "### FIREWALL\n\njust run:\n`bash ~/.local/share/omarchy/install/first-run/firewall.sh`\n\nYou probably will want to open some ports later with `ufw` like:\n`sudo ufw limit 22/tcp comment 'SSH'`\n"
-    },
-    {
-     "discussion": 3168,
-     "title": "Creating snapshot failed",
-     "url": "https://github.com/omacom/omarchy/discussions/3168",
-     "category": "Support",
-     "upvoteCount": 1,
-     "kind": "top-comment",
-     "author": "davemaier",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/3168#discussioncomment-14879586",
-     "snippet": "I'm having the same problem on 3.1.4, could not find any helpful logs so far. "
-    }
-   ],
-   "exampleErrorLines": [
-    "## **Guide: Fixing Limine UKI Build Failure and Snapper Errors on x86-64-v2 CPUs**",
-    "Failed script: /home/zark/.local/share/omarchy/install/login/limine-snapper.sh",
-    "On systems where /boot is a vfat partition mounted with fmask=0077 (the default in Omarchy's fstab), the install fails at limine-snapper.sh with \"Error: Limine config not found\" even though limine.conf exists and limine is installed.",
-    "Creating a snapshot failed.",
-    "limine-snapper-sync[5371]: Command failed: cp /boot/EFI/Linux/omarchy_linux.efi with exit code: 1"
-   ]
-  },
-  {
    "key": "1password",
    "label": "1password",
    "query": [
@@ -9115,8 +9126,8 @@
     "3.x": 22,
     "4.0.0": 11,
     "4.0.2": 10,
-    "4.0.1": 5,
     "4.0.3": 5,
+    "4.0.1": 5,
     "4.0.4": 4
    },
    "topIssues": [
@@ -9654,6 +9665,16 @@
      ]
     },
     {
+     "number": 12083,
+     "title": "4K@120 HDMI screen blanks for seconds on every new frame after linux-omarchy 7.2.5-3 (AMD Navi 33)",
+     "url": "https://github.com/omacom/omarchy/issues/12083",
+     "state": "OPEN",
+     "comments": 7,
+     "reactions": 1,
+     "createdAt": "2026-09-16T09:19:18Z",
+     "closedAt": null
+    },
+    {
      "number": 7084,
      "title": "Clamshell watcher ignores desc: rules for the internal panel and overwrites its scale every 2s",
      "url": "https://github.com/omacom/omarchy/issues/7084",
@@ -9675,16 +9696,6 @@
      "fixedBy": [
       5
      ]
-    },
-    {
-     "number": 12083,
-     "title": "4K@120 HDMI screen blanks for seconds on every new frame after linux-omarchy 7.2.5-3 (AMD Navi 33)",
-     "url": "https://github.com/omacom/omarchy/issues/12083",
-     "state": "OPEN",
-     "comments": 4,
-     "reactions": 1,
-     "createdAt": "2026-09-16T09:19:18Z",
-     "closedAt": null
     },
     {
      "number": 8103,
@@ -9816,6 +9827,254 @@
    "exampleErrorLines": [
     "If a syntax error, invalid format, or runtime exception occurs inside `~/.config/hypr/monitors.lua` (or `hypr.input`), the graphical desktop still starts (wallpaper and bar render), but **none of the user's keyboard shortcuts work** (`Super + Return` for terminal, `Super + Space` for menu).",
     "Because `require(\"hypr.monitors\")` runs **before** `require(\"hypr.bindings\")`, an unhandled error inside `monitors.lua` immediately aborts the Lua execution thread. As a result:"
+   ]
+  },
+  {
+   "key": "keyring",
+   "label": "keyring",
+   "query": [
+    "keyring"
+   ],
+   "discovered": "seed",
+   "searchScope": "title+body+comments",
+   "counts": {
+    "issues": 61,
+    "open": 19,
+    "closed": 42,
+    "discussions": 18
+   },
+   "versionsMentioned": {
+    "3.x": 23,
+    "4.0.2": 9,
+    "4.0.0": 7,
+    "4.0.1": 7,
+    "4.0.3": 6,
+    "4.16.x": 1,
+    "4.0.4": 1
+   },
+   "topIssues": [
+    {
+     "number": 2712,
+     "title": "Enhance [omarchy] Repo Security: Switch SigLevel to `Required DatabaseOptional` and Update Security Docs",
+     "url": "https://github.com/omacom/omarchy/issues/2712",
+     "state": "CLOSED",
+     "comments": 13,
+     "reactions": 39,
+     "createdAt": "2025-10-22T09:24:28Z",
+     "closedAt": "2026-07-18T21:56:15Z"
+    },
+    {
+     "number": 2308,
+     "title": "Chromium asks for keyring password on every startup",
+     "url": "https://github.com/omacom/omarchy/issues/2308",
+     "state": "CLOSED",
+     "comments": 22,
+     "reactions": 18,
+     "createdAt": "2025-10-08T06:31:40Z",
+     "closedAt": "2025-10-26T00:01:03Z"
+    },
+    {
+     "number": 2272,
+     "title": "Chromium everything is gray?",
+     "url": "https://github.com/omacom/omarchy/issues/2272",
+     "state": "CLOSED",
+     "comments": 36,
+     "reactions": 1,
+     "createdAt": "2025-10-07T06:55:47Z",
+     "closedAt": "2025-10-13T07:04:15Z"
+    },
+    {
+     "number": 2546,
+     "title": "Walker and Elephant missing after system upgrade",
+     "url": "https://github.com/omacom/omarchy/issues/2546",
+     "state": "CLOSED",
+     "comments": 30,
+     "reactions": 2,
+     "createdAt": "2025-10-19T11:42:16Z",
+     "closedAt": "2025-10-25T21:00:41Z"
+    },
+    {
+     "number": 5105,
+     "title": "Update/reboot left keyring in invalid state, browser sessions and gh auth got cleared",
+     "url": "https://github.com/omacom/omarchy/issues/5105",
+     "state": "OPEN",
+     "comments": 21,
+     "reactions": 11,
+     "createdAt": "2026-03-23T18:06:58Z",
+     "closedAt": null
+    },
+    {
+     "number": 352,
+     "title": "Gnome-keyring not creating default keyvault, 1Password MFA issues",
+     "url": "https://github.com/omacom/omarchy/issues/352",
+     "state": "CLOSED",
+     "comments": 15,
+     "reactions": 6,
+     "createdAt": "2025-07-26T04:16:35Z",
+     "closedAt": "2025-11-03T09:54:46Z",
+     "fixedBy": [
+      1860,
+      2242
+     ]
+    },
+    {
+     "number": 2916,
+     "title": "key \"F0134EE680CAC571\" could not be looked up remotely",
+     "url": "https://github.com/omacom/omarchy/issues/2916",
+     "state": "CLOSED",
+     "comments": 14,
+     "reactions": 4,
+     "createdAt": "2025-10-28T03:58:47Z",
+     "closedAt": "2026-02-01T21:16:12Z"
+    },
+    {
+     "number": 5337,
+     "title": "Hibernation won't work anyway",
+     "url": "https://github.com/omacom/omarchy/issues/5337",
+     "state": "CLOSED",
+     "comments": 17,
+     "reactions": 0,
+     "createdAt": "2026-04-17T07:07:11Z",
+     "closedAt": "2026-05-13T12:54:51Z"
+    },
+    {
+     "number": 432,
+     "title": "terminaltexteffects not detected",
+     "url": "https://github.com/omacom/omarchy/issues/432",
+     "state": "CLOSED",
+     "comments": 16,
+     "reactions": 0,
+     "createdAt": "2025-08-01T11:52:57Z",
+     "closedAt": "2025-08-12T17:08:24Z"
+    },
+    {
+     "number": 1015,
+     "title": "After installing VSCode and login in to GitHub there's a missing OS keyring error",
+     "url": "https://github.com/omacom/omarchy/issues/1015",
+     "state": "CLOSED",
+     "comments": 12,
+     "reactions": 2,
+     "createdAt": "2025-08-23T19:46:23Z",
+     "closedAt": "2025-11-03T09:56:02Z",
+     "fixedBy": [
+      1860,
+      2242
+     ]
+    },
+    {
+     "number": 1226,
+     "title": "Walker gone after 2.0.4",
+     "url": "https://github.com/omacom/omarchy/issues/1226",
+     "state": "CLOSED",
+     "comments": 12,
+     "reactions": 2,
+     "createdAt": "2025-08-28T06:19:16Z",
+     "closedAt": "2025-08-28T09:15:00Z"
+    },
+    {
+     "number": 810,
+     "title": "omarchy-chromium-bin - Registration response error message: DEPRECATED_ENDPOINT",
+     "url": "https://github.com/omacom/omarchy/issues/810",
+     "state": "CLOSED",
+     "comments": 11,
+     "reactions": 2,
+     "createdAt": "2025-08-15T09:26:49Z",
+     "closedAt": "2026-07-18T19:42:20Z"
+    },
+    {
+     "number": 73,
+     "title": "1Password 2FA Code fails to save",
+     "url": "https://github.com/omacom/omarchy/issues/73",
+     "state": "CLOSED",
+     "comments": 9,
+     "reactions": 3,
+     "createdAt": "2025-07-05T21:07:21Z",
+     "closedAt": "2025-07-09T17:34:34Z"
+    },
+    {
+     "number": 4268,
+     "title": "Updating broke system configuration",
+     "url": "https://github.com/omacom/omarchy/issues/4268",
+     "state": "CLOSED",
+     "comments": 11,
+     "reactions": 0,
+     "createdAt": "2026-01-15T03:58:06Z",
+     "closedAt": "2026-02-01T10:40:39Z"
+    },
+    {
+     "number": 12,
+     "title": "Secret Service API Provider",
+     "url": "https://github.com/omacom/omarchy/issues/12",
+     "state": "CLOSED",
+     "comments": 7,
+     "reactions": 1,
+     "createdAt": "2025-06-29T09:41:15Z",
+     "closedAt": "2025-06-30T02:41:59Z"
+    }
+   ],
+   "bestAnswers": [
+    {
+     "discussion": 3778,
+     "title": "How are omarchy's repo packages updated?",
+     "url": "https://github.com/omacom/omarchy/discussions/3778",
+     "category": "Q&A",
+     "upvoteCount": 10,
+     "kind": "top-comment",
+     "author": "Hexoplon",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/3778#discussioncomment-15380632",
+     "snippet": "Things like cursor, discord, vscode and chromium are all updated quite frequently, with both bug fixes and new features. Chromium especially is particularly important that remains up to date, as there are constant security fixes.\nWill packages like these be better maintained?\n\nI have also encountered issues where discord has a new update, and it will not start until the update gets installed. That means I would be stuck without discord until omarchy decides to update its mirrors"
+    },
+    {
+     "discussion": 8467,
+     "title": "Enable gcr-ssh-agent by default so SSH keys work out of the box",
+     "url": "https://github.com/omacom/omarchy/discussions/8467",
+     "category": "Suggestions",
+     "upvoteCount": 8,
+     "kind": "top-comment",
+     "author": "lnnrthnng",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/8467#discussioncomment-18372201",
+     "snippet": "Yes please!"
+    },
+    {
+     "discussion": 2311,
+     "title": "An application wants access to the keyring \"default keyring\"",
+     "url": "https://github.com/omacom/omarchy/discussions/2311",
+     "category": "Q&A",
+     "upvoteCount": 6,
+     "kind": "top-comment",
+     "author": "AdamWhitehurst",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/2311#discussioncomment-14639537",
+     "snippet": "Same issue, seems like a recent update.\n\nTried adding `--password-store=basic` to `/usr/share/applications/chromium.desktop` `Exec` commands, which works for Chromium itself but this doesnt seem to affect the `omarchy-web-app`s (my web apps definitely arent running on a different browser)\n\nAdding `--password-store=basic` to the `omarchy-launch-webapp` does solve the issue however. EG:\n```\nexec setsid uwsm app -- $(sed -n 's/^Exec=\\([^ ]*\\).*/\\1/p' {~/.local,~/.nix-profile,/usr}/share/application"
+    },
+    {
+     "discussion": 3331,
+     "title": "keyring isn't being unlocked at login, so apps can't access stored credentials and create new keyrings instead",
+     "url": "https://github.com/omacom/omarchy/discussions/3331",
+     "category": "Support",
+     "upvoteCount": 5,
+     "kind": "top-comment",
+     "author": "KrisKind75",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/3331#discussioncomment-14935733",
+     "snippet": "<img width=\"1170\" height=\"266\" alt=\"image\" src=\"https://github.com/user-attachments/assets/ee8e09c4-9a82-4646-b8fe-2ed5eca59955\" />\n1 app after reboot always tries to make a new default keyring. Also 1Password needs 2-f authentification everytime for r/w."
+    },
+    {
+     "discussion": 2973,
+     "title": "How should Topgrade update omarchy?",
+     "url": "https://github.com/omacom/omarchy/discussions/2973",
+     "category": "Q&A",
+     "upvoteCount": 5,
+     "kind": "top-comment",
+     "author": "tyvsmith",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/2973#discussioncomment-16443818",
+     "snippet": "Using Topgrade during the omarchy update process could also be interesting, similar to what the Bazzite/Bluefin do. Otherwise, you end up with stale versions in other stacks that may be popular including flatpaks, mise, hyprpm, distroboxes, etc.."
+    }
+   ],
+   "exampleErrorLines": [
+    "sddm-helper[1353]: gkr-pam: couldn't unlock the login keyring.",
+    "gkr-pam: couldn't unlock the login keyring.",
+    "Through a lot of trial and error, I've managed to get a setup that has a login keyring created with no password, and that is unlocked on boot. This results in no password prompts for the keyring in order to store my 1Password 2FA tokens or retrieve them.",
+    "error: required key missing from keyring",
+    "I got the same error. When the installation failed, I just ran yay, and it showed an update for a package related to the keyring. After that, it worked"
    ]
   },
   {
@@ -10060,254 +10319,6 @@
    ]
   },
   {
-   "key": "keyring",
-   "label": "keyring",
-   "query": [
-    "keyring"
-   ],
-   "discovered": "seed",
-   "searchScope": "title+body+comments",
-   "counts": {
-    "issues": 59,
-    "open": 18,
-    "closed": 41,
-    "discussions": 15
-   },
-   "versionsMentioned": {
-    "3.x": 23,
-    "4.0.2": 9,
-    "4.0.1": 7,
-    "4.0.0": 6,
-    "4.0.3": 6,
-    "4.16.x": 1,
-    "4.0.4": 1
-   },
-   "topIssues": [
-    {
-     "number": 2712,
-     "title": "Enhance [omarchy] Repo Security: Switch SigLevel to `Required DatabaseOptional` and Update Security Docs",
-     "url": "https://github.com/omacom/omarchy/issues/2712",
-     "state": "CLOSED",
-     "comments": 13,
-     "reactions": 39,
-     "createdAt": "2025-10-22T09:24:28Z",
-     "closedAt": "2026-07-18T21:56:15Z"
-    },
-    {
-     "number": 2308,
-     "title": "Chromium asks for keyring password on every startup",
-     "url": "https://github.com/omacom/omarchy/issues/2308",
-     "state": "CLOSED",
-     "comments": 22,
-     "reactions": 18,
-     "createdAt": "2025-10-08T06:31:40Z",
-     "closedAt": "2025-10-26T00:01:03Z"
-    },
-    {
-     "number": 2272,
-     "title": "Chromium everything is gray?",
-     "url": "https://github.com/omacom/omarchy/issues/2272",
-     "state": "CLOSED",
-     "comments": 36,
-     "reactions": 1,
-     "createdAt": "2025-10-07T06:55:47Z",
-     "closedAt": "2025-10-13T07:04:15Z"
-    },
-    {
-     "number": 2546,
-     "title": "Walker and Elephant missing after system upgrade",
-     "url": "https://github.com/omacom/omarchy/issues/2546",
-     "state": "CLOSED",
-     "comments": 30,
-     "reactions": 2,
-     "createdAt": "2025-10-19T11:42:16Z",
-     "closedAt": "2025-10-25T21:00:41Z"
-    },
-    {
-     "number": 5105,
-     "title": "Update/reboot left keyring in invalid state, browser sessions and gh auth got cleared",
-     "url": "https://github.com/omacom/omarchy/issues/5105",
-     "state": "OPEN",
-     "comments": 21,
-     "reactions": 11,
-     "createdAt": "2026-03-23T18:06:58Z",
-     "closedAt": null
-    },
-    {
-     "number": 352,
-     "title": "Gnome-keyring not creating default keyvault, 1Password MFA issues",
-     "url": "https://github.com/omacom/omarchy/issues/352",
-     "state": "CLOSED",
-     "comments": 15,
-     "reactions": 6,
-     "createdAt": "2025-07-26T04:16:35Z",
-     "closedAt": "2025-11-03T09:54:46Z",
-     "fixedBy": [
-      1860,
-      2242
-     ]
-    },
-    {
-     "number": 2916,
-     "title": "key \"F0134EE680CAC571\" could not be looked up remotely",
-     "url": "https://github.com/omacom/omarchy/issues/2916",
-     "state": "CLOSED",
-     "comments": 14,
-     "reactions": 4,
-     "createdAt": "2025-10-28T03:58:47Z",
-     "closedAt": "2026-02-01T21:16:12Z"
-    },
-    {
-     "number": 5337,
-     "title": "Hibernation won't work anyway",
-     "url": "https://github.com/omacom/omarchy/issues/5337",
-     "state": "CLOSED",
-     "comments": 17,
-     "reactions": 0,
-     "createdAt": "2026-04-17T07:07:11Z",
-     "closedAt": "2026-05-13T12:54:51Z"
-    },
-    {
-     "number": 432,
-     "title": "terminaltexteffects not detected",
-     "url": "https://github.com/omacom/omarchy/issues/432",
-     "state": "CLOSED",
-     "comments": 16,
-     "reactions": 0,
-     "createdAt": "2025-08-01T11:52:57Z",
-     "closedAt": "2025-08-12T17:08:24Z"
-    },
-    {
-     "number": 1015,
-     "title": "After installing VSCode and login in to GitHub there's a missing OS keyring error",
-     "url": "https://github.com/omacom/omarchy/issues/1015",
-     "state": "CLOSED",
-     "comments": 12,
-     "reactions": 2,
-     "createdAt": "2025-08-23T19:46:23Z",
-     "closedAt": "2025-11-03T09:56:02Z",
-     "fixedBy": [
-      1860,
-      2242
-     ]
-    },
-    {
-     "number": 1226,
-     "title": "Walker gone after 2.0.4",
-     "url": "https://github.com/omacom/omarchy/issues/1226",
-     "state": "CLOSED",
-     "comments": 12,
-     "reactions": 2,
-     "createdAt": "2025-08-28T06:19:16Z",
-     "closedAt": "2025-08-28T09:15:00Z"
-    },
-    {
-     "number": 810,
-     "title": "omarchy-chromium-bin - Registration response error message: DEPRECATED_ENDPOINT",
-     "url": "https://github.com/omacom/omarchy/issues/810",
-     "state": "CLOSED",
-     "comments": 11,
-     "reactions": 2,
-     "createdAt": "2025-08-15T09:26:49Z",
-     "closedAt": "2026-07-18T19:42:20Z"
-    },
-    {
-     "number": 73,
-     "title": "1Password 2FA Code fails to save",
-     "url": "https://github.com/omacom/omarchy/issues/73",
-     "state": "CLOSED",
-     "comments": 9,
-     "reactions": 3,
-     "createdAt": "2025-07-05T21:07:21Z",
-     "closedAt": "2025-07-09T17:34:34Z"
-    },
-    {
-     "number": 4268,
-     "title": "Updating broke system configuration",
-     "url": "https://github.com/omacom/omarchy/issues/4268",
-     "state": "CLOSED",
-     "comments": 11,
-     "reactions": 0,
-     "createdAt": "2026-01-15T03:58:06Z",
-     "closedAt": "2026-02-01T10:40:39Z"
-    },
-    {
-     "number": 12,
-     "title": "Secret Service API Provider",
-     "url": "https://github.com/omacom/omarchy/issues/12",
-     "state": "CLOSED",
-     "comments": 7,
-     "reactions": 1,
-     "createdAt": "2025-06-29T09:41:15Z",
-     "closedAt": "2025-06-30T02:41:59Z"
-    }
-   ],
-   "bestAnswers": [
-    {
-     "discussion": 3778,
-     "title": "How are omarchy's repo packages updated?",
-     "url": "https://github.com/omacom/omarchy/discussions/3778",
-     "category": "Q&A",
-     "upvoteCount": 10,
-     "kind": "top-comment",
-     "author": "Hexoplon",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/3778#discussioncomment-15380632",
-     "snippet": "Things like cursor, discord, vscode and chromium are all updated quite frequently, with both bug fixes and new features. Chromium especially is particularly important that remains up to date, as there are constant security fixes.\nWill packages like these be better maintained?\n\nI have also encountered issues where discord has a new update, and it will not start until the update gets installed. That means I would be stuck without discord until omarchy decides to update its mirrors"
-    },
-    {
-     "discussion": 8467,
-     "title": "Enable gcr-ssh-agent by default so SSH keys work out of the box",
-     "url": "https://github.com/omacom/omarchy/discussions/8467",
-     "category": "Suggestions",
-     "upvoteCount": 8,
-     "kind": "top-comment",
-     "author": "lnnrthnng",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/8467#discussioncomment-18372201",
-     "snippet": "Yes please!"
-    },
-    {
-     "discussion": 2311,
-     "title": "An application wants access to the keyring \"default keyring\"",
-     "url": "https://github.com/omacom/omarchy/discussions/2311",
-     "category": "Q&A",
-     "upvoteCount": 6,
-     "kind": "top-comment",
-     "author": "AdamWhitehurst",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/2311#discussioncomment-14639537",
-     "snippet": "Same issue, seems like a recent update.\n\nTried adding `--password-store=basic` to `/usr/share/applications/chromium.desktop` `Exec` commands, which works for Chromium itself but this doesnt seem to affect the `omarchy-web-app`s (my web apps definitely arent running on a different browser)\n\nAdding `--password-store=basic` to the `omarchy-launch-webapp` does solve the issue however. EG:\n```\nexec setsid uwsm app -- $(sed -n 's/^Exec=\\([^ ]*\\).*/\\1/p' {~/.local,~/.nix-profile,/usr}/share/application"
-    },
-    {
-     "discussion": 3331,
-     "title": "keyring isn't being unlocked at login, so apps can't access stored credentials and create new keyrings instead",
-     "url": "https://github.com/omacom/omarchy/discussions/3331",
-     "category": "Support",
-     "upvoteCount": 5,
-     "kind": "top-comment",
-     "author": "KrisKind75",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/3331#discussioncomment-14935733",
-     "snippet": "<img width=\"1170\" height=\"266\" alt=\"image\" src=\"https://github.com/user-attachments/assets/ee8e09c4-9a82-4646-b8fe-2ed5eca59955\" />\n1 app after reboot always tries to make a new default keyring. Also 1Password needs 2-f authentification everytime for r/w."
-    },
-    {
-     "discussion": 2973,
-     "title": "How should Topgrade update omarchy?",
-     "url": "https://github.com/omacom/omarchy/discussions/2973",
-     "category": "Q&A",
-     "upvoteCount": 5,
-     "kind": "top-comment",
-     "author": "tyvsmith",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/2973#discussioncomment-16443818",
-     "snippet": "Using Topgrade during the omarchy update process could also be interesting, similar to what the Bazzite/Bluefin do. Otherwise, you end up with stale versions in other stacks that may be popular including flatpaks, mise, hyprpm, distroboxes, etc.."
-    }
-   ],
-   "exampleErrorLines": [
-    "sddm-helper[1353]: gkr-pam: couldn't unlock the login keyring.",
-    "gkr-pam: couldn't unlock the login keyring.",
-    "Through a lot of trial and error, I've managed to get a setup that has a login keyring created with no password, and that is unlocked on boot. This results in no password prompts for the keyring in order to store my 1Password 2FA tokens or retrieve them.",
-    "error: required key missing from keyring",
-    "I got the same error. When the installation failed, I just ran yay, and it showed an update for a package related to the keyring. After that, it worked"
-   ]
-  },
-  {
    "key": "xdg-terminal-exec",
    "label": "xdg-terminal-exec",
    "query": [
@@ -10327,8 +10338,8 @@
     "4.0.2": 11,
     "4.0.1": 8,
     "4.0.4": 3,
-    "4.22.x": 2,
-    "4.0.3": 2
+    "4.0.3": 2,
+    "4.22.x": 2
    },
    "topIssues": [
     {
@@ -10780,220 +10791,6 @@
    ]
   },
   {
-   "key": "fractional",
-   "label": "fractional",
-   "query": [
-    "fractional"
-   ],
-   "discovered": "seed",
-   "searchScope": "title+body+comments",
-   "counts": {
-    "issues": 39,
-    "open": 20,
-    "closed": 19,
-    "discussions": 5
-   },
-   "versionsMentioned": {
-    "4.0.2": 14,
-    "3.x": 10,
-    "4.0.0": 8,
-    "4.0.1": 3,
-    "4.0.4": 3,
-    "4.0.3": 3,
-    "4.18.x": 1,
-    "4.22.x": 1,
-    "4.29.x": 1
-   },
-   "topIssues": [
-    {
-     "number": 4097,
-     "title": "No output to select entire screen in portal share picker ",
-     "url": "https://github.com/omacom/omarchy/issues/4097",
-     "state": "CLOSED",
-     "comments": 44,
-     "reactions": 1,
-     "createdAt": "2026-01-06T15:01:58Z",
-     "closedAt": "2026-07-18T19:42:47Z"
-    },
-    {
-     "number": 5601,
-     "title": "jetbrains products doesn support autofocus anymore",
-     "url": "https://github.com/omacom/omarchy/issues/5601",
-     "state": "CLOSED",
-     "comments": 15,
-     "reactions": 0,
-     "createdAt": "2026-05-05T20:46:02Z",
-     "closedAt": "2026-05-15T09:39:24Z"
-    },
-    {
-     "number": 4889,
-     "title": "Screen recording of window only shows top left quarter",
-     "url": "https://github.com/omacom/omarchy/issues/4889",
-     "state": "CLOSED",
-     "comments": 8,
-     "reactions": 3,
-     "createdAt": "2026-03-03T14:01:19Z",
-     "closedAt": "2026-07-18T19:43:01Z"
-    },
-    {
-     "number": 723,
-     "title": "Waybar icons appear too small on high-res 27\" display",
-     "url": "https://github.com/omacom/omarchy/issues/723",
-     "state": "CLOSED",
-     "comments": 8,
-     "reactions": 1,
-     "createdAt": "2025-08-12T18:10:55Z",
-     "closedAt": "2025-08-13T18:56:06Z"
-    },
-    {
-     "number": 5097,
-     "title": "Microsoft Edge crashes under Wayland with tile rule on hover",
-     "url": "https://github.com/omacom/omarchy/issues/5097",
-     "state": "OPEN",
-     "comments": 5,
-     "reactions": 4,
-     "createdAt": "2026-03-22T18:53:07Z",
-     "closedAt": null
-    },
-    {
-     "number": 2132,
-     "title": "Cursor lag on dual monitor setup with NVIDIA (RTX 4090) - Solution included",
-     "url": "https://github.com/omacom/omarchy/issues/2132",
-     "state": "CLOSED",
-     "comments": 2,
-     "reactions": 5,
-     "createdAt": "2025-10-01T10:00:39Z",
-     "closedAt": "2026-02-21T06:23:11Z"
-    },
-    {
-     "number": 3309,
-     "title": "Spotify does not scale right",
-     "url": "https://github.com/omacom/omarchy/issues/3309",
-     "state": "CLOSED",
-     "comments": 6,
-     "reactions": 0,
-     "createdAt": "2025-11-10T18:32:09Z",
-     "closedAt": "2025-11-11T08:10:04Z"
-    },
-    {
-     "number": 2340,
-     "title": "Screen is stuttering and background is unusually visible",
-     "url": "https://github.com/omacom/omarchy/issues/2340",
-     "state": "CLOSED",
-     "comments": 4,
-     "reactions": 0,
-     "createdAt": "2025-10-09T16:37:31Z",
-     "closedAt": "2025-10-10T13:16:53Z"
-    },
-    {
-     "number": 3235,
-     "title": "Text rendering glitches",
-     "url": "https://github.com/omacom/omarchy/issues/3235",
-     "state": "CLOSED",
-     "comments": 3,
-     "reactions": 0,
-     "createdAt": "2025-11-07T20:39:44Z",
-     "closedAt": "2026-01-06T09:53:58Z"
-    },
-    {
-     "number": 7174,
-     "title": "First-agent OAuth browser opens tiled under the 875×600 setup terminal",
-     "url": "https://github.com/omacom/omarchy/issues/7174",
-     "state": "OPEN",
-     "comments": 3,
-     "reactions": 0,
-     "createdAt": "2026-08-16T19:50:48Z",
-     "closedAt": null
-    },
-    {
-     "number": 7676,
-     "title": "Chromium profile menu renders as a clipped sliver when the window is wide (external 4K display)",
-     "url": "https://github.com/omacom/omarchy/issues/7676",
-     "state": "OPEN",
-     "comments": 3,
-     "reactions": 0,
-     "createdAt": "2026-08-21T13:08:19Z",
-     "closedAt": null
-    },
-    {
-     "number": 8574,
-     "title": "`omarchy display text size` breaks 1Password's fixed-size dialogs (root cause of #2016)",
-     "url": "https://github.com/omacom/omarchy/issues/8574",
-     "state": "OPEN",
-     "comments": 3,
-     "reactions": 0,
-     "createdAt": "2026-08-27T12:18:11Z",
-     "closedAt": null
-    },
-    {
-     "number": 9950,
-     "title": "Display panel's scale presets silently no-op when `monitors.lua` has explicit per-output `hl.monitor` lines — per-monitor scaling and the bar panel are mutually exclusive",
-     "url": "https://github.com/omacom/omarchy/issues/9950",
-     "state": "CLOSED",
-     "comments": 3,
-     "reactions": 0,
-     "createdAt": "2026-09-03T08:13:14Z",
-     "closedAt": "2026-09-21T05:58:08Z"
-    },
-    {
-     "number": 10382,
-     "title": "Emoji picker insert fails in Zen/Firefox: Shift+Insert pastes PRIMARY, not clipboard",
-     "url": "https://github.com/omacom/omarchy/issues/10382",
-     "state": "CLOSED",
-     "comments": 3,
-     "reactions": 0,
-     "createdAt": "2026-09-05T22:06:57Z",
-     "closedAt": "2026-09-21T09:54:29Z"
-    },
-    {
-     "number": 10420,
-     "title": "Screensaver: blank fullscreen window when Ghostty is the default terminal on a fractionally scaled monitor (Ghostty freezes on last pre-resize frame)",
-     "url": "https://github.com/omacom/omarchy/issues/10420",
-     "state": "OPEN",
-     "comments": 3,
-     "reactions": 0,
-     "createdAt": "2026-09-06T03:08:50Z",
-     "closedAt": null
-    }
-   ],
-   "bestAnswers": [
-    {
-     "discussion": 8213,
-     "title": "Update monitor configuration defaults and docs to use relative positioning (auto) to prevent cursor trapping",
-     "url": "https://github.com/omacom/omarchy/discussions/8213",
-     "category": "Suggestions",
-     "upvoteCount": 5,
-     "kind": "top-comment",
-     "author": "syskey8",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/8213#discussioncomment-18161434",
-     "snippet": "I've gone ahead and submitted a Pull Request (#8362) that completely fixes this issue by updating the default templates and documentation to use `auto-right`! \n\nThe underlying problem was that the official documentation taught absolute coordinates (e.g. `1920x0`), but when users used the system scaling tool, it updated their scale factor *without* updating their absolute coordinates, instantly breaking their monitor layouts and trapping their cursors. \n\nBy switching the defaults to use relative "
-    },
-    {
-     "discussion": 4702,
-     "title": "Cursor lag on dual monitor setup with NVIDIA (RTX 4090) - Solution included",
-     "url": "https://github.com/omacom/omarchy/discussions/4702",
-     "category": "Support",
-     "upvoteCount": 2,
-     "kind": "top-comment",
-     "author": "jelenv",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/4702#discussioncomment-15878868",
-     "snippet": "That's interesting, I wonder why I am not seeing this? My setup:\n- nvidia 3060 dgpu (driver 580.82.09), AMD Vega igpu, multi-monitor (laptop + another monitor), omarchy 3.0.2, kernel 6.16.8-arch3-1\n- `~/.config/hypr/monitors.conf`\n```ini\nenv = GDK_SCALE,1\n# Laptop screen\nmonitor = eDP-2, 2560x1600@60, 0x0, 1.6\n# Ext. monitor\nmonitor = DP-3, 1920x1080@60, -1920x0, 1\n# Fallback\nmonitor=,preferred,auto,auto\n```\n- `~/.config/hypr/envs.conf`\n```ini\nenv = NVD_BACKEND,direct\nenv = LIBVA_DRIVER_NAME,nvi"
-    },
-    {
-     "discussion": 1865,
-     "title": "Fractional scaling on 5k2k 40\" ultrawide monitor",
-     "url": "https://github.com/omacom/omarchy/discussions/1865",
-     "category": "Q&A",
-     "upvoteCount": 1,
-     "kind": "accepted-answer",
-     "author": "XY55bqg6iAw8ttP",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/1865#discussioncomment-14476488",
-     "snippet": "The 1.15 in that line isn't scaling, but the SDR brightness multiplier for when in HDR mode.\n\nFractional scaling in Hyprland uses the monitor directive’s scale parameter. If you don’t set one explicitly, it defaults to 1.0 (100%). A scale of 1.33 would be 133%, which is roughly the “looks like 3840×1620” setting you’re used to from macOS’s retina voodoo.\n\nSo, if I wanted a 133% scaling, I'd need to switch that line to:\n\n`monitor = desc:Dell Inc. DELL U4025QW, 5120x2160@120, 0x0, 1.33, bitdepth, "
-    }
-   ],
-   "exampleErrorLines": []
-  },
-  {
    "key": "voxtype",
    "label": "voxtype",
    "query": [
@@ -11002,8 +10799,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 39,
-    "open": 25,
+    "issues": 40,
+    "open": 26,
     "closed": 14,
     "discussions": 13
    },
@@ -11012,8 +10809,8 @@
     "3.x": 10,
     "4.0.2": 8,
     "4.0.0": 8,
+    "4.0.4": 5,
     "4.0.1": 5,
-    "4.0.4": 4,
     "4.22.x": 1
    },
    "topIssues": [
@@ -11247,6 +11044,220 @@
    ]
   },
   {
+   "key": "fractional",
+   "label": "fractional",
+   "query": [
+    "fractional"
+   ],
+   "discovered": "seed",
+   "searchScope": "title+body+comments",
+   "counts": {
+    "issues": 39,
+    "open": 20,
+    "closed": 19,
+    "discussions": 6
+   },
+   "versionsMentioned": {
+    "4.0.2": 14,
+    "3.x": 10,
+    "4.0.0": 8,
+    "4.0.1": 3,
+    "4.0.4": 3,
+    "4.0.3": 3,
+    "4.18.x": 1,
+    "4.22.x": 1,
+    "4.29.x": 1
+   },
+   "topIssues": [
+    {
+     "number": 4097,
+     "title": "No output to select entire screen in portal share picker ",
+     "url": "https://github.com/omacom/omarchy/issues/4097",
+     "state": "CLOSED",
+     "comments": 44,
+     "reactions": 1,
+     "createdAt": "2026-01-06T15:01:58Z",
+     "closedAt": "2026-07-18T19:42:47Z"
+    },
+    {
+     "number": 5601,
+     "title": "jetbrains products doesn support autofocus anymore",
+     "url": "https://github.com/omacom/omarchy/issues/5601",
+     "state": "CLOSED",
+     "comments": 15,
+     "reactions": 0,
+     "createdAt": "2026-05-05T20:46:02Z",
+     "closedAt": "2026-05-15T09:39:24Z"
+    },
+    {
+     "number": 4889,
+     "title": "Screen recording of window only shows top left quarter",
+     "url": "https://github.com/omacom/omarchy/issues/4889",
+     "state": "CLOSED",
+     "comments": 8,
+     "reactions": 3,
+     "createdAt": "2026-03-03T14:01:19Z",
+     "closedAt": "2026-07-18T19:43:01Z"
+    },
+    {
+     "number": 723,
+     "title": "Waybar icons appear too small on high-res 27\" display",
+     "url": "https://github.com/omacom/omarchy/issues/723",
+     "state": "CLOSED",
+     "comments": 8,
+     "reactions": 1,
+     "createdAt": "2025-08-12T18:10:55Z",
+     "closedAt": "2025-08-13T18:56:06Z"
+    },
+    {
+     "number": 5097,
+     "title": "Microsoft Edge crashes under Wayland with tile rule on hover",
+     "url": "https://github.com/omacom/omarchy/issues/5097",
+     "state": "OPEN",
+     "comments": 5,
+     "reactions": 4,
+     "createdAt": "2026-03-22T18:53:07Z",
+     "closedAt": null
+    },
+    {
+     "number": 2132,
+     "title": "Cursor lag on dual monitor setup with NVIDIA (RTX 4090) - Solution included",
+     "url": "https://github.com/omacom/omarchy/issues/2132",
+     "state": "CLOSED",
+     "comments": 2,
+     "reactions": 5,
+     "createdAt": "2025-10-01T10:00:39Z",
+     "closedAt": "2026-02-21T06:23:11Z"
+    },
+    {
+     "number": 3309,
+     "title": "Spotify does not scale right",
+     "url": "https://github.com/omacom/omarchy/issues/3309",
+     "state": "CLOSED",
+     "comments": 6,
+     "reactions": 0,
+     "createdAt": "2025-11-10T18:32:09Z",
+     "closedAt": "2025-11-11T08:10:04Z"
+    },
+    {
+     "number": 2340,
+     "title": "Screen is stuttering and background is unusually visible",
+     "url": "https://github.com/omacom/omarchy/issues/2340",
+     "state": "CLOSED",
+     "comments": 4,
+     "reactions": 0,
+     "createdAt": "2025-10-09T16:37:31Z",
+     "closedAt": "2025-10-10T13:16:53Z"
+    },
+    {
+     "number": 3235,
+     "title": "Text rendering glitches",
+     "url": "https://github.com/omacom/omarchy/issues/3235",
+     "state": "CLOSED",
+     "comments": 3,
+     "reactions": 0,
+     "createdAt": "2025-11-07T20:39:44Z",
+     "closedAt": "2026-01-06T09:53:58Z"
+    },
+    {
+     "number": 7174,
+     "title": "First-agent OAuth browser opens tiled under the 875×600 setup terminal",
+     "url": "https://github.com/omacom/omarchy/issues/7174",
+     "state": "OPEN",
+     "comments": 3,
+     "reactions": 0,
+     "createdAt": "2026-08-16T19:50:48Z",
+     "closedAt": null
+    },
+    {
+     "number": 7676,
+     "title": "Chromium profile menu renders as a clipped sliver when the window is wide (external 4K display)",
+     "url": "https://github.com/omacom/omarchy/issues/7676",
+     "state": "OPEN",
+     "comments": 3,
+     "reactions": 0,
+     "createdAt": "2026-08-21T13:08:19Z",
+     "closedAt": null
+    },
+    {
+     "number": 8574,
+     "title": "`omarchy display text size` breaks 1Password's fixed-size dialogs (root cause of #2016)",
+     "url": "https://github.com/omacom/omarchy/issues/8574",
+     "state": "OPEN",
+     "comments": 3,
+     "reactions": 0,
+     "createdAt": "2026-08-27T12:18:11Z",
+     "closedAt": null
+    },
+    {
+     "number": 9950,
+     "title": "Display panel's scale presets silently no-op when `monitors.lua` has explicit per-output `hl.monitor` lines — per-monitor scaling and the bar panel are mutually exclusive",
+     "url": "https://github.com/omacom/omarchy/issues/9950",
+     "state": "CLOSED",
+     "comments": 3,
+     "reactions": 0,
+     "createdAt": "2026-09-03T08:13:14Z",
+     "closedAt": "2026-09-21T05:58:08Z"
+    },
+    {
+     "number": 10382,
+     "title": "Emoji picker insert fails in Zen/Firefox: Shift+Insert pastes PRIMARY, not clipboard",
+     "url": "https://github.com/omacom/omarchy/issues/10382",
+     "state": "CLOSED",
+     "comments": 3,
+     "reactions": 0,
+     "createdAt": "2026-09-05T22:06:57Z",
+     "closedAt": "2026-09-21T09:54:29Z"
+    },
+    {
+     "number": 10420,
+     "title": "Screensaver: blank fullscreen window when Ghostty is the default terminal on a fractionally scaled monitor (Ghostty freezes on last pre-resize frame)",
+     "url": "https://github.com/omacom/omarchy/issues/10420",
+     "state": "OPEN",
+     "comments": 3,
+     "reactions": 0,
+     "createdAt": "2026-09-06T03:08:50Z",
+     "closedAt": null
+    }
+   ],
+   "bestAnswers": [
+    {
+     "discussion": 8213,
+     "title": "Update monitor configuration defaults and docs to use relative positioning (auto) to prevent cursor trapping",
+     "url": "https://github.com/omacom/omarchy/discussions/8213",
+     "category": "Suggestions",
+     "upvoteCount": 5,
+     "kind": "top-comment",
+     "author": "syskey8",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/8213#discussioncomment-18161434",
+     "snippet": "I've gone ahead and submitted a Pull Request (#8362) that completely fixes this issue by updating the default templates and documentation to use `auto-right`! \n\nThe underlying problem was that the official documentation taught absolute coordinates (e.g. `1920x0`), but when users used the system scaling tool, it updated their scale factor *without* updating their absolute coordinates, instantly breaking their monitor layouts and trapping their cursors. \n\nBy switching the defaults to use relative "
+    },
+    {
+     "discussion": 4702,
+     "title": "Cursor lag on dual monitor setup with NVIDIA (RTX 4090) - Solution included",
+     "url": "https://github.com/omacom/omarchy/discussions/4702",
+     "category": "Support",
+     "upvoteCount": 2,
+     "kind": "top-comment",
+     "author": "jelenv",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/4702#discussioncomment-15878868",
+     "snippet": "That's interesting, I wonder why I am not seeing this? My setup:\n- nvidia 3060 dgpu (driver 580.82.09), AMD Vega igpu, multi-monitor (laptop + another monitor), omarchy 3.0.2, kernel 6.16.8-arch3-1\n- `~/.config/hypr/monitors.conf`\n```ini\nenv = GDK_SCALE,1\n# Laptop screen\nmonitor = eDP-2, 2560x1600@60, 0x0, 1.6\n# Ext. monitor\nmonitor = DP-3, 1920x1080@60, -1920x0, 1\n# Fallback\nmonitor=,preferred,auto,auto\n```\n- `~/.config/hypr/envs.conf`\n```ini\nenv = NVD_BACKEND,direct\nenv = LIBVA_DRIVER_NAME,nvi"
+    },
+    {
+     "discussion": 1865,
+     "title": "Fractional scaling on 5k2k 40\" ultrawide monitor",
+     "url": "https://github.com/omacom/omarchy/discussions/1865",
+     "category": "Q&A",
+     "upvoteCount": 1,
+     "kind": "accepted-answer",
+     "author": "XY55bqg6iAw8ttP",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/1865#discussioncomment-14476488",
+     "snippet": "The 1.15 in that line isn't scaling, but the SDR brightness multiplier for when in HDR mode.\n\nFractional scaling in Hyprland uses the monitor directive’s scale parameter. If you don’t set one explicitly, it defaults to 1.0 (100%). A scale of 1.33 would be 133%, which is roughly the “looks like 3840×1620” setting you’re used to from macOS’s retina voodoo.\n\nSo, if I wanted a 133% scaling, I'd need to switch that line to:\n\n`monitor = desc:Dell Inc. DELL U4025QW, 5120x2160@120, 0x0, 1.33, bitdepth, "
+    }
+   ],
+   "exampleErrorLines": []
+  },
+  {
    "key": "webcam",
    "label": "webcam",
    "query": [
@@ -11472,6 +11483,258 @@
    ]
   },
   {
+   "key": "dictation",
+   "label": "dictation",
+   "query": [
+    "dictation"
+   ],
+   "discovered": "seed",
+   "searchScope": "title+body+comments",
+   "counts": {
+    "issues": 30,
+    "open": 20,
+    "closed": 10,
+    "discussions": 13
+   },
+   "versionsMentioned": {
+    "3.x": 9,
+    "4.0.0": 7,
+    "4.0.2": 6,
+    "4.0.3": 6,
+    "4.0.1": 5,
+    "4.0.4": 3
+   },
+   "topIssues": [
+    {
+     "number": 4159,
+     "title": "Voxtype keybinding sequence",
+     "url": "https://github.com/omacom/omarchy/issues/4159",
+     "state": "CLOSED",
+     "comments": 13,
+     "reactions": 8,
+     "createdAt": "2026-01-08T16:28:19Z",
+     "closedAt": "2026-07-18T19:45:13Z",
+     "fixedBy": [
+      54,
+      5345
+     ]
+    },
+    {
+     "number": 2467,
+     "title": "Integrate hyprwhspr for whisper dictation/speech-to-text",
+     "url": "https://github.com/omacom/omarchy/issues/2467",
+     "state": "CLOSED",
+     "comments": 4,
+     "reactions": 16,
+     "createdAt": "2025-10-15T16:41:35Z",
+     "closedAt": "2026-01-06T16:04:12Z"
+    },
+    {
+     "number": 4185,
+     "title": "Voxtype: Transcription triggers system shortcuts if Super key is held",
+     "url": "https://github.com/omacom/omarchy/issues/4185",
+     "state": "CLOSED",
+     "comments": 9,
+     "reactions": 0,
+     "createdAt": "2026-01-09T12:24:38Z",
+     "closedAt": "2026-04-08T09:06:29Z"
+    },
+    {
+     "number": 7135,
+     "title": "Quattro removes playerctl while default Voxtype config requires it",
+     "url": "https://github.com/omacom/omarchy/issues/7135",
+     "state": "OPEN",
+     "comments": 4,
+     "reactions": 1,
+     "createdAt": "2026-08-16T11:45:05Z",
+     "closedAt": null,
+     "fixedBy": [
+      570
+     ]
+    },
+    {
+     "number": 8312,
+     "title": "Dictation (Voxtype) leaves broken install on CPUs without AVX2 instead of failing gracefully",
+     "url": "https://github.com/omacom/omarchy/issues/8312",
+     "state": "CLOSED",
+     "comments": 5,
+     "reactions": 0,
+     "createdAt": "2026-08-25T23:59:41Z",
+     "closedAt": "2026-09-21T09:57:28Z"
+    },
+    {
+     "number": 5882,
+     "title": "F9 should not be bound to Voxtype dictation by default. Bare function keys must not be rebound.",
+     "url": "https://github.com/omacom/omarchy/issues/5882",
+     "state": "CLOSED",
+     "comments": 4,
+     "reactions": 0,
+     "createdAt": "2026-05-16T22:06:44Z",
+     "closedAt": "2026-05-18T12:56:05Z",
+     "fixedBy": [
+      5897
+     ]
+    },
+    {
+     "number": 5071,
+     "title": "Makima virtual keyboard breaks touchpad \"disable-while-typing\"",
+     "url": "https://github.com/omacom/omarchy/issues/5071",
+     "state": "CLOSED",
+     "comments": 2,
+     "reactions": 1,
+     "createdAt": "2026-03-19T11:47:58Z",
+     "closedAt": "2026-07-18T19:44:34Z"
+    },
+    {
+     "number": 6933,
+     "title": "Quattro update preserves bindings.conf but silently stops loading custom keybindings",
+     "url": "https://github.com/omacom/omarchy/issues/6933",
+     "state": "OPEN",
+     "comments": 3,
+     "reactions": 0,
+     "createdAt": "2026-08-15T07:41:37Z",
+     "closedAt": null,
+     "fixedBy": [
+      1
+     ]
+    },
+    {
+     "number": 9243,
+     "title": "Voxtype pause_media silently fails: playerctl not installed by omarchy-voxtype-install",
+     "url": "https://github.com/omacom/omarchy/issues/9243",
+     "state": "CLOSED",
+     "comments": 3,
+     "reactions": 0,
+     "createdAt": "2026-08-30T20:38:47Z",
+     "closedAt": "2026-09-21T09:56:15Z"
+    },
+    {
+     "number": 10207,
+     "title": "omarchy-shell SIGSEGV in QQuickItem::mapToScene while Qt synthesizes a context-menu event",
+     "url": "https://github.com/omacom/omarchy/issues/10207",
+     "state": "OPEN",
+     "comments": 2,
+     "reactions": 1,
+     "createdAt": "2026-09-04T17:28:24Z",
+     "closedAt": null
+    },
+    {
+     "number": 6029,
+     "title": "Voxtype/Dictation does not resume previous audio after use",
+     "url": "https://github.com/omacom/omarchy/issues/6029",
+     "state": "CLOSED",
+     "comments": 2,
+     "reactions": 0,
+     "createdAt": "2026-06-03T15:23:36Z",
+     "closedAt": "2026-07-18T19:43:15Z",
+     "fixedBy": [
+      487
+     ]
+    },
+    {
+     "number": 7883,
+     "title": "Dictation installer offers AVX2-only Voxtype on CPUs without AVX2",
+     "url": "https://github.com/omacom/omarchy/issues/7883",
+     "state": "OPEN",
+     "comments": 2,
+     "reactions": 0,
+     "createdAt": "2026-08-23T12:59:32Z",
+     "closedAt": null
+    },
+    {
+     "number": 10098,
+     "title": "Double-click on the Dictation indicator runs omarchy-restart-shell twice and segfaults quickshell in IpcHandler::updateRegistration",
+     "url": "https://github.com/omacom/omarchy/issues/10098",
+     "state": "OPEN",
+     "comments": 2,
+     "reactions": 0,
+     "createdAt": "2026-09-04T01:30:56Z",
+     "closedAt": null
+    },
+    {
+     "number": 12855,
+     "title": "Idle screensaver/lock never triggers: Quickshell IdleMonitor never reports idle",
+     "url": "https://github.com/omacom/omarchy/issues/12855",
+     "state": "OPEN",
+     "comments": 2,
+     "reactions": 0,
+     "createdAt": "2026-09-22T00:26:00Z",
+     "closedAt": null
+    },
+    {
+     "number": 1172,
+     "title": "Dictation app",
+     "url": "https://github.com/omacom/omarchy/issues/1172",
+     "state": "CLOSED",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2025-08-27T12:29:15Z",
+     "closedAt": "2025-08-27T13:28:13Z"
+    }
+   ],
+   "bestAnswers": [
+    {
+     "discussion": 1258,
+     "title": "Whisper / Parakeet + Omarchy - hyprwhspr, fast & accurate native dictation",
+     "url": "https://github.com/omacom/omarchy/discussions/1258",
+     "category": "Show and tell",
+     "upvoteCount": 3,
+     "kind": "top-comment",
+     "author": "hipsterusername",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/1258#discussioncomment-14249746",
+     "snippet": "Hell yes."
+    },
+    {
+     "discussion": 6103,
+     "title": "Add new install option for a Selected Text To Speech tool",
+     "url": "https://github.com/omacom/omarchy/discussions/6103",
+     "category": "Ideas",
+     "upvoteCount": 3,
+     "kind": "top-comment",
+     "author": "jdx",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/6103#discussioncomment-18422878",
+     "snippet": "👍 to this, I'd love to see some accessibility support for omarchy, it looks like there has been some work on this:\n\n- [PR #5139: Add Orca screen reader with Piper TTS](https://github.com/omacom/omarchy/pull/5139), opened March 27, 2026. It proposes an Orca toggle, Piper voice, and a keyboard shortcut. It remains open and currently has merge conflicts.\n- [PR #5686: Add speech-dispatcher and espeak-ng](https://github.com/omacom/omarchy/pull/5686), opened May 9, 2026. This provides the TTS infrastr"
+    },
+    {
+     "discussion": 4472,
+     "title": "Better voice-to-text dictation default?",
+     "url": "https://github.com/omacom/omarchy/discussions/4472",
+     "category": "Suggestions",
+     "upvoteCount": 2,
+     "kind": "top-comment",
+     "author": "pomartel",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/4472#discussioncomment-15684670",
+     "snippet": "For me the killing feature would be real-time dictation like in iOS. The text appear as you talk and you can edit it live with the keyboard. I think there is an Open AI model that uses websockets that could be used for that but there might be limitations with wayland.\n\nOther than that, there's a lot of voice-to-text solutions out there and they all work more or less the same. "
+    },
+    {
+     "discussion": 7028,
+     "title": "Dictation: typing is the wrong model for multilingual users — suggest clipboard as the voxtype default",
+     "url": "https://github.com/omacom/omarchy/discussions/7028",
+     "category": "Suggestions",
+     "upvoteCount": 2,
+     "kind": "top-comment",
+     "author": "schmunk42",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/7028#discussioncomment-18425743",
+     "snippet": "Confirming this on Omarchy 4 / Hyprland 0.56.2 with German dictation — and one detail that narrows it further: **only uppercase letters break.**\n\nwtype maps the n-th *distinct* character to keycode n+8 (`main.c:472`). But a lowercase letter sitting on one of the \"bad\" keycodes comes through perfectly fine — it is specifically uppercase that breaks:\n\n| test string | position | result |\n|---|---|---|\n| `abcdefghijklmn` | `n` = 14th → keycode 22 | unchanged |\n| `abcdefghijklmnZ` | `Z` = 15th → keyc"
+    },
+    {
+     "discussion": 7397,
+     "title": "Quattro upgrade Blockers for those who start before v2.0.0",
+     "url": "https://github.com/omacom/omarchy/discussions/7397",
+     "category": "General",
+     "upvoteCount": 1,
+     "kind": "top-comment",
+     "author": "rsd",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/7397#discussioncomment-18068844",
+     "snippet": "### FIREWALL\n\njust run:\n`bash ~/.local/share/omarchy/install/first-run/firewall.sh`\n\nYou probably will want to open some ports later with `ufw` like:\n`sudo ufw limit 22/tcp comment 'SSH'`\n"
+    }
+   ],
+   "exampleErrorLines": [
+    "Voxtype Dictation requires AVX2 on this hardware and cannot be installed.",
+    "**Expected:** clicking the icon when voxtype isn't installed should route to the existing install flow (same action as `install.ai.dictation` in the menu) rather than surfacing a raw shell error."
+   ]
+  },
+  {
    "key": "err-failed-to-start-windows-vm",
    "label": "❌ Failed to start Windows VM!",
    "query": [
@@ -11661,258 +11924,6 @@
    ]
   },
   {
-   "key": "dictation",
-   "label": "dictation",
-   "query": [
-    "dictation"
-   ],
-   "discovered": "seed",
-   "searchScope": "title+body+comments",
-   "counts": {
-    "issues": 29,
-    "open": 19,
-    "closed": 10,
-    "discussions": 13
-   },
-   "versionsMentioned": {
-    "3.x": 9,
-    "4.0.0": 7,
-    "4.0.2": 6,
-    "4.0.3": 6,
-    "4.0.1": 5,
-    "4.0.4": 3
-   },
-   "topIssues": [
-    {
-     "number": 4159,
-     "title": "Voxtype keybinding sequence",
-     "url": "https://github.com/omacom/omarchy/issues/4159",
-     "state": "CLOSED",
-     "comments": 13,
-     "reactions": 8,
-     "createdAt": "2026-01-08T16:28:19Z",
-     "closedAt": "2026-07-18T19:45:13Z",
-     "fixedBy": [
-      54,
-      5345
-     ]
-    },
-    {
-     "number": 2467,
-     "title": "Integrate hyprwhspr for whisper dictation/speech-to-text",
-     "url": "https://github.com/omacom/omarchy/issues/2467",
-     "state": "CLOSED",
-     "comments": 4,
-     "reactions": 16,
-     "createdAt": "2025-10-15T16:41:35Z",
-     "closedAt": "2026-01-06T16:04:12Z"
-    },
-    {
-     "number": 4185,
-     "title": "Voxtype: Transcription triggers system shortcuts if Super key is held",
-     "url": "https://github.com/omacom/omarchy/issues/4185",
-     "state": "CLOSED",
-     "comments": 9,
-     "reactions": 0,
-     "createdAt": "2026-01-09T12:24:38Z",
-     "closedAt": "2026-04-08T09:06:29Z"
-    },
-    {
-     "number": 7135,
-     "title": "Quattro removes playerctl while default Voxtype config requires it",
-     "url": "https://github.com/omacom/omarchy/issues/7135",
-     "state": "OPEN",
-     "comments": 4,
-     "reactions": 1,
-     "createdAt": "2026-08-16T11:45:05Z",
-     "closedAt": null,
-     "fixedBy": [
-      570
-     ]
-    },
-    {
-     "number": 8312,
-     "title": "Dictation (Voxtype) leaves broken install on CPUs without AVX2 instead of failing gracefully",
-     "url": "https://github.com/omacom/omarchy/issues/8312",
-     "state": "CLOSED",
-     "comments": 5,
-     "reactions": 0,
-     "createdAt": "2026-08-25T23:59:41Z",
-     "closedAt": "2026-09-21T09:57:28Z"
-    },
-    {
-     "number": 5882,
-     "title": "F9 should not be bound to Voxtype dictation by default. Bare function keys must not be rebound.",
-     "url": "https://github.com/omacom/omarchy/issues/5882",
-     "state": "CLOSED",
-     "comments": 4,
-     "reactions": 0,
-     "createdAt": "2026-05-16T22:06:44Z",
-     "closedAt": "2026-05-18T12:56:05Z",
-     "fixedBy": [
-      5897
-     ]
-    },
-    {
-     "number": 5071,
-     "title": "Makima virtual keyboard breaks touchpad \"disable-while-typing\"",
-     "url": "https://github.com/omacom/omarchy/issues/5071",
-     "state": "CLOSED",
-     "comments": 2,
-     "reactions": 1,
-     "createdAt": "2026-03-19T11:47:58Z",
-     "closedAt": "2026-07-18T19:44:34Z"
-    },
-    {
-     "number": 6933,
-     "title": "Quattro update preserves bindings.conf but silently stops loading custom keybindings",
-     "url": "https://github.com/omacom/omarchy/issues/6933",
-     "state": "OPEN",
-     "comments": 3,
-     "reactions": 0,
-     "createdAt": "2026-08-15T07:41:37Z",
-     "closedAt": null,
-     "fixedBy": [
-      1
-     ]
-    },
-    {
-     "number": 9243,
-     "title": "Voxtype pause_media silently fails: playerctl not installed by omarchy-voxtype-install",
-     "url": "https://github.com/omacom/omarchy/issues/9243",
-     "state": "CLOSED",
-     "comments": 3,
-     "reactions": 0,
-     "createdAt": "2026-08-30T20:38:47Z",
-     "closedAt": "2026-09-21T09:56:15Z"
-    },
-    {
-     "number": 10207,
-     "title": "omarchy-shell SIGSEGV in QQuickItem::mapToScene while Qt synthesizes a context-menu event",
-     "url": "https://github.com/omacom/omarchy/issues/10207",
-     "state": "OPEN",
-     "comments": 2,
-     "reactions": 1,
-     "createdAt": "2026-09-04T17:28:24Z",
-     "closedAt": null
-    },
-    {
-     "number": 6029,
-     "title": "Voxtype/Dictation does not resume previous audio after use",
-     "url": "https://github.com/omacom/omarchy/issues/6029",
-     "state": "CLOSED",
-     "comments": 2,
-     "reactions": 0,
-     "createdAt": "2026-06-03T15:23:36Z",
-     "closedAt": "2026-07-18T19:43:15Z",
-     "fixedBy": [
-      487
-     ]
-    },
-    {
-     "number": 7883,
-     "title": "Dictation installer offers AVX2-only Voxtype on CPUs without AVX2",
-     "url": "https://github.com/omacom/omarchy/issues/7883",
-     "state": "OPEN",
-     "comments": 2,
-     "reactions": 0,
-     "createdAt": "2026-08-23T12:59:32Z",
-     "closedAt": null
-    },
-    {
-     "number": 10098,
-     "title": "Double-click on the Dictation indicator runs omarchy-restart-shell twice and segfaults quickshell in IpcHandler::updateRegistration",
-     "url": "https://github.com/omacom/omarchy/issues/10098",
-     "state": "OPEN",
-     "comments": 2,
-     "reactions": 0,
-     "createdAt": "2026-09-04T01:30:56Z",
-     "closedAt": null
-    },
-    {
-     "number": 1172,
-     "title": "Dictation app",
-     "url": "https://github.com/omacom/omarchy/issues/1172",
-     "state": "CLOSED",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2025-08-27T12:29:15Z",
-     "closedAt": "2025-08-27T13:28:13Z"
-    },
-    {
-     "number": 4283,
-     "title": "Unable to install voxtype",
-     "url": "https://github.com/omacom/omarchy/issues/4283",
-     "state": "CLOSED",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-01-16T12:31:29Z",
-     "closedAt": "2026-01-16T12:35:33Z"
-    }
-   ],
-   "bestAnswers": [
-    {
-     "discussion": 1258,
-     "title": "Whisper / Parakeet + Omarchy - hyprwhspr, fast & accurate native dictation",
-     "url": "https://github.com/omacom/omarchy/discussions/1258",
-     "category": "Show and tell",
-     "upvoteCount": 3,
-     "kind": "top-comment",
-     "author": "hipsterusername",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/1258#discussioncomment-14249746",
-     "snippet": "Hell yes."
-    },
-    {
-     "discussion": 6103,
-     "title": "Add new install option for a Selected Text To Speech tool",
-     "url": "https://github.com/omacom/omarchy/discussions/6103",
-     "category": "Ideas",
-     "upvoteCount": 3,
-     "kind": "top-comment",
-     "author": "jdx",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/6103#discussioncomment-18422878",
-     "snippet": "👍 to this, I'd love to see some accessibility support for omarchy, it looks like there has been some work on this:\n\n- [PR #5139: Add Orca screen reader with Piper TTS](https://github.com/omacom/omarchy/pull/5139), opened March 27, 2026. It proposes an Orca toggle, Piper voice, and a keyboard shortcut. It remains open and currently has merge conflicts.\n- [PR #5686: Add speech-dispatcher and espeak-ng](https://github.com/omacom/omarchy/pull/5686), opened May 9, 2026. This provides the TTS infrastr"
-    },
-    {
-     "discussion": 4472,
-     "title": "Better voice-to-text dictation default?",
-     "url": "https://github.com/omacom/omarchy/discussions/4472",
-     "category": "Suggestions",
-     "upvoteCount": 2,
-     "kind": "top-comment",
-     "author": "pomartel",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/4472#discussioncomment-15684670",
-     "snippet": "For me the killing feature would be real-time dictation like in iOS. The text appear as you talk and you can edit it live with the keyboard. I think there is an Open AI model that uses websockets that could be used for that but there might be limitations with wayland.\n\nOther than that, there's a lot of voice-to-text solutions out there and they all work more or less the same. "
-    },
-    {
-     "discussion": 7028,
-     "title": "Dictation: typing is the wrong model for multilingual users — suggest clipboard as the voxtype default",
-     "url": "https://github.com/omacom/omarchy/discussions/7028",
-     "category": "Suggestions",
-     "upvoteCount": 2,
-     "kind": "top-comment",
-     "author": "schmunk42",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/7028#discussioncomment-18425743",
-     "snippet": "Confirming this on Omarchy 4 / Hyprland 0.56.2 with German dictation — and one detail that narrows it further: **only uppercase letters break.**\n\nwtype maps the n-th *distinct* character to keycode n+8 (`main.c:472`). But a lowercase letter sitting on one of the \"bad\" keycodes comes through perfectly fine — it is specifically uppercase that breaks:\n\n| test string | position | result |\n|---|---|---|\n| `abcdefghijklmn` | `n` = 14th → keycode 22 | unchanged |\n| `abcdefghijklmnZ` | `Z` = 15th → keyc"
-    },
-    {
-     "discussion": 7397,
-     "title": "Quattro upgrade Blockers for those who start before v2.0.0",
-     "url": "https://github.com/omacom/omarchy/discussions/7397",
-     "category": "General",
-     "upvoteCount": 1,
-     "kind": "top-comment",
-     "author": "rsd",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/7397#discussioncomment-18068844",
-     "snippet": "### FIREWALL\n\njust run:\n`bash ~/.local/share/omarchy/install/first-run/firewall.sh`\n\nYou probably will want to open some ports later with `ufw` like:\n`sudo ufw limit 22/tcp comment 'SSH'`\n"
-    }
-   ],
-   "exampleErrorLines": [
-    "Voxtype Dictation requires AVX2 on this hardware and cannot be installed.",
-    "**Expected:** clicking the icon when voxtype isn't installed should route to the existing install flow (same action as `install.ai.dictation` in the menu) rather than surfacing a raw shell error."
-   ]
-  },
-  {
    "key": "failed-commit-transaction",
    "label": "failed to commit transaction",
    "query": [
@@ -11922,16 +11933,16 @@
    "searchScope": "title+body+comments",
    "counts": {
     "issues": 29,
-    "open": 6,
-    "closed": 23,
+    "open": 5,
+    "closed": 24,
     "discussions": 1
    },
    "versionsMentioned": {
     "3.x": 14,
     "4.0.0": 5,
     "4.0.1": 2,
-    "4.2.x": 1,
     "4.12.x": 1,
+    "4.2.x": 1,
     "4.4.x": 1,
     "4.99.x": 1,
     "4.0.2": 1,
@@ -11996,11 +12007,11 @@
      "number": 5085,
      "title": "Install script fails due to package mirror 404 error and lacks dependency error handling",
      "url": "https://github.com/omacom/omarchy/issues/5085",
-     "state": "OPEN",
+     "state": "CLOSED",
      "comments": 9,
      "reactions": 0,
      "createdAt": "2026-03-20T18:45:45Z",
-     "closedAt": null
+     "closedAt": "2026-09-27T07:10:53Z"
     },
     {
      "number": 1645,
@@ -12356,6 +12367,245 @@
    ]
   },
   {
+   "key": "kernel-panic",
+   "label": "kernel panic",
+   "query": [
+    "kernel panic"
+   ],
+   "discovered": "seed",
+   "searchScope": "title+body+comments",
+   "counts": {
+    "issues": 25,
+    "open": 14,
+    "closed": 11,
+    "discussions": 7
+   },
+   "versionsMentioned": {
+    "3.x": 14,
+    "4.0.4": 5,
+    "4.0.2": 5,
+    "4.0.0": 4,
+    "4.0.3": 3,
+    "4.0.1": 2
+   },
+   "topIssues": [
+    {
+     "number": 1840,
+     "title": "Omarchy lid/sleep/suspend issue on MacBook (bug + solution to be tested)",
+     "url": "https://github.com/omacom/omarchy/issues/1840",
+     "state": "CLOSED",
+     "comments": 14,
+     "reactions": 27,
+     "createdAt": "2025-09-20T21:28:20Z",
+     "closedAt": "2026-02-21T06:21:44Z"
+    },
+    {
+     "number": 3231,
+     "title": "Kernel panic after update",
+     "url": "https://github.com/omacom/omarchy/issues/3231",
+     "state": "CLOSED",
+     "comments": 25,
+     "reactions": 15,
+     "createdAt": "2025-11-07T16:23:35Z",
+     "closedAt": "2025-11-07T21:42:52Z"
+    },
+    {
+     "number": 6223,
+     "title": "Crash and restart after omarchy-system-lock",
+     "url": "https://github.com/omacom/omarchy/issues/6223",
+     "state": "OPEN",
+     "comments": 25,
+     "reactions": 5,
+     "createdAt": "2026-07-14T20:38:58Z",
+     "closedAt": null
+    },
+    {
+     "number": 5953,
+     "title": "Dell XPS 14 DA14260 periodic hard reset after unplugging; power-button diagnostic blink code",
+     "url": "https://github.com/omacom/omarchy/issues/5953",
+     "state": "OPEN",
+     "comments": 18,
+     "reactions": 2,
+     "createdAt": "2026-05-23T02:14:30Z",
+     "closedAt": null
+    },
+    {
+     "number": 4158,
+     "title": "Hibernation is not working",
+     "url": "https://github.com/omacom/omarchy/issues/4158",
+     "state": "CLOSED",
+     "comments": 14,
+     "reactions": 2,
+     "createdAt": "2026-01-08T16:00:34Z",
+     "closedAt": "2026-04-17T19:09:04Z"
+    },
+    {
+     "number": 7909,
+     "title": "Random hard reboots on ThinkPad X1 Carbon Gen 11 — Omarchy only, Ubuntu stable",
+     "url": "https://github.com/omacom/omarchy/issues/7909",
+     "state": "OPEN",
+     "comments": 15,
+     "reactions": 0,
+     "createdAt": "2026-08-23T15:18:03Z",
+     "closedAt": null
+    },
+    {
+     "number": 3335,
+     "title": "Kernel panic after update: /boot/EFI/Limine/limine.conf not synced with /boot/limine.conf",
+     "url": "https://github.com/omacom/omarchy/issues/3335",
+     "state": "CLOSED",
+     "comments": 9,
+     "reactions": 3,
+     "createdAt": "2025-11-11T14:04:16Z",
+     "closedAt": "2025-11-21T04:47:08Z"
+    },
+    {
+     "number": 11563,
+     "title": "Hyprland 0.56.2 SIGABRT on empty std::string::pop_back during hyprctl Lua eval; crash restart drops user config",
+     "url": "https://github.com/omacom/omarchy/issues/11563",
+     "state": "OPEN",
+     "comments": 8,
+     "reactions": 0,
+     "createdAt": "2026-09-12T19:38:49Z",
+     "closedAt": null
+    },
+    {
+     "number": 8262,
+     "title": "Theme switcher and background keybindings broken: menu never renders, theme set silently fails from menu action",
+     "url": "https://github.com/omacom/omarchy/issues/8262",
+     "state": "OPEN",
+     "comments": 7,
+     "reactions": 0,
+     "createdAt": "2026-08-25T18:33:24Z",
+     "closedAt": null
+    },
+    {
+     "number": 12119,
+     "title": "linux-omarchy 7.2.5-3 fails on 2016 MacBook Pro (MacBookPro13,3) unless intel_iommu=off",
+     "url": "https://github.com/omacom/omarchy/issues/12119",
+     "state": "OPEN",
+     "comments": 6,
+     "reactions": 0,
+     "createdAt": "2026-09-16T13:00:49Z",
+     "closedAt": null
+    },
+    {
+     "number": 7549,
+     "title": "Frequent kernel panics after upgrade to Quattro.",
+     "url": "https://github.com/omacom/omarchy/issues/7549",
+     "state": "CLOSED",
+     "comments": 5,
+     "reactions": 0,
+     "createdAt": "2026-08-19T21:18:03Z",
+     "closedAt": "2026-09-01T23:58:20Z"
+    },
+    {
+     "number": 9450,
+     "title": "Omarchy install ends with cryptic VFS: Cannot open root device \"\" or unknown-block(0,0) or grub_memalign:552:out of memory",
+     "url": "https://github.com/omacom/omarchy/issues/9450",
+     "state": "OPEN",
+     "comments": 4,
+     "reactions": 0,
+     "createdAt": "2026-08-31T19:55:34Z",
+     "closedAt": null
+    },
+    {
+     "number": 3816,
+     "title": "linux-git (6.18.0-1-git) crashes on Framework Desktop (Strix Halo) before GUI",
+     "url": "https://github.com/omacom/omarchy/issues/3816",
+     "state": "CLOSED",
+     "comments": 3,
+     "reactions": 0,
+     "createdAt": "2025-12-08T07:56:47Z",
+     "closedAt": "2025-12-11T13:55:00Z"
+    },
+    {
+     "number": 7874,
+     "title": "Two total desktop freezes on NVIDIA Wayland (kernel 7.1.x): aquamarine \"Cannot commit when a page-flip is awaiting\", zero kernel errors",
+     "url": "https://github.com/omacom/omarchy/issues/7874",
+     "state": "OPEN",
+     "comments": 3,
+     "reactions": 0,
+     "createdAt": "2026-08-23T10:40:43Z",
+     "closedAt": null
+    },
+    {
+     "number": 12371,
+     "title": "Random hard crashes (instant power-off) on ThinkPad X220 since linux-omarchy 7.2.5-3; stock linux 7.2.3 is stable",
+     "url": "https://github.com/omacom/omarchy/issues/12371",
+     "state": "OPEN",
+     "comments": 3,
+     "reactions": 0,
+     "createdAt": "2026-09-18T06:20:36Z",
+     "closedAt": null
+    }
+   ],
+   "bestAnswers": [
+    {
+     "discussion": 3236,
+     "title": "Kernel Panic After Update Fix Guide",
+     "url": "https://github.com/omacom/omarchy/discussions/3236",
+     "category": "Support",
+     "upvoteCount": 20,
+     "kind": "accepted-answer",
+     "author": "ryanrhughes",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/3236#discussioncomment-14907148",
+     "snippet": ":point_up: "
+    },
+    {
+     "discussion": 4784,
+     "title": "Upgrade to omarchy 3.4.0 broke mdadm raid",
+     "url": "https://github.com/omacom/omarchy/discussions/4784",
+     "category": "Support",
+     "upvoteCount": 2,
+     "kind": "top-comment",
+     "author": "dhh",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/4784#discussioncomment-15948947",
+     "snippet": "We didn't change anything here on the Omarchy side. So I'm guessing it is indeed a kernel change or something else in the deeper dependencies."
+    },
+    {
+     "discussion": 3715,
+     "title": "kernel panic often occurs when working",
+     "url": "https://github.com/omacom/omarchy/discussions/3715",
+     "category": "Support",
+     "upvoteCount": 2,
+     "kind": "top-comment",
+     "author": "Beleren",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/3715#discussioncomment-15137469",
+     "snippet": "I'm also experiencing blue screen while running my company's node application. I don't know how to provide debug data."
+    },
+    {
+     "discussion": 6297,
+     "title": "Omarchy still won't install after CPU replacement. Other Linux distributions now work. Looking for ideas",
+     "url": "https://github.com/omacom/omarchy/discussions/6297",
+     "category": "Support",
+     "upvoteCount": 1,
+     "kind": "accepted-answer",
+     "author": "dollebrekel",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/6297#discussioncomment-18108868",
+     "snippet": "  ## Solved — root cause found: GRUB runs out of low memory (<4 GiB) on this board\n\n  Follow-up to my earlier report. This turned out to be **two unrelated problems stacked on top of each other**,\n  which is why it took so long to untangle.\n\n  ### Problem 1: a genuinely faulty CPU (already resolved)\n\n  Multiple distros were crashing, so the system went in for RMA. The service center's own testing showed the\n  **i9-14900KS failing an OCCT CPU stress test**, and it was replaced under the extended "
+    },
+    {
+     "discussion": 6094,
+     "title": "Kernel panic",
+     "url": "https://github.com/omacom/omarchy/discussions/6094",
+     "category": "Support",
+     "upvoteCount": 1,
+     "kind": "top-comment",
+     "author": "dollebrekel",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/6094#discussioncomment-17300085",
+     "snippet": "**Update: Resolved**\n\nThe live USB boot issue turned out to be caused by **Resizable BAR (ReBAR) + Above 4G Decoding** in the UEFI BIOS, combined with the large memory footprint of 128GB RAM and the RTX 5090's PCIe address space.\n\nWith ReBAR enabled, the firmware's memory map becomes highly fragmented, leaving Limine/GRUB with no contiguous memory region to allocate from — hence the `grub_memalign: Out of memory` error. The `VFS: Unable to mount root fs on unknown-block(0,0)` was a downstream fa"
+    }
+   ],
+   "exampleErrorLines": [
+    "For the latest crash on September 17, the journal ends abruptly at about 23:35 CDT with no normal shutdown sequence. The next boot reports that the journal was corrupted or uncleanly shut down. No kernel panic, OOM event, CPU hardware error, or thermal shutdown was found in t",
+    "Did you try installing and booting the standard Arch kernel? In my case the system hung on a black screen with the CachyOS kernel, without any kernel panic. After switching to the standard Arch kernel, I did get a panic. Based on that output and some AI assistance, I (or should",
+    "- kernel panic error `Kernel panic - not syncing: VFS: Unable to mount root fs on unknown-block(0,0)",
+    "Investigated PCIe/NVMe errors, kernel panics and filesystem.squashfs extraction failures.",
+    "Kernel panic - not syncing: Attempted to kill the idle task!"
+   ]
+  },
+  {
    "key": "iwlwifi",
    "label": "iwlwifi",
    "query": [
@@ -12588,15 +12838,15 @@
    "searchScope": "title+body+comments",
    "counts": {
     "issues": 24,
-    "open": 3,
-    "closed": 21,
+    "open": 2,
+    "closed": 22,
     "discussions": 1
    },
    "versionsMentioned": {
     "3.x": 14,
     "4.0.0": 3,
-    "4.2.x": 1,
     "4.12.x": 1,
+    "4.2.x": 1,
     "4.4.x": 1,
     "4.99.x": 1
    },
@@ -12635,11 +12885,11 @@
      "number": 5085,
      "title": "Install script fails due to package mirror 404 error and lacks dependency error handling",
      "url": "https://github.com/omacom/omarchy/issues/5085",
-     "state": "OPEN",
+     "state": "CLOSED",
      "comments": 9,
      "reactions": 0,
      "createdAt": "2026-03-20T18:45:45Z",
-     "closedAt": null
+     "closedAt": "2026-09-27T07:10:53Z"
     },
     {
      "number": 1645,
@@ -12767,244 +13017,6 @@
    ],
    "exampleErrorLines": [
     "Errors occurred, no packages were upgraded."
-   ]
-  },
-  {
-   "key": "kernel-panic",
-   "label": "kernel panic",
-   "query": [
-    "kernel panic"
-   ],
-   "discovered": "seed",
-   "searchScope": "title+body+comments",
-   "counts": {
-    "issues": 23,
-    "open": 12,
-    "closed": 11,
-    "discussions": 7
-   },
-   "versionsMentioned": {
-    "3.x": 13,
-    "4.0.2": 4,
-    "4.0.0": 4,
-    "4.0.4": 3,
-    "4.0.3": 3,
-    "4.0.1": 2
-   },
-   "topIssues": [
-    {
-     "number": 1840,
-     "title": "Omarchy lid/sleep/suspend issue on MacBook (bug + solution to be tested)",
-     "url": "https://github.com/omacom/omarchy/issues/1840",
-     "state": "CLOSED",
-     "comments": 14,
-     "reactions": 27,
-     "createdAt": "2025-09-20T21:28:20Z",
-     "closedAt": "2026-02-21T06:21:44Z"
-    },
-    {
-     "number": 3231,
-     "title": "Kernel panic after update",
-     "url": "https://github.com/omacom/omarchy/issues/3231",
-     "state": "CLOSED",
-     "comments": 25,
-     "reactions": 15,
-     "createdAt": "2025-11-07T16:23:35Z",
-     "closedAt": "2025-11-07T21:42:52Z"
-    },
-    {
-     "number": 6223,
-     "title": "Crash and restart after omarchy-system-lock",
-     "url": "https://github.com/omacom/omarchy/issues/6223",
-     "state": "OPEN",
-     "comments": 25,
-     "reactions": 5,
-     "createdAt": "2026-07-14T20:38:58Z",
-     "closedAt": null
-    },
-    {
-     "number": 5953,
-     "title": "Dell XPS 14 DA14260 periodic hard reset after unplugging; power-button diagnostic blink code",
-     "url": "https://github.com/omacom/omarchy/issues/5953",
-     "state": "OPEN",
-     "comments": 18,
-     "reactions": 2,
-     "createdAt": "2026-05-23T02:14:30Z",
-     "closedAt": null
-    },
-    {
-     "number": 4158,
-     "title": "Hibernation is not working",
-     "url": "https://github.com/omacom/omarchy/issues/4158",
-     "state": "CLOSED",
-     "comments": 14,
-     "reactions": 2,
-     "createdAt": "2026-01-08T16:00:34Z",
-     "closedAt": "2026-04-17T19:09:04Z"
-    },
-    {
-     "number": 7909,
-     "title": "Random hard reboots on ThinkPad X1 Carbon Gen 11 — Omarchy only, Ubuntu stable",
-     "url": "https://github.com/omacom/omarchy/issues/7909",
-     "state": "OPEN",
-     "comments": 15,
-     "reactions": 0,
-     "createdAt": "2026-08-23T15:18:03Z",
-     "closedAt": null
-    },
-    {
-     "number": 3335,
-     "title": "Kernel panic after update: /boot/EFI/Limine/limine.conf not synced with /boot/limine.conf",
-     "url": "https://github.com/omacom/omarchy/issues/3335",
-     "state": "CLOSED",
-     "comments": 9,
-     "reactions": 3,
-     "createdAt": "2025-11-11T14:04:16Z",
-     "closedAt": "2025-11-21T04:47:08Z"
-    },
-    {
-     "number": 11563,
-     "title": "Hyprland 0.56.2 SIGABRT on empty std::string::pop_back during hyprctl Lua eval; crash restart drops user config",
-     "url": "https://github.com/omacom/omarchy/issues/11563",
-     "state": "OPEN",
-     "comments": 8,
-     "reactions": 0,
-     "createdAt": "2026-09-12T19:38:49Z",
-     "closedAt": null
-    },
-    {
-     "number": 8262,
-     "title": "Theme switcher and background keybindings broken: menu never renders, theme set silently fails from menu action",
-     "url": "https://github.com/omacom/omarchy/issues/8262",
-     "state": "OPEN",
-     "comments": 7,
-     "reactions": 0,
-     "createdAt": "2026-08-25T18:33:24Z",
-     "closedAt": null
-    },
-    {
-     "number": 7549,
-     "title": "Frequent kernel panics after upgrade to Quattro.",
-     "url": "https://github.com/omacom/omarchy/issues/7549",
-     "state": "CLOSED",
-     "comments": 5,
-     "reactions": 0,
-     "createdAt": "2026-08-19T21:18:03Z",
-     "closedAt": "2026-09-01T23:58:20Z"
-    },
-    {
-     "number": 9450,
-     "title": "Omarchy install ends with cryptic VFS: Cannot open root device \"\" or unknown-block(0,0) or grub_memalign:552:out of memory",
-     "url": "https://github.com/omacom/omarchy/issues/9450",
-     "state": "OPEN",
-     "comments": 4,
-     "reactions": 0,
-     "createdAt": "2026-08-31T19:55:34Z",
-     "closedAt": null
-    },
-    {
-     "number": 3816,
-     "title": "linux-git (6.18.0-1-git) crashes on Framework Desktop (Strix Halo) before GUI",
-     "url": "https://github.com/omacom/omarchy/issues/3816",
-     "state": "CLOSED",
-     "comments": 3,
-     "reactions": 0,
-     "createdAt": "2025-12-08T07:56:47Z",
-     "closedAt": "2025-12-11T13:55:00Z"
-    },
-    {
-     "number": 7874,
-     "title": "Two total desktop freezes on NVIDIA Wayland (kernel 7.1.x): aquamarine \"Cannot commit when a page-flip is awaiting\", zero kernel errors",
-     "url": "https://github.com/omacom/omarchy/issues/7874",
-     "state": "OPEN",
-     "comments": 3,
-     "reactions": 0,
-     "createdAt": "2026-08-23T10:40:43Z",
-     "closedAt": null
-    },
-    {
-     "number": 3241,
-     "title": "Installation bricked because of Limine",
-     "url": "https://github.com/omacom/omarchy/issues/3241",
-     "state": "CLOSED",
-     "comments": 2,
-     "reactions": 0,
-     "createdAt": "2025-11-08T07:21:55Z",
-     "closedAt": "2025-11-08T11:54:06Z"
-    },
-    {
-     "number": 2504,
-     "title": "Kernel panic on wake from mouse movement",
-     "url": "https://github.com/omacom/omarchy/issues/2504",
-     "state": "CLOSED",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2025-10-17T10:44:49Z",
-     "closedAt": "2025-10-25T22:29:31Z"
-    }
-   ],
-   "bestAnswers": [
-    {
-     "discussion": 3236,
-     "title": "Kernel Panic After Update Fix Guide",
-     "url": "https://github.com/omacom/omarchy/discussions/3236",
-     "category": "Support",
-     "upvoteCount": 20,
-     "kind": "accepted-answer",
-     "author": "ryanrhughes",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/3236#discussioncomment-14907148",
-     "snippet": ":point_up: "
-    },
-    {
-     "discussion": 4784,
-     "title": "Upgrade to omarchy 3.4.0 broke mdadm raid",
-     "url": "https://github.com/omacom/omarchy/discussions/4784",
-     "category": "Support",
-     "upvoteCount": 2,
-     "kind": "top-comment",
-     "author": "dhh",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/4784#discussioncomment-15948947",
-     "snippet": "We didn't change anything here on the Omarchy side. So I'm guessing it is indeed a kernel change or something else in the deeper dependencies."
-    },
-    {
-     "discussion": 3715,
-     "title": "kernel panic often occurs when working",
-     "url": "https://github.com/omacom/omarchy/discussions/3715",
-     "category": "Support",
-     "upvoteCount": 2,
-     "kind": "top-comment",
-     "author": "Beleren",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/3715#discussioncomment-15137469",
-     "snippet": "I'm also experiencing blue screen while running my company's node application. I don't know how to provide debug data."
-    },
-    {
-     "discussion": 6297,
-     "title": "Omarchy still won't install after CPU replacement. Other Linux distributions now work. Looking for ideas",
-     "url": "https://github.com/omacom/omarchy/discussions/6297",
-     "category": "Support",
-     "upvoteCount": 1,
-     "kind": "accepted-answer",
-     "author": "dollebrekel",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/6297#discussioncomment-18108868",
-     "snippet": "  ## Solved — root cause found: GRUB runs out of low memory (<4 GiB) on this board\n\n  Follow-up to my earlier report. This turned out to be **two unrelated problems stacked on top of each other**,\n  which is why it took so long to untangle.\n\n  ### Problem 1: a genuinely faulty CPU (already resolved)\n\n  Multiple distros were crashing, so the system went in for RMA. The service center's own testing showed the\n  **i9-14900KS failing an OCCT CPU stress test**, and it was replaced under the extended "
-    },
-    {
-     "discussion": 6094,
-     "title": "Kernel panic",
-     "url": "https://github.com/omacom/omarchy/discussions/6094",
-     "category": "Support",
-     "upvoteCount": 1,
-     "kind": "top-comment",
-     "author": "dollebrekel",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/6094#discussioncomment-17300085",
-     "snippet": "**Update: Resolved**\n\nThe live USB boot issue turned out to be caused by **Resizable BAR (ReBAR) + Above 4G Decoding** in the UEFI BIOS, combined with the large memory footprint of 128GB RAM and the RTX 5090's PCIe address space.\n\nWith ReBAR enabled, the firmware's memory map becomes highly fragmented, leaving Limine/GRUB with no contiguous memory region to allocate from — hence the `grub_memalign: Out of memory` error. The `VFS: Unable to mount root fs on unknown-block(0,0)` was a downstream fa"
-    }
-   ],
-   "exampleErrorLines": [
-    "For the latest crash on September 17, the journal ends abruptly at about 23:35 CDT with no normal shutdown sequence. The next boot reports that the journal was corrupted or uncleanly shut down. No kernel panic, OOM event, CPU hardware error, or thermal shutdown was found in t",
-    "Did you try installing and booting the standard Arch kernel? In my case the system hung on a black screen with the CachyOS kernel, without any kernel panic. After switching to the standard Arch kernel, I did get a panic. Based on that output and some AI assistance, I (or should",
-    "- kernel panic error `Kernel panic - not syncing: VFS: Unable to mount root fs on unknown-block(0,0)",
-    "Investigated PCIe/NVMe errors, kernel panics and filesystem.squashfs extraction failures."
    ]
   },
   {
@@ -13232,7 +13244,7 @@
      "title": "# No Sound Fix: ASUS ROG Strix G16 (2025) on Omarchy 3.4.1",
      "url": "https://github.com/omacom/omarchy/issues/4821",
      "state": "OPEN",
-     "comments": 9,
+     "comments": 10,
      "reactions": 24,
      "createdAt": "2026-02-28T19:50:13Z",
      "closedAt": null
@@ -13340,6 +13352,16 @@
      ]
     },
     {
+     "number": 13172,
+     "title": "[kernel/audio] Internal speakers silent: left CS35L41 amp fails OTP_BOOT_DONE (-121) on HP Envy x360 13-bf0xxx",
+     "url": "https://github.com/omacom/omarchy/issues/13172",
+     "state": "OPEN",
+     "comments": 3,
+     "reactions": 0,
+     "createdAt": "2026-09-24T19:11:07Z",
+     "closedAt": null
+    },
+    {
      "number": 10543,
      "title": "Dell XPS 13 DX13260 (1028:0e53): no sound at all after dell-xps13-sidecar-amps workaround — CS35L56 firmware never downloads despite blobs being present",
      "url": "https://github.com/omacom/omarchy/issues/10543",
@@ -13377,16 +13399,6 @@
      "comments": 1,
      "reactions": 0,
      "createdAt": "2026-07-26T20:53:00Z",
-     "closedAt": null
-    },
-    {
-     "number": 7206,
-     "title": "No sound after reboot with headphones plugged in (Dell XPS 16 / sof-soundwire cs42l45)",
-     "url": "https://github.com/omacom/omarchy/issues/7206",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-08-17T01:15:18Z",
      "closedAt": null
     }
    ],
@@ -13643,6 +13655,7 @@
     "4.0.0": 7,
     "4.0.2": 6,
     "4.0.1": 5,
+    "4.0.4": 1,
     "4.0.3": 1
    },
    "topIssues": [
@@ -13717,6 +13730,16 @@
      "closedAt": "2026-09-20T18:54:00Z"
     },
     {
+     "number": 10745,
+     "title": "Custom bar/panel plugins fail silently — ReferenceError in Loader error handler swallows the diagnostic and skips the fallback",
+     "url": "https://github.com/omacom/omarchy/issues/10745",
+     "state": "OPEN",
+     "comments": 2,
+     "reactions": 0,
+     "createdAt": "2026-09-08T00:15:32Z",
+     "closedAt": null
+    },
+    {
      "number": 6922,
      "title": "Cloned bar plugin never loads: required properties are assigned after instantiation",
      "url": "https://github.com/omacom/omarchy/issues/6922",
@@ -13785,21 +13808,12 @@
      "reactions": 0,
      "createdAt": "2026-09-06T22:08:10Z",
      "closedAt": "2026-09-20T18:54:19Z"
-    },
-    {
-     "number": 10745,
-     "title": "Custom bar/panel plugins fail silently — ReferenceError in Loader error handler swallows the diagnostic and skips the fallback",
-     "url": "https://github.com/omacom/omarchy/issues/10745",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-08T00:15:32Z",
-     "closedAt": null
     }
    ],
    "bestAnswers": [],
    "exampleErrorLines": [
-    "WARN scene: @shell.qml[256:-1]: ReferenceError: errorString is not defined"
+    "WARN scene: @shell.qml[256:-1]: ReferenceError: errorString is not defined",
+    "WARN scene: @shell.qml[1357:-1]: ReferenceError: errorString is not defined"
    ]
   },
   {
@@ -13812,14 +13826,14 @@
    "searchScope": "title+body+comments",
    "counts": {
     "issues": 19,
-    "open": 4,
-    "closed": 15,
-    "discussions": 1
+    "open": 3,
+    "closed": 16,
+    "discussions": 2
    },
    "versionsMentioned": {
     "3.x": 11,
-    "4.2.x": 1,
     "4.12.x": 1,
+    "4.2.x": 1,
     "4.4.x": 1,
     "4.99.x": 1,
     "4.0.1": 1,
@@ -13864,11 +13878,11 @@
      "number": 5085,
      "title": "Install script fails due to package mirror 404 error and lacks dependency error handling",
      "url": "https://github.com/omacom/omarchy/issues/5085",
-     "state": "OPEN",
+     "state": "CLOSED",
      "comments": 9,
      "reactions": 0,
      "createdAt": "2026-03-20T18:45:45Z",
-     "closedAt": null
+     "closedAt": "2026-09-27T07:10:53Z"
     },
     {
      "number": 1645,
@@ -13992,6 +14006,17 @@
      "author": "urev",
      "answerUrl": "https://github.com/omacom/omarchy/discussions/5229#discussioncomment-16452233",
      "snippet": "**Solution:**\n1. Use a proxy. Ensure that sudo can use `HTTP_PROXY` and `HTTPS_PROXY` environments.\n2. Config `/etc/pacman.conf`,  use `ParallelDowloads = 2` instead of `ParallelDownloads = 5`. More parallel download threads can make the server side limit the download speed."
+    },
+    {
+     "discussion": 13333,
+     "title": "Check network connectivity before `omarchy-update` starts making changes",
+     "url": "https://github.com/omacom/omarchy/discussions/13333",
+     "category": "Suggestions",
+     "upvoteCount": 1,
+     "kind": "top-comment",
+     "author": "tayfuryldz",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/13333#discussioncomment-18618664",
+     "snippet": "This seems worth catching before the snapshot/cache work. I would avoid a generic “internet is up” check though, because a successful ping doesn't tell us whether the endpoints the updater actually needs are reachable.\n\nA cheap DNS lookup for the Omarchy package host plus one Arch mirror would cover the failure shown here. If that fails, exit with something explicit like “network/DNS not ready; no changes made.” Then the existing package operations remain the real authority once the preflight pa"
     }
    ],
    "exampleErrorLines": [
@@ -15006,15 +15031,15 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 13,
-    "open": 4,
+    "issues": 14,
+    "open": 5,
     "closed": 9,
     "discussions": 7
    },
    "versionsMentioned": {
     "3.x": 7,
     "4.0.2": 3,
-    "4.0.4": 2,
+    "4.0.4": 3,
     "4.0.3": 1
    },
    "topIssues": [
@@ -15147,9 +15172,30 @@
      "reactions": 0,
      "createdAt": "2026-09-18T09:35:09Z",
      "closedAt": null
+    },
+    {
+     "number": 13325,
+     "title": "problem got fixed by agent",
+     "url": "https://github.com/omacom/omarchy/issues/13325",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-26T13:44:18Z",
+     "closedAt": null
     }
    ],
    "bestAnswers": [
+    {
+     "discussion": 7669,
+     "title": "Quattro bar: named bar profiles assigned per screen (`bars` + `screens`)",
+     "url": "https://github.com/omacom/omarchy/discussions/7669",
+     "category": "Ideas",
+     "upvoteCount": 6,
+     "kind": "top-comment",
+     "author": "elMestre",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/7669#discussioncomment-18622749",
+     "snippet": "+1, same problem here with a 3440x1440 ultrawide next to a 1920x1080 monitor in portrait. The ultrawide's layout doesn't fit on the portrait screen, and moving the bar to a vertical edge doesn't help: on an ultrawide that wastes horizontal space and squeezes the widgets into a narrow column.\n\nMy workaround is a cloned `omarchy.bar` that filters `Quickshell.screens` by monitor model. That has a side effect for plugin widgets, which I wrote up in #13392. Even a per-screen `enabled` flag would let "
+    },
     {
      "discussion": 3273,
      "title": "RDP to an Omarchy Machine/VM",
@@ -15391,8 +15437,8 @@
    },
    "versionsMentioned": {
     "3.x": 9,
-    "4.0.0": 1,
-    "4.0.1": 1
+    "4.0.1": 1,
+    "4.0.0": 1
    },
    "topIssues": [
     {
@@ -15709,6 +15755,7 @@
     "4.0.2": 4,
     "4.0.1": 3,
     "4.0.0": 2,
+    "4.0.4": 1,
     "4.0.3": 1
    },
    "topIssues": [
@@ -15756,6 +15803,16 @@
      "closedAt": "2026-09-20T18:54:00Z"
     },
     {
+     "number": 10745,
+     "title": "Custom bar/panel plugins fail silently — ReferenceError in Loader error handler swallows the diagnostic and skips the fallback",
+     "url": "https://github.com/omacom/omarchy/issues/10745",
+     "state": "OPEN",
+     "comments": 2,
+     "reactions": 0,
+     "createdAt": "2026-09-08T00:15:32Z",
+     "closedAt": null
+    },
+    {
      "number": 6922,
      "title": "Cloned bar plugin never loads: required properties are assigned after instantiation",
      "url": "https://github.com/omacom/omarchy/issues/6922",
@@ -15783,16 +15840,6 @@
      "comments": 1,
      "reactions": 0,
      "createdAt": "2026-08-30T08:23:12Z",
-     "closedAt": null
-    },
-    {
-     "number": 10745,
-     "title": "Custom bar/panel plugins fail silently — ReferenceError in Loader error handler swallows the diagnostic and skips the fallback",
-     "url": "https://github.com/omacom/omarchy/issues/10745",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-08T00:15:32Z",
      "closedAt": null
     },
     {
@@ -15990,8 +16037,8 @@
     "3.x": 3,
     "4.0.2": 2,
     "4.0.0": 1,
-    "4.0.1": 1,
-    "4.0.3": 1
+    "4.0.3": 1,
+    "4.0.1": 1
    },
    "topIssues": [
     {
@@ -16122,8 +16169,8 @@
     "4.0.0": 2,
     "4.0.3": 2,
     "3.x": 1,
-    "4.0.2": 1,
-    "4.0.4": 1
+    "4.0.4": 1,
+    "4.0.2": 1
    },
    "topIssues": [
     {
@@ -16477,8 +16524,8 @@
    },
    "versionsMentioned": {
     "4.0.0": 3,
-    "3.x": 3,
     "4.0.4": 3,
+    "3.x": 3,
     "4.0.2": 2,
     "4.2.x": 1,
     "4.0.3": 1
@@ -16554,6 +16601,16 @@
      ]
     },
     {
+     "number": 13030,
+     "title": "linux-omarchy 7.2.5-3: Intel AX210 Wi-Fi dead for the whole boot on cold boots, because the kernel enables Intel IOMMU by default",
+     "url": "https://github.com/omacom/omarchy/issues/13030",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-23T14:13:53Z",
+     "closedAt": null
+    },
+    {
      "number": 7803,
      "title": "`pending-charge` treated as a charge-limit hold without checking the level: a failed battery reports \"Holding at 75-80%\" at 0%",
      "url": "https://github.com/omacom/omarchy/issues/7803",
@@ -16561,16 +16618,6 @@
      "comments": 0,
      "reactions": 0,
      "createdAt": "2026-08-22T18:16:09Z",
-     "closedAt": null
-    },
-    {
-     "number": 13030,
-     "title": "linux-omarchy 7.2.5-3: Intel AX210 Wi-Fi dead for the whole boot on cold boots, because the kernel enables Intel IOMMU by default",
-     "url": "https://github.com/omacom/omarchy/issues/13030",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-23T14:13:53Z",
      "closedAt": null
     }
    ],
@@ -16653,8 +16700,8 @@
    "versionsMentioned": {
     "3.x": 2,
     "4.0.3": 2,
-    "4.0.0": 1,
     "4.0.2": 1,
+    "4.0.0": 1,
     "4.0.4": 1
    },
    "topIssues": [
@@ -16679,6 +16726,16 @@
      "closedAt": "2025-10-26T02:47:22Z"
     },
     {
+     "number": 12351,
+     "title": "Galaxy Book6 Pro (NP960XJG): fingerprint reader 1c7a:05d5 (ETU906Axx-E) missing from libfprint-git egismoc table",
+     "url": "https://github.com/omacom/omarchy/issues/12351",
+     "state": "OPEN",
+     "comments": 3,
+     "reactions": 1,
+     "createdAt": "2026-09-18T01:49:43Z",
+     "closedAt": null
+    },
+    {
      "number": 7991,
      "title": "omarchy setup security fingerprint fails instantly on Goodix 27c6:530c/533c/538c readers — no open libfprint driver exists",
      "url": "https://github.com/omacom/omarchy/issues/7991",
@@ -16686,16 +16743,6 @@
      "comments": 1,
      "reactions": 0,
      "createdAt": "2026-08-24T04:05:44Z",
-     "closedAt": null
-    },
-    {
-     "number": 12351,
-     "title": "Galaxy Book6 Pro (NP960XJG): fingerprint reader 1c7a:05d5 (ETU906Axx-E) missing from libfprint-git egismoc table",
-     "url": "https://github.com/omacom/omarchy/issues/12351",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 1,
-     "createdAt": "2026-09-18T01:49:43Z",
      "closedAt": null
     },
     {
@@ -16958,6 +17005,7 @@
     "4.0.2": 3,
     "4.0.0": 2,
     "4.0.1": 2,
+    "4.0.4": 1,
     "4.0.3": 1
    },
    "topIssues": [
@@ -17005,6 +17053,16 @@
      "closedAt": "2026-09-20T18:54:00Z"
     },
     {
+     "number": 10745,
+     "title": "Custom bar/panel plugins fail silently — ReferenceError in Loader error handler swallows the diagnostic and skips the fallback",
+     "url": "https://github.com/omacom/omarchy/issues/10745",
+     "state": "OPEN",
+     "comments": 2,
+     "reactions": 0,
+     "createdAt": "2026-09-08T00:15:32Z",
+     "closedAt": null
+    },
+    {
      "number": 9116,
      "title": "Failed bar option leaves no bar at all: pluginBarLoader error handler throws ReferenceError before the fallback runs",
      "url": "https://github.com/omacom/omarchy/issues/9116",
@@ -17012,16 +17070,6 @@
      "comments": 1,
      "reactions": 0,
      "createdAt": "2026-08-30T08:23:12Z",
-     "closedAt": null
-    },
-    {
-     "number": 10745,
-     "title": "Custom bar/panel plugins fail silently — ReferenceError in Loader error handler swallows the diagnostic and skips the fallback",
-     "url": "https://github.com/omacom/omarchy/issues/10745",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-08T00:15:32Z",
      "closedAt": null
     },
     {
@@ -17057,6 +17105,7 @@
    "versionsMentioned": {
     "4.0.2": 5,
     "4.0.0": 2,
+    "4.0.4": 1,
     "4.0.3": 1,
     "4.0.1": 1
    },
@@ -17109,7 +17158,7 @@
      "title": "Custom bar/panel plugins fail silently — ReferenceError in Loader error handler swallows the diagnostic and skips the fallback",
      "url": "https://github.com/omacom/omarchy/issues/10745",
      "state": "OPEN",
-     "comments": 1,
+     "comments": 2,
      "reactions": 0,
      "createdAt": "2026-09-08T00:15:32Z",
      "closedAt": null
@@ -17666,16 +17715,16 @@
    "searchScope": "title+body+error-signature",
    "counts": {
     "issues": 5,
-    "open": 3,
-    "closed": 2,
+    "open": 2,
+    "closed": 3,
     "discussions": 0
    },
    "versionsMentioned": {
     "4.0.0": 2,
-    "4.0.2": 2,
     "4.0.4": 2,
-    "4.0.1": 1,
-    "3.x": 1
+    "4.0.2": 2,
+    "3.x": 1,
+    "4.0.1": 1
    },
    "topIssues": [
     {
@@ -17722,11 +17771,11 @@
      "number": 12586,
      "title": "Chrome 153 + Omarchy 4.0.4-1 + Hyprland + hybrid AMD/NVIDIA: WebGPU works, but YouTube becomes white",
      "url": "https://github.com/omacom/omarchy/issues/12586",
-     "state": "OPEN",
+     "state": "CLOSED",
      "comments": 0,
      "reactions": 0,
      "createdAt": "2026-09-20T00:50:03Z",
-     "closedAt": null
+     "closedAt": "2026-09-27T03:23:05Z"
     }
    ],
    "bestAnswers": [],
@@ -18149,8 +18198,8 @@
    },
    "versionsMentioned": {
     "3.x": 2,
-    "4.0.0": 1,
-    "4.0.1": 1
+    "4.0.1": 1,
+    "4.0.0": 1
    },
    "topIssues": [
     {
@@ -18854,7 +18903,8 @@
    },
    "versionsMentioned": {
     "4.0.4": 2,
-    "3.x": 1
+    "3.x": 1,
+    "4.0.2": 1
    },
    "topIssues": [
     {
@@ -18862,7 +18912,7 @@
      "title": "linux-omarchy 7.2.5-3 fails on 2016 MacBook Pro (MacBookPro13,3) unless intel_iommu=off",
      "url": "https://github.com/omacom/omarchy/issues/12119",
      "state": "OPEN",
-     "comments": 5,
+     "comments": 6,
      "reactions": 0,
      "createdAt": "2026-09-16T13:00:49Z",
      "closedAt": null
@@ -19057,8 +19107,8 @@
     "discussions": 0
    },
    "versionsMentioned": {
-    "4.0.0": 1,
     "4.0.1": 1,
+    "4.0.0": 1,
     "3.x": 1
    },
    "topIssues": [
@@ -19387,6 +19437,61 @@
    ]
   },
   {
+   "key": "err-atomic-drm-request-failed-to-commit-invalid-argument",
+   "label": "atomic drm request: failed to commit: Invalid argument",
+   "query": [
+    "atomic drm request: failed to commit: invalid argument"
+   ],
+   "discovered": "auto",
+   "searchScope": "title+body+error-signature",
+   "counts": {
+    "issues": 3,
+    "open": 3,
+    "closed": 0,
+    "discussions": 0
+   },
+   "versionsMentioned": {
+    "4.0.4": 3,
+    "4.0.2": 1
+   },
+   "topIssues": [
+    {
+     "number": 12152,
+     "title": "External-only HDMI display becomes unusable after idle lock/DPMS wake with eDP-1 disabled",
+     "url": "https://github.com/omacom/omarchy/issues/12152",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-16T18:04:08Z",
+     "closedAt": null
+    },
+    {
+     "number": 13341,
+     "title": "linux-omarchy 7.2.5: external monitors on Thunderbolt/MST dock get wrong EDID or fail to modeset (Panther Lake, upstream xe regression)",
+     "url": "https://github.com/omacom/omarchy/issues/13341",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-26T17:12:53Z",
+     "closedAt": null
+    },
+    {
+     "number": 12289,
+     "title": "Hybrid AMD iGPU + NVIDIA dGPU with the external display on the dGPU: nvidia.lua exports NVIDIA VA-API while Aquamarine renders on the iGPU, and Omarchy never sets AQ_DRM_DEVICES (counter-case to #11173)",
+     "url": "https://github.com/omacom/omarchy/issues/12289",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-17T14:52:25Z",
+     "closedAt": null
+    }
+   ],
+   "bestAnswers": [],
+   "exampleErrorLines": [
+    "atomic drm request: failed to commit: Invalid argument"
+   ]
+  },
+  {
    "key": "err-calibration-disabled-due-to-missing-firmware-controls",
    "label": "Calibration disabled due to missing firmware controls",
    "query": [
@@ -19584,8 +19689,8 @@
    },
    "versionsMentioned": {
     "4.0.0": 2,
-    "3.x": 1,
-    "4.0.3": 1
+    "4.0.3": 1,
+    "3.x": 1
    },
    "topIssues": [
     {
@@ -19694,8 +19799,8 @@
    },
    "versionsMentioned": {
     "3.x": 2,
-    "4.2.x": 1,
     "4.12.x": 1,
+    "4.2.x": 1,
     "4.99.x": 1
    },
    "topIssues": [
@@ -19733,6 +19838,115 @@
    "bestAnswers": [],
    "exampleErrorLines": [
     "-> error installing repo packages"
+   ]
+  },
+  {
+   "key": "err-error-ui-path-n-failed-to-create-eglimage-egl-success",
+   "label": "ERROR:ui/gl/scoped_egl_image.cc:23] Failed to create EGLImage: EGL_SUCCESS",
+   "query": [
+    "error:ui<path>:<n>] failed to create eglimage: egl_success"
+   ],
+   "discovered": "auto",
+   "searchScope": "title+body+error-signature",
+   "counts": {
+    "issues": 3,
+    "open": 2,
+    "closed": 1,
+    "discussions": 0
+   },
+   "versionsMentioned": {
+    "4.0.4": 1
+   },
+   "topIssues": [
+    {
+     "number": 12704,
+     "title": "Hybrid laptops: `nvidia.lua` sets `LIBVA_DRIVER_NAME=nvidia` session-wide even when the iGPU is the compositing device, breaking Chromium video",
+     "url": "https://github.com/omacom/omarchy/issues/12704",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 2,
+     "createdAt": "2026-09-20T23:33:01Z",
+     "closedAt": null
+    },
+    {
+     "number": 11168,
+     "title": "nvidia.lua forces LIBVA_DRIVER_NAME=nvidia on hybrid laptops rendering on the iGPU, breaking video playback in Chromium",
+     "url": "https://github.com/omacom/omarchy/issues/11168",
+     "state": "CLOSED",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-10T15:51:50Z",
+     "closedAt": "2026-09-10T15:52:28Z"
+    },
+    {
+     "number": 13325,
+     "title": "problem got fixed by agent",
+     "url": "https://github.com/omacom/omarchy/issues/13325",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-26T13:44:18Z",
+     "closedAt": null
+    }
+   ],
+   "bestAnswers": [],
+   "exampleErrorLines": [
+    "ERROR:ui/gl/scoped_egl_image.cc:23] Failed to create EGLImage: EGL_SUCCESS"
+   ]
+  },
+  {
+   "key": "err-error-ui-path-n-unable-to-initialize-binding-from-pixmap",
+   "label": "ERROR:ui/ozone/common/native_pixmap_egl_binding.cc:76] Unable to initialize binding from pixmap",
+   "query": [
+    "error:ui<path>:<n>] unable to initialize binding from pixmap"
+   ],
+   "discovered": "auto",
+   "searchScope": "title+body+error-signature",
+   "counts": {
+    "issues": 3,
+    "open": 2,
+    "closed": 1,
+    "discussions": 0
+   },
+   "versionsMentioned": {
+    "4.0.0": 1,
+    "4.0.4": 1
+   },
+   "topIssues": [
+    {
+     "number": 11168,
+     "title": "nvidia.lua forces LIBVA_DRIVER_NAME=nvidia on hybrid laptops rendering on the iGPU, breaking video playback in Chromium",
+     "url": "https://github.com/omacom/omarchy/issues/11168",
+     "state": "CLOSED",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-10T15:51:50Z",
+     "closedAt": "2026-09-10T15:52:28Z"
+    },
+    {
+     "number": 13188,
+     "title": "Chromium renders video black on NVIDIA: LIBVA_DRIVER_NAME=nvidia points it at a Firefox-only VA-API driver",
+     "url": "https://github.com/omacom/omarchy/issues/13188",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-24T23:37:31Z",
+     "closedAt": null
+    },
+    {
+     "number": 13325,
+     "title": "problem got fixed by agent",
+     "url": "https://github.com/omacom/omarchy/issues/13325",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-26T13:44:18Z",
+     "closedAt": null
+    }
+   ],
+   "bestAnswers": [],
+   "exampleErrorLines": [
+    "ERROR:ui/ozone/common/native_pixmap_egl_binding.cc:76] Unable to initialize binding from pixmap"
    ]
   },
   {
@@ -19944,7 +20158,7 @@
      "title": "amdgpu: kernel BUG at `amdgpu_object.c:213` — `amdgpu_bo_placement_from_domain` builds 5 placements (max 3) from Hyprland's `amdgpu_cs_ioctl`",
      "url": "https://github.com/omacom/omarchy/issues/13224",
      "state": "OPEN",
-     "comments": 0,
+     "comments": 1,
      "reactions": 0,
      "createdAt": "2026-09-25T13:50:58Z",
      "closedAt": null
@@ -19971,8 +20185,8 @@
    },
    "versionsMentioned": {
     "4.0.2": 2,
-    "4.0.0": 1,
-    "4.0.1": 1
+    "4.0.1": 1,
+    "4.0.0": 1
    },
    "topIssues": [
     {
@@ -20021,16 +20235,16 @@
    "searchScope": "title+body+error-signature",
    "counts": {
     "issues": 3,
-    "open": 2,
-    "closed": 1,
+    "open": 1,
+    "closed": 2,
     "discussions": 0
    },
    "versionsMentioned": {
     "4.0.4": 2,
     "4.0.0": 1,
-    "4.0.2": 1,
+    "3.x": 1,
     "4.0.1": 1,
-    "3.x": 1
+    "4.0.2": 1
    },
    "topIssues": [
     {
@@ -20057,11 +20271,11 @@
      "number": 12586,
      "title": "Chrome 153 + Omarchy 4.0.4-1 + Hyprland + hybrid AMD/NVIDIA: WebGPU works, but YouTube becomes white",
      "url": "https://github.com/omacom/omarchy/issues/12586",
-     "state": "OPEN",
+     "state": "CLOSED",
      "comments": 0,
      "reactions": 0,
      "createdAt": "2026-09-20T00:50:03Z",
-     "closedAt": null
+     "closedAt": "2026-09-27T03:23:05Z"
     }
    ],
    "bestAnswers": [],
@@ -20107,7 +20321,7 @@
      "title": "Agents widget: Codex limits intermittently fail with \"account/read\" (select/readline race)",
      "url": "https://github.com/omacom/omarchy/issues/13080",
      "state": "OPEN",
-     "comments": 1,
+     "comments": 2,
      "reactions": 1,
      "createdAt": "2026-09-24T01:38:36Z",
      "closedAt": null
@@ -20237,6 +20451,60 @@
    "bestAnswers": [],
    "exampleErrorLines": [
     "send_key_state: key not found"
+   ]
+  },
+  {
+   "key": "err-typeerror-cannot-assign-to-read-only-property-centerhoverrev",
+   "label": "TypeError: Cannot assign to read-only property \"centerHoverRevealSuppressed\"",
+   "query": [
+    "typeerror: cannot assign to read-only property \"centerhoverrevealsuppressed\""
+   ],
+   "discovered": "auto",
+   "searchScope": "title+body+error-signature",
+   "counts": {
+    "issues": 3,
+    "open": 3,
+    "closed": 0,
+    "discussions": 0
+   },
+   "versionsMentioned": {
+    "4.0.3": 2
+   },
+   "topIssues": [
+    {
+     "number": 10999,
+     "title": "4.0.3: a third-party panel's failed write to the now read-only centerHoverRevealSuppressed locks the whole session",
+     "url": "https://github.com/omacom/omarchy/issues/10999",
+     "state": "OPEN",
+     "comments": 4,
+     "reactions": 0,
+     "createdAt": "2026-09-09T16:04:13Z",
+     "closedAt": null
+    },
+    {
+     "number": 11662,
+     "title": "Universal Fix for Wedged-Style Popup Panels in Third-Party Plugins",
+     "url": "https://github.com/omacom/omarchy/issues/11662",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-13T10:47:33Z",
+     "closedAt": null
+    },
+    {
+     "number": 13382,
+     "title": "A throwing plugin close() leaves the panel overlay mapped and locks all pointer input",
+     "url": "https://github.com/omacom/omarchy/issues/13382",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-27T03:19:27Z",
+     "closedAt": null
+    }
+   ],
+   "bestAnswers": [],
+   "exampleErrorLines": [
+    "TypeError: Cannot assign to read-only property \"centerHoverRevealSuppressed\""
    ]
   },
   {

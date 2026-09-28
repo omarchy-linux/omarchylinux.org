@@ -1,5 +1,5 @@
 {
-  "count": 128,
+  "count": 133,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -1812,20 +1812,34 @@
       ]
     },
     {
-      "body": "echo \"Remove legacy temporary passwordless sudo grants\"\n\n# Migration queues are per-user; the privileged repair is once per machine.\nif ! /usr/bin/omarchy-sudo-passwordless __migration-complete; then\n  sudo /usr/bin/omarchy-sudo-passwordless __migrate\nfi",
+      "body": "echo \"Remove legacy temporary passwordless sudo grants\"\n\n# Migration queues are per-user; the privileged repair is once per machine.\n# The helper beside this migration: the package's /usr/bin copy on an install,\n# and under a dev link the checkout's, which may be newer than the package.\nhelper=\"$OMARCHY_PATH/bin/omarchy-sudo-passwordless\"\nif ! \"$helper\" __migration-complete; then\n  sudo \"$helper\" __migrate\nfi",
       "bodyTruncated": false,
       "date": "2026-08-31T08:07:15Z",
       "description": "Remove legacy temporary passwordless sudo grants",
       "file": "1788163635.sh",
-      "lineCount": 6,
+      "lineCount": 9,
       "packagesAdded": [],
       "packagesRemoved": [],
       "path": "migrations/1788163635.sh",
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1788163635.sh",
       "timestamp": 1788163635,
-      "touches": [
-        "/usr/bin/omarchy-sudo-passwordless"
-      ]
+      "touches": []
+    },
+    {
+      "body": "echo \"Replace the YT6801 vendor DKMS driver with the upstream kernel driver\"\n\nif ! yt6801_pci=$(lspci -Dn -d 1f0a:6801); then\n  echo \"Unable to discover YT6801 adapters; rerun omarchy-migrate.\" >&2\n  exit 1\nfi\n\nyt6801_devices=()\nwhile read -r device _; do\n  [[ -n $device ]] || continue\n  if [[ ! $device =~ ^[[:xdigit:]]{4}:[[:xdigit:]]{2}:[[:xdigit:]]{2}\\.[0-7]$ ]]; then\n    echo \"Invalid YT6801 PCI address: $device\" >&2\n    exit 1\n  fi\n  yt6801_devices+=(\"$device\")\ndone <<< \"$yt6801_pci\"\n\nyt6801_uses_upstream() {\n  local driver\n  driver=$(readlink -f \"/sys/bus/pci/devices/$1/driver\") &&\n    [[ $driver == \"/sys/bus/pci/drivers/dwmac-motorcomm\" ]]\n}\n\nyt6801_check_binding() {\n  local device\n  for device in \"${yt6801_devices[@]}\"; do\n    if ! yt6801_uses_upstream \"$device\"; then\n      echo \"YT6801 device $device did not bind to dwmac-motorcomm.\" >&2\n      echo \"Reboot into the latest Omarchy kernel and rerun omarchy-migrate.\" >&2\n      exit 1\n    fi\n  done\n}\n\n# Check discovery before changing hardware or packages. A failed query must not\n# turn into an empty list and mark the migration complete.\ninstalled_packages=$(pacman -Qq)\nloaded_modules=$(lsmod)\n\nyt6801_pending=()",
+      "bodyTruncated": true,
+      "date": "2026-09-01T16:11:57Z",
+      "description": "Replace the YT6801 vendor DKMS driver with the upstream kernel driver",
+      "file": "1788279117.sh",
+      "lineCount": 86,
+      "packagesAdded": [],
+      "packagesRemoved": [
+        "yt6801-dkms"
+      ],
+      "path": "migrations/1788279117.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1788279117.sh",
+      "timestamp": 1788279117,
+      "touches": []
     },
     {
       "body": "echo \"Install Cursor CLI via mise wrapper\"\n\n# Cursor's own installer links ~/.local/bin/cursor-agent, so an existing\n# command is the user's and stays. The wrapper resolves cursor-agent through\n# mise's registry, which lists it from 2026.8.15 on.\nif omarchy-cmd-missing cursor-agent && [[ ! -f $HOME/.local/state/omarchy/preinstalls-removed ]]; then\n  omarchy-mise-install cursor-agent\nfi",
@@ -2159,24 +2173,19 @@
       "touches": []
     },
     {
-      "body": "echo \"Install Elsewhen, the world clock plugin\"\n\nomarchy-pkg-add elsewhen\n\npackaged_plugin=\"/usr/share/omarchy/shell/plugins/omacom.elsewhen\"\nuser_plugin=\"$HOME/.config/omarchy/plugins/omacom.elsewhen\"\n\n# The package moved from plugins/ to shell/plugins/ once, stranding the link an\n# earlier run made to the old path. A link the user made is left alone.\nif [[ -L $user_plugin && ! -e $user_plugin && $(readlink \"$user_plugin\") == /usr/share/omarchy/* && -d $packaged_plugin ]]; then\n  ln -sfn \"$packaged_plugin\" \"$user_plugin\"\nfi\n\n# Dev checkouts do not contain plugins installed by system packages.\nif [[ ! $OMARCHY_PATH -ef /usr/share/omarchy && -d $packaged_plugin && ! -e $user_plugin && ! -L $user_plugin ]]; then\n  mkdir -p \"${user_plugin%/*}\"\n  ln -s \"$packaged_plugin\" \"$user_plugin\"\nfi\n\n# Best-effort, like the put below: an update whose shell cannot be asked still\n# finishes, and restarts the shell once the migrations are through.\nomarchy-shell -q shell rescanPlugins\nomarchy-bar put omacom.elsewhen --before omarchy.clock",
+      "body": "echo \"Put Elsewhen, the world clock, on the bar\"\n\n# Best-effort, like the put below: an update whose shell cannot be asked still\n# finishes, and restarts the shell once the migrations are through.\nomarchy-shell -q shell rescanPlugins\n\n# A legacy omacom.elsewhen entry is renamed in place by a later migration.\nconfig_file=\"$HOME/.config/omarchy/shell.json\"\nif [[ -s $config_file ]] && jq -e '[.bar.layout[]?[]? | if type == \"object\" then .id else . end] | index(\"omacom.elsewhen\")' \"$config_file\" >/dev/null 2>&1; then\n  echo \"Elsewhen is already on the bar\"\nelse\n  omarchy-bar put omarchy.elsewhen --before omarchy.clock\nfi",
       "bodyTruncated": false,
       "date": "2026-09-22T02:09:32Z",
-      "description": "Install Elsewhen, the world clock plugin",
+      "description": "Put Elsewhen, the world clock, on the bar",
       "file": "1790042972.sh",
-      "lineCount": 23,
-      "packagesAdded": [
-        "elsewhen"
-      ],
+      "lineCount": 13,
+      "packagesAdded": [],
       "packagesRemoved": [],
       "path": "migrations/1790042972.sh",
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790042972.sh",
       "timestamp": 1790042972,
       "touches": [
-        "/usr/share/omarchy",
-        "/usr/share/omarchy/",
-        "/usr/share/omarchy/shell/plugins/omacom.elsewhen",
-        "~/.config/omarchy/plugins/omacom.elsewhen"
+        "~/.config/omarchy/shell.json"
       ]
     },
     {
@@ -2192,6 +2201,79 @@
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790282866.sh",
       "timestamp": 1790282866,
       "touches": []
+    },
+    {
+      "body": "echo \"Loosen the offline install's exact Node pin so mise up tracks new releases\"\n\nmise_config=\"$HOME/.config/mise/config.toml\"\n\nif [[ -f $mise_config ]] && grep -qE '^node = \"[0-9]+\\.[0-9]+\\.[0-9]+\"$' \"$mise_config\"; then\n  sed -i -E 's/^node = \"[0-9]+\\.[0-9]+\\.[0-9]+\"$/node = \"latest\"/' \"$mise_config\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-09-26T21:11:07Z",
+      "description": "Loosen the offline install's exact Node pin so mise up tracks new releases",
+      "file": "1790457067.sh",
+      "lineCount": 7,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1790457067.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790457067.sh",
+      "timestamp": 1790457067,
+      "touches": [
+        "~/.config/mise/config.toml"
+      ]
+    },
+    {
+      "body": "echo \"Move Elsewhen, the world clock, into Omarchy as omarchy.elsewhen\"\n\n# The widget keeps its entry, and with it the cities and settings stored there.\nconfig_file=\"$HOME/.config/omarchy/shell.json\"\nif [[ -s $config_file ]]; then\n  tmp=$(mktemp)\n  jq '\n    def rename:\n      if . == \"omacom.elsewhen\" then \"omarchy.elsewhen\"\n      elif type == \"object\" and .id == \"omacom.elsewhen\" then .id = \"omarchy.elsewhen\"\n      end;\n\n    if (.bar.layout | type) == \"object\" then .bar.layout |= map_values(if type == \"array\" then map(rename) end) end\n    | if (.bar.centerAnchor | type) == \"string\" then .bar.centerAnchor |= rename end\n    | if (.plugins | type) == \"array\" then .plugins |= map(rename) end\n    | if (.disabledPlugins | type) == \"array\" then .disabledPlugins |= map(rename) end\n  ' \"$config_file\" >\"$tmp\"\n  mv \"$tmp\" \"$config_file\"\nfi\n\n# Dev checkouts found the packaged plugin through this link; one the user made\n# elsewhere is left alone.\nuser_plugin=\"$HOME/.config/omarchy/plugins/omacom.elsewhen\"\nif [[ -L $user_plugin && $(readlink \"$user_plugin\") == /usr/share/omarchy/* ]]; then\n  rm \"$user_plugin\"\nfi\n\nrm -rf \"${XDG_CACHE_HOME:-$HOME/.cache}/omacom-elsewhen\"\n\nomarchy-pkg-drop elsewhen",
+      "bodyTruncated": false,
+      "date": "2026-09-27T17:03:54Z",
+      "description": "Move Elsewhen, the world clock, into Omarchy as omarchy.elsewhen",
+      "file": "1790528634.sh",
+      "lineCount": 30,
+      "packagesAdded": [],
+      "packagesRemoved": [
+        "elsewhen"
+      ],
+      "path": "migrations/1790528634.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790528634.sh",
+      "timestamp": 1790528634,
+      "touches": [
+        "/usr/share/omarchy/",
+        "~/.cache",
+        "~/.config/omarchy/plugins/omacom.elsewhen",
+        "~/.config/omarchy/shell.json"
+      ]
+    },
+    {
+      "body": "echo \"Install Monologue, the webcam recorder\"\n\nif [[ ! -f $HOME/.local/state/omarchy/preinstalls-removed ]]; then\n  omarchy-pkg-add monologue\nfi",
+      "bodyTruncated": false,
+      "date": "2026-09-27T20:10:57Z",
+      "description": "Install Monologue, the webcam recorder",
+      "file": "1790539857.sh",
+      "lineCount": 5,
+      "packagesAdded": [
+        "monologue"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1790539857.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790539857.sh",
+      "timestamp": 1790539857,
+      "touches": [
+        "~/.local/state/omarchy/preinstalls-removed"
+      ]
+    },
+    {
+      "body": "echo \"Install Hype, the Markdown presentation app\"\n\nif [[ ! -f $HOME/.local/state/omarchy/preinstalls-removed ]]; then\n  omarchy-pkg-add hype\nfi",
+      "bodyTruncated": false,
+      "date": "2026-09-27T20:47:49Z",
+      "description": "Install Hype, the Markdown presentation app",
+      "file": "1790542069.sh",
+      "lineCount": 5,
+      "packagesAdded": [
+        "hype"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1790542069.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790542069.sh",
+      "timestamp": 1790542069,
+      "touches": [
+        "~/.local/state/omarchy/preinstalls-removed"
+      ]
     }
   ],
   "prerelease": true,

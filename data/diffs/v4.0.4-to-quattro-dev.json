@@ -6,6 +6,10 @@
         "label": "Select all"
       },
       {
+        "chord": "SUPER + CTRL + ALT + E",
+        "label": "World clock"
+      },
+      {
         "chord": "SUPER + CTRL + ALT + F",
         "label": "Toggle full screen desktop"
       },
@@ -25,6 +29,46 @@
     "changedAction": [
       {
         "action": [
+          "omarchy-shell media previous",
+          "{ ipc = \"media.previous\" }"
+        ],
+        "chord": "ALT + SHIFT + XF86AudioPlay",
+        "label": "Previous track"
+      },
+      {
+        "action": [
+          "omarchy-shell media next",
+          "{ ipc = \"media.next\" }"
+        ],
+        "chord": "ALT + XF86AudioPlay",
+        "label": "Next track"
+      },
+      {
+        "action": [
+          "omarchy-shell notifications invokeLast",
+          "{ ipc = \"notifications.invokeLast\" }"
+        ],
+        "chord": "SUPER + ALT + comma",
+        "label": "Invoke last notification"
+      },
+      {
+        "action": [
+          "omarchy-shell notifications showHistory",
+          "{ ipc = \"notifications.showHistory\" }"
+        ],
+        "chord": "SUPER + SHIFT + ALT + comma",
+        "label": "Open notification history"
+      },
+      {
+        "action": [
+          "omarchy-menu toggle apps",
+          "{ menu = \"apps\" }"
+        ],
+        "chord": "SUPER + ALT + SPACE",
+        "label": "Apps menu"
+      },
+      {
+        "action": [
           "universal_clipboard_shortcut(\"CTRL\", \"C\", \"CTRL\", \"Insert\")",
           "universal_clipboard_shortcut(\"CTRL\", \"C\", \"CTRL SHIFT\", \"C\")"
         ],
@@ -33,21 +77,269 @@
       },
       {
         "action": [
+          "omarchy-shell notifications dismissOne",
+          "{ ipc = \"notifications.dismissOne\" }"
+        ],
+        "chord": "SUPER + comma",
+        "label": "Dismiss last notification"
+      },
+      {
+        "action": [
+          "omarchy-shell shell toggle omarchy.audio",
+          "{ panel = \"omarchy.audio\" }"
+        ],
+        "chord": "SUPER + CTRL + A",
+        "label": "Audio"
+      },
+      {
+        "action": [
+          "omarchy-shell shell toggle omarchy.clock",
+          "{ panel = \"omarchy.clock\" }"
+        ],
+        "chord": "SUPER + CTRL + ALT + D",
+        "label": "Calendar"
+      },
+      {
+        "action": [
+          "omarchy-shell shell toggle omarchy.bluetooth",
+          "{ panel = \"omarchy.bluetooth\" }"
+        ],
+        "chord": "SUPER + CTRL + B",
+        "label": "Bluetooth"
+      },
+      {
+        "action": [
+          "omarchy-menu toggle capture",
+          "{ menu = \"capture\" }"
+        ],
+        "chord": "SUPER + CTRL + C",
+        "label": "Capture menu"
+      },
+      {
+        "action": [
+          "omarchy-shell shell toggle omarchy.monitor",
+          "{ panel = \"omarchy.monitor\" }"
+        ],
+        "chord": "SUPER + CTRL + D",
+        "label": "Display"
+      },
+      {
+        "action": [
+          "omarchy-shell shell toggle omarchy.emojis",
+          "{ panel = \"omarchy.emojis\" }"
+        ],
+        "chord": "SUPER + CTRL + E",
+        "label": "Emojis"
+      },
+      {
+        "action": [
+          "omarchy-menu toggle hardware",
+          "{ menu = \"hardware\" }"
+        ],
+        "chord": "SUPER + CTRL + H",
+        "label": "Hardware menu"
+      },
+      {
+        "action": [
+          "omarchy-menu toggle toggle",
+          "{ menu = \"toggle\" }"
+        ],
+        "chord": "SUPER + CTRL + O",
+        "label": "Toggle menu"
+      },
+      {
+        "action": [
+          "omarchy-shell shell toggle omarchy.power",
+          "{ panel = \"omarchy.power\" }"
+        ],
+        "chord": "SUPER + CTRL + P",
+        "label": "Power"
+      },
+      {
+        "action": [
+          "omarchy-menu toggle reminder-set",
+          "{ menu = \"reminder-set\" }"
+        ],
+        "chord": "SUPER + CTRL + R",
+        "label": "Set reminder"
+      },
+      {
+        "action": [
+          "omarchy-menu toggle share",
+          "{ menu = \"share\" }"
+        ],
+        "chord": "SUPER + CTRL + S",
+        "label": "Share"
+      },
+      {
+        "action": [
+          "omarchy-menu toggle theme",
+          "{ menu = \"theme\" }"
+        ],
+        "chord": "SUPER + SHIFT + CTRL + SPACE",
+        "label": "Theme menu"
+      },
+      {
+        "action": [
+          "omarchy-menu toggle background",
+          "{ menu = \"background\" }"
+        ],
+        "chord": "SUPER + CTRL + SPACE",
+        "label": "Background switcher"
+      },
+      {
+        "action": [
+          "omarchy-shell shell toggle omarchy.clipboard",
+          "{ panel = \"omarchy.clipboard\" }"
+        ],
+        "chord": "SUPER + CTRL + V",
+        "label": "Clipboard manager"
+      },
+      {
+        "action": [
+          "omarchy-shell shell toggle omarchy.network",
+          "{ panel = \"omarchy.network\" }"
+        ],
+        "chord": "SUPER + CTRL + W",
+        "label": "Network"
+      },
+      {
+        "action": [
+          "omarchy-menu toggle system",
+          "{ menu = \"system\" }"
+        ],
+        "chord": "SUPER + ESCAPE",
+        "label": "System menu"
+      },
+      {
+        "action": [
+          "{ omarchy = \"terminal\" }",
+          "o.launch_terminal()"
+        ],
+        "chord": "SUPER + RETURN",
+        "label": "Terminal"
+      },
+      {
+        "action": [
+          "omarchy-menu toggle root",
+          "{ menu = \"root\" }"
+        ],
+        "chord": "SUPER + SHIFT + code:201",
+        "label": "Omarchy menu"
+      },
+      {
+        "action": [
+          "omarchy-shell notifications dismissAll",
+          "{ ipc = \"notifications.dismissAll\" }"
+        ],
+        "chord": "SUPER + SHIFT + comma",
+        "label": "Dismiss all notifications"
+      },
+      {
+        "action": [
+          "omarchy-menu toggle",
+          "{ menu = \"root\" }"
+        ],
+        "chord": "SUPER + SPACE",
+        "label": "Omarchy menu"
+      },
+      {
+        "action": [
           "universal_clipboard_shortcut(\"CTRL\", \"V\", \"SHIFT\", \"Insert\")",
           "universal_clipboard_shortcut(\"CTRL\", \"V\", \"CTRL SHIFT\", \"V\")"
         ],
         "chord": "SUPER + V",
         "label": "Universal paste"
+      },
+      {
+        "action": [
+          "omarchy-audio-output-volume lower",
+          "{ audio = \"lower\" }"
+        ],
+        "chord": "XF86AudioLowerVolume",
+        "label": "Volume down"
+      },
+      {
+        "action": [
+          "omarchy-audio-output-volume mute-toggle",
+          "{ audio = \"mute-toggle\" }"
+        ],
+        "chord": "XF86AudioMute",
+        "label": "Mute"
+      },
+      {
+        "action": [
+          "omarchy-shell media next",
+          "{ ipc = \"media.next\" }"
+        ],
+        "chord": "XF86AudioNext",
+        "label": "Next track"
+      },
+      {
+        "action": [
+          "omarchy-shell media playPause",
+          "{ ipc = \"media.playPause\" }"
+        ],
+        "chord": "XF86AudioPause",
+        "label": "Pause"
+      },
+      {
+        "action": [
+          "omarchy-shell media playPause",
+          "{ ipc = \"media.playPause\" }"
+        ],
+        "chord": "XF86AudioPlay",
+        "label": "Play"
+      },
+      {
+        "action": [
+          "omarchy-shell media previous",
+          "{ ipc = \"media.previous\" }"
+        ],
+        "chord": "XF86AudioPrev",
+        "label": "Previous track"
+      },
+      {
+        "action": [
+          "omarchy-audio-output-volume raise",
+          "{ audio = \"raise\" }"
+        ],
+        "chord": "XF86AudioRaiseVolume",
+        "label": "Volume up"
+      },
+      {
+        "action": [
+          "omarchy-brightness-display 5%-",
+          "{ brightness = \"lower\" }"
+        ],
+        "chord": "XF86MonBrightnessDown",
+        "label": "Brightness down"
+      },
+      {
+        "action": [
+          "omarchy-brightness-display +5%",
+          "{ brightness = \"raise\" }"
+        ],
+        "chord": "XF86MonBrightnessUp",
+        "label": "Brightness up"
+      },
+      {
+        "action": [
+          "omarchy-menu toggle system",
+          "{ menu = \"system\" }"
+        ],
+        "chord": "XF86PowerOff",
+        "label": "Power menu"
       }
     ],
     "counts": {
-      "added": 5,
-      "changedAction": 2,
+      "added": 6,
+      "changedAction": 38,
       "from": 228,
       "fromRecords": 228,
       "removed": 0,
-      "to": 233,
-      "toRecords": 233
+      "to": 234,
+      "toRecords": 234
     },
     "note": null,
     "removed": []
@@ -56,6 +348,7 @@
     "added": [
       "omarchy-ascii",
       "omarchy-branding-about-animation",
+      "omarchy-cmd-default-browser",
       "omarchy-crash-mute",
       "omarchy-hw-dell-xps13-sidecar-amps",
       "omarchy-hw-elgato-camlink-4k",
@@ -67,8 +360,13 @@
       "omarchy-remove-ai-grok-bot",
       "omarchy-remove-ai-lm-studio",
       "omarchy-remove-ai-ollama",
+      "omarchy-remove-service-ssh-agent",
       "omarchy-security-functions",
+      "omarchy-setup-security-ssh-agent",
+      "omarchy-theme-set-herdr-machines",
+      "omarchy-theme-set-hunk",
       "omarchy-toggle-fullscreen-desktop",
+      "omarchy-toggle-theme-sync",
       "omarchy-update-pacman",
       "omarchy-windows-key"
     ],
@@ -81,6 +379,15 @@
           ]
         },
         "name": "omarchy-capture-screenshot"
+      },
+      {
+        "fields": {
+          "args": [
+            "",
+            "[terminal-pid]"
+          ]
+        },
+        "name": "omarchy-cmd-terminal-cwd"
       },
       {
         "fields": {
@@ -145,6 +452,33 @@
           ]
         },
         "name": "omarchy-install-service-dropbox"
+      },
+      {
+        "fields": {
+          "args": [
+            "[command...]",
+            "[--pid=<terminal-pid>] [command...]"
+          ]
+        },
+        "name": "omarchy-launch-terminal"
+      },
+      {
+        "fields": {
+          "args": [
+            "[--selected <image>] [--print-name] [--show-labels] [--filterable] [--lazy-thumbnails] [--preload] [--cache-only] <image-dir>...",
+            "[--selected <image>] [--print-name] [--show-labels] [--filterable] [--lazy-thumbnails] [--preload] [--cache-only] [--print-rows] <image-dir>..."
+          ]
+        },
+        "name": "omarchy-menu-images"
+      },
+      {
+        "fields": {
+          "summary": [
+            "Disable the OpenSSH server, close the firewall port, and optionally remove authorized keys",
+            "Disable the OpenSSH server, remove standard firewall rules, and optionally remove authorized keys"
+          ]
+        },
+        "name": "omarchy-remove-security-sshd"
       },
       {
         "fields": {
@@ -214,11 +548,11 @@
       }
     ],
     "counts": {
-      "added": 17,
-      "changed": 10,
+      "added": 23,
+      "changed": 14,
       "from": 444,
       "removed": 0,
-      "to": 461
+      "to": 467
     },
     "removed": []
   },
@@ -232,8 +566,11 @@
       "remove.ai.grok-bot",
       "remove.ai.lm-studio",
       "remove.ai.ollama",
+      "remove.service.ssh-agent",
       "setup.default.agent.agy",
-      "setup.default.agent.ori"
+      "setup.default.agent.ori",
+      "setup.security.ssh-agent",
+      "trigger.toggle.theme-sync"
     ],
     "changed": [
       {
@@ -1004,14 +1341,23 @@
           ]
         },
         "id": "setup.default.terminal.kitty"
+      },
+      {
+        "fields": {
+          "action": [
+            "theme=$(omarchy-theme-switcher); [[ -n $theme ]] && omarchy-theme-set \"$theme\"",
+            "omarchy-shell shell summon omarchy.image-picker '{\"source\":\"themes\"}'"
+          ]
+        },
+        "id": "style.theme"
       }
     ],
     "counts": {
-      "added": 9,
-      "changed": 85,
+      "added": 12,
+      "changed": 86,
       "from": 333,
       "removed": 2,
-      "to": 340
+      "to": 343
     },
     "removed": [
       "remove.dictation",
@@ -1021,9 +1367,9 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 22,
+      "new": 27,
       "removed": 0,
-      "to": 128
+      "to": 133
     },
     "new": [
       {
@@ -1065,6 +1411,11 @@
         "date": "2026-08-31T08:07:15Z",
         "description": "Remove legacy temporary passwordless sudo grants",
         "file": "1788163635.sh"
+      },
+      {
+        "date": "2026-09-01T16:11:57Z",
+        "description": "Replace the YT6801 vendor DKMS driver with the upstream kernel driver",
+        "file": "1788279117.sh"
       },
       {
         "date": "2026-09-05T07:57:40Z",
@@ -1128,13 +1479,33 @@
       },
       {
         "date": "2026-09-22T02:09:32Z",
-        "description": "Install Elsewhen, the world clock plugin",
+        "description": "Put Elsewhen, the world clock, on the bar",
         "file": "1790042972.sh"
       },
       {
         "date": "2026-09-24T20:47:46Z",
         "description": "Apply the NVIDIA video driver fix on hybrid laptops",
         "file": "1790282866.sh"
+      },
+      {
+        "date": "2026-09-26T21:11:07Z",
+        "description": "Loosen the offline install's exact Node pin so mise up tracks new releases",
+        "file": "1790457067.sh"
+      },
+      {
+        "date": "2026-09-27T17:03:54Z",
+        "description": "Move Elsewhen, the world clock, into Omarchy as omarchy.elsewhen",
+        "file": "1790528634.sh"
+      },
+      {
+        "date": "2026-09-27T20:10:57Z",
+        "description": "Install Monologue, the webcam recorder",
+        "file": "1790539857.sh"
+      },
+      {
+        "date": "2026-09-27T20:47:49Z",
+        "description": "Install Hype, the Markdown presentation app",
+        "file": "1790542069.sh"
       }
     ],
     "removed": []

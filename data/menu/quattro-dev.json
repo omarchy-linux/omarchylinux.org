@@ -1,5 +1,5 @@
 {
-  "count": 340,
+  "count": 343,
   "flat": [
     {
       "action": "omarchy-launch-about",
@@ -2959,6 +2959,24 @@
       "when": "omarchy-pkg-present dropbox"
     },
     {
+      "action": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-service-ssh-agent",
+      "aliases": [],
+      "checked": null,
+      "command": null,
+      "declared": true,
+      "depth": 2,
+      "icon": "󰣀",
+      "iconFont": null,
+      "id": "remove.service.ssh-agent",
+      "kind": "action",
+      "label": "SSH Agent",
+      "parent": "remove.service",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": "systemctl --user -q is-enabled gcr-ssh-agent.socket"
+    },
+    {
       "action": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-service-tailscale",
       "aliases": [],
       "checked": null,
@@ -4233,6 +4251,24 @@
       "when": null
     },
     {
+      "action": "omarchy-launch-floating-terminal-with-presentation omarchy-setup-security-ssh-agent",
+      "aliases": [],
+      "checked": null,
+      "command": null,
+      "declared": true,
+      "depth": 2,
+      "icon": "󰣀",
+      "iconFont": null,
+      "id": "setup.security.ssh-agent",
+      "kind": "action",
+      "label": "SSH Agent",
+      "parent": "setup.security",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": "! systemctl --user -q is-enabled gcr-ssh-agent.socket"
+    },
+    {
       "action": "omarchy-launch-floating-terminal-with-presentation omarchy-setup-security-sshd",
       "aliases": [],
       "checked": null,
@@ -4614,7 +4650,7 @@
       "when": null
     },
     {
-      "action": "theme=$(omarchy-theme-switcher); [[ -n $theme ]] && omarchy-theme-set \"$theme\"",
+      "action": "omarchy-shell shell summon omarchy.image-picker '{\"source\":\"themes\"}'",
       "aliases": [
         "theme",
         "themes"
@@ -5595,6 +5631,24 @@
       "target": null,
       "title": null,
       "when": null
+    },
+    {
+      "action": "omarchy-toggle-theme-sync",
+      "aliases": [],
+      "checked": null,
+      "command": null,
+      "declared": true,
+      "depth": 2,
+      "icon": "󰸌",
+      "iconFont": null,
+      "id": "trigger.toggle.theme-sync",
+      "kind": "action",
+      "label": "Herdr Theme Sync",
+      "parent": "trigger.toggle",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": "omarchy-theme-set-herdr-machines --available"
     },
     {
       "action": "omarchy-toggle-bar",
@@ -6923,6 +6977,25 @@
               "when": null
             },
             {
+              "action": "omarchy-toggle-theme-sync",
+              "aliases": [],
+              "checked": null,
+              "children": [],
+              "command": null,
+              "declared": true,
+              "depth": 2,
+              "icon": "󰸌",
+              "iconFont": null,
+              "id": "trigger.toggle.theme-sync",
+              "kind": "action",
+              "label": "Herdr Theme Sync",
+              "parent": "trigger.toggle",
+              "provider": null,
+              "target": null,
+              "title": null,
+              "when": "omarchy-theme-set-herdr-machines --available"
+            },
+            {
               "action": "omarchy-toggle-nightlight",
               "aliases": [],
               "checked": null,
@@ -7325,7 +7398,7 @@
       "checked": null,
       "children": [
         {
-          "action": "theme=$(omarchy-theme-switcher); [[ -n $theme ]] && omarchy-theme-set \"$theme\"",
+          "action": "omarchy-shell shell summon omarchy.image-picker '{\"source\":\"themes\"}'",
           "aliases": [
             "theme",
             "themes"
@@ -8845,6 +8918,25 @@
               "target": null,
               "title": null,
               "when": null
+            },
+            {
+              "action": "omarchy-launch-floating-terminal-with-presentation omarchy-setup-security-ssh-agent",
+              "aliases": [],
+              "checked": null,
+              "children": [],
+              "command": null,
+              "declared": true,
+              "depth": 2,
+              "icon": "󰣀",
+              "iconFont": null,
+              "id": "setup.security.ssh-agent",
+              "kind": "action",
+              "label": "SSH Agent",
+              "parent": "setup.security",
+              "provider": null,
+              "target": null,
+              "title": null,
+              "when": "! systemctl --user -q is-enabled gcr-ssh-agent.socket"
             },
             {
               "action": "omarchy-launch-floating-terminal-with-presentation omarchy-sudo-passwordless",
@@ -11068,6 +11160,25 @@
               "target": null,
               "title": null,
               "when": "omarchy-pkg-present tailscale"
+            },
+            {
+              "action": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-service-ssh-agent",
+              "aliases": [],
+              "checked": null,
+              "children": [],
+              "command": null,
+              "declared": true,
+              "depth": 2,
+              "icon": "󰣀",
+              "iconFont": null,
+              "id": "remove.service.ssh-agent",
+              "kind": "action",
+              "label": "SSH Agent",
+              "parent": "remove.service",
+              "provider": null,
+              "target": null,
+              "title": null,
+              "when": "systemctl --user -q is-enabled gcr-ssh-agent.socket"
             }
           ],
           "command": null,

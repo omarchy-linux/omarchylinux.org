@@ -1,7 +1,7 @@
 {
  "source": "github.com/omacom/omarchy",
- "fetchedAt": "2026-09-28T11:01:56.145149+00:00",
- "derivedAt": "2026-09-28T11:09:11.827379+00:00",
+ "fetchedAt": "2026-09-29T10:46:21.759932+00:00",
+ "derivedAt": "2026-09-29T10:54:01.752839+00:00",
  "quirkScriptRef": "v4.0.4",
  "matchScope": "issue/discussion title + body (opening post only)",
  "components": [
@@ -10,9 +10,9 @@
    "title": "Displays and multi-monitor",
    "matchPattern": "\\bmonitor\\w*|\\bdisplay\\w*|hidpi|scaling|fractional|external\\s+display|\\bdock\\w*|thunderbolt",
    "counts": {
-    "issues": 1296,
-    "open": 729,
-    "closed": 567,
+    "issues": 1306,
+    "open": 738,
+    "closed": 568,
     "discussions": 375
    },
    "topIssues": [
@@ -87,7 +87,7 @@
      "title": "4.0.1: `shell_succeeds` fix enables NVDEC VAAPI routing on hybrid laptops with Intel-driven displays, corrupting browser video",
      "url": "https://github.com/omacom/omarchy/issues/8215",
      "state": "OPEN",
-     "comments": 29,
+     "comments": 30,
      "reactions": 14,
      "createdAt": "2026-08-25T14:14:21Z",
      "closedAt": null
@@ -130,7 +130,7 @@
      "title": "Macbook Pro 2020 WIFI Issues",
      "url": "https://github.com/omacom/omarchy/issues/1806",
      "state": "OPEN",
-     "comments": 34,
+     "comments": 35,
      "reactions": 0,
      "createdAt": "2025-09-19T15:34:21Z",
      "closedAt": null
@@ -281,11 +281,111 @@
    ],
    "recentIssues": [
     {
+     "number": 13727,
+     "title": "T2 Macs get vulkan-asahi installed: Vulkan detection matches \"Non-VGA\" Apple T2 devices as an Apple GPU",
+     "url": "https://github.com/omacom/omarchy/issues/13727",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-29T07:17:08Z",
+     "closedAt": null
+    },
+    {
+     "number": 13707,
+     "title": "Launch feedback OSD can get stuck on screen indefinitely (duration: 0 with no fallback closer)",
+     "url": "https://github.com/omacom/omarchy/issues/13707",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-29T03:02:59Z",
+     "closedAt": null
+    },
+    {
+     "number": 13701,
+     "title": "omarchy-sleep-lock.service logs status=1/FAILURE on every sleep transition (systemd-inhibit restart races logind sleep state)",
+     "url": "https://github.com/omacom/omarchy/issues/13701",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-29T00:20:20Z",
+     "closedAt": null
+    },
+    {
+     "number": 13700,
+     "title": "Bar draws over the screensaver since it moved to a special workspace",
+     "url": "https://github.com/omacom/omarchy/issues/13700",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-29T00:14:29Z",
+     "closedAt": null
+    },
+    {
+     "number": 13586,
+     "title": "Hybrid Intel+NVIDIA: forced NVIDIA VA-API (LIBVA_DRIVER_NAME=nvidia) crashes browser GPU process on video playback",
+     "url": "https://github.com/omacom/omarchy/issues/13586",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-28T18:24:49Z",
+     "closedAt": null
+    },
+    {
+     "number": 13578,
+     "title": "Cloned bar: stock Bar is built then destroyed on every start, leaving delayed injectProps() calls on a dead object",
+     "url": "https://github.com/omacom/omarchy/issues/13578",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T17:47:16Z",
+     "closedAt": null
+    },
+    {
+     "number": 13577,
+     "title": "Framework Desktop: shutdown hangs on Omarchy logo with Thunderbolt display (Studio Display XDR) on 4.0.4",
+     "url": "https://github.com/omacom/omarchy/issues/13577",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T17:46:39Z",
+     "closedAt": null
+    },
+    {
+     "number": 13562,
+     "title": "Menu (Super+Space) needs several presses to open after focus moves to another monitor",
+     "url": "https://github.com/omacom/omarchy/issues/13562",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-28T16:10:51Z",
+     "closedAt": null
+    },
+    {
+     "number": 13558,
+     "title": "omarchy-windows-vm launch refuses ~/Windows once dockurr sets setgid (chmod 0700 leaves mode 2700)",
+     "url": "https://github.com/omacom/omarchy/issues/13558",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T15:15:13Z",
+     "closedAt": null
+    },
+    {
+     "number": 13549,
+     "title": "Hybrid AMD+NVIDIA laptops: global LIBVA_DRIVER_NAME=nvidia makes Firefox decode video on the CPU",
+     "url": "https://github.com/omacom/omarchy/issues/13549",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T13:35:26Z",
+     "closedAt": null
+    },
+    {
      "number": 13510,
      "title": "Intel MacBooks: Black screen after LUKS decryption due to missing early KMS (i915)",
      "url": "https://github.com/omacom/omarchy/issues/13510",
      "state": "OPEN",
-     "comments": 0,
+     "comments": 1,
      "reactions": 0,
      "createdAt": "2026-09-28T05:56:08Z",
      "closedAt": null
@@ -329,112 +429,12 @@
      "reactions": 0,
      "createdAt": "2026-09-27T19:34:43Z",
      "closedAt": null
-    },
-    {
-     "number": 13437,
-     "title": "MOMENTUM 4 stereo silence after sleep: reset and re-pair restored AAC playback",
-     "url": "https://github.com/omacom/omarchy/issues/13437",
-     "state": "OPEN",
-     "comments": 4,
-     "reactions": 0,
-     "createdAt": "2026-09-27T19:10:31Z",
-     "closedAt": null
-    },
-    {
-     "number": 13425,
-     "title": "omarchy-agent-usage-codex: 4s RPC timeout intermittently drops Codex usage/limits",
-     "url": "https://github.com/omacom/omarchy/issues/13425",
-     "state": "OPEN",
-     "comments": 2,
-     "reactions": 0,
-     "createdAt": "2026-09-27T17:02:35Z",
-     "closedAt": null
-    },
-    {
-     "number": 13420,
-     "title": "Hybrid NVIDIA laptop: HDMI (dGPU-wired) external monitor corrupted after deep suspend; s2idle workaround",
-     "url": "https://github.com/omacom/omarchy/issues/13420",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-27T16:30:26Z",
-     "closedAt": null
-    },
-    {
-     "number": 13411,
-     "title": "Codex auto-review launch bypasses the shared background server",
-     "url": "https://github.com/omacom/omarchy/issues/13411",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-27T14:50:06Z",
-     "closedAt": null
-    },
-    {
-     "number": 13410,
-     "title": "Fingerprint-unlock crash (pam_fprintd) leaves orphaned duplicate Quickshell bar, unmanageable by omarchy restart shell",
-     "url": "https://github.com/omacom/omarchy/issues/13410",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-27T14:25:39Z",
-     "closedAt": null
-    },
-    {
-     "number": 13395,
-     "title": "Hibernate resume fails (amdgpu_pmops_freeze -> -62, GPU mode1 reset failed) on AMD RDNA2 dGPU desktops - initramfs kms load blocks the resume hook",
-     "url": "https://github.com/omacom/omarchy/issues/13395",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-27T10:09:37Z",
-     "closedAt": null
-    },
-    {
-     "number": 13393,
-     "title": "Live ISO kernel (linux-t2) has no amdgpu — black screen on AMD APU laptops (HP 255 G10 / Ryzen 7 7730U)",
-     "url": "https://github.com/omacom/omarchy/issues/13393",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-27T09:45:42Z",
-     "closedAt": null
-    },
-    {
-     "number": 13388,
-     "title": "DisplayPort audio ELD lost after S3 resume and lid transition while video remains connected",
-     "url": "https://github.com/omacom/omarchy/issues/13388",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-27T07:43:34Z",
-     "closedAt": null
-    },
-    {
-     "number": 13387,
-     "title": "About page shows incorrect storage usage",
-     "url": "https://github.com/omacom/omarchy/issues/13387",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-27T07:03:33Z",
-     "closedAt": null
-    },
-    {
-     "number": 13381,
-     "title": "Clock panel: hero date clipped by the card border when [font] base-size is below 12",
-     "url": "https://github.com/omacom/omarchy/issues/13381",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-27T03:16:35Z",
-     "closedAt": null
     }
    ],
    "commonErrorStrings": [
     {
      "signature": "❌ failed to start windows vm!",
-     "issues": 27,
+     "issues": 28,
      "example": "❌ Failed to start Windows VM!"
     },
     {
@@ -444,7 +444,7 @@
     },
     {
      "signature": "failed to start windows vm!",
-     "issues": 11,
+     "issues": 12,
      "example": "Failed to start Windows VM!"
     },
     {
@@ -600,9 +600,9 @@
    "title": "NVIDIA GPUs",
    "matchPattern": "nvidia|geforce|\\brtx\\s?\\d{3,4}\\b|\\bgtx\\s?\\d{3,4}\\b|nouveau|\\bcuda\\b|nvidia-open|nvidia-dkms|\\bnvk\\b",
    "counts": {
-    "issues": 888,
-    "open": 451,
-    "closed": 437,
+    "issues": 893,
+    "open": 455,
+    "closed": 438,
     "discussions": 116
    },
    "topIssues": [
@@ -697,7 +697,7 @@
      "title": "4.0.1: `shell_succeeds` fix enables NVDEC VAAPI routing on hybrid laptops with Intel-driven displays, corrupting browser video",
      "url": "https://github.com/omacom/omarchy/issues/8215",
      "state": "OPEN",
-     "comments": 29,
+     "comments": 30,
      "reactions": 14,
      "createdAt": "2026-08-25T14:14:21Z",
      "closedAt": null
@@ -868,11 +868,61 @@
    ],
    "recentIssues": [
     {
+     "number": 13586,
+     "title": "Hybrid Intel+NVIDIA: forced NVIDIA VA-API (LIBVA_DRIVER_NAME=nvidia) crashes browser GPU process on video playback",
+     "url": "https://github.com/omacom/omarchy/issues/13586",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-28T18:24:49Z",
+     "closedAt": null
+    },
+    {
+     "number": 13583,
+     "title": "omarchy hibernation remove leaves resume.conf behind, so a later setup keeps a stale resume_offset",
+     "url": "https://github.com/omacom/omarchy/issues/13583",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T18:19:59Z",
+     "closedAt": null
+    },
+    {
+     "number": 13558,
+     "title": "omarchy-windows-vm launch refuses ~/Windows once dockurr sets setgid (chmod 0700 leaves mode 2700)",
+     "url": "https://github.com/omacom/omarchy/issues/13558",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T15:15:13Z",
+     "closedAt": null
+    },
+    {
+     "number": 13549,
+     "title": "Hybrid AMD+NVIDIA laptops: global LIBVA_DRIVER_NAME=nvidia makes Firefox decode video on the CPU",
+     "url": "https://github.com/omacom/omarchy/issues/13549",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T13:35:26Z",
+     "closedAt": null
+    },
+    {
+     "number": 13535,
+     "title": "Launch OSD (\"Launching <app>…\") can stay on screen forever",
+     "url": "https://github.com/omacom/omarchy/issues/13535",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T11:35:11Z",
+     "closedAt": null
+    },
+    {
      "number": 13510,
      "title": "Intel MacBooks: Black screen after LUKS decryption due to missing early KMS (i915)",
      "url": "https://github.com/omacom/omarchy/issues/13510",
      "state": "OPEN",
-     "comments": 0,
+     "comments": 1,
      "reactions": 0,
      "createdAt": "2026-09-28T05:56:08Z",
      "closedAt": null
@@ -966,56 +1016,6 @@
      "reactions": 0,
      "createdAt": "2026-09-26T19:04:01Z",
      "closedAt": null
-    },
-    {
-     "number": 13346,
-     "title": "Chrome Live Caption bubble is tiled into its own window",
-     "url": "https://github.com/omacom/omarchy/issues/13346",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-26T18:29:07Z",
-     "closedAt": null
-    },
-    {
-     "number": 13343,
-     "title": "Third-party bar widget never mounts while its keepLoaded service runs, and reload does not compile the widget QML",
-     "url": "https://github.com/omacom/omarchy/issues/13343",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-26T17:44:13Z",
-     "closedAt": null
-    },
-    {
-     "number": 13325,
-     "title": "problem got fixed by agent",
-     "url": "https://github.com/omacom/omarchy/issues/13325",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-26T13:44:18Z",
-     "closedAt": null
-    },
-    {
-     "number": 13302,
-     "title": "Root-Cause Investigation: Right-Side Status Bar Click Areas Become Misaligned After System Tray Item Removal",
-     "url": "https://github.com/omacom/omarchy/issues/13302",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-26T08:08:00Z",
-     "closedAt": null
-    },
-    {
-     "number": 13288,
-     "title": "linux-omarchy 7.2: 30s NVMe stalls behind Meteor Lake VMD (\"timeout, completion polled\")",
-     "url": "https://github.com/omacom/omarchy/issues/13288",
-     "state": "OPEN",
-     "comments": 2,
-     "reactions": 0,
-     "createdAt": "2026-09-26T01:45:49Z",
-     "closedAt": null
     }
    ],
    "commonErrorStrings": [
@@ -1028,6 +1028,11 @@
      "signature": "error: failed to commit transaction (failed to retrieve some files)",
      "issues": 7,
      "example": "error: failed to commit transaction (failed to retrieve some files)"
+    },
+    {
+     "signature": "❌ failed to start windows vm!",
+     "issues": 6,
+     "example": "❌ Failed to start Windows VM!"
     },
     {
      "signature": "warning: failed to retrieve some files",
@@ -1043,11 +1048,6 @@
      "signature": "info: encoder [nvenc] failed",
      "issues": 5,
      "example": "Info: Encoder [nvenc] failed"
-    },
-    {
-     "signature": "❌ failed to start windows vm!",
-     "issues": 5,
-     "example": "❌ Failed to start Windows VM!"
     },
     {
      "signature": "keyword can't work with non-legacy parsers. use eval.",
@@ -1075,6 +1075,16 @@
      "example": "Failed to enable unit: Unit sunshine.service does not exist"
     },
     {
+     "signature": "error:ui<path>:<n>] unable to initialize binding from pixmap",
+     "issues": 4,
+     "example": "ERROR:ui/ozone/common/native_pixmap_egl_binding.cc:76] Unable to initialize binding from pixmap"
+    },
+    {
+     "signature": "error:ui<path>:<n>] failed to create eglimage: egl_success",
+     "issues": 4,
+     "example": "ERROR:ui/gl/scoped_egl_image.cc:23] Failed to create EGLImage: EGL_SUCCESS"
+    },
+    {
      "signature": "please review the output above carefully, correct the error, and retry the update.",
      "issues": 3,
      "example": "Please review the output above carefully, correct the error, and retry the update."
@@ -1083,16 +1093,6 @@
      "signature": "usb usb<n>: pm: failed to suspend async: error -<n>",
      "issues": 3,
      "example": "usb usb1: PM: failed to suspend async: error -16"
-    },
-    {
-     "signature": "the system attempts to suspend but immediately wakes back up with the following errors in journalctl:",
-     "issues": 3,
-     "example": "The system attempts to suspend but immediately wakes back up with the following errors in journalctl:"
-    },
-    {
-     "signature": "ozoneimagebacking::produceskiaganesh failed to create gl representation",
-     "issues": 3,
-     "example": "OzoneImageBacking::ProduceSkiaGanesh failed to create GL representation"
     }
    ],
    "relatedQuirkScripts": [
@@ -1139,9 +1139,9 @@
    "title": "Boot, Limine and LUKS",
    "matchPattern": "limine|\\bboot\\b|\\bgrub\\b|\\buefi\\b|secure\\s+boot|\\bluks\\b|emergency\\s+mode|kernel\\s+panic",
    "counts": {
-    "issues": 796,
-    "open": 450,
-    "closed": 346,
+    "issues": 803,
+    "open": 456,
+    "closed": 347,
     "discussions": 209
    },
    "topIssues": [
@@ -1412,11 +1412,81 @@
    ],
    "recentIssues": [
     {
+     "number": 13704,
+     "title": "omarchy-dev does not install 05-omarchy-passwordless-revoke.hook, so no passwordless sudo grant can ever be published",
+     "url": "https://github.com/omacom/omarchy/issues/13704",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-29T01:31:29Z",
+     "closedAt": null
+    },
+    {
+     "number": 13689,
+     "title": "Factory reset drops other systems' boot entries from a shared ESP",
+     "url": "https://github.com/omacom/omarchy/issues/13689",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-28T22:08:46Z",
+     "closedAt": null
+    },
+    {
+     "number": 13589,
+     "title": "Add automatic T2 speaker DSP setup for MacBookPro15,1 installations",
+     "url": "https://github.com/omacom/omarchy/issues/13589",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T18:37:51Z",
+     "closedAt": null
+    },
+    {
+     "number": 13583,
+     "title": "omarchy hibernation remove leaves resume.conf behind, so a later setup keeps a stale resume_offset",
+     "url": "https://github.com/omacom/omarchy/issues/13583",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T18:19:59Z",
+     "closedAt": null
+    },
+    {
+     "number": 13577,
+     "title": "Framework Desktop: shutdown hangs on Omarchy logo with Thunderbolt display (Studio Display XDR) on 4.0.4",
+     "url": "https://github.com/omacom/omarchy/issues/13577",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T17:46:39Z",
+     "closedAt": null
+    },
+    {
+     "number": 13558,
+     "title": "omarchy-windows-vm launch refuses ~/Windows once dockurr sets setgid (chmod 0700 leaves mode 2700)",
+     "url": "https://github.com/omacom/omarchy/issues/13558",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T15:15:13Z",
+     "closedAt": null
+    },
+    {
+     "number": 13537,
+     "title": "Fresh installs ship an unused vanilla `linux` kernel alongside `linux-omarchy`; its auto-generated Limine entry eventually gets booted (btrfs corruption crash report)",
+     "url": "https://github.com/omacom/omarchy/issues/13537",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T11:56:50Z",
+     "closedAt": null
+    },
+    {
      "number": 13510,
      "title": "Intel MacBooks: Black screen after LUKS decryption due to missing early KMS (i915)",
      "url": "https://github.com/omacom/omarchy/issues/13510",
      "state": "OPEN",
-     "comments": 0,
+     "comments": 1,
      "reactions": 0,
      "createdAt": "2026-09-28T05:56:08Z",
      "closedAt": null
@@ -1490,82 +1560,12 @@
      "reactions": 0,
      "createdAt": "2026-09-27T09:45:42Z",
      "closedAt": null
-    },
-    {
-     "number": 13376,
-     "title": "omarchy update aborts with 'Refusing to use an unsafe ... inhibitor state path' on non-English locales (localized stat %F comparison)",
-     "url": "https://github.com/omacom/omarchy/issues/13376",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-27T01:59:24Z",
-     "closedAt": null
-    },
-    {
-     "number": 13367,
-     "title": "Dual boot with Windows: a clock in local time keeps new snapshots out of the Limine menu for hours",
-     "url": "https://github.com/omacom/omarchy/issues/13367",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-26T22:14:38Z",
-     "closedAt": null
-    },
-    {
-     "number": 13357,
-     "title": "kms hook kept on desktops with an idle iGPU: 139 MB of unused nouveau/amdgpu firmware per UKI, exhausting a 2 GB ESP",
-     "url": "https://github.com/omacom/omarchy/issues/13357",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-26T20:10:48Z",
-     "closedAt": null
-    },
-    {
-     "number": 13355,
-     "title": "omarchy-update-requires-free-space checks only /, never the ESP — a full /boot breaks booting with no warning",
-     "url": "https://github.com/omacom/omarchy/issues/13355",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-26T20:10:44Z",
-     "closedAt": null
-    },
-    {
-     "number": 13348,
-     "title": "linux-omarchy 7.2.5-3: kernel panic in idle task (Attempted to kill the idle task) on Alder Lake XPS 15 9520 — stock linux 7.2.3 stable",
-     "url": "https://github.com/omacom/omarchy/issues/13348",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-26T19:04:01Z",
-     "closedAt": null
-    },
-    {
-     "number": 13341,
-     "title": "linux-omarchy 7.2.5: external monitors on Thunderbolt/MST dock get wrong EDID or fail to modeset (Panther Lake, upstream xe regression)",
-     "url": "https://github.com/omacom/omarchy/issues/13341",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-26T17:12:53Z",
-     "closedAt": null
-    },
-    {
-     "number": 13317,
-     "title": "blank black screen",
-     "url": "https://github.com/omacom/omarchy/issues/13317",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-26T12:34:07Z",
-     "closedAt": null
     }
    ],
    "commonErrorStrings": [
     {
      "signature": "❌ failed to start windows vm!",
-     "issues": 11,
+     "issues": 12,
      "example": "❌ Failed to start Windows VM!"
     },
     {
@@ -1575,7 +1575,7 @@
     },
     {
      "signature": "failed to start windows vm!",
-     "issues": 4,
+     "issues": 5,
      "example": "Failed to start Windows VM!"
     },
     {
@@ -1701,9 +1701,9 @@
    "title": "Touchpad, keyboard and input",
    "matchPattern": "touchpad|trackpad|keyboard|libinput|gesture\\w*",
    "counts": {
-    "issues": 592,
-    "open": 309,
-    "closed": 283,
+    "issues": 597,
+    "open": 313,
+    "closed": 284,
     "discussions": 243
    },
    "topIssues": [
@@ -1970,6 +1970,56 @@
    ],
    "recentIssues": [
     {
+     "number": 13586,
+     "title": "Hybrid Intel+NVIDIA: forced NVIDIA VA-API (LIBVA_DRIVER_NAME=nvidia) crashes browser GPU process on video playback",
+     "url": "https://github.com/omacom/omarchy/issues/13586",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-28T18:24:49Z",
+     "closedAt": null
+    },
+    {
+     "number": 13583,
+     "title": "omarchy hibernation remove leaves resume.conf behind, so a later setup keeps a stale resume_offset",
+     "url": "https://github.com/omacom/omarchy/issues/13583",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T18:19:59Z",
+     "closedAt": null
+    },
+    {
+     "number": 13562,
+     "title": "Menu (Super+Space) needs several presses to open after focus moves to another monitor",
+     "url": "https://github.com/omacom/omarchy/issues/13562",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-28T16:10:51Z",
+     "closedAt": null
+    },
+    {
+     "number": 13554,
+     "title": "bin scripts: user-visible OSD strings are hardcoded English, no i18n path",
+     "url": "https://github.com/omacom/omarchy/issues/13554",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T14:46:28Z",
+     "closedAt": null
+    },
+    {
+     "number": 13534,
+     "title": "Dropdown in chromium keeps closing.",
+     "url": "https://github.com/omacom/omarchy/issues/13534",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T11:26:31Z",
+     "closedAt": null
+    },
+    {
      "number": 13502,
      "title": "Built-in keyboard on Fujitsu LIFEBOOK P727 is unresponsive at disk unlock prompt",
      "url": "https://github.com/omacom/omarchy/issues/13502",
@@ -2033,11 +2083,11 @@
      "number": 13281,
      "title": "Fullscreen Proton games lose the keyboard while the mouse stays",
      "url": "https://github.com/omacom/omarchy/issues/13281",
-     "state": "OPEN",
+     "state": "CLOSED",
      "comments": 0,
      "reactions": 0,
      "createdAt": "2026-09-26T00:35:43Z",
-     "closedAt": null
+     "closedAt": "2026-09-28T21:19:27Z"
     },
     {
      "number": 13274,
@@ -2067,56 +2117,6 @@
      "comments": 1,
      "reactions": 0,
      "createdAt": "2026-09-25T18:57:11Z",
-     "closedAt": null
-    },
-    {
-     "number": 13175,
-     "title": "Held Ctrl is lost during keyboard repeat in native Wayland apps when Omarchy's fcitx5 service is running",
-     "url": "https://github.com/omacom/omarchy/issues/13175",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-24T19:33:50Z",
-     "closedAt": null
-    },
-    {
-     "number": 13162,
-     "title": "UK timezone and keyboard selected at install, but locale stays en_US",
-     "url": "https://github.com/omacom/omarchy/issues/13162",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-24T16:30:51Z",
-     "closedAt": null
-    },
-    {
-     "number": 13157,
-     "title": "Dismissing the screensaver with the trackpad leaves the app underneath fullscreen (on_focus_under_fullscreen = 1 hands fullscreen to the window that gains focus)",
-     "url": "https://github.com/omacom/omarchy/issues/13157",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-24T14:59:04Z",
-     "closedAt": null
-    },
-    {
-     "number": 13032,
-     "title": "linux-omarchy completely lacks Android Binder IPC support (CONFIG_ANDROID_BINDER_IPC), breaking Waydroid out-of-the-box",
-     "url": "https://github.com/omacom/omarchy/issues/13032",
-     "state": "CLOSED",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-23T14:47:07Z",
-     "closedAt": "2026-09-24T16:32:04Z"
-    },
-    {
-     "number": 12994,
-     "title": "Keyboard layout and keyboard backlight don't persist across suspend/resume",
-     "url": "https://github.com/omacom/omarchy/issues/12994",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-23T03:29:00Z",
      "closedAt": null
     }
    ],
@@ -2280,8 +2280,8 @@
    "title": "Suspend, sleep and resume",
    "matchPattern": "\\bsuspend\\w*|\\bsleep\\b|s2idle|\\bhibernat\\w*|\\bresume\\b|\\blid\\b",
    "counts": {
-    "issues": 541,
-    "open": 363,
+    "issues": 546,
+    "open": 368,
     "closed": 178,
     "discussions": 83
    },
@@ -2381,7 +2381,7 @@
      "title": "Camera (IPU7-PTL / OV08X40) on ThinkPad X1 Carbon Gen 14: ACPI status=0, sensor invisible to Linux",
      "url": "https://github.com/omacom/omarchy/issues/6000",
      "state": "OPEN",
-     "comments": 23,
+     "comments": 24,
      "reactions": 1,
      "createdAt": "2026-05-30T12:37:49Z",
      "closedAt": null
@@ -2483,6 +2483,16 @@
      "closedAt": "2025-09-16T14:00:16Z"
     },
     {
+     "number": 4069,
+     "title": "MacbookPro 2015 Retina GPU Lockup/System Freeze Requires Reboot",
+     "url": "https://github.com/omacom/omarchy/issues/4069",
+     "state": "OPEN",
+     "comments": 14,
+     "reactions": 2,
+     "createdAt": "2026-01-03T19:51:07Z",
+     "closedAt": null
+    },
+    {
      "number": 4158,
      "title": "Hibernation is not working",
      "url": "https://github.com/omacom/omarchy/issues/4158",
@@ -2513,16 +2523,6 @@
      "closedAt": "2025-10-26T01:06:27Z"
     },
     {
-     "number": 4069,
-     "title": "MacbookPro 2015 Retina GPU Lockup/System Freeze Requires Reboot",
-     "url": "https://github.com/omacom/omarchy/issues/4069",
-     "state": "OPEN",
-     "comments": 13,
-     "reactions": 2,
-     "createdAt": "2026-01-03T19:51:07Z",
-     "closedAt": null
-    },
-    {
      "number": 7229,
      "title": "Fingerprint reader fails after suspend: fprintd reports \"Cannot run while suspended\"",
      "url": "https://github.com/omacom/omarchy/issues/7229",
@@ -2545,11 +2545,61 @@
    ],
    "recentIssues": [
     {
+     "number": 13704,
+     "title": "omarchy-dev does not install 05-omarchy-passwordless-revoke.hook, so no passwordless sudo grant can ever be published",
+     "url": "https://github.com/omacom/omarchy/issues/13704",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-29T01:31:29Z",
+     "closedAt": null
+    },
+    {
+     "number": 13701,
+     "title": "omarchy-sleep-lock.service logs status=1/FAILURE on every sleep transition (systemd-inhibit restart races logind sleep state)",
+     "url": "https://github.com/omacom/omarchy/issues/13701",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-29T00:20:20Z",
+     "closedAt": null
+    },
+    {
+     "number": 13689,
+     "title": "Factory reset drops other systems' boot entries from a shared ESP",
+     "url": "https://github.com/omacom/omarchy/issues/13689",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-28T22:08:46Z",
+     "closedAt": null
+    },
+    {
+     "number": 13597,
+     "title": "openai-codex-desktop 26.924.22138-1 can't open existing conversations (regression from 26.915.31945-1)",
+     "url": "https://github.com/omacom/omarchy/issues/13597",
+     "state": "OPEN",
+     "comments": 2,
+     "reactions": 2,
+     "createdAt": "2026-09-28T19:58:55Z",
+     "closedAt": null
+    },
+    {
+     "number": 13583,
+     "title": "omarchy hibernation remove leaves resume.conf behind, so a later setup keeps a stale resume_offset",
+     "url": "https://github.com/omacom/omarchy/issues/13583",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T18:19:59Z",
+     "closedAt": null
+    },
+    {
      "number": 13510,
      "title": "Intel MacBooks: Black screen after LUKS decryption due to missing early KMS (i915)",
      "url": "https://github.com/omacom/omarchy/issues/13510",
      "state": "OPEN",
-     "comments": 0,
+     "comments": 1,
      "reactions": 0,
      "createdAt": "2026-09-28T05:56:08Z",
      "closedAt": null
@@ -2643,56 +2693,6 @@
      "reactions": 0,
      "createdAt": "2026-09-26T19:25:13Z",
      "closedAt": null
-    },
-    {
-     "number": 13348,
-     "title": "linux-omarchy 7.2.5-3: kernel panic in idle task (Attempted to kill the idle task) on Alder Lake XPS 15 9520 — stock linux 7.2.3 stable",
-     "url": "https://github.com/omacom/omarchy/issues/13348",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-26T19:04:01Z",
-     "closedAt": null
-    },
-    {
-     "number": 13337,
-     "title": "omarchy update ends with '/usr/bin/setpriv' terminated by signal TERM",
-     "url": "https://github.com/omacom/omarchy/issues/13337",
-     "state": "CLOSED",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-26T16:43:08Z",
-     "closedAt": "2026-09-26T21:09:20Z"
-    },
-    {
-     "number": 13330,
-     "title": "External monitor via USB-C→DP dongle never recovers after suspend/replug on ThinkPad X1C Gen8 (Alpine Ridge TB3) — reboot-only, not an Omarchy bug",
-     "url": "https://github.com/omacom/omarchy/issues/13330",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-26T15:31:02Z",
-     "closedAt": null
-    },
-    {
-     "number": 13300,
-     "title": "Undocking with the lid closed suspends with no active output: black screen after resume (clamshell race)",
-     "url": "https://github.com/omacom/omarchy/issues/13300",
-     "state": "OPEN",
-     "comments": 3,
-     "reactions": 0,
-     "createdAt": "2026-09-26T07:46:33Z",
-     "closedAt": null
-    },
-    {
-     "number": 13297,
-     "title": "MacBookPro14,1: BCM4350 hybrid coexistence starves Bluetooth audio on 2.4 GHz Wi-Fi",
-     "url": "https://github.com/omacom/omarchy/issues/13297",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-26T06:58:57Z",
-     "closedAt": null
     }
    ],
    "commonErrorStrings": [
@@ -2742,14 +2742,14 @@
      "example": "PM: Some devices failed to suspend, or early wake event detected"
     },
     {
-     "signature": "brcmfmac <n>:<n>:<n>.<n>: brcmf_pcie_pm_enter_d<n>: timeout on response for entering d<n> substate",
-     "issues": 2,
-     "example": "brcmfmac 0000:01:00.0: brcmf_pcie_pm_enter_D3: Timeout on response for entering D3 substate"
-    },
-    {
      "signature": "brcmfmac <n>:<n>:<n>.<n>: pm: failed to suspend: error -<n>",
      "issues": 2,
      "example": "brcmfmac 0000:01:00.0: PM: failed to suspend: error -5"
+    },
+    {
+     "signature": "brcmfmac <n>:<n>:<n>.<n>: brcmf_pcie_pm_enter_d<n>: timeout on response for entering d<n> substate",
+     "issues": 2,
+     "example": "brcmfmac 0000:01:00.0: brcmf_pcie_pm_enter_D3: Timeout on response for entering D3 substate"
     },
     {
      "signature": "cannot find any crtc or sizes",
@@ -2834,8 +2834,8 @@
    "title": "AMD GPUs",
    "matchPattern": "\\bamdgpu\\b|\\bradeon\\b|\\brx\\s?[5-9]\\d{3}\\b|\\bvega\\b|\\brdna\\s?\\d?\\b|amd\\s+(gpu|graphics|igpu|apu)|strix\\s+halo|\\b(680m|780m|880m|890m)\\b",
    "counts": {
-    "issues": 491,
-    "open": 282,
+    "issues": 496,
+    "open": 287,
     "closed": 209,
     "discussions": 37
    },
@@ -3041,6 +3041,16 @@
      "closedAt": "2025-11-09T09:56:07Z"
     },
     {
+     "number": 4069,
+     "title": "MacbookPro 2015 Retina GPU Lockup/System Freeze Requires Reboot",
+     "url": "https://github.com/omacom/omarchy/issues/4069",
+     "state": "OPEN",
+     "comments": 14,
+     "reactions": 2,
+     "createdAt": "2026-01-03T19:51:07Z",
+     "closedAt": null
+    },
+    {
      "number": 3581,
      "title": "Default Ghostty Terminal Fails/Instantly Crashes on Legacy GPUs (e.g., ATI Radeon HD 5xxx)",
      "url": "https://github.com/omacom/omarchy/issues/3581",
@@ -3052,16 +3062,6 @@
      "fixedBy": [
       3711
      ]
-    },
-    {
-     "number": 4069,
-     "title": "MacbookPro 2015 Retina GPU Lockup/System Freeze Requires Reboot",
-     "url": "https://github.com/omacom/omarchy/issues/4069",
-     "state": "OPEN",
-     "comments": 13,
-     "reactions": 2,
-     "createdAt": "2026-01-03T19:51:07Z",
-     "closedAt": null
     },
     {
      "number": 11249,
@@ -3094,17 +3094,67 @@
      "closedAt": "2026-09-20T20:04:41Z"
     },
     {
-     "number": 2505,
-     "title": "fprintd des not workint?",
-     "url": "https://github.com/omacom/omarchy/issues/2505",
-     "state": "CLOSED",
-     "comments": 11,
+     "number": 12617,
+     "title": "amdgpu/TTM: kernel oops in `ttm_lru_bulk_move_tail()` (corrupt LRU `list_head`) from `amdgpu_cs_ioctl`",
+     "url": "https://github.com/omacom/omarchy/issues/12617",
+     "state": "OPEN",
+     "comments": 12,
      "reactions": 0,
-     "createdAt": "2025-10-17T13:36:13Z",
-     "closedAt": "2025-10-22T10:22:53Z"
+     "createdAt": "2026-09-20T08:55:40Z",
+     "closedAt": null
     }
    ],
    "recentIssues": [
+    {
+     "number": 13700,
+     "title": "Bar draws over the screensaver since it moved to a special workspace",
+     "url": "https://github.com/omacom/omarchy/issues/13700",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-29T00:14:29Z",
+     "closedAt": null
+    },
+    {
+     "number": 13577,
+     "title": "Framework Desktop: shutdown hangs on Omarchy logo with Thunderbolt display (Studio Display XDR) on 4.0.4",
+     "url": "https://github.com/omacom/omarchy/issues/13577",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T17:46:39Z",
+     "closedAt": null
+    },
+    {
+     "number": 13566,
+     "title": "Launch OSD toast (\"Launching X…\") can get stuck on screen indefinitely",
+     "url": "https://github.com/omacom/omarchy/issues/13566",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T16:34:13Z",
+     "closedAt": null
+    },
+    {
+     "number": 13562,
+     "title": "Menu (Super+Space) needs several presses to open after focus moves to another monitor",
+     "url": "https://github.com/omacom/omarchy/issues/13562",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-28T16:10:51Z",
+     "closedAt": null
+    },
+    {
+     "number": 13549,
+     "title": "Hybrid AMD+NVIDIA laptops: global LIBVA_DRIVER_NAME=nvidia makes Firefox decode video on the CPU",
+     "url": "https://github.com/omacom/omarchy/issues/13549",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T13:35:26Z",
+     "closedAt": null
+    },
     {
      "number": 13442,
      "title": "omarchy plugin clone leaves bar.centerAnchor pointing at the old widget id, silently disabling the center anchor",
@@ -3180,7 +3230,7 @@
      "title": "[MacBookPro16,1 T2] Hard power cut under heavy CPU load on battery — power-saver does not cap power draw (i9-9980HK)",
      "url": "https://github.com/omacom/omarchy/issues/13295",
      "state": "OPEN",
-     "comments": 3,
+     "comments": 5,
      "reactions": 0,
      "createdAt": "2026-09-26T06:47:11Z",
      "closedAt": null
@@ -3207,56 +3257,6 @@
      "fixedBy": [
       13350
      ]
-    },
-    {
-     "number": 13252,
-     "title": "`omarchy toggle bar on` hides the bar (on/off are inverted)",
-     "url": "https://github.com/omacom/omarchy/issues/13252",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-25T19:04:01Z",
-     "closedAt": null
-    },
-    {
-     "number": 13224,
-     "title": "amdgpu: kernel BUG at `amdgpu_object.c:213` — `amdgpu_bo_placement_from_domain` builds 5 placements (max 3) from Hyprland's `amdgpu_cs_ioctl`",
-     "url": "https://github.com/omacom/omarchy/issues/13224",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-25T13:50:58Z",
-     "closedAt": null
-    },
-    {
-     "number": 13222,
-     "title": "linux-omarchy 7.2.5: HDMI FRL link training fails on RX 9070 XT, no signal at 4K120",
-     "url": "https://github.com/omacom/omarchy/issues/13222",
-     "state": "OPEN",
-     "comments": 2,
-     "reactions": 0,
-     "createdAt": "2026-09-25T13:24:36Z",
-     "closedAt": null
-    },
-    {
-     "number": 13211,
-     "title": "i915 driver: USB-C dock display fails to re-detect after unplug/replug (kernel 7.2.3 regression)",
-     "url": "https://github.com/omacom/omarchy/issues/13211",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-25T09:22:36Z",
-     "closedAt": null
-    },
-    {
-     "number": 13210,
-     "title": "MacBookPro15,1: after a long S3, amdgpu SMU firmware fails to start and both displays stay black",
-     "url": "https://github.com/omacom/omarchy/issues/13210",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-25T09:15:04Z",
-     "closedAt": null
     }
    ],
    "commonErrorStrings": [
@@ -3362,9 +3362,9 @@
    "title": "Battery and power management",
    "matchPattern": "battery|\\bpower\\b|\\btlp\\b|charging",
    "counts": {
-    "issues": 427,
-    "open": 265,
-    "closed": 162,
+    "issues": 429,
+    "open": 266,
+    "closed": 163,
     "discussions": 127
    },
    "topIssues": [
@@ -3429,6 +3429,16 @@
      "closedAt": "2025-11-03T09:54:49Z"
     },
     {
+     "number": 6000,
+     "title": "Camera (IPU7-PTL / OV08X40) on ThinkPad X1 Carbon Gen 14: ACPI status=0, sensor invisible to Linux",
+     "url": "https://github.com/omacom/omarchy/issues/6000",
+     "state": "OPEN",
+     "comments": 24,
+     "reactions": 1,
+     "createdAt": "2026-05-30T12:37:49Z",
+     "closedAt": null
+    },
+    {
      "number": 1619,
      "title": "Multiple Lenovo types not able to boot / get in to BIOS after installation",
      "url": "https://github.com/omacom/omarchy/issues/1619",
@@ -3441,16 +3451,6 @@
       1860,
       2242
      ]
-    },
-    {
-     "number": 6000,
-     "title": "Camera (IPU7-PTL / OV08X40) on ThinkPad X1 Carbon Gen 14: ACPI status=0, sensor invisible to Linux",
-     "url": "https://github.com/omacom/omarchy/issues/6000",
-     "state": "OPEN",
-     "comments": 23,
-     "reactions": 1,
-     "createdAt": "2026-05-30T12:37:49Z",
-     "closedAt": null
     },
     {
      "number": 4184,
@@ -3631,6 +3631,26 @@
    ],
    "recentIssues": [
     {
+     "number": 13731,
+     "title": "ISSUE while Connecting Charger on my HP victus Laptop",
+     "url": "https://github.com/omacom/omarchy/issues/13731",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-29T09:45:05Z",
+     "closedAt": null
+    },
+    {
+     "number": 13577,
+     "title": "Framework Desktop: shutdown hangs on Omarchy logo with Thunderbolt display (Studio Display XDR) on 4.0.4",
+     "url": "https://github.com/omacom/omarchy/issues/13577",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T17:46:39Z",
+     "closedAt": null
+    },
+    {
      "number": 13523,
      "title": "Bluetooth bar toggle can't turn Bluetooth back on once it's off (adapter becomes null)",
      "url": "https://github.com/omacom/omarchy/issues/13523",
@@ -3645,7 +3665,7 @@
      "title": "Intel MacBooks: Black screen after LUKS decryption due to missing early KMS (i915)",
      "url": "https://github.com/omacom/omarchy/issues/13510",
      "state": "OPEN",
-     "comments": 0,
+     "comments": 1,
      "reactions": 0,
      "createdAt": "2026-09-28T05:56:08Z",
      "closedAt": null
@@ -3734,11 +3754,11 @@
      "number": 13341,
      "title": "linux-omarchy 7.2.5: external monitors on Thunderbolt/MST dock get wrong EDID or fail to modeset (Panther Lake, upstream xe regression)",
      "url": "https://github.com/omacom/omarchy/issues/13341",
-     "state": "OPEN",
-     "comments": 1,
+     "state": "CLOSED",
+     "comments": 4,
      "reactions": 0,
      "createdAt": "2026-09-26T17:12:53Z",
-     "closedAt": null
+     "closedAt": "2026-09-28T17:06:03Z"
     },
     {
      "number": 13330,
@@ -3758,26 +3778,6 @@
      "comments": 3,
      "reactions": 0,
      "createdAt": "2026-09-26T07:46:33Z",
-     "closedAt": null
-    },
-    {
-     "number": 13295,
-     "title": "[MacBookPro16,1 T2] Hard power cut under heavy CPU load on battery — power-saver does not cap power draw (i9-9980HK)",
-     "url": "https://github.com/omacom/omarchy/issues/13295",
-     "state": "OPEN",
-     "comments": 3,
-     "reactions": 0,
-     "createdAt": "2026-09-26T06:47:11Z",
-     "closedAt": null
-    },
-    {
-     "number": 13291,
-     "title": "F10 (Bluetooth) hotkey is inert on ThinkPad T490 — thinkpad_acpi's default hotkey_mask omits the Bluetooth bit",
-     "url": "https://github.com/omacom/omarchy/issues/13291",
-     "state": "OPEN",
-     "comments": 2,
-     "reactions": 0,
-     "createdAt": "2026-09-26T02:56:44Z",
      "closedAt": null
     }
    ],
@@ -3808,14 +3808,14 @@
      "example": "PM: Some devices failed to suspend, or early wake event detected"
     },
     {
-     "signature": "brcmfmac <n>:<n>:<n>.<n>: brcmf_pcie_pm_enter_d<n>: timeout on response for entering d<n> substate",
-     "issues": 2,
-     "example": "brcmfmac 0000:01:00.0: brcmf_pcie_pm_enter_D3: Timeout on response for entering D3 substate"
-    },
-    {
      "signature": "brcmfmac <n>:<n>:<n>.<n>: pm: failed to suspend: error -<n>",
      "issues": 2,
      "example": "brcmfmac 0000:01:00.0: PM: failed to suspend: error -5"
+    },
+    {
+     "signature": "brcmfmac <n>:<n>:<n>.<n>: brcmf_pcie_pm_enter_d<n>: timeout on response for entering d<n> substate",
+     "issues": 2,
+     "example": "brcmfmac 0000:01:00.0: brcmf_pcie_pm_enter_D3: Timeout on response for entering D3 substate"
     },
     {
      "signature": "ucsi_acpi usbc<n>:<n>: unknown error <n>",
@@ -3869,10 +3869,10 @@
    "title": "Intel GPUs",
    "matchPattern": "intel\\s+(gpu|graphics|arc|igpu)|\\bi915\\b|intel\\s+arc|iris\\s+xe|\\bxe\\s+driver\\b|xe\\s+kernel|intel_gpu",
    "counts": {
-    "issues": 358,
-    "open": 238,
-    "closed": 120,
-    "discussions": 20
+    "issues": 362,
+    "open": 241,
+    "closed": 121,
+    "discussions": 21
    },
    "topIssues": [
     {
@@ -3903,7 +3903,7 @@
      "title": "4.0.1: `shell_succeeds` fix enables NVDEC VAAPI routing on hybrid laptops with Intel-driven displays, corrupting browser video",
      "url": "https://github.com/omacom/omarchy/issues/8215",
      "state": "OPEN",
-     "comments": 29,
+     "comments": 30,
      "reactions": 14,
      "createdAt": "2026-08-25T14:14:21Z",
      "closedAt": null
@@ -3927,7 +3927,7 @@
      "url": "https://github.com/omacom/omarchy/issues/6475",
      "state": "OPEN",
      "comments": 8,
-     "reactions": 23,
+     "reactions": 24,
      "createdAt": "2026-08-01T08:33:54Z",
      "closedAt": null
     },
@@ -4015,6 +4015,16 @@
      "closedAt": null
     },
     {
+     "number": 6858,
+     "title": "Lock screen auto-focus not working",
+     "url": "https://github.com/omacom/omarchy/issues/6858",
+     "state": "OPEN",
+     "comments": 6,
+     "reactions": 6,
+     "createdAt": "2026-08-14T08:30:42Z",
+     "closedAt": null
+    },
+    {
      "number": 6985,
      "title": "Quattro (4.0) install fails: fix-synaptic-touchpad.sh psmouse module mismatch + vulkan.sh offline mirror missing files",
      "url": "https://github.com/omacom/omarchy/issues/6985",
@@ -4081,16 +4091,6 @@
      "closedAt": null
     },
     {
-     "number": 6858,
-     "title": "Lock screen auto-focus not working",
-     "url": "https://github.com/omacom/omarchy/issues/6858",
-     "state": "OPEN",
-     "comments": 6,
-     "reactions": 5,
-     "createdAt": "2026-08-14T08:30:42Z",
-     "closedAt": null
-    },
-    {
      "number": 11019,
      "title": "External monitors on a USB-C dock never return after undocking (aquamarine 0.15.0 regression)",
      "url": "https://github.com/omacom/omarchy/issues/11019",
@@ -4143,11 +4143,51 @@
    ],
    "recentIssues": [
     {
+     "number": 13691,
+     "title": "`omarchy-theme-set-pi` themes `~/.pi/agent` even when `PI_CODING_AGENT_DIR` points elsewhere",
+     "url": "https://github.com/omacom/omarchy/issues/13691",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T22:09:39Z",
+     "closedAt": null
+    },
+    {
+     "number": 13586,
+     "title": "Hybrid Intel+NVIDIA: forced NVIDIA VA-API (LIBVA_DRIVER_NAME=nvidia) crashes browser GPU process on video playback",
+     "url": "https://github.com/omacom/omarchy/issues/13586",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-28T18:24:49Z",
+     "closedAt": null
+    },
+    {
+     "number": 13535,
+     "title": "Launch OSD (\"Launching <app>…\") can stay on screen forever",
+     "url": "https://github.com/omacom/omarchy/issues/13535",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T11:35:11Z",
+     "closedAt": null
+    },
+    {
+     "number": 13534,
+     "title": "Dropdown in chromium keeps closing.",
+     "url": "https://github.com/omacom/omarchy/issues/13534",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T11:26:31Z",
+     "closedAt": null
+    },
+    {
      "number": 13510,
      "title": "Intel MacBooks: Black screen after LUKS decryption due to missing early KMS (i915)",
      "url": "https://github.com/omacom/omarchy/issues/13510",
      "state": "OPEN",
-     "comments": 0,
+     "comments": 1,
      "reactions": 0,
      "createdAt": "2026-09-28T05:56:08Z",
      "closedAt": null
@@ -4246,55 +4286,11 @@
      "number": 13341,
      "title": "linux-omarchy 7.2.5: external monitors on Thunderbolt/MST dock get wrong EDID or fail to modeset (Panther Lake, upstream xe regression)",
      "url": "https://github.com/omacom/omarchy/issues/13341",
-     "state": "OPEN",
-     "comments": 1,
+     "state": "CLOSED",
+     "comments": 4,
      "reactions": 0,
      "createdAt": "2026-09-26T17:12:53Z",
-     "closedAt": null
-    },
-    {
-     "number": 13337,
-     "title": "omarchy update ends with '/usr/bin/setpriv' terminated by signal TERM",
-     "url": "https://github.com/omacom/omarchy/issues/13337",
-     "state": "CLOSED",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-26T16:43:08Z",
-     "closedAt": "2026-09-26T21:09:20Z"
-    },
-    {
-     "number": 13325,
-     "title": "problem got fixed by agent",
-     "url": "https://github.com/omacom/omarchy/issues/13325",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-26T13:44:18Z",
-     "closedAt": null
-    },
-    {
-     "number": 13319,
-     "title": "omarchy update asks for the sudo password on every privileged command",
-     "url": "https://github.com/omacom/omarchy/issues/13319",
-     "state": "CLOSED",
-     "comments": 2,
-     "reactions": 0,
-     "createdAt": "2026-09-26T12:37:43Z",
-     "closedAt": "2026-09-26T13:27:42Z",
-     "fixedBy": [
-      13323,
-      51
-     ]
-    },
-    {
-     "number": 13317,
-     "title": "blank black screen",
-     "url": "https://github.com/omacom/omarchy/issues/13317",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-26T12:34:07Z",
-     "closedAt": null
+     "closedAt": "2026-09-28T17:06:03Z"
     }
    ],
    "commonErrorStrings": [
@@ -4302,6 +4298,11 @@
      "signature": "fatal: tried to show lockscreen surfaces without active lock",
      "issues": 4,
      "example": "FATAL: Tried to show lockscreen surfaces without active lock"
+    },
+    {
+     "signature": "error:ui<path>:<n>] failed to create eglimage: egl_success",
+     "issues": 4,
+     "example": "ERROR:ui/gl/scoped_egl_image.cc:23] Failed to create EGLImage: EGL_SUCCESS"
     },
     {
      "signature": "eglcreateimage failed with <hex>",
@@ -4319,9 +4320,14 @@
      "example": "Failed to start Windows VM!"
     },
     {
-     "signature": "error:ui<path>:<n>] failed to create eglimage: egl_success",
+     "signature": "error:ui<path>:<n>] unable to initialize binding from pixmap",
      "issues": 3,
-     "example": "ERROR:ui/gl/scoped_egl_image.cc:23] Failed to create EGLImage: EGL_SUCCESS"
+     "example": "ERROR:ui/ozone/common/native_pixmap_egl_binding.cc:76] Unable to initialize binding from pixmap"
+    },
+    {
+     "signature": "error:ui<path>:<n>] imageegl.cpp:<n> (operator()): eglcreateimage failed with <hex>",
+     "issues": 3,
+     "example": "ERROR:ui/gl/angle_platform_impl.cc:48] ImageEGL.cpp:118 (operator()): eglCreateImage failed with 0x00003009"
     },
     {
      "signature": "ozoneimagebacking::produceskiaganesh failed to create gl representation",
@@ -4344,14 +4350,14 @@
      "example": "ReferenceError: errorString is not defined"
     },
     {
-     "signature": "error:ui<path>:<n>] unable to initialize binding from pixmap",
+     "signature": "error:gpu<path>:<n>] sharedimagemanager::produceskia: trying to produce a skia representation from an incompatible backing: compoundimagebacking",
      "issues": 2,
-     "example": "ERROR:ui/ozone/common/native_pixmap_egl_binding.cc:76] Unable to initialize binding from pixmap"
+     "example": "ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:269] SharedImageManager::ProduceSkia: Trying to produce a Skia representation from an incompatible backing: CompoundImageBacking"
     },
     {
-     "signature": "error:ui<path>:<n>] imageegl.cpp:<n> (operator()): eglcreateimage failed with <hex>",
+     "signature": "error:gpu<path>:<n>] ozoneimagebacking::produceskiaganesh failed to create gl representation",
      "issues": 2,
-     "example": "ERROR:ui/gl/angle_platform_impl.cc:48] ImageEGL.cpp:118 (operator()): eglCreateImage failed with 0x00003009"
+     "example": "ERROR:gpu/command_buffer/service/shared_image/ozone_image_backing.cc:320] OzoneImageBacking::ProduceSkiaGanesh failed to create GL representation"
     },
     {
      "signature": "❌ failed to start windows vm!",
@@ -4362,16 +4368,6 @@
      "signature": "flip_done timed out",
      "issues": 2,
      "example": "flip_done timed out"
-    },
-    {
-     "signature": "atomic drm request: failed to commit: invalid argument",
-     "issues": 2,
-     "example": "atomic drm request: failed to commit: Invalid argument"
-    },
-    {
-     "signature": "amdgpu <n>:<n>:<n>.<n>: [drm:amdgpu_ring_test_helper [amdgpu]] *error* ring gfx test failed (-<n>)",
-     "issues": 2,
-     "example": "amdgpu 0000:01:00.0: [drm:amdgpu_ring_test_helper [amdgpu]] *ERROR* ring gfx test failed (-110)"
     }
    ],
    "relatedQuirkScripts": [
@@ -4490,9 +4486,9 @@
    "title": "Audio",
    "matchPattern": "\\baudio\\b|\\bsound\\b|speaker\\w*|microphone|pipewire|wireplumber|headphone\\w*",
    "counts": {
-    "issues": 310,
-    "open": 189,
-    "closed": 121,
+    "issues": 312,
+    "open": 190,
+    "closed": 122,
     "discussions": 92
    },
    "topIssues": [
@@ -4762,6 +4758,26 @@
    ],
    "recentIssues": [
     {
+     "number": 13589,
+     "title": "Add automatic T2 speaker DSP setup for MacBookPro15,1 installations",
+     "url": "https://github.com/omacom/omarchy/issues/13589",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T18:37:51Z",
+     "closedAt": null
+    },
+    {
+     "number": 13554,
+     "title": "bin scripts: user-visible OSD strings are hardcoded English, no i18n path",
+     "url": "https://github.com/omacom/omarchy/issues/13554",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T14:46:28Z",
+     "closedAt": null
+    },
+    {
      "number": 13487,
      "title": "bt-agent (auto-accept) crash-loops every ~15 s while a flapping Bluetooth device is present",
      "url": "https://github.com/omacom/omarchy/issues/13487",
@@ -4846,7 +4862,7 @@
      "title": "MacBookPro14,1: BCM4350 hybrid coexistence starves Bluetooth audio on 2.4 GHz Wi-Fi",
      "url": "https://github.com/omacom/omarchy/issues/13297",
      "state": "OPEN",
-     "comments": 0,
+     "comments": 2,
      "reactions": 0,
      "createdAt": "2026-09-26T06:58:57Z",
      "closedAt": null
@@ -4876,7 +4892,7 @@
      "title": "[kernel/audio] Internal speakers silent: left CS35L41 amp fails OTP_BOOT_DONE (-121) on HP Envy x360 13-bf0xxx",
      "url": "https://github.com/omacom/omarchy/issues/13172",
      "state": "OPEN",
-     "comments": 3,
+     "comments": 5,
      "reactions": 0,
      "createdAt": "2026-09-24T19:11:07Z",
      "closedAt": null
@@ -4890,38 +4906,18 @@
      "reactions": 0,
      "createdAt": "2026-09-24T06:09:27Z",
      "closedAt": null
-    },
-    {
-     "number": 13078,
-     "title": "omarchy-restart-bluetooth does not restart bluetooth.service, leaving wedged adapters unrecoverable via GUI or menu",
-     "url": "https://github.com/omacom/omarchy/issues/13078",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-24T01:30:45Z",
-     "closedAt": null
-    },
-    {
-     "number": 13072,
-     "title": "Idle wake recreates shell panel components without destroying the old ones (duplicate IpcHandlers, leaked child processes)",
-     "url": "https://github.com/omacom/omarchy/issues/13072",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-23T23:57:16Z",
-     "closedAt": null
     }
    ],
    "commonErrorStrings": [
     {
-     "signature": "can't read tuning ids",
-     "issues": 3,
-     "example": "Can't read tuning IDs"
-    },
-    {
      "signature": "calibration disabled due to missing firmware controls",
      "issues": 3,
      "example": "Calibration disabled due to missing firmware controls"
+    },
+    {
+     "signature": "can't read tuning ids",
+     "issues": 3,
+     "example": "Can't read tuning IDs"
     },
     {
      "signature": "error:ui<path>:<n>] unable to initialize binding from pixmap",
@@ -4929,19 +4925,9 @@
      "example": "ERROR:ui/ozone/common/native_pixmap_egl_binding.cc:76] Unable to initialize binding from pixmap"
     },
     {
-     "signature": "gsr info: pipewire: stream <hex> previous state: \"paused\", new state: \"unconnected\" (error: none)",
-     "issues": 2,
-     "example": "gsr info: pipewire: stream 0x557003f75ff0 previous state: \"paused\", new state: \"unconnected\" (error: none)"
-    },
-    {
      "signature": "gsr info: pipewire: stream <hex> previous state: \"paused\", new state: \"streaming\" (error: none)",
      "issues": 2,
      "example": "gsr info: pipewire: stream 0x557003f75ff0 previous state: \"paused\", new state: \"streaming\" (error: none)"
-    },
-    {
-     "signature": "gsr info: pipewire: stream <hex> previous state: \"connecting\", new state: \"paused\" (error: none)",
-     "issues": 2,
-     "example": "gsr info: pipewire: stream 0x557003f75ff0 previous state: \"connecting\", new state: \"paused\" (error: none)"
     },
     {
      "signature": "gsr info: pipewire: stream <hex> previous state: \"unconnected\", new state: \"connecting\" (error: none)",
@@ -4949,19 +4935,19 @@
      "example": "gsr info: pipewire: stream 0x557003f75ff0 previous state: \"unconnected\", new state: \"connecting\" (error: none)"
     },
     {
+     "signature": "gsr info: pipewire: stream <hex> previous state: \"connecting\", new state: \"paused\" (error: none)",
+     "issues": 2,
+     "example": "gsr info: pipewire: stream 0x557003f75ff0 previous state: \"connecting\", new state: \"paused\" (error: none)"
+    },
+    {
+     "signature": "gsr info: pipewire: stream <hex> previous state: \"paused\", new state: \"unconnected\" (error: none)",
+     "issues": 2,
+     "example": "gsr info: pipewire: stream 0x557003f75ff0 previous state: \"paused\", new state: \"unconnected\" (error: none)"
+    },
+    {
      "signature": "sof_sdw sof_sdw: asoc: failed to instantiate card -<n>",
      "issues": 2,
      "example": "sof_sdw sof_sdw: ASoC: failed to instantiate card -22"
-    },
-    {
-     "signature": "cs<n>l<n> spi-cs<n>l<n>-right: can't read tuning ids",
-     "issues": 2,
-     "example": "cs35l56 spi-cs35l56-right: Can't read tuning IDs"
-    },
-    {
-     "signature": "cs<n>l<n> spi-cs<n>l<n>-right: calibration disabled due to missing firmware controls",
-     "issues": 2,
-     "example": "cs35l56 spi-cs35l56-right: Calibration disabled due to missing firmware controls"
     },
     {
      "signature": "cs<n>l<n> spi-cs<n>l<n>-right: firmware_missing",
@@ -4969,9 +4955,19 @@
      "example": "cs35l56 spi-cs35l56-right: FIRMWARE_MISSING"
     },
     {
+     "signature": "cs<n>l<n> spi-cs<n>l<n>-right: calibration disabled due to missing firmware controls",
+     "issues": 2,
+     "example": "cs35l56 spi-cs35l56-right: Calibration disabled due to missing firmware controls"
+    },
+    {
      "signature": "cs<n>l<n> spi-cs<n>l<n>-left: firmware_missing",
      "issues": 2,
      "example": "cs35l56 spi-cs35l56-left:  FIRMWARE_MISSING"
+    },
+    {
+     "signature": "cs<n>l<n> spi-cs<n>l<n>-left: can't read tuning ids",
+     "issues": 2,
+     "example": "cs35l56 spi-cs35l56-left:  Can't read tuning IDs"
     },
     {
      "signature": "cs<n>l<n> spi-cs<n>l<n>-left: calibration disabled due to missing firmware controls",
@@ -4979,9 +4975,9 @@
      "example": "cs35l56 spi-cs35l56-left:  Calibration disabled due to missing firmware controls"
     },
     {
-     "signature": "cs<n>l<n> spi-cs<n>l<n>-left: can't read tuning ids",
+     "signature": "cs<n>l<n> spi-cs<n>l<n>-right: can't read tuning ids",
      "issues": 2,
-     "example": "cs35l56 spi-cs35l56-left:  Can't read tuning IDs"
+     "example": "cs35l56 spi-cs35l56-right: Can't read tuning IDs"
     },
     {
      "signature": "error:ui<path>:<n>] imageegl.cpp:<n> (operator()): eglcreateimage failed with <hex>",
@@ -5099,7 +5095,7 @@
      "title": "Macbook Pro 2020 WIFI Issues",
      "url": "https://github.com/omacom/omarchy/issues/1806",
      "state": "OPEN",
-     "comments": 34,
+     "comments": 35,
      "reactions": 0,
      "createdAt": "2025-09-19T15:34:21Z",
      "closedAt": null
@@ -5353,7 +5349,7 @@
      "title": "MacBookPro14,1: BCM4350 hybrid coexistence starves Bluetooth audio on 2.4 GHz Wi-Fi",
      "url": "https://github.com/omacom/omarchy/issues/13297",
      "state": "OPEN",
-     "comments": 0,
+     "comments": 2,
      "reactions": 0,
      "createdAt": "2026-09-26T06:58:57Z",
      "closedAt": null
@@ -5363,7 +5359,7 @@
      "title": "BCM43602 (MacBookPro11,4): AP Country IE pushed into firmware drops the 5 GHz/802.11ac link within a minute, falls back to 2.4 GHz 802.11n",
      "url": "https://github.com/omacom/omarchy/issues/13168",
      "state": "OPEN",
-     "comments": 0,
+     "comments": 1,
      "reactions": 0,
      "createdAt": "2026-09-24T18:22:03Z",
      "closedAt": null
@@ -5373,7 +5369,7 @@
      "title": "BCM43602 (MacBookPro11,4): brcmfmac feature_disable=0x82000 quirk removes 802.11ac/VHT, pins Wi-Fi to 2.4 GHz",
      "url": "https://github.com/omacom/omarchy/issues/13164",
      "state": "OPEN",
-     "comments": 0,
+     "comments": 1,
      "reactions": 0,
      "createdAt": "2026-09-24T17:02:15Z",
      "closedAt": null
@@ -5393,7 +5389,7 @@
      "title": "NVIDIA DisplayPort outputs stay at 0x0; modeless reload cannot fix the atomic CRTC mismatch",
      "url": "https://github.com/omacom/omarchy/issues/13073",
      "state": "OPEN",
-     "comments": 0,
+     "comments": 1,
      "reactions": 0,
      "createdAt": "2026-09-24T00:07:15Z",
      "closedAt": null
@@ -5486,14 +5482,14 @@
      "example": "PM: Some devices failed to suspend, or early wake event detected"
     },
     {
-     "signature": "brcmfmac <n>:<n>:<n>.<n>: brcmf_pcie_pm_enter_d<n>: timeout on response for entering d<n> substate",
-     "issues": 2,
-     "example": "brcmfmac 0000:01:00.0: brcmf_pcie_pm_enter_D3: Timeout on response for entering D3 substate"
-    },
-    {
      "signature": "brcmfmac <n>:<n>:<n>.<n>: pm: failed to suspend: error -<n>",
      "issues": 2,
      "example": "brcmfmac 0000:01:00.0: PM: failed to suspend: error -5"
+    },
+    {
+     "signature": "brcmfmac <n>:<n>:<n>.<n>: brcmf_pcie_pm_enter_d<n>: timeout on response for entering d<n> substate",
+     "issues": 2,
+     "example": "brcmfmac 0000:01:00.0: brcmf_pcie_pm_enter_D3: Timeout on response for entering D3 substate"
     },
     {
      "signature": "pm: hibernation: failed to load image, recovering.",
@@ -5538,8 +5534,8 @@
    "title": "Hybrid / dual GPU",
    "matchPattern": "hybrid\\s+(gpu|graphics)|\\boptimus\\b|prime-?run|\\bdgpu\\b|\\bigpu\\b|muxless|\\bmux\\b|aq_drm_devices|dual\\s+gpu|discrete\\s+gpu",
    "counts": {
-    "issues": 252,
-    "open": 166,
+    "issues": 254,
+    "open": 168,
     "closed": 86,
     "discussions": 29
    },
@@ -5559,7 +5555,7 @@
      "title": "4.0.1: `shell_succeeds` fix enables NVDEC VAAPI routing on hybrid laptops with Intel-driven displays, corrupting browser video",
      "url": "https://github.com/omacom/omarchy/issues/8215",
      "state": "OPEN",
-     "comments": 29,
+     "comments": 30,
      "reactions": 14,
      "createdAt": "2026-08-25T14:14:21Z",
      "closedAt": null
@@ -5615,19 +5611,6 @@
      "closedAt": null
     },
     {
-     "number": 6628,
-     "title": "Lock shell dies during normal idle->lock; session permanently locked, reboot required",
-     "url": "https://github.com/omacom/omarchy/issues/6628",
-     "state": "OPEN",
-     "comments": 18,
-     "reactions": 1,
-     "createdAt": "2026-08-08T09:23:08Z",
-     "closedAt": null,
-     "fixedBy": [
-      6630
-     ]
-    },
-    {
      "number": 1813,
      "title": "Dual GPU Mac (iMac mid-2015) driver issues",
      "url": "https://github.com/omacom/omarchy/issues/1813",
@@ -5636,6 +5619,19 @@
      "reactions": 3,
      "createdAt": "2025-09-19T19:53:01Z",
      "closedAt": "2026-02-21T06:21:37Z"
+    },
+    {
+     "number": 6628,
+     "title": "Lock shell dies during normal idle->lock; session permanently locked, reboot required",
+     "url": "https://github.com/omacom/omarchy/issues/6628",
+     "state": "OPEN",
+     "comments": 17,
+     "reactions": 1,
+     "createdAt": "2026-08-08T09:23:08Z",
+     "closedAt": null,
+     "fixedBy": [
+      6630
+     ]
     },
     {
      "number": 550,
@@ -5668,6 +5664,16 @@
      "closedAt": "2026-09-20T20:04:41Z"
     },
     {
+     "number": 12617,
+     "title": "amdgpu/TTM: kernel oops in `ttm_lru_bulk_move_tail()` (corrupt LRU `list_head`) from `amdgpu_cs_ioctl`",
+     "url": "https://github.com/omacom/omarchy/issues/12617",
+     "state": "OPEN",
+     "comments": 12,
+     "reactions": 0,
+     "createdAt": "2026-09-20T08:55:40Z",
+     "closedAt": null
+    },
+    {
      "number": 6805,
      "title": "Quickshell segfaults in QQuickItem::mapToScene during context-menu delivery (SIGSEGV)",
      "url": "https://github.com/omacom/omarchy/issues/6805",
@@ -5675,16 +5681,6 @@
      "comments": 11,
      "reactions": 0,
      "createdAt": "2026-08-13T14:17:25Z",
-     "closedAt": null
-    },
-    {
-     "number": 12617,
-     "title": "amdgpu/TTM: kernel oops in `ttm_lru_bulk_move_tail()` (corrupt LRU `list_head`) from `amdgpu_cs_ioctl`",
-     "url": "https://github.com/omacom/omarchy/issues/12617",
-     "state": "OPEN",
-     "comments": 11,
-     "reactions": 0,
-     "createdAt": "2026-09-20T08:55:40Z",
      "closedAt": null
     },
     {
@@ -5800,6 +5796,26 @@
    ],
    "recentIssues": [
     {
+     "number": 13586,
+     "title": "Hybrid Intel+NVIDIA: forced NVIDIA VA-API (LIBVA_DRIVER_NAME=nvidia) crashes browser GPU process on video playback",
+     "url": "https://github.com/omacom/omarchy/issues/13586",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-28T18:24:49Z",
+     "closedAt": null
+    },
+    {
+     "number": 13549,
+     "title": "Hybrid AMD+NVIDIA laptops: global LIBVA_DRIVER_NAME=nvidia makes Firefox decode video on the CPU",
+     "url": "https://github.com/omacom/omarchy/issues/13549",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T13:35:26Z",
+     "closedAt": null
+    },
+    {
      "number": 13420,
      "title": "Hybrid NVIDIA laptop: HDMI (dGPU-wired) external monitor corrupted after deep suspend; s2idle workaround",
      "url": "https://github.com/omacom/omarchy/issues/13420",
@@ -5874,7 +5890,7 @@
      "title": "[MacBookPro16,1 T2] Hard power cut under heavy CPU load on battery — power-saver does not cap power draw (i9-9980HK)",
      "url": "https://github.com/omacom/omarchy/issues/13295",
      "state": "OPEN",
-     "comments": 3,
+     "comments": 5,
      "reactions": 0,
      "createdAt": "2026-09-26T06:47:11Z",
      "closedAt": null
@@ -5928,26 +5944,6 @@
      "reactions": 0,
      "createdAt": "2026-09-24T01:39:14Z",
      "closedAt": null
-    },
-    {
-     "number": 13032,
-     "title": "linux-omarchy completely lacks Android Binder IPC support (CONFIG_ANDROID_BINDER_IPC), breaking Waydroid out-of-the-box",
-     "url": "https://github.com/omacom/omarchy/issues/13032",
-     "state": "CLOSED",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-23T14:47:07Z",
-     "closedAt": "2026-09-24T16:32:04Z"
-    },
-    {
-     "number": 13020,
-     "title": "omarchy-update's shell/monitor-daemon restart leaves external monitor stuck at 0x0 (blank)",
-     "url": "https://github.com/omacom/omarchy/issues/13020",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-23T10:35:20Z",
-     "closedAt": null
     }
    ],
    "commonErrorStrings": [
@@ -5955,6 +5951,11 @@
      "signature": "eglcreateimage failed with <hex>",
      "issues": 5,
      "example": "eglCreateImage failed with 0x00003009"
+    },
+    {
+     "signature": "error:ui<path>:<n>] failed to create eglimage: egl_success",
+     "issues": 4,
+     "example": "ERROR:ui/gl/scoped_egl_image.cc:23] Failed to create EGLImage: EGL_SUCCESS"
     },
     {
      "signature": "oops: invalid opcode: <n> [#<n>] smp nopti",
@@ -5982,9 +5983,14 @@
      "example": "FATAL: Tried to show lockscreen surfaces without active lock"
     },
     {
-     "signature": "error:ui<path>:<n>] failed to create eglimage: egl_success",
+     "signature": "error:ui<path>:<n>] unable to initialize binding from pixmap",
      "issues": 3,
-     "example": "ERROR:ui/gl/scoped_egl_image.cc:23] Failed to create EGLImage: EGL_SUCCESS"
+     "example": "ERROR:ui/ozone/common/native_pixmap_egl_binding.cc:76] Unable to initialize binding from pixmap"
+    },
+    {
+     "signature": "error:ui<path>:<n>] imageegl.cpp:<n> (operator()): eglcreateimage failed with <hex>",
+     "issues": 3,
+     "example": "ERROR:ui/gl/angle_platform_impl.cc:48] ImageEGL.cpp:118 (operator()): eglCreateImage failed with 0x00003009"
     },
     {
      "signature": "warn scene: @shell.qml[<n>:-<n>]: referenceerror: errorstring is not defined",
@@ -6007,24 +6013,14 @@
      "example": "Failed to enable unit: Unit sunshine.service does not exist"
     },
     {
-     "signature": "error:ui<path>:<n>] unable to initialize binding from pixmap",
+     "signature": "error:gpu<path>:<n>] sharedimagemanager::produceskia: trying to produce a skia representation from an incompatible backing: compoundimagebacking",
      "issues": 2,
-     "example": "ERROR:ui/ozone/common/native_pixmap_egl_binding.cc:76] Unable to initialize binding from pixmap"
+     "example": "ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:269] SharedImageManager::ProduceSkia: Trying to produce a Skia representation from an incompatible backing: CompoundImageBacking"
     },
     {
-     "signature": "error:ui<path>:<n>] imageegl.cpp:<n> (operator()): eglcreateimage failed with <hex>",
+     "signature": "error:gpu<path>:<n>] ozoneimagebacking::produceskiaganesh failed to create gl representation",
      "issues": 2,
-     "example": "ERROR:ui/gl/angle_platform_impl.cc:48] ImageEGL.cpp:118 (operator()): eglCreateImage failed with 0x00003009"
-    },
-    {
-     "signature": "hybrid gpu not found or in unknown mode.",
-     "issues": 2,
-     "example": "Hybrid GPU not found or in unknown mode."
-    },
-    {
-     "signature": "amdgpu <n>:<n>:<n>.<n>: [drm:amdgpu_ring_test_helper [amdgpu]] *error* ring gfx test failed (-<n>)",
-     "issues": 2,
-     "example": "amdgpu 0000:01:00.0: [drm:amdgpu_ring_test_helper [amdgpu]] *ERROR* ring gfx test failed (-110)"
+     "example": "ERROR:gpu/command_buffer/service/shared_image/ozone_image_backing.cc:320] OzoneImageBacking::ProduceSkiaGanesh failed to create GL representation"
     }
    ],
    "relatedQuirkScripts": [
@@ -6065,9 +6061,9 @@
    "title": "Thunderbolt and docks",
    "matchPattern": "thunderbolt|\\bdock\\w*|docking\\s+station|usb-?c\\s+hub|displaylink",
    "counts": {
-    "issues": 192,
-    "open": 114,
-    "closed": 78,
+    "issues": 194,
+    "open": 115,
+    "closed": 79,
     "discussions": 62
    },
    "topIssues": [
@@ -6076,7 +6072,7 @@
      "title": "Macbook Pro 2020 WIFI Issues",
      "url": "https://github.com/omacom/omarchy/issues/1806",
      "state": "OPEN",
-     "comments": 34,
+     "comments": 35,
      "reactions": 0,
      "createdAt": "2025-09-19T15:34:21Z",
      "closedAt": null
@@ -6339,6 +6335,26 @@
    ],
    "recentIssues": [
     {
+     "number": 13577,
+     "title": "Framework Desktop: shutdown hangs on Omarchy logo with Thunderbolt display (Studio Display XDR) on 4.0.4",
+     "url": "https://github.com/omacom/omarchy/issues/13577",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T17:46:39Z",
+     "closedAt": null
+    },
+    {
+     "number": 13558,
+     "title": "omarchy-windows-vm launch refuses ~/Windows once dockurr sets setgid (chmod 0700 leaves mode 2700)",
+     "url": "https://github.com/omacom/omarchy/issues/13558",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T15:15:13Z",
+     "closedAt": null
+    },
+    {
      "number": 13489,
      "title": "Network icon incorrectly switches from Ethernet to Wi-Fi after NetworkManager restart",
      "url": "https://github.com/omacom/omarchy/issues/13489",
@@ -6362,11 +6378,11 @@
      "number": 13341,
      "title": "linux-omarchy 7.2.5: external monitors on Thunderbolt/MST dock get wrong EDID or fail to modeset (Panther Lake, upstream xe regression)",
      "url": "https://github.com/omacom/omarchy/issues/13341",
-     "state": "OPEN",
-     "comments": 1,
+     "state": "CLOSED",
+     "comments": 4,
      "reactions": 0,
      "createdAt": "2026-09-26T17:12:53Z",
-     "closedAt": null
+     "closedAt": "2026-09-28T17:06:03Z"
     },
     {
      "number": 13330,
@@ -6394,7 +6410,7 @@
      "url": "https://github.com/omacom/omarchy/issues/13244",
      "state": "OPEN",
      "comments": 0,
-     "reactions": 0,
+     "reactions": 1,
      "createdAt": "2026-09-25T15:59:39Z",
      "closedAt": null,
      "fixedBy": [
@@ -6406,7 +6422,7 @@
      "title": "i915 driver: USB-C dock display fails to re-detect after unplug/replug (kernel 7.2.3 regression)",
      "url": "https://github.com/omacom/omarchy/issues/13211",
      "state": "OPEN",
-     "comments": 1,
+     "comments": 3,
      "reactions": 0,
      "createdAt": "2026-09-25T09:22:36Z",
      "closedAt": null
@@ -6470,37 +6486,17 @@
      "reactions": 0,
      "createdAt": "2026-09-21T01:37:15Z",
      "closedAt": null
-    },
-    {
-     "number": 12705,
-     "title": "Post-resume fingerprint failure: lock screen activates fprintd inside logind's PrepareForSleep window, and the inhibitor-less daemon outlives the suspend",
-     "url": "https://github.com/omacom/omarchy/issues/12705",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-20T23:36:45Z",
-     "closedAt": null
-    },
-    {
-     "number": 12699,
-     "title": "External display hot-plug leaves Intel outputs at 0x0 after dock reconnect",
-     "url": "https://github.com/omacom/omarchy/issues/12699",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-20T22:16:46Z",
-     "closedAt": null
     }
    ],
    "commonErrorStrings": [
     {
      "signature": "❌ failed to start windows vm!",
-     "issues": 27,
+     "issues": 28,
      "example": "❌ Failed to start Windows VM!"
     },
     {
      "signature": "failed to start windows vm!",
-     "issues": 11,
+     "issues": 12,
      "example": "Failed to start Windows VM!"
     },
     {
@@ -6514,14 +6510,14 @@
      "example": "uwsm_hyprland.desktop[1710]: error in client communication (pid 1881)"
     },
     {
-     "signature": "[error][com.freerdp.core] - [freerdp_connect]: freerdp_post_connect failed",
-     "issues": 2,
-     "example": "[ERROR][com.freerdp.core] - [freerdp_connect]: freerdp_post_connect failed"
-    },
-    {
      "signature": "[error][com.freerdp.core.transport] - [transport_read_layer]: bio_read returned a system error <n>: connection reset by peer",
      "issues": 2,
      "example": "[ERROR][com.freerdp.core.transport] - [transport_read_layer]: BIO_read returned a system error 104: Connection reset by peer"
+    },
+    {
+     "signature": "[error][com.freerdp.core] - [freerdp_connect]: freerdp_post_connect failed",
+     "issues": 2,
+     "example": "[ERROR][com.freerdp.core] - [freerdp_connect]: freerdp_post_connect failed"
     },
     {
      "signature": "windows vm container not found.",
@@ -6532,6 +6528,11 @@
      "signature": "failed to start",
      "issues": 2,
      "example": "Failed to start"
+    },
+    {
+     "signature": "omarchy-windows-vm launch # ❌ failed to start windows vm!",
+     "issues": 2,
+     "example": "omarchy-windows-vm launch    # ❌ Failed to start Windows VM!"
     },
     {
      "signature": "no `over-current`, no `unable to enumerate`, no `error -<n>`. clean `usb disconnect` of the root hub device.",
@@ -6631,6 +6632,16 @@
      "closedAt": "2025-08-22T07:15:49Z"
     },
     {
+     "number": 4069,
+     "title": "MacbookPro 2015 Retina GPU Lockup/System Freeze Requires Reboot",
+     "url": "https://github.com/omacom/omarchy/issues/4069",
+     "state": "OPEN",
+     "comments": 14,
+     "reactions": 2,
+     "createdAt": "2026-01-03T19:51:07Z",
+     "closedAt": null
+    },
+    {
      "number": 2064,
      "title": "Omarchy do not recognize my fringerprint reader",
      "url": "https://github.com/omacom/omarchy/issues/2064",
@@ -6639,16 +6650,6 @@
      "reactions": 3,
      "createdAt": "2025-09-29T11:35:34Z",
      "closedAt": "2026-02-01T20:31:18Z"
-    },
-    {
-     "number": 4069,
-     "title": "MacbookPro 2015 Retina GPU Lockup/System Freeze Requires Reboot",
-     "url": "https://github.com/omacom/omarchy/issues/4069",
-     "state": "OPEN",
-     "comments": 13,
-     "reactions": 2,
-     "createdAt": "2026-01-03T19:51:07Z",
-     "closedAt": null
     },
     {
      "number": 1288,
@@ -6890,7 +6891,7 @@
      "title": "MacBookPro14,1: BCM4350 hybrid coexistence starves Bluetooth audio on 2.4 GHz Wi-Fi",
      "url": "https://github.com/omacom/omarchy/issues/13297",
      "state": "OPEN",
-     "comments": 0,
+     "comments": 2,
      "reactions": 0,
      "createdAt": "2026-09-26T06:58:57Z",
      "closedAt": null
@@ -6900,7 +6901,7 @@
      "title": "[MacBookPro16,1 T2] Hard power cut under heavy CPU load on battery — power-saver does not cap power draw (i9-9980HK)",
      "url": "https://github.com/omacom/omarchy/issues/13295",
      "state": "OPEN",
-     "comments": 3,
+     "comments": 5,
      "reactions": 0,
      "createdAt": "2026-09-26T06:47:11Z",
      "closedAt": null
@@ -6940,7 +6941,7 @@
      "title": "[kernel/audio] Internal speakers silent: left CS35L41 amp fails OTP_BOOT_DONE (-121) on HP Envy x360 13-bf0xxx",
      "url": "https://github.com/omacom/omarchy/issues/13172",
      "state": "OPEN",
-     "comments": 3,
+     "comments": 5,
      "reactions": 0,
      "createdAt": "2026-09-24T19:11:07Z",
      "closedAt": null
@@ -6970,7 +6971,7 @@
      "title": "Idle wake recreates shell panel components without destroying the old ones (duplicate IpcHandlers, leaked child processes)",
      "url": "https://github.com/omacom/omarchy/issues/13072",
      "state": "OPEN",
-     "comments": 0,
+     "comments": 1,
      "reactions": 0,
      "createdAt": "2026-09-23T23:57:16Z",
      "closedAt": null
@@ -7032,8 +7033,8 @@
    "title": "Storage, NVMe and filesystems",
    "matchPattern": "\\bnvme\\b|\\bssd\\b|\\bsata\\b|\\bhdd\\b|hard\\s+drive|\\bmdadm\\b|\\braid\\b|\\blvm\\b|\\bfstab\\b",
    "counts": {
-    "issues": 119,
-    "open": 65,
+    "issues": 120,
+    "open": 66,
     "closed": 54,
     "discussions": 48
    },
@@ -7245,6 +7246,16 @@
      "closedAt": "2025-09-29T13:46:25Z"
     },
     {
+     "number": 12119,
+     "title": "linux-omarchy 7.2.5-3 fails on 2016 MacBook Pro (MacBookPro13,3) unless intel_iommu=off",
+     "url": "https://github.com/omacom/omarchy/issues/12119",
+     "state": "OPEN",
+     "comments": 7,
+     "reactions": 0,
+     "createdAt": "2026-09-16T13:00:49Z",
+     "closedAt": null
+    },
+    {
      "number": 2747,
      "title": "Unable to install Omarchy on a 4TiB ssd",
      "url": "https://github.com/omacom/omarchy/issues/2747",
@@ -7275,27 +7286,27 @@
      "closedAt": null
     },
     {
-     "number": 12119,
-     "title": "linux-omarchy 7.2.5-3 fails on 2016 MacBook Pro (MacBookPro13,3) unless intel_iommu=off",
-     "url": "https://github.com/omacom/omarchy/issues/12119",
+     "number": 13288,
+     "title": "linux-omarchy 7.2: 30s NVMe stalls behind Meteor Lake VMD (\"timeout, completion polled\")",
+     "url": "https://github.com/omacom/omarchy/issues/13288",
      "state": "OPEN",
      "comments": 6,
      "reactions": 0,
-     "createdAt": "2026-09-16T13:00:49Z",
+     "createdAt": "2026-09-26T01:45:49Z",
      "closedAt": null
-    },
-    {
-     "number": 1660,
-     "title": "Can’t log into the system after updating",
-     "url": "https://github.com/omacom/omarchy/issues/1660",
-     "state": "CLOSED",
-     "comments": 5,
-     "reactions": 0,
-     "createdAt": "2025-09-14T11:01:42Z",
-     "closedAt": "2025-09-14T11:55:45Z"
     }
    ],
    "recentIssues": [
+    {
+     "number": 13583,
+     "title": "omarchy hibernation remove leaves resume.conf behind, so a later setup keeps a stale resume_offset",
+     "url": "https://github.com/omacom/omarchy/issues/13583",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T18:19:59Z",
+     "closedAt": null
+    },
     {
      "number": 13393,
      "title": "Live ISO kernel (linux-t2) has no amdgpu — black screen on AMD APU laptops (HP 255 G10 / Ryzen 7 7730U)",
@@ -7311,7 +7322,7 @@
      "title": "linux-omarchy 7.2: 30s NVMe stalls behind Meteor Lake VMD (\"timeout, completion polled\")",
      "url": "https://github.com/omacom/omarchy/issues/13288",
      "state": "OPEN",
-     "comments": 2,
+     "comments": 6,
      "reactions": 0,
      "createdAt": "2026-09-26T01:45:49Z",
      "closedAt": null
@@ -7411,7 +7422,7 @@
      "title": "linux-omarchy 7.2.5-3 fails on 2016 MacBook Pro (MacBookPro13,3) unless intel_iommu=off",
      "url": "https://github.com/omacom/omarchy/issues/12119",
      "state": "OPEN",
-     "comments": 6,
+     "comments": 7,
      "reactions": 0,
      "createdAt": "2026-09-16T13:00:49Z",
      "closedAt": null
@@ -7434,16 +7445,6 @@
      "comments": 0,
      "reactions": 0,
      "createdAt": "2026-09-15T17:16:29Z",
-     "closedAt": null
-    },
-    {
-     "number": 11754,
-     "title": "Bar: add an overflow region so the bar can hold more widgets than fit",
-     "url": "https://github.com/omacom/omarchy/issues/11754",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-14T00:39:24Z",
      "closedAt": null
     }
    ],
@@ -7473,8 +7474,8 @@
    "title": "Virtual machines",
    "matchPattern": "vmware|virtualbox|\\bqemu\\b|\\bkvm\\b|proxmox|parallels|\\butm\\b|hyper-?v\\b|virtual\\s+machine",
    "counts": {
-    "issues": 114,
-    "open": 59,
+    "issues": 115,
+    "open": 60,
     "closed": 55,
     "discussions": 40
    },
@@ -7742,6 +7743,16 @@
    ],
    "recentIssues": [
     {
+     "number": 13689,
+     "title": "Factory reset drops other systems' boot entries from a shared ESP",
+     "url": "https://github.com/omacom/omarchy/issues/13689",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-28T22:08:46Z",
+     "closedAt": null
+    },
+    {
      "number": 13304,
      "title": "Notifications never render: `screenObscured` is permanently true because `firstPartyServiceFor(\"omarchy.lock\")` always returns null",
      "url": "https://github.com/omacom/omarchy/issues/13304",
@@ -7880,28 +7891,18 @@
      "reactions": 1,
      "createdAt": "2026-09-07T09:09:48Z",
      "closedAt": null
-    },
-    {
-     "number": 10617,
-     "title": "Stale Brave Origin SingletonLock shipped in Try Omarchy image prevents the browser from starting (#4149 regression)",
-     "url": "https://github.com/omacom/omarchy/issues/10617",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-07T08:53:15Z",
-     "closedAt": null
     }
    ],
    "commonErrorStrings": [
     {
-     "signature": "[<hex>] <panic+<hex>>",
-     "issues": 2,
-     "example": "[0x117cf] <panic+0x7e>"
-    },
-    {
      "signature": "panic: failed to load stage <n>.",
      "issues": 2,
      "example": "PANIC: Failed to load stage 3."
+    },
+    {
+     "signature": "[<hex>] <panic+<hex>>",
+     "issues": 2,
+     "example": "[0x117cf] <panic+0x7e>"
     }
    ],
    "relatedQuirkScripts": []
@@ -8346,16 +8347,6 @@
      "example": "Authentication service cannot retrieve authentication info"
     },
     {
-     "signature": "warning: fprintd-<n>.<n>.<n>-<n> is up to date -- skipping",
-     "issues": 2,
-     "example": "warning: fprintd-1.94.5-1 is up to date -- skipping"
-    },
-    {
-     "signature": "warning: usbutils-<n>-<n> is up to date -- skipping",
-     "issues": 2,
-     "example": "warning: usbutils-018-1 is up to date -- skipping"
-    },
-    {
      "signature": "error: unresolvable package conflicts detected",
      "issues": 2,
      "example": "error: unresolvable package conflicts detected"
@@ -8364,6 +8355,16 @@
      "signature": "error: failed to prepare transaction (conflicting dependencies)",
      "issues": 2,
      "example": "error: failed to prepare transaction (conflicting dependencies)"
+    },
+    {
+     "signature": "warning: usbutils-<n>-<n> is up to date -- skipping",
+     "issues": 2,
+     "example": "warning: usbutils-018-1 is up to date -- skipping"
+    },
+    {
+     "signature": "warning: fprintd-<n>.<n>.<n>-<n> is up to date -- skipping",
+     "issues": 2,
+     "example": "warning: fprintd-1.94.5-1 is up to date -- skipping"
     },
     {
      "signature": "verification timed out",
@@ -8410,8 +8411,8 @@
    "title": "Omarchy Windows VM",
    "matchPattern": "windows[\\s-]vm|omarchy-windows-vm",
    "counts": {
-    "issues": 88,
-    "open": 37,
+    "issues": 89,
+    "open": 38,
     "closed": 51,
     "discussions": 11
    },
@@ -8684,12 +8685,22 @@
    ],
    "recentIssues": [
     {
+     "number": 13558,
+     "title": "omarchy-windows-vm launch refuses ~/Windows once dockurr sets setgid (chmod 0700 leaves mode 2700)",
+     "url": "https://github.com/omacom/omarchy/issues/13558",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T15:15:13Z",
+     "closedAt": null
+    },
+    {
      "number": 13244,
      "title": "omarchy-windows-vm launch fails on every run after the first: chmod 0700 leaves setgid on ~/Windows",
      "url": "https://github.com/omacom/omarchy/issues/13244",
      "state": "OPEN",
      "comments": 0,
-     "reactions": 0,
+     "reactions": 1,
      "createdAt": "2026-09-25T15:59:39Z",
      "closedAt": null,
      "fixedBy": [
@@ -8825,27 +8836,17 @@
      "reactions": 0,
      "createdAt": "2026-09-15T13:35:21Z",
      "closedAt": "2026-09-20T18:22:14Z"
-    },
-    {
-     "number": 11879,
-     "title": "omarchy windows vm: shared-folder setgid blocks relaunch after first run; KVM boot crash on Meteor Lake",
-     "url": "https://github.com/omacom/omarchy/issues/11879",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-15T01:01:37Z",
-     "closedAt": null
     }
    ],
    "commonErrorStrings": [
     {
      "signature": "❌ failed to start windows vm!",
-     "issues": 30,
+     "issues": 31,
      "example": "❌ Failed to start Windows VM!"
     },
     {
      "signature": "failed to start windows vm!",
-     "issues": 11,
+     "issues": 12,
      "example": "Failed to start Windows VM!"
     },
     {
@@ -8854,19 +8855,24 @@
      "example": "Failed to start Windows VM"
     },
     {
+     "signature": "omarchy-windows-vm launch # ❌ failed to start windows vm!",
+     "issues": 3,
+     "example": "omarchy-windows-vm launch    # ❌ Failed to start Windows VM!"
+    },
+    {
      "signature": "[<n>:<n>:<n>:<n>] [<n>:<hash>] [error][com.freerdp.core.transport] - [transport_read_layer]: bio_read returned a system error <n>: connection reset by peer",
      "issues": 2,
      "example": "[14:14:41:463] [159106:00026d84] [ERROR][com.freerdp.core.transport] - [transport_read_layer]: BIO_read returned a system error 104: Connection reset by peer"
     },
     {
-     "signature": "[error][com.freerdp.core] - [freerdp_connect]: freerdp_post_connect failed",
-     "issues": 2,
-     "example": "[ERROR][com.freerdp.core] - [freerdp_connect]: freerdp_post_connect failed"
-    },
-    {
      "signature": "[error][com.freerdp.core.transport] - [transport_read_layer]: bio_read returned a system error <n>: connection reset by peer",
      "issues": 2,
      "example": "[ERROR][com.freerdp.core.transport] - [transport_read_layer]: BIO_read returned a system error 104: Connection reset by peer"
+    },
+    {
+     "signature": "[error][com.freerdp.core] - [freerdp_connect]: freerdp_post_connect failed",
+     "issues": 2,
+     "example": "[ERROR][com.freerdp.core] - [freerdp_connect]: freerdp_post_connect failed"
     },
     {
      "signature": "❌ failed to write the windows vm configuration.",
@@ -8877,11 +8883,6 @@
      "signature": "windows vm container not found.",
      "issues": 2,
      "example": "Windows VM container not found."
-    },
-    {
-     "signature": "omarchy-windows-vm launch # ❌ failed to start windows vm!",
-     "issues": 2,
-     "example": "omarchy-windows-vm launch    # ❌ Failed to start Windows VM!"
     },
     {
      "signature": "failed to start",
@@ -8896,8 +8897,8 @@
    "title": "Intel T2 Macs",
    "matchPattern": "linux-t2|\\bt2\\s+(mac\\w*|chip|security)|(macbook|imac|mac\\s?mini|mac\\s?pro)[^\\n]{0,80}\\bt2\\b|\\bt2\\b[^\\n]{0,80}(macbook|mac\\b)",
    "counts": {
-    "issues": 76,
-    "open": 54,
+    "issues": 78,
+    "open": 56,
     "closed": 22,
     "discussions": 14
    },
@@ -9039,6 +9040,16 @@
      "closedAt": null
     },
     {
+     "number": 13295,
+     "title": "[MacBookPro16,1 T2] Hard power cut under heavy CPU load on battery — power-saver does not cap power draw (i9-9980HK)",
+     "url": "https://github.com/omacom/omarchy/issues/13295",
+     "state": "OPEN",
+     "comments": 5,
+     "reactions": 0,
+     "createdAt": "2026-09-26T06:47:11Z",
+     "closedAt": null
+    },
+    {
      "number": 1844,
      "title": "GPU Switcher for T2 Macbooks with Intel iGPU and AMD dGPU",
      "url": "https://github.com/omacom/omarchy/issues/1844",
@@ -9132,16 +9143,6 @@
      "closedAt": "2026-09-19T09:33:03Z"
     },
     {
-     "number": 13295,
-     "title": "[MacBookPro16,1 T2] Hard power cut under heavy CPU load on battery — power-saver does not cap power draw (i9-9980HK)",
-     "url": "https://github.com/omacom/omarchy/issues/13295",
-     "state": "OPEN",
-     "comments": 3,
-     "reactions": 0,
-     "createdAt": "2026-09-26T06:47:11Z",
-     "closedAt": null
-    },
-    {
      "number": 4018,
      "title": "tiny-dfr doesn't start automatically on resume",
      "url": "https://github.com/omacom/omarchy/issues/4018",
@@ -9167,6 +9168,26 @@
    ],
    "recentIssues": [
     {
+     "number": 13727,
+     "title": "T2 Macs get vulkan-asahi installed: Vulkan detection matches \"Non-VGA\" Apple T2 devices as an Apple GPU",
+     "url": "https://github.com/omacom/omarchy/issues/13727",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-29T07:17:08Z",
+     "closedAt": null
+    },
+    {
+     "number": 13589,
+     "title": "Add automatic T2 speaker DSP setup for MacBookPro15,1 installations",
+     "url": "https://github.com/omacom/omarchy/issues/13589",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T18:37:51Z",
+     "closedAt": null
+    },
+    {
      "number": 13393,
      "title": "Live ISO kernel (linux-t2) has no amdgpu — black screen on AMD APU laptops (HP 255 G10 / Ryzen 7 7730U)",
      "url": "https://github.com/omacom/omarchy/issues/13393",
@@ -9181,7 +9202,7 @@
      "title": "MacBookPro14,1: BCM4350 hybrid coexistence starves Bluetooth audio on 2.4 GHz Wi-Fi",
      "url": "https://github.com/omacom/omarchy/issues/13297",
      "state": "OPEN",
-     "comments": 0,
+     "comments": 2,
      "reactions": 0,
      "createdAt": "2026-09-26T06:58:57Z",
      "closedAt": null
@@ -9191,7 +9212,7 @@
      "title": "[MacBookPro16,1 T2] Hard power cut under heavy CPU load on battery — power-saver does not cap power draw (i9-9980HK)",
      "url": "https://github.com/omacom/omarchy/issues/13295",
      "state": "OPEN",
-     "comments": 3,
+     "comments": 5,
      "reactions": 0,
      "createdAt": "2026-09-26T06:47:11Z",
      "closedAt": null
@@ -9261,7 +9282,7 @@
      "title": "Kernel migration exempts T2 Macs only, so T1 and pre-T2 Macs are switched to linux-omarchy",
      "url": "https://github.com/omacom/omarchy/issues/12281",
      "state": "OPEN",
-     "comments": 1,
+     "comments": 2,
      "reactions": 0,
      "createdAt": "2026-09-17T13:37:27Z",
      "closedAt": null
@@ -9295,26 +9316,6 @@
      "reactions": 0,
      "createdAt": "2026-09-16T22:42:20Z",
      "closedAt": null
-    },
-    {
-     "number": 12194,
-     "title": "MacBookPro14,2 (T1 Alpine Ridge): S3 wake loop heats the chassis and eventually hangs resume",
-     "url": "https://github.com/omacom/omarchy/issues/12194",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-16T22:40:34Z",
-     "closedAt": null
-    },
-    {
-     "number": 12173,
-     "title": "Migration 1789095456.sh collides with the deleted PTL-kernel migration of the same name",
-     "url": "https://github.com/omacom/omarchy/issues/12173",
-     "state": "OPEN",
-     "comments": 2,
-     "reactions": 0,
-     "createdAt": "2026-09-16T18:46:26Z",
-     "closedAt": null
     }
    ],
    "commonErrorStrings": [
@@ -9324,14 +9325,14 @@
      "example": "PM: Some devices failed to suspend, or early wake event detected"
     },
     {
-     "signature": "brcmfmac <n>:<n>:<n>.<n>: brcmf_pcie_pm_enter_d<n>: timeout on response for entering d<n> substate",
-     "issues": 2,
-     "example": "brcmfmac 0000:01:00.0: brcmf_pcie_pm_enter_D3: Timeout on response for entering D3 substate"
-    },
-    {
      "signature": "brcmfmac <n>:<n>:<n>.<n>: pm: failed to suspend: error -<n>",
      "issues": 2,
      "example": "brcmfmac 0000:01:00.0: PM: failed to suspend: error -5"
+    },
+    {
+     "signature": "brcmfmac <n>:<n>:<n>.<n>: brcmf_pcie_pm_enter_d<n>: timeout on response for entering d<n> substate",
+     "issues": 2,
+     "example": "brcmfmac 0000:01:00.0: brcmf_pcie_pm_enter_D3: Timeout on response for entering D3 substate"
     }
    ],
    "relatedQuirkScripts": [
@@ -9383,6 +9384,439 @@
      "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/fix-synaptic-touchpad.sh",
      "summary": "Only when modprobe can resolve psmouse for the running kernel, and never"
     },
+    {
+     "name": "vulkan.sh",
+     "path": "install/hardware/vulkan.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/vulkan.sh",
+     "summary": "(NVIDIA Vulkan is handled by nvidia.sh via nvidia-utils)"
+    }
+   ]
+  },
+  {
+   "key": "apple-silicon-asahi",
+   "title": "Apple Silicon and Asahi",
+   "matchPattern": "\\basahi\\b|apple\\s+silicon|\\bm[1-4]\\s*(pro|max|ultra)?\\s*(mac\\w*|chip)|(macbook|mac\\s?mini|imac)[^\\n]{0,40}\\bm[1-4]\\b|aarch64\\s+mac",
+   "counts": {
+    "issues": 55,
+    "open": 43,
+    "closed": 12,
+    "discussions": 13
+   },
+   "topIssues": [
+    {
+     "number": 1930,
+     "title": "unusably slow in QEMU",
+     "url": "https://github.com/omacom/omarchy/issues/1930",
+     "state": "CLOSED",
+     "comments": 10,
+     "reactions": 0,
+     "createdAt": "2025-09-25T09:19:32Z",
+     "closedAt": "2025-09-26T01:06:39Z"
+    },
+    {
+     "number": 8271,
+     "title": "Installer erases T1/T2 firmware on Apple hardware, permanently disabling Touch Bar / camera / Touch ID",
+     "url": "https://github.com/omacom/omarchy/issues/8271",
+     "state": "OPEN",
+     "comments": 9,
+     "reactions": 0,
+     "createdAt": "2026-08-25T18:56:42Z",
+     "closedAt": null
+    },
+    {
+     "number": 11593,
+     "title": "Pre-T2 battery charge limiting works via SMC BCLM and wants integration",
+     "url": "https://github.com/omacom/omarchy/issues/11593",
+     "state": "OPEN",
+     "comments": 7,
+     "reactions": 0,
+     "createdAt": "2026-09-13T00:34:08Z",
+     "closedAt": null
+    },
+    {
+     "number": 1180,
+     "title": "Infinite install loop running in UTM?",
+     "url": "https://github.com/omacom/omarchy/issues/1180",
+     "state": "CLOSED",
+     "comments": 5,
+     "reactions": 0,
+     "createdAt": "2025-08-27T14:50:12Z",
+     "closedAt": "2025-08-27T18:29:25Z"
+    },
+    {
+     "number": 2704,
+     "title": "Universal copy paste (Super + C, Super + V) not working in neovim",
+     "url": "https://github.com/omacom/omarchy/issues/2704",
+     "state": "CLOSED",
+     "comments": 2,
+     "reactions": 3,
+     "createdAt": "2025-10-22T07:33:21Z",
+     "closedAt": "2025-10-22T16:30:21Z"
+    },
+    {
+     "number": 3585,
+     "title": "omarchy-install-steam auto-selects nvidia-utils on my Framework 13 Ai 370 HX",
+     "url": "https://github.com/omacom/omarchy/issues/3585",
+     "state": "CLOSED",
+     "comments": 3,
+     "reactions": 0,
+     "createdAt": "2025-11-24T06:35:27Z",
+     "closedAt": "2025-11-24T08:30:33Z"
+    },
+    {
+     "number": 9008,
+     "title": "Agent windows (org.omarchy.agent) miss the terminal scroll_touchpad rule, making touchpad scrolling ~10x slower",
+     "url": "https://github.com/omacom/omarchy/issues/9008",
+     "state": "OPEN",
+     "comments": 3,
+     "reactions": 0,
+     "createdAt": "2026-08-29T20:05:40Z",
+     "closedAt": null
+    },
+    {
+     "number": 9046,
+     "title": "Omawrite Save File dialog exceeds 2x logical display bounds",
+     "url": "https://github.com/omacom/omarchy/issues/9046",
+     "state": "CLOSED",
+     "comments": 3,
+     "reactions": 0,
+     "createdAt": "2026-08-30T00:36:54Z",
+     "closedAt": "2026-09-01T15:16:00Z"
+    },
+    {
+     "number": 951,
+     "title": "Harden ssh client and gpg",
+     "url": "https://github.com/omacom/omarchy/issues/951",
+     "state": "CLOSED",
+     "comments": 2,
+     "reactions": 0,
+     "createdAt": "2025-08-21T08:20:30Z",
+     "closedAt": "2025-08-31T07:33:17Z"
+    },
+    {
+     "number": 9356,
+     "title": "omarchy install terminal <pkg> reports failure but still mutates xdg-terminals.list and copies config when package is missing on aarch64",
+     "url": "https://github.com/omacom/omarchy/issues/9356",
+     "state": "OPEN",
+     "comments": 2,
+     "reactions": 0,
+     "createdAt": "2026-08-31T12:14:39Z",
+     "closedAt": null
+    },
+    {
+     "number": 12005,
+     "title": "Power widget shows \"Charging\" while battery is discharging: icon/label trust UPower.onBattery and ignore device.state",
+     "url": "https://github.com/omacom/omarchy/issues/12005",
+     "state": "OPEN",
+     "comments": 2,
+     "reactions": 0,
+     "createdAt": "2026-09-15T20:05:24Z",
+     "closedAt": null
+    },
+    {
+     "number": 3791,
+     "title": "tiny-dfr and t2fanrd services don't auto-start on Intel T2 Macs",
+     "url": "https://github.com/omacom/omarchy/issues/3791",
+     "state": "CLOSED",
+     "comments": 0,
+     "reactions": 1,
+     "createdAt": "2025-12-06T20:45:37Z",
+     "closedAt": "2025-12-11T14:20:24Z",
+     "fixedBy": [
+      3792
+     ]
+    },
+    {
+     "number": 7439,
+     "title": "No Wi-Fi on Apple Silicon Macs: the Broadcom quirk's chip-ID gate includes BCM4378/BCM4387",
+     "url": "https://github.com/omacom/omarchy/issues/7439",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-08-19T03:57:59Z",
+     "closedAt": null
+    },
+    {
+     "number": 8274,
+     "title": "Installer erases T1/T2 firmware on Apple hardware, permanently disabling Touch Bar / camera / Touch ID",
+     "url": "https://github.com/omacom/omarchy/issues/8274",
+     "state": "CLOSED",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-08-25T19:07:06Z",
+     "closedAt": "2026-09-21T09:53:18Z"
+    },
+    {
+     "number": 8376,
+     "title": "omarchy-hw-touchpad misses Apple Touch (MTP) trackpads, so omarchy-toggle-touchpad silently does nothing",
+     "url": "https://github.com/omacom/omarchy/issues/8376",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-08-26T12:10:42Z",
+     "closedAt": null
+    },
+    {
+     "number": 8418,
+     "title": "Asahi MacBooks: lid handling can never fire — wrong switch name, and lid state read from /proc/acpi which Asahi lacks",
+     "url": "https://github.com/omacom/omarchy/issues/8418",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-08-26T16:03:25Z",
+     "closedAt": null
+    },
+    {
+     "number": 8645,
+     "title": "Install menu offers x86_64-only packages on aarch64: every entry fails with `target not found` in a floating terminal that closes",
+     "url": "https://github.com/omacom/omarchy/issues/8645",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-08-27T17:57:42Z",
+     "closedAt": null
+    },
+    {
+     "number": 8669,
+     "title": "Rust install leaves unguarded ~/.profile cargo source that can login-loop UWSM",
+     "url": "https://github.com/omacom/omarchy/issues/8669",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-08-27T20:52:37Z",
+     "closedAt": null
+    },
+    {
+     "number": 8946,
+     "title": "Quattro/Apple Silicon: lock-screen DPMS blank causes repeating HDMI hotplug flap (\"No Signal\" flicker) until unlock",
+     "url": "https://github.com/omacom/omarchy/issues/8946",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-08-29T14:58:39Z",
+     "closedAt": null
+    },
+    {
+     "number": 10477,
+     "title": "omarchy-hw-laptop: DMI chassis fallback never matches, so any machine without an ACPI lid button reports \"not a laptop\"",
+     "url": "https://github.com/omacom/omarchy/issues/10477",
+     "state": "CLOSED",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-06T13:42:27Z",
+     "closedAt": "2026-09-06T13:58:36Z"
+    },
+    {
+     "number": 10666,
+     "title": "omarchy-theme-set-browser hangs (and stalls omarchy update) when brave-bin is installed but only Brave Origin is running",
+     "url": "https://github.com/omacom/omarchy/issues/10666",
+     "state": "CLOSED",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-07T16:57:40Z",
+     "closedAt": "2026-09-21T09:49:17Z"
+    },
+    {
+     "number": 10735,
+     "title": "omarchy-network-speedtest leaves orphaned curl workers running against fast.com after the panel is closed",
+     "url": "https://github.com/omacom/omarchy/issues/10735",
+     "state": "CLOSED",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-07T22:46:29Z",
+     "closedAt": "2026-09-21T09:54:04Z"
+    },
+    {
+     "number": 10858,
+     "title": "Apple Silicon: speakersafetyd's post-resume PCM reinit wedges/crashes wireplumber, leaving audio stuck muted (no resume-fix, unlike wifi/HID/NVMe)",
+     "url": "https://github.com/omacom/omarchy/issues/10858",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-08T19:13:05Z",
+     "closedAt": null
+    },
+    {
+     "number": 11914,
+     "title": "Apple Silicon M1 Pro: built-in HDMI link teardown hangs Hyprland even at 1080p/60",
+     "url": "https://github.com/omacom/omarchy/issues/11914",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-15T08:13:46Z",
+     "closedAt": null
+    },
+    {
+     "number": 12156,
+     "title": "Menu cursor jumps to top of Apps submenu ~1s after navigation, with flicker from continuous app-list rebuilds",
+     "url": "https://github.com/omacom/omarchy/issues/12156",
+     "state": "CLOSED",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-16T18:20:16Z",
+     "closedAt": "2026-09-16T18:26:42Z"
+    }
+   ],
+   "recentIssues": [
+    {
+     "number": 13727,
+     "title": "T2 Macs get vulkan-asahi installed: Vulkan detection matches \"Non-VGA\" Apple T2 devices as an Apple GPU",
+     "url": "https://github.com/omacom/omarchy/issues/13727",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-29T07:17:08Z",
+     "closedAt": null
+    },
+    {
+     "number": 13370,
+     "title": "Apple Silicon lid close binds wrong command — machine never suspends",
+     "url": "https://github.com/omacom/omarchy/issues/13370",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-26T22:44:02Z",
+     "closedAt": null
+    },
+    {
+     "number": 13358,
+     "title": "Apple Silicon: Voxtype dictation silently records zeros when pinned to the headset-jack source (device = \"default\")",
+     "url": "https://github.com/omacom/omarchy/issues/13358",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-26T20:43:23Z",
+     "closedAt": null
+    },
+    {
+     "number": 13185,
+     "title": "Silent pam_faillock lockout: sudo and lock screen reject the correct password as \"incorrect\"; one typo after unlock_time re-locks",
+     "url": "https://github.com/omacom/omarchy/issues/13185",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-24T22:47:05Z",
+     "closedAt": null
+    },
+    {
+     "number": 13068,
+     "title": "Apple Silicon: Limine migration can never complete on a standard Asahi install (ESP is /boot, not /boot/efi)",
+     "url": "https://github.com/omacom/omarchy/issues/13068",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-23T21:11:50Z",
+     "closedAt": null
+    },
+    {
+     "number": 13058,
+     "title": "Apple Silicon regression: top bar no longer reserves the camera notch",
+     "url": "https://github.com/omacom/omarchy/issues/13058",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-23T20:00:58Z",
+     "closedAt": null
+    },
+    {
+     "number": 13037,
+     "title": "omarchy-launch-editor --inline passes no wait flag to GUI editors, so `git commit` records the unedited message",
+     "url": "https://github.com/omacom/omarchy/issues/13037",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-23T16:18:00Z",
+     "closedAt": null
+    },
+    {
+     "number": 12976,
+     "title": "Apple Silicon: speakersafetyd start-limit leaves speakers locked with volume UI at 100%",
+     "url": "https://github.com/omacom/omarchy/issues/12976",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-23T00:38:35Z",
+     "closedAt": null
+    },
+    {
+     "number": 12942,
+     "title": "Keyboard backlight stays off after unlock: second `omarchy-brightness-keyboard off` saves 0 as the restore value",
+     "url": "https://github.com/omacom/omarchy/issues/12942",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-22T19:35:45Z",
+     "closedAt": null
+    },
+    {
+     "number": 12874,
+     "title": "Apple Silicon: GRUB migrations make encrypted (and btrfs) installs unbootable",
+     "url": "https://github.com/omacom/omarchy/issues/12874",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-22T05:06:04Z",
+     "closedAt": null
+    },
+    {
+     "number": 12515,
+     "title": "first-run onboarding notifications repeat every boot on Apple Silicon (two bugs in install/user/first-run/)",
+     "url": "https://github.com/omacom/omarchy/issues/12515",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-19T12:45:02Z",
+     "closedAt": null
+    },
+    {
+     "number": 12317,
+     "title": "Apple Silicon: installing the AVD decoder breaks all video in google-chrome (solid green)",
+     "url": "https://github.com/omacom/omarchy/issues/12317",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-17T19:01:15Z",
+     "closedAt": null
+    },
+    {
+     "number": 12303,
+     "title": "ARM update reboot loop",
+     "url": "https://github.com/omacom/omarchy/issues/12303",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-17T17:42:03Z",
+     "closedAt": null
+    },
+    {
+     "number": 12302,
+     "title": "Idle monitor never re-arms after stay-awake is turned off: no screensaver or idle lock until the shell is restarted",
+     "url": "https://github.com/omacom/omarchy/issues/12302",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-17T17:39:04Z",
+     "closedAt": null
+    },
+    {
+     "number": 12285,
+     "title": "sudo password prompt in foot intermittently rejects the correct password — PAM logs \"conversation failed\", typed input never reaches sudo",
+     "url": "https://github.com/omacom/omarchy/issues/12285",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 1,
+     "createdAt": "2026-09-17T13:54:49Z",
+     "closedAt": null
+    }
+   ],
+   "commonErrorStrings": [
+    {
+     "signature": "restart=on-failure",
+     "issues": 2,
+     "example": "Restart=on-failure"
+    }
+   ],
+   "relatedQuirkScripts": [
     {
      "name": "vulkan.sh",
      "path": "install/hardware/vulkan.sh",
@@ -9715,7 +10149,7 @@
      "url": "https://github.com/omacom/omarchy/issues/13244",
      "state": "OPEN",
      "comments": 0,
-     "reactions": 0,
+     "reactions": 1,
      "createdAt": "2026-09-25T15:59:39Z",
      "closedAt": null,
      "fixedBy": [
@@ -9840,14 +10274,14 @@
      "example": "Enrollment failed. Please try again."
     },
     {
-     "signature": "warning: fprintd-<n>.<n>.<n>-<n> is up to date -- skipping",
-     "issues": 2,
-     "example": "warning: fprintd-1.94.5-1 is up to date -- skipping"
-    },
-    {
      "signature": "warning: usbutils-<n>-<n> is up to date -- skipping",
      "issues": 2,
      "example": "warning: usbutils-018-1 is up to date -- skipping"
+    },
+    {
+     "signature": "warning: fprintd-<n>.<n>.<n>-<n> is up to date -- skipping",
+     "issues": 2,
+     "example": "warning: fprintd-1.94.5-1 is up to date -- skipping"
     },
     {
      "signature": "❌ failed to start windows vm!",
@@ -9906,439 +10340,6 @@
    ]
   },
   {
-   "key": "apple-silicon-asahi",
-   "title": "Apple Silicon and Asahi",
-   "matchPattern": "\\basahi\\b|apple\\s+silicon|\\bm[1-4]\\s*(pro|max|ultra)?\\s*(mac\\w*|chip)|(macbook|mac\\s?mini|imac)[^\\n]{0,40}\\bm[1-4]\\b|aarch64\\s+mac",
-   "counts": {
-    "issues": 54,
-    "open": 42,
-    "closed": 12,
-    "discussions": 13
-   },
-   "topIssues": [
-    {
-     "number": 1930,
-     "title": "unusably slow in QEMU",
-     "url": "https://github.com/omacom/omarchy/issues/1930",
-     "state": "CLOSED",
-     "comments": 10,
-     "reactions": 0,
-     "createdAt": "2025-09-25T09:19:32Z",
-     "closedAt": "2025-09-26T01:06:39Z"
-    },
-    {
-     "number": 8271,
-     "title": "Installer erases T1/T2 firmware on Apple hardware, permanently disabling Touch Bar / camera / Touch ID",
-     "url": "https://github.com/omacom/omarchy/issues/8271",
-     "state": "OPEN",
-     "comments": 9,
-     "reactions": 0,
-     "createdAt": "2026-08-25T18:56:42Z",
-     "closedAt": null
-    },
-    {
-     "number": 11593,
-     "title": "Pre-T2 battery charge limiting works via SMC BCLM and wants integration",
-     "url": "https://github.com/omacom/omarchy/issues/11593",
-     "state": "OPEN",
-     "comments": 7,
-     "reactions": 0,
-     "createdAt": "2026-09-13T00:34:08Z",
-     "closedAt": null
-    },
-    {
-     "number": 1180,
-     "title": "Infinite install loop running in UTM?",
-     "url": "https://github.com/omacom/omarchy/issues/1180",
-     "state": "CLOSED",
-     "comments": 5,
-     "reactions": 0,
-     "createdAt": "2025-08-27T14:50:12Z",
-     "closedAt": "2025-08-27T18:29:25Z"
-    },
-    {
-     "number": 2704,
-     "title": "Universal copy paste (Super + C, Super + V) not working in neovim",
-     "url": "https://github.com/omacom/omarchy/issues/2704",
-     "state": "CLOSED",
-     "comments": 2,
-     "reactions": 3,
-     "createdAt": "2025-10-22T07:33:21Z",
-     "closedAt": "2025-10-22T16:30:21Z"
-    },
-    {
-     "number": 3585,
-     "title": "omarchy-install-steam auto-selects nvidia-utils on my Framework 13 Ai 370 HX",
-     "url": "https://github.com/omacom/omarchy/issues/3585",
-     "state": "CLOSED",
-     "comments": 3,
-     "reactions": 0,
-     "createdAt": "2025-11-24T06:35:27Z",
-     "closedAt": "2025-11-24T08:30:33Z"
-    },
-    {
-     "number": 9008,
-     "title": "Agent windows (org.omarchy.agent) miss the terminal scroll_touchpad rule, making touchpad scrolling ~10x slower",
-     "url": "https://github.com/omacom/omarchy/issues/9008",
-     "state": "OPEN",
-     "comments": 3,
-     "reactions": 0,
-     "createdAt": "2026-08-29T20:05:40Z",
-     "closedAt": null
-    },
-    {
-     "number": 9046,
-     "title": "Omawrite Save File dialog exceeds 2x logical display bounds",
-     "url": "https://github.com/omacom/omarchy/issues/9046",
-     "state": "CLOSED",
-     "comments": 3,
-     "reactions": 0,
-     "createdAt": "2026-08-30T00:36:54Z",
-     "closedAt": "2026-09-01T15:16:00Z"
-    },
-    {
-     "number": 951,
-     "title": "Harden ssh client and gpg",
-     "url": "https://github.com/omacom/omarchy/issues/951",
-     "state": "CLOSED",
-     "comments": 2,
-     "reactions": 0,
-     "createdAt": "2025-08-21T08:20:30Z",
-     "closedAt": "2025-08-31T07:33:17Z"
-    },
-    {
-     "number": 9356,
-     "title": "omarchy install terminal <pkg> reports failure but still mutates xdg-terminals.list and copies config when package is missing on aarch64",
-     "url": "https://github.com/omacom/omarchy/issues/9356",
-     "state": "OPEN",
-     "comments": 2,
-     "reactions": 0,
-     "createdAt": "2026-08-31T12:14:39Z",
-     "closedAt": null
-    },
-    {
-     "number": 12005,
-     "title": "Power widget shows \"Charging\" while battery is discharging: icon/label trust UPower.onBattery and ignore device.state",
-     "url": "https://github.com/omacom/omarchy/issues/12005",
-     "state": "OPEN",
-     "comments": 2,
-     "reactions": 0,
-     "createdAt": "2026-09-15T20:05:24Z",
-     "closedAt": null
-    },
-    {
-     "number": 3791,
-     "title": "tiny-dfr and t2fanrd services don't auto-start on Intel T2 Macs",
-     "url": "https://github.com/omacom/omarchy/issues/3791",
-     "state": "CLOSED",
-     "comments": 0,
-     "reactions": 1,
-     "createdAt": "2025-12-06T20:45:37Z",
-     "closedAt": "2025-12-11T14:20:24Z",
-     "fixedBy": [
-      3792
-     ]
-    },
-    {
-     "number": 7439,
-     "title": "No Wi-Fi on Apple Silicon Macs: the Broadcom quirk's chip-ID gate includes BCM4378/BCM4387",
-     "url": "https://github.com/omacom/omarchy/issues/7439",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-08-19T03:57:59Z",
-     "closedAt": null
-    },
-    {
-     "number": 8274,
-     "title": "Installer erases T1/T2 firmware on Apple hardware, permanently disabling Touch Bar / camera / Touch ID",
-     "url": "https://github.com/omacom/omarchy/issues/8274",
-     "state": "CLOSED",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-08-25T19:07:06Z",
-     "closedAt": "2026-09-21T09:53:18Z"
-    },
-    {
-     "number": 8376,
-     "title": "omarchy-hw-touchpad misses Apple Touch (MTP) trackpads, so omarchy-toggle-touchpad silently does nothing",
-     "url": "https://github.com/omacom/omarchy/issues/8376",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-08-26T12:10:42Z",
-     "closedAt": null
-    },
-    {
-     "number": 8418,
-     "title": "Asahi MacBooks: lid handling can never fire — wrong switch name, and lid state read from /proc/acpi which Asahi lacks",
-     "url": "https://github.com/omacom/omarchy/issues/8418",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-08-26T16:03:25Z",
-     "closedAt": null
-    },
-    {
-     "number": 8645,
-     "title": "Install menu offers x86_64-only packages on aarch64: every entry fails with `target not found` in a floating terminal that closes",
-     "url": "https://github.com/omacom/omarchy/issues/8645",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-08-27T17:57:42Z",
-     "closedAt": null
-    },
-    {
-     "number": 8669,
-     "title": "Rust install leaves unguarded ~/.profile cargo source that can login-loop UWSM",
-     "url": "https://github.com/omacom/omarchy/issues/8669",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-08-27T20:52:37Z",
-     "closedAt": null
-    },
-    {
-     "number": 8946,
-     "title": "Quattro/Apple Silicon: lock-screen DPMS blank causes repeating HDMI hotplug flap (\"No Signal\" flicker) until unlock",
-     "url": "https://github.com/omacom/omarchy/issues/8946",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-08-29T14:58:39Z",
-     "closedAt": null
-    },
-    {
-     "number": 10477,
-     "title": "omarchy-hw-laptop: DMI chassis fallback never matches, so any machine without an ACPI lid button reports \"not a laptop\"",
-     "url": "https://github.com/omacom/omarchy/issues/10477",
-     "state": "CLOSED",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-06T13:42:27Z",
-     "closedAt": "2026-09-06T13:58:36Z"
-    },
-    {
-     "number": 10666,
-     "title": "omarchy-theme-set-browser hangs (and stalls omarchy update) when brave-bin is installed but only Brave Origin is running",
-     "url": "https://github.com/omacom/omarchy/issues/10666",
-     "state": "CLOSED",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-07T16:57:40Z",
-     "closedAt": "2026-09-21T09:49:17Z"
-    },
-    {
-     "number": 10735,
-     "title": "omarchy-network-speedtest leaves orphaned curl workers running against fast.com after the panel is closed",
-     "url": "https://github.com/omacom/omarchy/issues/10735",
-     "state": "CLOSED",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-07T22:46:29Z",
-     "closedAt": "2026-09-21T09:54:04Z"
-    },
-    {
-     "number": 10858,
-     "title": "Apple Silicon: speakersafetyd's post-resume PCM reinit wedges/crashes wireplumber, leaving audio stuck muted (no resume-fix, unlike wifi/HID/NVMe)",
-     "url": "https://github.com/omacom/omarchy/issues/10858",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-08T19:13:05Z",
-     "closedAt": null
-    },
-    {
-     "number": 11914,
-     "title": "Apple Silicon M1 Pro: built-in HDMI link teardown hangs Hyprland even at 1080p/60",
-     "url": "https://github.com/omacom/omarchy/issues/11914",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-15T08:13:46Z",
-     "closedAt": null
-    },
-    {
-     "number": 12156,
-     "title": "Menu cursor jumps to top of Apps submenu ~1s after navigation, with flicker from continuous app-list rebuilds",
-     "url": "https://github.com/omacom/omarchy/issues/12156",
-     "state": "CLOSED",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-16T18:20:16Z",
-     "closedAt": "2026-09-16T18:26:42Z"
-    }
-   ],
-   "recentIssues": [
-    {
-     "number": 13370,
-     "title": "Apple Silicon lid close binds wrong command — machine never suspends",
-     "url": "https://github.com/omacom/omarchy/issues/13370",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-26T22:44:02Z",
-     "closedAt": null
-    },
-    {
-     "number": 13358,
-     "title": "Apple Silicon: Voxtype dictation silently records zeros when pinned to the headset-jack source (device = \"default\")",
-     "url": "https://github.com/omacom/omarchy/issues/13358",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-26T20:43:23Z",
-     "closedAt": null
-    },
-    {
-     "number": 13185,
-     "title": "Silent pam_faillock lockout: sudo and lock screen reject the correct password as \"incorrect\"; one typo after unlock_time re-locks",
-     "url": "https://github.com/omacom/omarchy/issues/13185",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-24T22:47:05Z",
-     "closedAt": null
-    },
-    {
-     "number": 13068,
-     "title": "Apple Silicon: Limine migration can never complete on a standard Asahi install (ESP is /boot, not /boot/efi)",
-     "url": "https://github.com/omacom/omarchy/issues/13068",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-23T21:11:50Z",
-     "closedAt": null
-    },
-    {
-     "number": 13058,
-     "title": "Apple Silicon regression: top bar no longer reserves the camera notch",
-     "url": "https://github.com/omacom/omarchy/issues/13058",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-23T20:00:58Z",
-     "closedAt": null
-    },
-    {
-     "number": 13037,
-     "title": "omarchy-launch-editor --inline passes no wait flag to GUI editors, so `git commit` records the unedited message",
-     "url": "https://github.com/omacom/omarchy/issues/13037",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-23T16:18:00Z",
-     "closedAt": null
-    },
-    {
-     "number": 12976,
-     "title": "Apple Silicon: speakersafetyd start-limit leaves speakers locked with volume UI at 100%",
-     "url": "https://github.com/omacom/omarchy/issues/12976",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-23T00:38:35Z",
-     "closedAt": null
-    },
-    {
-     "number": 12942,
-     "title": "Keyboard backlight stays off after unlock: second `omarchy-brightness-keyboard off` saves 0 as the restore value",
-     "url": "https://github.com/omacom/omarchy/issues/12942",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-22T19:35:45Z",
-     "closedAt": null
-    },
-    {
-     "number": 12874,
-     "title": "Apple Silicon: GRUB migrations make encrypted (and btrfs) installs unbootable",
-     "url": "https://github.com/omacom/omarchy/issues/12874",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-22T05:06:04Z",
-     "closedAt": null
-    },
-    {
-     "number": 12515,
-     "title": "first-run onboarding notifications repeat every boot on Apple Silicon (two bugs in install/user/first-run/)",
-     "url": "https://github.com/omacom/omarchy/issues/12515",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-19T12:45:02Z",
-     "closedAt": null
-    },
-    {
-     "number": 12317,
-     "title": "Apple Silicon: installing the AVD decoder breaks all video in google-chrome (solid green)",
-     "url": "https://github.com/omacom/omarchy/issues/12317",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-17T19:01:15Z",
-     "closedAt": null
-    },
-    {
-     "number": 12303,
-     "title": "ARM update reboot loop",
-     "url": "https://github.com/omacom/omarchy/issues/12303",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-17T17:42:03Z",
-     "closedAt": null
-    },
-    {
-     "number": 12302,
-     "title": "Idle monitor never re-arms after stay-awake is turned off: no screensaver or idle lock until the shell is restarted",
-     "url": "https://github.com/omacom/omarchy/issues/12302",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-17T17:39:04Z",
-     "closedAt": null
-    },
-    {
-     "number": 12285,
-     "title": "sudo password prompt in foot intermittently rejects the correct password — PAM logs \"conversation failed\", typed input never reaches sudo",
-     "url": "https://github.com/omacom/omarchy/issues/12285",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 1,
-     "createdAt": "2026-09-17T13:54:49Z",
-     "closedAt": null
-    },
-    {
-     "number": 12156,
-     "title": "Menu cursor jumps to top of Apps submenu ~1s after navigation, with flicker from continuous app-list rebuilds",
-     "url": "https://github.com/omacom/omarchy/issues/12156",
-     "state": "CLOSED",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-16T18:20:16Z",
-     "closedAt": "2026-09-16T18:26:42Z"
-    }
-   ],
-   "commonErrorStrings": [
-    {
-     "signature": "restart=on-failure",
-     "issues": 2,
-     "example": "Restart=on-failure"
-    }
-   ],
-   "relatedQuirkScripts": [
-    {
-     "name": "vulkan.sh",
-     "path": "install/hardware/vulkan.sh",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/vulkan.sh",
-     "summary": "(NVIDIA Vulkan is handled by nvidia.sh via nvidia-utils)"
-    }
-   ]
-  },
-  {
    "key": "webcam",
    "title": "Webcams",
    "matchPattern": "webcam|\\bipu[67]\\b|\\bv4l2\\b|\\buvcvideo\\b",
@@ -10354,7 +10355,7 @@
      "title": "Camera (IPU7-PTL / OV08X40) on ThinkPad X1 Carbon Gen 14: ACPI status=0, sensor invisible to Linux",
      "url": "https://github.com/omacom/omarchy/issues/6000",
      "state": "OPEN",
-     "comments": 23,
+     "comments": 24,
      "reactions": 1,
      "createdAt": "2026-05-30T12:37:49Z",
      "closedAt": null
@@ -10545,6 +10546,16 @@
      ]
     },
     {
+     "number": 11373,
+     "title": "No driver path for the pre-T2 FaceTime HD camera (Broadcom 1570)",
+     "url": "https://github.com/omacom/omarchy/issues/11373",
+     "state": "OPEN",
+     "comments": 2,
+     "reactions": 0,
+     "createdAt": "2026-09-11T21:14:29Z",
+     "closedAt": null
+    },
+    {
      "number": 12050,
      "title": "[hyprland] Lua binds written as \"MODS + code:N\" don't parse — all binds sharing a modifier fire at once (SUPER+RETURN lands you on workspace 10)",
      "url": "https://github.com/omacom/omarchy/issues/12050",
@@ -10603,16 +10614,6 @@
      "reactions": 0,
      "createdAt": "2026-07-18T08:18:34Z",
      "closedAt": "2026-07-18T19:47:14Z"
-    },
-    {
-     "number": 7697,
-     "title": "ipu7-camera.sh misdetects Meteor Lake (IPU6) hardware as IPU7, breaking the webcam",
-     "url": "https://github.com/omacom/omarchy/issues/7697",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-08-21T17:48:47Z",
-     "closedAt": null
     }
    ],
    "recentIssues": [
@@ -10641,7 +10642,7 @@
      "title": "Galaxy Book6 Pro (NP960XJG): IPU7 webcam is SSLC2000/SC200PC, intel-ipu7-camera assumes OV08X40",
      "url": "https://github.com/omacom/omarchy/issues/12347",
      "state": "OPEN",
-     "comments": 0,
+     "comments": 1,
      "reactions": 0,
      "createdAt": "2026-09-18T01:20:53Z",
      "closedAt": null
@@ -10731,7 +10732,7 @@
      "title": "No driver path for the pre-T2 FaceTime HD camera (Broadcom 1570)",
      "url": "https://github.com/omacom/omarchy/issues/11373",
      "state": "OPEN",
-     "comments": 1,
+     "comments": 2,
      "reactions": 0,
      "createdAt": "2026-09-11T21:14:29Z",
      "closedAt": null

@@ -102,7 +102,7 @@
       "groupDescription": "AI coding agent usage data",
       "hasMetadata": true,
       "hidden": true,
-      "lineCount": 603,
+      "lineCount": 611,
       "name": "omarchy-agent-usage-codex",
       "path": "bin/omarchy-agent-usage-codex",
       "requiresSudo": false,
@@ -955,6 +955,23 @@
       "requiresSudo": false,
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-clipboard-paste-text",
       "summary": "Copy text to the clipboard and type or paste it"
+    },
+    {
+      "aliases": [],
+      "args": "<browser-command> [browser-args...]",
+      "cli": "omarchy cmd browser handoff",
+      "examples": [],
+      "executable": true,
+      "group": "cmd",
+      "groupDescription": "Command and shortcut helpers",
+      "hasMetadata": true,
+      "hidden": true,
+      "lineCount": 48,
+      "name": "omarchy-cmd-browser-handoff",
+      "path": "bin/omarchy-cmd-browser-handoff",
+      "requiresSudo": false,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-cmd-browser-handoff",
+      "summary": "Hand a command line to the running Chromium-based browser"
     },
     {
       "aliases": [],
@@ -2208,6 +2225,23 @@
     {
       "aliases": [],
       "args": "",
+      "cli": "omarchy hw vm",
+      "examples": [],
+      "executable": true,
+      "group": "hw",
+      "groupDescription": "Hardware detection and controls",
+      "hasMetadata": true,
+      "hidden": false,
+      "lineCount": 5,
+      "name": "omarchy-hw-vm",
+      "path": "bin/omarchy-hw-vm",
+      "requiresSudo": false,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-hw-vm",
+      "summary": "Returns true when running in a virtual machine."
+    },
+    {
+      "aliases": [],
+      "args": "",
       "cli": "omarchy hw vulkan",
       "examples": [],
       "executable": true,
@@ -3450,7 +3484,7 @@
       "groupDescription": "Application launchers",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 31,
+      "lineCount": 33,
       "name": "omarchy-launch-browser",
       "path": "bin/omarchy-launch-browser",
       "requiresSudo": false,
@@ -3792,7 +3826,7 @@
       "groupDescription": "Application launchers",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 13,
+      "lineCount": 17,
       "name": "omarchy-launch-webapp",
       "path": "bin/omarchy-launch-webapp",
       "requiresSudo": false,
@@ -7211,6 +7245,27 @@
     {
       "aliases": [],
       "args": "[toggle|on|off]",
+      "cli": "omarchy toggle animations",
+      "examples": [
+        "omarchy toggle animations",
+        "omarchy toggle animations off",
+        "omarchy toggle animations on"
+      ],
+      "executable": true,
+      "group": "toggle",
+      "groupDescription": "Toggle Omarchy features",
+      "hasMetadata": true,
+      "hidden": false,
+      "lineCount": 22,
+      "name": "omarchy-toggle-animations",
+      "path": "bin/omarchy-toggle-animations",
+      "requiresSudo": false,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-toggle-animations",
+      "summary": "Toggle animations, transparency and other effects that are slow without a GPU"
+    },
+    {
+      "aliases": [],
+      "args": "[toggle|on|off]",
       "cli": "omarchy toggle bar",
       "examples": [
         "omarchy toggle bar",
@@ -8293,7 +8348,7 @@
       "summary": "Install, launch, stop, inspect, or remove the Windows VM"
     }
   ],
-  "count": 467,
+  "count": 470,
   "generatedFrom": "data/source/quattro-dev/bin",
   "groups": {
     "agent": "AI coding agent usage data",

@@ -1,11 +1,11 @@
 {
  "source": "github.com/omacom/omarchy",
- "fetchedAt": "2026-09-28T11:01:56.145149+00:00",
- "derivedAt": "2026-09-28T11:09:38.751367+00:00",
+ "fetchedAt": "2026-09-29T10:46:21.759932+00:00",
+ "derivedAt": "2026-09-29T10:54:36.413392+00:00",
  "counts": {
-  "clusters": 134,
+  "clusters": 138,
   "seed": 74,
-  "auto": 60
+  "auto": 64
  },
  "clusters": [
   {
@@ -17,17 +17,17 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 877,
-    "open": 452,
-    "closed": 425,
+    "issues": 882,
+    "open": 456,
+    "closed": 426,
     "discussions": 107
    },
    "versionsMentioned": {
     "3.x": 250,
-    "4.0.0": 166,
+    "4.0.0": 167,
     "4.0.2": 157,
     "4.0.1": 137,
-    "4.0.4": 117,
+    "4.0.4": 125,
     "4.0.3": 101,
     "4.22.x": 7,
     "4.6.x": 2,
@@ -151,7 +151,7 @@
      "title": "4.0.1: `shell_succeeds` fix enables NVDEC VAAPI routing on hybrid laptops with Intel-driven displays, corrupting browser video",
      "url": "https://github.com/omacom/omarchy/issues/8215",
      "state": "OPEN",
-     "comments": 29,
+     "comments": 30,
      "reactions": 14,
      "createdAt": "2026-08-25T14:14:21Z",
      "closedAt": null
@@ -271,17 +271,17 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 643,
-    "open": 457,
+    "issues": 649,
+    "open": 463,
     "closed": 186,
     "discussions": 72
    },
    "versionsMentioned": {
     "4.0.2": 206,
-    "4.0.0": 191,
+    "4.0.0": 193,
     "4.0.3": 164,
     "4.0.1": 139,
-    "4.0.4": 128,
+    "4.0.4": 136,
     "3.x": 25,
     "4.22.x": 3,
     "4.25.x": 3,
@@ -305,7 +305,7 @@
      "url": "https://github.com/omacom/omarchy/issues/6475",
      "state": "OPEN",
      "comments": 8,
-     "reactions": 23,
+     "reactions": 24,
      "createdAt": "2026-08-01T08:33:54Z",
      "closedAt": null
     },
@@ -340,19 +340,6 @@
      "closedAt": "2026-09-21T09:51:09Z"
     },
     {
-     "number": 6628,
-     "title": "Lock shell dies during normal idle->lock; session permanently locked, reboot required",
-     "url": "https://github.com/omacom/omarchy/issues/6628",
-     "state": "OPEN",
-     "comments": 18,
-     "reactions": 1,
-     "createdAt": "2026-08-08T09:23:08Z",
-     "closedAt": null,
-     "fixedBy": [
-      6630
-     ]
-    },
-    {
      "number": 6888,
      "title": "Stranded-lock recovery never completes: requestSessionLock() early-returns on  sessionLock.secure, so the session stays on \"lockscreen app died\" forever",
      "url": "https://github.com/omacom/omarchy/issues/6888",
@@ -374,6 +361,19 @@
      "reactions": 10,
      "createdAt": "2026-08-17T14:46:08Z",
      "closedAt": null
+    },
+    {
+     "number": 6628,
+     "title": "Lock shell dies during normal idle->lock; session permanently locked, reboot required",
+     "url": "https://github.com/omacom/omarchy/issues/6628",
+     "state": "OPEN",
+     "comments": 17,
+     "reactions": 1,
+     "createdAt": "2026-08-08T09:23:08Z",
+     "closedAt": null,
+     "fixedBy": [
+      6630
+     ]
     },
     {
      "number": 6956,
@@ -510,8 +510,8 @@
     "- 16:14:31 — Quickshell logged the PipeWire error, cleared the default sink/source, and removed numerous `PwNode`, `PwDevice`, and metadata objects.",
     "- 11:25:44.145: Quickshell logged PipeWire connection error `-32`.",
     "- quickshell-mirror/quickshell#962, open, filed today with this exact fatal message.",
-    "**New datapoint: Quickshell #61 — \"Fatal Error from SessionLock after turning off the monitor\" — is already closed/fixed, and its fix is in our build. The remaining defect is at the Hyprland/aquamarine stage, not Quickshell's old surface bug.**",
-    "- `quickshell-mirror/quickshell#61` (\"Fatal Error from SessionLock/surface after turning off the monitor\") is **CLOSED / COMPLETED** (2025-06-19, fix commit `3d3b7f1c`)."
+    "3. 12:22 — **different trigger**: session already locked (`secure=true` since 11:39). User switched to tty3 (getty 12:21:12, login 12:22:09). Quickshell aborted at 12:22:10, one sec",
+    "**New datapoint: Quickshell #61 — \"Fatal Error from SessionLock after turning off the monitor\" — is already closed/fixed, and its fix is in our build. The remaining defect is at the Hyprland/aquamarine stage, not Quickshell's old surface bug.**"
    ]
   },
   {
@@ -523,17 +523,17 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 507,
-    "open": 332,
-    "closed": 175,
-    "discussions": 173
+    "issues": 511,
+    "open": 335,
+    "closed": 176,
+    "discussions": 175
    },
    "versionsMentioned": {
     "4.0.2": 137,
     "4.0.3": 123,
-    "4.0.0": 119,
+    "4.0.0": 120,
+    "4.0.4": 94,
     "4.0.1": 93,
-    "4.0.4": 88,
     "3.x": 33,
     "4.25.x": 2,
     "4.22.x": 1,
@@ -600,7 +600,7 @@
      "title": "Camera (IPU7-PTL / OV08X40) on ThinkPad X1 Carbon Gen 14: ACPI status=0, sensor invisible to Linux",
      "url": "https://github.com/omacom/omarchy/issues/6000",
      "state": "OPEN",
-     "comments": 23,
+     "comments": 24,
      "reactions": 1,
      "createdAt": "2026-05-30T12:37:49Z",
      "closedAt": null
@@ -636,19 +636,6 @@
      "closedAt": "2026-02-01T20:37:46Z"
     },
     {
-     "number": 6628,
-     "title": "Lock shell dies during normal idle->lock; session permanently locked, reboot required",
-     "url": "https://github.com/omacom/omarchy/issues/6628",
-     "state": "OPEN",
-     "comments": 18,
-     "reactions": 1,
-     "createdAt": "2026-08-08T09:23:08Z",
-     "closedAt": null,
-     "fixedBy": [
-      6630
-     ]
-    },
-    {
      "number": 6888,
      "title": "Stranded-lock recovery never completes: requestSessionLock() early-returns on  sessionLock.secure, so the session stays on \"lockscreen app died\" forever",
      "url": "https://github.com/omacom/omarchy/issues/6888",
@@ -670,6 +657,19 @@
      "reactions": 10,
      "createdAt": "2026-08-17T14:46:08Z",
      "closedAt": null
+    },
+    {
+     "number": 6628,
+     "title": "Lock shell dies during normal idle->lock; session permanently locked, reboot required",
+     "url": "https://github.com/omacom/omarchy/issues/6628",
+     "state": "OPEN",
+     "comments": 17,
+     "reactions": 1,
+     "createdAt": "2026-08-08T09:23:08Z",
+     "closedAt": null,
+     "fixedBy": [
+      6630
+     ]
     },
     {
      "number": 7,
@@ -786,17 +786,17 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 430,
-    "open": 162,
+    "issues": 433,
+    "open": 165,
     "closed": 268,
-    "discussions": 73
+    "discussions": 74
    },
    "versionsMentioned": {
     "3.x": 137,
-    "4.0.0": 83,
+    "4.0.0": 84,
     "4.0.2": 48,
     "4.0.3": 43,
-    "4.0.4": 38,
+    "4.0.4": 40,
     "4.0.1": 35,
     "4.50.x": 2,
     "4.22.x": 2,
@@ -1035,18 +1035,18 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 386,
-    "open": 171,
+    "issues": 391,
+    "open": 176,
     "closed": 215,
     "discussions": 103
    },
    "versionsMentioned": {
     "3.x": 107,
     "4.0.2": 61,
-    "4.0.0": 54,
+    "4.0.0": 55,
     "4.0.1": 47,
     "4.0.3": 46,
-    "4.0.4": 35,
+    "4.0.4": 38,
     "4.2.x": 1,
     "4.22.x": 1
    },
@@ -1142,7 +1142,7 @@
      "title": "4.0.1: `shell_succeeds` fix enables NVDEC VAAPI routing on hybrid laptops with Intel-driven displays, corrupting browser video",
      "url": "https://github.com/omacom/omarchy/issues/8215",
      "state": "OPEN",
-     "comments": 29,
+     "comments": 30,
      "reactions": 14,
      "createdAt": "2026-08-25T14:14:21Z",
      "closedAt": null
@@ -1285,8 +1285,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 369,
-    "open": 135,
+    "issues": 371,
+    "open": 137,
     "closed": 234,
     "discussions": 175
    },
@@ -1294,8 +1294,8 @@
     "3.x": 94,
     "4.0.0": 51,
     "4.0.2": 39,
+    "4.0.4": 27,
     "4.0.1": 27,
-    "4.0.4": 25,
     "4.0.3": 25,
     "4.22.x": 4,
     "4.50.x": 2,
@@ -1528,16 +1528,16 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 365,
-    "open": 243,
+    "issues": 366,
+    "open": 244,
     "closed": 122,
     "discussions": 39
    },
    "versionsMentioned": {
     "4.0.2": 87,
-    "4.0.4": 76,
-    "4.0.3": 72,
+    "4.0.4": 80,
     "4.0.0": 72,
+    "4.0.3": 72,
     "3.x": 70,
     "4.0.1": 57,
     "4.22.x": 2
@@ -1618,7 +1618,7 @@
      "title": "Macbook Pro 2020 WIFI Issues",
      "url": "https://github.com/omacom/omarchy/issues/1806",
      "state": "OPEN",
-     "comments": 34,
+     "comments": 35,
      "reactions": 0,
      "createdAt": "2025-09-19T15:34:21Z",
      "closedAt": null
@@ -1678,7 +1678,7 @@
      "title": "Camera (IPU7-PTL / OV08X40) on ThinkPad X1 Carbon Gen 14: ACPI status=0, sensor invisible to Linux",
      "url": "https://github.com/omacom/omarchy/issues/6000",
      "state": "OPEN",
-     "comments": 23,
+     "comments": 24,
      "reactions": 1,
      "createdAt": "2026-05-30T12:37:49Z",
      "closedAt": null
@@ -1771,9 +1771,9 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 321,
-    "open": 161,
-    "closed": 160,
+    "issues": 323,
+    "open": 162,
+    "closed": 161,
     "discussions": 39
    },
    "versionsMentioned": {
@@ -1782,7 +1782,7 @@
     "4.0.1": 48,
     "4.0.2": 43,
     "4.0.3": 29,
-    "4.0.4": 24,
+    "4.0.4": 26,
     "4.50.x": 1,
     "4.1.x": 1,
     "4.28.x": 1
@@ -2021,18 +2021,18 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 287,
-    "open": 182,
-    "closed": 105,
+    "issues": 294,
+    "open": 188,
+    "closed": 106,
     "discussions": 89
    },
    "versionsMentioned": {
     "4.0.2": 79,
-    "4.0.0": 65,
+    "4.0.0": 67,
+    "4.0.4": 58,
     "4.0.1": 55,
     "4.0.3": 53,
-    "4.0.4": 51,
-    "3.x": 50,
+    "3.x": 51,
     "4.22.x": 4,
     "4.25.x": 1,
     "4.16.x": 1,
@@ -2265,21 +2265,22 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 283,
-    "open": 169,
+    "issues": 285,
+    "open": 171,
     "closed": 114,
     "discussions": 77
    },
    "versionsMentioned": {
-    "4.0.4": 57,
+    "4.0.4": 58,
     "4.0.2": 50,
     "3.x": 48,
+    "4.0.0": 46,
     "4.0.3": 46,
-    "4.0.0": 45,
     "4.0.1": 29,
     "4.2.x": 4,
     "4.5.x": 1,
     "4.3.x": 1,
+    "4.4.x": 1,
     "4.29.x": 1
    },
    "topIssues": [
@@ -2524,18 +2525,18 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 252,
-    "open": 136,
-    "closed": 116,
+    "issues": 257,
+    "open": 140,
+    "closed": 117,
     "discussions": 53
    },
    "versionsMentioned": {
     "3.x": 54,
     "4.0.2": 54,
-    "4.0.0": 49,
+    "4.0.0": 50,
+    "4.0.4": 31,
     "4.0.3": 31,
     "4.0.1": 25,
-    "4.0.4": 25,
     "4.22.x": 3,
     "4.0.x": 1,
     "4.25.x": 1
@@ -2556,7 +2557,7 @@
      "title": "4.0.1: `shell_succeeds` fix enables NVDEC VAAPI routing on hybrid laptops with Intel-driven displays, corrupting browser video",
      "url": "https://github.com/omacom/omarchy/issues/8215",
      "state": "OPEN",
-     "comments": 29,
+     "comments": 30,
      "reactions": 14,
      "createdAt": "2026-08-25T14:14:21Z",
      "closedAt": null
@@ -2783,7 +2784,7 @@
    "versionsMentioned": {
     "4.0.2": 56,
     "4.0.0": 52,
-    "4.0.4": 47,
+    "4.0.4": 48,
     "4.0.3": 44,
     "4.0.1": 44,
     "3.x": 35,
@@ -2901,19 +2902,6 @@
      "closedAt": "2026-07-18T19:44:48Z"
     },
     {
-     "number": 6628,
-     "title": "Lock shell dies during normal idle->lock; session permanently locked, reboot required",
-     "url": "https://github.com/omacom/omarchy/issues/6628",
-     "state": "OPEN",
-     "comments": 18,
-     "reactions": 1,
-     "createdAt": "2026-08-08T09:23:08Z",
-     "closedAt": null,
-     "fixedBy": [
-      6630
-     ]
-    },
-    {
      "number": 45,
      "title": "Lockscreen sometimes only show up on one monitor when using a multi-monitor setup",
      "url": "https://github.com/omacom/omarchy/issues/45",
@@ -2938,6 +2926,19 @@
      "fixedBy": [
       448,
       15
+     ]
+    },
+    {
+     "number": 6628,
+     "title": "Lock shell dies during normal idle->lock; session permanently locked, reboot required",
+     "url": "https://github.com/omacom/omarchy/issues/6628",
+     "state": "OPEN",
+     "comments": 17,
+     "reactions": 1,
+     "createdAt": "2026-08-08T09:23:08Z",
+     "closedAt": null,
+     "fixedBy": [
+      6630
      ]
     },
     {
@@ -3024,8 +3025,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 235,
-    "open": 92,
+    "issues": 236,
+    "open": 93,
     "closed": 143,
     "discussions": 99
    },
@@ -3034,8 +3035,8 @@
     "4.0.3": 33,
     "4.0.2": 30,
     "4.0.0": 28,
+    "4.0.4": 24,
     "4.0.1": 24,
-    "4.0.4": 23,
     "4.2.x": 1,
     "4.22.x": 1
    },
@@ -3095,7 +3096,7 @@
      "title": "Macbook Pro 2020 WIFI Issues",
      "url": "https://github.com/omacom/omarchy/issues/1806",
      "state": "OPEN",
-     "comments": 34,
+     "comments": 35,
      "reactions": 0,
      "createdAt": "2025-09-19T15:34:21Z",
      "closedAt": null
@@ -3135,6 +3136,16 @@
      "closedAt": "2025-11-01T19:17:18Z"
     },
     {
+     "number": 6475,
+     "title": "[Quattro] D-Bus idle inhibits are silently dropped since hypridle was replaced — screensaver fires during video playback (reproduced with Zen browser)",
+     "url": "https://github.com/omacom/omarchy/issues/6475",
+     "state": "OPEN",
+     "comments": 8,
+     "reactions": 24,
+     "createdAt": "2026-08-01T08:33:54Z",
+     "closedAt": null
+    },
+    {
      "number": 4169,
      "title": "Last updates broke everything",
      "url": "https://github.com/omacom/omarchy/issues/4169",
@@ -3143,16 +3154,6 @@
      "reactions": 11,
      "createdAt": "2026-01-08T22:08:47Z",
      "closedAt": "2026-01-11T22:59:53Z"
-    },
-    {
-     "number": 6475,
-     "title": "[Quattro] D-Bus idle inhibits are silently dropped since hypridle was replaced — screensaver fires during video playback (reproduced with Zen browser)",
-     "url": "https://github.com/omacom/omarchy/issues/6475",
-     "state": "OPEN",
-     "comments": 8,
-     "reactions": 23,
-     "createdAt": "2026-08-01T08:33:54Z",
-     "closedAt": null
     },
     {
      "number": 2656,
@@ -3506,6 +3507,251 @@
    ]
   },
   {
+   "key": "wifi",
+   "label": "wifi",
+   "query": [
+    "wifi"
+   ],
+   "discovered": "seed",
+   "searchScope": "title+body+comments",
+   "counts": {
+    "issues": 216,
+    "open": 83,
+    "closed": 133,
+    "discussions": 68
+   },
+   "versionsMentioned": {
+    "3.x": 69,
+    "4.0.0": 24,
+    "4.0.2": 18,
+    "4.0.3": 18,
+    "4.0.4": 16,
+    "4.0.1": 14
+   },
+   "topIssues": [
+    {
+     "number": 1414,
+     "title": "Use NetworkManager instead of systemd-networkd",
+     "url": "https://github.com/omacom/omarchy/issues/1414",
+     "state": "CLOSED",
+     "comments": 102,
+     "reactions": 137,
+     "createdAt": "2025-09-02T15:44:54Z",
+     "closedAt": "2026-07-18T19:42:22Z",
+     "fixedBy": [
+      4093
+     ]
+    },
+    {
+     "number": 2858,
+     "title": "Add a better display configuration tool",
+     "url": "https://github.com/omacom/omarchy/issues/2858",
+     "state": "CLOSED",
+     "comments": 38,
+     "reactions": 23,
+     "createdAt": "2025-10-26T00:56:45Z",
+     "closedAt": "2026-07-18T19:42:36Z"
+    },
+    {
+     "number": 1151,
+     "title": "Black screen right after login instead of Hyprland | Omarchy ISO 2.0",
+     "url": "https://github.com/omacom/omarchy/issues/1151",
+     "state": "CLOSED",
+     "comments": 25,
+     "reactions": 16,
+     "createdAt": "2025-08-26T23:56:39Z",
+     "closedAt": "2025-08-27T11:03:57Z"
+    },
+    {
+     "number": 1840,
+     "title": "Omarchy lid/sleep/suspend issue on MacBook (bug + solution to be tested)",
+     "url": "https://github.com/omacom/omarchy/issues/1840",
+     "state": "CLOSED",
+     "comments": 14,
+     "reactions": 27,
+     "createdAt": "2025-09-20T21:28:20Z",
+     "closedAt": "2026-02-21T06:21:44Z"
+    },
+    {
+     "number": 1022,
+     "title": "2016 MacBook Pro bizarre WiFi behavior",
+     "url": "https://github.com/omacom/omarchy/issues/1022",
+     "state": "CLOSED",
+     "comments": 39,
+     "reactions": 0,
+     "createdAt": "2025-08-24T04:20:45Z",
+     "closedAt": "2026-02-21T06:21:27Z"
+    },
+    {
+     "number": 3154,
+     "title": "3.1.5 update this morning bricked my machine",
+     "url": "https://github.com/omacom/omarchy/issues/3154",
+     "state": "CLOSED",
+     "comments": 29,
+     "reactions": 9,
+     "createdAt": "2025-11-04T21:25:22Z",
+     "closedAt": "2025-11-09T10:01:39Z"
+    },
+    {
+     "number": 5339,
+     "title": "Keyboard won't work after Live Update",
+     "url": "https://github.com/omacom/omarchy/issues/5339",
+     "state": "CLOSED",
+     "comments": 33,
+     "reactions": 5,
+     "createdAt": "2026-04-17T07:56:17Z",
+     "closedAt": "2026-04-22T15:11:36Z"
+    },
+    {
+     "number": 3882,
+     "title": "WiFi Keeps Disconnecting",
+     "url": "https://github.com/omacom/omarchy/issues/3882",
+     "state": "CLOSED",
+     "comments": 20,
+     "reactions": 17,
+     "createdAt": "2025-12-15T16:18:10Z",
+     "closedAt": "2026-07-18T19:43:37Z"
+    },
+    {
+     "number": 394,
+     "title": "suspend on BeeLink SER9 (and new Framework 13 AMD Ryzen AI 9 HX 370)",
+     "url": "https://github.com/omacom/omarchy/issues/394",
+     "state": "CLOSED",
+     "comments": 29,
+     "reactions": 6,
+     "createdAt": "2025-07-29T11:55:05Z",
+     "closedAt": "2026-02-21T06:20:47Z"
+    },
+    {
+     "number": 1806,
+     "title": "Macbook Pro 2020 WIFI Issues",
+     "url": "https://github.com/omacom/omarchy/issues/1806",
+     "state": "OPEN",
+     "comments": 35,
+     "reactions": 0,
+     "createdAt": "2025-09-19T15:34:21Z",
+     "closedAt": null
+    },
+    {
+     "number": 1485,
+     "title": "The system doesn't boot after install",
+     "url": "https://github.com/omacom/omarchy/issues/1485",
+     "state": "CLOSED",
+     "comments": 33,
+     "reactions": 0,
+     "createdAt": "2025-09-06T21:43:20Z",
+     "closedAt": "2025-10-26T02:18:14Z"
+    },
+    {
+     "number": 1422,
+     "title": "Wifi sometimes stops working and requires rfkill or restarting iwd to work",
+     "url": "https://github.com/omacom/omarchy/issues/1422",
+     "state": "CLOSED",
+     "comments": 25,
+     "reactions": 5,
+     "createdAt": "2025-09-03T01:48:54Z",
+     "closedAt": "2026-07-18T19:43:19Z"
+    },
+    {
+     "number": 745,
+     "title": "DNS Configuration Issue",
+     "url": "https://github.com/omacom/omarchy/issues/745",
+     "state": "CLOSED",
+     "comments": 21,
+     "reactions": 7,
+     "createdAt": "2025-08-13T08:39:38Z",
+     "closedAt": "2025-08-24T11:40:06Z",
+     "fixedBy": [
+      752
+     ]
+    },
+    {
+     "number": 2595,
+     "title": "Opening the wifi setup removes network connection.",
+     "url": "https://github.com/omacom/omarchy/issues/2595",
+     "state": "CLOSED",
+     "comments": 18,
+     "reactions": 9,
+     "createdAt": "2025-10-20T02:36:31Z",
+     "closedAt": "2026-07-18T19:43:30Z"
+    },
+    {
+     "number": 5797,
+     "title": "Omarchy 3.8.0 breaks hyprland",
+     "url": "https://github.com/omacom/omarchy/issues/5797",
+     "state": "CLOSED",
+     "comments": 14,
+     "reactions": 12,
+     "createdAt": "2026-05-13T09:23:37Z",
+     "closedAt": "2026-05-15T18:29:32Z"
+    }
+   ],
+   "bestAnswers": [
+    {
+     "discussion": 693,
+     "title": "Workaround for version 1.13 new install & upgrade not working after boot",
+     "url": "https://github.com/omacom/omarchy/discussions/693",
+     "category": "Manual",
+     "upvoteCount": 36,
+     "kind": "top-comment",
+     "author": "GuzmanPintos",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/693#discussioncomment-14077783",
+     "snippet": "Thanks for this guide. If you're running on WiFi, you'll likely need to run `systemctl start iwd` to get a working network before executing `sudo pacman -U --noconfirm https://archive.archlinux.org/packages/u/uwsm/uwsm-0.23.0-1-any.pkg.tar.zst`."
+    },
+    {
+     "discussion": 650,
+     "title": "Guide: Install Omarchy using CachyOS base install",
+     "url": "https://github.com/omacom/omarchy/discussions/650",
+     "category": "Manual",
+     "upvoteCount": 18,
+     "kind": "top-comment",
+     "author": "revan1611",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/650#discussioncomment-14653636",
+     "snippet": "What about a different scenario: Install Omarchy as usual, then install CachyOS repos and kernel?"
+    },
+    {
+     "discussion": 959,
+     "title": "Omarchy + WeWorkWiFi -> no way to connect to network, confusing WiFi UI",
+     "url": "https://github.com/omacom/omarchy/discussions/959",
+     "category": "Q&A",
+     "upvoteCount": 16,
+     "kind": "top-comment",
+     "author": "johnapishift",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/959#discussioncomment-14260221",
+     "snippet": "Hi there, not entirely sure if you are encountering a more advanced issue, but, I was also struggling to figure out how to use the wifi TUI, until I saw it was just using https://github.com/pythops/impala\n\nIt sounds like you figured out that you could tab through to the network you wanted to connect to, such as the following:\n<img width=\"795\" height=\"594\" alt=\"image\" src=\"https://github.com/user-attachments/assets/6cb6e573-d5b4-430f-a985-3dfc2c480f6f\" />\n\nWhere I was getting tripped up, was that"
+    },
+    {
+     "discussion": 1454,
+     "title": "Add 802.1x WiFi network support",
+     "url": "https://github.com/omacom/omarchy/discussions/1454",
+     "category": "Ideas",
+     "upvoteCount": 16,
+     "kind": "top-comment",
+     "author": "Zeus-Deus",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/1454#discussioncomment-14700713",
+     "snippet": "For anyone considering switching to NetworkManager in Omarchy, I created a **complete NetworkManager setup guide** that covers:\n\n- Disabling iwd and systemd-networkd properly\n- Installing NetworkManager with wpa_supplicant backend\n- Setting up nm-applet with waybar\n- Connecting to 802.1X networks (eduroam, enterprise WiFi)\n- How to revert if needed\n\n**Guide:** https://github.com/Zeus-Deus/omarchy-setup/blob/main/NetworkManager/README.md\n\n---\n\n**Update: I built a NetworkManager TUI for Omarchy!**"
+    },
+    {
+     "discussion": 2623,
+     "title": "What's the best way to setup open vpn client on omarchy?",
+     "url": "https://github.com/omacom/omarchy/discussions/2623",
+     "category": "Q&A",
+     "upvoteCount": 13,
+     "kind": "top-comment",
+     "author": "ghrubi",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/2623#discussioncomment-15098975",
+     "snippet": "The last commenter here https://github.com/basecamp/omarchy/discussions/1366 said that the wireguard setup helped him with his OpenVPN setup. Maybe you can reach out and request their OpenVPN setup."
+    }
+   ],
+   "exampleErrorLines": [
+    "I ran into similar issue as well. It doesn't happen every 5 mins, but every once in while,  I get disconnected from my wifi. When I open the wifi TUI to reconnect, I get `operation error`.",
+    "I just confirmed my Mac has the BRCM4377 wifi adapter and is using the brcmfmac driver.  Some basic googling says that's the right driver for that chip.  But the dmseg error \"direct firmware load for brcm/brcmfmac4377b3. . . . failed with error -2\" tells me the driver ain't working.",
+    "I was able to follow Gemini's instructions by git cloning the repo on my macbook, copying the driver files to a USB and transferring them to my Omarchy laptop.  I copied them to /lib/firmware/brcm/ then rebooted.  Still no luck with wifi, but am getting new errors now. (screenshot below).",
+    "I followed the instructions on [T2 Linux](https://wiki.t2linux.org/guides/wifi-bluetooth/#__tabbed_2_5) that suggested adding `brcmfmac.feature_disable=0x82000` to `kernel_cmdline` in `/boot/limine.conf`. That cleared the power management errors.",
+    "I have impala 0.4.1 but still, after reboot, the first time I open the wifi menu it would show \"org.freedesktop.DBus.Error.NotFound: No matching method found.\" and disconnect and forget the current wifi. the subsequent open is fine. Very weird."
+   ]
+  },
+  {
    "key": "bluetooth",
    "label": "bluetooth",
    "query": [
@@ -3522,7 +3768,7 @@
    "versionsMentioned": {
     "3.x": 51,
     "4.0.4": 34,
-    "4.0.0": 32,
+    "4.0.0": 33,
     "4.0.2": 31,
     "4.0.3": 29,
     "4.0.1": 21,
@@ -3574,7 +3820,7 @@
      "title": "Macbook Pro 2020 WIFI Issues",
      "url": "https://github.com/omacom/omarchy/issues/1806",
      "state": "OPEN",
-     "comments": 34,
+     "comments": 35,
      "reactions": 0,
      "createdAt": "2025-09-19T15:34:21Z",
      "closedAt": null
@@ -3747,251 +3993,6 @@
     "Any updates on this issue, has the fix been merged. I am up to date but still seeing the error message, (I am not seeing any bluetooth errors, just the message on boot).",
     "kernel: Bluetooth: hci0: sending frame failed (-19)",
     "kernel: Bluetooth: hci0: Opcode 0x0c1a failed: -19"
-   ]
-  },
-  {
-   "key": "wifi",
-   "label": "wifi",
-   "query": [
-    "wifi"
-   ],
-   "discovered": "seed",
-   "searchScope": "title+body+comments",
-   "counts": {
-    "issues": 215,
-    "open": 82,
-    "closed": 133,
-    "discussions": 68
-   },
-   "versionsMentioned": {
-    "3.x": 69,
-    "4.0.0": 24,
-    "4.0.2": 18,
-    "4.0.3": 18,
-    "4.0.1": 14,
-    "4.0.4": 13
-   },
-   "topIssues": [
-    {
-     "number": 1414,
-     "title": "Use NetworkManager instead of systemd-networkd",
-     "url": "https://github.com/omacom/omarchy/issues/1414",
-     "state": "CLOSED",
-     "comments": 102,
-     "reactions": 137,
-     "createdAt": "2025-09-02T15:44:54Z",
-     "closedAt": "2026-07-18T19:42:22Z",
-     "fixedBy": [
-      4093
-     ]
-    },
-    {
-     "number": 2858,
-     "title": "Add a better display configuration tool",
-     "url": "https://github.com/omacom/omarchy/issues/2858",
-     "state": "CLOSED",
-     "comments": 38,
-     "reactions": 23,
-     "createdAt": "2025-10-26T00:56:45Z",
-     "closedAt": "2026-07-18T19:42:36Z"
-    },
-    {
-     "number": 1151,
-     "title": "Black screen right after login instead of Hyprland | Omarchy ISO 2.0",
-     "url": "https://github.com/omacom/omarchy/issues/1151",
-     "state": "CLOSED",
-     "comments": 25,
-     "reactions": 16,
-     "createdAt": "2025-08-26T23:56:39Z",
-     "closedAt": "2025-08-27T11:03:57Z"
-    },
-    {
-     "number": 1840,
-     "title": "Omarchy lid/sleep/suspend issue on MacBook (bug + solution to be tested)",
-     "url": "https://github.com/omacom/omarchy/issues/1840",
-     "state": "CLOSED",
-     "comments": 14,
-     "reactions": 27,
-     "createdAt": "2025-09-20T21:28:20Z",
-     "closedAt": "2026-02-21T06:21:44Z"
-    },
-    {
-     "number": 1022,
-     "title": "2016 MacBook Pro bizarre WiFi behavior",
-     "url": "https://github.com/omacom/omarchy/issues/1022",
-     "state": "CLOSED",
-     "comments": 39,
-     "reactions": 0,
-     "createdAt": "2025-08-24T04:20:45Z",
-     "closedAt": "2026-02-21T06:21:27Z"
-    },
-    {
-     "number": 3154,
-     "title": "3.1.5 update this morning bricked my machine",
-     "url": "https://github.com/omacom/omarchy/issues/3154",
-     "state": "CLOSED",
-     "comments": 29,
-     "reactions": 9,
-     "createdAt": "2025-11-04T21:25:22Z",
-     "closedAt": "2025-11-09T10:01:39Z"
-    },
-    {
-     "number": 5339,
-     "title": "Keyboard won't work after Live Update",
-     "url": "https://github.com/omacom/omarchy/issues/5339",
-     "state": "CLOSED",
-     "comments": 33,
-     "reactions": 5,
-     "createdAt": "2026-04-17T07:56:17Z",
-     "closedAt": "2026-04-22T15:11:36Z"
-    },
-    {
-     "number": 3882,
-     "title": "WiFi Keeps Disconnecting",
-     "url": "https://github.com/omacom/omarchy/issues/3882",
-     "state": "CLOSED",
-     "comments": 20,
-     "reactions": 17,
-     "createdAt": "2025-12-15T16:18:10Z",
-     "closedAt": "2026-07-18T19:43:37Z"
-    },
-    {
-     "number": 394,
-     "title": "suspend on BeeLink SER9 (and new Framework 13 AMD Ryzen AI 9 HX 370)",
-     "url": "https://github.com/omacom/omarchy/issues/394",
-     "state": "CLOSED",
-     "comments": 29,
-     "reactions": 6,
-     "createdAt": "2025-07-29T11:55:05Z",
-     "closedAt": "2026-02-21T06:20:47Z"
-    },
-    {
-     "number": 1806,
-     "title": "Macbook Pro 2020 WIFI Issues",
-     "url": "https://github.com/omacom/omarchy/issues/1806",
-     "state": "OPEN",
-     "comments": 34,
-     "reactions": 0,
-     "createdAt": "2025-09-19T15:34:21Z",
-     "closedAt": null
-    },
-    {
-     "number": 1485,
-     "title": "The system doesn't boot after install",
-     "url": "https://github.com/omacom/omarchy/issues/1485",
-     "state": "CLOSED",
-     "comments": 33,
-     "reactions": 0,
-     "createdAt": "2025-09-06T21:43:20Z",
-     "closedAt": "2025-10-26T02:18:14Z"
-    },
-    {
-     "number": 1422,
-     "title": "Wifi sometimes stops working and requires rfkill or restarting iwd to work",
-     "url": "https://github.com/omacom/omarchy/issues/1422",
-     "state": "CLOSED",
-     "comments": 25,
-     "reactions": 5,
-     "createdAt": "2025-09-03T01:48:54Z",
-     "closedAt": "2026-07-18T19:43:19Z"
-    },
-    {
-     "number": 745,
-     "title": "DNS Configuration Issue",
-     "url": "https://github.com/omacom/omarchy/issues/745",
-     "state": "CLOSED",
-     "comments": 21,
-     "reactions": 7,
-     "createdAt": "2025-08-13T08:39:38Z",
-     "closedAt": "2025-08-24T11:40:06Z",
-     "fixedBy": [
-      752
-     ]
-    },
-    {
-     "number": 2595,
-     "title": "Opening the wifi setup removes network connection.",
-     "url": "https://github.com/omacom/omarchy/issues/2595",
-     "state": "CLOSED",
-     "comments": 18,
-     "reactions": 9,
-     "createdAt": "2025-10-20T02:36:31Z",
-     "closedAt": "2026-07-18T19:43:30Z"
-    },
-    {
-     "number": 5797,
-     "title": "Omarchy 3.8.0 breaks hyprland",
-     "url": "https://github.com/omacom/omarchy/issues/5797",
-     "state": "CLOSED",
-     "comments": 14,
-     "reactions": 12,
-     "createdAt": "2026-05-13T09:23:37Z",
-     "closedAt": "2026-05-15T18:29:32Z"
-    }
-   ],
-   "bestAnswers": [
-    {
-     "discussion": 693,
-     "title": "Workaround for version 1.13 new install & upgrade not working after boot",
-     "url": "https://github.com/omacom/omarchy/discussions/693",
-     "category": "Manual",
-     "upvoteCount": 36,
-     "kind": "top-comment",
-     "author": "GuzmanPintos",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/693#discussioncomment-14077783",
-     "snippet": "Thanks for this guide. If you're running on WiFi, you'll likely need to run `systemctl start iwd` to get a working network before executing `sudo pacman -U --noconfirm https://archive.archlinux.org/packages/u/uwsm/uwsm-0.23.0-1-any.pkg.tar.zst`."
-    },
-    {
-     "discussion": 650,
-     "title": "Guide: Install Omarchy using CachyOS base install",
-     "url": "https://github.com/omacom/omarchy/discussions/650",
-     "category": "Manual",
-     "upvoteCount": 18,
-     "kind": "top-comment",
-     "author": "revan1611",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/650#discussioncomment-14653636",
-     "snippet": "What about a different scenario: Install Omarchy as usual, then install CachyOS repos and kernel?"
-    },
-    {
-     "discussion": 959,
-     "title": "Omarchy + WeWorkWiFi -> no way to connect to network, confusing WiFi UI",
-     "url": "https://github.com/omacom/omarchy/discussions/959",
-     "category": "Q&A",
-     "upvoteCount": 16,
-     "kind": "top-comment",
-     "author": "johnapishift",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/959#discussioncomment-14260221",
-     "snippet": "Hi there, not entirely sure if you are encountering a more advanced issue, but, I was also struggling to figure out how to use the wifi TUI, until I saw it was just using https://github.com/pythops/impala\n\nIt sounds like you figured out that you could tab through to the network you wanted to connect to, such as the following:\n<img width=\"795\" height=\"594\" alt=\"image\" src=\"https://github.com/user-attachments/assets/6cb6e573-d5b4-430f-a985-3dfc2c480f6f\" />\n\nWhere I was getting tripped up, was that"
-    },
-    {
-     "discussion": 1454,
-     "title": "Add 802.1x WiFi network support",
-     "url": "https://github.com/omacom/omarchy/discussions/1454",
-     "category": "Ideas",
-     "upvoteCount": 16,
-     "kind": "top-comment",
-     "author": "Zeus-Deus",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/1454#discussioncomment-14700713",
-     "snippet": "For anyone considering switching to NetworkManager in Omarchy, I created a **complete NetworkManager setup guide** that covers:\n\n- Disabling iwd and systemd-networkd properly\n- Installing NetworkManager with wpa_supplicant backend\n- Setting up nm-applet with waybar\n- Connecting to 802.1X networks (eduroam, enterprise WiFi)\n- How to revert if needed\n\n**Guide:** https://github.com/Zeus-Deus/omarchy-setup/blob/main/NetworkManager/README.md\n\n---\n\n**Update: I built a NetworkManager TUI for Omarchy!**"
-    },
-    {
-     "discussion": 2623,
-     "title": "What's the best way to setup open vpn client on omarchy?",
-     "url": "https://github.com/omacom/omarchy/discussions/2623",
-     "category": "Q&A",
-     "upvoteCount": 13,
-     "kind": "top-comment",
-     "author": "ghrubi",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/2623#discussioncomment-15098975",
-     "snippet": "The last commenter here https://github.com/basecamp/omarchy/discussions/1366 said that the wireguard setup helped him with his OpenVPN setup. Maybe you can reach out and request their OpenVPN setup."
-    }
-   ],
-   "exampleErrorLines": [
-    "I ran into similar issue as well. It doesn't happen every 5 mins, but every once in while,  I get disconnected from my wifi. When I open the wifi TUI to reconnect, I get `operation error`.",
-    "I just confirmed my Mac has the BRCM4377 wifi adapter and is using the brcmfmac driver.  Some basic googling says that's the right driver for that chip.  But the dmseg error \"direct firmware load for brcm/brcmfmac4377b3. . . . failed with error -2\" tells me the driver ain't working.",
-    "I was able to follow Gemini's instructions by git cloning the repo on my macbook, copying the driver files to a USB and transferring them to my Omarchy laptop.  I copied them to /lib/firmware/brcm/ then rebooted.  Still no luck with wifi, but am getting new errors now. (screenshot below).",
-    "I followed the instructions on [T2 Linux](https://wiki.t2linux.org/guides/wifi-bluetooth/#__tabbed_2_5) that suggested adding `brcmfmac.feature_disable=0x82000` to `kernel_cmdline` in `/boot/limine.conf`. That cleared the power management errors.",
-    "I have impala 0.4.1 but still, after reboot, the first time I open the wifi menu it would show \"org.freedesktop.DBus.Error.NotFound: No matching method found.\" and disconnect and forget the current wifi. the subsequent open is fine. Very weird."
    ]
   },
   {
@@ -4249,15 +4250,15 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 202,
-    "open": 92,
+    "issues": 203,
+    "open": 93,
     "closed": 110,
     "discussions": 56
    },
    "versionsMentioned": {
     "3.x": 47,
     "4.0.0": 38,
-    "4.0.4": 28,
+    "4.0.4": 29,
     "4.0.2": 26,
     "4.0.3": 15,
     "4.0.1": 12,
@@ -4502,8 +4503,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 199,
-    "open": 102,
+    "issues": 200,
+    "open": 103,
     "closed": 97,
     "discussions": 59
    },
@@ -4512,8 +4513,8 @@
     "4.0.0": 35,
     "4.0.1": 28,
     "4.0.3": 25,
+    "4.0.4": 25,
     "4.0.2": 25,
-    "4.0.4": 23,
     "4.18.x": 1,
     "4.14.x": 1
    },
@@ -4752,7 +4753,7 @@
     "issues": 181,
     "open": 81,
     "closed": 100,
-    "discussions": 19
+    "discussions": 20
    },
    "versionsMentioned": {
     "3.x": 48,
@@ -4989,17 +4990,17 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 169,
-    "open": 113,
-    "closed": 56,
+    "issues": 172,
+    "open": 115,
+    "closed": 57,
     "discussions": 49
    },
    "versionsMentioned": {
     "4.0.2": 55,
     "4.0.0": 54,
     "4.0.1": 51,
-    "4.0.4": 31,
-    "4.0.3": 31,
+    "4.0.4": 35,
+    "4.0.3": 32,
     "3.x": 14,
     "4.22.x": 1,
     "4.9.x": 1
@@ -5169,17 +5170,14 @@
      "closedAt": null
     },
     {
-     "number": 7645,
-     "title": "Quickshell lock crashes in PamSubprocess during overlapping fingerprint retries",
-     "url": "https://github.com/omacom/omarchy/issues/7645",
+     "number": 12190,
+     "title": "`linux-omarchy` 7.2.5-3 hangs during suspend entry on Wildcat Lake (XPS 13 DX13260); stock `linux` 7.2.3 suspends fine",
+     "url": "https://github.com/omacom/omarchy/issues/12190",
      "state": "OPEN",
-     "comments": 9,
+     "comments": 11,
      "reactions": 0,
-     "createdAt": "2026-08-20T23:11:48Z",
-     "closedAt": null,
-     "fixedBy": [
-      10225
-     ]
+     "createdAt": "2026-09-16T21:53:20Z",
+     "closedAt": null
     }
    ],
    "bestAnswers": [
@@ -5245,16 +5243,16 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 167,
-    "open": 82,
+    "issues": 170,
+    "open": 85,
     "closed": 85,
     "discussions": 37
    },
    "versionsMentioned": {
-    "3.x": 45,
+    "3.x": 46,
+    "4.0.4": 22,
     "4.0.0": 22,
     "4.0.2": 21,
-    "4.0.4": 19,
     "4.0.3": 18,
     "4.0.1": 13
    },
@@ -5492,8 +5490,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 149,
-    "open": 59,
+    "issues": 150,
+    "open": 60,
     "closed": 90,
     "discussions": 49
    },
@@ -5503,7 +5501,7 @@
     "4.0.2": 15,
     "4.0.1": 13,
     "4.0.3": 13,
-    "4.0.4": 10,
+    "4.0.4": 11,
     "4.2.x": 1,
     "4.25.x": 1,
     "4.22.x": 1,
@@ -5733,7 +5731,7 @@
     "issues": 140,
     "open": 54,
     "closed": 86,
-    "discussions": 25
+    "discussions": 26
    },
    "versionsMentioned": {
     "3.x": 51,
@@ -5962,250 +5960,6 @@
    ]
   },
   {
-   "key": "sddm",
-   "label": "sddm",
-   "query": [
-    "sddm"
-   ],
-   "discovered": "seed",
-   "searchScope": "title+body+comments",
-   "counts": {
-    "issues": 140,
-    "open": 84,
-    "closed": 56,
-    "discussions": 27
-   },
-   "versionsMentioned": {
-    "4.0.2": 32,
-    "4.0.0": 27,
-    "3.x": 26,
-    "4.0.3": 23,
-    "4.0.1": 20,
-    "4.0.4": 14,
-    "4.8.x": 1
-   },
-   "topIssues": [
-    {
-     "number": 2308,
-     "title": "Chromium asks for keyring password on every startup",
-     "url": "https://github.com/omacom/omarchy/issues/2308",
-     "state": "CLOSED",
-     "comments": 22,
-     "reactions": 18,
-     "createdAt": "2025-10-08T06:31:40Z",
-     "closedAt": "2025-10-26T00:01:03Z"
-    },
-    {
-     "number": 716,
-     "title": "Omarchy conflicts with SDDM by ocupying tty1 first",
-     "url": "https://github.com/omacom/omarchy/issues/716",
-     "state": "CLOSED",
-     "comments": 37,
-     "reactions": 0,
-     "createdAt": "2025-08-12T16:25:13Z",
-     "closedAt": "2025-08-14T07:56:47Z"
-    },
-    {
-     "number": 1485,
-     "title": "The system doesn't boot after install",
-     "url": "https://github.com/omacom/omarchy/issues/1485",
-     "state": "CLOSED",
-     "comments": 33,
-     "reactions": 0,
-     "createdAt": "2025-09-06T21:43:20Z",
-     "closedAt": "2025-10-26T02:18:14Z"
-    },
-    {
-     "number": 5105,
-     "title": "Update/reboot left keyring in invalid state, browser sessions and gh auth got cleared",
-     "url": "https://github.com/omacom/omarchy/issues/5105",
-     "state": "OPEN",
-     "comments": 21,
-     "reactions": 11,
-     "createdAt": "2026-03-23T18:06:58Z",
-     "closedAt": null
-    },
-    {
-     "number": 2635,
-     "title": "Omarchy 3.1 No Signal to Monitors When Waking from Sleep",
-     "url": "https://github.com/omacom/omarchy/issues/2635",
-     "state": "OPEN",
-     "comments": 18,
-     "reactions": 13,
-     "createdAt": "2025-10-20T17:46:16Z",
-     "closedAt": null
-    },
-    {
-     "number": 3293,
-     "title": "Hyprlock sometimes crashes after opening laptop, 3.1.5",
-     "url": "https://github.com/omacom/omarchy/issues/3293",
-     "state": "CLOSED",
-     "comments": 16,
-     "reactions": 13,
-     "createdAt": "2025-11-10T10:05:21Z",
-     "closedAt": "2026-02-02T19:55:52Z"
-    },
-    {
-     "number": 352,
-     "title": "Gnome-keyring not creating default keyvault, 1Password MFA issues",
-     "url": "https://github.com/omacom/omarchy/issues/352",
-     "state": "CLOSED",
-     "comments": 15,
-     "reactions": 6,
-     "createdAt": "2025-07-26T04:16:35Z",
-     "closedAt": "2025-11-03T09:54:46Z",
-     "fixedBy": [
-      1860,
-      2242
-     ]
-    },
-    {
-     "number": 748,
-     "title": "Walker and Omarchy menu don't launch on Super+Space",
-     "url": "https://github.com/omacom/omarchy/issues/748",
-     "state": "CLOSED",
-     "comments": 20,
-     "reactions": 0,
-     "createdAt": "2025-08-13T13:42:40Z",
-     "closedAt": "2025-08-22T11:12:49Z"
-    },
-    {
-     "number": 8113,
-     "title": "Omarchy unusable under VMware Workstation with 3D acceleration enabled",
-     "url": "https://github.com/omacom/omarchy/issues/8113",
-     "state": "CLOSED",
-     "comments": 10,
-     "reactions": 4,
-     "createdAt": "2026-08-24T22:41:37Z",
-     "closedAt": "2026-09-21T09:52:55Z"
-    },
-    {
-     "number": 2880,
-     "title": "Add a matching SDDM login screen theme",
-     "url": "https://github.com/omacom/omarchy/issues/2880",
-     "state": "CLOSED",
-     "comments": 6,
-     "reactions": 7,
-     "createdAt": "2025-10-26T17:41:03Z",
-     "closedAt": "2026-07-18T19:42:37Z"
-    },
-    {
-     "number": 6151,
-     "title": "Non-US keyboard layout not applied at LUKS decrypt prompt after 3.8.x update",
-     "url": "https://github.com/omacom/omarchy/issues/6151",
-     "state": "CLOSED",
-     "comments": 5,
-     "reactions": 7,
-     "createdAt": "2026-06-29T17:47:34Z",
-     "closedAt": "2026-07-12T15:07:17Z"
-    },
-    {
-     "number": 8989,
-     "title": "Hybrid iGPU-primary laptops: nvidia.lua forces NVIDIA env session-wide — video corruption (root cause of #4901) and blocked dGPU runtime suspend",
-     "url": "https://github.com/omacom/omarchy/issues/8989",
-     "state": "CLOSED",
-     "comments": 11,
-     "reactions": 1,
-     "createdAt": "2026-08-29T18:23:27Z",
-     "closedAt": "2026-09-20T20:04:41Z"
-    },
-    {
-     "number": 5986,
-     "title": "SDDM greeter defaults to us keymap instead of the one selected on install",
-     "url": "https://github.com/omacom/omarchy/issues/5986",
-     "state": "CLOSED",
-     "comments": 5,
-     "reactions": 6,
-     "createdAt": "2026-05-27T19:52:51Z",
-     "closedAt": "2026-07-18T19:43:12Z"
-    },
-    {
-     "number": 5706,
-     "title": "Login loop after update if nvidia DKMS fails to build for the new kernel",
-     "url": "https://github.com/omacom/omarchy/issues/5706",
-     "state": "OPEN",
-     "comments": 6,
-     "reactions": 4,
-     "createdAt": "2026-05-09T17:41:02Z",
-     "closedAt": null
-    },
-    {
-     "number": 412,
-     "title": "waybar / walker / windows disappear after returning from sleep",
-     "url": "https://github.com/omacom/omarchy/issues/412",
-     "state": "CLOSED",
-     "comments": 8,
-     "reactions": 0,
-     "createdAt": "2025-07-30T18:16:13Z",
-     "closedAt": "2025-08-05T21:51:42Z"
-    }
-   ],
-   "bestAnswers": [
-    {
-     "discussion": 532,
-     "title": "Support Multiple Users",
-     "url": "https://github.com/omacom/omarchy/discussions/532",
-     "category": "Ideas",
-     "upvoteCount": 40,
-     "kind": "top-comment",
-     "author": "andrewib",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/532#discussioncomment-14486409",
-     "snippet": "It would not hurt Omarchy market share if multi user setup was an option during install. Many desktop PCs are multi user, and not having this feature is a dealbreaker for many.\n\nThe same goes for encrypted drives - it's not necessary or wanted by many. Again, mostly by desktop PC users.\n\nDon't see why both these things should not be an option."
-    },
-    {
-     "discussion": 2195,
-     "title": "Using Niri instead of Hyprland in Omarchy",
-     "url": "https://github.com/omacom/omarchy/discussions/2195",
-     "category": "Q&A",
-     "upvoteCount": 26,
-     "kind": "accepted-answer",
-     "author": "alexhraber",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/2195#discussioncomment-14594989",
-     "snippet": "https://code.hyprland.org/hyprwm/hyprland-plugins/src/branch/main/hyprscrolling"
-    },
-    {
-     "discussion": 2495,
-     "title": "Changing Your Shell to Zsh or Fish in Omarchy Without Breaking Everything",
-     "url": "https://github.com/omacom/omarchy/discussions/2495",
-     "category": "Manual",
-     "upvoteCount": 20,
-     "kind": "top-comment",
-     "author": "Jerry1098",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/2495#discussioncomment-14923461",
-     "snippet": "Thank you for this guide :)\n\nProbably because of a new change to `alacritty`:\nAfter setting \n```toml\n[shell]\nprogram = \"/usr/bin/fish\"\n```\nI get a config warning stating that the `[shell]` option has been deprecated. The new correct config option is:\n```toml\n[terminal.shell]\nprogram = \"/usr/bin/fish\"\n```\n\nTo load zoxide into your fish shell you would need to add:\n```fish\nzoxide init fish | source\n```\nat the end of your `~/.config/fish/config.fish` or install the [`zoxide.fish`](https://github.co"
-    },
-    {
-     "discussion": 4982,
-     "title": "Add facial login authentication support for Omarchy",
-     "url": "https://github.com/omacom/omarchy/discussions/4982",
-     "category": "Suggestions",
-     "upvoteCount": 15,
-     "kind": "top-comment",
-     "author": "felipecsl",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/4982#discussioncomment-16597218",
-     "snippet": "the new dell xps panther lake laptops removed fingerprint reader so the only biometric option is face unlock for these laptops"
-    },
-    {
-     "discussion": 486,
-     "title": "How can I switch kde plasma and omarchy (hyprland) back and forth?",
-     "url": "https://github.com/omacom/omarchy/discussions/486",
-     "category": "Q&A",
-     "upvoteCount": 6,
-     "kind": "top-comment",
-     "author": "meta-byte",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/486#discussioncomment-13998137",
-     "snippet": "I imagine it's possible if you install something like Greetd or SDDM. I don't think that's how Omarchy is designed to function considering it has auto login enabled by default."
-    }
-   ],
-   "exampleErrorLines": [
-    "sddm-helper[1353]: gkr-pam: couldn't unlock the login keyring.",
-    "sddm-helper-start-wayland[10406]: \"Warning: Virtual modifier Hyper multiply defined / Using 0, ignoring 0\"",
-    "sddm-helper-start-wayland[10406]: \"Warning: Multiple symbols for level 1/group 1 on key <FK23>\"",
-    "sddm-helper[10526]: [PAM] authenticate: Authentication failure",
-    "sddm[1223]: Authentication error: SDDM::Auth::ERROR_AUTHENTICATION \"Authentication failure\""
-   ]
-  },
-  {
    "key": "font",
    "label": "font",
    "query": [
@@ -6214,8 +5968,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 139,
-    "open": 54,
+    "issues": 140,
+    "open": 55,
     "closed": 85,
     "discussions": 48
    },
@@ -6223,7 +5977,7 @@
     "3.x": 40,
     "4.0.1": 14,
     "4.0.2": 13,
-    "4.0.4": 12,
+    "4.0.4": 13,
     "4.0.0": 11,
     "4.0.3": 8,
     "4.22.x": 2,
@@ -6459,6 +6213,250 @@
    ]
   },
   {
+   "key": "sddm",
+   "label": "sddm",
+   "query": [
+    "sddm"
+   ],
+   "discovered": "seed",
+   "searchScope": "title+body+comments",
+   "counts": {
+    "issues": 140,
+    "open": 84,
+    "closed": 56,
+    "discussions": 27
+   },
+   "versionsMentioned": {
+    "4.0.2": 32,
+    "4.0.0": 27,
+    "3.x": 26,
+    "4.0.3": 23,
+    "4.0.1": 20,
+    "4.0.4": 15,
+    "4.8.x": 1
+   },
+   "topIssues": [
+    {
+     "number": 2308,
+     "title": "Chromium asks for keyring password on every startup",
+     "url": "https://github.com/omacom/omarchy/issues/2308",
+     "state": "CLOSED",
+     "comments": 22,
+     "reactions": 18,
+     "createdAt": "2025-10-08T06:31:40Z",
+     "closedAt": "2025-10-26T00:01:03Z"
+    },
+    {
+     "number": 716,
+     "title": "Omarchy conflicts with SDDM by ocupying tty1 first",
+     "url": "https://github.com/omacom/omarchy/issues/716",
+     "state": "CLOSED",
+     "comments": 37,
+     "reactions": 0,
+     "createdAt": "2025-08-12T16:25:13Z",
+     "closedAt": "2025-08-14T07:56:47Z"
+    },
+    {
+     "number": 1485,
+     "title": "The system doesn't boot after install",
+     "url": "https://github.com/omacom/omarchy/issues/1485",
+     "state": "CLOSED",
+     "comments": 33,
+     "reactions": 0,
+     "createdAt": "2025-09-06T21:43:20Z",
+     "closedAt": "2025-10-26T02:18:14Z"
+    },
+    {
+     "number": 5105,
+     "title": "Update/reboot left keyring in invalid state, browser sessions and gh auth got cleared",
+     "url": "https://github.com/omacom/omarchy/issues/5105",
+     "state": "OPEN",
+     "comments": 21,
+     "reactions": 11,
+     "createdAt": "2026-03-23T18:06:58Z",
+     "closedAt": null
+    },
+    {
+     "number": 2635,
+     "title": "Omarchy 3.1 No Signal to Monitors When Waking from Sleep",
+     "url": "https://github.com/omacom/omarchy/issues/2635",
+     "state": "OPEN",
+     "comments": 18,
+     "reactions": 13,
+     "createdAt": "2025-10-20T17:46:16Z",
+     "closedAt": null
+    },
+    {
+     "number": 3293,
+     "title": "Hyprlock sometimes crashes after opening laptop, 3.1.5",
+     "url": "https://github.com/omacom/omarchy/issues/3293",
+     "state": "CLOSED",
+     "comments": 16,
+     "reactions": 13,
+     "createdAt": "2025-11-10T10:05:21Z",
+     "closedAt": "2026-02-02T19:55:52Z"
+    },
+    {
+     "number": 352,
+     "title": "Gnome-keyring not creating default keyvault, 1Password MFA issues",
+     "url": "https://github.com/omacom/omarchy/issues/352",
+     "state": "CLOSED",
+     "comments": 15,
+     "reactions": 6,
+     "createdAt": "2025-07-26T04:16:35Z",
+     "closedAt": "2025-11-03T09:54:46Z",
+     "fixedBy": [
+      1860,
+      2242
+     ]
+    },
+    {
+     "number": 748,
+     "title": "Walker and Omarchy menu don't launch on Super+Space",
+     "url": "https://github.com/omacom/omarchy/issues/748",
+     "state": "CLOSED",
+     "comments": 20,
+     "reactions": 0,
+     "createdAt": "2025-08-13T13:42:40Z",
+     "closedAt": "2025-08-22T11:12:49Z"
+    },
+    {
+     "number": 8113,
+     "title": "Omarchy unusable under VMware Workstation with 3D acceleration enabled",
+     "url": "https://github.com/omacom/omarchy/issues/8113",
+     "state": "CLOSED",
+     "comments": 10,
+     "reactions": 4,
+     "createdAt": "2026-08-24T22:41:37Z",
+     "closedAt": "2026-09-21T09:52:55Z"
+    },
+    {
+     "number": 2880,
+     "title": "Add a matching SDDM login screen theme",
+     "url": "https://github.com/omacom/omarchy/issues/2880",
+     "state": "CLOSED",
+     "comments": 6,
+     "reactions": 7,
+     "createdAt": "2025-10-26T17:41:03Z",
+     "closedAt": "2026-07-18T19:42:37Z"
+    },
+    {
+     "number": 6151,
+     "title": "Non-US keyboard layout not applied at LUKS decrypt prompt after 3.8.x update",
+     "url": "https://github.com/omacom/omarchy/issues/6151",
+     "state": "CLOSED",
+     "comments": 5,
+     "reactions": 7,
+     "createdAt": "2026-06-29T17:47:34Z",
+     "closedAt": "2026-07-12T15:07:17Z"
+    },
+    {
+     "number": 8989,
+     "title": "Hybrid iGPU-primary laptops: nvidia.lua forces NVIDIA env session-wide — video corruption (root cause of #4901) and blocked dGPU runtime suspend",
+     "url": "https://github.com/omacom/omarchy/issues/8989",
+     "state": "CLOSED",
+     "comments": 11,
+     "reactions": 1,
+     "createdAt": "2026-08-29T18:23:27Z",
+     "closedAt": "2026-09-20T20:04:41Z"
+    },
+    {
+     "number": 5986,
+     "title": "SDDM greeter defaults to us keymap instead of the one selected on install",
+     "url": "https://github.com/omacom/omarchy/issues/5986",
+     "state": "CLOSED",
+     "comments": 5,
+     "reactions": 6,
+     "createdAt": "2026-05-27T19:52:51Z",
+     "closedAt": "2026-07-18T19:43:12Z"
+    },
+    {
+     "number": 5706,
+     "title": "Login loop after update if nvidia DKMS fails to build for the new kernel",
+     "url": "https://github.com/omacom/omarchy/issues/5706",
+     "state": "OPEN",
+     "comments": 6,
+     "reactions": 4,
+     "createdAt": "2026-05-09T17:41:02Z",
+     "closedAt": null
+    },
+    {
+     "number": 412,
+     "title": "waybar / walker / windows disappear after returning from sleep",
+     "url": "https://github.com/omacom/omarchy/issues/412",
+     "state": "CLOSED",
+     "comments": 8,
+     "reactions": 0,
+     "createdAt": "2025-07-30T18:16:13Z",
+     "closedAt": "2025-08-05T21:51:42Z"
+    }
+   ],
+   "bestAnswers": [
+    {
+     "discussion": 532,
+     "title": "Support Multiple Users",
+     "url": "https://github.com/omacom/omarchy/discussions/532",
+     "category": "Ideas",
+     "upvoteCount": 40,
+     "kind": "top-comment",
+     "author": "andrewib",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/532#discussioncomment-14486409",
+     "snippet": "It would not hurt Omarchy market share if multi user setup was an option during install. Many desktop PCs are multi user, and not having this feature is a dealbreaker for many.\n\nThe same goes for encrypted drives - it's not necessary or wanted by many. Again, mostly by desktop PC users.\n\nDon't see why both these things should not be an option."
+    },
+    {
+     "discussion": 2195,
+     "title": "Using Niri instead of Hyprland in Omarchy",
+     "url": "https://github.com/omacom/omarchy/discussions/2195",
+     "category": "Q&A",
+     "upvoteCount": 26,
+     "kind": "accepted-answer",
+     "author": "alexhraber",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/2195#discussioncomment-14594989",
+     "snippet": "https://code.hyprland.org/hyprwm/hyprland-plugins/src/branch/main/hyprscrolling"
+    },
+    {
+     "discussion": 2495,
+     "title": "Changing Your Shell to Zsh or Fish in Omarchy Without Breaking Everything",
+     "url": "https://github.com/omacom/omarchy/discussions/2495",
+     "category": "Manual",
+     "upvoteCount": 20,
+     "kind": "top-comment",
+     "author": "Jerry1098",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/2495#discussioncomment-14923461",
+     "snippet": "Thank you for this guide :)\n\nProbably because of a new change to `alacritty`:\nAfter setting \n```toml\n[shell]\nprogram = \"/usr/bin/fish\"\n```\nI get a config warning stating that the `[shell]` option has been deprecated. The new correct config option is:\n```toml\n[terminal.shell]\nprogram = \"/usr/bin/fish\"\n```\n\nTo load zoxide into your fish shell you would need to add:\n```fish\nzoxide init fish | source\n```\nat the end of your `~/.config/fish/config.fish` or install the [`zoxide.fish`](https://github.co"
+    },
+    {
+     "discussion": 4982,
+     "title": "Add facial login authentication support for Omarchy",
+     "url": "https://github.com/omacom/omarchy/discussions/4982",
+     "category": "Suggestions",
+     "upvoteCount": 15,
+     "kind": "top-comment",
+     "author": "felipecsl",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/4982#discussioncomment-16597218",
+     "snippet": "the new dell xps panther lake laptops removed fingerprint reader so the only biometric option is face unlock for these laptops"
+    },
+    {
+     "discussion": 486,
+     "title": "How can I switch kde plasma and omarchy (hyprland) back and forth?",
+     "url": "https://github.com/omacom/omarchy/discussions/486",
+     "category": "Q&A",
+     "upvoteCount": 6,
+     "kind": "top-comment",
+     "author": "meta-byte",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/486#discussioncomment-13998137",
+     "snippet": "I imagine it's possible if you install something like Greetd or SDDM. I don't think that's how Omarchy is designed to function considering it has auto login enabled by default."
+    }
+   ],
+   "exampleErrorLines": [
+    "sddm-helper[1353]: gkr-pam: couldn't unlock the login keyring.",
+    "sddm-helper-start-wayland[10406]: \"Warning: Virtual modifier Hyper multiply defined / Using 0, ignoring 0\"",
+    "sddm-helper-start-wayland[10406]: \"Warning: Multiple symbols for level 1/group 1 on key <FK23>\"",
+    "sddm-helper[10526]: [PAM] authenticate: Authentication failure",
+    "sddm[1223]: Authentication error: SDDM::Auth::ERROR_AUTHENTICATION \"Authentication failure\""
+   ]
+  },
+  {
    "key": "mise",
    "label": "mise",
    "query": [
@@ -6467,8 +6465,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 121,
-    "open": 54,
+    "issues": 122,
+    "open": 55,
     "closed": 67,
     "discussions": 40
    },
@@ -6476,7 +6474,7 @@
     "4.0.0": 40,
     "3.x": 24,
     "4.0.1": 20,
-    "4.0.4": 15,
+    "4.0.4": 16,
     "4.0.3": 13,
     "4.0.2": 11,
     "4.22.x": 1
@@ -6736,6 +6734,16 @@
      "closedAt": null
     },
     {
+     "number": 6858,
+     "title": "Lock screen auto-focus not working",
+     "url": "https://github.com/omacom/omarchy/issues/6858",
+     "state": "OPEN",
+     "comments": 6,
+     "reactions": 6,
+     "createdAt": "2026-08-14T08:30:42Z",
+     "closedAt": null
+    },
+    {
      "number": 170,
      "title": "Fingerprint Reader for t480",
      "url": "https://github.com/omacom/omarchy/issues/170",
@@ -6754,16 +6762,6 @@
      "reactions": 0,
      "createdAt": "2025-10-17T13:36:13Z",
      "closedAt": "2025-10-22T10:22:53Z"
-    },
-    {
-     "number": 6858,
-     "title": "Lock screen auto-focus not working",
-     "url": "https://github.com/omacom/omarchy/issues/6858",
-     "state": "OPEN",
-     "comments": 6,
-     "reactions": 5,
-     "createdAt": "2026-08-14T08:30:42Z",
-     "closedAt": null
     },
     {
      "number": 856,
@@ -7231,7 +7229,7 @@
      "url": "https://github.com/omacom/omarchy/issues/6475",
      "state": "OPEN",
      "comments": 8,
-     "reactions": 23,
+     "reactions": 24,
      "createdAt": "2026-08-01T08:33:54Z",
      "closedAt": null
     },
@@ -7676,7 +7674,7 @@
    "versionsMentioned": {
     "3.x": 24,
     "4.0.2": 20,
-    "4.0.4": 18,
+    "4.0.4": 20,
     "4.0.1": 16,
     "4.0.0": 14,
     "4.0.3": 12
@@ -7796,6 +7794,16 @@
      "closedAt": "2025-09-29T13:48:05Z"
     },
     {
+     "number": 12617,
+     "title": "amdgpu/TTM: kernel oops in `ttm_lru_bulk_move_tail()` (corrupt LRU `list_head`) from `amdgpu_cs_ioctl`",
+     "url": "https://github.com/omacom/omarchy/issues/12617",
+     "state": "OPEN",
+     "comments": 12,
+     "reactions": 0,
+     "createdAt": "2026-09-20T08:55:40Z",
+     "closedAt": null
+    },
+    {
      "number": 1125,
      "title": "Cannot Recover from Suspense Mode",
      "url": "https://github.com/omacom/omarchy/issues/1125",
@@ -7813,16 +7821,6 @@
      "comments": 11,
      "reactions": 0,
      "createdAt": "2026-09-10T00:03:33Z",
-     "closedAt": null
-    },
-    {
-     "number": 12617,
-     "title": "amdgpu/TTM: kernel oops in `ttm_lru_bulk_move_tail()` (corrupt LRU `list_head`) from `amdgpu_cs_ioctl`",
-     "url": "https://github.com/omacom/omarchy/issues/12617",
-     "state": "OPEN",
-     "comments": 11,
-     "reactions": 0,
-     "createdAt": "2026-09-20T08:55:40Z",
      "closedAt": null
     },
     {
@@ -7910,15 +7908,15 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 96,
-    "open": 33,
+    "issues": 97,
+    "open": 34,
     "closed": 63,
     "discussions": 28
    },
    "versionsMentioned": {
     "4.0.2": 27,
     "3.x": 24,
-    "4.0.4": 15,
+    "4.0.4": 16,
     "4.0.3": 11,
     "4.0.1": 10,
     "4.0.0": 9
@@ -8512,6 +8510,16 @@
      "closedAt": "2025-11-21T04:47:08Z"
     },
     {
+     "number": 12617,
+     "title": "amdgpu/TTM: kernel oops in `ttm_lru_bulk_move_tail()` (corrupt LRU `list_head`) from `amdgpu_cs_ioctl`",
+     "url": "https://github.com/omacom/omarchy/issues/12617",
+     "state": "OPEN",
+     "comments": 12,
+     "reactions": 0,
+     "createdAt": "2026-09-20T08:55:40Z",
+     "closedAt": null
+    },
+    {
      "number": 6209,
      "title": "System becomes unusable after update: libgcc_s.so.1 missing during gcc-libs upgrade",
      "url": "https://github.com/omacom/omarchy/issues/6209",
@@ -8519,16 +8527,6 @@
      "comments": 11,
      "reactions": 0,
      "createdAt": "2026-07-12T18:20:23Z",
-     "closedAt": null
-    },
-    {
-     "number": 12617,
-     "title": "amdgpu/TTM: kernel oops in `ttm_lru_bulk_move_tail()` (corrupt LRU `list_head`) from `amdgpu_cs_ioctl`",
-     "url": "https://github.com/omacom/omarchy/issues/12617",
-     "state": "OPEN",
-     "comments": 11,
-     "reactions": 0,
-     "createdAt": "2026-09-20T08:55:40Z",
      "closedAt": null
     },
     {
@@ -8872,13 +8870,13 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 76,
-    "open": 52,
+    "issues": 77,
+    "open": 53,
     "closed": 24,
     "discussions": 11
    },
    "versionsMentioned": {
-    "4.0.4": 21,
+    "4.0.4": 22,
     "3.x": 14,
     "4.0.3": 14,
     "4.0.1": 10,
@@ -8886,7 +8884,8 @@
     "4.0.0": 5,
     "4.2.x": 3,
     "4.5.x": 1,
-    "4.25.x": 1
+    "4.25.x": 1,
+    "4.4.x": 1
    },
    "topIssues": [
     {
@@ -8960,6 +8959,16 @@
      "closedAt": "2026-09-20T20:10:27Z"
     },
     {
+     "number": 12188,
+     "title": "linux-omarchy kernel breaks screen backlight and USB audio volume on Dell XPS 14 (Panther Lake)",
+     "url": "https://github.com/omacom/omarchy/issues/12188",
+     "state": "OPEN",
+     "comments": 7,
+     "reactions": 0,
+     "createdAt": "2026-09-16T21:24:06Z",
+     "closedAt": null
+    },
+    {
      "number": 6037,
      "title": "Audio Quality Dropped Significantly Of My Laptop Speaker After Switching to Omarchy",
      "url": "https://github.com/omacom/omarchy/issues/6037",
@@ -8980,6 +8989,16 @@
      "closedAt": null
     },
     {
+     "number": 13172,
+     "title": "[kernel/audio] Internal speakers silent: left CS35L41 amp fails OTP_BOOT_DONE (-121) on HP Envy x360 13-bf0xxx",
+     "url": "https://github.com/omacom/omarchy/issues/13172",
+     "state": "OPEN",
+     "comments": 5,
+     "reactions": 0,
+     "createdAt": "2026-09-24T19:11:07Z",
+     "closedAt": null
+    },
+    {
      "number": 6001,
      "title": "Microphone on ThinkPad X1 Carbon Gen 14 (Panther Lake + CS42L45) silent — missing sof-ptl-cs42l45 topology / machine driver",
      "url": "https://github.com/omacom/omarchy/issues/6001",
@@ -8988,6 +9007,16 @@
      "reactions": 0,
      "createdAt": "2026-05-30T12:44:57Z",
      "closedAt": "2026-06-08T08:54:29Z"
+    },
+    {
+     "number": 8789,
+     "title": "[Quattro] Audio picker cannot switch between HDMI/DP profiles on one GPU card",
+     "url": "https://github.com/omacom/omarchy/issues/8789",
+     "state": "OPEN",
+     "comments": 3,
+     "reactions": 1,
+     "createdAt": "2026-08-28T17:21:38Z",
+     "closedAt": null
     },
     {
      "number": 11049,
@@ -9010,39 +9039,6 @@
      "closedAt": "2026-09-13T14:52:25Z",
      "fixedBy": [
       496
-     ]
-    },
-    {
-     "number": 12086,
-     "title": "Internal speakers silent on Legion Pro 7 16IRX8H; TAS2781 binding changes with codec SSID override",
-     "url": "https://github.com/omacom/omarchy/issues/12086",
-     "state": "OPEN",
-     "comments": 4,
-     "reactions": 0,
-     "createdAt": "2026-09-16T10:01:47Z",
-     "closedAt": null
-    },
-    {
-     "number": 12204,
-     "title": "omarchy-audio-output-sink fails to resolve physical sink for EasyEffects",
-     "url": "https://github.com/omacom/omarchy/issues/12204",
-     "state": "OPEN",
-     "comments": 4,
-     "reactions": 0,
-     "createdAt": "2026-09-16T23:21:45Z",
-     "closedAt": null
-    },
-    {
-     "number": 5375,
-     "title": "Arabic text renders with Noto Nastaliq Urdu instead of proper Arabic font",
-     "url": "https://github.com/omacom/omarchy/issues/5375",
-     "state": "CLOSED",
-     "comments": 2,
-     "reactions": 1,
-     "createdAt": "2026-04-21T08:36:14Z",
-     "closedAt": "2026-07-20T14:41:07Z",
-     "fixedBy": [
-      6322
      ]
     }
    ],
@@ -9106,9 +9102,9 @@
    "exampleErrorLines": [
     "1. **A2DP profile corruption** — the Bose speaker's A2DP connection entered a broken state with repeated `avdtp_connect_cb(): Connection refused` and `Unable to load LastUsed: rseid 1 not found` errors",
     "Mechanism: on 0.5.17 the PipeWire sinks are created with **zero ports**, so WirePlumber has nothing to link streams to and every stream lands on `SPA_ID_INVALID` at -inf dB (presents to users as \"muted, can't unmute\"). Raw ALSA (`speaker-test -D hw:1,2`) played fine throughou",
-    "The audio services and built-in speaker output are back online, and playback tests complete. **The user has not yet confirmed audible playback after the override**, so this report does not claim that it fixes the issue. The calibration CRC error",
+    "The right amp (`.1`) always binds and loads DSP firmware. The left amp (`.0`) remains unbound (`/sys/bus/i2c/drivers/cs35l41-hda/i2c-CSC3551:00-cs35l41-hda.0` never appears). With `.0` missing, the internal \"Speaker\" sink stays silent even though playback runs without error through the DSP.",
     "**Boot 3** — card instantiates successfully (`sof-soundwire`, machine string `DellInc.-XPS13DX13260-1.3.0-0865D8`), full PipeWire sink/source set appears, `paplay`/`speaker-test` run with zero errors and sink transitions `SUSPENDED` → `RUNNING`, but:",
-    "The right amp (`.1`) always binds and loads DSP firmware. The left amp (`.0`) remains unbound (`/sys/bus/i2c/drivers/cs35l41-hda/i2c-CSC3551:00-cs35l41-hda.0` never appears). With `.0` missing, the internal \"Speaker\" sink stays silent even though playback runs without error through the DSP."
+    "The audio services and built-in speaker output are back online, and playback tests complete. **The user has not yet confirmed audible playback after the override**, so this report does not claim that it fixes the issue. The calibration CRC error"
    ]
   },
   {
@@ -9616,7 +9612,7 @@
     "4.0.0": 27,
     "4.0.2": 16,
     "4.0.1": 13,
-    "4.0.4": 11,
+    "4.0.4": 12,
     "4.0.3": 9,
     "3.x": 3
    },
@@ -9844,7 +9840,7 @@
     "issues": 62,
     "open": 20,
     "closed": 42,
-    "discussions": 18
+    "discussions": 19
    },
    "versionsMentioned": {
     "3.x": 23,
@@ -10802,8 +10798,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 41,
-    "open": 27,
+    "issues": 42,
+    "open": 28,
     "closed": 14,
     "discussions": 13
    },
@@ -10812,7 +10808,7 @@
     "3.x": 10,
     "4.0.2": 8,
     "4.0.0": 8,
-    "4.0.4": 6,
+    "4.0.4": 7,
     "4.0.1": 5,
     "4.22.x": 1
    },
@@ -10836,7 +10832,7 @@
      "title": "amdgpu/TTM: kernel oops in `ttm_lru_bulk_move_tail()` (corrupt LRU `list_head`) from `amdgpu_cs_ioctl`",
      "url": "https://github.com/omacom/omarchy/issues/12617",
      "state": "OPEN",
-     "comments": 11,
+     "comments": 12,
      "reactions": 0,
      "createdAt": "2026-09-20T08:55:40Z",
      "closedAt": null
@@ -11291,7 +11287,7 @@
      "title": "Camera (IPU7-PTL / OV08X40) on ThinkPad X1 Carbon Gen 14: ACPI status=0, sensor invisible to Linux",
      "url": "https://github.com/omacom/omarchy/issues/6000",
      "state": "OPEN",
-     "comments": 23,
+     "comments": 24,
      "reactions": 1,
      "createdAt": "2026-05-30T12:37:49Z",
      "closedAt": null
@@ -11497,8 +11493,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 30,
-    "open": 20,
+    "issues": 31,
+    "open": 21,
     "closed": 10,
     "discussions": 13
    },
@@ -11508,7 +11504,7 @@
     "4.0.2": 6,
     "4.0.3": 6,
     "4.0.1": 5,
-    "4.0.4": 3
+    "4.0.4": 4
    },
    "topIssues": [
     {
@@ -11569,6 +11565,16 @@
      "closedAt": "2026-09-21T09:57:28Z"
     },
     {
+     "number": 10207,
+     "title": "omarchy-shell SIGSEGV in QQuickItem::mapToScene while Qt synthesizes a context-menu event",
+     "url": "https://github.com/omacom/omarchy/issues/10207",
+     "state": "OPEN",
+     "comments": 4,
+     "reactions": 1,
+     "createdAt": "2026-09-04T17:28:24Z",
+     "closedAt": null
+    },
+    {
      "number": 5882,
      "title": "F9 should not be bound to Voxtype dictation by default. Bare function keys must not be rebound.",
      "url": "https://github.com/omacom/omarchy/issues/5882",
@@ -11580,16 +11586,6 @@
      "fixedBy": [
       5897
      ]
-    },
-    {
-     "number": 10207,
-     "title": "omarchy-shell SIGSEGV in QQuickItem::mapToScene while Qt synthesizes a context-menu event",
-     "url": "https://github.com/omacom/omarchy/issues/10207",
-     "state": "OPEN",
-     "comments": 3,
-     "reactions": 1,
-     "createdAt": "2026-09-04T17:28:24Z",
-     "closedAt": null
     },
     {
      "number": 5071,
@@ -11749,14 +11745,14 @@
    "discovered": "auto",
    "searchScope": "title+body+error-signature",
    "counts": {
-    "issues": 30,
-    "open": 10,
+    "issues": 31,
+    "open": 11,
     "closed": 20,
     "discussions": 0
    },
    "versionsMentioned": {
     "4.0.2": 17,
-    "4.0.4": 9,
+    "4.0.4": 10,
     "4.0.3": 8,
     "4.0.0": 2
    },
@@ -11947,13 +11943,13 @@
     "3.x": 14,
     "4.0.0": 5,
     "4.0.1": 2,
-    "4.12.x": 1,
     "4.2.x": 1,
+    "4.12.x": 1,
     "4.4.x": 1,
     "4.99.x": 1,
     "4.0.2": 1,
-    "4.0.3": 1,
-    "4.0.4": 1
+    "4.0.4": 1,
+    "4.0.3": 1
    },
    "topIssues": [
     {
@@ -12150,8 +12146,8 @@
     "4.0.2": 8,
     "4.0.3": 6,
     "4.0.0": 5,
-    "4.0.1": 4,
     "4.0.4": 4,
+    "4.0.1": 4,
     "3.x": 2,
     "4.20.x": 1,
     "4.3.x": 1
@@ -12172,7 +12168,7 @@
      "title": "Lock shell dies during normal idle->lock; session permanently locked, reboot required",
      "url": "https://github.com/omacom/omarchy/issues/6628",
      "state": "OPEN",
-     "comments": 18,
+     "comments": 17,
      "reactions": 1,
      "createdAt": "2026-08-08T09:23:08Z",
      "closedAt": null,
@@ -12490,7 +12486,7 @@
      "title": "linux-omarchy 7.2.5-3 fails on 2016 MacBook Pro (MacBookPro13,3) unless intel_iommu=off",
      "url": "https://github.com/omacom/omarchy/issues/12119",
      "state": "OPEN",
-     "comments": 6,
+     "comments": 7,
      "reactions": 0,
      "createdAt": "2026-09-16T13:00:49Z",
      "closedAt": null
@@ -12629,8 +12625,8 @@
     "4.0.0": 5,
     "4.0.2": 5,
     "3.x": 4,
-    "4.0.3": 3,
     "4.0.4": 3,
+    "4.0.3": 3,
     "4.0.1": 2
    },
    "topIssues": [
@@ -12851,8 +12847,8 @@
    "versionsMentioned": {
     "3.x": 14,
     "4.0.0": 3,
-    "4.12.x": 1,
     "4.2.x": 1,
+    "4.12.x": 1,
     "4.4.x": 1,
     "4.99.x": 1
    },
@@ -13026,232 +13022,6 @@
    ]
   },
   {
-   "key": "no-sound",
-   "label": "no sound",
-   "query": [
-    "no sound"
-   ],
-   "discovered": "seed",
-   "searchScope": "title+body+comments",
-   "counts": {
-    "issues": 22,
-    "open": 10,
-    "closed": 12,
-    "discussions": 6
-   },
-   "versionsMentioned": {
-    "3.x": 6,
-    "4.0.0": 3,
-    "4.0.3": 3,
-    "4.0.4": 3,
-    "4.0.1": 2,
-    "4.0.2": 2,
-    "4.2.x": 2
-   },
-   "topIssues": [
-    {
-     "number": 4821,
-     "title": "# No Sound Fix: ASUS ROG Strix G16 (2025) on Omarchy 3.4.1",
-     "url": "https://github.com/omacom/omarchy/issues/4821",
-     "state": "OPEN",
-     "comments": 10,
-     "reactions": 24,
-     "createdAt": "2026-02-28T19:50:13Z",
-     "closedAt": null
-    },
-    {
-     "number": 3066,
-     "title": "Battery Low Warning",
-     "url": "https://github.com/omacom/omarchy/issues/3066",
-     "state": "CLOSED",
-     "comments": 12,
-     "reactions": 7,
-     "createdAt": "2025-11-02T09:20:00Z",
-     "closedAt": "2026-02-02T19:20:10Z",
-     "fixedBy": [
-      3838
-     ]
-    },
-    {
-     "number": 5557,
-     "title": "No sound on ASUS Zenbook S14 UX5406AA (Panther Lake) — sof_sdw topology / kernel ABI mismatch",
-     "url": "https://github.com/omacom/omarchy/issues/5557",
-     "state": "OPEN",
-     "comments": 16,
-     "reactions": 0,
-     "createdAt": "2026-05-03T01:12:43Z",
-     "closedAt": null,
-     "fixedBy": [
-      5606
-     ]
-    },
-    {
-     "number": 718,
-     "title": "Speakers: Builtin Speakers & Monitor Speakers Not Working",
-     "url": "https://github.com/omacom/omarchy/issues/718",
-     "state": "CLOSED",
-     "comments": 9,
-     "reactions": 0,
-     "createdAt": "2025-08-12T16:59:23Z",
-     "closedAt": "2025-08-18T16:17:26Z"
-    },
-    {
-     "number": 1734,
-     "title": "AirPods Pro 2 not working properly",
-     "url": "https://github.com/omacom/omarchy/issues/1734",
-     "state": "CLOSED",
-     "comments": 8,
-     "reactions": 0,
-     "createdAt": "2025-09-17T20:12:17Z",
-     "closedAt": "2026-02-01T19:52:14Z"
-    },
-    {
-     "number": 2101,
-     "title": "MacBook 10,1 audio doesn't work OOTB",
-     "url": "https://github.com/omacom/omarchy/issues/2101",
-     "state": "CLOSED",
-     "comments": 6,
-     "reactions": 0,
-     "createdAt": "2025-09-30T09:09:45Z",
-     "closedAt": "2026-02-21T06:23:01Z"
-    },
-    {
-     "number": 571,
-     "title": "I cannot switch between the earphones and speakers by plugging or unplugging them.",
-     "url": "https://github.com/omacom/omarchy/issues/571",
-     "state": "CLOSED",
-     "comments": 2,
-     "reactions": 3,
-     "createdAt": "2025-08-08T23:10:25Z",
-     "closedAt": "2025-11-03T09:54:48Z"
-    },
-    {
-     "number": 6001,
-     "title": "Microphone on ThinkPad X1 Carbon Gen 14 (Panther Lake + CS42L45) silent — missing sof-ptl-cs42l45 topology / machine driver",
-     "url": "https://github.com/omacom/omarchy/issues/6001",
-     "state": "CLOSED",
-     "comments": 4,
-     "reactions": 0,
-     "createdAt": "2026-05-30T12:44:57Z",
-     "closedAt": "2026-06-08T08:54:29Z"
-    },
-    {
-     "number": 11320,
-     "title": "No speaker audio on Dell XPS 13 DX13260 (2026) — CS35L56 amp firmware never loads",
-     "url": "https://github.com/omacom/omarchy/issues/11320",
-     "state": "CLOSED",
-     "comments": 4,
-     "reactions": 0,
-     "createdAt": "2026-09-11T13:06:45Z",
-     "closedAt": "2026-09-13T14:52:25Z",
-     "fixedBy": [
-      496
-     ]
-    },
-    {
-     "number": 13437,
-     "title": "MOMENTUM 4 stereo silence after sleep: reset and re-pair restored AAC playback",
-     "url": "https://github.com/omacom/omarchy/issues/13437",
-     "state": "OPEN",
-     "comments": 4,
-     "reactions": 0,
-     "createdAt": "2026-09-27T19:10:31Z",
-     "closedAt": null
-    },
-    {
-     "number": 11374,
-     "title": "No sound from internal speakers on Dell XPS 13 DX13260 (Panther Lake, CS42L43+CS35L56A) — speaker-ID/tuning read failure",
-     "url": "https://github.com/omacom/omarchy/issues/11374",
-     "state": "CLOSED",
-     "comments": 3,
-     "reactions": 0,
-     "createdAt": "2026-09-11T21:21:27Z",
-     "closedAt": "2026-09-21T05:58:50Z",
-     "fixedBy": [
-      496
-     ]
-    },
-    {
-     "number": 13172,
-     "title": "[kernel/audio] Internal speakers silent: left CS35L41 amp fails OTP_BOOT_DONE (-121) on HP Envy x360 13-bf0xxx",
-     "url": "https://github.com/omacom/omarchy/issues/13172",
-     "state": "OPEN",
-     "comments": 3,
-     "reactions": 0,
-     "createdAt": "2026-09-24T19:11:07Z",
-     "closedAt": null
-    },
-    {
-     "number": 10543,
-     "title": "Dell XPS 13 DX13260 (1028:0e53): no sound at all after dell-xps13-sidecar-amps workaround — CS35L56 firmware never downloads despite blobs being present",
-     "url": "https://github.com/omacom/omarchy/issues/10543",
-     "state": "CLOSED",
-     "comments": 2,
-     "reactions": 0,
-     "createdAt": "2026-09-06T20:10:36Z",
-     "closedAt": "2026-09-21T05:58:36Z"
-    },
-    {
-     "number": 2792,
-     "title": "There is no sound in omarchy-windows-vm.",
-     "url": "https://github.com/omacom/omarchy/issues/2792",
-     "state": "CLOSED",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2025-10-24T08:05:42Z",
-     "closedAt": "2025-10-24T08:58:32Z"
-    },
-    {
-     "number": 6110,
-     "title": "No audio on Intel Arrow Lake — sof-firmware not installed, DSP fails to boot (Dummy Output)",
-     "url": "https://github.com/omacom/omarchy/issues/6110",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-06-19T06:42:23Z",
-     "closedAt": null
-    }
-   ],
-   "bestAnswers": [
-    {
-     "discussion": 8621,
-     "title": "Dell XPS 13 (DX13260, SKU 0E53): internal speakers quiet and tinny — CS35L56 sidecar amps never enabled, and no `spkid0` firmware for this SKU",
-     "url": "https://github.com/omacom/omarchy/discussions/8621",
-     "category": "Suggestions",
-     "upvoteCount": 3,
-     "kind": "top-comment",
-     "author": "adenta",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/8621#discussioncomment-18395007",
-     "snippet": "I think this is a bios issue\n\n\nI’m using the same spkid0 → spkid1 workaround on an XPS 13 DX13260, SKU 0E53. The speakers sound much better, but I noticed a change after updating BIOS 1.3.0 → 1.6.0.\nBefore the BIOS update, both CS35L56 amplifiers logged:\nCalibration applied\nAfterward:\n- Both still load firmware v4.5.9 and report the same tuning IDs.\n- Neither logs Calibration applied.\n- This EFI variable is no longer present:/sys/firmware/efi/efivars/CirrusSmartAmpCalibrationData-02f9af02-7734-4"
-    },
-    {
-     "discussion": 4473,
-     "title": "Battery Low Warning",
-     "url": "https://github.com/omacom/omarchy/discussions/4473",
-     "category": "Suggestions",
-     "upvoteCount": 2,
-     "kind": "top-comment",
-     "author": "himanshu0805",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/4473#discussioncomment-15676003",
-     "snippet": "The notification dosen't come when I watch YouTube in Firefox at full screen.\n\nAlso there is no sound for it."
-    },
-    {
-     "discussion": 4700,
-     "title": "MacBook 10,1 audio doesn't work OOTB",
-     "url": "https://github.com/omacom/omarchy/discussions/4700",
-     "category": "Support",
-     "upvoteCount": 1,
-     "kind": "top-comment",
-     "author": "brycv",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/4700#discussioncomment-15878862",
-     "snippet": "I just installed Omarchy 3.1.4 on my macbook10,1 that I haven't used in several years and ran into this exact issue. I would love to see this integrated into Omarchy. Sound doesn't work in Fedora 43 or Ubuntu 25.10 either so this would be a nice win."
-    }
-   ],
-   "exampleErrorLines": [
-    "- No sound-related errors surface in PipeWire/WirePlumber/pactl — everything looks \"normal\" from userspace. The problem is entirely below that layer."
-   ]
-  },
-  {
    "key": "ipu7",
    "label": "ipu7",
    "query": [
@@ -13260,18 +13030,19 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 21,
-    "open": 15,
+    "issues": 22,
+    "open": 16,
     "closed": 6,
     "discussions": 1
    },
    "versionsMentioned": {
+    "4.0.4": 6,
     "4.0.3": 6,
-    "4.0.4": 5,
     "3.x": 4,
     "4.0.2": 4,
     "4.0.0": 4,
-    "4.0.1": 1
+    "4.0.1": 1,
+    "4.4.x": 1
    },
    "topIssues": [
     {
@@ -13279,7 +13050,7 @@
      "title": "Camera (IPU7-PTL / OV08X40) on ThinkPad X1 Carbon Gen 14: ACPI status=0, sensor invisible to Linux",
      "url": "https://github.com/omacom/omarchy/issues/6000",
      "state": "OPEN",
-     "comments": 23,
+     "comments": 24,
      "reactions": 1,
      "createdAt": "2026-05-30T12:37:49Z",
      "closedAt": null
@@ -13316,6 +13087,16 @@
      "reactions": 0,
      "createdAt": "2026-08-22T13:40:41Z",
      "closedAt": "2026-09-21T09:55:53Z"
+    },
+    {
+     "number": 12188,
+     "title": "linux-omarchy kernel breaks screen backlight and USB audio volume on Dell XPS 14 (Panther Lake)",
+     "url": "https://github.com/omacom/omarchy/issues/12188",
+     "state": "OPEN",
+     "comments": 7,
+     "reactions": 0,
+     "createdAt": "2026-09-16T21:24:06Z",
+     "closedAt": null
     },
     {
      "number": 8641,
@@ -13428,23 +13209,240 @@
      "reactions": 0,
      "createdAt": "2026-09-02T19:29:51Z",
      "closedAt": "2026-09-21T09:55:41Z"
-    },
-    {
-     "number": 10154,
-     "title": "ptl-kernel.sh never removes the stock kernel: `pacman -Rdd linux linux-headers` aborts when linux-headers isn't installed, and `|| true` hides it",
-     "url": "https://github.com/omacom/omarchy/issues/10154",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-04T11:18:40Z",
-     "closedAt": null
     }
    ],
    "bestAnswers": [],
    "exampleErrorLines": [
     "**`IPU7 in secure mode` is not an error, and not a probe message.** In `v7.1` it is a `dev_info()` inside `ipu7_resume()` — `drivers/staging/media/ipu7/ipu7.c:2694`:",
+    "After I would about this, I then disabled one of the new drivers that are now in-tree, which causes IPU7 drivers to fail to build.",
     "systemctl reset-failed v4l2-relayd@ipu7.service ...",
     "systemctl reset-failed v4l2-relayd@ipu7.service 2>/dev/null || true"
+   ]
+  },
+  {
+   "key": "no-sound",
+   "label": "no sound",
+   "query": [
+    "no sound"
+   ],
+   "discovered": "seed",
+   "searchScope": "title+body+comments",
+   "counts": {
+    "issues": 22,
+    "open": 10,
+    "closed": 12,
+    "discussions": 6
+   },
+   "versionsMentioned": {
+    "3.x": 6,
+    "4.0.0": 3,
+    "4.0.3": 3,
+    "4.0.4": 3,
+    "4.0.1": 2,
+    "4.0.2": 2,
+    "4.2.x": 2
+   },
+   "topIssues": [
+    {
+     "number": 4821,
+     "title": "# No Sound Fix: ASUS ROG Strix G16 (2025) on Omarchy 3.4.1",
+     "url": "https://github.com/omacom/omarchy/issues/4821",
+     "state": "OPEN",
+     "comments": 10,
+     "reactions": 24,
+     "createdAt": "2026-02-28T19:50:13Z",
+     "closedAt": null
+    },
+    {
+     "number": 3066,
+     "title": "Battery Low Warning",
+     "url": "https://github.com/omacom/omarchy/issues/3066",
+     "state": "CLOSED",
+     "comments": 12,
+     "reactions": 7,
+     "createdAt": "2025-11-02T09:20:00Z",
+     "closedAt": "2026-02-02T19:20:10Z",
+     "fixedBy": [
+      3838
+     ]
+    },
+    {
+     "number": 5557,
+     "title": "No sound on ASUS Zenbook S14 UX5406AA (Panther Lake) — sof_sdw topology / kernel ABI mismatch",
+     "url": "https://github.com/omacom/omarchy/issues/5557",
+     "state": "OPEN",
+     "comments": 16,
+     "reactions": 0,
+     "createdAt": "2026-05-03T01:12:43Z",
+     "closedAt": null,
+     "fixedBy": [
+      5606
+     ]
+    },
+    {
+     "number": 718,
+     "title": "Speakers: Builtin Speakers & Monitor Speakers Not Working",
+     "url": "https://github.com/omacom/omarchy/issues/718",
+     "state": "CLOSED",
+     "comments": 9,
+     "reactions": 0,
+     "createdAt": "2025-08-12T16:59:23Z",
+     "closedAt": "2025-08-18T16:17:26Z"
+    },
+    {
+     "number": 1734,
+     "title": "AirPods Pro 2 not working properly",
+     "url": "https://github.com/omacom/omarchy/issues/1734",
+     "state": "CLOSED",
+     "comments": 8,
+     "reactions": 0,
+     "createdAt": "2025-09-17T20:12:17Z",
+     "closedAt": "2026-02-01T19:52:14Z"
+    },
+    {
+     "number": 2101,
+     "title": "MacBook 10,1 audio doesn't work OOTB",
+     "url": "https://github.com/omacom/omarchy/issues/2101",
+     "state": "CLOSED",
+     "comments": 6,
+     "reactions": 0,
+     "createdAt": "2025-09-30T09:09:45Z",
+     "closedAt": "2026-02-21T06:23:01Z"
+    },
+    {
+     "number": 571,
+     "title": "I cannot switch between the earphones and speakers by plugging or unplugging them.",
+     "url": "https://github.com/omacom/omarchy/issues/571",
+     "state": "CLOSED",
+     "comments": 2,
+     "reactions": 3,
+     "createdAt": "2025-08-08T23:10:25Z",
+     "closedAt": "2025-11-03T09:54:48Z"
+    },
+    {
+     "number": 13172,
+     "title": "[kernel/audio] Internal speakers silent: left CS35L41 amp fails OTP_BOOT_DONE (-121) on HP Envy x360 13-bf0xxx",
+     "url": "https://github.com/omacom/omarchy/issues/13172",
+     "state": "OPEN",
+     "comments": 5,
+     "reactions": 0,
+     "createdAt": "2026-09-24T19:11:07Z",
+     "closedAt": null
+    },
+    {
+     "number": 6001,
+     "title": "Microphone on ThinkPad X1 Carbon Gen 14 (Panther Lake + CS42L45) silent — missing sof-ptl-cs42l45 topology / machine driver",
+     "url": "https://github.com/omacom/omarchy/issues/6001",
+     "state": "CLOSED",
+     "comments": 4,
+     "reactions": 0,
+     "createdAt": "2026-05-30T12:44:57Z",
+     "closedAt": "2026-06-08T08:54:29Z"
+    },
+    {
+     "number": 11320,
+     "title": "No speaker audio on Dell XPS 13 DX13260 (2026) — CS35L56 amp firmware never loads",
+     "url": "https://github.com/omacom/omarchy/issues/11320",
+     "state": "CLOSED",
+     "comments": 4,
+     "reactions": 0,
+     "createdAt": "2026-09-11T13:06:45Z",
+     "closedAt": "2026-09-13T14:52:25Z",
+     "fixedBy": [
+      496
+     ]
+    },
+    {
+     "number": 13437,
+     "title": "MOMENTUM 4 stereo silence after sleep: reset and re-pair restored AAC playback",
+     "url": "https://github.com/omacom/omarchy/issues/13437",
+     "state": "OPEN",
+     "comments": 4,
+     "reactions": 0,
+     "createdAt": "2026-09-27T19:10:31Z",
+     "closedAt": null
+    },
+    {
+     "number": 11374,
+     "title": "No sound from internal speakers on Dell XPS 13 DX13260 (Panther Lake, CS42L43+CS35L56A) — speaker-ID/tuning read failure",
+     "url": "https://github.com/omacom/omarchy/issues/11374",
+     "state": "CLOSED",
+     "comments": 3,
+     "reactions": 0,
+     "createdAt": "2026-09-11T21:21:27Z",
+     "closedAt": "2026-09-21T05:58:50Z",
+     "fixedBy": [
+      496
+     ]
+    },
+    {
+     "number": 10543,
+     "title": "Dell XPS 13 DX13260 (1028:0e53): no sound at all after dell-xps13-sidecar-amps workaround — CS35L56 firmware never downloads despite blobs being present",
+     "url": "https://github.com/omacom/omarchy/issues/10543",
+     "state": "CLOSED",
+     "comments": 2,
+     "reactions": 0,
+     "createdAt": "2026-09-06T20:10:36Z",
+     "closedAt": "2026-09-21T05:58:36Z"
+    },
+    {
+     "number": 2792,
+     "title": "There is no sound in omarchy-windows-vm.",
+     "url": "https://github.com/omacom/omarchy/issues/2792",
+     "state": "CLOSED",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2025-10-24T08:05:42Z",
+     "closedAt": "2025-10-24T08:58:32Z"
+    },
+    {
+     "number": 6110,
+     "title": "No audio on Intel Arrow Lake — sof-firmware not installed, DSP fails to boot (Dummy Output)",
+     "url": "https://github.com/omacom/omarchy/issues/6110",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-06-19T06:42:23Z",
+     "closedAt": null
+    }
+   ],
+   "bestAnswers": [
+    {
+     "discussion": 8621,
+     "title": "Dell XPS 13 (DX13260, SKU 0E53): internal speakers quiet and tinny — CS35L56 sidecar amps never enabled, and no `spkid0` firmware for this SKU",
+     "url": "https://github.com/omacom/omarchy/discussions/8621",
+     "category": "Suggestions",
+     "upvoteCount": 3,
+     "kind": "top-comment",
+     "author": "adenta",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/8621#discussioncomment-18395007",
+     "snippet": "I think this is a bios issue\n\n\nI’m using the same spkid0 → spkid1 workaround on an XPS 13 DX13260, SKU 0E53. The speakers sound much better, but I noticed a change after updating BIOS 1.3.0 → 1.6.0.\nBefore the BIOS update, both CS35L56 amplifiers logged:\nCalibration applied\nAfterward:\n- Both still load firmware v4.5.9 and report the same tuning IDs.\n- Neither logs Calibration applied.\n- This EFI variable is no longer present:/sys/firmware/efi/efivars/CirrusSmartAmpCalibrationData-02f9af02-7734-4"
+    },
+    {
+     "discussion": 4473,
+     "title": "Battery Low Warning",
+     "url": "https://github.com/omacom/omarchy/discussions/4473",
+     "category": "Suggestions",
+     "upvoteCount": 2,
+     "kind": "top-comment",
+     "author": "himanshu0805",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/4473#discussioncomment-15676003",
+     "snippet": "The notification dosen't come when I watch YouTube in Firefox at full screen.\n\nAlso there is no sound for it."
+    },
+    {
+     "discussion": 4700,
+     "title": "MacBook 10,1 audio doesn't work OOTB",
+     "url": "https://github.com/omacom/omarchy/discussions/4700",
+     "category": "Support",
+     "upvoteCount": 1,
+     "kind": "top-comment",
+     "author": "brycv",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/4700#discussioncomment-15878862",
+     "snippet": "I just installed Omarchy 3.1.4 on my macbook10,1 that I haven't used in several years and ran into this exact issue. I would love to see this integrated into Omarchy. Sound doesn't work in Fedora 43 or Ubuntu 25.10 either so this would be a nice win."
+    }
+   ],
+   "exampleErrorLines": [
+    "- No sound-related errors surface in PipeWire/WirePlumber/pactl — everything looks \"normal\" from userspace. The problem is entirely below that layer."
    ]
   },
   {
@@ -13661,8 +13659,8 @@
     "4.0.0": 7,
     "4.0.2": 6,
     "4.0.1": 5,
-    "4.0.3": 1,
-    "4.0.4": 1
+    "4.0.4": 1,
+    "4.0.3": 1
    },
    "topIssues": [
     {
@@ -13838,13 +13836,13 @@
    },
    "versionsMentioned": {
     "3.x": 11,
-    "4.12.x": 1,
     "4.2.x": 1,
+    "4.12.x": 1,
     "4.4.x": 1,
     "4.99.x": 1,
     "4.0.1": 1,
-    "4.0.3": 1,
-    "4.0.4": 1
+    "4.0.4": 1,
+    "4.0.3": 1
    },
    "topIssues": [
     {
@@ -14853,7 +14851,7 @@
      "title": "Lock shell dies during normal idle->lock; session permanently locked, reboot required",
      "url": "https://github.com/omacom/omarchy/issues/6628",
      "state": "OPEN",
-     "comments": 18,
+     "comments": 17,
      "reactions": 1,
      "createdAt": "2026-08-08T09:23:08Z",
      "closedAt": null,
@@ -15444,8 +15442,8 @@
    },
    "versionsMentioned": {
     "3.x": 9,
-    "4.0.1": 1,
-    "4.0.0": 1
+    "4.0.0": 1,
+    "4.0.1": 1
    },
    "topIssues": [
     {
@@ -15622,7 +15620,8 @@
     "4.0.2": 8,
     "4.0.1": 5,
     "4.0.0": 3,
-    "3.x": 2
+    "3.x": 2,
+    "4.0.4": 1
    },
    "topIssues": [
     {
@@ -15636,6 +15635,19 @@
      "closedAt": null
     },
     {
+     "number": 8647,
+     "title": "Omarchy shell SIGABRT on idle lock after quickshell 0.3.1 / Qt 6.11.2 update: \"FATAL: Tried to show lockscreen surfaces without active lock\" (+ one SIGSEGV in __dynamic_cast at startup)",
+     "url": "https://github.com/omacom/omarchy/issues/8647",
+     "state": "OPEN",
+     "comments": 6,
+     "reactions": 0,
+     "createdAt": "2026-08-27T18:14:21Z",
+     "closedAt": null,
+     "fixedBy": [
+      11
+     ]
+    },
+    {
      "number": 10322,
      "title": "Lock: writing to a plugin directory while locked hot-reloads the shell, and stranded-lock recovery then aborts Quickshell",
      "url": "https://github.com/omacom/omarchy/issues/10322",
@@ -15646,17 +15658,14 @@
      "closedAt": "2026-09-20T20:11:59Z"
     },
     {
-     "number": 8647,
-     "title": "Omarchy shell SIGABRT on idle lock after quickshell 0.3.1 / Qt 6.11.2 update: \"FATAL: Tried to show lockscreen surfaces without active lock\" (+ one SIGSEGV in __dynamic_cast at startup)",
-     "url": "https://github.com/omacom/omarchy/issues/8647",
+     "number": 10459,
+     "title": "Session lock silently lost on output re-add: desktop exposed without authentication (and quickshell SIGABRT on the same path)",
+     "url": "https://github.com/omacom/omarchy/issues/10459",
      "state": "OPEN",
-     "comments": 4,
+     "comments": 3,
      "reactions": 0,
-     "createdAt": "2026-08-27T18:14:21Z",
-     "closedAt": null,
-     "fixedBy": [
-      11
-     ]
+     "createdAt": "2026-09-06T10:26:17Z",
+     "closedAt": null
     },
     {
      "number": 9654,
@@ -15677,16 +15686,6 @@
      "reactions": 0,
      "createdAt": "2026-09-02T02:29:06Z",
      "closedAt": "2026-09-21T05:57:27Z"
-    },
-    {
-     "number": 10459,
-     "title": "Session lock silently lost on output re-add: desktop exposed without authentication (and quickshell SIGABRT on the same path)",
-     "url": "https://github.com/omacom/omarchy/issues/10459",
-     "state": "OPEN",
-     "comments": 2,
-     "reactions": 0,
-     "createdAt": "2026-09-06T10:26:17Z",
-     "closedAt": null
     },
     {
      "number": 10464,
@@ -15762,8 +15761,8 @@
     "4.0.2": 4,
     "4.0.1": 3,
     "4.0.0": 2,
-    "4.0.3": 1,
-    "4.0.4": 1
+    "4.0.4": 1,
+    "4.0.3": 1
    },
    "topIssues": [
     {
@@ -16429,14 +16428,14 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 8,
-    "open": 4,
+    "issues": 9,
+    "open": 5,
     "closed": 4,
     "discussions": 0
    },
    "versionsMentioned": {
     "3.x": 5,
-    "4.0.4": 2,
+    "4.0.4": 3,
     "4.0.0": 2,
     "4.0.2": 2,
     "4.0.1": 1
@@ -16513,6 +16512,16 @@
      "closedAt": null
     },
     {
+     "number": 12347,
+     "title": "Galaxy Book6 Pro (NP960XJG): IPU7 webcam is SSLC2000/SC200PC, intel-ipu7-camera assumes OV08X40",
+     "url": "https://github.com/omacom/omarchy/issues/12347",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-18T01:20:53Z",
+     "closedAt": null
+    },
+    {
      "number": 12551,
      "title": "omarchy-upgrade-to-quattro silently overwrites /etc/snapper/configs/root, discarding user retention settings & sometimes deleting its own snapshot",
      "url": "https://github.com/omacom/omarchy/issues/12551",
@@ -16545,8 +16554,8 @@
     "3.x": 3,
     "4.0.4": 3,
     "4.0.2": 2,
-    "4.0.3": 1,
-    "4.2.x": 1
+    "4.2.x": 1,
+    "4.0.3": 1
    },
    "topIssues": [
     {
@@ -17023,8 +17032,8 @@
     "4.0.2": 3,
     "4.0.0": 2,
     "4.0.1": 2,
-    "4.0.3": 1,
-    "4.0.4": 1
+    "4.0.4": 1,
+    "4.0.3": 1
    },
    "topIssues": [
     {
@@ -17123,8 +17132,8 @@
    "versionsMentioned": {
     "4.0.2": 5,
     "4.0.0": 2,
-    "4.0.3": 1,
     "4.0.4": 1,
+    "4.0.3": 1,
     "4.0.1": 1
    },
    "topIssues": [
@@ -17660,7 +17669,8 @@
    },
    "versionsMentioned": {
     "3.x": 4,
-    "4.0.0": 2
+    "4.0.0": 2,
+    "4.0.4": 1
    },
    "topIssues": [
     {
@@ -17708,7 +17718,7 @@
      "title": "Hermes Desktop launcher crashes: \"too many values to unpack (expected 4)\" — _desktop_launch_options() now returns >4 values",
      "url": "https://github.com/omacom/omarchy/issues/13491",
      "state": "OPEN",
-     "comments": 1,
+     "comments": 2,
      "reactions": 0,
      "createdAt": "2026-09-28T00:22:29Z",
      "closedAt": null
@@ -17812,6 +17822,83 @@
    ]
   },
   {
+   "key": "err-command-not-found",
+   "label": "command not found",
+   "query": [
+    "command not found"
+   ],
+   "discovered": "auto",
+   "searchScope": "title+body+error-signature",
+   "counts": {
+    "issues": 5,
+    "open": 3,
+    "closed": 2,
+    "discussions": 0
+   },
+   "versionsMentioned": {
+    "3.x": 1,
+    "4.0.0": 1,
+    "4.0.3": 1,
+    "4.0.4": 1
+   },
+   "topIssues": [
+    {
+     "number": 5977,
+     "title": "uwsm-app: \"Command not found: omarchy-hyprland-monitor-watch\" at login (regression — #5499 closed but unresolved on 3.8.2)",
+     "url": "https://github.com/omacom/omarchy/issues/5977",
+     "state": "CLOSED",
+     "comments": 2,
+     "reactions": 2,
+     "createdAt": "2026-05-25T20:03:58Z",
+     "closedAt": "2026-07-18T19:45:22Z"
+    },
+    {
+     "number": 743,
+     "title": "A few users reported : Issue: `OMARCHY_PATH` and `PATH` for omarchy/bin missing after omarchy-update",
+     "url": "https://github.com/omacom/omarchy/issues/743",
+     "state": "CLOSED",
+     "comments": 1,
+     "reactions": 1,
+     "createdAt": "2025-08-13T07:51:16Z",
+     "closedAt": "2025-08-13T12:06:36Z"
+    },
+    {
+     "number": 7122,
+     "title": "ripgrep is an unchecked test dependency, and without it nine guards report ok instead of failing",
+     "url": "https://github.com/omacom/omarchy/issues/7122",
+     "state": "OPEN",
+     "comments": 2,
+     "reactions": 0,
+     "createdAt": "2026-08-16T11:10:31Z",
+     "closedAt": null
+    },
+    {
+     "number": 13594,
+     "title": "Dictate bar icon errors with \"voxtype: command not found\" when Voxtype isn't installed",
+     "url": "https://github.com/omacom/omarchy/issues/13594",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-28T19:47:57Z",
+     "closedAt": null
+    },
+    {
+     "number": 12239,
+     "title": "tailscale bar widget and lock/menu plugins break when 'which' is not installed",
+     "url": "https://github.com/omacom/omarchy/issues/12239",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-17T09:53:18Z",
+     "closedAt": null
+    }
+   ],
+   "bestAnswers": [],
+   "exampleErrorLines": [
+    "command not found"
+   ]
+  },
+  {
    "key": "err-eglcreateimage-failed-with-hex",
    "label": "eglCreateImage failed with 0x00003009",
    "query": [
@@ -17829,8 +17916,8 @@
     "4.0.0": 2,
     "4.0.2": 2,
     "4.0.4": 2,
-    "4.0.1": 1,
-    "3.x": 1
+    "3.x": 1,
+    "4.0.1": 1
    },
    "topIssues": [
     {
@@ -18305,8 +18392,8 @@
    },
    "versionsMentioned": {
     "3.x": 2,
-    "4.0.1": 1,
-    "4.0.0": 1
+    "4.0.0": 1,
+    "4.0.1": 1
    },
    "topIssues": [
     {
@@ -18784,72 +18871,6 @@
    ]
   },
   {
-   "key": "err-command-not-found",
-   "label": "command not found",
-   "query": [
-    "command not found"
-   ],
-   "discovered": "auto",
-   "searchScope": "title+body+error-signature",
-   "counts": {
-    "issues": 4,
-    "open": 2,
-    "closed": 2,
-    "discussions": 0
-   },
-   "versionsMentioned": {
-    "3.x": 1,
-    "4.0.0": 1,
-    "4.0.3": 1
-   },
-   "topIssues": [
-    {
-     "number": 5977,
-     "title": "uwsm-app: \"Command not found: omarchy-hyprland-monitor-watch\" at login (regression — #5499 closed but unresolved on 3.8.2)",
-     "url": "https://github.com/omacom/omarchy/issues/5977",
-     "state": "CLOSED",
-     "comments": 2,
-     "reactions": 2,
-     "createdAt": "2026-05-25T20:03:58Z",
-     "closedAt": "2026-07-18T19:45:22Z"
-    },
-    {
-     "number": 743,
-     "title": "A few users reported : Issue: `OMARCHY_PATH` and `PATH` for omarchy/bin missing after omarchy-update",
-     "url": "https://github.com/omacom/omarchy/issues/743",
-     "state": "CLOSED",
-     "comments": 1,
-     "reactions": 1,
-     "createdAt": "2025-08-13T07:51:16Z",
-     "closedAt": "2025-08-13T12:06:36Z"
-    },
-    {
-     "number": 7122,
-     "title": "ripgrep is an unchecked test dependency, and without it nine guards report ok instead of failing",
-     "url": "https://github.com/omacom/omarchy/issues/7122",
-     "state": "OPEN",
-     "comments": 2,
-     "reactions": 0,
-     "createdAt": "2026-08-16T11:10:31Z",
-     "closedAt": null
-    },
-    {
-     "number": 12239,
-     "title": "tailscale bar widget and lock/menu plugins break when 'which' is not installed",
-     "url": "https://github.com/omacom/omarchy/issues/12239",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-17T09:53:18Z",
-     "closedAt": null
-    }
-   ],
-   "bestAnswers": [],
-   "exampleErrorLines": [
-    "command not found"
-   ]
-  },
-  {
    "key": "err-error-couldn-t-scale-frame-invalid-argument",
    "label": "Error: Couldn't scale frame: Invalid argument",
    "query": [
@@ -18932,8 +18953,8 @@
    },
    "versionsMentioned": {
     "4.0.4": 2,
-    "3.x": 1,
-    "4.0.2": 1
+    "4.0.2": 1,
+    "3.x": 1
    },
    "topIssues": [
     {
@@ -18941,7 +18962,7 @@
      "title": "linux-omarchy 7.2.5-3 fails on 2016 MacBook Pro (MacBookPro13,3) unless intel_iommu=off",
      "url": "https://github.com/omacom/omarchy/issues/12119",
      "state": "OPEN",
-     "comments": 6,
+     "comments": 7,
      "reactions": 0,
      "createdAt": "2026-09-16T13:00:49Z",
      "closedAt": null
@@ -18981,6 +19002,135 @@
    "exampleErrorLines": [
     "ERROR: Failed to mount '/dev/mapper/omarchy_root' on real root",
     "ERROR: Failed to mount '/dev/mapper/root' on real root"
+   ]
+  },
+  {
+   "key": "err-error-ui-path-n-failed-to-create-eglimage-egl-success",
+   "label": "ERROR:ui/gl/scoped_egl_image.cc:23] Failed to create EGLImage: EGL_SUCCESS",
+   "query": [
+    "error:ui<path>:<n>] failed to create eglimage: egl_success"
+   ],
+   "discovered": "auto",
+   "searchScope": "title+body+error-signature",
+   "counts": {
+    "issues": 4,
+    "open": 3,
+    "closed": 1,
+    "discussions": 0
+   },
+   "versionsMentioned": {
+    "4.0.4": 2
+   },
+   "topIssues": [
+    {
+     "number": 12704,
+     "title": "Hybrid laptops: `nvidia.lua` sets `LIBVA_DRIVER_NAME=nvidia` session-wide even when the iGPU is the compositing device, breaking Chromium video",
+     "url": "https://github.com/omacom/omarchy/issues/12704",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 2,
+     "createdAt": "2026-09-20T23:33:01Z",
+     "closedAt": null
+    },
+    {
+     "number": 13586,
+     "title": "Hybrid Intel+NVIDIA: forced NVIDIA VA-API (LIBVA_DRIVER_NAME=nvidia) crashes browser GPU process on video playback",
+     "url": "https://github.com/omacom/omarchy/issues/13586",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-28T18:24:49Z",
+     "closedAt": null
+    },
+    {
+     "number": 11168,
+     "title": "nvidia.lua forces LIBVA_DRIVER_NAME=nvidia on hybrid laptops rendering on the iGPU, breaking video playback in Chromium",
+     "url": "https://github.com/omacom/omarchy/issues/11168",
+     "state": "CLOSED",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-10T15:51:50Z",
+     "closedAt": "2026-09-10T15:52:28Z"
+    },
+    {
+     "number": 13325,
+     "title": "problem got fixed by agent",
+     "url": "https://github.com/omacom/omarchy/issues/13325",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-26T13:44:18Z",
+     "closedAt": null
+    }
+   ],
+   "bestAnswers": [],
+   "exampleErrorLines": [
+    "ERROR:ui/gl/scoped_egl_image.cc:23] Failed to create EGLImage: EGL_SUCCESS"
+   ]
+  },
+  {
+   "key": "err-error-ui-path-n-unable-to-initialize-binding-from-pixmap",
+   "label": "ERROR:ui/ozone/common/native_pixmap_egl_binding.cc:76] Unable to initialize binding from pixmap",
+   "query": [
+    "error:ui<path>:<n>] unable to initialize binding from pixmap"
+   ],
+   "discovered": "auto",
+   "searchScope": "title+body+error-signature",
+   "counts": {
+    "issues": 4,
+    "open": 3,
+    "closed": 1,
+    "discussions": 0
+   },
+   "versionsMentioned": {
+    "4.0.4": 2,
+    "4.0.0": 1
+   },
+   "topIssues": [
+    {
+     "number": 13586,
+     "title": "Hybrid Intel+NVIDIA: forced NVIDIA VA-API (LIBVA_DRIVER_NAME=nvidia) crashes browser GPU process on video playback",
+     "url": "https://github.com/omacom/omarchy/issues/13586",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-28T18:24:49Z",
+     "closedAt": null
+    },
+    {
+     "number": 11168,
+     "title": "nvidia.lua forces LIBVA_DRIVER_NAME=nvidia on hybrid laptops rendering on the iGPU, breaking video playback in Chromium",
+     "url": "https://github.com/omacom/omarchy/issues/11168",
+     "state": "CLOSED",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-10T15:51:50Z",
+     "closedAt": "2026-09-10T15:52:28Z"
+    },
+    {
+     "number": 13188,
+     "title": "Chromium renders video black on NVIDIA: LIBVA_DRIVER_NAME=nvidia points it at a Firefox-only VA-API driver",
+     "url": "https://github.com/omacom/omarchy/issues/13188",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-24T23:37:31Z",
+     "closedAt": null
+    },
+    {
+     "number": 13325,
+     "title": "problem got fixed by agent",
+     "url": "https://github.com/omacom/omarchy/issues/13325",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-26T13:44:18Z",
+     "closedAt": null
+    }
+   ],
+   "bestAnswers": [],
+   "exampleErrorLines": [
+    "ERROR:ui/ozone/common/native_pixmap_egl_binding.cc:76] Unable to initialize binding from pixmap"
    ]
   },
   {
@@ -19040,7 +19190,7 @@
      "title": "Galaxy Book6 Pro (NP960XJG): IPU7 webcam is SSLC2000/SC200PC, intel-ipu7-camera assumes OV08X40",
      "url": "https://github.com/omacom/omarchy/issues/12347",
      "state": "OPEN",
-     "comments": 0,
+     "comments": 1,
      "reactions": 0,
      "createdAt": "2026-09-18T01:20:53Z",
      "closedAt": null
@@ -19136,8 +19286,8 @@
     "discussions": 0
    },
    "versionsMentioned": {
-    "4.0.1": 1,
     "4.0.0": 1,
+    "4.0.1": 1,
     "3.x": 1
    },
    "topIssues": [
@@ -19377,7 +19527,7 @@
      "title": "\"Launching …\" OSD can linger or stick after app launch; no way to dismiss it",
      "url": "https://github.com/omacom/omarchy/issues/13264",
      "state": "OPEN",
-     "comments": 0,
+     "comments": 1,
      "reactions": 0,
      "createdAt": "2026-09-25T21:02:44Z",
      "closedAt": null
@@ -19531,8 +19681,8 @@
    "searchScope": "title+body+error-signature",
    "counts": {
     "issues": 3,
-    "open": 3,
-    "closed": 0,
+    "open": 2,
+    "closed": 1,
     "discussions": 0
    },
    "versionsMentioned": {
@@ -19541,6 +19691,16 @@
    },
    "topIssues": [
     {
+     "number": 13341,
+     "title": "linux-omarchy 7.2.5: external monitors on Thunderbolt/MST dock get wrong EDID or fail to modeset (Panther Lake, upstream xe regression)",
+     "url": "https://github.com/omacom/omarchy/issues/13341",
+     "state": "CLOSED",
+     "comments": 4,
+     "reactions": 0,
+     "createdAt": "2026-09-26T17:12:53Z",
+     "closedAt": "2026-09-28T17:06:03Z"
+    },
+    {
      "number": 12152,
      "title": "External-only HDMI display becomes unusable after idle lock/DPMS wake with eDP-1 disabled",
      "url": "https://github.com/omacom/omarchy/issues/12152",
@@ -19548,16 +19708,6 @@
      "comments": 1,
      "reactions": 0,
      "createdAt": "2026-09-16T18:04:08Z",
-     "closedAt": null
-    },
-    {
-     "number": 13341,
-     "title": "linux-omarchy 7.2.5: external monitors on Thunderbolt/MST dock get wrong EDID or fail to modeset (Panther Lake, upstream xe regression)",
-     "url": "https://github.com/omacom/omarchy/issues/13341",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-26T17:12:53Z",
      "closedAt": null
     },
     {
@@ -19869,6 +20019,61 @@
    ]
   },
   {
+   "key": "err-error-gpu-path-n-ozoneimagebacking-produceskiaganesh-failed-",
+   "label": "ERROR:gpu/command_buffer/service/shared_image/ozone_image_backing.cc:320] OzoneImageBacking::ProduceSkiaGanesh failed to create GL representation",
+   "query": [
+    "error:gpu<path>:<n>] ozoneimagebacking::produceskiaganesh failed to create gl representation"
+   ],
+   "discovered": "auto",
+   "searchScope": "title+body+error-signature",
+   "counts": {
+    "issues": 3,
+    "open": 2,
+    "closed": 1,
+    "discussions": 0
+   },
+   "versionsMentioned": {
+    "4.0.0": 1,
+    "4.0.4": 1
+   },
+   "topIssues": [
+    {
+     "number": 13586,
+     "title": "Hybrid Intel+NVIDIA: forced NVIDIA VA-API (LIBVA_DRIVER_NAME=nvidia) crashes browser GPU process on video playback",
+     "url": "https://github.com/omacom/omarchy/issues/13586",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-28T18:24:49Z",
+     "closedAt": null
+    },
+    {
+     "number": 11168,
+     "title": "nvidia.lua forces LIBVA_DRIVER_NAME=nvidia on hybrid laptops rendering on the iGPU, breaking video playback in Chromium",
+     "url": "https://github.com/omacom/omarchy/issues/11168",
+     "state": "CLOSED",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-10T15:51:50Z",
+     "closedAt": "2026-09-10T15:52:28Z"
+    },
+    {
+     "number": 13188,
+     "title": "Chromium renders video black on NVIDIA: LIBVA_DRIVER_NAME=nvidia points it at a Firefox-only VA-API driver",
+     "url": "https://github.com/omacom/omarchy/issues/13188",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-24T23:37:31Z",
+     "closedAt": null
+    }
+   ],
+   "bestAnswers": [],
+   "exampleErrorLines": [
+    "ERROR:gpu/command_buffer/service/shared_image/ozone_image_backing.cc:320] OzoneImageBacking::ProduceSkiaGanesh failed to create GL representation"
+   ]
+  },
+  {
    "key": "err-error-installing-repo-packages",
    "label": "-> error installing repo packages",
    "query": [
@@ -19884,8 +20089,8 @@
    },
    "versionsMentioned": {
     "3.x": 2,
-    "4.12.x": 1,
     "4.2.x": 1,
+    "4.12.x": 1,
     "4.99.x": 1
    },
    "topIssues": [
@@ -19926,10 +20131,10 @@
    ]
   },
   {
-   "key": "err-error-ui-path-n-failed-to-create-eglimage-egl-success",
-   "label": "ERROR:ui/gl/scoped_egl_image.cc:23] Failed to create EGLImage: EGL_SUCCESS",
+   "key": "err-error-no-package-owns-path",
+   "label": "error: No package owns /usr/lib/modules/7.2.6-1-aarch64-ARCH/vmlinuz",
    "query": [
-    "error:ui<path>:<n>] failed to create eglimage: egl_success"
+    "error: no package owns <path>"
    ],
    "discovered": "auto",
    "searchScope": "title+body+error-signature",
@@ -19940,50 +20145,52 @@
     "discussions": 0
    },
    "versionsMentioned": {
-    "4.0.4": 1
+    "4.0.0": 3
    },
    "topIssues": [
     {
-     "number": 12704,
-     "title": "Hybrid laptops: `nvidia.lua` sets `LIBVA_DRIVER_NAME=nvidia` session-wide even when the iGPU is the compositing device, breaking Chromium video",
-     "url": "https://github.com/omacom/omarchy/issues/12704",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 2,
-     "createdAt": "2026-09-20T23:33:01Z",
-     "closedAt": null
-    },
-    {
-     "number": 11168,
-     "title": "nvidia.lua forces LIBVA_DRIVER_NAME=nvidia on hybrid laptops rendering on the iGPU, breaking video playback in Chromium",
-     "url": "https://github.com/omacom/omarchy/issues/11168",
+     "number": 12440,
+     "title": "omarchy update always prompts 'kernel has been updated, reboot?' on aarch64 (pacman -Qo can't resolve vmlinuz owner)",
+     "url": "https://github.com/omacom/omarchy/issues/12440",
      "state": "CLOSED",
      "comments": 0,
      "reactions": 0,
-     "createdAt": "2026-09-10T15:51:50Z",
-     "closedAt": "2026-09-10T15:52:28Z"
+     "createdAt": "2026-09-18T17:49:03Z",
+     "closedAt": "2026-09-27T02:36:17Z"
     },
     {
-     "number": 13325,
-     "title": "problem got fixed by agent",
-     "url": "https://github.com/omacom/omarchy/issues/13325",
+     "number": 13290,
+     "title": "Unowned owe files block omarchy update on every run: file-conflict recovery only clears omarchy* package names",
+     "url": "https://github.com/omacom/omarchy/issues/13290",
      "state": "OPEN",
      "comments": 0,
      "reactions": 0,
-     "createdAt": "2026-09-26T13:44:18Z",
+     "createdAt": "2026-09-26T02:35:28Z",
+     "closedAt": null
+    },
+    {
+     "number": 13704,
+     "title": "omarchy-dev does not install 05-omarchy-passwordless-revoke.hook, so no passwordless sudo grant can ever be published",
+     "url": "https://github.com/omacom/omarchy/issues/13704",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-29T01:31:29Z",
      "closedAt": null
     }
    ],
    "bestAnswers": [],
    "exampleErrorLines": [
-    "ERROR:ui/gl/scoped_egl_image.cc:23] Failed to create EGLImage: EGL_SUCCESS"
+    "error: No package owns /usr/lib/modules/7.2.6-1-aarch64-ARCH/vmlinuz",
+    "error: No package owns /usr/bin/owe",
+    "error: No package owns /usr/share/libalpm/hooks/05-omarchy-passwordless-revoke.hook"
    ]
   },
   {
-   "key": "err-error-ui-path-n-unable-to-initialize-binding-from-pixmap",
-   "label": "ERROR:ui/ozone/common/native_pixmap_egl_binding.cc:76] Unable to initialize binding from pixmap",
+   "key": "err-error-ui-path-n-imageegl-cpp-n-operator-eglcreateimage-faile",
+   "label": "ERROR:ui/gl/angle_platform_impl.cc:48] ImageEGL.cpp:118 (operator()): eglCreateImage failed with 0x00003009",
    "query": [
-    "error:ui<path>:<n>] unable to initialize binding from pixmap"
+    "error:ui<path>:<n>] imageegl.cpp:<n> (operator()): eglcreateimage failed with <hex>"
    ],
    "discovered": "auto",
    "searchScope": "title+body+error-signature",
@@ -19994,10 +20201,19 @@
     "discussions": 0
    },
    "versionsMentioned": {
-    "4.0.0": 1,
-    "4.0.4": 1
+    "4.0.4": 2
    },
    "topIssues": [
+    {
+     "number": 13586,
+     "title": "Hybrid Intel+NVIDIA: forced NVIDIA VA-API (LIBVA_DRIVER_NAME=nvidia) crashes browser GPU process on video playback",
+     "url": "https://github.com/omacom/omarchy/issues/13586",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-28T18:24:49Z",
+     "closedAt": null
+    },
     {
      "number": 11168,
      "title": "nvidia.lua forces LIBVA_DRIVER_NAME=nvidia on hybrid laptops rendering on the iGPU, breaking video playback in Chromium",
@@ -20007,16 +20223,6 @@
      "reactions": 0,
      "createdAt": "2026-09-10T15:51:50Z",
      "closedAt": "2026-09-10T15:52:28Z"
-    },
-    {
-     "number": 13188,
-     "title": "Chromium renders video black on NVIDIA: LIBVA_DRIVER_NAME=nvidia points it at a Firefox-only VA-API driver",
-     "url": "https://github.com/omacom/omarchy/issues/13188",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-09-24T23:37:31Z",
-     "closedAt": null
     },
     {
      "number": 13325,
@@ -20031,7 +20237,7 @@
    ],
    "bestAnswers": [],
    "exampleErrorLines": [
-    "ERROR:ui/ozone/common/native_pixmap_egl_binding.cc:76] Unable to initialize binding from pixmap"
+    "ERROR:ui/gl/angle_platform_impl.cc:48] ImageEGL.cpp:118 (operator()): eglCreateImage failed with 0x00003009"
    ]
   },
   {
@@ -20201,6 +20407,63 @@
    ]
   },
   {
+   "key": "err-omarchy-windows-vm-launch-failed-to-start-windows-vm",
+   "label": "omarchy-windows-vm launch    # ❌ Failed to start Windows VM!",
+   "query": [
+    "omarchy-windows-vm launch # ❌ failed to start windows vm!"
+   ],
+   "discovered": "auto",
+   "searchScope": "title+body+error-signature",
+   "counts": {
+    "issues": 3,
+    "open": 1,
+    "closed": 2,
+    "discussions": 0
+   },
+   "versionsMentioned": {
+    "4.0.2": 1,
+    "4.0.4": 1
+   },
+   "topIssues": [
+    {
+     "number": 10441,
+     "title": "omarchy-windows-vm: launch permanently fails when a mount source has the setgid bit, because chmod 0700 cannot clear it",
+     "url": "https://github.com/omacom/omarchy/issues/10441",
+     "state": "CLOSED",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-06T06:51:04Z",
+     "closedAt": "2026-09-20T18:18:41Z"
+    },
+    {
+     "number": 10784,
+     "title": "Windows VM permanently fails to start after first run: chmod 0700 cannot clear the setgid bit the container sets on ~/Windows",
+     "url": "https://github.com/omacom/omarchy/issues/10784",
+     "state": "CLOSED",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-08T07:36:25Z",
+     "closedAt": "2026-09-20T18:21:01Z"
+    },
+    {
+     "number": 13558,
+     "title": "omarchy-windows-vm launch refuses ~/Windows once dockurr sets setgid (chmod 0700 leaves mode 2700)",
+     "url": "https://github.com/omacom/omarchy/issues/13558",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-09-28T15:15:13Z",
+     "closedAt": null
+    }
+   ],
+   "bestAnswers": [],
+   "exampleErrorLines": [
+    "omarchy-windows-vm launch    # ❌ Failed to start Windows VM!",
+    "omarchy-windows-vm launch      # ❌ Failed to start Windows VM!",
+    "omarchy-windows-vm launch           # ❌ Failed to start Windows VM!"
+   ]
+  },
+  {
    "key": "err-oops-invalid-opcode-n-n-smp-nopti",
    "label": "Oops: invalid opcode: 0000 [#1] SMP NOPTI",
    "query": [
@@ -20270,8 +20533,8 @@
    },
    "versionsMentioned": {
     "4.0.2": 2,
-    "4.0.1": 1,
-    "4.0.0": 1
+    "4.0.0": 1,
+    "4.0.1": 1
    },
    "topIssues": [
     {
@@ -20328,8 +20591,8 @@
     "4.0.4": 2,
     "4.0.0": 1,
     "4.0.2": 1,
-    "4.0.1": 1,
-    "3.x": 1
+    "3.x": 1,
+    "4.0.1": 1
    },
    "topIssues": [
     {
@@ -20498,9 +20761,20 @@
    "versionsMentioned": {
     "4.0.0": 1,
     "4.0.1": 1,
+    "4.0.3": 1,
     "4.0.4": 1
    },
    "topIssues": [
+    {
+     "number": 13080,
+     "title": "Agents widget: Codex limits intermittently fail with \"account/read\" (select/readline race)",
+     "url": "https://github.com/omacom/omarchy/issues/13080",
+     "state": "OPEN",
+     "comments": 3,
+     "reactions": 3,
+     "createdAt": "2026-09-24T01:38:36Z",
+     "closedAt": null
+    },
     {
      "number": 7997,
      "title": "Codex agent usage collector passes an approval policy codex-cli no longer accepts",
@@ -20513,16 +20787,6 @@
      "fixedBy": [
       7649
      ]
-    },
-    {
-     "number": 13080,
-     "title": "Agents widget: Codex limits intermittently fail with \"account/read\" (select/readline race)",
-     "url": "https://github.com/omacom/omarchy/issues/13080",
-     "state": "OPEN",
-     "comments": 2,
-     "reactions": 1,
-     "createdAt": "2026-09-24T01:38:36Z",
-     "closedAt": null
     },
     {
      "number": 10727,

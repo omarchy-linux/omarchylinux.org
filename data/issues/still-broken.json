@@ -1,7 +1,7 @@
 {
  "source": "github.com/omacom/omarchy",
- "fetchedAt": "2026-09-29T10:46:21.759932+00:00",
- "derivedAt": "2026-09-29T10:54:36.455040+00:00",
+ "fetchedAt": "2026-09-30T10:34:33.277986+00:00",
+ "derivedAt": "2026-09-30T10:43:08.637123+00:00",
  "criteria": {
   "stateReason": "COMPLETED",
   "minPostCloseComments": 2,
@@ -17,12 +17,12 @@
   ],
   "commentWindow": "last 5 comments fetched per closed issue"
  },
- "count": 37,
+ "count": 38,
  "funnel": {
-  "completedIssues": 2677,
-  "withFetchedComments": 1680,
-  "withAtLeastOnePostCloseMarker": 131,
-  "withAtLeastTwoPostCloseMarkers": 37
+  "completedIssues": 2681,
+  "withFetchedComments": 1682,
+  "withAtLeastOnePostCloseMarker": 132,
+  "withAtLeastTwoPostCloseMarkers": 38
  },
  "issues": [
   {
@@ -35,8 +35,8 @@
    "closer": null,
    "fixedBy": [],
    "components": [],
-   "comments": 12,
-   "postCloseComments": 2,
+   "comments": 13,
+   "postCloseComments": 3,
    "sampleSnippets": [
     {
      "author": "dtellz",
@@ -49,9 +49,49 @@
      "createdAt": "2026-09-25T18:54:05Z",
      "url": "https://github.com/omacom/omarchy/issues/1846#issuecomment-5837899104",
      "snippet": "For what it's worth, writing it via `dd` worked fine when BalenaEtcher did not:\n`sudo dd if=/path/to/omarchy-4.0.4.iso of=/dev/disk4 bs=1m status=progress`\n\nFind your disk number via `diskutil list`"
+    },
+    {
+     "author": "Afsal102",
+     "createdAt": "2026-09-30T05:42:19Z",
+     "url": "https://github.com/omacom/omarchy/issues/1846#issuecomment-5904890706",
+     "snippet": "> This is back with v4.0.4\n\nyea looks to be back, unable to flash it from balenaEtcher"
     }
    ],
-   "lastActivity": "2026-09-25T18:54:33Z"
+   "lastActivity": "2026-09-30T05:42:19Z"
+  },
+  {
+   "number": 7789,
+   "title": "Lock screen never clears the password buffer across suspend/resume",
+   "url": "https://github.com/omacom/omarchy/issues/7789",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2026-08-27T15:11:42Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [
+    "nvidia",
+    "intel-gpu",
+    "suspend-sleep",
+    "touchpad-input",
+    "battery-power"
+   ],
+   "comments": 4,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "jmmon",
+     "createdAt": "2026-09-29T11:17:56Z",
+     "url": "https://github.com/omacom/omarchy/issues/7789#issuecomment-5889173784",
+     "snippet": "\n## Confirmed on s2idle, and it is purely a buffer-preservation bug — no phantom input\n\nReproduced on a Dell XPS 15 9530, Omarchy `4.0.0.r1832.g23dab9e-1`, Hyprland\n0.56.2, quickshell 0.3.1, kernel `7.2.5-3-omarchy`, external ViewSonic VG3448\non DisplayPort. `/sys/power/mem_sleep` = `s2idle` (not th"
+    },
+    {
+     "author": "brightwalker25",
+     "createdAt": "2026-09-29T18:00:37Z",
+     "url": "https://github.com/omacom/omarchy/issues/7789#issuecomment-5895763797",
+     "snippet": "@jmmon Thank you for taking the time to reproduce this so thoroughly. It is very helpful to know that the buffer survives suspend on s2idle as well, and that the phantom characters did not appear there. That supports the idea that they come from S3 on my machine and are a separate problem. Thank you"
+    }
+   ],
+   "lastActivity": "2026-09-29T18:00:37Z"
   },
   {
    "number": 12044,

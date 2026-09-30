@@ -1,10 +1,10 @@
 {
  "source": "github.com/omacom/omarchy",
- "fetchedAt": "2026-09-29T10:46:21.759932+00:00",
- "derivedAt": "2026-09-29T10:54:13.063007+00:00",
+ "fetchedAt": "2026-09-30T10:34:33.277986+00:00",
+ "derivedAt": "2026-09-30T10:42:50.238128+00:00",
  "quirkScriptRef": "v4.0.4",
  "counts": {
-  "models": 156,
+  "models": 157,
   "legacyOnly": 16
  },
  "models": [
@@ -43,8 +43,8 @@
     "2023"
    ],
    "counts": {
-    "issues": 92,
-    "open": 49,
+    "issues": 94,
+    "open": 51,
     "closed": 43,
     "discussions": 19
    },
@@ -59,11 +59,11 @@
     },
     {
      "key": "wifi",
-     "issues": 22
+     "issues": 23
     },
     {
      "key": "t2-mac",
-     "issues": 21
+     "issues": 22
     },
     {
      "key": "touchpad-input",
@@ -71,7 +71,7 @@
     },
     {
      "key": "apple-silicon-asahi",
-     "issues": 18
+     "issues": 19
     },
     {
      "key": "suspend-sleep",
@@ -83,7 +83,7 @@
     },
     {
      "key": "amd-gpu",
-     "issues": 11
+     "issues": 12
     },
     {
      "key": "battery-power",
@@ -123,6 +123,28 @@
     }
    ],
    "issues": [
+    {
+     "number": 13814,
+     "title": "Network panel shows a padlock on saved open Wi-Fi networks (Quickshell security classification)",
+     "url": "https://github.com/omacom/omarchy/issues/13814",
+     "state": "OPEN",
+     "components": [
+      "wifi",
+      "apple-silicon-asahi"
+     ],
+     "createdAt": "2026-09-30T00:04:46Z"
+    },
+    {
+     "number": 13794,
+     "title": "Cloned bar plugins: silent failure on denied service lookups, and nested QML files not hot-reloaded",
+     "url": "https://github.com/omacom/omarchy/issues/13794",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu",
+      "t2-mac"
+     ],
+     "createdAt": "2026-09-29T22:59:26Z"
+    },
     {
      "number": 13589,
      "title": "Add automatic T2 speaker DSP setup for MacBookPro15,1 installations",
@@ -3218,15 +3240,15 @@
     "Gen 9"
    ],
    "counts": {
-    "issues": 52,
-    "open": 26,
+    "issues": 53,
+    "open": 27,
     "closed": 26,
     "discussions": 4
    },
    "components": [
     {
      "key": "intel-gpu",
-     "issues": 17
+     "issues": 18
     },
     {
      "key": "multi-monitor",
@@ -3241,11 +3263,11 @@
      "issues": 13
     },
     {
-     "key": "battery-power",
-     "issues": 10
+     "key": "audio",
+     "issues": 11
     },
     {
-     "key": "audio",
+     "key": "battery-power",
      "issues": 10
     },
     {
@@ -3298,6 +3320,17 @@
     }
    ],
    "issues": [
+    {
+     "number": 13758,
+     "title": "Audio panel lists unplugged microphone inputs that can't be selected",
+     "url": "https://github.com/omacom/omarchy/issues/13758",
+     "state": "OPEN",
+     "components": [
+      "intel-gpu",
+      "audio"
+     ],
+     "createdAt": "2026-09-29T16:15:59Z"
+    },
     {
      "number": 13388,
      "title": "DisplayPort audio ELD lost after S3 resume and lid transition while video remains connected",
@@ -6186,8 +6219,8 @@
     "9440"
    ],
    "counts": {
-    "issues": 27,
-    "open": 21,
+    "issues": 28,
+    "open": 22,
     "closed": 6,
     "discussions": 1
    },
@@ -6201,11 +6234,11 @@
      "issues": 12
     },
     {
-     "key": "suspend-sleep",
-     "issues": 10
+     "key": "battery-power",
+     "issues": 11
     },
     {
-     "key": "battery-power",
+     "key": "suspend-sleep",
      "issues": 10
     },
     {
@@ -6250,6 +6283,16 @@
     }
    ],
    "issues": [
+    {
+     "number": 13798,
+     "title": "Battery time jumps between multi-hour figures on two close looks",
+     "url": "https://github.com/omacom/omarchy/issues/13798",
+     "state": "OPEN",
+     "components": [
+      "battery-power"
+     ],
+     "createdAt": "2026-09-29T23:12:31Z"
+    },
     {
      "number": 13118,
      "title": "bluez 5.87-2 ships a broken A2DP SEP cache (upstream regression, fix already in BlueZ master) — consider carrying the one-commit fix in the Omarchy repo",
@@ -7080,8 +7123,8 @@
    ],
    "variants": [],
    "counts": {
-    "issues": 26,
-    "open": 8,
+    "issues": 27,
+    "open": 9,
     "closed": 18,
     "discussions": 5
    },
@@ -7099,15 +7142,19 @@
      "issues": 5
     },
     {
+     "key": "fingerprint",
+     "issues": 3
+    },
+    {
      "key": "touchpad-input",
      "issues": 3
     },
     {
-     "key": "fingerprint",
+     "key": "wifi",
      "issues": 2
     },
     {
-     "key": "wifi",
+     "key": "printer",
      "issues": 2
     },
     {
@@ -7127,10 +7174,6 @@
      "issues": 1
     },
     {
-     "key": "printer",
-     "issues": 1
-    },
-    {
      "key": "webcam",
      "issues": 1
     },
@@ -7144,6 +7187,17 @@
     }
    ],
    "issues": [
+    {
+     "number": 13754,
+     "title": "omarchy-hw-fingerprint false positive: reports a sensor for Synaptics 06cb:009a, which no libfprint driver claims — setup prompts for sudo, enrolls nothing, then fails",
+     "url": "https://github.com/omacom/omarchy/issues/13754",
+     "state": "OPEN",
+     "components": [
+      "fingerprint",
+      "printer"
+     ],
+     "createdAt": "2026-09-29T15:34:38Z"
+    },
     {
      "number": 12757,
      "title": "Bluetooth panel cannot pair legacy keyboards requiring PIN entry",
@@ -9748,6 +9802,402 @@
    "legacyPrototypeSource": "legacy-prototype-unverified"
   },
   {
+   "key": "asus-rog-zephyrus",
+   "vendor": "ASUS",
+   "model": "ASUS ROG Zephyrus",
+   "aliases": [
+    "ASUS ROG Zephyrus G14",
+    "ASUS ROG Zephyrus G15",
+    "ASUS ROG Zephyrus G16",
+    "ROG Zephyrus G16"
+   ],
+   "variants": [
+    "G14",
+    "G15",
+    "G16"
+   ],
+   "counts": {
+    "issues": 19,
+    "open": 14,
+    "closed": 5,
+    "discussions": 2
+   },
+   "components": [
+    {
+     "key": "nvidia",
+     "issues": 13
+    },
+    {
+     "key": "hybrid-gpu",
+     "issues": 9
+    },
+    {
+     "key": "multi-monitor",
+     "issues": 8
+    },
+    {
+     "key": "amd-gpu",
+     "issues": 7
+    },
+    {
+     "key": "boot-limine",
+     "issues": 5
+    },
+    {
+     "key": "touchpad-input",
+     "issues": 5
+    },
+    {
+     "key": "suspend-sleep",
+     "issues": 5
+    },
+    {
+     "key": "battery-power",
+     "issues": 4
+    },
+    {
+     "key": "audio",
+     "issues": 3
+    },
+    {
+     "key": "thunderbolt-dock",
+     "issues": 2
+    },
+    {
+     "key": "intel-gpu",
+     "issues": 1
+    },
+    {
+     "key": "wifi",
+     "issues": 1
+    },
+    {
+     "key": "storage-nvme",
+     "issues": 1
+    }
+   ],
+   "issues": [
+    {
+     "number": 13827,
+     "title": "Stable mirror ships rog-control-center 6.4.0-2 which aborts at startup; Arch 6.4.0-3 fixes it",
+     "url": "https://github.com/omacom/omarchy/issues/13827",
+     "state": "OPEN",
+     "components": [
+      "nvidia"
+     ],
+     "createdAt": "2026-09-30T02:29:43Z"
+    },
+    {
+     "number": 13288,
+     "title": "linux-omarchy 7.2: 30s NVMe stalls behind Meteor Lake VMD (\"timeout, completion polled\")",
+     "url": "https://github.com/omacom/omarchy/issues/13288",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "storage-nvme"
+     ],
+     "createdAt": "2026-09-26T01:45:49Z"
+    },
+    {
+     "number": 11460,
+     "title": "LIBVA_DRIVER_NAME=nvidia forced on hybrid laptops where the panel is driven by the iGPU — video plays audio with a black picture",
+     "url": "https://github.com/omacom/omarchy/issues/11460",
+     "state": "CLOSED",
+     "components": [
+      "nvidia",
+      "amd-gpu",
+      "hybrid-gpu",
+      "multi-monitor",
+      "audio"
+     ],
+     "createdAt": "2026-09-12T13:01:45Z"
+    },
+    {
+     "number": 11046,
+     "title": "ASUS ROG: soft-mixer caps hardware Master at 80% so bar \"100%\" is not full volume",
+     "url": "https://github.com/omacom/omarchy/issues/11046",
+     "state": "OPEN",
+     "components": [
+      "audio",
+      "boot-limine"
+     ],
+     "createdAt": "2026-09-09T20:45:51Z"
+    },
+    {
+     "number": 10456,
+     "title": "Zero-length internal-monitor-disable.lua wedges clamshell: lid-close becomes a no-op with no recovery path",
+     "url": "https://github.com/omacom/omarchy/issues/10456",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "hybrid-gpu",
+      "suspend-sleep",
+      "multi-monitor",
+      "battery-power"
+     ],
+     "createdAt": "2026-09-06T10:15:31Z"
+    },
+    {
+     "number": 9720,
+     "title": "[Hardware]: Black screen on boot on AMD Strix Point / Radeon 890M laptops (ASUS ROG Zephyrus G14) due to Aquamarine atomic DRM commit failure",
+     "url": "https://github.com/omacom/omarchy/issues/9720",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "amd-gpu",
+      "hybrid-gpu",
+      "multi-monitor",
+      "boot-limine"
+     ],
+     "createdAt": "2026-09-02T01:58:14Z"
+    },
+    {
+     "number": 9696,
+     "title": "Hibernate hangs (forced power-off required) on hybrid-GPU ASUS ROG G14 — force-igpu/supergfxctl never installed",
+     "url": "https://github.com/omacom/omarchy/issues/9696",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "amd-gpu",
+      "hybrid-gpu",
+      "suspend-sleep",
+      "multi-monitor",
+      "boot-limine",
+      "touchpad-input",
+      "battery-power",
+      "thunderbolt-dock"
+     ],
+     "createdAt": "2026-09-01T23:15:39Z"
+    },
+    {
+     "number": 8589,
+     "title": "Hibernation aborts during image creation on ASUS ROG Zephyrus G14 (GA403UV); HibernateMode=shutdown fixes it",
+     "url": "https://github.com/omacom/omarchy/issues/8589",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu",
+      "hybrid-gpu",
+      "suspend-sleep",
+      "multi-monitor",
+      "wifi",
+      "touchpad-input",
+      "battery-power"
+     ],
+     "createdAt": "2026-08-27T14:00:08Z"
+    },
+    {
+     "number": 8491,
+     "title": "Omarchy shell stays alive but stops rendering after resume-time EGL_BAD_CONTEXT",
+     "url": "https://github.com/omacom/omarchy/issues/8491",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "hybrid-gpu",
+      "suspend-sleep"
+     ],
+     "createdAt": "2026-08-27T01:19:01Z"
+    },
+    {
+     "number": 7811,
+     "title": "Lock screen visible but keyboard input dead after lid-open resume (reproduces on Quattro, follow-up to #2991)",
+     "url": "https://github.com/omacom/omarchy/issues/7811",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "hybrid-gpu",
+      "suspend-sleep",
+      "multi-monitor",
+      "boot-limine",
+      "touchpad-input"
+     ],
+     "createdAt": "2026-08-22T19:43:10Z"
+    },
+    {
+     "number": 7607,
+     "title": "Display panel can't persistently turn off internal display — Omarchy watcher reverts it",
+     "url": "https://github.com/omacom/omarchy/issues/7607",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu",
+      "multi-monitor",
+      "thunderbolt-dock"
+     ],
+     "createdAt": "2026-08-20T13:07:11Z"
+    },
+    {
+     "number": 7374,
+     "title": "Power panel shows UPower's hwdb charge limit (75-80%) instead of the real asusctl-set limit, and a bogus 0 cycle count",
+     "url": "https://github.com/omacom/omarchy/issues/7374",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "amd-gpu",
+      "battery-power"
+     ],
+     "createdAt": "2026-08-18T10:39:43Z"
+    },
+    {
+     "number": 7327,
+     "title": "`omarchy-upgrade-to-quattro` leaves qt6-wayland dependency-marked, so the shell's Wayland platform support shows as a removable orphan",
+     "url": "https://github.com/omacom/omarchy/issues/7327",
+     "state": "OPEN",
+     "components": [
+      "audio"
+     ],
+     "createdAt": "2026-08-17T23:20:33Z"
+    },
+    {
+     "number": 7090,
+     "title": "Quattro: \"selection\" layer namespace hook steals RETURN/TAB/arrows from any layer-shell client using that namespace (breaks wl-kbptr)",
+     "url": "https://github.com/omacom/omarchy/issues/7090",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "amd-gpu",
+      "hybrid-gpu",
+      "touchpad-input"
+     ],
+     "createdAt": "2026-08-16T08:18:35Z"
+    },
+    {
+     "number": 6949,
+     "title": "Fn + F3 keyboard backlight shortcut not working on ASUS ROG Zephyrus G14",
+     "url": "https://github.com/omacom/omarchy/issues/6949",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "boot-limine",
+      "touchpad-input"
+     ],
+     "createdAt": "2026-08-15T09:59:09Z"
+    },
+    {
+     "number": 6903,
+     "title": "Foot terminal shows syntax error in foot.ini on startup",
+     "url": "https://github.com/omacom/omarchy/issues/6903",
+     "state": "CLOSED",
+     "components": [
+      "nvidia"
+     ],
+     "createdAt": "2026-08-14T21:56:25Z"
+    },
+    {
+     "number": 5428,
+     "title": "Hybrid GPU menu entry disappears after switching to Integrated mode (detection can't see dGPU once supergfxd removes it from PCI)",
+     "url": "https://github.com/omacom/omarchy/issues/5428",
+     "state": "CLOSED",
+     "components": [
+      "nvidia",
+      "intel-gpu",
+      "hybrid-gpu",
+      "multi-monitor"
+     ],
+     "createdAt": "2026-04-24T12:26:20Z"
+    },
+    {
+     "number": 3308,
+     "title": "keyring isn't being unlocked at login, so apps can't access stored credentials and create new keyrings instead",
+     "url": "https://github.com/omacom/omarchy/issues/3308",
+     "state": "CLOSED",
+     "components": [],
+     "createdAt": "2025-11-10T18:05:38Z"
+    },
+    {
+     "number": 3249,
+     "title": "ZED fails to install",
+     "url": "https://github.com/omacom/omarchy/issues/3249",
+     "state": "CLOSED",
+     "components": [],
+     "createdAt": "2025-11-08T15:12:46Z"
+    }
+   ],
+   "issuesTruncated": false,
+   "quirkScripts": [
+    {
+     "name": "omarchy-hw-asus-rog",
+     "path": "bin/omarchy-hw-asus-rog",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-hw-asus-rog",
+     "summary": "Detect whether the computer is an Asus ROG machine."
+    },
+    {
+     "name": "fix-z13-touchpad.sh",
+     "path": "install/hardware/asus/fix-z13-touchpad.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/asus/fix-z13-touchpad.sh",
+     "summary": "The Z13's detachable keyboard touchpad is detected as external by udev,"
+    },
+    {
+     "name": "asus-rog.sh",
+     "path": "install/hardware/asus-rog.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/asus-rog.sh",
+     "summary": ""
+    },
+    {
+     "name": "fix-audio-mixer.sh",
+     "path": "install/user/hardware/asus/fix-audio-mixer.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/user/hardware/asus/fix-audio-mixer.sh",
+     "summary": "Unmute the Master control on the ALC285 card (often muted by default)"
+    },
+    {
+     "name": "fix-mic.sh",
+     "path": "install/user/hardware/asus/fix-mic.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/user/hardware/asus/fix-mic.sh",
+     "summary": "The mic boost is way too high by default, causing clipping."
+    }
+   ],
+   "dmiHints": [],
+   "legacyPrototype": {
+    "id": "asus-g14-2023",
+    "name": "ASUS ROG Zephyrus G14 (2023)",
+    "brand": "ASUS",
+    "rating": "silver",
+    "summary": "Reddit: 2023 G16/G14 4050 runs well. Kill the dGPU for battery.",
+    "type": "laptop",
+    "tags": "zephyrus g14 2023 4050",
+    "wifi": "works",
+    "audio": "works",
+    "webcam": "works",
+    "fingerprint": "unknown",
+    "gpu": "workaround",
+    "suspend": "workaround",
+    "href": "nvidia-laptops.html#asus-g14-2023"
+   },
+   "legacyPrototypeAlso": [
+    {
+     "id": "asus-g14-2024",
+     "name": "ASUS ROG Zephyrus G14 (2024, GA403, 4060)",
+     "brand": "ASUS",
+     "rating": "silver",
+     "summary": "Long write-up: dual kernel to mux the 4060, asusctl, envycontrol. Installs; battery is the project.",
+     "type": "laptop",
+     "tags": "zephyrus g14 2024 ga403uv 8945hs 4060",
+     "wifi": "works",
+     "audio": "works",
+     "webcam": "works",
+     "fingerprint": "unknown",
+     "gpu": "workaround",
+     "suspend": "workaround",
+     "href": "nvidia-laptops.html#asus-g14-2024"
+    },
+    {
+     "id": "asus-g16",
+     "name": "ASUS ROG Zephyrus G16 (2023–2024, 4060/4070)",
+     "brand": "ASUS",
+     "rating": "bronze",
+     "summary": "Installs, then some units black-screen in Hyprland. nomodeset / NVIDIA env overrides.",
+     "type": "laptop",
+     "tags": "zephyrus g16 4060 4070 black screen",
+     "wifi": "works",
+     "audio": "works",
+     "webcam": "works",
+     "fingerprint": "unknown",
+     "gpu": "workaround",
+     "suspend": "works",
+     "href": "nvidia-laptops.html#asus-g16"
+    }
+   ],
+   "legacyPrototypeSource": "legacy-prototype-unverified"
+  },
+  {
    "key": "asus-rog-strix",
    "vendor": "ASUS",
    "model": "ASUS ROG Strix",
@@ -10111,392 +10561,6 @@
     "suspend": "works",
     "href": "nvidia-laptops.html#asus-strix-g18"
    },
-   "legacyPrototypeSource": "legacy-prototype-unverified"
-  },
-  {
-   "key": "asus-rog-zephyrus",
-   "vendor": "ASUS",
-   "model": "ASUS ROG Zephyrus",
-   "aliases": [
-    "ASUS ROG Zephyrus G14",
-    "ASUS ROG Zephyrus G15",
-    "ASUS ROG Zephyrus G16",
-    "ROG Zephyrus G16"
-   ],
-   "variants": [
-    "G14",
-    "G15",
-    "G16"
-   ],
-   "counts": {
-    "issues": 18,
-    "open": 13,
-    "closed": 5,
-    "discussions": 2
-   },
-   "components": [
-    {
-     "key": "nvidia",
-     "issues": 12
-    },
-    {
-     "key": "hybrid-gpu",
-     "issues": 9
-    },
-    {
-     "key": "multi-monitor",
-     "issues": 8
-    },
-    {
-     "key": "amd-gpu",
-     "issues": 7
-    },
-    {
-     "key": "boot-limine",
-     "issues": 5
-    },
-    {
-     "key": "touchpad-input",
-     "issues": 5
-    },
-    {
-     "key": "suspend-sleep",
-     "issues": 5
-    },
-    {
-     "key": "battery-power",
-     "issues": 4
-    },
-    {
-     "key": "audio",
-     "issues": 3
-    },
-    {
-     "key": "thunderbolt-dock",
-     "issues": 2
-    },
-    {
-     "key": "intel-gpu",
-     "issues": 1
-    },
-    {
-     "key": "wifi",
-     "issues": 1
-    },
-    {
-     "key": "storage-nvme",
-     "issues": 1
-    }
-   ],
-   "issues": [
-    {
-     "number": 13288,
-     "title": "linux-omarchy 7.2: 30s NVMe stalls behind Meteor Lake VMD (\"timeout, completion polled\")",
-     "url": "https://github.com/omacom/omarchy/issues/13288",
-     "state": "OPEN",
-     "components": [
-      "nvidia",
-      "storage-nvme"
-     ],
-     "createdAt": "2026-09-26T01:45:49Z"
-    },
-    {
-     "number": 11460,
-     "title": "LIBVA_DRIVER_NAME=nvidia forced on hybrid laptops where the panel is driven by the iGPU — video plays audio with a black picture",
-     "url": "https://github.com/omacom/omarchy/issues/11460",
-     "state": "CLOSED",
-     "components": [
-      "nvidia",
-      "amd-gpu",
-      "hybrid-gpu",
-      "multi-monitor",
-      "audio"
-     ],
-     "createdAt": "2026-09-12T13:01:45Z"
-    },
-    {
-     "number": 11046,
-     "title": "ASUS ROG: soft-mixer caps hardware Master at 80% so bar \"100%\" is not full volume",
-     "url": "https://github.com/omacom/omarchy/issues/11046",
-     "state": "OPEN",
-     "components": [
-      "audio",
-      "boot-limine"
-     ],
-     "createdAt": "2026-09-09T20:45:51Z"
-    },
-    {
-     "number": 10456,
-     "title": "Zero-length internal-monitor-disable.lua wedges clamshell: lid-close becomes a no-op with no recovery path",
-     "url": "https://github.com/omacom/omarchy/issues/10456",
-     "state": "OPEN",
-     "components": [
-      "nvidia",
-      "hybrid-gpu",
-      "suspend-sleep",
-      "multi-monitor",
-      "battery-power"
-     ],
-     "createdAt": "2026-09-06T10:15:31Z"
-    },
-    {
-     "number": 9720,
-     "title": "[Hardware]: Black screen on boot on AMD Strix Point / Radeon 890M laptops (ASUS ROG Zephyrus G14) due to Aquamarine atomic DRM commit failure",
-     "url": "https://github.com/omacom/omarchy/issues/9720",
-     "state": "OPEN",
-     "components": [
-      "nvidia",
-      "amd-gpu",
-      "hybrid-gpu",
-      "multi-monitor",
-      "boot-limine"
-     ],
-     "createdAt": "2026-09-02T01:58:14Z"
-    },
-    {
-     "number": 9696,
-     "title": "Hibernate hangs (forced power-off required) on hybrid-GPU ASUS ROG G14 — force-igpu/supergfxctl never installed",
-     "url": "https://github.com/omacom/omarchy/issues/9696",
-     "state": "OPEN",
-     "components": [
-      "nvidia",
-      "amd-gpu",
-      "hybrid-gpu",
-      "suspend-sleep",
-      "multi-monitor",
-      "boot-limine",
-      "touchpad-input",
-      "battery-power",
-      "thunderbolt-dock"
-     ],
-     "createdAt": "2026-09-01T23:15:39Z"
-    },
-    {
-     "number": 8589,
-     "title": "Hibernation aborts during image creation on ASUS ROG Zephyrus G14 (GA403UV); HibernateMode=shutdown fixes it",
-     "url": "https://github.com/omacom/omarchy/issues/8589",
-     "state": "OPEN",
-     "components": [
-      "amd-gpu",
-      "hybrid-gpu",
-      "suspend-sleep",
-      "multi-monitor",
-      "wifi",
-      "touchpad-input",
-      "battery-power"
-     ],
-     "createdAt": "2026-08-27T14:00:08Z"
-    },
-    {
-     "number": 8491,
-     "title": "Omarchy shell stays alive but stops rendering after resume-time EGL_BAD_CONTEXT",
-     "url": "https://github.com/omacom/omarchy/issues/8491",
-     "state": "OPEN",
-     "components": [
-      "nvidia",
-      "hybrid-gpu",
-      "suspend-sleep"
-     ],
-     "createdAt": "2026-08-27T01:19:01Z"
-    },
-    {
-     "number": 7811,
-     "title": "Lock screen visible but keyboard input dead after lid-open resume (reproduces on Quattro, follow-up to #2991)",
-     "url": "https://github.com/omacom/omarchy/issues/7811",
-     "state": "OPEN",
-     "components": [
-      "nvidia",
-      "hybrid-gpu",
-      "suspend-sleep",
-      "multi-monitor",
-      "boot-limine",
-      "touchpad-input"
-     ],
-     "createdAt": "2026-08-22T19:43:10Z"
-    },
-    {
-     "number": 7607,
-     "title": "Display panel can't persistently turn off internal display — Omarchy watcher reverts it",
-     "url": "https://github.com/omacom/omarchy/issues/7607",
-     "state": "OPEN",
-     "components": [
-      "amd-gpu",
-      "multi-monitor",
-      "thunderbolt-dock"
-     ],
-     "createdAt": "2026-08-20T13:07:11Z"
-    },
-    {
-     "number": 7374,
-     "title": "Power panel shows UPower's hwdb charge limit (75-80%) instead of the real asusctl-set limit, and a bogus 0 cycle count",
-     "url": "https://github.com/omacom/omarchy/issues/7374",
-     "state": "OPEN",
-     "components": [
-      "nvidia",
-      "amd-gpu",
-      "battery-power"
-     ],
-     "createdAt": "2026-08-18T10:39:43Z"
-    },
-    {
-     "number": 7327,
-     "title": "`omarchy-upgrade-to-quattro` leaves qt6-wayland dependency-marked, so the shell's Wayland platform support shows as a removable orphan",
-     "url": "https://github.com/omacom/omarchy/issues/7327",
-     "state": "OPEN",
-     "components": [
-      "audio"
-     ],
-     "createdAt": "2026-08-17T23:20:33Z"
-    },
-    {
-     "number": 7090,
-     "title": "Quattro: \"selection\" layer namespace hook steals RETURN/TAB/arrows from any layer-shell client using that namespace (breaks wl-kbptr)",
-     "url": "https://github.com/omacom/omarchy/issues/7090",
-     "state": "OPEN",
-     "components": [
-      "nvidia",
-      "amd-gpu",
-      "hybrid-gpu",
-      "touchpad-input"
-     ],
-     "createdAt": "2026-08-16T08:18:35Z"
-    },
-    {
-     "number": 6949,
-     "title": "Fn + F3 keyboard backlight shortcut not working on ASUS ROG Zephyrus G14",
-     "url": "https://github.com/omacom/omarchy/issues/6949",
-     "state": "OPEN",
-     "components": [
-      "nvidia",
-      "boot-limine",
-      "touchpad-input"
-     ],
-     "createdAt": "2026-08-15T09:59:09Z"
-    },
-    {
-     "number": 6903,
-     "title": "Foot terminal shows syntax error in foot.ini on startup",
-     "url": "https://github.com/omacom/omarchy/issues/6903",
-     "state": "CLOSED",
-     "components": [
-      "nvidia"
-     ],
-     "createdAt": "2026-08-14T21:56:25Z"
-    },
-    {
-     "number": 5428,
-     "title": "Hybrid GPU menu entry disappears after switching to Integrated mode (detection can't see dGPU once supergfxd removes it from PCI)",
-     "url": "https://github.com/omacom/omarchy/issues/5428",
-     "state": "CLOSED",
-     "components": [
-      "nvidia",
-      "intel-gpu",
-      "hybrid-gpu",
-      "multi-monitor"
-     ],
-     "createdAt": "2026-04-24T12:26:20Z"
-    },
-    {
-     "number": 3308,
-     "title": "keyring isn't being unlocked at login, so apps can't access stored credentials and create new keyrings instead",
-     "url": "https://github.com/omacom/omarchy/issues/3308",
-     "state": "CLOSED",
-     "components": [],
-     "createdAt": "2025-11-10T18:05:38Z"
-    },
-    {
-     "number": 3249,
-     "title": "ZED fails to install",
-     "url": "https://github.com/omacom/omarchy/issues/3249",
-     "state": "CLOSED",
-     "components": [],
-     "createdAt": "2025-11-08T15:12:46Z"
-    }
-   ],
-   "issuesTruncated": false,
-   "quirkScripts": [
-    {
-     "name": "omarchy-hw-asus-rog",
-     "path": "bin/omarchy-hw-asus-rog",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-hw-asus-rog",
-     "summary": "Detect whether the computer is an Asus ROG machine."
-    },
-    {
-     "name": "fix-z13-touchpad.sh",
-     "path": "install/hardware/asus/fix-z13-touchpad.sh",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/asus/fix-z13-touchpad.sh",
-     "summary": "The Z13's detachable keyboard touchpad is detected as external by udev,"
-    },
-    {
-     "name": "asus-rog.sh",
-     "path": "install/hardware/asus-rog.sh",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/asus-rog.sh",
-     "summary": ""
-    },
-    {
-     "name": "fix-audio-mixer.sh",
-     "path": "install/user/hardware/asus/fix-audio-mixer.sh",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/user/hardware/asus/fix-audio-mixer.sh",
-     "summary": "Unmute the Master control on the ALC285 card (often muted by default)"
-    },
-    {
-     "name": "fix-mic.sh",
-     "path": "install/user/hardware/asus/fix-mic.sh",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/user/hardware/asus/fix-mic.sh",
-     "summary": "The mic boost is way too high by default, causing clipping."
-    }
-   ],
-   "dmiHints": [],
-   "legacyPrototype": {
-    "id": "asus-g14-2023",
-    "name": "ASUS ROG Zephyrus G14 (2023)",
-    "brand": "ASUS",
-    "rating": "silver",
-    "summary": "Reddit: 2023 G16/G14 4050 runs well. Kill the dGPU for battery.",
-    "type": "laptop",
-    "tags": "zephyrus g14 2023 4050",
-    "wifi": "works",
-    "audio": "works",
-    "webcam": "works",
-    "fingerprint": "unknown",
-    "gpu": "workaround",
-    "suspend": "workaround",
-    "href": "nvidia-laptops.html#asus-g14-2023"
-   },
-   "legacyPrototypeAlso": [
-    {
-     "id": "asus-g14-2024",
-     "name": "ASUS ROG Zephyrus G14 (2024, GA403, 4060)",
-     "brand": "ASUS",
-     "rating": "silver",
-     "summary": "Long write-up: dual kernel to mux the 4060, asusctl, envycontrol. Installs; battery is the project.",
-     "type": "laptop",
-     "tags": "zephyrus g14 2024 ga403uv 8945hs 4060",
-     "wifi": "works",
-     "audio": "works",
-     "webcam": "works",
-     "fingerprint": "unknown",
-     "gpu": "workaround",
-     "suspend": "workaround",
-     "href": "nvidia-laptops.html#asus-g14-2024"
-    },
-    {
-     "id": "asus-g16",
-     "name": "ASUS ROG Zephyrus G16 (2023–2024, 4060/4070)",
-     "brand": "ASUS",
-     "rating": "bronze",
-     "summary": "Installs, then some units black-screen in Hyprland. nomodeset / NVIDIA env overrides.",
-     "type": "laptop",
-     "tags": "zephyrus g16 4060 4070 black screen",
-     "wifi": "works",
-     "audio": "works",
-     "webcam": "works",
-     "fingerprint": "unknown",
-     "gpu": "workaround",
-     "suspend": "works",
-     "href": "nvidia-laptops.html#asus-g16"
-    }
-   ],
    "legacyPrototypeSource": "legacy-prototype-unverified"
   },
   {
@@ -13305,6 +13369,211 @@
    "dmiHints": []
   },
   {
+   "key": "dell-precision",
+   "vendor": "Dell",
+   "model": "Dell Precision",
+   "aliases": [
+    "DELL Precision 5510",
+    "Dell Precision 3571",
+    "Dell Precision 3590",
+    "Dell Precision 5480",
+    "Dell Precision 5530",
+    "Dell Precision 5540",
+    "Dell Precision 5550",
+    "Dell Precision 7720",
+    "Dell Precision 7740"
+   ],
+   "variants": [
+    "3571",
+    "3590",
+    "5480",
+    "5510",
+    "5530",
+    "5540",
+    "5550",
+    "7720",
+    "7740"
+   ],
+   "counts": {
+    "issues": 11,
+    "open": 3,
+    "closed": 8,
+    "discussions": 2
+   },
+   "components": [
+    {
+     "key": "nvidia",
+     "issues": 3
+    },
+    {
+     "key": "fingerprint",
+     "issues": 2
+    },
+    {
+     "key": "bluetooth",
+     "issues": 2
+    },
+    {
+     "key": "battery-power",
+     "issues": 2
+    },
+    {
+     "key": "suspend-sleep",
+     "issues": 2
+    },
+    {
+     "key": "multi-monitor",
+     "issues": 2
+    },
+    {
+     "key": "boot-limine",
+     "issues": 2
+    },
+    {
+     "key": "wifi",
+     "issues": 1
+    },
+    {
+     "key": "intel-gpu",
+     "issues": 1
+    },
+    {
+     "key": "hybrid-gpu",
+     "issues": 1
+    },
+    {
+     "key": "storage-nvme",
+     "issues": 1
+    },
+    {
+     "key": "amd-gpu",
+     "issues": 1
+    }
+   ],
+   "issues": [
+    {
+     "number": 13748,
+     "title": "Lock-screen fingerprint retries with no backoff, overheats/disables sensor overnight; polkit fingerprint never actually captures",
+     "url": "https://github.com/omacom/omarchy/issues/13748",
+     "state": "OPEN",
+     "components": [
+      "boot-limine",
+      "fingerprint"
+     ],
+     "createdAt": "2026-09-29T13:53:07Z"
+    },
+    {
+     "number": 12379,
+     "title": "Bluetooth regression on kernel 7.2.x — Dell Precision 3590 (Broadcom 58200 / 0a5c:5864)",
+     "url": "https://github.com/omacom/omarchy/issues/12379",
+     "state": "CLOSED",
+     "components": [
+      "bluetooth"
+     ],
+     "createdAt": "2026-09-18T08:30:11Z"
+    },
+    {
+     "number": 12349,
+     "title": "`omarchy-install-service-sunshine` starts Sunshine twice; the second instance SIGABRTs",
+     "url": "https://github.com/omacom/omarchy/issues/12349",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu",
+      "suspend-sleep"
+     ],
+     "createdAt": "2026-09-18T01:43:10Z"
+    },
+    {
+     "number": 12222,
+     "title": "Enabling Direct Boot causes hard brick (No POST / Black Screen) on older Dell laptops",
+     "url": "https://github.com/omacom/omarchy/issues/12222",
+     "state": "OPEN",
+     "components": [
+      "multi-monitor",
+      "boot-limine",
+      "battery-power",
+      "storage-nvme"
+     ],
+     "createdAt": "2026-09-17T04:36:25Z"
+    },
+    {
+     "number": 11761,
+     "title": "Hybrid Intel+NVIDIA laptops: nvidia.lua forces LIBVA_DRIVER_NAME=nvidia even when the dGPU drives no display",
+     "url": "https://github.com/omacom/omarchy/issues/11761",
+     "state": "CLOSED",
+     "components": [
+      "nvidia",
+      "intel-gpu",
+      "hybrid-gpu",
+      "suspend-sleep",
+      "multi-monitor"
+     ],
+     "createdAt": "2026-09-14T02:36:40Z"
+    },
+    {
+     "number": 9705,
+     "title": "omarchy-install-hermes-cli readiness probe never passes — --oneshot is top-level in hermes --help, not under hermes chat",
+     "url": "https://github.com/omacom/omarchy/issues/9705",
+     "state": "CLOSED",
+     "components": [
+      "nvidia"
+     ],
+     "createdAt": "2026-09-01T23:55:06Z"
+    },
+    {
+     "number": 3475,
+     "title": "Hyprland 99% cpu usage when copy&paste + copy&paste not working",
+     "url": "https://github.com/omacom/omarchy/issues/3475",
+     "state": "CLOSED",
+     "components": [],
+     "createdAt": "2025-11-20T11:56:34Z"
+    },
+    {
+     "number": 3408,
+     "title": "Applications take 1-2 minutes to open",
+     "url": "https://github.com/omacom/omarchy/issues/3408",
+     "state": "CLOSED",
+     "components": [
+      "nvidia"
+     ],
+     "createdAt": "2025-11-15T01:51:02Z"
+    },
+    {
+     "number": 2412,
+     "title": "Webapps don't work, double slashes are changed into single slash",
+     "url": "https://github.com/omacom/omarchy/issues/2412",
+     "state": "CLOSED",
+     "components": [],
+     "createdAt": "2025-10-12T19:46:01Z"
+    },
+    {
+     "number": 2119,
+     "title": "Waybar - customize icon size of battery, wifi, and other icons.",
+     "url": "https://github.com/omacom/omarchy/issues/2119",
+     "state": "CLOSED",
+     "components": [
+      "wifi",
+      "bluetooth",
+      "battery-power"
+     ],
+     "createdAt": "2025-09-30T19:55:07Z"
+    },
+    {
+     "number": 1590,
+     "title": "Consider adding support for fingerprint reader hardware (27c6:533c Shenzhen Goodix)",
+     "url": "https://github.com/omacom/omarchy/issues/1590",
+     "state": "CLOSED",
+     "components": [
+      "fingerprint"
+     ],
+     "createdAt": "2025-09-11T01:09:56Z"
+    }
+   ],
+   "issuesTruncated": false,
+   "quirkScripts": [],
+   "dmiHints": []
+  },
+  {
    "key": "hp-zbook",
    "vendor": "HP",
    "model": "HP Zbook",
@@ -13947,198 +14216,6 @@
    "dmiHints": []
   },
   {
-   "key": "dell-precision",
-   "vendor": "Dell",
-   "model": "Dell Precision",
-   "aliases": [
-    "DELL Precision 5510",
-    "Dell Precision 3571",
-    "Dell Precision 3590",
-    "Dell Precision 5480",
-    "Dell Precision 5530",
-    "Dell Precision 5540",
-    "Dell Precision 5550",
-    "Dell Precision 7720"
-   ],
-   "variants": [
-    "3571",
-    "3590",
-    "5480",
-    "5510",
-    "5530",
-    "5540",
-    "5550",
-    "7720"
-   ],
-   "counts": {
-    "issues": 10,
-    "open": 2,
-    "closed": 8,
-    "discussions": 2
-   },
-   "components": [
-    {
-     "key": "nvidia",
-     "issues": 3
-    },
-    {
-     "key": "bluetooth",
-     "issues": 2
-    },
-    {
-     "key": "battery-power",
-     "issues": 2
-    },
-    {
-     "key": "suspend-sleep",
-     "issues": 2
-    },
-    {
-     "key": "multi-monitor",
-     "issues": 2
-    },
-    {
-     "key": "fingerprint",
-     "issues": 1
-    },
-    {
-     "key": "wifi",
-     "issues": 1
-    },
-    {
-     "key": "intel-gpu",
-     "issues": 1
-    },
-    {
-     "key": "hybrid-gpu",
-     "issues": 1
-    },
-    {
-     "key": "boot-limine",
-     "issues": 1
-    },
-    {
-     "key": "storage-nvme",
-     "issues": 1
-    },
-    {
-     "key": "amd-gpu",
-     "issues": 1
-    }
-   ],
-   "issues": [
-    {
-     "number": 12379,
-     "title": "Bluetooth regression on kernel 7.2.x — Dell Precision 3590 (Broadcom 58200 / 0a5c:5864)",
-     "url": "https://github.com/omacom/omarchy/issues/12379",
-     "state": "CLOSED",
-     "components": [
-      "bluetooth"
-     ],
-     "createdAt": "2026-09-18T08:30:11Z"
-    },
-    {
-     "number": 12349,
-     "title": "`omarchy-install-service-sunshine` starts Sunshine twice; the second instance SIGABRTs",
-     "url": "https://github.com/omacom/omarchy/issues/12349",
-     "state": "OPEN",
-     "components": [
-      "amd-gpu",
-      "suspend-sleep"
-     ],
-     "createdAt": "2026-09-18T01:43:10Z"
-    },
-    {
-     "number": 12222,
-     "title": "Enabling Direct Boot causes hard brick (No POST / Black Screen) on older Dell laptops",
-     "url": "https://github.com/omacom/omarchy/issues/12222",
-     "state": "OPEN",
-     "components": [
-      "multi-monitor",
-      "boot-limine",
-      "battery-power",
-      "storage-nvme"
-     ],
-     "createdAt": "2026-09-17T04:36:25Z"
-    },
-    {
-     "number": 11761,
-     "title": "Hybrid Intel+NVIDIA laptops: nvidia.lua forces LIBVA_DRIVER_NAME=nvidia even when the dGPU drives no display",
-     "url": "https://github.com/omacom/omarchy/issues/11761",
-     "state": "CLOSED",
-     "components": [
-      "nvidia",
-      "intel-gpu",
-      "hybrid-gpu",
-      "suspend-sleep",
-      "multi-monitor"
-     ],
-     "createdAt": "2026-09-14T02:36:40Z"
-    },
-    {
-     "number": 9705,
-     "title": "omarchy-install-hermes-cli readiness probe never passes — --oneshot is top-level in hermes --help, not under hermes chat",
-     "url": "https://github.com/omacom/omarchy/issues/9705",
-     "state": "CLOSED",
-     "components": [
-      "nvidia"
-     ],
-     "createdAt": "2026-09-01T23:55:06Z"
-    },
-    {
-     "number": 3475,
-     "title": "Hyprland 99% cpu usage when copy&paste + copy&paste not working",
-     "url": "https://github.com/omacom/omarchy/issues/3475",
-     "state": "CLOSED",
-     "components": [],
-     "createdAt": "2025-11-20T11:56:34Z"
-    },
-    {
-     "number": 3408,
-     "title": "Applications take 1-2 minutes to open",
-     "url": "https://github.com/omacom/omarchy/issues/3408",
-     "state": "CLOSED",
-     "components": [
-      "nvidia"
-     ],
-     "createdAt": "2025-11-15T01:51:02Z"
-    },
-    {
-     "number": 2412,
-     "title": "Webapps don't work, double slashes are changed into single slash",
-     "url": "https://github.com/omacom/omarchy/issues/2412",
-     "state": "CLOSED",
-     "components": [],
-     "createdAt": "2025-10-12T19:46:01Z"
-    },
-    {
-     "number": 2119,
-     "title": "Waybar - customize icon size of battery, wifi, and other icons.",
-     "url": "https://github.com/omacom/omarchy/issues/2119",
-     "state": "CLOSED",
-     "components": [
-      "wifi",
-      "bluetooth",
-      "battery-power"
-     ],
-     "createdAt": "2025-09-30T19:55:07Z"
-    },
-    {
-     "number": 1590,
-     "title": "Consider adding support for fingerprint reader hardware (27c6:533c Shenzhen Goodix)",
-     "url": "https://github.com/omacom/omarchy/issues/1590",
-     "state": "CLOSED",
-     "components": [
-      "fingerprint"
-     ],
-     "createdAt": "2025-09-11T01:09:56Z"
-    }
-   ],
-   "issuesTruncated": false,
-   "quirkScripts": [],
-   "dmiHints": []
-  },
-  {
    "key": "hp-pavilion",
    "vendor": "HP",
    "model": "HP Pavilion",
@@ -14330,15 +14407,19 @@
     "2015"
    ],
    "counts": {
-    "issues": 8,
-    "open": 2,
+    "issues": 9,
+    "open": 3,
     "closed": 6,
     "discussions": 3
    },
    "components": [
     {
      "key": "multi-monitor",
-     "issues": 4
+     "issues": 5
+    },
+    {
+     "key": "amd-gpu",
+     "issues": 3
     },
     {
      "key": "nvidia",
@@ -14346,10 +14427,6 @@
     },
     {
      "key": "audio",
-     "issues": 2
-    },
-    {
-     "key": "amd-gpu",
      "issues": 2
     },
     {
@@ -14375,9 +14452,25 @@
     {
      "key": "t2-mac",
      "issues": 1
+    },
+    {
+     "key": "intel-gpu",
+     "issues": 1
     }
    ],
    "issues": [
+    {
+     "number": 13760,
+     "title": "iMac12,2 (Mid 2011, Radeon HD 6770M + HD 3000): Chromium renders with artifacts on legacy radeon/no-Vulkan GPUs; fixed by --disable-gpu-compositing",
+     "url": "https://github.com/omacom/omarchy/issues/13760",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu",
+      "intel-gpu",
+      "multi-monitor"
+     ],
+     "createdAt": "2026-09-29T16:19:47Z"
+    },
     {
      "number": 12197,
      "title": "T2 iMac20,1 (2020 5K, Radeon Pro 5300): amdgpu SMU init fails; Plymouth/KMS black screen before LUKS",
@@ -18991,6 +19084,132 @@
    "dmiHints": []
   },
   {
+   "key": "microsoft-surface-go",
+   "vendor": "Microsoft",
+   "model": "Surface Go",
+   "aliases": [
+    "Surface Go",
+    "Surface Go 2",
+    "surface go"
+   ],
+   "variants": [
+    "2"
+   ],
+   "counts": {
+    "issues": 5,
+    "open": 3,
+    "closed": 2,
+    "discussions": 0
+   },
+   "components": [
+    {
+     "key": "boot-limine",
+     "issues": 2
+    },
+    {
+     "key": "suspend-sleep",
+     "issues": 2
+    },
+    {
+     "key": "battery-power",
+     "issues": 1
+    },
+    {
+     "key": "nvidia",
+     "issues": 1
+    },
+    {
+     "key": "intel-gpu",
+     "issues": 1
+    },
+    {
+     "key": "hybrid-gpu",
+     "issues": 1
+    },
+    {
+     "key": "multi-monitor",
+     "issues": 1
+    },
+    {
+     "key": "bluetooth",
+     "issues": 1
+    }
+   ],
+   "issues": [
+    {
+     "number": 13821,
+     "title": "Bluetooth panel shows \"Turned Off\" while adapter is powered and device connected (stale state after wake from sleep)",
+     "url": "https://github.com/omacom/omarchy/issues/13821",
+     "state": "OPEN",
+     "components": [
+      "suspend-sleep",
+      "bluetooth"
+     ],
+     "createdAt": "2026-09-30T01:42:03Z"
+    },
+    {
+     "number": 8979,
+     "title": "Hardware video decode fails to render on external monitor wired to the NVIDIA GPU (hybrid Intel+NVIDIA, Omarchy 4.0.0.alpha \"Quattro\")",
+     "url": "https://github.com/omacom/omarchy/issues/8979",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "intel-gpu",
+      "hybrid-gpu",
+      "multi-monitor"
+     ],
+     "createdAt": "2026-08-29T17:23:15Z"
+    },
+    {
+     "number": 6079,
+     "title": "System still running after shutdown",
+     "url": "https://github.com/omacom/omarchy/issues/6079",
+     "state": "OPEN",
+     "components": [
+      "suspend-sleep",
+      "battery-power"
+     ],
+     "createdAt": "2026-06-12T15:28:22Z"
+    },
+    {
+     "number": 4616,
+     "title": "Install Package Site is empty and trying to install anything results in error",
+     "url": "https://github.com/omacom/omarchy/issues/4616",
+     "state": "CLOSED",
+     "components": [
+      "boot-limine"
+     ],
+     "createdAt": "2026-02-16T10:28:03Z"
+    },
+    {
+     "number": 4605,
+     "title": "UKI Build Regression: Illegal Instruction (Exit Status 32) on x86-64-v2 Hardware",
+     "url": "https://github.com/omacom/omarchy/issues/4605",
+     "state": "CLOSED",
+     "components": [
+      "boot-limine"
+     ],
+     "createdAt": "2026-02-14T21:23:36Z"
+    }
+   ],
+   "issuesTruncated": false,
+   "quirkScripts": [
+    {
+     "name": "omarchy-hw-surface",
+     "path": "bin/omarchy-hw-surface",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-hw-surface",
+     "summary": "Detect whether the computer is a Microsoft Surface device."
+    },
+    {
+     "name": "fix-surface-keyboard.sh",
+     "path": "install/hardware/fix-surface-keyboard.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/fix-surface-keyboard.sh",
+     "summary": "Module list derived from Chris McLeod's manual install instructions"
+    }
+   ],
+   "dmiHints": []
+  },
+  {
    "key": "acer-predator",
    "vendor": "Acer",
    "model": "Acer Predator",
@@ -20124,116 +20343,6 @@
    "dmiHints": []
   },
   {
-   "key": "microsoft-surface-go",
-   "vendor": "Microsoft",
-   "model": "Surface Go",
-   "aliases": [
-    "Surface Go 2",
-    "surface go"
-   ],
-   "variants": [
-    "2"
-   ],
-   "counts": {
-    "issues": 4,
-    "open": 2,
-    "closed": 2,
-    "discussions": 0
-   },
-   "components": [
-    {
-     "key": "boot-limine",
-     "issues": 2
-    },
-    {
-     "key": "suspend-sleep",
-     "issues": 1
-    },
-    {
-     "key": "battery-power",
-     "issues": 1
-    },
-    {
-     "key": "nvidia",
-     "issues": 1
-    },
-    {
-     "key": "intel-gpu",
-     "issues": 1
-    },
-    {
-     "key": "hybrid-gpu",
-     "issues": 1
-    },
-    {
-     "key": "multi-monitor",
-     "issues": 1
-    }
-   ],
-   "issues": [
-    {
-     "number": 8979,
-     "title": "Hardware video decode fails to render on external monitor wired to the NVIDIA GPU (hybrid Intel+NVIDIA, Omarchy 4.0.0.alpha \"Quattro\")",
-     "url": "https://github.com/omacom/omarchy/issues/8979",
-     "state": "OPEN",
-     "components": [
-      "nvidia",
-      "intel-gpu",
-      "hybrid-gpu",
-      "multi-monitor"
-     ],
-     "createdAt": "2026-08-29T17:23:15Z"
-    },
-    {
-     "number": 6079,
-     "title": "System still running after shutdown",
-     "url": "https://github.com/omacom/omarchy/issues/6079",
-     "state": "OPEN",
-     "components": [
-      "suspend-sleep",
-      "battery-power"
-     ],
-     "createdAt": "2026-06-12T15:28:22Z"
-    },
-    {
-     "number": 4616,
-     "title": "Install Package Site is empty and trying to install anything results in error",
-     "url": "https://github.com/omacom/omarchy/issues/4616",
-     "state": "CLOSED",
-     "components": [
-      "boot-limine"
-     ],
-     "createdAt": "2026-02-16T10:28:03Z"
-    },
-    {
-     "number": 4605,
-     "title": "UKI Build Regression: Illegal Instruction (Exit Status 32) on x86-64-v2 Hardware",
-     "url": "https://github.com/omacom/omarchy/issues/4605",
-     "state": "CLOSED",
-     "components": [
-      "boot-limine"
-     ],
-     "createdAt": "2026-02-14T21:23:36Z"
-    }
-   ],
-   "issuesTruncated": false,
-   "quirkScripts": [
-    {
-     "name": "omarchy-hw-surface",
-     "path": "bin/omarchy-hw-surface",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-hw-surface",
-     "summary": "Detect whether the computer is a Microsoft Surface device."
-    },
-    {
-     "name": "fix-surface-keyboard.sh",
-     "path": "install/hardware/fix-surface-keyboard.sh",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/fix-surface-keyboard.sh",
-     "summary": "Module list derived from Chris McLeod's manual install instructions"
-    }
-   ],
-   "dmiHints": []
-  },
-  {
    "key": "apple-macbookair6-2",
    "vendor": "Apple",
    "model": "MacBookAir6,2",
@@ -20870,6 +20979,111 @@
       "battery-power"
      ],
      "createdAt": "2025-09-18T15:55:23Z"
+    }
+   ],
+   "issuesTruncated": false,
+   "quirkScripts": [],
+   "dmiHints": []
+  },
+  {
+   "key": "lenovo-thinkpad-e15",
+   "vendor": "Lenovo",
+   "model": "ThinkPad E15",
+   "aliases": [
+    "ThinkPad E15 Gen 3"
+   ],
+   "variants": [
+    "Gen 3"
+   ],
+   "counts": {
+    "issues": 3,
+    "open": 3,
+    "closed": 0,
+    "discussions": 0
+   },
+   "components": [
+    {
+     "key": "amd-gpu",
+     "issues": 2
+    },
+    {
+     "key": "suspend-sleep",
+     "issues": 2
+    },
+    {
+     "key": "boot-limine",
+     "issues": 2
+    },
+    {
+     "key": "battery-power",
+     "issues": 2
+    },
+    {
+     "key": "fingerprint",
+     "issues": 1
+    },
+    {
+     "key": "multi-monitor",
+     "issues": 1
+    },
+    {
+     "key": "nvidia",
+     "issues": 1
+    },
+    {
+     "key": "hybrid-gpu",
+     "issues": 1
+    },
+    {
+     "key": "audio",
+     "issues": 1
+    },
+    {
+     "key": "touchpad-input",
+     "issues": 1
+    }
+   ],
+   "issues": [
+    {
+     "number": 13752,
+     "title": "AMD Lucienne (ThinkPad E15 Gen 3): reg-write failures start at a hibernate resume, hibernation writes degrade to worst-ever, final hibernate froze during image write (no image, silent journal end)",
+     "url": "https://github.com/omacom/omarchy/issues/13752",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "amd-gpu",
+      "hybrid-gpu",
+      "suspend-sleep",
+      "audio",
+      "boot-limine",
+      "touchpad-input",
+      "battery-power"
+     ],
+     "createdAt": "2026-09-29T14:42:21Z"
+    },
+    {
+     "number": 11413,
+     "title": "Intermittent freeze after hibernation on AMD Lucienne; upstream investigation #5808",
+     "url": "https://github.com/omacom/omarchy/issues/11413",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu",
+      "suspend-sleep",
+      "multi-monitor",
+      "boot-limine",
+      "battery-power"
+     ],
+     "createdAt": "2026-09-12T04:36:47Z"
+    },
+    {
+     "number": 7483,
+     "title": "ELAN 04f3:0c4b fingerprint reader never matches under stock libfprint (ThinkPad E14/E15 Gen 3/4) — works with libfprint-tod instead",
+     "url": "https://github.com/omacom/omarchy/issues/7483",
+     "state": "OPEN",
+     "components": [
+      "fingerprint"
+     ],
+     "createdAt": "2026-08-19T11:18:12Z"
     }
    ],
    "issuesTruncated": false,
@@ -22182,78 +22396,6 @@
       "boot-limine"
      ],
      "createdAt": "2026-09-03T08:13:05Z"
-    }
-   ],
-   "issuesTruncated": false,
-   "quirkScripts": [],
-   "dmiHints": []
-  },
-  {
-   "key": "lenovo-thinkpad-e15",
-   "vendor": "Lenovo",
-   "model": "ThinkPad E15",
-   "aliases": [
-    "ThinkPad E15 Gen 3"
-   ],
-   "variants": [
-    "Gen 3"
-   ],
-   "counts": {
-    "issues": 2,
-    "open": 2,
-    "closed": 0,
-    "discussions": 0
-   },
-   "components": [
-    {
-     "key": "fingerprint",
-     "issues": 1
-    },
-    {
-     "key": "amd-gpu",
-     "issues": 1
-    },
-    {
-     "key": "suspend-sleep",
-     "issues": 1
-    },
-    {
-     "key": "multi-monitor",
-     "issues": 1
-    },
-    {
-     "key": "boot-limine",
-     "issues": 1
-    },
-    {
-     "key": "battery-power",
-     "issues": 1
-    }
-   ],
-   "issues": [
-    {
-     "number": 11413,
-     "title": "Intermittent freeze after hibernation on AMD Lucienne; upstream investigation #5808",
-     "url": "https://github.com/omacom/omarchy/issues/11413",
-     "state": "OPEN",
-     "components": [
-      "amd-gpu",
-      "suspend-sleep",
-      "multi-monitor",
-      "boot-limine",
-      "battery-power"
-     ],
-     "createdAt": "2026-09-12T04:36:47Z"
-    },
-    {
-     "number": 7483,
-     "title": "ELAN 04f3:0c4b fingerprint reader never matches under stock libfprint (ThinkPad E14/E15 Gen 3/4) — works with libfprint-tod instead",
-     "url": "https://github.com/omacom/omarchy/issues/7483",
-     "state": "OPEN",
-     "components": [
-      "fingerprint"
-     ],
-     "createdAt": "2026-08-19T11:18:12Z"
     }
    ],
    "issuesTruncated": false,
@@ -24071,6 +24213,78 @@
    "dmiHints": []
   },
   {
+   "key": "apple-macbookpro17-1",
+   "vendor": "Apple",
+   "model": "MacBookPro17,1",
+   "aliases": [
+    "MacBookPro17,1"
+   ],
+   "variants": [],
+   "counts": {
+    "issues": 1,
+    "open": 1,
+    "closed": 0,
+    "discussions": 0
+   },
+   "components": [
+    {
+     "key": "wifi",
+     "issues": 1
+    },
+    {
+     "key": "apple-silicon-asahi",
+     "issues": 1
+    }
+   ],
+   "issues": [
+    {
+     "number": 13814,
+     "title": "Network panel shows a padlock on saved open Wi-Fi networks (Quickshell security classification)",
+     "url": "https://github.com/omacom/omarchy/issues/13814",
+     "state": "OPEN",
+     "components": [
+      "wifi",
+      "apple-silicon-asahi"
+     ],
+     "createdAt": "2026-09-30T00:04:46Z"
+    }
+   ],
+   "issuesTruncated": false,
+   "quirkScripts": [
+    {
+     "name": "omarchy-hw-display",
+     "path": "bin/omarchy-hw-display",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-hw-display",
+     "summary": "Print the most likely display backlight device."
+    },
+    {
+     "name": "fix-brcmfmac-supplicant.sh",
+     "path": "install/hardware/apple/fix-brcmfmac-supplicant.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-brcmfmac-supplicant.sh",
+     "summary": "handshake itself. On these parts that offload fails against an access point in"
+    },
+    {
+     "name": "fix-spi-keyboard.sh",
+     "path": "install/hardware/apple/fix-spi-keyboard.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-spi-keyboard.sh",
+     "summary": ""
+    },
+    {
+     "name": "fix-suspend-nvme.sh",
+     "path": "install/hardware/apple/fix-suspend-nvme.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-suspend-nvme.sh",
+     "summary": "This prevents NVMe drives from failing to wake from sleep properly"
+    },
+    {
+     "name": "fix-t2.sh",
+     "path": "install/hardware/apple/fix-t2.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-t2.sh",
+     "summary": "Vendor: 106b (Apple), Device IDs: 1801 or 1802 (T2 Security Chip)"
+    }
+   ],
+   "dmiHints": []
+  },
+  {
    "key": "apple-macbookpro18-3",
    "vendor": "Apple",
    "model": "MacBookPro18,3",
@@ -25606,7 +25820,7 @@
     "issues": 1,
     "open": 0,
     "closed": 1,
-    "discussions": 4
+    "discussions": 5
    },
    "components": [
     {

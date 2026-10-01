@@ -1,7 +1,7 @@
 {
  "source": "github.com/omacom/omarchy",
- "fetchedAt": "2026-09-30T10:34:33.277986+00:00",
- "derivedAt": "2026-09-30T10:42:50.238128+00:00",
+ "fetchedAt": "2026-10-01T11:02:03.892705+00:00",
+ "derivedAt": "2026-10-01T11:09:49.260060+00:00",
  "quirkScriptRef": "v4.0.4",
  "counts": {
   "models": 157,
@@ -2398,7 +2398,7 @@
     "issues": 53,
     "open": 38,
     "closed": 15,
-    "discussions": 12
+    "discussions": 13
    },
    "components": [
     {
@@ -10198,6 +10198,365 @@
    "legacyPrototypeSource": "legacy-prototype-unverified"
   },
   {
+   "key": "apple-macbookpro16-1",
+   "vendor": "Apple",
+   "model": "MacBookPro16,1",
+   "aliases": [
+    "MacBook Pro 16,1",
+    "MacBookPro16,1",
+    "Macbook Pro 16,1"
+   ],
+   "variants": [],
+   "counts": {
+    "issues": 18,
+    "open": 15,
+    "closed": 3,
+    "discussions": 4
+   },
+   "components": [
+    {
+     "key": "t2-mac",
+     "issues": 14
+    },
+    {
+     "key": "multi-monitor",
+     "issues": 10
+    },
+    {
+     "key": "boot-limine",
+     "issues": 10
+    },
+    {
+     "key": "battery-power",
+     "issues": 7
+    },
+    {
+     "key": "touchpad-input",
+     "issues": 5
+    },
+    {
+     "key": "amd-gpu",
+     "issues": 5
+    },
+    {
+     "key": "intel-gpu",
+     "issues": 5
+    },
+    {
+     "key": "hybrid-gpu",
+     "issues": 5
+    },
+    {
+     "key": "suspend-sleep",
+     "issues": 5
+    },
+    {
+     "key": "audio",
+     "issues": 3
+    },
+    {
+     "key": "apple-silicon-asahi",
+     "issues": 2
+    },
+    {
+     "key": "thunderbolt-dock",
+     "issues": 2
+    },
+    {
+     "key": "wifi",
+     "issues": 2
+    },
+    {
+     "key": "vm",
+     "issues": 1
+    },
+    {
+     "key": "windows-vm",
+     "issues": 1
+    },
+    {
+     "key": "bluetooth",
+     "issues": 1
+    }
+   ],
+   "issues": [
+    {
+     "number": 13890,
+     "title": "Dual-GPU Macs: after resume, the lock screen's blank resets the gmux backlight to 80% and nothing restores the user's level",
+     "url": "https://github.com/omacom/omarchy/issues/13890",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu",
+      "suspend-sleep",
+      "multi-monitor",
+      "t2-mac"
+     ],
+     "createdAt": "2026-09-30T16:25:42Z"
+    },
+    {
+     "number": 13295,
+     "title": "[MacBookPro16,1 T2] Hard power cut under heavy CPU load on battery — power-saver does not cap power draw (i9-9980HK)",
+     "url": "https://github.com/omacom/omarchy/issues/13295",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu",
+      "hybrid-gpu",
+      "multi-monitor",
+      "bluetooth",
+      "boot-limine",
+      "battery-power",
+      "t2-mac"
+     ],
+     "createdAt": "2026-09-26T06:47:11Z"
+    },
+    {
+     "number": 13290,
+     "title": "Unowned owe files block omarchy update on every run: file-conflict recovery only clears omarchy* package names",
+     "url": "https://github.com/omacom/omarchy/issues/13290",
+     "state": "OPEN",
+     "components": [
+      "suspend-sleep",
+      "battery-power",
+      "t2-mac"
+     ],
+     "createdAt": "2026-09-26T02:35:28Z"
+    },
+    {
+     "number": 12734,
+     "title": "Saved battery power profile never applied when booting on battery: omarchy-powerprofiles-set autodetect silently falls back to \"ac\"",
+     "url": "https://github.com/omacom/omarchy/issues/12734",
+     "state": "OPEN",
+     "components": [
+      "boot-limine",
+      "battery-power",
+      "t2-mac"
+     ],
+     "createdAt": "2026-09-21T07:22:59Z"
+    },
+    {
+     "number": 12593,
+     "title": "Omarchy 4.0.4 on 2019 T2 MacBook Pro: post-login black screen, full-speed fans and shutdown; hybrid graphics workaround succeeds",
+     "url": "https://github.com/omacom/omarchy/issues/12593",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu",
+      "intel-gpu",
+      "hybrid-gpu",
+      "suspend-sleep",
+      "multi-monitor",
+      "boot-limine",
+      "battery-power",
+      "t2-mac"
+     ],
+     "createdAt": "2026-09-20T03:04:38Z"
+    },
+    {
+     "number": 12273,
+     "title": "Unknown-1 DRM connector should be disabled by default on T2 Mac",
+     "url": "https://github.com/omacom/omarchy/issues/12273",
+     "state": "OPEN",
+     "components": [
+      "intel-gpu",
+      "hybrid-gpu",
+      "multi-monitor",
+      "t2-mac"
+     ],
+     "createdAt": "2026-09-17T12:08:34Z"
+    },
+    {
+     "number": 12272,
+     "title": "SDDM password input UI not updating on login screen (i915 T2)",
+     "url": "https://github.com/omacom/omarchy/issues/12272",
+     "state": "OPEN",
+     "components": [
+      "intel-gpu",
+      "suspend-sleep",
+      "multi-monitor",
+      "touchpad-input",
+      "t2-mac"
+     ],
+     "createdAt": "2026-09-17T11:54:43Z"
+    },
+    {
+     "number": 12153,
+     "title": "omarchy windows vm launch fails silently when the shared folder has setgid set (numeric chmod can't clear it)",
+     "url": "https://github.com/omacom/omarchy/issues/12153",
+     "state": "OPEN",
+     "components": [
+      "suspend-sleep",
+      "multi-monitor",
+      "boot-limine",
+      "battery-power",
+      "windows-vm",
+      "thunderbolt-dock"
+     ],
+     "createdAt": "2026-09-16T18:10:25Z"
+    },
+    {
+     "number": 10699,
+     "title": "Stable installer (master) still writes apple-bce, breaking every T2 Mac install",
+     "url": "https://github.com/omacom/omarchy/issues/10699",
+     "state": "OPEN",
+     "components": [
+      "boot-limine",
+      "t2-mac"
+     ],
+     "createdAt": "2026-09-07T20:06:03Z"
+    },
+    {
+     "number": 10121,
+     "title": "T2 Macs: battery charge limiting is unreachable — applesmc binds no device, and the t2bce stack has no SMC transport",
+     "url": "https://github.com/omacom/omarchy/issues/10121",
+     "state": "OPEN",
+     "components": [
+      "audio",
+      "boot-limine",
+      "battery-power",
+      "t2-mac"
+     ],
+     "createdAt": "2026-09-04T05:44:58Z"
+    },
+    {
+     "number": 9853,
+     "title": "omarchy-refresh-pacman drops hardware-specific repos (arch-mact2 on T2 Macs), silently orphaning linux-t2",
+     "url": "https://github.com/omacom/omarchy/issues/9853",
+     "state": "OPEN",
+     "components": [
+      "audio",
+      "boot-limine",
+      "t2-mac"
+     ],
+     "createdAt": "2026-09-02T17:18:35Z"
+    },
+    {
+     "number": 9802,
+     "title": "MacBookPro16,1 Broadcom quirk disables WPA3-SAE",
+     "url": "https://github.com/omacom/omarchy/issues/9802",
+     "state": "OPEN",
+     "components": [
+      "wifi",
+      "t2-mac",
+      "apple-silicon-asahi"
+     ],
+     "createdAt": "2026-09-02T11:49:06Z"
+    },
+    {
+     "number": 9609,
+     "title": "MacBookPro16,1 (T2, hybrid graphics): gmux leaves the internal panel on the AMD dGPU, hard-hanging the machine at session start",
+     "url": "https://github.com/omacom/omarchy/issues/9609",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu",
+      "intel-gpu",
+      "hybrid-gpu",
+      "multi-monitor",
+      "audio",
+      "wifi",
+      "boot-limine",
+      "touchpad-input",
+      "battery-power",
+      "t2-mac"
+     ],
+     "createdAt": "2026-09-01T13:17:33Z"
+    },
+    {
+     "number": 7110,
+     "title": "fnmode=2 is forced on every install: a no-op for the keyboards it names, and it removes the media keys on Apple keyboards",
+     "url": "https://github.com/omacom/omarchy/issues/7110",
+     "state": "OPEN",
+     "components": [
+      "multi-monitor",
+      "touchpad-input",
+      "t2-mac",
+      "vm"
+     ],
+     "createdAt": "2026-08-16T11:09:41Z"
+    },
+    {
+     "number": 3906,
+     "title": "Early thunderbolt module loading in v3.2.3 breaks multi-monitor on discrete GPU systems",
+     "url": "https://github.com/omacom/omarchy/issues/3906",
+     "state": "CLOSED",
+     "components": [
+      "amd-gpu",
+      "intel-gpu",
+      "hybrid-gpu",
+      "multi-monitor",
+      "boot-limine",
+      "thunderbolt-dock"
+     ],
+     "createdAt": "2025-12-16T18:44:41Z"
+    },
+    {
+     "number": 3791,
+     "title": "tiny-dfr and t2fanrd services don't auto-start on Intel T2 Macs",
+     "url": "https://github.com/omacom/omarchy/issues/3791",
+     "state": "CLOSED",
+     "components": [
+      "t2-mac",
+      "apple-silicon-asahi"
+     ],
+     "createdAt": "2025-12-06T20:45:37Z"
+    },
+    {
+     "number": 2837,
+     "title": "Touch Bar Function Key Mode Not Working on MacBookPro16,1",
+     "url": "https://github.com/omacom/omarchy/issues/2837",
+     "state": "OPEN",
+     "components": [
+      "multi-monitor",
+      "boot-limine",
+      "touchpad-input"
+     ],
+     "createdAt": "2025-10-25T08:20:19Z"
+    },
+    {
+     "number": 1804,
+     "title": "Set Apple keyboard backlit to 100% as a default state (examples for Macbook Pro 16,1 and Macbook Pro Retina 13)",
+     "url": "https://github.com/omacom/omarchy/issues/1804",
+     "state": "CLOSED",
+     "components": [
+      "touchpad-input"
+     ],
+     "createdAt": "2025-09-19T13:52:19Z"
+    }
+   ],
+   "issuesTruncated": false,
+   "quirkScripts": [
+    {
+     "name": "omarchy-hw-display",
+     "path": "bin/omarchy-hw-display",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-hw-display",
+     "summary": "Print the most likely display backlight device."
+    },
+    {
+     "name": "fix-brcmfmac-supplicant.sh",
+     "path": "install/hardware/apple/fix-brcmfmac-supplicant.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-brcmfmac-supplicant.sh",
+     "summary": "handshake itself. On these parts that offload fails against an access point in"
+    },
+    {
+     "name": "fix-spi-keyboard.sh",
+     "path": "install/hardware/apple/fix-spi-keyboard.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-spi-keyboard.sh",
+     "summary": ""
+    },
+    {
+     "name": "fix-suspend-nvme.sh",
+     "path": "install/hardware/apple/fix-suspend-nvme.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-suspend-nvme.sh",
+     "summary": "This prevents NVMe drives from failing to wake from sleep properly"
+    },
+    {
+     "name": "fix-t2.sh",
+     "path": "install/hardware/apple/fix-t2.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-t2.sh",
+     "summary": "Vendor: 106b (Apple), Device IDs: 1801 or 1802 (T2 Security Chip)"
+    }
+   ],
+   "dmiHints": []
+  },
+  {
    "key": "asus-rog-strix",
    "vendor": "ASUS",
    "model": "ASUS ROG Strix",
@@ -10841,352 +11200,6 @@
     "href": "framework.html#framework-desktop"
    },
    "legacyPrototypeSource": "legacy-prototype-unverified"
-  },
-  {
-   "key": "apple-macbookpro16-1",
-   "vendor": "Apple",
-   "model": "MacBookPro16,1",
-   "aliases": [
-    "MacBook Pro 16,1",
-    "MacBookPro16,1",
-    "Macbook Pro 16,1"
-   ],
-   "variants": [],
-   "counts": {
-    "issues": 17,
-    "open": 14,
-    "closed": 3,
-    "discussions": 4
-   },
-   "components": [
-    {
-     "key": "t2-mac",
-     "issues": 13
-    },
-    {
-     "key": "boot-limine",
-     "issues": 10
-    },
-    {
-     "key": "multi-monitor",
-     "issues": 9
-    },
-    {
-     "key": "battery-power",
-     "issues": 7
-    },
-    {
-     "key": "touchpad-input",
-     "issues": 5
-    },
-    {
-     "key": "intel-gpu",
-     "issues": 5
-    },
-    {
-     "key": "hybrid-gpu",
-     "issues": 5
-    },
-    {
-     "key": "amd-gpu",
-     "issues": 4
-    },
-    {
-     "key": "suspend-sleep",
-     "issues": 4
-    },
-    {
-     "key": "audio",
-     "issues": 3
-    },
-    {
-     "key": "apple-silicon-asahi",
-     "issues": 2
-    },
-    {
-     "key": "thunderbolt-dock",
-     "issues": 2
-    },
-    {
-     "key": "wifi",
-     "issues": 2
-    },
-    {
-     "key": "vm",
-     "issues": 1
-    },
-    {
-     "key": "windows-vm",
-     "issues": 1
-    },
-    {
-     "key": "bluetooth",
-     "issues": 1
-    }
-   ],
-   "issues": [
-    {
-     "number": 13295,
-     "title": "[MacBookPro16,1 T2] Hard power cut under heavy CPU load on battery — power-saver does not cap power draw (i9-9980HK)",
-     "url": "https://github.com/omacom/omarchy/issues/13295",
-     "state": "OPEN",
-     "components": [
-      "amd-gpu",
-      "hybrid-gpu",
-      "multi-monitor",
-      "bluetooth",
-      "boot-limine",
-      "battery-power",
-      "t2-mac"
-     ],
-     "createdAt": "2026-09-26T06:47:11Z"
-    },
-    {
-     "number": 13290,
-     "title": "Unowned owe files block omarchy update on every run: file-conflict recovery only clears omarchy* package names",
-     "url": "https://github.com/omacom/omarchy/issues/13290",
-     "state": "OPEN",
-     "components": [
-      "suspend-sleep",
-      "battery-power",
-      "t2-mac"
-     ],
-     "createdAt": "2026-09-26T02:35:28Z"
-    },
-    {
-     "number": 12734,
-     "title": "Saved battery power profile never applied when booting on battery: omarchy-powerprofiles-set autodetect silently falls back to \"ac\"",
-     "url": "https://github.com/omacom/omarchy/issues/12734",
-     "state": "OPEN",
-     "components": [
-      "boot-limine",
-      "battery-power",
-      "t2-mac"
-     ],
-     "createdAt": "2026-09-21T07:22:59Z"
-    },
-    {
-     "number": 12593,
-     "title": "Omarchy 4.0.4 on 2019 T2 MacBook Pro: post-login black screen, full-speed fans and shutdown; hybrid graphics workaround succeeds",
-     "url": "https://github.com/omacom/omarchy/issues/12593",
-     "state": "OPEN",
-     "components": [
-      "amd-gpu",
-      "intel-gpu",
-      "hybrid-gpu",
-      "suspend-sleep",
-      "multi-monitor",
-      "boot-limine",
-      "battery-power",
-      "t2-mac"
-     ],
-     "createdAt": "2026-09-20T03:04:38Z"
-    },
-    {
-     "number": 12273,
-     "title": "Unknown-1 DRM connector should be disabled by default on T2 Mac",
-     "url": "https://github.com/omacom/omarchy/issues/12273",
-     "state": "OPEN",
-     "components": [
-      "intel-gpu",
-      "hybrid-gpu",
-      "multi-monitor",
-      "t2-mac"
-     ],
-     "createdAt": "2026-09-17T12:08:34Z"
-    },
-    {
-     "number": 12272,
-     "title": "SDDM password input UI not updating on login screen (i915 T2)",
-     "url": "https://github.com/omacom/omarchy/issues/12272",
-     "state": "OPEN",
-     "components": [
-      "intel-gpu",
-      "suspend-sleep",
-      "multi-monitor",
-      "touchpad-input",
-      "t2-mac"
-     ],
-     "createdAt": "2026-09-17T11:54:43Z"
-    },
-    {
-     "number": 12153,
-     "title": "omarchy windows vm launch fails silently when the shared folder has setgid set (numeric chmod can't clear it)",
-     "url": "https://github.com/omacom/omarchy/issues/12153",
-     "state": "OPEN",
-     "components": [
-      "suspend-sleep",
-      "multi-monitor",
-      "boot-limine",
-      "battery-power",
-      "windows-vm",
-      "thunderbolt-dock"
-     ],
-     "createdAt": "2026-09-16T18:10:25Z"
-    },
-    {
-     "number": 10699,
-     "title": "Stable installer (master) still writes apple-bce, breaking every T2 Mac install",
-     "url": "https://github.com/omacom/omarchy/issues/10699",
-     "state": "OPEN",
-     "components": [
-      "boot-limine",
-      "t2-mac"
-     ],
-     "createdAt": "2026-09-07T20:06:03Z"
-    },
-    {
-     "number": 10121,
-     "title": "T2 Macs: battery charge limiting is unreachable — applesmc binds no device, and the t2bce stack has no SMC transport",
-     "url": "https://github.com/omacom/omarchy/issues/10121",
-     "state": "OPEN",
-     "components": [
-      "audio",
-      "boot-limine",
-      "battery-power",
-      "t2-mac"
-     ],
-     "createdAt": "2026-09-04T05:44:58Z"
-    },
-    {
-     "number": 9853,
-     "title": "omarchy-refresh-pacman drops hardware-specific repos (arch-mact2 on T2 Macs), silently orphaning linux-t2",
-     "url": "https://github.com/omacom/omarchy/issues/9853",
-     "state": "OPEN",
-     "components": [
-      "audio",
-      "boot-limine",
-      "t2-mac"
-     ],
-     "createdAt": "2026-09-02T17:18:35Z"
-    },
-    {
-     "number": 9802,
-     "title": "MacBookPro16,1 Broadcom quirk disables WPA3-SAE",
-     "url": "https://github.com/omacom/omarchy/issues/9802",
-     "state": "OPEN",
-     "components": [
-      "wifi",
-      "t2-mac",
-      "apple-silicon-asahi"
-     ],
-     "createdAt": "2026-09-02T11:49:06Z"
-    },
-    {
-     "number": 9609,
-     "title": "MacBookPro16,1 (T2, hybrid graphics): gmux leaves the internal panel on the AMD dGPU, hard-hanging the machine at session start",
-     "url": "https://github.com/omacom/omarchy/issues/9609",
-     "state": "OPEN",
-     "components": [
-      "amd-gpu",
-      "intel-gpu",
-      "hybrid-gpu",
-      "multi-monitor",
-      "audio",
-      "wifi",
-      "boot-limine",
-      "touchpad-input",
-      "battery-power",
-      "t2-mac"
-     ],
-     "createdAt": "2026-09-01T13:17:33Z"
-    },
-    {
-     "number": 7110,
-     "title": "fnmode=2 is forced on every install: a no-op for the keyboards it names, and it removes the media keys on Apple keyboards",
-     "url": "https://github.com/omacom/omarchy/issues/7110",
-     "state": "OPEN",
-     "components": [
-      "multi-monitor",
-      "touchpad-input",
-      "t2-mac",
-      "vm"
-     ],
-     "createdAt": "2026-08-16T11:09:41Z"
-    },
-    {
-     "number": 3906,
-     "title": "Early thunderbolt module loading in v3.2.3 breaks multi-monitor on discrete GPU systems",
-     "url": "https://github.com/omacom/omarchy/issues/3906",
-     "state": "CLOSED",
-     "components": [
-      "amd-gpu",
-      "intel-gpu",
-      "hybrid-gpu",
-      "multi-monitor",
-      "boot-limine",
-      "thunderbolt-dock"
-     ],
-     "createdAt": "2025-12-16T18:44:41Z"
-    },
-    {
-     "number": 3791,
-     "title": "tiny-dfr and t2fanrd services don't auto-start on Intel T2 Macs",
-     "url": "https://github.com/omacom/omarchy/issues/3791",
-     "state": "CLOSED",
-     "components": [
-      "t2-mac",
-      "apple-silicon-asahi"
-     ],
-     "createdAt": "2025-12-06T20:45:37Z"
-    },
-    {
-     "number": 2837,
-     "title": "Touch Bar Function Key Mode Not Working on MacBookPro16,1",
-     "url": "https://github.com/omacom/omarchy/issues/2837",
-     "state": "OPEN",
-     "components": [
-      "multi-monitor",
-      "boot-limine",
-      "touchpad-input"
-     ],
-     "createdAt": "2025-10-25T08:20:19Z"
-    },
-    {
-     "number": 1804,
-     "title": "Set Apple keyboard backlit to 100% as a default state (examples for Macbook Pro 16,1 and Macbook Pro Retina 13)",
-     "url": "https://github.com/omacom/omarchy/issues/1804",
-     "state": "CLOSED",
-     "components": [
-      "touchpad-input"
-     ],
-     "createdAt": "2025-09-19T13:52:19Z"
-    }
-   ],
-   "issuesTruncated": false,
-   "quirkScripts": [
-    {
-     "name": "omarchy-hw-display",
-     "path": "bin/omarchy-hw-display",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-hw-display",
-     "summary": "Print the most likely display backlight device."
-    },
-    {
-     "name": "fix-brcmfmac-supplicant.sh",
-     "path": "install/hardware/apple/fix-brcmfmac-supplicant.sh",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-brcmfmac-supplicant.sh",
-     "summary": "handshake itself. On these parts that offload fails against an access point in"
-    },
-    {
-     "name": "fix-spi-keyboard.sh",
-     "path": "install/hardware/apple/fix-spi-keyboard.sh",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-spi-keyboard.sh",
-     "summary": ""
-    },
-    {
-     "name": "fix-suspend-nvme.sh",
-     "path": "install/hardware/apple/fix-suspend-nvme.sh",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-suspend-nvme.sh",
-     "summary": "This prevents NVMe drives from failing to wake from sleep properly"
-    },
-    {
-     "name": "fix-t2.sh",
-     "path": "install/hardware/apple/fix-t2.sh",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-t2.sh",
-     "summary": "Vendor: 106b (Apple), Device IDs: 1801 or 1802 (T2 Security Chip)"
-    }
-   ],
-   "dmiHints": []
   },
   {
    "key": "asus-tuf",
@@ -12378,6 +12391,271 @@
    "legacyPrototypeSource": "legacy-prototype-unverified"
   },
   {
+   "key": "hp-elitebook",
+   "vendor": "HP",
+   "model": "HP Elitebook",
+   "aliases": [
+    "HP EliteBook 8",
+    "HP EliteBook 835",
+    "HP EliteBook 840",
+    "HP EliteBook 845",
+    "HP EliteBook 8470w",
+    "HP EliteBook 850",
+    "HP EliteBook X",
+    "HP EliteBook with",
+    "HP EliteBook x360",
+    "HP Elitebook",
+    "HP Elitebook 840",
+    "elitebook-8-g1i-int",
+    "hp Elitebook I5th"
+   ],
+   "variants": [
+    "8",
+    "8-g1i-int",
+    "835",
+    "840",
+    "845",
+    "8470w",
+    "850",
+    "I5th",
+    "x360"
+   ],
+   "counts": {
+    "issues": 14,
+    "open": 8,
+    "closed": 6,
+    "discussions": 5
+   },
+   "components": [
+    {
+     "key": "multi-monitor",
+     "issues": 5
+    },
+    {
+     "key": "amd-gpu",
+     "issues": 5
+    },
+    {
+     "key": "audio",
+     "issues": 3
+    },
+    {
+     "key": "boot-limine",
+     "issues": 3
+    },
+    {
+     "key": "webcam",
+     "issues": 2
+    },
+    {
+     "key": "suspend-sleep",
+     "issues": 2
+    },
+    {
+     "key": "fingerprint",
+     "issues": 2
+    },
+    {
+     "key": "touchpad-input",
+     "issues": 1
+    },
+    {
+     "key": "printer",
+     "issues": 1
+    },
+    {
+     "key": "wifi",
+     "issues": 1
+    },
+    {
+     "key": "battery-power",
+     "issues": 1
+    },
+    {
+     "key": "storage-nvme",
+     "issues": 1
+    },
+    {
+     "key": "bluetooth",
+     "issues": 1
+    }
+   ],
+   "issues": [
+    {
+     "number": 13943,
+     "title": "Dual Monitor Support is Buggy",
+     "url": "https://github.com/omacom/omarchy/issues/13943",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu",
+      "multi-monitor",
+      "audio"
+     ],
+     "createdAt": "2026-10-01T10:16:39Z"
+    },
+    {
+     "number": 13566,
+     "title": "Launch OSD toast (\"Launching X…\") can get stuck on screen indefinitely",
+     "url": "https://github.com/omacom/omarchy/issues/13566",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu"
+     ],
+     "createdAt": "2026-09-28T16:34:13Z"
+    },
+    {
+     "number": 13178,
+     "title": "HP EliteBook X Flip G2i (Panther Lake): IPU7 webcam is OV05C10/OVTI05C1 — no kernel driver and intel-ipu7-camera assumes OV08X40, so the camera fails silently",
+     "url": "https://github.com/omacom/omarchy/issues/13178",
+     "state": "OPEN",
+     "components": [
+      "webcam"
+     ],
+     "createdAt": "2026-09-24T21:02:34Z"
+    },
+    {
+     "number": 12597,
+     "title": "Grok disappears from Agents panel when weekly usage percentage is absent",
+     "url": "https://github.com/omacom/omarchy/issues/12597",
+     "state": "OPEN",
+     "components": [
+      "multi-monitor"
+     ],
+     "createdAt": "2026-09-20T03:56:00Z"
+    },
+    {
+     "number": 12227,
+     "title": "HP EliteBook 8 G1i (Lunar Lake): internal speakers silent, CS35L54 amps never instantiate because ACPI cs-gpios omits the second SPI chip select",
+     "url": "https://github.com/omacom/omarchy/issues/12227",
+     "state": "CLOSED",
+     "components": [
+      "audio",
+      "bluetooth",
+      "boot-limine"
+     ],
+     "createdAt": "2026-09-17T06:04:23Z"
+    },
+    {
+     "number": 11332,
+     "title": "Intermittent s2idle resume failure on HP EliteBook 845 G10, more frequent with Linux 7.2.3",
+     "url": "https://github.com/omacom/omarchy/issues/11332",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu",
+      "suspend-sleep",
+      "multi-monitor",
+      "wifi",
+      "boot-limine",
+      "battery-power",
+      "storage-nvme"
+     ],
+     "createdAt": "2026-09-11T14:16:13Z"
+    },
+    {
+     "number": 10892,
+     "title": "`omarchy setup security fingerprint` fails at enroll on readers libfprint can't drive (Validity VFS491, 138a:003d)",
+     "url": "https://github.com/omacom/omarchy/issues/10892",
+     "state": "OPEN",
+     "components": [
+      "boot-limine",
+      "fingerprint",
+      "printer"
+     ],
+     "createdAt": "2026-09-08T22:38:55Z"
+    },
+    {
+     "number": 10493,
+     "title": "Browser Crashing without any notification",
+     "url": "https://github.com/omacom/omarchy/issues/10493",
+     "state": "OPEN",
+     "components": [],
+     "createdAt": "2026-09-06T15:50:51Z"
+    },
+    {
+     "number": 8747,
+     "title": "Lock screen fingerprint auth hangs ~25-30s if fprintd restarts while locked (e.g. after suspend on drivers needing a post-resume reset)",
+     "url": "https://github.com/omacom/omarchy/issues/8747",
+     "state": "CLOSED",
+     "components": [
+      "suspend-sleep",
+      "multi-monitor",
+      "fingerprint"
+     ],
+     "createdAt": "2026-08-28T11:49:16Z"
+    },
+    {
+     "number": 8206,
+     "title": "Emoji doesn't paste",
+     "url": "https://github.com/omacom/omarchy/issues/8206",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu"
+     ],
+     "createdAt": "2026-08-25T13:08:45Z"
+    },
+    {
+     "number": 4570,
+     "title": "Mute button doesn't work after update",
+     "url": "https://github.com/omacom/omarchy/issues/4570",
+     "state": "CLOSED",
+     "components": [
+      "audio",
+      "touchpad-input"
+     ],
+     "createdAt": "2026-02-10T09:33:07Z"
+    },
+    {
+     "number": 4529,
+     "title": "Built-in webcam not detected on Arch / Omarchy (/dev/video* missing)",
+     "url": "https://github.com/omacom/omarchy/issues/4529",
+     "state": "CLOSED",
+     "components": [
+      "amd-gpu",
+      "webcam"
+     ],
+     "createdAt": "2026-02-06T20:31:22Z"
+    },
+    {
+     "number": 4390,
+     "title": "Chromium desktop entry bug",
+     "url": "https://github.com/omacom/omarchy/issues/4390",
+     "state": "CLOSED",
+     "components": [],
+     "createdAt": "2026-01-29T22:26:08Z"
+    },
+    {
+     "number": 3571,
+     "title": "Weird keys displaying at bottom of Application Launcher",
+     "url": "https://github.com/omacom/omarchy/issues/3571",
+     "state": "CLOSED",
+     "components": [
+      "multi-monitor"
+     ],
+     "createdAt": "2025-11-23T06:54:28Z"
+    }
+   ],
+   "issuesTruncated": false,
+   "quirkScripts": [],
+   "dmiHints": [],
+   "legacyPrototype": {
+    "id": "hp-elitebook-ultra-g1q",
+    "name": "HP EliteBook Ultra G1q (Snapdragon X)",
+    "brand": "HP",
+    "rating": "experimental",
+    "summary": "PR testing: installs, native display, Wi-Fi, BT, keyboard, touchpad, touchscreen on linux-aarch64 7.2.",
+    "type": "laptop",
+    "tags": "elitebook snapdragon x1e-78-100",
+    "wifi": "workaround",
+    "audio": "unknown",
+    "webcam": "works",
+    "fingerprint": "unknown",
+    "gpu": "workaround",
+    "suspend": "works",
+    "href": "apple-silicon.html#hp-elitebook-ultra-g1q"
+   },
+   "legacyPrototypeSource": "legacy-prototype-unverified"
+  },
+  {
    "key": "microsoft-surface-laptop",
    "vendor": "Microsoft",
    "model": "Surface Laptop",
@@ -12909,258 +13187,6 @@
     "gpu": "works",
     "suspend": "works",
     "href": "dell.html#dell-inspiron-vintage"
-   },
-   "legacyPrototypeSource": "legacy-prototype-unverified"
-  },
-  {
-   "key": "hp-elitebook",
-   "vendor": "HP",
-   "model": "HP Elitebook",
-   "aliases": [
-    "HP EliteBook 8",
-    "HP EliteBook 835",
-    "HP EliteBook 845",
-    "HP EliteBook 8470w",
-    "HP EliteBook 850",
-    "HP EliteBook X",
-    "HP EliteBook with",
-    "HP EliteBook x360",
-    "HP Elitebook",
-    "HP Elitebook 840",
-    "elitebook-8-g1i-int",
-    "hp Elitebook I5th"
-   ],
-   "variants": [
-    "8",
-    "8-g1i-int",
-    "835",
-    "840",
-    "845",
-    "8470w",
-    "850",
-    "I5th",
-    "x360"
-   ],
-   "counts": {
-    "issues": 13,
-    "open": 7,
-    "closed": 6,
-    "discussions": 5
-   },
-   "components": [
-    {
-     "key": "multi-monitor",
-     "issues": 4
-    },
-    {
-     "key": "amd-gpu",
-     "issues": 4
-    },
-    {
-     "key": "boot-limine",
-     "issues": 3
-    },
-    {
-     "key": "webcam",
-     "issues": 2
-    },
-    {
-     "key": "audio",
-     "issues": 2
-    },
-    {
-     "key": "suspend-sleep",
-     "issues": 2
-    },
-    {
-     "key": "fingerprint",
-     "issues": 2
-    },
-    {
-     "key": "touchpad-input",
-     "issues": 1
-    },
-    {
-     "key": "printer",
-     "issues": 1
-    },
-    {
-     "key": "wifi",
-     "issues": 1
-    },
-    {
-     "key": "battery-power",
-     "issues": 1
-    },
-    {
-     "key": "storage-nvme",
-     "issues": 1
-    },
-    {
-     "key": "bluetooth",
-     "issues": 1
-    }
-   ],
-   "issues": [
-    {
-     "number": 13566,
-     "title": "Launch OSD toast (\"Launching X…\") can get stuck on screen indefinitely",
-     "url": "https://github.com/omacom/omarchy/issues/13566",
-     "state": "OPEN",
-     "components": [
-      "amd-gpu"
-     ],
-     "createdAt": "2026-09-28T16:34:13Z"
-    },
-    {
-     "number": 13178,
-     "title": "HP EliteBook X Flip G2i (Panther Lake): IPU7 webcam is OV05C10/OVTI05C1 — no kernel driver and intel-ipu7-camera assumes OV08X40, so the camera fails silently",
-     "url": "https://github.com/omacom/omarchy/issues/13178",
-     "state": "OPEN",
-     "components": [
-      "webcam"
-     ],
-     "createdAt": "2026-09-24T21:02:34Z"
-    },
-    {
-     "number": 12597,
-     "title": "Grok disappears from Agents panel when weekly usage percentage is absent",
-     "url": "https://github.com/omacom/omarchy/issues/12597",
-     "state": "OPEN",
-     "components": [
-      "multi-monitor"
-     ],
-     "createdAt": "2026-09-20T03:56:00Z"
-    },
-    {
-     "number": 12227,
-     "title": "HP EliteBook 8 G1i (Lunar Lake): internal speakers silent, CS35L54 amps never instantiate because ACPI cs-gpios omits the second SPI chip select",
-     "url": "https://github.com/omacom/omarchy/issues/12227",
-     "state": "CLOSED",
-     "components": [
-      "audio",
-      "bluetooth",
-      "boot-limine"
-     ],
-     "createdAt": "2026-09-17T06:04:23Z"
-    },
-    {
-     "number": 11332,
-     "title": "Intermittent s2idle resume failure on HP EliteBook 845 G10, more frequent with Linux 7.2.3",
-     "url": "https://github.com/omacom/omarchy/issues/11332",
-     "state": "OPEN",
-     "components": [
-      "amd-gpu",
-      "suspend-sleep",
-      "multi-monitor",
-      "wifi",
-      "boot-limine",
-      "battery-power",
-      "storage-nvme"
-     ],
-     "createdAt": "2026-09-11T14:16:13Z"
-    },
-    {
-     "number": 10892,
-     "title": "`omarchy setup security fingerprint` fails at enroll on readers libfprint can't drive (Validity VFS491, 138a:003d)",
-     "url": "https://github.com/omacom/omarchy/issues/10892",
-     "state": "OPEN",
-     "components": [
-      "boot-limine",
-      "fingerprint",
-      "printer"
-     ],
-     "createdAt": "2026-09-08T22:38:55Z"
-    },
-    {
-     "number": 10493,
-     "title": "Browser Crashing without any notification",
-     "url": "https://github.com/omacom/omarchy/issues/10493",
-     "state": "OPEN",
-     "components": [],
-     "createdAt": "2026-09-06T15:50:51Z"
-    },
-    {
-     "number": 8747,
-     "title": "Lock screen fingerprint auth hangs ~25-30s if fprintd restarts while locked (e.g. after suspend on drivers needing a post-resume reset)",
-     "url": "https://github.com/omacom/omarchy/issues/8747",
-     "state": "CLOSED",
-     "components": [
-      "suspend-sleep",
-      "multi-monitor",
-      "fingerprint"
-     ],
-     "createdAt": "2026-08-28T11:49:16Z"
-    },
-    {
-     "number": 8206,
-     "title": "Emoji doesn't paste",
-     "url": "https://github.com/omacom/omarchy/issues/8206",
-     "state": "OPEN",
-     "components": [
-      "amd-gpu"
-     ],
-     "createdAt": "2026-08-25T13:08:45Z"
-    },
-    {
-     "number": 4570,
-     "title": "Mute button doesn't work after update",
-     "url": "https://github.com/omacom/omarchy/issues/4570",
-     "state": "CLOSED",
-     "components": [
-      "audio",
-      "touchpad-input"
-     ],
-     "createdAt": "2026-02-10T09:33:07Z"
-    },
-    {
-     "number": 4529,
-     "title": "Built-in webcam not detected on Arch / Omarchy (/dev/video* missing)",
-     "url": "https://github.com/omacom/omarchy/issues/4529",
-     "state": "CLOSED",
-     "components": [
-      "amd-gpu",
-      "webcam"
-     ],
-     "createdAt": "2026-02-06T20:31:22Z"
-    },
-    {
-     "number": 4390,
-     "title": "Chromium desktop entry bug",
-     "url": "https://github.com/omacom/omarchy/issues/4390",
-     "state": "CLOSED",
-     "components": [],
-     "createdAt": "2026-01-29T22:26:08Z"
-    },
-    {
-     "number": 3571,
-     "title": "Weird keys displaying at bottom of Application Launcher",
-     "url": "https://github.com/omacom/omarchy/issues/3571",
-     "state": "CLOSED",
-     "components": [
-      "multi-monitor"
-     ],
-     "createdAt": "2025-11-23T06:54:28Z"
-    }
-   ],
-   "issuesTruncated": false,
-   "quirkScripts": [],
-   "dmiHints": [],
-   "legacyPrototype": {
-    "id": "hp-elitebook-ultra-g1q",
-    "name": "HP EliteBook Ultra G1q (Snapdragon X)",
-    "brand": "HP",
-    "rating": "experimental",
-    "summary": "PR testing: installs, native display, Wi-Fi, BT, keyboard, touchpad, touchscreen on linux-aarch64 7.2.",
-    "type": "laptop",
-    "tags": "elitebook snapdragon x1e-78-100",
-    "wifi": "workaround",
-    "audio": "unknown",
-    "webcam": "works",
-    "fingerprint": "unknown",
-    "gpu": "workaround",
-    "suspend": "works",
-    "href": "apple-silicon.html#hp-elitebook-ultra-g1q"
    },
    "legacyPrototypeSource": "legacy-prototype-unverified"
   },
@@ -14410,7 +14436,7 @@
     "issues": 9,
     "open": 3,
     "closed": 6,
-    "discussions": 3
+    "discussions": 4
    },
    "components": [
     {
@@ -14639,6 +14665,225 @@
    "legacyPrototypeSource": "legacy-prototype-unverified"
   },
   {
+   "key": "dell-alienware",
+   "vendor": "Dell",
+   "model": "Dell Alienware",
+   "aliases": [
+    "Alienware",
+    "Alienware 15",
+    "Alienware 16",
+    "Alienware 17",
+    "Alienware Aurora",
+    "Alienware Laptop",
+    "Alienware laptop",
+    "Alienware m15",
+    "Alienware m18",
+    "Alienware m51",
+    "Dell Alienware m51",
+    "alienware aurora",
+    "alienware in"
+   ],
+   "variants": [
+    "15",
+    "16",
+    "17",
+    "Aurora",
+    "aurora",
+    "m15",
+    "m18",
+    "m51"
+   ],
+   "counts": {
+    "issues": 9,
+    "open": 6,
+    "closed": 3,
+    "discussions": 4
+   },
+   "components": [
+    {
+     "key": "multi-monitor",
+     "issues": 3
+    },
+    {
+     "key": "boot-limine",
+     "issues": 3
+    },
+    {
+     "key": "touchpad-input",
+     "issues": 3
+    },
+    {
+     "key": "battery-power",
+     "issues": 3
+    },
+    {
+     "key": "nvidia",
+     "issues": 3
+    },
+    {
+     "key": "audio",
+     "issues": 2
+    },
+    {
+     "key": "bluetooth",
+     "issues": 1
+    },
+    {
+     "key": "hybrid-gpu",
+     "issues": 1
+    },
+    {
+     "key": "amd-gpu",
+     "issues": 1
+    },
+    {
+     "key": "fingerprint",
+     "issues": 1
+    }
+   ],
+   "issues": [
+    {
+     "number": 13944,
+     "title": "Lock screen: fingerprint reader disabled by libfprint thermal guard after ~3 min, then 250 ms retry loop",
+     "url": "https://github.com/omacom/omarchy/issues/13944",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "amd-gpu",
+      "fingerprint"
+     ],
+     "createdAt": "2026-10-01T10:20:55Z"
+    },
+    {
+     "number": 12221,
+     "title": "Firefox-based browsers (Zen) never map a window on NVIDIA + Wayland: renderer deadlocks in libnvidia-egl-wayland2 (egl-wayland2 pulled in by nvidia-utils 610)",
+     "url": "https://github.com/omacom/omarchy/issues/12221",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "hybrid-gpu",
+      "multi-monitor"
+     ],
+     "createdAt": "2026-09-17T04:19:48Z"
+    },
+    {
+     "number": 12181,
+     "title": "linux-omarchy 7.2.5-3: SynPS/2 Synaptics touchpad completely vanishes from kernel (works on stock linux 7.2.3)",
+     "url": "https://github.com/omacom/omarchy/issues/12181",
+     "state": "OPEN",
+     "components": [
+      "audio",
+      "boot-limine",
+      "touchpad-input"
+     ],
+     "createdAt": "2026-09-16T20:53:24Z"
+    },
+    {
+     "number": 8735,
+     "title": "Alienware 17 (Realtek ALC3661): headphone/aux jack never appears in output picker — jack-sense split across mismatched pin, no live PipeWire switching",
+     "url": "https://github.com/omacom/omarchy/issues/8735",
+     "state": "OPEN",
+     "components": [
+      "multi-monitor",
+      "audio"
+     ],
+     "createdAt": "2026-08-28T07:48:25Z"
+    },
+    {
+     "number": 7516,
+     "title": "Performance power profile runs fans at 100% while idle on Alienware",
+     "url": "https://github.com/omacom/omarchy/issues/7516",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "boot-limine",
+      "battery-power"
+     ],
+     "createdAt": "2026-08-19T16:32:44Z"
+    },
+    {
+     "number": 6923,
+     "title": "Installer: Scroll Lock backlight can lock input on SINO WEALTH 258a:0001 keyboards",
+     "url": "https://github.com/omacom/omarchy/issues/6923",
+     "state": "OPEN",
+     "components": [
+      "touchpad-input"
+     ],
+     "createdAt": "2026-08-15T06:14:52Z"
+    },
+    {
+     "number": 4011,
+     "title": "Bluetooth device not recognized on Alienware Laptop",
+     "url": "https://github.com/omacom/omarchy/issues/4011",
+     "state": "CLOSED",
+     "components": [
+      "bluetooth",
+      "battery-power"
+     ],
+     "createdAt": "2025-12-28T19:36:41Z"
+    },
+    {
+     "number": 2658,
+     "title": "Bricked Alienware 17 R3",
+     "url": "https://github.com/omacom/omarchy/issues/2658",
+     "state": "CLOSED",
+     "components": [],
+     "createdAt": "2025-10-21T08:11:24Z"
+    },
+    {
+     "number": 2597,
+     "title": "Soft-Bricked My Laptop After System Update",
+     "url": "https://github.com/omacom/omarchy/issues/2597",
+     "state": "CLOSED",
+     "components": [
+      "multi-monitor",
+      "boot-limine",
+      "touchpad-input",
+      "battery-power"
+     ],
+     "createdAt": "2025-10-20T03:09:43Z"
+    }
+   ],
+   "issuesTruncated": false,
+   "quirkScripts": [],
+   "dmiHints": [],
+   "legacyPrototype": {
+    "id": "dell-alienware-x17-r1",
+    "name": "Alienware x17 R1",
+    "brand": "Dell",
+    "rating": "silver",
+    "summary": "Hub gaming-laptop setup with dual externals. NVIDIA hybrid rules apply.",
+    "type": "laptop",
+    "tags": "alienware nvidia gaming",
+    "wifi": "works",
+    "audio": "works",
+    "webcam": "works",
+    "fingerprint": "unknown",
+    "gpu": "workaround",
+    "suspend": "works",
+    "href": "nvidia-laptops.html#dell-alienware-x17-r1"
+   },
+   "legacyPrototypeAlso": [
+    {
+     "id": "dell-alienware-generic",
+     "name": "Alienware gaming laptop (other)",
+     "brand": "Dell",
+     "rating": "bronze",
+     "summary": "Tested in the wild. Treat like any muxed NVIDIA box: nomodeset if the ISO blacks out.",
+     "type": "laptop",
+     "tags": "alienware nvidia",
+     "wifi": "works",
+     "audio": "works",
+     "webcam": "works",
+     "fingerprint": "unknown",
+     "gpu": "workaround",
+     "suspend": "works",
+     "href": "nvidia-laptops.html"
+    }
+   ],
+   "legacyPrototypeSource": "legacy-prototype-unverified"
+  },
+  {
    "key": "apple-macbookpro11-5",
    "vendor": "Apple",
    "model": "MacBookPro11,5",
@@ -14650,7 +14895,7 @@
     "issues": 8,
     "open": 6,
     "closed": 2,
-    "discussions": 2
+    "discussions": 3
    },
    "components": [
     {
@@ -14819,203 +15064,6 @@
     }
    ],
    "dmiHints": []
-  },
-  {
-   "key": "dell-alienware",
-   "vendor": "Dell",
-   "model": "Dell Alienware",
-   "aliases": [
-    "Alienware",
-    "Alienware 16",
-    "Alienware 17",
-    "Alienware Aurora",
-    "Alienware Laptop",
-    "Alienware laptop",
-    "Alienware m15",
-    "Alienware m18",
-    "Alienware m51",
-    "Dell Alienware m51",
-    "alienware aurora",
-    "alienware in"
-   ],
-   "variants": [
-    "16",
-    "17",
-    "Aurora",
-    "aurora",
-    "m15",
-    "m18",
-    "m51"
-   ],
-   "counts": {
-    "issues": 8,
-    "open": 5,
-    "closed": 3,
-    "discussions": 4
-   },
-   "components": [
-    {
-     "key": "multi-monitor",
-     "issues": 3
-    },
-    {
-     "key": "boot-limine",
-     "issues": 3
-    },
-    {
-     "key": "touchpad-input",
-     "issues": 3
-    },
-    {
-     "key": "battery-power",
-     "issues": 3
-    },
-    {
-     "key": "nvidia",
-     "issues": 2
-    },
-    {
-     "key": "audio",
-     "issues": 2
-    },
-    {
-     "key": "bluetooth",
-     "issues": 1
-    },
-    {
-     "key": "hybrid-gpu",
-     "issues": 1
-    }
-   ],
-   "issues": [
-    {
-     "number": 12221,
-     "title": "Firefox-based browsers (Zen) never map a window on NVIDIA + Wayland: renderer deadlocks in libnvidia-egl-wayland2 (egl-wayland2 pulled in by nvidia-utils 610)",
-     "url": "https://github.com/omacom/omarchy/issues/12221",
-     "state": "OPEN",
-     "components": [
-      "nvidia",
-      "hybrid-gpu",
-      "multi-monitor"
-     ],
-     "createdAt": "2026-09-17T04:19:48Z"
-    },
-    {
-     "number": 12181,
-     "title": "linux-omarchy 7.2.5-3: SynPS/2 Synaptics touchpad completely vanishes from kernel (works on stock linux 7.2.3)",
-     "url": "https://github.com/omacom/omarchy/issues/12181",
-     "state": "OPEN",
-     "components": [
-      "audio",
-      "boot-limine",
-      "touchpad-input"
-     ],
-     "createdAt": "2026-09-16T20:53:24Z"
-    },
-    {
-     "number": 8735,
-     "title": "Alienware 17 (Realtek ALC3661): headphone/aux jack never appears in output picker — jack-sense split across mismatched pin, no live PipeWire switching",
-     "url": "https://github.com/omacom/omarchy/issues/8735",
-     "state": "OPEN",
-     "components": [
-      "multi-monitor",
-      "audio"
-     ],
-     "createdAt": "2026-08-28T07:48:25Z"
-    },
-    {
-     "number": 7516,
-     "title": "Performance power profile runs fans at 100% while idle on Alienware",
-     "url": "https://github.com/omacom/omarchy/issues/7516",
-     "state": "OPEN",
-     "components": [
-      "nvidia",
-      "boot-limine",
-      "battery-power"
-     ],
-     "createdAt": "2026-08-19T16:32:44Z"
-    },
-    {
-     "number": 6923,
-     "title": "Installer: Scroll Lock backlight can lock input on SINO WEALTH 258a:0001 keyboards",
-     "url": "https://github.com/omacom/omarchy/issues/6923",
-     "state": "OPEN",
-     "components": [
-      "touchpad-input"
-     ],
-     "createdAt": "2026-08-15T06:14:52Z"
-    },
-    {
-     "number": 4011,
-     "title": "Bluetooth device not recognized on Alienware Laptop",
-     "url": "https://github.com/omacom/omarchy/issues/4011",
-     "state": "CLOSED",
-     "components": [
-      "bluetooth",
-      "battery-power"
-     ],
-     "createdAt": "2025-12-28T19:36:41Z"
-    },
-    {
-     "number": 2658,
-     "title": "Bricked Alienware 17 R3",
-     "url": "https://github.com/omacom/omarchy/issues/2658",
-     "state": "CLOSED",
-     "components": [],
-     "createdAt": "2025-10-21T08:11:24Z"
-    },
-    {
-     "number": 2597,
-     "title": "Soft-Bricked My Laptop After System Update",
-     "url": "https://github.com/omacom/omarchy/issues/2597",
-     "state": "CLOSED",
-     "components": [
-      "multi-monitor",
-      "boot-limine",
-      "touchpad-input",
-      "battery-power"
-     ],
-     "createdAt": "2025-10-20T03:09:43Z"
-    }
-   ],
-   "issuesTruncated": false,
-   "quirkScripts": [],
-   "dmiHints": [],
-   "legacyPrototype": {
-    "id": "dell-alienware-x17-r1",
-    "name": "Alienware x17 R1",
-    "brand": "Dell",
-    "rating": "silver",
-    "summary": "Hub gaming-laptop setup with dual externals. NVIDIA hybrid rules apply.",
-    "type": "laptop",
-    "tags": "alienware nvidia gaming",
-    "wifi": "works",
-    "audio": "works",
-    "webcam": "works",
-    "fingerprint": "unknown",
-    "gpu": "workaround",
-    "suspend": "works",
-    "href": "nvidia-laptops.html#dell-alienware-x17-r1"
-   },
-   "legacyPrototypeAlso": [
-    {
-     "id": "dell-alienware-generic",
-     "name": "Alienware gaming laptop (other)",
-     "brand": "Dell",
-     "rating": "bronze",
-     "summary": "Tested in the wild. Treat like any muxed NVIDIA box: nomodeset if the ISO blacks out.",
-     "type": "laptop",
-     "tags": "alienware nvidia",
-     "wifi": "works",
-     "audio": "works",
-     "webcam": "works",
-     "fingerprint": "unknown",
-     "gpu": "workaround",
-     "suspend": "works",
-     "href": "nvidia-laptops.html"
-    }
-   ],
-   "legacyPrototypeSource": "legacy-prototype-unverified"
   },
   {
    "key": "framework-laptop-16",
@@ -18867,7 +18915,7 @@
     "issues": 5,
     "open": 4,
     "closed": 1,
-    "discussions": 1
+    "discussions": 0
    },
    "components": [
     {
@@ -23592,7 +23640,7 @@
     "issues": 1,
     "open": 1,
     "closed": 0,
-    "discussions": 0
+    "discussions": 1
    },
    "components": [
     {

@@ -346,6 +346,15 @@
   },
   "commands": {
     "added": [
+      "omarchy-agent-account-add",
+      "omarchy-agent-account-home",
+      "omarchy-agent-account-list",
+      "omarchy-agent-account-mode",
+      "omarchy-agent-account-remove",
+      "omarchy-agent-account-rename",
+      "omarchy-agent-account-state",
+      "omarchy-agent-account-use",
+      "omarchy-agent-usage-grok",
       "omarchy-ascii",
       "omarchy-branding-about-animation",
       "omarchy-cmd-browser-handoff",
@@ -551,11 +560,11 @@
       }
     ],
     "counts": {
-      "added": 26,
+      "added": 35,
       "changed": 14,
       "from": 444,
       "removed": 0,
-      "to": 470
+      "to": 479
     },
     "removed": []
   },
@@ -1371,9 +1380,9 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 27,
+      "new": 30,
       "removed": 0,
-      "to": 133
+      "to": 136
     },
     "new": [
       {
@@ -1510,6 +1519,21 @@
         "date": "2026-09-27T20:47:49Z",
         "description": "Install Hype, the Markdown presentation app",
         "file": "1790542069.sh"
+      },
+      {
+        "date": "2026-09-29T17:19:22Z",
+        "description": "Install the compiler and Qt pieces for building Omarchy-style apps",
+        "file": "1790702362.sh"
+      },
+      {
+        "date": "2026-09-29T17:23:26Z",
+        "description": "Link the omarchy-app agent skill for building apps",
+        "file": "1790702606.sh"
+      },
+      {
+        "date": "2026-10-01T14:00:09Z",
+        "description": "Install Grok through mise's first-party package",
+        "file": "1790863209.sh"
       }
     ],
     "removed": []

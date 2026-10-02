@@ -1,5 +1,5 @@
 {
-  "count": 133,
+  "count": 136,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -2272,6 +2272,73 @@
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790542069.sh",
       "timestamp": 1790542069,
       "touches": [
+        "~/.local/state/omarchy/preinstalls-removed"
+      ]
+    },
+    {
+      "body": "echo \"Install the compiler and Qt pieces for building Omarchy-style apps\"\n\n# The omarchy-app agent skill builds apps the way Hype, Monologue, and Omacut\n# are built: C++ and Qt Quick, compiled with qmake6 and make, with SVG icons,\n# audio and video through Qt Multimedia, and heavy media work through ffmpeg.\n# Qt arrived only as a dependency of those apps, and the compiler not at all.\nomarchy-pkg-add base-devel qt6-base qt6-declarative qt6-multimedia qt6-svg qt6-wayland ffmpeg",
+      "bodyTruncated": false,
+      "date": "2026-09-29T17:19:22Z",
+      "description": "Install the compiler and Qt pieces for building Omarchy-style apps",
+      "file": "1790702362.sh",
+      "lineCount": 7,
+      "packagesAdded": [
+        "base-devel",
+        "ffmpeg",
+        "qt6-base",
+        "qt6-declarative",
+        "qt6-multimedia",
+        "qt6-svg",
+        "qt6-wayland"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1790702362.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790702362.sh",
+      "timestamp": 1790702362,
+      "touches": []
+    },
+    {
+      "body": "echo \"Link the omarchy-app agent skill for building apps\"\n\n# omarchy-provision-user links every skill, but only once per user, so\n# existing installs get the new one here, in the same places. A skill of the\n# user's own by that name is left where it is.\nskill=\"$OMARCHY_PATH/default/agents/skills/omarchy-app\"\n\nlink_skill() {\n  mkdir -p \"$1\"\n  if [[ -e $1/omarchy-app && ! -L $1/omarchy-app ]]; then\n    echo \"Leaving your own $1/omarchy-app in place\"\n  else\n    ln -sfn \"$skill\" \"$1/omarchy-app\"\n  fi\n}\n\nif [[ -d $skill ]]; then\n  for skills_dir in ~/.agents/skills ~/.claude/skills ~/.codex/skills ~/.pi/agent/skills ~/.gemini/config/skills ~/.hermes/skills; do\n    link_skill \"$skills_dir\"\n  done\n\n  if [[ -d ~/.hermes/profiles ]]; then\n    for profile in ~/.hermes/profiles/*/; do\n      [[ -d $profile ]] || continue\n      link_skill \"$profile/skills\"\n    done\n  fi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-09-29T17:23:26Z",
+      "description": "Link the omarchy-app agent skill for building apps",
+      "file": "1790702606.sh",
+      "lineCount": 28,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1790702606.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790702606.sh",
+      "timestamp": 1790702606,
+      "touches": [
+        "~/.agents/skills",
+        "~/.claude/skills",
+        "~/.codex/skills",
+        "~/.gemini/config/skills",
+        "~/.hermes/profiles",
+        "~/.hermes/profiles/",
+        "~/.hermes/skills",
+        "~/.pi/agent/skills"
+      ]
+    },
+    {
+      "body": "echo \"Install Grok through mise's first-party package\"\n\n# The npm package launches whatever is already in ~/.grok/bin, and mise does not\n# run its postinstall, so a newer package keeps running the old binary. mise's\n# grok tool is the binary. Drop the npm tool or its shim stays ahead of the stub.\n\nnpm_grok=\"npm:@xai-official/grok\"\nwrapper=\"$HOME/.local/bin/grok\"\nnpm_stub=false\n\n# Anchored to the package the old installer wrote. A script the user wrote that\n# calls mise use -g for something else is left alone.\nif [[ -f $wrapper && ! -L $wrapper ]] && grep -Fq \"$npm_grok\" \"$wrapper\"; then\n  npm_stub=true\nfi\n\ndrop_npm_grok() {\n  omarchy-cmd-present mise || return 0\n  if [[ -n $(mise ls -g \"$npm_grok\") ]]; then\n    mise unuse -g \"$npm_grok\"\n  fi\n  if [[ -n $(mise ls -i \"$npm_grok\") ]]; then\n    mise uninstall -y --all \"$npm_grok\"\n  fi\n}\n\nif [[ ! -f $HOME/.local/state/omarchy/preinstalls-removed ]]; then\n  # The shim is ahead of ~/.local/bin, so drop the npm tool before looking for\n  # grok. A removed wrapper still looks installed until the tool is gone.\n  drop_npm_grok\n  if [[ $npm_stub == true ]] || omarchy-cmd-missing grok; then\n    omarchy-mise-install grok\n  fi\nelif [[ $npm_stub == true ]]; then\n  # After an opt-out, only a wrapper Omarchy wrote proves the tool is ours.\n  rm -f \"$wrapper\"\n  drop_npm_grok\nfi\n\n# The npm launcher unpacked its binary into ~/.grok/bin, where x.ai's installer",
+      "bodyTruncated": true,
+      "date": "2026-10-01T14:00:09Z",
+      "description": "Install Grok through mise's first-party package",
+      "file": "1790863209.sh",
+      "lineCount": 61,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1790863209.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790863209.sh",
+      "timestamp": 1790863209,
+      "touches": [
+        "~/.grok",
+        "~/.grok/",
+        "~/.grok/bin/grok",
+        "~/.local/bin/",
+        "~/.local/bin/agent",
+        "~/.local/bin/grok",
         "~/.local/state/omarchy/preinstalls-removed"
       ]
     }

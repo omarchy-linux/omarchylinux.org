@@ -1,5 +1,5 @@
 {
-  "count": 136,
+  "count": 137,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -2201,6 +2201,24 @@
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790282866.sh",
       "timestamp": 1790282866,
       "touches": []
+    },
+    {
+      "body": "echo \"Move OpenClaw to a self-updating install under ~/.openclaw\"\n\n# The openclaw package used to be OpenClaw itself, installed under /usr where `openclaw update` and the Control UI's Update button cannot write. It is now the seed for a copy under ~/.openclaw that updates itself, and omarchy-install-openclaw-cli sets that copy up, points the command on PATH at it and moves a gateway service the old package installed over to it. Only machines with the package have an OpenClaw of Omarchy's to move.\nomarchy-pkg-present openclaw || exit 0\n\n# Updates install packages before migrations. An older package is still the runtime and has no seed, so this stays pending until it is updated.\nif [[ ! -r /usr/share/openclaw/install-cli.sh || ! -r /usr/share/openclaw/openclaw.tgz ]]; then\n  echo \"Update the openclaw package before rerunning this migration.\" >&2\n  exit 1\nfi\n\nomarchy-install-openclaw-cli --now",
+      "bodyTruncated": false,
+      "date": "2026-09-26T04:36:21Z",
+      "description": "Move OpenClaw to a self-updating install under ~/.openclaw",
+      "file": "1790397381.sh",
+      "lineCount": 12,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1790397381.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790397381.sh",
+      "timestamp": 1790397381,
+      "touches": [
+        "/usr/share/openclaw/install-cli.sh",
+        "/usr/share/openclaw/openclaw.tgz",
+        "~/.openclaw"
+      ]
     },
     {
       "body": "echo \"Loosen the offline install's exact Node pin so mise up tracks new releases\"\n\nmise_config=\"$HOME/.config/mise/config.toml\"\n\nif [[ -f $mise_config ]] && grep -qE '^node = \"[0-9]+\\.[0-9]+\\.[0-9]+\"$' \"$mise_config\"; then\n  sed -i -E 's/^node = \"[0-9]+\\.[0-9]+\\.[0-9]+\"$/node = \"latest\"/' \"$mise_config\"\nfi",

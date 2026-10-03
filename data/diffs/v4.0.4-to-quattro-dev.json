@@ -458,6 +458,26 @@
       },
       {
         "fields": {
+          "args": [
+            "[--check|--now]",
+            "<--check|--now>"
+          ],
+          "examples": [
+            [],
+            [
+              "omarchy install openclaw cli --now",
+              "omarchy install openclaw cli --check"
+            ]
+          ],
+          "summary": [
+            "Ensure the OpenClaw CLI is installed for the default agent",
+            "Install OpenClaw for the default agent as the self-updating copy under ~/.openclaw"
+          ]
+        },
+        "name": "omarchy-install-openclaw-cli"
+      },
+      {
+        "fields": {
           "requiresSudo": [
             false,
             true
@@ -561,7 +581,7 @@
     ],
     "counts": {
       "added": 35,
-      "changed": 14,
+      "changed": 15,
       "from": 444,
       "removed": 0,
       "to": 479
@@ -1380,9 +1400,9 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 30,
+      "new": 31,
       "removed": 0,
-      "to": 136
+      "to": 137
     },
     "new": [
       {
@@ -1499,6 +1519,11 @@
         "date": "2026-09-24T20:47:46Z",
         "description": "Apply the NVIDIA video driver fix on hybrid laptops",
         "file": "1790282866.sh"
+      },
+      {
+        "date": "2026-09-26T04:36:21Z",
+        "description": "Move OpenClaw to a self-updating install under ~/.openclaw",
+        "file": "1790397381.sh"
       },
       {
         "date": "2026-09-26T21:11:07Z",

@@ -1,7 +1,7 @@
 {
  "source": "github.com/omacom/omarchy",
- "fetchedAt": "2026-10-02T10:35:03.951009+00:00",
- "derivedAt": "2026-10-02T10:43:34.351617+00:00",
+ "fetchedAt": "2026-10-03T09:56:23.572217+00:00",
+ "derivedAt": "2026-10-03T10:03:20.904985+00:00",
  "criteria": {
   "stateReason": "COMPLETED",
   "minPostCloseComments": 2,
@@ -17,14 +17,46 @@
   ],
   "commentWindow": "last 5 comments fetched per closed issue"
  },
- "count": 39,
+ "count": 40,
  "funnel": {
-  "completedIssues": 2682,
-  "withFetchedComments": 1683,
-  "withAtLeastOnePostCloseMarker": 134,
-  "withAtLeastTwoPostCloseMarkers": 39
+  "completedIssues": 2688,
+  "withFetchedComments": 1685,
+  "withAtLeastOnePostCloseMarker": 135,
+  "withAtLeastTwoPostCloseMarkers": 40
  },
  "issues": [
+  {
+   "number": 3619,
+   "title": "X1 Carbon Gen 13 LUKS Prompt Black Screen",
+   "url": "https://github.com/omacom/omarchy/issues/3619",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-12-21T13:17:47Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [
+    "intel-gpu",
+    "multi-monitor",
+    "boot-limine"
+   ],
+   "comments": 7,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "mayannath",
+     "createdAt": "2026-09-03T17:45:46Z",
+     "url": "https://github.com/omacom/omarchy/issues/3619#issuecomment-5529752344",
+     "snippet": "having the same issue on a ThinkPad Intel Core Ultra9 285H\nloading iso from a flashed drive.. splash screen shows and then it just stays there.\npressing ESC give me - sh: can't access tty; job control turned off"
+    },
+    {
+     "author": "garth",
+     "createdAt": "2026-10-02T18:47:30Z",
+     "url": "https://github.com/omacom/omarchy/issues/3619#issuecomment-5959107813",
+     "snippet": "Still happening on Omarchy 4.0.4 with the same model, and the `kms` hook removal still fixes it. Adding what I found in case it helps get a default fix in.\n\n**System**\n- ThinkPad X1 Carbon Gen 13 (21NXCTO1WW), Core Ultra 7 265U, Arrow Lake-U graphics (`i915`, device 7d41)\n- Panel: Samsung ATNA40HQ02"
+    }
+   ],
+   "lastActivity": "2026-10-02T18:47:30Z"
+  },
   {
    "number": 2128,
    "title": "Omarchy OS stuck on the loader after logging in successfully by entering correct credentials (trying out as a virtual machine on VirtualBox)",

@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-04T10:45:50Z",
+  "fetchedAt": "2026-10-05T11:46:08Z",
   "mirrors": [
     {
       "name": "stable-mirror",
@@ -12,7 +12,7 @@
         "unix": 1788802790,
         "iso": "2026-09-07T17:39:50Z"
       },
-      "lagHoursVsUpstream": 642.03
+      "lagHoursVsUpstream": 666.24
     },
     {
       "name": "rc-mirror",
@@ -25,32 +25,32 @@
         "unix": 1788802790,
         "iso": "2026-09-07T17:39:50Z"
       },
-      "lagHoursVsUpstream": 642.03
+      "lagHoursVsUpstream": 666.24
     },
     {
       "name": "mirror",
       "url": "https://mirror.omarchy.org",
       "lastupdate": {
-        "unix": 1791109260,
-        "iso": "2026-10-04T10:21:00Z"
+        "unix": 1791197865,
+        "iso": "2026-10-05T10:57:45Z"
       },
       "lastsync": {
-        "unix": 1791109430,
-        "iso": "2026-10-04T10:23:50Z"
+        "unix": 1791199148,
+        "iso": "2026-10-05T11:19:08Z"
       },
-      "lagHoursVsUpstream": 0.4
+      "lagHoursVsUpstream": 0.0
     }
   ],
   "upstream": {
     "name": "arch-geo-mirror",
     "url": "https://geo.mirror.pkgbuild.com",
     "lastupdate": {
-      "unix": 1791110693,
-      "iso": "2026-10-04T10:44:53Z"
+      "unix": 1791197865,
+      "iso": "2026-10-05T10:57:45Z"
     },
     "lastsync": {
-      "unix": 1791110684,
-      "iso": "2026-10-04T10:44:44Z"
+      "unix": 1791200761,
+      "iso": "2026-10-05T11:46:01Z"
     }
   },
   "channels": {
@@ -3957,7 +3957,7 @@
       "arch": "aarch64",
       "url": "https://pkgs.omarchy.org/edge/aarch64/omarchy.db",
       "ok": true,
-      "packageCount": 171,
+      "packageCount": 172,
       "packages": {
         "1password": {
           "version": "8.12.38-1",
@@ -4480,9 +4480,14 @@
           "builddate": 1791089883
         },
         "omarchy-mac-boot": {
-          "version": "20261004-2",
+          "version": "20261004-3",
           "desc": "Apple Silicon boot support for Omarchy: initramfs, in-place encryption, first boot and Limine activation",
-          "builddate": 1791089879
+          "builddate": 1791185189
+        },
+        "omarchy-mac-ml": {
+          "version": "1-1",
+          "desc": "MLX on the GPU and Core ML models on the Neural Engine for Apple Silicon Macs",
+          "builddate": 1791107973
         },
         "omarchy-mlx": {
           "version": "0.7.24-1",

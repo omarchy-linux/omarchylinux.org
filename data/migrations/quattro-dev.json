@@ -1,5 +1,5 @@
 {
-  "count": 137,
+  "count": 143,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -1538,7 +1538,7 @@
       ]
     },
     {
-      "body": "echo \"Move this install to the opt-in docker group default (the group is root-equivalent)\"\n\n# The docker group grants passwordless root (a container can bind-mount / and\n# rewrite the host), so Omarchy no longer puts users in it by default. Bring\n# existing installs in line: remove this user from the group if present. The\n# change applies after a reboot, so it stays reachable until then. Anyone who\n# wants passwordless docker back can opt in, behind a warning, with\n# Setup > Security > Sudoless Docker. Reuses the removal command so there is one\n# source of truth for the privileged change and its notice; DEFER_REBOOT keeps\n# it from prompting mid-update — omarchy-update-restart handles the reboot once\n# the whole update has finished.\nif id -nG \"$USER\" | grep -qw docker; then\n  OMARCHY_DEFER_REBOOT=1 omarchy-remove-security-sudoless-docker\nfi\n\n# The Docker app entry copied into ~/.local/share/applications used to run\n# lazydocker directly; it now needs the wrapper that prompts for daemon access\n# (or runs directly under sudoless Docker). Refresh just that file.\ndest=\"$HOME/.local/share/applications/Docker.desktop\"\nif [[ -f $dest ]]; then\n  cp \"$OMARCHY_PATH/applications/Docker.desktop\" \"$dest\"\nfi",
+      "body": "echo \"Move this install to the opt-in docker group default (the group is root-equivalent)\"\n\n# The docker group grants passwordless root (a container can bind-mount / and\n# rewrite the host), so Omarchy no longer puts users in it by default. Bring\n# existing installs in line: remove this user from the group if present. The\n# change applies after a reboot, so it stays reachable until then. Anyone who\n# wants passwordless docker back can opt in, behind a warning, with\n# Setup > Security > Sudoless Docker. Reuses the removal command so there is one\n# source of truth for the privileged change and its notice; DEFER_REBOOT keeps\n# it from prompting mid-update — omarchy-update-restart handles the reboot once\n# the whole update has finished.\nif id -nG \"$USER\" | grep -qw docker; then\n  OMARCHY_DEFER_REBOOT=1 omarchy-remove-security-sudoless-docker\nfi\n\n# The Docker app entry copied into ~/.local/share/applications used to run\n# lazydocker directly; it now needs the wrapper that prompts for daemon access\n# (or runs directly under sudoless Docker). Refresh just that file.\ndest=\"$HOME/.local/share/applications/Docker.desktop\"\nif [[ -f $dest ]]; then\n  cp \"$OMARCHY_PATH/default/applications/Docker.desktop\" \"$dest\"\nfi",
       "bodyTruncated": false,
       "date": "2026-08-24T14:03:07Z",
       "description": "Move this install to the opt-in docker group default (the group is root-equivalent)",
@@ -1824,6 +1824,40 @@
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1788163635.sh",
       "timestamp": 1788163635,
       "touches": []
+    },
+    {
+      "body": "echo \"Restore polkit brute-force protection on machines that enabled fingerprint or FIDO2 auth\"\n\npolkit=/etc/pam.d/polkit-1\n\n# When fingerprint or FIDO2 auth was set up while /etc/pam.d/polkit-1 did not yet\n# exist -- the normal case on Arch, where the polkit package ships its stack in\n# /usr/lib/pam.d/polkit-1 -- the setup commands hand-rolled an /etc/pam.d/polkit-1\n# that lists pam_unix directly instead of `include system-auth`. That override\n# dropped pam_faillock, so polkit prompts had no brute-force lockout and their\n# failures never counted toward the shared tally. The setup commands now defer to\n# system-auth; this repairs the files the old ones already wrote.\n#\n# Only the exact stack those commands produced is touched. Every non-blank,\n# non-comment line must be one of the known hardware-auth auth lines (the\n# clamshell gate, pam_fprintd, or the FIDO2 pam_u2f line) or a bare\n# `X required pam_unix.so`; all four bare pam_unix lines must be present; and\n# system-auth must not already be included. This matches the fingerprint, FIDO2,\n# combined, and post-removal (markerless, both remove commands strip only their\n# own marker lines) layouts, and refuses any administrator-authored stack that\n# carries other directives. The repair replaces only the bare pam_unix lines, so\n# comments and the hardware-auth lines are preserved verbatim.\n\nis_omarchy_vulnerable_stack() {\n  local file=$1 line\n  local re_gate='^auth[[:space:]]+\\[success=1 default=ignore\\][[:space:]]+pam_exec\\.so quiet /usr/bin/omarchy-hw-laptop-closed[[:space:]]*$'\n  local re_fprintd='^auth[[:space:]]+sufficient[[:space:]]+pam_fprintd\\.so[[:space:]]*$'\n  local re_u2f='^auth[[:space:]]+sufficient[[:space:]]+pam_u2f\\.so cue authfile=/etc/fido2/fido2[[:space:]]*$'\n  local re_bare='^(auth|account|password|session)[[:space:]]+required[[:space:]]+pam_unix\\.so[[:space:]]*$'\n  local phase\n\n  # Already fixed, or partially converted: leave it alone (also makes reruns no-op).\n  if grep -qE '^(auth|account|password|session)[[:space:]]+include[[:space:]]+system-auth' \"$file\"; then\n    return 1\n  fi\n\n  # The vulnerable signature: all four phases delegated to a bare pam_unix.\n  for phase in auth account password session; do\n    grep -qE \"^${phase}[[:space:]]+required[[:space:]]+pam_unix\\.so[[:space:]]*\\$\" \"$file\" || return 1\n  done\n",
+      "bodyTruncated": true,
+      "date": "2026-09-01T09:54:15Z",
+      "description": "Restore polkit brute-force protection on machines that enabled fingerprint or FIDO2 auth",
+      "file": "1788256455.sh",
+      "lineCount": 77,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1788256455.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1788256455.sh",
+      "timestamp": 1788256455,
+      "touches": [
+        "/etc/fido2/fido2",
+        "/etc/pam.d/polkit-1",
+        "/usr/bin/omarchy-hw-laptop-closed"
+      ]
+    },
+    {
+      "body": "echo \"Expose GNOME Keyring to sandboxed apps through the Secret portal\"\n\nportal_dir=\"${XDG_CONFIG_HOME:-$HOME/.config}/xdg-desktop-portal\"\nportal_config=\"$portal_dir/hyprland-portals.conf\"\ngeneric_config=\"$portal_dir/portals.conf\"\n\n# Only apply if not configured yet\nif [[ -e $portal_config || -L $portal_config ]]; then\n  echo \"Portal already configured, skipping...\"\n  exit 0\nelif [[ -e $generic_config || -L $generic_config ]]; then\n  echo \"Portal already configured, skipping...\"\n  exit 0\nfi\n\ninstall -Dm644 \"$OMARCHY_PATH/config/xdg-desktop-portal/hyprland-portals.conf\" \"$portal_config\"\n\n# Activate the backend immediately in a live desktop\nif systemctl --user is-active --quiet xdg-desktop-portal.service 2>/dev/null; then\n  if ! systemctl --user restart xdg-desktop-portal.service; then\n    echo \"Failed to restart xdg-desktop-portal\" >&2\n  fi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-09-01T11:17:47Z",
+      "description": "Expose GNOME Keyring to sandboxed apps through the Secret portal",
+      "file": "1788261467.sh",
+      "lineCount": 23,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1788261467.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1788261467.sh",
+      "timestamp": 1788261467,
+      "touches": [
+        "~/.config"
+      ]
     },
     {
       "body": "echo \"Replace the YT6801 vendor DKMS driver with the upstream kernel driver\"\n\nif ! yt6801_pci=$(lspci -Dn -d 1f0a:6801); then\n  echo \"Unable to discover YT6801 adapters; rerun omarchy-migrate.\" >&2\n  exit 1\nfi\n\nyt6801_devices=()\nwhile read -r device _; do\n  [[ -n $device ]] || continue\n  if [[ ! $device =~ ^[[:xdigit:]]{4}:[[:xdigit:]]{2}:[[:xdigit:]]{2}\\.[0-7]$ ]]; then\n    echo \"Invalid YT6801 PCI address: $device\" >&2\n    exit 1\n  fi\n  yt6801_devices+=(\"$device\")\ndone <<< \"$yt6801_pci\"\n\nyt6801_uses_upstream() {\n  local driver\n  driver=$(readlink -f \"/sys/bus/pci/devices/$1/driver\") &&\n    [[ $driver == \"/sys/bus/pci/drivers/dwmac-motorcomm\" ]]\n}\n\nyt6801_check_binding() {\n  local device\n  for device in \"${yt6801_devices[@]}\"; do\n    if ! yt6801_uses_upstream \"$device\"; then\n      echo \"YT6801 device $device did not bind to dwmac-motorcomm.\" >&2\n      echo \"Reboot into the latest Omarchy kernel and rerun omarchy-migrate.\" >&2\n      exit 1\n    fi\n  done\n}\n\n# Check discovery before changing hardware or packages. A failed query must not\n# turn into an empty list and mark the migration complete.\ninstalled_packages=$(pacman -Qq)\nloaded_modules=$(lsmod)\n\nyt6801_pending=()",
@@ -2189,6 +2223,22 @@
       ]
     },
     {
+      "body": "echo \"Ask RTKit directly for the speaker tuning's realtime priority\"\n\n# The tuning host asked for realtime through xdg-desktop-portal. A portal started\n# before rtkit was installed reports a realtime budget of zero; module-rt applies\n# it as a hard RLIMIT_RTTIME of 0, RTKit still makes the data thread realtime, and\n# the kernel kills the host as soon as audio plays. The host config is only copied\n# by `omarchy-audio-tuning on`, so an installed tuning keeps the old one until\n# replaced here.\n#\n# Only Omarchy's own copy with the old setting is replaced. A community\n# calibrator can host its graph under the same file name, and a tuning graph is\n# never touched: `omarchy-audio-tuning on` would overwrite one it did not write.\nhost_config=\"${XDG_CONFIG_HOME:-$HOME/.config}/pipewire/omarchy-speaker-tuning.conf\"\nhost_source=\"$OMARCHY_PATH/default/audio/filter-chain-host.conf\"\n\nif [[ -f $host_config && ! -L $host_config ]] &&\n  grep -qx '# Host config for the Omarchy speaker tuning.' \"$host_config\" &&\n  grep -q 'args = { }' \"$host_config\"; then\n  install -Dm644 \"$host_source\" \"$host_config\"\n  # A restart ends playback for a moment, so only a running host is restarted.\n  systemctl --user try-restart omarchy-speaker-tuning.service >/dev/null 2>&1 || true\nfi",
+      "bodyTruncated": false,
+      "date": "2026-09-22T22:08:25Z",
+      "description": "Ask RTKit directly for the speaker tuning's realtime priority",
+      "file": "1790114905.sh",
+      "lineCount": 22,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1790114905.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790114905.sh",
+      "timestamp": 1790114905,
+      "touches": [
+        "~/.config"
+      ]
+    },
+    {
       "body": "echo \"Apply the NVIDIA video driver fix on hybrid laptops\"\n\nif omarchy-hw-nvidia && ! omarchy-hw-nvidia-display; then\n  # Hyprland applies env at startup. Reloading the updated defaults cannot\n  # clear the old overrides inherited by the compositor and its applications.\n  omarchy-state set reboot-required\n  echo \"Reboot to stop forcing NVIDIA VA-API/GLX drivers on the integrated GPU.\"\nfi",
       "bodyTruncated": false,
       "date": "2026-09-24T20:47:46Z",
@@ -2358,6 +2408,54 @@
         "~/.local/bin/agent",
         "~/.local/bin/grok",
         "~/.local/state/omarchy/preinstalls-removed"
+      ]
+    },
+    {
+      "body": "echo \"Make agent account selection apply to scripts and subprocesses\"\n\n# The settings package ships the mise wrapper declarations. Build the dispatch\n# links for this user without installing or changing any agent version.\nmise reshim",
+      "bodyTruncated": false,
+      "date": "2026-10-04T11:14:39Z",
+      "description": "Make agent account selection apply to scripts and subprocesses",
+      "file": "1791112479.sh",
+      "lineCount": 5,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791112479.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791112479.sh",
+      "timestamp": 1791112479,
+      "touches": []
+    },
+    {
+      "body": "echo \"Add an example for opting applications in to transparency\"\n\nlooknfeel=\"${XDG_CONFIG_HOME:-$HOME/.config}/hypr/looknfeel.lua\"\nif [[ -f $looknfeel ]] && ! rg -Fq 'o.transparent_window(\"my-app\")' \"$looknfeel\"; then\n  cat >>\"$looknfeel\" <<'LUA'\n\n-- Opt another application in to Omarchy's standard transparency.\n-- Find its class with: hyprctl clients\n-- o.transparent_window(\"my-app\")\n-- o.transparent_window(\"my-app\", \"0.9 0.85\") -- Custom active/inactive opacity.\nLUA\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-04T14:22:11Z",
+      "description": "Add an example for opting applications in to transparency",
+      "file": "1791123731.sh",
+      "lineCount": 12,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791123731.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791123731.sh",
+      "timestamp": 1791123731,
+      "touches": [
+        "~/.config"
+      ]
+    },
+    {
+      "body": "echo \"Install the fingerprint resume hook on existing fingerprint setups\"\n\n# Existing enrolled machines never rerun setup. Install only missing files\n# so administrator changes survive an upgrade.\n\nhook_src=\"${OMARCHY_FPRINTD_RESUME_SRC:-$OMARCHY_PATH/default/systemd/system-sleep/fprintd-resume}\"\nhook_dst=\"${OMARCHY_FPRINTD_RESUME_DST:-/usr/lib/systemd/system-sleep/fprintd-resume}\"\nstop_timeout_src=\"${OMARCHY_FPRINTD_STOP_TIMEOUT_SRC:-$OMARCHY_PATH/default/systemd/system/fprintd.service.d/10-stop-timeout.conf}\"\nstop_timeout_dst=\"${OMARCHY_FPRINTD_STOP_TIMEOUT_DST:-/etc/systemd/system/fprintd.service.d/10-stop-timeout.conf}\"\nlock_pam=\"${OMARCHY_LOCK_FINGERPRINT_PAM:-/etc/pam.d/omarchy-lock-fingerprint}\"\n\n[[ -f $lock_pam ]] || exit 0\n\nif [[ -f $hook_src && ! -e $hook_dst ]]; then\n  echo \"Installing the fprintd resume hook\"\n  sudo install -Dm755 \"$hook_src\" \"$hook_dst\"\nfi\n\nif [[ -f $stop_timeout_src && ! -e $stop_timeout_dst ]]; then\n  sudo install -Dm644 \"$stop_timeout_src\" \"$stop_timeout_dst\"\nfi\n\nif [[ -f $stop_timeout_dst ]]; then\n  reload_needed=$(systemctl show fprintd.service --property=NeedDaemonReload --value)\n  if [[ $reload_needed == \"yes\" ]]; then\n    sudo systemctl daemon-reload\n  fi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-04T14:54:10Z",
+      "description": "Install the fingerprint resume hook on existing fingerprint setups",
+      "file": "1791125650.sh",
+      "lineCount": 28,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791125650.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791125650.sh",
+      "timestamp": 1791125650,
+      "touches": [
+        "/etc/pam.d/omarchy-lock-fingerprint",
+        "/etc/systemd/system/fprintd.service.d/10-stop-timeout.conf",
+        "/usr/lib/systemd/system-sleep/fprintd-resume"
       ]
     }
   ],

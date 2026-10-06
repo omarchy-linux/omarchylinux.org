@@ -1,7 +1,7 @@
 {
  "source": "github.com/omacom/omarchy",
- "fetchedAt": "2026-10-05T11:37:52.829011+00:00",
- "derivedAt": "2026-10-05T11:45:40.686756+00:00",
+ "fetchedAt": "2026-10-06T11:21:53.700391+00:00",
+ "derivedAt": "2026-10-06T11:29:51.244809+00:00",
  "quirkScriptRef": "v4.0.4",
  "counts": {
   "models": 158,
@@ -46,7 +46,7 @@
     "issues": 95,
     "open": 52,
     "closed": 43,
-    "discussions": 19
+    "discussions": 20
    },
    "components": [
     {
@@ -1369,8 +1369,8 @@
    "variants": [],
    "counts": {
     "issues": 83,
-    "open": 31,
-    "closed": 52,
+    "open": 30,
+    "closed": 53,
     "discussions": 12
    },
    "components": [
@@ -1597,7 +1597,7 @@
      "number": 9443,
      "title": "Stuck capture.sh silently stops text clipboard history (no timeout on wl-paste)",
      "url": "https://github.com/omacom/omarchy/issues/9443",
-     "state": "OPEN",
+     "state": "CLOSED",
      "components": [],
      "createdAt": "2026-08-31T19:21:38Z"
     },
@@ -9242,14 +9242,14 @@
     "Dell Latitude 5430",
     "Dell Latitude 5431",
     "Dell Latitude 5491",
+    "Dell Latitude 5510",
     "Dell Latitude 5521",
     "Dell Latitude 7420",
     "Dell Latitude 7430",
     "Dell Latitude 7440",
     "Dell Latitude 7450",
     "Dell Latitude E5470",
-    "Dell Latitude E7490",
-    "Dell latitude 5490"
+    "Dell Latitude E7490"
    ],
    "variants": [
     "3380",
@@ -9259,6 +9259,7 @@
     "5431",
     "5490",
     "5491",
+    "5510",
     "5521",
     "7420",
     "7430",
@@ -9268,8 +9269,8 @@
     "E7490"
    ],
    "counts": {
-    "issues": 23,
-    "open": 12,
+    "issues": 24,
+    "open": 13,
     "closed": 11,
     "discussions": 3
    },
@@ -9284,6 +9285,10 @@
     },
     {
      "key": "battery-power",
+     "issues": 5
+    },
+    {
+     "key": "wifi",
      "issues": 4
     },
     {
@@ -9291,8 +9296,8 @@
      "issues": 3
     },
     {
-     "key": "wifi",
-     "issues": 3
+     "key": "storage-nvme",
+     "issues": 2
     },
     {
      "key": "touchpad-input",
@@ -9305,10 +9310,6 @@
     {
      "key": "fingerprint",
      "issues": 2
-    },
-    {
-     "key": "storage-nvme",
-     "issues": 1
     },
     {
      "key": "amd-gpu",
@@ -9328,6 +9329,18 @@
     }
    ],
    "issues": [
+    {
+     "number": 14338,
+     "title": "KDE connect Not finding my local devices",
+     "url": "https://github.com/omacom/omarchy/issues/14338",
+     "state": "OPEN",
+     "components": [
+      "wifi",
+      "battery-power",
+      "storage-nvme"
+     ],
+     "createdAt": "2026-10-05T21:21:26Z"
+    },
     {
      "number": 12463,
      "title": "Power panel reports fabricated 'Charge cycles: 0' on _BIF-only firmware",
@@ -10367,6 +10380,390 @@
    "legacyPrototypeSource": "legacy-prototype-unverified"
   },
   {
+   "key": "asus-rog-strix",
+   "vendor": "ASUS",
+   "model": "ASUS ROG Strix",
+   "aliases": [
+    "ASUS ROG STRIX X870-A",
+    "ASUS ROG STRIX Z390-H",
+    "ASUS ROG Strix",
+    "ASUS ROG Strix G16",
+    "ASUS ROG Strix G18",
+    "ASUS ROG Strix G513R",
+    "ASUS ROG Strix G733ZW",
+    "ASUS ROG Strix X870-I",
+    "ROG STRIX X570-I",
+    "ROG Strix G16",
+    "ROG Strix G533ZW_G53",
+    "ROG Strix G713QR_G71",
+    "ROG Strix G814JZ",
+    "asus rog strix g713rw"
+   ],
+   "variants": [
+    "G16",
+    "G18",
+    "G513R",
+    "G533ZW_G53",
+    "G713QR_G71",
+    "G733ZW",
+    "G814JZ",
+    "X570-I",
+    "X870-A",
+    "X870-I",
+    "Z390-H",
+    "g713rw"
+   ],
+   "counts": {
+    "issues": 19,
+    "open": 9,
+    "closed": 10,
+    "discussions": 3
+   },
+   "components": [
+    {
+     "key": "multi-monitor",
+     "issues": 10
+    },
+    {
+     "key": "nvidia",
+     "issues": 10
+    },
+    {
+     "key": "boot-limine",
+     "issues": 9
+    },
+    {
+     "key": "suspend-sleep",
+     "issues": 9
+    },
+    {
+     "key": "battery-power",
+     "issues": 5
+    },
+    {
+     "key": "touchpad-input",
+     "issues": 5
+    },
+    {
+     "key": "hybrid-gpu",
+     "issues": 4
+    },
+    {
+     "key": "audio",
+     "issues": 4
+    },
+    {
+     "key": "amd-gpu",
+     "issues": 3
+    },
+    {
+     "key": "storage-nvme",
+     "issues": 3
+    },
+    {
+     "key": "thunderbolt-dock",
+     "issues": 2
+    },
+    {
+     "key": "wifi",
+     "issues": 2
+    },
+    {
+     "key": "bluetooth",
+     "issues": 1
+    }
+   ],
+   "issues": [
+    {
+     "number": 14340,
+     "title": "linux-omarchy 7.2.5-3: kswapd hits __GFP_NOFAIL in btrfs_init_eb_prealloc, then btrfs aborts on an uncommitted corrupt leaf",
+     "url": "https://github.com/omacom/omarchy/issues/14340",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu",
+      "suspend-sleep",
+      "multi-monitor",
+      "wifi",
+      "boot-limine",
+      "thunderbolt-dock",
+      "storage-nvme"
+     ],
+     "createdAt": "2026-10-05T22:12:25Z"
+    },
+    {
+     "number": 11101,
+     "title": "limine-install fails on software RAID / Intel RST ESP: 'Failed to parse disk and partition from source /dev/mdXpY'",
+     "url": "https://github.com/omacom/omarchy/issues/11101",
+     "state": "OPEN",
+     "components": [
+      "boot-limine",
+      "storage-nvme"
+     ],
+     "createdAt": "2026-09-10T08:10:34Z"
+    },
+    {
+     "number": 9678,
+     "title": "Laptop NVIDIA GPUs stuck at default TGP — nvidia-powerd is never enabled",
+     "url": "https://github.com/omacom/omarchy/issues/9678",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "hybrid-gpu",
+      "suspend-sleep",
+      "multi-monitor",
+      "boot-limine",
+      "battery-power"
+     ],
+     "createdAt": "2026-09-01T20:45:49Z"
+    },
+    {
+     "number": 9325,
+     "title": "Lock screen accepts no keyboard input after suspend/resume — fcitx5 wedges, presents as a system freeze",
+     "url": "https://github.com/omacom/omarchy/issues/9325",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "hybrid-gpu",
+      "suspend-sleep",
+      "touchpad-input"
+     ],
+     "createdAt": "2026-08-31T08:22:56Z"
+    },
+    {
+     "number": 8359,
+     "title": "ASUS ROG blanket software-mixer fix degrades audio quality on smart-amp laptops (e.g. G733ZW) — muddy sound out of the box",
+     "url": "https://github.com/omacom/omarchy/issues/8359",
+     "state": "OPEN",
+     "components": [
+      "multi-monitor",
+      "audio"
+     ],
+     "createdAt": "2026-08-26T10:16:56Z"
+    },
+    {
+     "number": 8231,
+     "title": "Autoconnected bluetooth speaker doesn't play audio",
+     "url": "https://github.com/omacom/omarchy/issues/8231",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "suspend-sleep",
+      "multi-monitor",
+      "audio",
+      "bluetooth",
+      "boot-limine"
+     ],
+     "createdAt": "2026-08-25T16:12:46Z"
+    },
+    {
+     "number": 7912,
+     "title": "List of bugs/issues/recommendations from after Omarchy Quattro's upgrade",
+     "url": "https://github.com/omacom/omarchy/issues/7912",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "suspend-sleep",
+      "multi-monitor",
+      "audio",
+      "wifi",
+      "boot-limine",
+      "battery-power",
+      "storage-nvme"
+     ],
+     "createdAt": "2026-08-23T15:30:23Z"
+    },
+    {
+     "number": 7303,
+     "title": "Quattro: Suspend hard-freezes (s2idle) on ASUS ROG Strix G16 G614FR",
+     "url": "https://github.com/omacom/omarchy/issues/7303",
+     "state": "CLOSED",
+     "components": [
+      "nvidia",
+      "hybrid-gpu",
+      "suspend-sleep",
+      "battery-power"
+     ],
+     "createdAt": "2026-08-17T18:04:28Z"
+    },
+    {
+     "number": 5554,
+     "title": "Hibernation with Nvidia GPU Issues",
+     "url": "https://github.com/omacom/omarchy/issues/5554",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "suspend-sleep",
+      "boot-limine"
+     ],
+     "createdAt": "2026-05-02T19:27:50Z"
+    },
+    {
+     "number": 5531,
+     "title": "Error when trying to view \"Trash settings...\" from Files app",
+     "url": "https://github.com/omacom/omarchy/issues/5531",
+     "state": "CLOSED",
+     "components": [],
+     "createdAt": "2026-05-01T15:22:27Z"
+    },
+    {
+     "number": 4821,
+     "title": "# No Sound Fix: ASUS ROG Strix G16 (2025) on Omarchy 3.4.1",
+     "url": "https://github.com/omacom/omarchy/issues/4821",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "multi-monitor",
+      "audio",
+      "boot-limine"
+     ],
+     "createdAt": "2026-02-28T19:50:13Z"
+    },
+    {
+     "number": 4083,
+     "title": "ScreenSaver interrupted after less than a second when using thunderbolt monitor",
+     "url": "https://github.com/omacom/omarchy/issues/4083",
+     "state": "CLOSED",
+     "components": [
+      "suspend-sleep",
+      "multi-monitor",
+      "touchpad-input",
+      "thunderbolt-dock"
+     ],
+     "createdAt": "2026-01-05T06:12:25Z"
+    },
+    {
+     "number": 4017,
+     "title": "Brightness OSD shows but no change",
+     "url": "https://github.com/omacom/omarchy/issues/4017",
+     "state": "CLOSED",
+     "components": [
+      "nvidia",
+      "amd-gpu",
+      "hybrid-gpu",
+      "multi-monitor",
+      "boot-limine"
+     ],
+     "createdAt": "2025-12-29T18:42:47Z"
+    },
+    {
+     "number": 3737,
+     "title": "Can't put complex name of the layout format, e.g. format-us_fr-qwerty",
+     "url": "https://github.com/omacom/omarchy/issues/3737",
+     "state": "CLOSED",
+     "components": [
+      "nvidia",
+      "amd-gpu",
+      "multi-monitor",
+      "touchpad-input",
+      "battery-power"
+     ],
+     "createdAt": "2025-12-02T12:18:51Z"
+    },
+    {
+     "number": 3591,
+     "title": "Elephant Index Out of Range Runtime Error",
+     "url": "https://github.com/omacom/omarchy/issues/3591",
+     "state": "CLOSED",
+     "components": [
+      "nvidia",
+      "touchpad-input"
+     ],
+     "createdAt": "2025-11-24T12:43:07Z"
+    },
+    {
+     "number": 3144,
+     "title": "Omarchy-Update script doesn't detect custom/alternative kernels",
+     "url": "https://github.com/omacom/omarchy/issues/3144",
+     "state": "CLOSED",
+     "components": [],
+     "createdAt": "2025-11-04T16:15:40Z"
+    },
+    {
+     "number": 2991,
+     "title": "Can not interact with lock screen after opening lid",
+     "url": "https://github.com/omacom/omarchy/issues/2991",
+     "state": "CLOSED",
+     "components": [
+      "suspend-sleep",
+      "multi-monitor",
+      "touchpad-input"
+     ],
+     "createdAt": "2025-10-30T07:58:13Z"
+    },
+    {
+     "number": 2777,
+     "title": "After the plymouth boot screen and before hyprland, I see my BIOS/UEFI splash screen momentarily.",
+     "url": "https://github.com/omacom/omarchy/issues/2777",
+     "state": "CLOSED",
+     "components": [
+      "boot-limine"
+     ],
+     "createdAt": "2025-10-23T20:05:45Z"
+    },
+    {
+     "number": 2699,
+     "title": "Screen goes black and laptop becomes completely unresponsive.",
+     "url": "https://github.com/omacom/omarchy/issues/2699",
+     "state": "CLOSED",
+     "components": [
+      "battery-power"
+     ],
+     "createdAt": "2025-10-22T05:08:18Z"
+    }
+   ],
+   "issuesTruncated": false,
+   "quirkScripts": [
+    {
+     "name": "omarchy-hw-asus-rog",
+     "path": "bin/omarchy-hw-asus-rog",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-hw-asus-rog",
+     "summary": "Detect whether the computer is an Asus ROG machine."
+    },
+    {
+     "name": "fix-z13-touchpad.sh",
+     "path": "install/hardware/asus/fix-z13-touchpad.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/asus/fix-z13-touchpad.sh",
+     "summary": "The Z13's detachable keyboard touchpad is detected as external by udev,"
+    },
+    {
+     "name": "asus-rog.sh",
+     "path": "install/hardware/asus-rog.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/asus-rog.sh",
+     "summary": ""
+    },
+    {
+     "name": "fix-audio-mixer.sh",
+     "path": "install/user/hardware/asus/fix-audio-mixer.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/user/hardware/asus/fix-audio-mixer.sh",
+     "summary": "Unmute the Master control on the ALC285 card (often muted by default)"
+    },
+    {
+     "name": "fix-mic.sh",
+     "path": "install/user/hardware/asus/fix-mic.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/user/hardware/asus/fix-mic.sh",
+     "summary": "The mic boost is way too high by default, causing clipping."
+    }
+   ],
+   "dmiHints": [],
+   "legacyPrototype": {
+    "id": "asus-strix-g18",
+    "name": "ASUS ROG Strix G18",
+    "brand": "ASUS",
+    "rating": "silver",
+    "summary": "Reddit: stock install, no issues reported by that owner.",
+    "type": "laptop",
+    "tags": "strix g18 nvidia",
+    "wifi": "works",
+    "audio": "works",
+    "webcam": "works",
+    "fingerprint": "unknown",
+    "gpu": "workaround",
+    "suspend": "works",
+    "href": "nvidia-laptops.html#asus-strix-g18"
+   },
+   "legacyPrototypeSource": "legacy-prototype-unverified"
+  },
+  {
    "key": "asus-tuf",
    "vendor": "ASUS",
    "model": "ASUS TUF",
@@ -11027,7 +11424,7 @@
     "issues": 18,
     "open": 14,
     "closed": 4,
-    "discussions": 4
+    "discussions": 5
    },
    "components": [
     {
@@ -11373,372 +11770,6 @@
    "dmiHints": []
   },
   {
-   "key": "asus-rog-strix",
-   "vendor": "ASUS",
-   "model": "ASUS ROG Strix",
-   "aliases": [
-    "ASUS ROG STRIX Z390-H",
-    "ASUS ROG Strix",
-    "ASUS ROG Strix G16",
-    "ASUS ROG Strix G18",
-    "ASUS ROG Strix G513R",
-    "ASUS ROG Strix G733ZW",
-    "ASUS ROG Strix X870-I",
-    "ROG STRIX X570-I",
-    "ROG Strix G16",
-    "ROG Strix G533ZW_G53",
-    "ROG Strix G713QR_G71",
-    "ROG Strix G814JZ",
-    "asus rog strix g713rw"
-   ],
-   "variants": [
-    "G16",
-    "G18",
-    "G513R",
-    "G533ZW_G53",
-    "G713QR_G71",
-    "G733ZW",
-    "G814JZ",
-    "X570-I",
-    "X870-I",
-    "Z390-H",
-    "g713rw"
-   ],
-   "counts": {
-    "issues": 18,
-    "open": 8,
-    "closed": 10,
-    "discussions": 3
-   },
-   "components": [
-    {
-     "key": "nvidia",
-     "issues": 10
-    },
-    {
-     "key": "multi-monitor",
-     "issues": 9
-    },
-    {
-     "key": "boot-limine",
-     "issues": 8
-    },
-    {
-     "key": "suspend-sleep",
-     "issues": 8
-    },
-    {
-     "key": "battery-power",
-     "issues": 5
-    },
-    {
-     "key": "touchpad-input",
-     "issues": 5
-    },
-    {
-     "key": "hybrid-gpu",
-     "issues": 4
-    },
-    {
-     "key": "audio",
-     "issues": 4
-    },
-    {
-     "key": "amd-gpu",
-     "issues": 2
-    },
-    {
-     "key": "storage-nvme",
-     "issues": 2
-    },
-    {
-     "key": "thunderbolt-dock",
-     "issues": 1
-    },
-    {
-     "key": "wifi",
-     "issues": 1
-    },
-    {
-     "key": "bluetooth",
-     "issues": 1
-    }
-   ],
-   "issues": [
-    {
-     "number": 11101,
-     "title": "limine-install fails on software RAID / Intel RST ESP: 'Failed to parse disk and partition from source /dev/mdXpY'",
-     "url": "https://github.com/omacom/omarchy/issues/11101",
-     "state": "OPEN",
-     "components": [
-      "boot-limine",
-      "storage-nvme"
-     ],
-     "createdAt": "2026-09-10T08:10:34Z"
-    },
-    {
-     "number": 9678,
-     "title": "Laptop NVIDIA GPUs stuck at default TGP — nvidia-powerd is never enabled",
-     "url": "https://github.com/omacom/omarchy/issues/9678",
-     "state": "OPEN",
-     "components": [
-      "nvidia",
-      "hybrid-gpu",
-      "suspend-sleep",
-      "multi-monitor",
-      "boot-limine",
-      "battery-power"
-     ],
-     "createdAt": "2026-09-01T20:45:49Z"
-    },
-    {
-     "number": 9325,
-     "title": "Lock screen accepts no keyboard input after suspend/resume — fcitx5 wedges, presents as a system freeze",
-     "url": "https://github.com/omacom/omarchy/issues/9325",
-     "state": "OPEN",
-     "components": [
-      "nvidia",
-      "hybrid-gpu",
-      "suspend-sleep",
-      "touchpad-input"
-     ],
-     "createdAt": "2026-08-31T08:22:56Z"
-    },
-    {
-     "number": 8359,
-     "title": "ASUS ROG blanket software-mixer fix degrades audio quality on smart-amp laptops (e.g. G733ZW) — muddy sound out of the box",
-     "url": "https://github.com/omacom/omarchy/issues/8359",
-     "state": "OPEN",
-     "components": [
-      "multi-monitor",
-      "audio"
-     ],
-     "createdAt": "2026-08-26T10:16:56Z"
-    },
-    {
-     "number": 8231,
-     "title": "Autoconnected bluetooth speaker doesn't play audio",
-     "url": "https://github.com/omacom/omarchy/issues/8231",
-     "state": "OPEN",
-     "components": [
-      "nvidia",
-      "suspend-sleep",
-      "multi-monitor",
-      "audio",
-      "bluetooth",
-      "boot-limine"
-     ],
-     "createdAt": "2026-08-25T16:12:46Z"
-    },
-    {
-     "number": 7912,
-     "title": "List of bugs/issues/recommendations from after Omarchy Quattro's upgrade",
-     "url": "https://github.com/omacom/omarchy/issues/7912",
-     "state": "OPEN",
-     "components": [
-      "nvidia",
-      "suspend-sleep",
-      "multi-monitor",
-      "audio",
-      "wifi",
-      "boot-limine",
-      "battery-power",
-      "storage-nvme"
-     ],
-     "createdAt": "2026-08-23T15:30:23Z"
-    },
-    {
-     "number": 7303,
-     "title": "Quattro: Suspend hard-freezes (s2idle) on ASUS ROG Strix G16 G614FR",
-     "url": "https://github.com/omacom/omarchy/issues/7303",
-     "state": "CLOSED",
-     "components": [
-      "nvidia",
-      "hybrid-gpu",
-      "suspend-sleep",
-      "battery-power"
-     ],
-     "createdAt": "2026-08-17T18:04:28Z"
-    },
-    {
-     "number": 5554,
-     "title": "Hibernation with Nvidia GPU Issues",
-     "url": "https://github.com/omacom/omarchy/issues/5554",
-     "state": "OPEN",
-     "components": [
-      "nvidia",
-      "suspend-sleep",
-      "boot-limine"
-     ],
-     "createdAt": "2026-05-02T19:27:50Z"
-    },
-    {
-     "number": 5531,
-     "title": "Error when trying to view \"Trash settings...\" from Files app",
-     "url": "https://github.com/omacom/omarchy/issues/5531",
-     "state": "CLOSED",
-     "components": [],
-     "createdAt": "2026-05-01T15:22:27Z"
-    },
-    {
-     "number": 4821,
-     "title": "# No Sound Fix: ASUS ROG Strix G16 (2025) on Omarchy 3.4.1",
-     "url": "https://github.com/omacom/omarchy/issues/4821",
-     "state": "OPEN",
-     "components": [
-      "nvidia",
-      "multi-monitor",
-      "audio",
-      "boot-limine"
-     ],
-     "createdAt": "2026-02-28T19:50:13Z"
-    },
-    {
-     "number": 4083,
-     "title": "ScreenSaver interrupted after less than a second when using thunderbolt monitor",
-     "url": "https://github.com/omacom/omarchy/issues/4083",
-     "state": "CLOSED",
-     "components": [
-      "suspend-sleep",
-      "multi-monitor",
-      "touchpad-input",
-      "thunderbolt-dock"
-     ],
-     "createdAt": "2026-01-05T06:12:25Z"
-    },
-    {
-     "number": 4017,
-     "title": "Brightness OSD shows but no change",
-     "url": "https://github.com/omacom/omarchy/issues/4017",
-     "state": "CLOSED",
-     "components": [
-      "nvidia",
-      "amd-gpu",
-      "hybrid-gpu",
-      "multi-monitor",
-      "boot-limine"
-     ],
-     "createdAt": "2025-12-29T18:42:47Z"
-    },
-    {
-     "number": 3737,
-     "title": "Can't put complex name of the layout format, e.g. format-us_fr-qwerty",
-     "url": "https://github.com/omacom/omarchy/issues/3737",
-     "state": "CLOSED",
-     "components": [
-      "nvidia",
-      "amd-gpu",
-      "multi-monitor",
-      "touchpad-input",
-      "battery-power"
-     ],
-     "createdAt": "2025-12-02T12:18:51Z"
-    },
-    {
-     "number": 3591,
-     "title": "Elephant Index Out of Range Runtime Error",
-     "url": "https://github.com/omacom/omarchy/issues/3591",
-     "state": "CLOSED",
-     "components": [
-      "nvidia",
-      "touchpad-input"
-     ],
-     "createdAt": "2025-11-24T12:43:07Z"
-    },
-    {
-     "number": 3144,
-     "title": "Omarchy-Update script doesn't detect custom/alternative kernels",
-     "url": "https://github.com/omacom/omarchy/issues/3144",
-     "state": "CLOSED",
-     "components": [],
-     "createdAt": "2025-11-04T16:15:40Z"
-    },
-    {
-     "number": 2991,
-     "title": "Can not interact with lock screen after opening lid",
-     "url": "https://github.com/omacom/omarchy/issues/2991",
-     "state": "CLOSED",
-     "components": [
-      "suspend-sleep",
-      "multi-monitor",
-      "touchpad-input"
-     ],
-     "createdAt": "2025-10-30T07:58:13Z"
-    },
-    {
-     "number": 2777,
-     "title": "After the plymouth boot screen and before hyprland, I see my BIOS/UEFI splash screen momentarily.",
-     "url": "https://github.com/omacom/omarchy/issues/2777",
-     "state": "CLOSED",
-     "components": [
-      "boot-limine"
-     ],
-     "createdAt": "2025-10-23T20:05:45Z"
-    },
-    {
-     "number": 2699,
-     "title": "Screen goes black and laptop becomes completely unresponsive.",
-     "url": "https://github.com/omacom/omarchy/issues/2699",
-     "state": "CLOSED",
-     "components": [
-      "battery-power"
-     ],
-     "createdAt": "2025-10-22T05:08:18Z"
-    }
-   ],
-   "issuesTruncated": false,
-   "quirkScripts": [
-    {
-     "name": "omarchy-hw-asus-rog",
-     "path": "bin/omarchy-hw-asus-rog",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-hw-asus-rog",
-     "summary": "Detect whether the computer is an Asus ROG machine."
-    },
-    {
-     "name": "fix-z13-touchpad.sh",
-     "path": "install/hardware/asus/fix-z13-touchpad.sh",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/asus/fix-z13-touchpad.sh",
-     "summary": "The Z13's detachable keyboard touchpad is detected as external by udev,"
-    },
-    {
-     "name": "asus-rog.sh",
-     "path": "install/hardware/asus-rog.sh",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/asus-rog.sh",
-     "summary": ""
-    },
-    {
-     "name": "fix-audio-mixer.sh",
-     "path": "install/user/hardware/asus/fix-audio-mixer.sh",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/user/hardware/asus/fix-audio-mixer.sh",
-     "summary": "Unmute the Master control on the ALC285 card (often muted by default)"
-    },
-    {
-     "name": "fix-mic.sh",
-     "path": "install/user/hardware/asus/fix-mic.sh",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/user/hardware/asus/fix-mic.sh",
-     "summary": "The mic boost is way too high by default, causing clipping."
-    }
-   ],
-   "dmiHints": [],
-   "legacyPrototype": {
-    "id": "asus-strix-g18",
-    "name": "ASUS ROG Strix G18",
-    "brand": "ASUS",
-    "rating": "silver",
-    "summary": "Reddit: stock install, no issues reported by that owner.",
-    "type": "laptop",
-    "tags": "strix g18 nvidia",
-    "wifi": "works",
-    "audio": "works",
-    "webcam": "works",
-    "fingerprint": "unknown",
-    "gpu": "workaround",
-    "suspend": "works",
-    "href": "nvidia-laptops.html#asus-strix-g18"
-   },
-   "legacyPrototypeSource": "legacy-prototype-unverified"
-  },
-  {
    "key": "dell-xps-16",
    "vendor": "Dell",
    "model": "Dell XPS 16",
@@ -12042,6 +12073,7 @@
    "vendor": "HP",
    "model": "HP Elitebook",
    "aliases": [
+    "HP EliteBook 6",
     "HP EliteBook 8",
     "HP EliteBook 835",
     "HP EliteBook 840",
@@ -12057,6 +12089,7 @@
     "hp Elitebook I5th"
    ],
    "variants": [
+    "6",
     "8",
     "8-g1i-int",
     "835",
@@ -12068,23 +12101,27 @@
     "x360"
    ],
    "counts": {
-    "issues": 15,
-    "open": 8,
+    "issues": 16,
+    "open": 9,
     "closed": 7,
     "discussions": 5
    },
    "components": [
     {
      "key": "multi-monitor",
-     "issues": 5
+     "issues": 6
     },
     {
      "key": "amd-gpu",
-     "issues": 5
+     "issues": 6
     },
     {
      "key": "audio",
      "issues": 4
+    },
+    {
+     "key": "touchpad-input",
+     "issues": 3
     },
     {
      "key": "suspend-sleep",
@@ -12100,10 +12137,6 @@
     },
     {
      "key": "webcam",
-     "issues": 2
-    },
-    {
-     "key": "touchpad-input",
      "issues": 2
     },
     {
@@ -12128,6 +12161,18 @@
     }
    ],
    "issues": [
+    {
+     "number": 14326,
+     "title": "Screensaver quits ~1.4s after launch, opens windowed, and is drawn over, whenever a bar panel holds keyboard focus",
+     "url": "https://github.com/omacom/omarchy/issues/14326",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu",
+      "multi-monitor",
+      "touchpad-input"
+     ],
+     "createdAt": "2026-10-05T16:37:20Z"
+    },
     {
      "number": 14172,
      "title": "HP EliteBook X Flip G2i: every resume freezes ~13 s on tas2783-sdw speaker amp timeouts — please carry the pending tas2783 resume patches in linux-omarchy",
@@ -12346,8 +12391,8 @@
    ],
    "counts": {
     "issues": 15,
-    "open": 7,
-    "closed": 8,
+    "open": 6,
+    "closed": 9,
     "discussions": 6
    },
    "components": [
@@ -12409,7 +12454,7 @@
      "number": 13731,
      "title": "ISSUE while Connecting Charger on my HP victus Laptop",
      "url": "https://github.com/omacom/omarchy/issues/13731",
-     "state": "OPEN",
+     "state": "CLOSED",
      "components": [
       "battery-power"
      ],
@@ -15681,6 +15726,181 @@
    "dmiHints": []
   },
   {
+   "key": "lenovo-thinkpad-e14",
+   "vendor": "Lenovo",
+   "model": "ThinkPad E14",
+   "aliases": [
+    "ThinkPad E14",
+    "ThinkPad E14 Gen 4",
+    "ThinkPad E14 Gen 5",
+    "ThinkPad E14 Gen 7",
+    "Thinkpad E14 Gen 4",
+    "Thinkpad E14 Gen 7",
+    "Thinkpad E14 Gen3",
+    "Thinkpad E14 gen 3",
+    "thinkpad e14 gen3"
+   ],
+   "variants": [
+    "Gen 3",
+    "Gen 4",
+    "Gen 5",
+    "Gen 7"
+   ],
+   "counts": {
+    "issues": 9,
+    "open": 5,
+    "closed": 4,
+    "discussions": 2
+   },
+   "components": [
+    {
+     "key": "multi-monitor",
+     "issues": 3
+    },
+    {
+     "key": "boot-limine",
+     "issues": 2
+    },
+    {
+     "key": "vm",
+     "issues": 1
+    },
+    {
+     "key": "thunderbolt-dock",
+     "issues": 1
+    },
+    {
+     "key": "fingerprint",
+     "issues": 1
+    },
+    {
+     "key": "amd-gpu",
+     "issues": 1
+    },
+    {
+     "key": "touchpad-input",
+     "issues": 1
+    },
+    {
+     "key": "bluetooth",
+     "issues": 1
+    }
+   ],
+   "issues": [
+    {
+     "number": 14334,
+     "title": "Status bar is drawn over the screensaver since it moved to a special workspace (#3284)",
+     "url": "https://github.com/omacom/omarchy/issues/14334",
+     "state": "OPEN",
+     "components": [
+      "multi-monitor"
+     ],
+     "createdAt": "2026-10-05T19:36:05Z"
+    },
+    {
+     "number": 13342,
+     "title": "Bluetooth does not retain OFF setting between reboots",
+     "url": "https://github.com/omacom/omarchy/issues/13342",
+     "state": "OPEN",
+     "components": [
+      "bluetooth"
+     ],
+     "createdAt": "2026-09-26T17:16:25Z"
+    },
+    {
+     "number": 10862,
+     "title": "Idle screensaver/lock triggers during windowed Firefox video playback",
+     "url": "https://github.com/omacom/omarchy/issues/10862",
+     "state": "CLOSED",
+     "components": [
+      "amd-gpu",
+      "touchpad-input"
+     ],
+     "createdAt": "2026-09-08T19:57:41Z"
+    },
+    {
+     "number": 7483,
+     "title": "ELAN 04f3:0c4b fingerprint reader never matches under stock libfprint (ThinkPad E14/E15 Gen 3/4) — works with libfprint-tod instead",
+     "url": "https://github.com/omacom/omarchy/issues/7483",
+     "state": "OPEN",
+     "components": [
+      "fingerprint"
+     ],
+     "createdAt": "2026-08-19T11:18:12Z"
+    },
+    {
+     "number": 7209,
+     "title": "Laptop display stays dark after disconnecting from External Display",
+     "url": "https://github.com/omacom/omarchy/issues/7209",
+     "state": "OPEN",
+     "components": [
+      "multi-monitor"
+     ],
+     "createdAt": "2026-08-17T01:27:25Z"
+    },
+    {
+     "number": 6169,
+     "title": "Kernel/limine update leaves boot broken until manual `limine-mkinitcpio` rerun — encrypt hook \"device not found\"; suspicious duplicate signing hash across different kernel versions",
+     "url": "https://github.com/omacom/omarchy/issues/6169",
+     "state": "OPEN",
+     "components": [
+      "boot-limine"
+     ],
+     "createdAt": "2026-07-05T14:55:09Z"
+    },
+    {
+     "number": 3841,
+     "title": "external DP-1 present in hyprctl monitors, no wallpaper/bar showing on it",
+     "url": "https://github.com/omacom/omarchy/issues/3841",
+     "state": "CLOSED",
+     "components": [
+      "multi-monitor",
+      "boot-limine",
+      "thunderbolt-dock"
+     ],
+     "createdAt": "2025-12-11T07:39:58Z"
+    },
+    {
+     "number": 3205,
+     "title": "Updating the system when there is not enouth space on the disc causes system to completely break beyond the point of detail",
+     "url": "https://github.com/omacom/omarchy/issues/3205",
+     "state": "CLOSED",
+     "components": [],
+     "createdAt": "2025-11-06T08:21:24Z"
+    },
+    {
+     "number": 2030,
+     "title": "Barve causes vm to go into \"pause loop\" when instaling brave browser thruth aur on omarchy 3.0.1",
+     "url": "https://github.com/omacom/omarchy/issues/2030",
+     "state": "CLOSED",
+     "components": [
+      "vm"
+     ],
+     "createdAt": "2025-09-28T10:16:30Z"
+    }
+   ],
+   "issuesTruncated": false,
+   "quirkScripts": [],
+   "dmiHints": [],
+   "legacyPrototype": {
+    "id": "thinkpad-e14-g7",
+    "name": "ThinkPad E14 Gen 7",
+    "brand": "Lenovo",
+    "rating": "bronze",
+    "summary": "3.7 update reports of broken sound/mic/camera. Snapshot rollback, then file an issue.",
+    "type": "laptop",
+    "tags": "thinkpad e14 gen7",
+    "wifi": "works",
+    "audio": "workaround",
+    "webcam": "workaround",
+    "fingerprint": "unknown",
+    "gpu": "works",
+    "suspend": "works",
+    "href": "thinkpad.html#thinkpad-e14-g7"
+   },
+   "legacyPrototypeSource": "legacy-prototype-unverified"
+  },
+  {
    "key": "apple-mac-mini",
    "vendor": "Apple",
    "model": "Mac mini",
@@ -16269,170 +16489,6 @@
    "issuesTruncated": false,
    "quirkScripts": [],
    "dmiHints": []
-  },
-  {
-   "key": "lenovo-thinkpad-e14",
-   "vendor": "Lenovo",
-   "model": "ThinkPad E14",
-   "aliases": [
-    "ThinkPad E14",
-    "ThinkPad E14 Gen 4",
-    "ThinkPad E14 Gen 5",
-    "Thinkpad E14 Gen 4",
-    "Thinkpad E14 Gen 7",
-    "Thinkpad E14 Gen3",
-    "Thinkpad E14 gen 3",
-    "thinkpad e14 gen3"
-   ],
-   "variants": [
-    "Gen 3",
-    "Gen 4",
-    "Gen 5",
-    "Gen 7"
-   ],
-   "counts": {
-    "issues": 8,
-    "open": 4,
-    "closed": 4,
-    "discussions": 2
-   },
-   "components": [
-    {
-     "key": "multi-monitor",
-     "issues": 2
-    },
-    {
-     "key": "boot-limine",
-     "issues": 2
-    },
-    {
-     "key": "vm",
-     "issues": 1
-    },
-    {
-     "key": "thunderbolt-dock",
-     "issues": 1
-    },
-    {
-     "key": "fingerprint",
-     "issues": 1
-    },
-    {
-     "key": "amd-gpu",
-     "issues": 1
-    },
-    {
-     "key": "touchpad-input",
-     "issues": 1
-    },
-    {
-     "key": "bluetooth",
-     "issues": 1
-    }
-   ],
-   "issues": [
-    {
-     "number": 13342,
-     "title": "Bluetooth does not retain OFF setting between reboots",
-     "url": "https://github.com/omacom/omarchy/issues/13342",
-     "state": "OPEN",
-     "components": [
-      "bluetooth"
-     ],
-     "createdAt": "2026-09-26T17:16:25Z"
-    },
-    {
-     "number": 10862,
-     "title": "Idle screensaver/lock triggers during windowed Firefox video playback",
-     "url": "https://github.com/omacom/omarchy/issues/10862",
-     "state": "CLOSED",
-     "components": [
-      "amd-gpu",
-      "touchpad-input"
-     ],
-     "createdAt": "2026-09-08T19:57:41Z"
-    },
-    {
-     "number": 7483,
-     "title": "ELAN 04f3:0c4b fingerprint reader never matches under stock libfprint (ThinkPad E14/E15 Gen 3/4) — works with libfprint-tod instead",
-     "url": "https://github.com/omacom/omarchy/issues/7483",
-     "state": "OPEN",
-     "components": [
-      "fingerprint"
-     ],
-     "createdAt": "2026-08-19T11:18:12Z"
-    },
-    {
-     "number": 7209,
-     "title": "Laptop display stays dark after disconnecting from External Display",
-     "url": "https://github.com/omacom/omarchy/issues/7209",
-     "state": "OPEN",
-     "components": [
-      "multi-monitor"
-     ],
-     "createdAt": "2026-08-17T01:27:25Z"
-    },
-    {
-     "number": 6169,
-     "title": "Kernel/limine update leaves boot broken until manual `limine-mkinitcpio` rerun — encrypt hook \"device not found\"; suspicious duplicate signing hash across different kernel versions",
-     "url": "https://github.com/omacom/omarchy/issues/6169",
-     "state": "OPEN",
-     "components": [
-      "boot-limine"
-     ],
-     "createdAt": "2026-07-05T14:55:09Z"
-    },
-    {
-     "number": 3841,
-     "title": "external DP-1 present in hyprctl monitors, no wallpaper/bar showing on it",
-     "url": "https://github.com/omacom/omarchy/issues/3841",
-     "state": "CLOSED",
-     "components": [
-      "multi-monitor",
-      "boot-limine",
-      "thunderbolt-dock"
-     ],
-     "createdAt": "2025-12-11T07:39:58Z"
-    },
-    {
-     "number": 3205,
-     "title": "Updating the system when there is not enouth space on the disc causes system to completely break beyond the point of detail",
-     "url": "https://github.com/omacom/omarchy/issues/3205",
-     "state": "CLOSED",
-     "components": [],
-     "createdAt": "2025-11-06T08:21:24Z"
-    },
-    {
-     "number": 2030,
-     "title": "Barve causes vm to go into \"pause loop\" when instaling brave browser thruth aur on omarchy 3.0.1",
-     "url": "https://github.com/omacom/omarchy/issues/2030",
-     "state": "CLOSED",
-     "components": [
-      "vm"
-     ],
-     "createdAt": "2025-09-28T10:16:30Z"
-    }
-   ],
-   "issuesTruncated": false,
-   "quirkScripts": [],
-   "dmiHints": [],
-   "legacyPrototype": {
-    "id": "thinkpad-e14-g7",
-    "name": "ThinkPad E14 Gen 7",
-    "brand": "Lenovo",
-    "rating": "bronze",
-    "summary": "3.7 update reports of broken sound/mic/camera. Snapshot rollback, then file an issue.",
-    "type": "laptop",
-    "tags": "thinkpad e14 gen7",
-    "wifi": "works",
-    "audio": "workaround",
-    "webcam": "workaround",
-    "fingerprint": "unknown",
-    "gpu": "works",
-    "suspend": "works",
-    "href": "thinkpad.html#thinkpad-e14-g7"
-   },
-   "legacyPrototypeSource": "legacy-prototype-unverified"
   },
   {
    "key": "lenovo-thinkpad-p1",
@@ -17866,7 +17922,7 @@
     "issues": 6,
     "open": 3,
     "closed": 3,
-    "discussions": 0
+    "discussions": 1
    },
    "components": [
     {
@@ -23055,7 +23111,7 @@
     "issues": 2,
     "open": 2,
     "closed": 0,
-    "discussions": 5
+    "discussions": 6
    },
    "components": [
     {

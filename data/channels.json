@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-06T11:30:13Z",
+  "fetchedAt": "2026-10-07T11:17:52Z",
   "mirrors": [
     {
       "name": "stable-mirror",
@@ -12,7 +12,7 @@
         "unix": 1788802790,
         "iso": "2026-09-07T17:39:50Z"
       },
-      "lagHoursVsUpstream": 690.65
+      "lagHoursVsUpstream": 714.23
     },
     {
       "name": "rc-mirror",
@@ -25,32 +25,32 @@
         "unix": 1788802790,
         "iso": "2026-09-07T17:39:50Z"
       },
-      "lagHoursVsUpstream": 690.65
+      "lagHoursVsUpstream": 714.23
     },
     {
       "name": "mirror",
       "url": "https://mirror.omarchy.org",
       "lastupdate": {
-        "unix": 1791278915,
-        "iso": "2026-10-06T09:28:35Z"
+        "unix": 1791370628,
+        "iso": "2026-10-07T10:57:08Z"
       },
       "lastsync": {
-        "unix": 1791280924,
-        "iso": "2026-10-06T10:02:04Z"
+        "unix": 1791371008,
+        "iso": "2026-10-07T11:03:28Z"
       },
-      "lagHoursVsUpstream": 1.89
+      "lagHoursVsUpstream": 0.0
     }
   ],
   "upstream": {
     "name": "arch-geo-mirror",
     "url": "https://geo.mirror.pkgbuild.com",
     "lastupdate": {
-      "unix": 1791285734,
-      "iso": "2026-10-06T11:22:14Z"
+      "unix": 1791370628,
+      "iso": "2026-10-07T10:57:08Z"
     },
     "lastsync": {
-      "unix": 1791286104,
-      "iso": "2026-10-06T11:28:24Z"
+      "unix": 1791371770,
+      "iso": "2026-10-07T11:16:10Z"
     }
   },
   "channels": {
@@ -58,12 +58,12 @@
       "arch": "x86_64",
       "url": "https://pkgs.omarchy.org/stable/x86_64/omarchy.db",
       "ok": true,
-      "packageCount": 254,
+      "packageCount": 255,
       "packages": {
         "1password": {
-          "version": "8.12.38-1",
+          "version": "8.12.40-1",
           "desc": "Password manager and secure wallet",
-          "builddate": 1790968389
+          "builddate": 1791333395
         },
         "1password-beta": {
           "version": "8.12.40_27.BETA-1",
@@ -76,14 +76,14 @@
           "builddate": 1790980535
         },
         "aether": {
-          "version": "4.31.1-1",
+          "version": "4.32.0-1",
           "desc": "Desktop theming application - extract colors from wallpapers and apply cohesive themes",
-          "builddate": 1790968993
+          "builddate": 1791334475
         },
         "aether-debug": {
-          "version": "4.31.1-1",
+          "version": "4.32.0-1",
           "desc": "Detached debugging symbols for aether",
-          "builddate": 1790968993
+          "builddate": 1791334475
         },
         "asdcontrol": {
           "version": "1:0.6.0-2",
@@ -106,14 +106,14 @@
           "builddate": 1789884282
         },
         "basecamp-cli": {
-          "version": "0.11.0-2",
+          "version": "0.12.0-1",
           "desc": "CLI for Basecamp project management",
-          "builddate": 1789439026
+          "builddate": 1791335133
         },
         "basecamp-cli-debug": {
-          "version": "0.11.0-2",
+          "version": "0.12.0-1",
           "desc": "Detached debugging symbols for basecamp-cli",
-          "builddate": 1789439026
+          "builddate": 1791335133
         },
         "brave-bin": {
           "version": "1:1.96.61-1",
@@ -141,14 +141,14 @@
           "builddate": 1785110135
         },
         "claude-code": {
-          "version": "2.1.289-1",
+          "version": "2.1.291-1",
           "desc": "An agentic coding tool that lives in your terminal",
-          "builddate": 1791070745
+          "builddate": 1791334802
         },
         "claude-desktop": {
-          "version": "2.9939.4-1",
+          "version": "2.19675.1-1",
           "desc": "Official Claude desktop app with Claude Code",
-          "builddate": 1790969872
+          "builddate": 1791333854
         },
         "cliamp": {
           "version": "2.0.1-1",
@@ -176,9 +176,9 @@
           "builddate": 1790565426
         },
         "cursor-bin": {
-          "version": "3.23.12-1",
+          "version": "3.23.23-1",
           "desc": "AI-first coding environment",
-          "builddate": 1790968697
+          "builddate": 1791333817
         },
         "cursor-cli": {
           "version": "1:2026.10.01.1.e373342-1",
@@ -411,14 +411,14 @@
           "builddate": 1789525997
         },
         "github-copilot-cli": {
-          "version": "1.0.91-1",
+          "version": "1.0.92-1",
           "desc": "GitHub Copilot CLI brings the power of Copilot coding agent directly to your terminal.",
-          "builddate": 1790980054
+          "builddate": 1791334752
         },
         "google-chrome": {
-          "version": "154.0.8037.97-1",
+          "version": "155.0.8059.39-1",
           "desc": "The popular web browser by Google (Stable Channel)",
-          "builddate": 1790969312
+          "builddate": 1791334744
         },
         "gpu-screen-recorder": {
           "version": "5.12.3-2",
@@ -635,6 +635,11 @@
           "desc": "Firmware files for Linux - Firmware for Cirrus Logic audio devices (Arch - payload, stable-snapshot shim)",
           "builddate": 1789664428
         },
+        "linux-firmware-cirrus-dx13260": {
+          "version": "20260810-1",
+          "desc": "Cirrus speaker firmware aliases for Dell XPS 13 DX13260 Panther Lake",
+          "builddate": 1791322234
+        },
         "linux-mainline-panther-lake": {
           "version": "7.0rc4-2",
           "desc": "The Linux Mainline (Panther Lake audio support) kernel and modules",
@@ -741,9 +746,9 @@
           "builddate": 1772748770
         },
         "microsoft-edge-stable-bin": {
-          "version": "154.0.4258.53-1",
+          "version": "154.0.4258.62-1",
           "desc": "A browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier",
-          "builddate": 1790968691
+          "builddate": 1791333817
         },
         "minecraft-launcher": {
           "version": "1:2.1.3-3",
@@ -756,9 +761,9 @@
           "builddate": 1763739709
         },
         "mise-bin": {
-          "version": "2026.10.0-1",
+          "version": "2026.10.3-1",
           "desc": "dev tools, env vars, task runner",
-          "builddate": 1791005751
+          "builddate": 1791333517
         },
         "nautilus-dropbox": {
           "version": "2026.09.28-1",
@@ -946,19 +951,19 @@
           "builddate": 1787887918
         },
         "openai-codex-bin": {
-          "version": "0.160.0-1",
+          "version": "0.160.1-1",
           "desc": "Arch Linux package for OpenAI's Codex CLI - Auto Updated",
-          "builddate": 1790969378
+          "builddate": 1791334226
         },
         "openai-codex-bin-debug": {
-          "version": "0.160.0-1",
+          "version": "0.160.1-1",
           "desc": "Detached debugging symbols for openai-codex-bin",
-          "builddate": 1790969378
+          "builddate": 1791334226
         },
         "openai-codex-desktop": {
-          "version": "26.930.41038-1",
+          "version": "26.930.61225-1",
           "desc": "Official ChatGPT desktop app with Codex",
-          "builddate": 1791070741
+          "builddate": 1791334230
         },
         "opencl-nvidia-580xx": {
           "version": "580.178.04-1.1",
@@ -966,9 +971,9 @@
           "builddate": 1786647872
         },
         "openclaw": {
-          "version": "2026.9.6-3",
+          "version": "2026.9.8-1",
           "desc": "Multi-channel AI gateway with extensible messaging integrations",
-          "builddate": 1791098658
+          "builddate": 1791335321
         },
         "opencode": {
           "version": "1.1.51-1",
@@ -996,9 +1001,9 @@
           "builddate": 1791228190
         },
         "perplexity": {
-          "version": "26.9.6+build95799-1",
+          "version": "26.10.0+build101817-1",
           "desc": "Official Perplexity desktop app",
-          "builddate": 1790969366
+          "builddate": 1791334220
         },
         "pinta": {
           "version": "3.1.2-1",
@@ -1081,9 +1086,9 @@
           "builddate": 1789440310
         },
         "strata": {
-          "version": "0.20.1-1",
+          "version": "0.21.0-1",
           "desc": "Fast, keyboard-first file manager for modern Linux desktops",
-          "builddate": 1790520254
+          "builddate": 1791345440
         },
         "sublime-text-4": {
           "version": "4.4215-1",
@@ -1111,14 +1116,14 @@
           "builddate": 1770489439
         },
         "symfony-cli": {
-          "version": "5.20.0-9",
+          "version": "5.21.0-1",
           "desc": "The Symfony client helps developers create and manage Symfony applications.",
-          "builddate": 1788488590
+          "builddate": 1791333820
         },
         "symfony-cli-debug": {
-          "version": "5.20.0-9",
+          "version": "5.21.0-1",
           "desc": "Detached debugging symbols for symfony-cli",
-          "builddate": 1788488590
+          "builddate": 1791333820
         },
         "t3code-bin": {
           "version": "0.0.45-1",
@@ -1126,9 +1131,9 @@
           "builddate": 1790980714
         },
         "t3code-nightly-bin": {
-          "version": "0.0.46_nightly.20261004.2644-1",
+          "version": "0.0.46_nightly.20261006.2735-1",
           "desc": "Open-source control plane for coding agents (nightly)",
-          "builddate": 1791094576
+          "builddate": 1791333858
         },
         "t3code-patched-bin": {
           "version": "0.0.35-5",
@@ -1336,12 +1341,12 @@
       "arch": "x86_64",
       "url": "https://pkgs.omarchy.org/rc/x86_64/omarchy.db",
       "ok": true,
-      "packageCount": 252,
+      "packageCount": 253,
       "packages": {
         "1password": {
-          "version": "8.12.38-1",
+          "version": "8.12.40-1",
           "desc": "Password manager and secure wallet",
-          "builddate": 1790968389
+          "builddate": 1791333395
         },
         "1password-beta": {
           "version": "8.12.40_27.BETA-1",
@@ -1354,14 +1359,14 @@
           "builddate": 1790980535
         },
         "aether": {
-          "version": "4.31.1-1",
+          "version": "4.32.0-1",
           "desc": "Desktop theming application - extract colors from wallpapers and apply cohesive themes",
-          "builddate": 1790968993
+          "builddate": 1791334475
         },
         "aether-debug": {
-          "version": "4.31.1-1",
+          "version": "4.32.0-1",
           "desc": "Detached debugging symbols for aether",
-          "builddate": 1790968993
+          "builddate": 1791334475
         },
         "asdcontrol": {
           "version": "1:0.6.0-2",
@@ -1384,14 +1389,14 @@
           "builddate": 1789884282
         },
         "basecamp-cli": {
-          "version": "0.11.0-2",
+          "version": "0.12.0-1",
           "desc": "CLI for Basecamp project management",
-          "builddate": 1789445246
+          "builddate": 1791335133
         },
         "basecamp-cli-debug": {
-          "version": "0.11.0-2",
+          "version": "0.12.0-1",
           "desc": "Detached debugging symbols for basecamp-cli",
-          "builddate": 1789445246
+          "builddate": 1791335133
         },
         "brave-bin": {
           "version": "1:1.96.61-1",
@@ -1419,14 +1424,14 @@
           "builddate": 1785110135
         },
         "claude-code": {
-          "version": "2.1.289-1",
+          "version": "2.1.291-1",
           "desc": "An agentic coding tool that lives in your terminal",
-          "builddate": 1791070745
+          "builddate": 1791334802
         },
         "claude-desktop": {
-          "version": "2.9939.4-1",
+          "version": "2.19675.1-1",
           "desc": "Official Claude desktop app with Claude Code",
-          "builddate": 1790969872
+          "builddate": 1791333854
         },
         "cliamp": {
           "version": "2.0.1-1",
@@ -1454,9 +1459,9 @@
           "builddate": 1790565426
         },
         "cursor-bin": {
-          "version": "3.23.12-1",
+          "version": "3.23.23-1",
           "desc": "AI-first coding environment",
-          "builddate": 1790968697
+          "builddate": 1791333817
         },
         "cursor-cli": {
           "version": "1:2026.10.01.1.e373342-1",
@@ -1689,14 +1694,14 @@
           "builddate": 1789525641
         },
         "github-copilot-cli": {
-          "version": "1.0.91-1",
+          "version": "1.0.92-1",
           "desc": "GitHub Copilot CLI brings the power of Copilot coding agent directly to your terminal.",
-          "builddate": 1790980054
+          "builddate": 1791334752
         },
         "google-chrome": {
-          "version": "154.0.8037.97-1",
+          "version": "155.0.8059.39-1",
           "desc": "The popular web browser by Google (Stable Channel)",
-          "builddate": 1790969312
+          "builddate": 1791334744
         },
         "gpu-screen-recorder": {
           "version": "5.12.3-2",
@@ -1913,6 +1918,11 @@
           "desc": "Firmware files for Linux - Firmware for Cirrus Logic audio devices (Arch - payload, stable-snapshot shim)",
           "builddate": 1789664075
         },
+        "linux-firmware-cirrus-dx13260": {
+          "version": "20260810-1",
+          "desc": "Cirrus speaker firmware aliases for Dell XPS 13 DX13260 Panther Lake",
+          "builddate": 1791322234
+        },
         "linux-mainline-panther-lake": {
           "version": "7.0rc4-2",
           "desc": "The Linux Mainline (Panther Lake audio support) kernel and modules",
@@ -2019,9 +2029,9 @@
           "builddate": 1772748770
         },
         "microsoft-edge-stable-bin": {
-          "version": "154.0.4258.53-1",
+          "version": "154.0.4258.62-1",
           "desc": "A browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier",
-          "builddate": 1790968691
+          "builddate": 1791333817
         },
         "minecraft-launcher": {
           "version": "1:2.1.3-3",
@@ -2034,9 +2044,9 @@
           "builddate": 1763739709
         },
         "mise-bin": {
-          "version": "2026.10.0-1",
+          "version": "2026.10.3-1",
           "desc": "dev tools, env vars, task runner",
-          "builddate": 1791005751
+          "builddate": 1791333517
         },
         "nautilus-dropbox": {
           "version": "2026.09.28-1",
@@ -2214,19 +2224,19 @@
           "builddate": 1787887918
         },
         "openai-codex-bin": {
-          "version": "0.160.0-1",
+          "version": "0.160.1-1",
           "desc": "Arch Linux package for OpenAI's Codex CLI - Auto Updated",
-          "builddate": 1790969378
+          "builddate": 1791334226
         },
         "openai-codex-bin-debug": {
-          "version": "0.160.0-1",
+          "version": "0.160.1-1",
           "desc": "Detached debugging symbols for openai-codex-bin",
-          "builddate": 1790969378
+          "builddate": 1791334226
         },
         "openai-codex-desktop": {
-          "version": "26.930.41038-1",
+          "version": "26.930.61225-1",
           "desc": "Official ChatGPT desktop app with Codex",
-          "builddate": 1791070741
+          "builddate": 1791334230
         },
         "opencl-nvidia-580xx": {
           "version": "580.178.04-1.1",
@@ -2234,9 +2244,9 @@
           "builddate": 1786647872
         },
         "openclaw": {
-          "version": "2026.9.6-3",
+          "version": "2026.9.8-1",
           "desc": "Multi-channel AI gateway with extensible messaging integrations",
-          "builddate": 1791098658
+          "builddate": 1791335321
         },
         "opencode": {
           "version": "1.1.51-1",
@@ -2264,9 +2274,9 @@
           "builddate": 1791228190
         },
         "perplexity": {
-          "version": "26.9.6+build95799-1",
+          "version": "26.10.0+build101817-1",
           "desc": "Official Perplexity desktop app",
-          "builddate": 1790969366
+          "builddate": 1791334220
         },
         "pinta": {
           "version": "3.1.2-1",
@@ -2349,9 +2359,9 @@
           "builddate": 1789445433
         },
         "strata": {
-          "version": "0.20.1-1",
+          "version": "0.21.0-1",
           "desc": "Fast, keyboard-first file manager for modern Linux desktops",
-          "builddate": 1790520254
+          "builddate": 1791345440
         },
         "sublime-text-4": {
           "version": "4.4215-1",
@@ -2379,14 +2389,14 @@
           "builddate": 1770489439
         },
         "symfony-cli": {
-          "version": "5.20.0-9",
+          "version": "5.21.0-1",
           "desc": "The Symfony client helps developers create and manage Symfony applications.",
-          "builddate": 1788488836
+          "builddate": 1791333820
         },
         "symfony-cli-debug": {
-          "version": "5.20.0-9",
+          "version": "5.21.0-1",
           "desc": "Detached debugging symbols for symfony-cli",
-          "builddate": 1788488836
+          "builddate": 1791333820
         },
         "t3code-bin": {
           "version": "0.0.45-1",
@@ -2394,9 +2404,9 @@
           "builddate": 1790980714
         },
         "t3code-nightly-bin": {
-          "version": "0.0.46_nightly.20261004.2644-1",
+          "version": "0.0.46_nightly.20261006.2735-1",
           "desc": "Open-source control plane for coding agents (nightly)",
-          "builddate": 1791094576
+          "builddate": 1791333858
         },
         "t3code-patched-bin": {
           "version": "0.0.35-5",
@@ -2604,12 +2614,12 @@
       "arch": "x86_64",
       "url": "https://pkgs.omarchy.org/edge/x86_64/omarchy.db",
       "ok": true,
-      "packageCount": 270,
+      "packageCount": 273,
       "packages": {
         "1password": {
-          "version": "8.12.38-1",
+          "version": "8.12.40-1",
           "desc": "Password manager and secure wallet",
-          "builddate": 1790968389
+          "builddate": 1791333395
         },
         "1password-beta": {
           "version": "8.12.40_27.BETA-1",
@@ -2622,14 +2632,14 @@
           "builddate": 1790980535
         },
         "aether": {
-          "version": "4.31.1-1",
+          "version": "4.32.0-1",
           "desc": "Desktop theming application - extract colors from wallpapers and apply cohesive themes",
-          "builddate": 1790968993
+          "builddate": 1791334475
         },
         "aether-debug": {
-          "version": "4.31.1-1",
+          "version": "4.32.0-1",
           "desc": "Detached debugging symbols for aether",
-          "builddate": 1790968993
+          "builddate": 1791334475
         },
         "asdcontrol": {
           "version": "1:0.6.0-2",
@@ -2662,14 +2672,14 @@
           "builddate": 1789884282
         },
         "basecamp-cli": {
-          "version": "0.11.0-2",
+          "version": "0.12.0-1",
           "desc": "CLI for Basecamp project management",
-          "builddate": 1789441683
+          "builddate": 1791335133
         },
         "basecamp-cli-debug": {
-          "version": "0.11.0-2",
+          "version": "0.12.0-1",
           "desc": "Detached debugging symbols for basecamp-cli",
-          "builddate": 1789441683
+          "builddate": 1791335133
         },
         "brave-bin": {
           "version": "1:1.96.61-1",
@@ -2697,14 +2707,14 @@
           "builddate": 1789442302
         },
         "claude-code": {
-          "version": "2.1.289-1",
+          "version": "2.1.291-1",
           "desc": "An agentic coding tool that lives in your terminal",
-          "builddate": 1791070745
+          "builddate": 1791334802
         },
         "claude-desktop": {
-          "version": "2.9939.4-1",
+          "version": "2.19675.1-1",
           "desc": "Official Claude desktop app with Claude Code",
-          "builddate": 1790969872
+          "builddate": 1791333854
         },
         "cliamp": {
           "version": "2.3.0-1",
@@ -2737,9 +2747,9 @@
           "builddate": 1791067251
         },
         "cursor-bin": {
-          "version": "3.23.12-1",
+          "version": "3.23.23-1",
           "desc": "AI-first coding environment",
-          "builddate": 1790968697
+          "builddate": 1791333817
         },
         "cursor-cli": {
           "version": "1:2026.10.01.1.e373342-1",
@@ -2772,9 +2782,9 @@
           "builddate": 1787674581
         },
         "disktree-bin": {
-          "version": "0.10.1-1",
+          "version": "0.11.0-1",
           "desc": "Disk space treemap for Omarchy: see what fills a disk by kind, mark what should go, and remove it",
-          "builddate": 1790370757
+          "builddate": 1791334753
         },
         "dotnet-core-bin-debug": {
           "version": "10.0.401-1",
@@ -3002,9 +3012,9 @@
           "builddate": 1789503685
         },
         "github-copilot-cli": {
-          "version": "1.0.91-1",
+          "version": "1.0.92-1",
           "desc": "GitHub Copilot CLI brings the power of Copilot coding agent directly to your terminal.",
-          "builddate": 1790980054
+          "builddate": 1791334752
         },
         "gliff": {
           "version": "0.2.0-1",
@@ -3012,9 +3022,9 @@
           "builddate": 1790966780
         },
         "google-chrome": {
-          "version": "154.0.8037.97-1",
+          "version": "155.0.8059.39-1",
           "desc": "The popular web browser by Google (Stable Channel)",
-          "builddate": 1790969312
+          "builddate": 1791334744
         },
         "gpu-screen-recorder": {
           "version": "5.12.3-2",
@@ -3236,6 +3246,11 @@
           "desc": "Firmware files for Linux - Firmware for Cirrus Logic audio devices (Arch - payload, stable-snapshot shim)",
           "builddate": 1789663737
         },
+        "linux-firmware-cirrus-dx13260": {
+          "version": "20260810-1",
+          "desc": "Cirrus speaker firmware aliases for Dell XPS 13 DX13260 Panther Lake",
+          "builddate": 1791322234
+        },
         "linux-mainline-panther-lake": {
           "version": "7.0rc4-2",
           "desc": "The Linux Mainline (Panther Lake audio support) kernel and modules",
@@ -3247,24 +3262,34 @@
           "builddate": 1773943828
         },
         "linux-omarchy": {
-          "version": "7.2.8-2",
-          "desc": "The Omarchy Linux kernel and modules",
-          "builddate": 1791271167
+          "version": "7.2.8-5",
+          "desc": "The Omarchy Linux (BORE CPU scheduler, ADIOS I/O scheduler) kernel and modules (meta package for linux-omarchy-bore)",
+          "builddate": 1791339459
         },
         "linux-omarchy-bore": {
-          "version": "7.2.8-2",
+          "version": "7.2.8-5",
           "desc": "The Omarchy Linux (BORE CPU scheduler, ADIOS I/O scheduler) kernel and modules",
-          "builddate": 1791271153
+          "builddate": 1791339461
         },
         "linux-omarchy-bore-headers": {
-          "version": "7.2.8-2",
+          "version": "7.2.8-5",
           "desc": "Headers and scripts for building modules for the Omarchy Linux (BORE CPU scheduler, ADIOS I/O scheduler) kernel",
-          "builddate": 1791271153
+          "builddate": 1791339461
+        },
+        "linux-omarchy-eevdf": {
+          "version": "7.2.8-5",
+          "desc": "The Omarchy Linux kernel and modules",
+          "builddate": 1791339603
+        },
+        "linux-omarchy-eevdf-headers": {
+          "version": "7.2.8-5",
+          "desc": "Headers and scripts for building modules for the Omarchy Linux kernel",
+          "builddate": 1791339603
         },
         "linux-omarchy-headers": {
-          "version": "7.2.8-2",
-          "desc": "Headers and scripts for building modules for the Omarchy Linux kernel",
-          "builddate": 1791271167
+          "version": "7.2.8-5",
+          "desc": "Headers and scripts for building modules for the Omarchy Linux (BORE CPU scheduler, ADIOS I/O scheduler) kernel (meta package for linux-omarchy-bore-headers)",
+          "builddate": 1791339459
         },
         "linux-omarchy-muqss": {
           "version": "7.2.3-1",
@@ -3352,9 +3377,9 @@
           "builddate": 1789442278
         },
         "microsoft-edge-stable-bin": {
-          "version": "154.0.4258.53-1",
+          "version": "154.0.4258.62-1",
           "desc": "A browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier",
-          "builddate": 1790968691
+          "builddate": 1791333817
         },
         "minecraft-launcher": {
           "version": "1:2.1.3-3",
@@ -3367,9 +3392,9 @@
           "builddate": 1762885455
         },
         "mise-bin": {
-          "version": "2026.10.0-1",
+          "version": "2026.10.3-1",
           "desc": "dev tools, env vars, task runner",
-          "builddate": 1791005751
+          "builddate": 1791333517
         },
         "monologue": {
           "version": "0.3.0-1",
@@ -3487,9 +3512,9 @@
           "builddate": 1762885481
         },
         "omarchy-meeting-recorder-bin": {
-          "version": "1.5.0-1",
+          "version": "1.6.0-1",
           "desc": "Meeting Recorder for Omarchy: record the mic and the computer audio, transcribed on your own machine with speakers, chapters and a player",
-          "builddate": 1790969380
+          "builddate": 1791334797
         },
         "omarchy-nvim": {
           "version": "2026.9.21-2",
@@ -3572,19 +3597,19 @@
           "builddate": 1789644231
         },
         "openai-codex-bin": {
-          "version": "0.160.0-1",
+          "version": "0.160.1-1",
           "desc": "Arch Linux package for OpenAI's Codex CLI - Auto Updated",
-          "builddate": 1790969378
+          "builddate": 1791334226
         },
         "openai-codex-bin-debug": {
-          "version": "0.160.0-1",
+          "version": "0.160.1-1",
           "desc": "Detached debugging symbols for openai-codex-bin",
-          "builddate": 1790969378
+          "builddate": 1791334226
         },
         "openai-codex-desktop": {
-          "version": "26.930.41038-1",
+          "version": "26.930.61225-1",
           "desc": "Official ChatGPT desktop app with Codex",
-          "builddate": 1791070741
+          "builddate": 1791334230
         },
         "opencl-nvidia-580xx": {
           "version": "580.178.04-1.1",
@@ -3592,9 +3617,9 @@
           "builddate": 1786647872
         },
         "openclaw": {
-          "version": "2026.9.6-3",
+          "version": "2026.9.8-1",
           "desc": "Multi-channel AI gateway with extensible messaging integrations",
-          "builddate": 1791098658
+          "builddate": 1791335321
         },
         "openvino-genai": {
           "version": "2026.4.0.0-1",
@@ -3622,9 +3647,9 @@
           "builddate": 1791228190
         },
         "perplexity": {
-          "version": "26.9.6+build95799-1",
+          "version": "26.10.0+build101817-1",
           "desc": "Official Perplexity desktop app",
-          "builddate": 1790969366
+          "builddate": 1791334220
         },
         "pinta": {
           "version": "3.1.2-1",
@@ -3712,9 +3737,9 @@
           "builddate": 1789444055
         },
         "strata": {
-          "version": "0.20.1-1",
+          "version": "0.21.0-1",
           "desc": "Fast, keyboard-first file manager for modern Linux desktops",
-          "builddate": 1790520254
+          "builddate": 1791345440
         },
         "sublime-text-4": {
           "version": "4.4215-1",
@@ -3742,14 +3767,14 @@
           "builddate": 1790556759
         },
         "symfony-cli": {
-          "version": "5.20.0-9",
+          "version": "5.21.0-1",
           "desc": "The Symfony client helps developers create and manage Symfony applications.",
-          "builddate": 1788488514
+          "builddate": 1791333820
         },
         "symfony-cli-debug": {
-          "version": "5.20.0-9",
+          "version": "5.21.0-1",
           "desc": "Detached debugging symbols for symfony-cli",
-          "builddate": 1788488514
+          "builddate": 1791333820
         },
         "t3code-bin": {
           "version": "0.0.45-1",
@@ -3757,9 +3782,9 @@
           "builddate": 1790980714
         },
         "t3code-nightly-bin": {
-          "version": "0.0.46_nightly.20261004.2644-1",
+          "version": "0.0.46_nightly.20261006.2735-1",
           "desc": "Open-source control plane for coding agents (nightly)",
-          "builddate": 1791094576
+          "builddate": 1791333858
         },
         "tensaku": {
           "version": "0.29.0-1",
@@ -3965,9 +3990,9 @@
       "packageCount": 174,
       "packages": {
         "1password": {
-          "version": "8.12.38-1",
+          "version": "8.12.40-1",
           "desc": "Password manager and secure wallet",
-          "builddate": 1790968200
+          "builddate": 1791333277
         },
         "1password-beta": {
           "version": "8.12.40_27.BETA-1",
@@ -3980,9 +4005,9 @@
           "builddate": 1790980174
         },
         "aether": {
-          "version": "4.31.1-1",
+          "version": "4.32.0-1",
           "desc": "Desktop theming application - extract colors from wallpapers and apply cohesive themes",
-          "builddate": 1790968290
+          "builddate": 1791333271
         },
         "aquamarine": {
           "version": "0.15.1-1.1",
@@ -4010,9 +4035,9 @@
           "builddate": 1790122507
         },
         "basecamp-cli": {
-          "version": "0.9.1-1",
+          "version": "0.12.0-1",
           "desc": "CLI for Basecamp project management",
-          "builddate": 1788548865
+          "builddate": 1791333277
         },
         "brave-bin": {
           "version": "1:1.96.61-1",
@@ -4035,14 +4060,14 @@
           "builddate": 1788556018
         },
         "claude-code": {
-          "version": "2.1.289-1",
+          "version": "2.1.291-1",
           "desc": "An agentic coding tool that lives in your terminal",
-          "builddate": 1791070481
+          "builddate": 1791333268
         },
         "claude-desktop": {
-          "version": "2.9939.4-1",
+          "version": "2.19675.1-1",
           "desc": "Official Claude desktop app with Claude Code",
-          "builddate": 1790968178
+          "builddate": 1791333268
         },
         "cliamp": {
           "version": "2.3.0-1",
@@ -4060,9 +4085,9 @@
           "builddate": 1790565916
         },
         "cursor-bin": {
-          "version": "3.23.12-1",
+          "version": "3.23.23-1",
           "desc": "AI-first coding environment",
-          "builddate": 1790968194
+          "builddate": 1791333281
         },
         "cursor-cli": {
           "version": "1:2026.10.01.1.e373342-1",
@@ -4075,9 +4100,9 @@
           "builddate": 1790387334
         },
         "disktree-bin": {
-          "version": "0.10.1-1",
+          "version": "0.11.0-1",
           "desc": "Disk space treemap for Omarchy: see what fills a disk by kind, mark what should go, and remove it",
-          "builddate": 1790371217
+          "builddate": 1791333275
         },
         "dotnet-host-bin": {
           "version": "10.0.401-2",
@@ -4205,14 +4230,14 @@
           "builddate": 1790924844
         },
         "github-copilot-cli": {
-          "version": "1.0.91-1",
+          "version": "1.0.92-1",
           "desc": "GitHub Copilot CLI brings the power of Copilot coding agent directly to your terminal.",
-          "builddate": 1790968346
+          "builddate": 1791333268
         },
         "google-chrome": {
-          "version": "154.0.8037.97-1",
+          "version": "155.0.8059.39-1",
           "desc": "The popular web browser by Google (Stable Channel)",
-          "builddate": 1790968234
+          "builddate": 1791333276
         },
         "grok-bot": {
           "version": "0.47.0-1",
@@ -4380,9 +4405,9 @@
           "builddate": 1790983314
         },
         "mise-bin": {
-          "version": "2026.10.0-1",
+          "version": "2026.10.3-1",
           "desc": "dev tools, env vars, task runner",
-          "builddate": 1791005580
+          "builddate": 1791333259
         },
         "monologue": {
           "version": "0.3.0-1",
@@ -4415,9 +4440,9 @@
           "builddate": 1790922389
         },
         "obsidian": {
-          "version": "1.13.7-2",
+          "version": "1.14.4-1",
           "desc": "Knowledge base on top of a local folder of plain-text Markdown files",
-          "builddate": 1790230396
+          "builddate": 1791333309
         },
         "omacalc": {
           "version": "0.2.2-1",
@@ -4585,19 +4610,19 @@
           "builddate": 1788557749
         },
         "openai-codex-bin": {
-          "version": "0.160.0-1",
+          "version": "0.160.1-1",
           "desc": "Arch Linux package for OpenAI's Codex CLI - Auto Updated",
-          "builddate": 1790968236
+          "builddate": 1791333339
         },
         "openai-codex-desktop": {
-          "version": "26.930.41038-1",
+          "version": "26.930.61225-1",
           "desc": "Official ChatGPT desktop app with Codex",
-          "builddate": 1791070486
+          "builddate": 1791333330
         },
         "openclaw": {
-          "version": "2026.9.6-3",
+          "version": "2026.9.8-1",
           "desc": "Multi-channel AI gateway with extensible messaging integrations",
-          "builddate": 1791098482
+          "builddate": 1791333294
         },
         "owe": {
           "version": "0.2.9-1",
@@ -4610,9 +4635,9 @@
           "builddate": 1791227971
         },
         "perplexity": {
-          "version": "26.9.6+build95799-1",
+          "version": "26.10.0+build101817-1",
           "desc": "Official Perplexity desktop app",
-          "builddate": 1790968199
+          "builddate": 1791333263
         },
         "pinta": {
           "version": "3.1.2-1",
@@ -4665,9 +4690,9 @@
           "builddate": 1791241651
         },
         "strata": {
-          "version": "0.20.1-1",
+          "version": "0.21.0-1",
           "desc": "Fast, keyboard-first file manager for modern Linux desktops",
-          "builddate": 1790520020
+          "builddate": 1791345195
         },
         "sublime-text-4": {
           "version": "4.4215-1",
@@ -4680,9 +4705,9 @@
           "builddate": 1788576340
         },
         "symfony-cli": {
-          "version": "5.20.0-9",
+          "version": "5.21.0-1",
           "desc": "The Symfony client helps developers create and manage Symfony applications.",
-          "builddate": 1788559956
+          "builddate": 1791333271
         },
         "t3code-bin": {
           "version": "0.0.45-1",
@@ -4690,9 +4715,9 @@
           "builddate": 1790980188
         },
         "t3code-nightly-bin": {
-          "version": "0.0.46_nightly.20261004.2644-1",
+          "version": "0.0.46_nightly.20261006.2735-1",
           "desc": "Open-source control plane for coding agents (nightly)",
-          "builddate": 1791094370
+          "builddate": 1791333276
         },
         "tensaku": {
           "version": "0.28.0-1",
@@ -4902,7 +4927,7 @@
       {
         "name": "disktree-bin",
         "stable": null,
-        "edge": "0.10.1-1"
+        "edge": "0.11.0-1"
       },
       {
         "name": "dotnet-core-bin-debug",
@@ -5147,22 +5172,32 @@
       {
         "name": "linux-omarchy",
         "stable": "7.2.5-3",
-        "edge": "7.2.8-2"
+        "edge": "7.2.8-5"
       },
       {
         "name": "linux-omarchy-bore",
         "stable": "7.2.5-3",
-        "edge": "7.2.8-2"
+        "edge": "7.2.8-5"
       },
       {
         "name": "linux-omarchy-bore-headers",
         "stable": "7.2.5-3",
-        "edge": "7.2.8-2"
+        "edge": "7.2.8-5"
+      },
+      {
+        "name": "linux-omarchy-eevdf",
+        "stable": null,
+        "edge": "7.2.8-5"
+      },
+      {
+        "name": "linux-omarchy-eevdf-headers",
+        "stable": null,
+        "edge": "7.2.8-5"
       },
       {
         "name": "linux-omarchy-headers",
         "stable": "7.2.5-3",
-        "edge": "7.2.8-2"
+        "edge": "7.2.8-5"
       },
       {
         "name": "linux-omarchy-ptl-novrr-mm",
@@ -5207,7 +5242,7 @@
       {
         "name": "omarchy-meeting-recorder-bin",
         "stable": null,
-        "edge": "1.5.0-1"
+        "edge": "1.6.0-1"
       },
       {
         "name": "omarchy-nvim",
@@ -5464,7 +5499,7 @@
       {
         "name": "disktree-bin",
         "rc": null,
-        "edge": "0.10.1-1"
+        "edge": "0.11.0-1"
       },
       {
         "name": "dotnet-core-bin-debug",
@@ -5709,22 +5744,32 @@
       {
         "name": "linux-omarchy",
         "rc": "7.2.5-4",
-        "edge": "7.2.8-2"
+        "edge": "7.2.8-5"
       },
       {
         "name": "linux-omarchy-bore",
         "rc": "7.2.5-4",
-        "edge": "7.2.8-2"
+        "edge": "7.2.8-5"
       },
       {
         "name": "linux-omarchy-bore-headers",
         "rc": "7.2.5-4",
-        "edge": "7.2.8-2"
+        "edge": "7.2.8-5"
+      },
+      {
+        "name": "linux-omarchy-eevdf",
+        "rc": null,
+        "edge": "7.2.8-5"
+      },
+      {
+        "name": "linux-omarchy-eevdf-headers",
+        "rc": null,
+        "edge": "7.2.8-5"
       },
       {
         "name": "linux-omarchy-headers",
         "rc": "7.2.5-4",
-        "edge": "7.2.8-2"
+        "edge": "7.2.8-5"
       },
       {
         "name": "linux-omarchy-ptl-novrr-mm",
@@ -5769,7 +5814,7 @@
       {
         "name": "omarchy-meeting-recorder-bin",
         "rc": null,
-        "edge": "1.5.0-1"
+        "edge": "1.6.0-1"
       },
       {
         "name": "omarchy-nvim",
@@ -5998,6 +6043,7 @@
   "kernels": {
     "stable": {
       "linux-firmware-cirrus": "20260810-3",
+      "linux-firmware-cirrus-dx13260": "20260810-1",
       "linux-mainline-panther-lake": "7.0rc4-2",
       "linux-mainline-panther-lake-headers": "7.0rc4-2",
       "linux-omarchy": "7.2.5-3",
@@ -6013,6 +6059,7 @@
     },
     "rc": {
       "linux-firmware-cirrus": "20260810-3",
+      "linux-firmware-cirrus-dx13260": "20260810-1",
       "linux-mainline-panther-lake": "7.0rc4-2",
       "linux-mainline-panther-lake-headers": "7.0rc4-2",
       "linux-omarchy": "7.2.5-4",
@@ -6028,12 +6075,15 @@
     },
     "edge": {
       "linux-firmware-cirrus": "20260810-3",
+      "linux-firmware-cirrus-dx13260": "20260810-1",
       "linux-mainline-panther-lake": "7.0rc4-2",
       "linux-mainline-panther-lake-headers": "7.0rc4-2",
-      "linux-omarchy": "7.2.8-2",
-      "linux-omarchy-bore": "7.2.8-2",
-      "linux-omarchy-bore-headers": "7.2.8-2",
-      "linux-omarchy-headers": "7.2.8-2",
+      "linux-omarchy": "7.2.8-5",
+      "linux-omarchy-bore": "7.2.8-5",
+      "linux-omarchy-bore-headers": "7.2.8-5",
+      "linux-omarchy-eevdf": "7.2.8-5",
+      "linux-omarchy-eevdf-headers": "7.2.8-5",
+      "linux-omarchy-headers": "7.2.8-5",
       "linux-omarchy-muqss": "7.2.3-1",
       "linux-omarchy-muqss-headers": "7.2.3-1",
       "linux-omarchy-ptl-novrr-mm": "7.2.5-2",

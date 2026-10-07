@@ -1,5 +1,5 @@
 {
-  "count": 143,
+  "count": 145,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -2389,7 +2389,7 @@
       ]
     },
     {
-      "body": "echo \"Install Grok through mise's first-party package\"\n\n# The npm package launches whatever is already in ~/.grok/bin, and mise does not\n# run its postinstall, so a newer package keeps running the old binary. mise's\n# grok tool is the binary. Drop the npm tool or its shim stays ahead of the stub.\n\nnpm_grok=\"npm:@xai-official/grok\"\nwrapper=\"$HOME/.local/bin/grok\"\nnpm_stub=false\n\n# Anchored to the package the old installer wrote. A script the user wrote that\n# calls mise use -g for something else is left alone.\nif [[ -f $wrapper && ! -L $wrapper ]] && grep -Fq \"$npm_grok\" \"$wrapper\"; then\n  npm_stub=true\nfi\n\ndrop_npm_grok() {\n  omarchy-cmd-present mise || return 0\n  if [[ -n $(mise ls -g \"$npm_grok\") ]]; then\n    mise unuse -g \"$npm_grok\"\n  fi\n  if [[ -n $(mise ls -i \"$npm_grok\") ]]; then\n    mise uninstall -y --all \"$npm_grok\"\n  fi\n}\n\nif [[ ! -f $HOME/.local/state/omarchy/preinstalls-removed ]]; then\n  # The shim is ahead of ~/.local/bin, so drop the npm tool before looking for\n  # grok. A removed wrapper still looks installed until the tool is gone.\n  drop_npm_grok\n  if [[ $npm_stub == true ]] || omarchy-cmd-missing grok; then\n    omarchy-mise-install grok\n  fi\nelif [[ $npm_stub == true ]]; then\n  # After an opt-out, only a wrapper Omarchy wrote proves the tool is ours.\n  rm -f \"$wrapper\"\n  drop_npm_grok\nfi\n\n# The npm launcher unpacked its binary into ~/.grok/bin, where x.ai's installer",
+      "body": "echo \"Install Grok through mise's first-party package\"\n\n# The npm package launches whatever is already in ~/.grok/bin, and mise does not\n# run its postinstall, so a newer package keeps running the old binary. mise's\n# grok tool is the binary. Drop the npm tool or its shim stays ahead of the stub.\n\nnpm_grok=\"npm:@xai-official/grok\"\nwrapper=\"$HOME/.local/bin/grok\"\nnpm_stub=false\n\n# Anchored to the package the old installer wrote. A script the user wrote that\n# calls mise use -g for something else is left alone.\nif [[ -f $wrapper && ! -L $wrapper ]] && grep -Fq \"$npm_grok\" \"$wrapper\"; then\n  npm_stub=true\nfi\n\ndrop_npm_grok() {\n  omarchy-cmd-present mise || return 0\n  if [[ -n $(mise ls -g \"$npm_grok\") ]]; then\n    mise unuse -y -g \"$npm_grok\"\n  fi\n  if [[ -n $(mise ls -i \"$npm_grok\") ]]; then\n    mise uninstall -y --all \"$npm_grok\"\n  fi\n}\n\nif [[ ! -f $HOME/.local/state/omarchy/preinstalls-removed ]]; then\n  # The shim is ahead of ~/.local/bin, so drop the npm tool before looking for\n  # grok. A removed wrapper still looks installed until the tool is gone.\n  drop_npm_grok\n  if [[ $npm_stub == true ]] || omarchy-cmd-missing grok; then\n    omarchy-mise-install grok\n  fi\nelif [[ $npm_stub == true ]]; then\n  # After an opt-out, only a wrapper Omarchy wrote proves the tool is ours.\n  rm -f \"$wrapper\"\n  drop_npm_grok\nfi\n\n# The npm launcher unpacked its binary into ~/.grok/bin, where x.ai's installer",
       "bodyTruncated": true,
       "date": "2026-10-01T14:00:09Z",
       "description": "Install Grok through mise's first-party package",
@@ -2456,6 +2456,41 @@
         "/etc/pam.d/omarchy-lock-fingerprint",
         "/etc/systemd/system/fprintd.service.d/10-stop-timeout.conf",
         "/usr/lib/systemd/system-sleep/fprintd-resume"
+      ]
+    },
+    {
+      "body": "echo \"Install the Dell XPS 13 Panther Lake speaker firmware\"\n\nif omarchy-hw-dell-xps13-dx13260-ptl; then\n  source \"$OMARCHY_PATH/install/hardware/dell-xps13-ptl-speaker-firmware.sh\"\n  omarchy-state set reboot-required\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-06T05:46:53Z",
+      "description": "Install the Dell XPS 13 Panther Lake speaker firmware",
+      "file": "1791265613.sh",
+      "lineCount": 6,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791265613.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791265613.sh",
+      "timestamp": 1791265613,
+      "touches": []
+    },
+    {
+      "body": "echo \"Replace the Disk Usage TUI with Disktree\"\n\nomarchy-pkg-add disktree-bin\nomarchy-pkg-drop dua-cli\n\nrm -f \"$HOME/.local/share/applications/Disk Usage.desktop\"\nif [[ -d $HOME/.local/share/applications ]]; then\n  update-desktop-database \"$HOME/.local/share/applications\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-07T03:58:04Z",
+      "description": "Replace the Disk Usage TUI with Disktree",
+      "file": "1791345484.sh",
+      "lineCount": 9,
+      "packagesAdded": [
+        "disktree-bin"
+      ],
+      "packagesRemoved": [
+        "dua-cli"
+      ],
+      "path": "migrations/1791345484.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791345484.sh",
+      "timestamp": 1791345484,
+      "touches": [
+        "~/.local/share/applications",
+        "~/.local/share/applications/Disk"
       ]
     }
   ],

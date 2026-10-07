@@ -370,6 +370,7 @@
       "omarchy-cmd-browser-handoff",
       "omarchy-cmd-default-browser",
       "omarchy-crash-mute",
+      "omarchy-hw-dell-xps13-dx13260-ptl",
       "omarchy-hw-dell-xps13-sidecar-amps",
       "omarchy-hw-elgato-camlink-4k",
       "omarchy-hw-nvidia-display",
@@ -585,6 +586,22 @@
         "fields": {
           "args": [
             "",
+            "[-y]"
+          ],
+          "examples": [
+            [],
+            [
+              "omarchy update orphan-pkgs",
+              "omarchy update orphan-pkgs -y"
+            ]
+          ]
+        },
+        "name": "omarchy-update-orphan-pkgs"
+      },
+      {
+        "fields": {
+          "args": [
+            "",
             "[--services-only|--reboot-only]"
           ]
         },
@@ -592,11 +609,11 @@
       }
     ],
     "counts": {
-      "added": 38,
-      "changed": 15,
+      "added": 39,
+      "changed": 16,
       "from": 444,
       "removed": 0,
-      "to": 482
+      "to": 483
     },
     "removed": []
   },
@@ -1414,9 +1431,9 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 37,
+      "new": 39,
       "removed": 0,
-      "to": 143
+      "to": 145
     },
     "new": [
       {
@@ -1603,6 +1620,16 @@
         "date": "2026-10-04T14:54:10Z",
         "description": "Install the fingerprint resume hook on existing fingerprint setups",
         "file": "1791125650.sh"
+      },
+      {
+        "date": "2026-10-06T05:46:53Z",
+        "description": "Install the Dell XPS 13 Panther Lake speaker firmware",
+        "file": "1791265613.sh"
+      },
+      {
+        "date": "2026-10-07T03:58:04Z",
+        "description": "Replace the Disk Usage TUI with Disktree",
+        "file": "1791345484.sh"
       }
     ],
     "removed": []

@@ -1,7 +1,7 @@
 {
  "source": "github.com/omacom/omarchy",
- "fetchedAt": "2026-10-06T11:21:53.700391+00:00",
- "derivedAt": "2026-10-06T11:30:10.558419+00:00",
+ "fetchedAt": "2026-10-07T11:09:56.384317+00:00",
+ "derivedAt": "2026-10-07T11:17:49.767086+00:00",
  "criteria": {
   "stateReason": "COMPLETED",
   "minPostCloseComments": 2,
@@ -19,12 +19,46 @@
  },
  "count": 40,
  "funnel": {
-  "completedIssues": 2752,
-  "withFetchedComments": 1729,
+  "completedIssues": 2755,
+  "withFetchedComments": 1730,
   "withAtLeastOnePostCloseMarker": 137,
   "withAtLeastTwoPostCloseMarkers": 40
  },
  "issues": [
+  {
+   "number": 1846,
+   "title": "unable to write 3.0.1 ISO using balenaEtcher",
+   "url": "https://github.com/omacom/omarchy/issues/1846",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-09-29T13:46:38Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [],
+   "comments": 14,
+   "postCloseComments": 4,
+   "sampleSnippets": [
+    {
+     "author": "dtellz",
+     "createdAt": "2026-09-25T09:44:16Z",
+     "url": "https://github.com/omacom/omarchy/issues/1846#issuecomment-5830291235",
+     "snippet": "This is back with v4.0.4"
+    },
+    {
+     "author": "alaycock",
+     "createdAt": "2026-09-25T18:54:05Z",
+     "url": "https://github.com/omacom/omarchy/issues/1846#issuecomment-5837899104",
+     "snippet": "I ran into this too. I instead used `dd`, which worked fine when BalenaEtcher did not:\n`sudo dd if=/path/to/omarchy-4.0.4.iso of=/dev/disk4 bs=1m status=progress`\n\nFind your disk number via `diskutil list`, no need to install BalenaEtcher."
+    },
+    {
+     "author": "Afsal102",
+     "createdAt": "2026-09-30T05:42:19Z",
+     "url": "https://github.com/omacom/omarchy/issues/1846#issuecomment-5904890706",
+     "snippet": "> This is back with v4.0.4\n\nyea looks to be back, unable to flash it from balenaEtcher"
+    }
+   ],
+   "lastActivity": "2026-10-06T17:27:02Z"
+  },
   {
    "number": 3619,
    "title": "X1 Carbon Gen 13 LUKS Prompt Black Screen",
@@ -86,40 +120,6 @@
     }
    ],
    "lastActivity": "2026-10-01T05:23:16Z"
-  },
-  {
-   "number": 1846,
-   "title": "unable to write 3.0.1 ISO using balenaEtcher",
-   "url": "https://github.com/omacom/omarchy/issues/1846",
-   "state": "CLOSED",
-   "stateReason": "COMPLETED",
-   "closedAt": "2025-09-29T13:46:38Z",
-   "closer": null,
-   "fixedBy": [],
-   "components": [],
-   "comments": 13,
-   "postCloseComments": 3,
-   "sampleSnippets": [
-    {
-     "author": "dtellz",
-     "createdAt": "2026-09-25T09:44:16Z",
-     "url": "https://github.com/omacom/omarchy/issues/1846#issuecomment-5830291235",
-     "snippet": "This is back with v4.0.4"
-    },
-    {
-     "author": "alaycock",
-     "createdAt": "2026-09-25T18:54:05Z",
-     "url": "https://github.com/omacom/omarchy/issues/1846#issuecomment-5837899104",
-     "snippet": "For what it's worth, writing it via `dd` worked fine when BalenaEtcher did not:\n`sudo dd if=/path/to/omarchy-4.0.4.iso of=/dev/disk4 bs=1m status=progress`\n\nFind your disk number via `diskutil list`"
-    },
-    {
-     "author": "Afsal102",
-     "createdAt": "2026-09-30T05:42:19Z",
-     "url": "https://github.com/omacom/omarchy/issues/1846#issuecomment-5904890706",
-     "snippet": "> This is back with v4.0.4\n\nyea looks to be back, unable to flash it from balenaEtcher"
-    }
-   ],
-   "lastActivity": "2026-09-30T05:42:19Z"
   },
   {
    "number": 7789,

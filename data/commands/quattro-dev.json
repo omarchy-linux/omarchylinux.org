@@ -2057,6 +2057,23 @@
     {
       "aliases": [],
       "args": "",
+      "cli": "omarchy hw dell xps13 dx13260 ptl",
+      "examples": [],
+      "executable": true,
+      "group": "hw",
+      "groupDescription": "Hardware detection and controls",
+      "hasMetadata": true,
+      "hidden": false,
+      "lineCount": 5,
+      "name": "omarchy-hw-dell-xps13-dx13260-ptl",
+      "path": "bin/omarchy-hw-dell-xps13-dx13260-ptl",
+      "requiresSudo": false,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-hw-dell-xps13-dx13260-ptl",
+      "summary": "Match the Dell XPS 13 DX13260 with an Intel Panther Lake GPU."
+    },
+    {
+      "aliases": [],
+      "args": "",
       "cli": "omarchy hw dell xps13 sidecar amps",
       "examples": [],
       "executable": true,
@@ -8013,15 +8030,18 @@
     },
     {
       "aliases": [],
-      "args": "",
+      "args": "[-y]",
       "cli": "omarchy update orphan pkgs",
-      "examples": [],
+      "examples": [
+        "omarchy update orphan-pkgs",
+        "omarchy update orphan-pkgs -y"
+      ],
       "executable": true,
       "group": "update",
       "groupDescription": "Omarchy and system updates",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 29,
+      "lineCount": 31,
       "name": "omarchy-update-orphan-pkgs",
       "path": "bin/omarchy-update-orphan-pkgs",
       "requiresSudo": true,
@@ -8576,7 +8596,7 @@
       "summary": "Install, launch, stop, inspect, or remove the Windows VM"
     }
   ],
-  "count": 482,
+  "count": 483,
   "generatedFrom": "data/source/quattro-dev/bin",
   "groups": {
     "agent": "AI coding agents, their usage, and subscription accounts",

@@ -387,6 +387,8 @@
       "omarchy-remove-service-ssh-agent",
       "omarchy-security-functions",
       "omarchy-setup-security-ssh-agent",
+      "omarchy-theme-bg-boot-intro",
+      "omarchy-theme-bg-intro",
       "omarchy-theme-set-herdr-machines",
       "omarchy-theme-set-hunk",
       "omarchy-toggle-animations",
@@ -561,6 +563,15 @@
       {
         "fields": {
           "args": [
+            "[MINUTES]",
+            "[MINUTES|permanent|--active|--disable]"
+          ]
+        },
+        "name": "omarchy-sudo-passwordless"
+      },
+      {
+        "fields": {
+          "args": [
             "<path-to-image>",
             "<path-to-media>"
           ],
@@ -609,11 +620,11 @@
       }
     ],
     "counts": {
-      "added": 39,
-      "changed": 16,
+      "added": 41,
+      "changed": 17,
       "from": 444,
       "removed": 0,
-      "to": 483
+      "to": 485
     },
     "removed": []
   },
@@ -622,6 +633,7 @@
     "added": [
       "install.ai.claude",
       "install.service.microsoft",
+      "install.service.slack",
       "remove.ai.chatgpt",
       "remove.ai.claude",
       "remove.ai.dictation",
@@ -1417,11 +1429,11 @@
       }
     ],
     "counts": {
-      "added": 15,
+      "added": 16,
       "changed": 86,
       "from": 333,
       "removed": 2,
-      "to": 346
+      "to": 347
     },
     "removed": [
       "remove.dictation",
@@ -1431,9 +1443,9 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 39,
+      "new": 41,
       "removed": 0,
-      "to": 145
+      "to": 147
     },
     "new": [
       {
@@ -1490,6 +1502,11 @@
         "date": "2026-09-01T16:11:57Z",
         "description": "Replace the YT6801 vendor DKMS driver with the upstream kernel driver",
         "file": "1788279117.sh"
+      },
+      {
+        "date": "2026-09-01T16:49:08Z",
+        "description": "Re-stage the active theme with packaged intro videos",
+        "file": "1788281348.sh"
       },
       {
         "date": "2026-09-05T07:57:40Z",
@@ -1630,6 +1647,11 @@
         "date": "2026-10-07T03:58:04Z",
         "description": "Replace the Disk Usage TUI with Disktree",
         "file": "1791345484.sh"
+      },
+      {
+        "date": "2026-10-07T12:41:27Z",
+        "description": "Enable overlay scrollbars in Chromium-based browsers",
+        "file": "1791376887.sh"
       }
     ],
     "removed": []

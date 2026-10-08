@@ -3935,7 +3935,7 @@
       "groupDescription": "Application launchers",
       "hasMetadata": true,
       "hidden": true,
-      "lineCount": 91,
+      "lineCount": 93,
       "name": "omarchy-launch-shell",
       "path": "bin/omarchy-launch-shell",
       "requiresSudo": false,
@@ -6571,7 +6571,7 @@
     },
     {
       "aliases": [],
-      "args": "[MINUTES]",
+      "args": "[MINUTES|permanent|--active|--disable]",
       "cli": "omarchy sudo passwordless",
       "examples": [],
       "executable": true,
@@ -6579,7 +6579,7 @@
       "groupDescription": "Sudo configuration helpers",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 449,
+      "lineCount": 596,
       "name": "omarchy-sudo-passwordless",
       "path": "bin/omarchy-sudo-passwordless",
       "requiresSudo": true,
@@ -6837,6 +6837,23 @@
     {
       "aliases": [],
       "args": "",
+      "cli": "omarchy theme bg boot intro",
+      "examples": [],
+      "executable": true,
+      "group": "theme",
+      "groupDescription": "Theme management",
+      "hasMetadata": true,
+      "hidden": true,
+      "lineCount": 201,
+      "name": "omarchy-theme-bg-boot-intro",
+      "path": "bin/omarchy-theme-bg-boot-intro",
+      "requiresSudo": false,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-theme-bg-boot-intro",
+      "summary": "Play the current background's matching theme intro"
+    },
+    {
+      "aliases": [],
+      "args": "",
       "cli": "omarchy theme bg cache",
       "examples": [],
       "executable": true,
@@ -6886,6 +6903,26 @@
       "requiresSudo": false,
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-theme-bg-install",
       "summary": "Open the current theme's user background folder"
+    },
+    {
+      "aliases": [],
+      "args": "<enable|disable|toggle|status>",
+      "cli": "omarchy theme bg intro",
+      "examples": [
+        "omarchy theme bg intro toggle",
+        "omarchy theme bg intro disable"
+      ],
+      "executable": true,
+      "group": "theme",
+      "groupDescription": "Theme management",
+      "hasMetadata": true,
+      "hidden": false,
+      "lineCount": 34,
+      "name": "omarchy-theme-bg-intro",
+      "path": "bin/omarchy-theme-bg-intro",
+      "requiresSudo": false,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-theme-bg-intro",
+      "summary": "Enable or disable background intros"
     },
     {
       "aliases": [],
@@ -7140,7 +7177,7 @@
       "groupDescription": "Theme management",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 451,
+      "lineCount": 529,
       "name": "omarchy-theme-set",
       "path": "bin/omarchy-theme-set",
       "requiresSudo": false,
@@ -7242,7 +7279,7 @@
       "groupDescription": "Theme management",
       "hasMetadata": true,
       "hidden": true,
-      "lineCount": 75,
+      "lineCount": 80,
       "name": "omarchy-theme-set-herdr-machines",
       "path": "bin/omarchy-theme-set-herdr-machines",
       "requiresSudo": false,
@@ -8596,7 +8633,7 @@
       "summary": "Install, launch, stop, inspect, or remove the Windows VM"
     }
   ],
-  "count": 483,
+  "count": 485,
   "generatedFrom": "data/source/quattro-dev/bin",
   "groups": {
     "agent": "AI coding agents, their usage, and subscription accounts",

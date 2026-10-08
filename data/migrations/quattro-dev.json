@@ -1,5 +1,5 @@
 {
-  "count": 145,
+  "count": 147,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -1876,6 +1876,23 @@
       "touches": []
     },
     {
+      "body": "echo \"Re-stage the active theme with packaged intro videos\"\n\ntheme_name_path=\"$HOME/.local/state/omarchy/current/theme.name\"\n\n[[ -s $theme_name_path ]] || exit 0\n\ntheme_name=$(<\"$theme_name_path\")\n[[ $theme_name =~ ^[[:alnum:]_][[:alnum:].+_-]*$ ]] || exit 0\n[[ -d $OMARCHY_PATH/themes/$theme_name/backgrounds/intros ]] || exit 0\n\nomarchy-theme-refresh\n\nstate_dir=\"$HOME/.local/state/omarchy\"\nmarker=\"$state_dir/background-intro.session-id\"\nsession_id=${OMARCHY_SESSION_ID:-${HYPRLAND_INSTANCE_SIGNATURE:-}}\nif [[ -z $session_id ]]; then\n  hypr_dir=$(find \"${XDG_RUNTIME_DIR:-/run/user/$UID}/hypr\" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\\n' 2>/dev/null | sort -n | tail -n 1 | cut -d' ' -f2- || true)\n  session_id=${hypr_dir##*/}\nfi\n[[ -n $session_id ]] || exit 0\nmkdir -p \"$state_dir\"\nmarker_staged=$(mktemp \"$state_dir/.background-intro.session-id.XXXXXX\")\ntrap 'rm -f \"$marker_staged\"' EXIT\nprintf '%s\\n' \"$session_id\" >\"$marker_staged\"\nmv -f \"$marker_staged\" \"$marker\"\ntrap - EXIT",
+      "bodyTruncated": false,
+      "date": "2026-09-01T16:49:08Z",
+      "description": "Re-stage the active theme with packaged intro videos",
+      "file": "1788281348.sh",
+      "lineCount": 26,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1788281348.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1788281348.sh",
+      "timestamp": 1788281348,
+      "touches": [
+        "~/.local/state/omarchy",
+        "~/.local/state/omarchy/current/theme.name"
+      ]
+    },
+    {
       "body": "echo \"Install Cursor CLI via mise wrapper\"\n\n# Cursor's own installer links ~/.local/bin/cursor-agent, so an existing\n# command is the user's and stays. The wrapper resolves cursor-agent through\n# mise's registry, which lists it from 2026.8.15 on.\nif omarchy-cmd-missing cursor-agent && [[ ! -f $HOME/.local/state/omarchy/preinstalls-removed ]]; then\n  omarchy-mise-install cursor-agent\nfi",
       "bodyTruncated": false,
       "date": "2026-09-05T03:05:53Z",
@@ -2492,6 +2509,20 @@
         "~/.local/share/applications",
         "~/.local/share/applications/Disk"
       ]
+    },
+    {
+      "body": "echo \"Enable overlay scrollbars in Chromium-based browsers\"\n\nfor flags_file in \"$HOME\"/.config/{chromium,chrome,microsoft-edge-stable,brave,brave-origin}-flags.conf; do\n  [[ -f $flags_file ]] || continue\n  grep -Eq -- '^--enable-features=([^,]+,)*OverlayScrollbar([,:]|$)' \"$flags_file\" && continue\n\n  if grep -q -- '^--enable-features=' \"$flags_file\"; then\n    sed -i --follow-symlinks \\\n      -e '/^--enable-features=/ s/$/,OverlayScrollbar/' \\\n      -e '/^--enable-features=/ s/=,/=/' \"$flags_file\"\n  else\n    [[ -n $(tail -c1 \"$flags_file\") ]] && echo >>\"$flags_file\"\n    echo '--enable-features=OverlayScrollbar' >>\"$flags_file\"\n  fi\ndone",
+      "bodyTruncated": false,
+      "date": "2026-10-07T12:41:27Z",
+      "description": "Enable overlay scrollbars in Chromium-based browsers",
+      "file": "1791376887.sh",
+      "lineCount": 15,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791376887.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791376887.sh",
+      "timestamp": 1791376887,
+      "touches": []
     }
   ],
   "prerelease": true,

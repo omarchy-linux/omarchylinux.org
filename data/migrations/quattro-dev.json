@@ -1,5 +1,5 @@
 {
-  "count": 147,
+  "count": 149,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -2523,6 +2523,39 @@
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791376887.sh",
       "timestamp": 1791376887,
       "touches": []
+    },
+    {
+      "body": "echo \"Prioritize the Omarchy package repository over Arch repositories\"\n\n# Move the existing section rather than replacing pacman.conf so channel URLs,\n# custom repositories, and administrator options survive the migration.\npacman_config=$(mktemp)\ntrap 'rm -f \"$pacman_config\"' EXIT\n\nawk '\n  /^[[:space:]]*\\[[^]]+\\]/ {\n    section = $0\n    sub(/^[[:space:]]*\\[/, \"\", section)\n    sub(/\\].*$/, \"\", section)\n    if (section != \"options\") repositories = 1\n  }\n  !repositories { prefix = prefix $0 \"\\n\"; next }\n  section == \"omarchy\" { omarchy = omarchy $0 \"\\n\"; next }\n  { others = others $0 \"\\n\" }\n  END { printf \"%s%s%s\", prefix, omarchy, others }\n' /etc/pacman.conf >\"$pacman_config\"\n\nif ! cmp -s /etc/pacman.conf \"$pacman_config\"; then\n  sudo cp -a /etc/pacman.conf /etc/pacman.conf.bak\n  sudo install -m 644 -o root -g root \"$pacman_config\" /etc/pacman.conf\nfi\n\n# Refresh databases and upgrade against the new repository priority. Run this\n# even when the config is already ordered so a failed upgrade can be retried.\nomarchy-update-system-pkgs",
+      "bodyTruncated": false,
+      "date": "2026-10-07T20:00:52Z",
+      "description": "Prioritize the Omarchy package repository over Arch repositories",
+      "file": "1791403252.sh",
+      "lineCount": 28,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791403252.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791403252.sh",
+      "timestamp": 1791403252,
+      "touches": [
+        "/etc/pacman.conf",
+        "/etc/pacman.conf.bak"
+      ]
+    },
+    {
+      "body": "echo \"Preserve Voxtype as the default for existing dictation users\"\n\nbackend_config=\"${XDG_CONFIG_HOME:-$HOME/.config}/omarchy/defaults/dictation\"\nif [[ ! -e $backend_config ]] && omarchy-pkg-present voxtype-bin; then\n  mkdir -p \"${backend_config%/*}\"\n  temporary=$(mktemp \"$backend_config.XXXXXX\")\n  printf '%s\\n' voxtype > \"$temporary\"\n  mv -f \"$temporary\" \"$backend_config\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-08T17:07:53Z",
+      "description": "Preserve Voxtype as the default for existing dictation users",
+      "file": "1791479273.sh",
+      "lineCount": 9,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791479273.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791479273.sh",
+      "timestamp": 1791479273,
+      "touches": [
+        "~/.config"
+      ]
     }
   ],
   "prerelease": true,

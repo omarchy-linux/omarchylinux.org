@@ -2,6 +2,14 @@
   "bindings": {
     "added": [
       {
+        "chord": "ALT + Alt_R",
+        "label": "Start dictation (push-to-talk)"
+      },
+      {
+        "chord": "ALT + Alt_R",
+        "label": "Stop dictation (push-to-talk)"
+      },
+      {
         "chord": "SUPER + A",
         "label": "Select all"
       },
@@ -46,6 +54,22 @@
         ],
         "chord": "ALT + XF86AudioPlay",
         "label": "Next track"
+      },
+      {
+        "action": [
+          "voxtype record start",
+          "omarchy-dictation start"
+        ],
+        "chord": "F9",
+        "label": "Start dictation (push-to-talk)"
+      },
+      {
+        "action": [
+          "voxtype record stop",
+          "omarchy-dictation stop"
+        ],
+        "chord": "F9",
+        "label": "Stop dictation (push-to-talk)"
       },
       {
         "action": [
@@ -209,6 +233,14 @@
       },
       {
         "action": [
+          "voxtype record toggle",
+          "omarchy-dictation toggle"
+        ],
+        "chord": "SUPER + CTRL + X",
+        "label": "Toggle dictation"
+      },
+      {
+        "action": [
           "omarchy-menu toggle system",
           "{ menu = \"system\" }"
         ],
@@ -337,13 +369,13 @@
       }
     ],
     "counts": {
-      "added": 7,
-      "changedAction": 38,
+      "added": 9,
+      "changedAction": 41,
       "from": 228,
       "fromRecords": 228,
       "removed": 1,
-      "to": 234,
-      "toRecords": 234
+      "to": 236,
+      "toRecords": 236
     },
     "note": null,
     "removed": [
@@ -370,6 +402,11 @@
       "omarchy-cmd-browser-handoff",
       "omarchy-cmd-default-browser",
       "omarchy-crash-mute",
+      "omarchy-default-dictation",
+      "omarchy-dictation",
+      "omarchy-dictation-superwhisper",
+      "omarchy-dictation-use",
+      "omarchy-dictation-voxtype",
       "omarchy-hw-dell-xps13-dx13260-ptl",
       "omarchy-hw-dell-xps13-sidecar-amps",
       "omarchy-hw-elgato-camlink-4k",
@@ -377,12 +414,16 @@
       "omarchy-hw-vm",
       "omarchy-install-ai-claude",
       "omarchy-install-chromium-claude",
+      "omarchy-install-dictation-superwhisper",
+      "omarchy-install-dictation-voxtype",
       "omarchy-install-service-microsoft",
       "omarchy-remove-ai-chatgpt",
       "omarchy-remove-ai-claude",
       "omarchy-remove-ai-grok-bot",
       "omarchy-remove-ai-lm-studio",
       "omarchy-remove-ai-ollama",
+      "omarchy-remove-dictation-superwhisper",
+      "omarchy-remove-dictation-voxtype",
       "omarchy-remove-service-microsoft",
       "omarchy-remove-service-ssh-agent",
       "omarchy-security-functions",
@@ -620,13 +661,17 @@
       }
     ],
     "counts": {
-      "added": 41,
+      "added": 50,
       "changed": 17,
       "from": 444,
-      "removed": 0,
-      "to": 485
+      "removed": 3,
+      "to": 491
     },
-    "removed": []
+    "removed": [
+      "omarchy-voxtype-install",
+      "omarchy-voxtype-remove",
+      "omarchy-voxtype-status"
+    ]
   },
   "from": "v4.0.4",
   "menu": {
@@ -636,14 +681,18 @@
       "install.service.slack",
       "remove.ai.chatgpt",
       "remove.ai.claude",
-      "remove.ai.dictation",
       "remove.ai.grok-bot",
       "remove.ai.lm-studio",
       "remove.ai.ollama",
+      "remove.dictation.superwhisper",
+      "remove.dictation.voxtype",
       "remove.service.microsoft",
       "remove.service.ssh-agent",
       "setup.default.agent.agy",
       "setup.default.agent.ori",
+      "setup.default.dictation",
+      "setup.default.dictation.superwhisper",
+      "setup.default.dictation.voxtype",
       "setup.security.ssh-agent",
       "trigger.toggle.animations",
       "trigger.toggle.theme-sync"
@@ -657,15 +706,6 @@
           ]
         },
         "id": "install.ai.chatgpt"
-      },
-      {
-        "fields": {
-          "when": [
-            "! omarchy-pkg-present voxtype-bin",
-            null
-          ]
-        },
-        "id": "install.ai.dictation"
       },
       {
         "fields": {
@@ -1245,6 +1285,19 @@
       },
       {
         "fields": {
+          "action": [
+            "omarchy-launch-floating-terminal-with-presentation omarchy-voxtype-remove",
+            null
+          ],
+          "when": [
+            "omarchy-pkg-present voxtype-bin",
+            "omarchy-pkg-present voxtype-bin || omarchy-pkg-present superwhisper-bin"
+          ]
+        },
+        "id": "remove.dictation"
+      },
+      {
+        "fields": {
           "when": [
             "omarchy-cmd-present brave",
             null
@@ -1429,23 +1482,23 @@
       }
     ],
     "counts": {
-      "added": 16,
+      "added": 20,
       "changed": 86,
       "from": 333,
       "removed": 2,
-      "to": 347
+      "to": 351
     },
     "removed": [
-      "remove.dictation",
+      "install.ai.dictation",
       "setup.default.agent.gemini"
     ]
   },
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 41,
+      "new": 43,
       "removed": 0,
-      "to": 147
+      "to": 149
     },
     "new": [
       {
@@ -1652,6 +1705,16 @@
         "date": "2026-10-07T12:41:27Z",
         "description": "Enable overlay scrollbars in Chromium-based browsers",
         "file": "1791376887.sh"
+      },
+      {
+        "date": "2026-10-07T20:00:52Z",
+        "description": "Prioritize the Omarchy package repository over Arch repositories",
+        "file": "1791403252.sh"
+      },
+      {
+        "date": "2026-10-08T17:07:53Z",
+        "description": "Preserve Voxtype as the default for existing dictation users",
+        "file": "1791479273.sh"
       }
     ],
     "removed": []

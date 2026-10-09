@@ -565,6 +565,85 @@
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/clipboard.lua#L49"
     },
     {
+      "action": "omarchy-dictation toggle",
+      "category": "dictation",
+      "chord": "SUPER + CTRL + X",
+      "file": "default/hypr/bindings/dictation.lua",
+      "keys": [
+        "SUPER",
+        "CTRL",
+        "X"
+      ],
+      "kind": "bind",
+      "label": "Toggle dictation",
+      "line": 2,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/dictation.lua#L2"
+    },
+    {
+      "action": "omarchy-dictation start",
+      "category": "dictation",
+      "chord": "F9",
+      "file": "default/hypr/bindings/dictation.lua",
+      "keys": [
+        "F9"
+      ],
+      "kind": "bind",
+      "label": "Start dictation (push-to-talk)",
+      "line": 3,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/dictation.lua#L3"
+    },
+    {
+      "action": "omarchy-dictation stop",
+      "category": "dictation",
+      "chord": "F9",
+      "file": "default/hypr/bindings/dictation.lua",
+      "keys": [
+        "F9"
+      ],
+      "kind": "bind",
+      "label": "Stop dictation (push-to-talk)",
+      "line": 4,
+      "note": null,
+      "options": "{ release = true }",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/dictation.lua#L4"
+    },
+    {
+      "action": "omarchy-dictation start",
+      "category": "dictation",
+      "chord": "ALT + Alt_R",
+      "file": "default/hypr/bindings/dictation.lua",
+      "keys": [
+        "ALT",
+        "Alt_R"
+      ],
+      "kind": "bind",
+      "label": "Start dictation (push-to-talk)",
+      "line": 7,
+      "note": null,
+      "options": "{ ignore_mods = true }",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/dictation.lua#L7"
+    },
+    {
+      "action": "omarchy-dictation stop",
+      "category": "dictation",
+      "chord": "ALT + Alt_R",
+      "file": "default/hypr/bindings/dictation.lua",
+      "keys": [
+        "ALT",
+        "Alt_R"
+      ],
+      "kind": "bind",
+      "label": "Stop dictation (push-to-talk)",
+      "line": 8,
+      "note": null,
+      "options": "{ release = true, ignore_mods = true }",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/dictation.lua#L8"
+    },
+    {
       "action": "{ audio = \"raise\" }",
       "category": "media",
       "chord": "XF86AudioRaiseVolume",
@@ -3865,56 +3944,9 @@
       "note": null,
       "options": null,
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L128"
-    },
-    {
-      "action": "voxtype record toggle",
-      "category": "voxtype",
-      "chord": "SUPER + CTRL + X",
-      "file": "default/hypr/bindings/voxtype.lua",
-      "keys": [
-        "SUPER",
-        "CTRL",
-        "X"
-      ],
-      "kind": "bind",
-      "label": "Toggle dictation",
-      "line": 2,
-      "note": null,
-      "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/voxtype.lua#L2"
-    },
-    {
-      "action": "voxtype record start",
-      "category": "voxtype",
-      "chord": "F9",
-      "file": "default/hypr/bindings/voxtype.lua",
-      "keys": [
-        "F9"
-      ],
-      "kind": "bind",
-      "label": "Start dictation (push-to-talk)",
-      "line": 3,
-      "note": null,
-      "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/voxtype.lua#L3"
-    },
-    {
-      "action": "voxtype record stop",
-      "category": "voxtype",
-      "chord": "F9",
-      "file": "default/hypr/bindings/voxtype.lua",
-      "keys": [
-        "F9"
-      ],
-      "kind": "bind",
-      "label": "Stop dictation (push-to-talk)",
-      "line": 4,
-      "note": null,
-      "options": "{ release = true }",
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/voxtype.lua#L4"
     }
   ],
-  "count": 234,
+  "count": 236,
   "format": "lua",
   "generatedFrom": "data/source/quattro-dev/default/hypr/bindings",
   "prerelease": true,

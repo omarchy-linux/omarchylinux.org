@@ -2,14 +2,6 @@
   "bindings": {
     "added": [
       {
-        "chord": "ALT + Alt_R",
-        "label": "Start dictation (push-to-talk)"
-      },
-      {
-        "chord": "ALT + Alt_R",
-        "label": "Stop dictation (push-to-talk)"
-      },
-      {
         "chord": "SUPER + A",
         "label": "Select all"
       },
@@ -36,6 +28,14 @@
       {
         "chord": "SUPER + SHIFT + grave",
         "label": "Move window to scratchpad"
+      },
+      {
+        "chord": "switch:off:Apple SMC power/lid events",
+        "label": null
+      },
+      {
+        "chord": "switch:on:Apple SMC power/lid events",
+        "label": null
       }
     ],
     "changedAction": [
@@ -54,22 +54,6 @@
         ],
         "chord": "ALT + XF86AudioPlay",
         "label": "Next track"
-      },
-      {
-        "action": [
-          "voxtype record start",
-          "omarchy-dictation start"
-        ],
-        "chord": "F9",
-        "label": "Start dictation (push-to-talk)"
-      },
-      {
-        "action": [
-          "voxtype record stop",
-          "omarchy-dictation stop"
-        ],
-        "chord": "F9",
-        "label": "Stop dictation (push-to-talk)"
       },
       {
         "action": [
@@ -370,15 +354,23 @@
     ],
     "counts": {
       "added": 9,
-      "changedAction": 41,
+      "changedAction": 39,
       "from": 228,
       "fromRecords": 228,
-      "removed": 1,
-      "to": 236,
-      "toRecords": 236
+      "removed": 3,
+      "to": 234,
+      "toRecords": 234
     },
     "note": null,
     "removed": [
+      {
+        "chord": "F9",
+        "label": "Start dictation (push-to-talk)"
+      },
+      {
+        "chord": "F9",
+        "label": "Stop dictation (push-to-talk)"
+      },
       {
         "chord": "SUPER + BACKSPACE",
         "label": "Toggle window transparency"
@@ -399,6 +391,7 @@
       "omarchy-agent-usage-grok",
       "omarchy-ascii",
       "omarchy-branding-about-animation",
+      "omarchy-capture-screenrecording-process",
       "omarchy-cmd-browser-handoff",
       "omarchy-cmd-default-browser",
       "omarchy-crash-mute",
@@ -407,16 +400,24 @@
       "omarchy-dictation-superwhisper",
       "omarchy-dictation-use",
       "omarchy-dictation-voxtype",
+      "omarchy-hw-aarch64",
+      "omarchy-hw-aarch64-apple",
+      "omarchy-hw-apple-silicon",
       "omarchy-hw-dell-xps13-dx13260-ptl",
       "omarchy-hw-dell-xps13-sidecar-amps",
       "omarchy-hw-elgato-camlink-4k",
       "omarchy-hw-nvidia-display",
+      "omarchy-hw-platform",
       "omarchy-hw-vm",
+      "omarchy-hw-x86",
       "omarchy-install-ai-claude",
       "omarchy-install-chromium-claude",
       "omarchy-install-dictation-superwhisper",
       "omarchy-install-dictation-voxtype",
       "omarchy-install-service-microsoft",
+      "omarchy-lifecycle-dispatch",
+      "omarchy-pkg-defaults",
+      "omarchy-provision-hardware",
       "omarchy-remove-ai-chatgpt",
       "omarchy-remove-ai-claude",
       "omarchy-remove-ai-grok-bot",
@@ -424,21 +425,63 @@
       "omarchy-remove-ai-ollama",
       "omarchy-remove-dictation-superwhisper",
       "omarchy-remove-dictation-voxtype",
+      "omarchy-remove-security-thunderbolt-authorization",
+      "omarchy-remove-security-thunderbolt-boot",
+      "omarchy-remove-security-usb-authorization",
       "omarchy-remove-service-microsoft",
       "omarchy-remove-service-ssh-agent",
       "omarchy-security-functions",
       "omarchy-setup-security-ssh-agent",
+      "omarchy-setup-security-thunderbolt-authorization",
+      "omarchy-setup-security-thunderbolt-boot",
+      "omarchy-setup-security-usb-authorization",
+      "omarchy-system-lid-inhibit",
       "omarchy-theme-bg-boot-intro",
       "omarchy-theme-bg-intro",
       "omarchy-theme-set-herdr-machines",
       "omarchy-theme-set-hunk",
+      "omarchy-thunderbolt-authorization-admin",
+      "omarchy-thunderbolt-authorization-approve",
+      "omarchy-thunderbolt-authorization-boot-enabled",
+      "omarchy-thunderbolt-authorization-daemon",
+      "omarchy-thunderbolt-authorization-review",
+      "omarchy-thunderbolt-authorization-watch",
       "omarchy-toggle-animations",
       "omarchy-toggle-fullscreen-desktop",
       "omarchy-toggle-theme-sync",
+      "omarchy-update-boot",
       "omarchy-update-pacman",
+      "omarchy-usb-authorization-approve",
+      "omarchy-usb-authorization-boot",
+      "omarchy-usb-authorization-event",
+      "omarchy-usb-authorization-restore-default",
+      "omarchy-usb-authorization-review",
+      "omarchy-usb-authorization-watch",
       "omarchy-windows-key"
     ],
     "changed": [
+      {
+        "fields": {
+          "args": [
+            "",
+            "[sources]"
+          ],
+          "summary": [
+            "Print PulseAudio sink availability for the shell",
+            "Print PulseAudio sink or source availability for the shell"
+          ]
+        },
+        "name": "omarchy-audio-sink-availability"
+      },
+      {
+        "fields": {
+          "args": [
+            "[--fullscreen] [--with-desktop-audio] [--with-microphone-audio] [--with-webcam] [--webcam-device=<device>] [--webcam-size=<small|medium|large>] [--resolution=<size>] [--stop-recording]",
+            "[--fullscreen] [--with-desktop-audio] [--with-microphone-audio] [--with-webcam] [--webcam-device=<device>] [--webcam-size=<small|medium|large>] [--resolution=<size>] [--stop-recording] [--status]"
+          ]
+        },
+        "name": "omarchy-capture-screenrecording"
+      },
       {
         "fields": {
           "args": [
@@ -465,6 +508,15 @@
           ]
         },
         "name": "omarchy-default-agent"
+      },
+      {
+        "fields": {
+          "summary": [
+            "Set a new encryption password for a drive selected.",
+            "Set a new password for an encrypted drive"
+          ]
+        },
+        "name": "omarchy-drive-password"
       },
       {
         "fields": {
@@ -558,6 +610,15 @@
           ]
         },
         "name": "omarchy-menu-images"
+      },
+      {
+        "fields": {
+          "summary": [
+            "Reinstall all default Omarchy packages from the stable channel",
+            "Reinstall all default Omarchy packages from the stable channel, or on aarch64 the edge channel"
+          ]
+        },
+        "name": "omarchy-reinstall-pkgs"
       },
       {
         "fields": {
@@ -661,11 +722,11 @@
       }
     ],
     "counts": {
-      "added": 50,
-      "changed": 17,
+      "added": 79,
+      "changed": 21,
       "from": 444,
       "removed": 3,
-      "to": 491
+      "to": 520
     },
     "removed": [
       "omarchy-voxtype-install",
@@ -686,6 +747,10 @@
       "remove.ai.ollama",
       "remove.dictation.superwhisper",
       "remove.dictation.voxtype",
+      "remove.security.thunderbolt",
+      "remove.security.thunderbolt-boot",
+      "remove.security.usb-authorization",
+      "remove.security.usb-authorization-boot",
       "remove.service.microsoft",
       "remove.service.ssh-agent",
       "setup.default.agent.agy",
@@ -694,6 +759,10 @@
       "setup.default.dictation.superwhisper",
       "setup.default.dictation.voxtype",
       "setup.security.ssh-agent",
+      "setup.security.thunderbolt",
+      "setup.security.thunderbolt-boot",
+      "setup.security.usb-authorization",
+      "setup.security.usb-authorization-boot",
       "trigger.toggle.animations",
       "trigger.toggle.theme-sync"
     ],
@@ -801,7 +870,7 @@
         "fields": {
           "when": [
             "! omarchy-pkg-present microsoft-edge-stable-bin",
-            null
+            "omarchy-hw-x86"
           ]
         },
         "id": "install.browser.edge"
@@ -1071,7 +1140,7 @@
         "fields": {
           "when": [
             "! omarchy-pkg-present heroic-games-launcher-bin",
-            null
+            "omarchy-hw-x86"
           ]
         },
         "id": "install.gaming.heroic"
@@ -1089,7 +1158,7 @@
         "fields": {
           "when": [
             "! omarchy-pkg-present minecraft-launcher",
-            null
+            "omarchy-hw-x86"
           ]
         },
         "id": "install.gaming.minecraft"
@@ -1170,7 +1239,7 @@
         "fields": {
           "when": [
             "! omarchy-pkg-present dropbox",
-            null
+            "omarchy-hw-x86"
           ]
         },
         "id": "install.service.dropbox"
@@ -1206,7 +1275,7 @@
         "fields": {
           "when": [
             "! omarchy-pkg-present spotify",
-            null
+            "omarchy-hw-x86"
           ]
         },
         "id": "install.service.spotify"
@@ -1260,7 +1329,7 @@
         "fields": {
           "when": [
             "[[ ! -f $HOME/.local/share/applications/windows-vm.desktop ]]",
-            null
+            "omarchy-hw-x86"
           ]
         },
         "id": "install.windows"
@@ -1473,20 +1542,38 @@
       },
       {
         "fields": {
+          "when": [
+            null,
+            "! omarchy-hw-aarch64-apple"
+          ]
+        },
+        "id": "setup.direct-boot"
+      },
+      {
+        "fields": {
           "action": [
             "theme=$(omarchy-theme-switcher); [[ -n $theme ]] && omarchy-theme-set \"$theme\"",
             "omarchy-shell shell summon omarchy.image-picker '{\"source\":\"themes\"}'"
           ]
         },
         "id": "style.theme"
+      },
+      {
+        "fields": {
+          "when": [
+            "pgrep -f '^gpu-screen-recorder'",
+            "omarchy-capture-screenrecording --status"
+          ]
+        },
+        "id": "trigger.capture.screenrecord.stop"
       }
     ],
     "counts": {
-      "added": 20,
-      "changed": 86,
+      "added": 28,
+      "changed": 88,
       "from": 333,
       "removed": 2,
-      "to": 351
+      "to": 359
     },
     "removed": [
       "install.ai.dictation",
@@ -1496,9 +1583,9 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 43,
+      "new": 49,
       "removed": 0,
-      "to": 149
+      "to": 155
     },
     "new": [
       {
@@ -1612,6 +1699,11 @@
         "file": "1789310715.sh"
       },
       {
+        "date": "2026-09-15T00:51:13Z",
+        "description": "Enable approval for newly connected USB devices",
+        "file": "1789433473.sh"
+      },
+      {
         "date": "2026-09-18T20:55:27Z",
         "description": "Enable OWE desktop video backgrounds and lock feed",
         "file": "1789764927.sh"
@@ -1637,6 +1729,11 @@
         "file": "1790282866.sh"
       },
       {
+        "date": "2026-09-25T13:56:39Z",
+        "description": "Require approval for new Thunderbolt accessories",
+        "file": "1790344599.sh"
+      },
+      {
         "date": "2026-09-26T04:36:21Z",
         "description": "Move OpenClaw to a self-updating install under ~/.openclaw",
         "file": "1790397381.sh"
@@ -1660,6 +1757,11 @@
         "date": "2026-09-27T20:47:49Z",
         "description": "Install Hype, the Markdown presentation app",
         "file": "1790542069.sh"
+      },
+      {
+        "date": "2026-09-28T15:16:57Z",
+        "description": "Repair USB approval prompts and enable portable device approvals",
+        "file": "1790608617.sh"
       },
       {
         "date": "2026-09-29T17:19:22Z",
@@ -1712,9 +1814,24 @@
         "file": "1791403252.sh"
       },
       {
+        "date": "2026-10-08T14:40:56Z",
+        "description": "Repair background selections after bundled images moved to WebP",
+        "file": "1791470456.sh"
+      },
+      {
         "date": "2026-10-08T17:07:53Z",
         "description": "Preserve Voxtype as the default for existing dictation users",
         "file": "1791479273.sh"
+      },
+      {
+        "date": "2026-10-09T10:36:15Z",
+        "description": "Install Gliff, the Hyprland remote desktop over SSH",
+        "file": "1791542175.sh"
+      },
+      {
+        "date": "2026-10-09T21:23:24Z",
+        "description": "Stop the boot from waiting on a black screen for the console to answer",
+        "file": "1791581004.sh"
       }
     ],
     "removed": []

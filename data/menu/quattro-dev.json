@@ -1,5 +1,5 @@
 {
-  "count": 351,
+  "count": 359,
   "flat": [
     {
       "action": "omarchy-launch-about",
@@ -344,7 +344,7 @@
       "provider": null,
       "target": null,
       "title": null,
-      "when": null
+      "when": "omarchy-hw-x86"
     },
     {
       "action": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-browser firefox'",
@@ -1010,7 +1010,7 @@
       "provider": null,
       "target": null,
       "title": null,
-      "when": null
+      "when": "omarchy-hw-x86"
     },
     {
       "action": "omarchy-launch-floating-terminal-with-presentation omarchy-install-gaming-lutris",
@@ -1046,7 +1046,7 @@
       "provider": null,
       "target": null,
       "title": null,
-      "when": null
+      "when": "omarchy-hw-x86"
     },
     {
       "action": "omarchy-games-retro-install",
@@ -1262,7 +1262,7 @@
       "provider": null,
       "target": null,
       "title": null,
-      "when": null
+      "when": "omarchy-hw-x86"
     },
     {
       "action": "omarchy-launch-floating-terminal-with-presentation omarchy-install-service-microsoft",
@@ -1370,7 +1370,7 @@
       "provider": null,
       "target": null,
       "title": null,
-      "when": null
+      "when": "omarchy-hw-x86"
     },
     {
       "action": "omarchy-launch-floating-terminal-with-presentation omarchy-install-service-tailscale",
@@ -1712,7 +1712,7 @@
       "provider": null,
       "target": null,
       "title": null,
-      "when": null
+      "when": "omarchy-hw-x86"
     },
     {
       "action": null,
@@ -2977,6 +2977,78 @@
       "when": "! omarchy-sudo-docker --configured"
     },
     {
+      "action": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-security-thunderbolt-authorization",
+      "aliases": [],
+      "checked": null,
+      "command": null,
+      "declared": true,
+      "depth": 2,
+      "icon": "󱐋",
+      "iconFont": null,
+      "id": "remove.security.thunderbolt",
+      "kind": "action",
+      "label": "Thunderbolt",
+      "parent": "remove.security",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": "[[ -f /etc/omarchy/thunderbolt-authorization.enabled || -f /etc/omarchy/thunderbolt-authorization.pending ]]"
+    },
+    {
+      "action": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-security-thunderbolt-boot",
+      "aliases": [],
+      "checked": null,
+      "command": null,
+      "declared": true,
+      "depth": 2,
+      "icon": "󱐋",
+      "iconFont": null,
+      "id": "remove.security.thunderbolt-boot",
+      "kind": "action",
+      "label": "Thunderbolt Boot",
+      "parent": "remove.security",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": "omarchy-thunderbolt-authorization-boot-enabled"
+    },
+    {
+      "action": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-security-usb-authorization",
+      "aliases": [],
+      "checked": null,
+      "command": null,
+      "declared": true,
+      "depth": 2,
+      "icon": "󰖀",
+      "iconFont": null,
+      "id": "remove.security.usb-authorization",
+      "kind": "action",
+      "label": "USB Device Authorization",
+      "parent": "remove.security",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": "systemctl is-enabled --quiet usbguard.service"
+    },
+    {
+      "action": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-security-usb-authorization --boot-only'",
+      "aliases": [],
+      "checked": null,
+      "command": null,
+      "declared": true,
+      "depth": 2,
+      "icon": "󰖀",
+      "iconFont": null,
+      "id": "remove.security.usb-authorization-boot",
+      "kind": "action",
+      "label": "USB at Boot",
+      "parent": "remove.security",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": "! omarchy-hw-aarch64-apple && grep -Fqx 'KERNEL_CMDLINE[default]+=\" usbcore.authorized_default=0\"' /etc/limine-entry-tool.d/usb-authorization.conf 2>/dev/null"
+    },
+    {
       "action": null,
       "aliases": [],
       "checked": null,
@@ -3699,7 +3771,7 @@
       "provider": null,
       "target": null,
       "title": null,
-      "when": null
+      "when": "omarchy-hw-x86"
     },
     {
       "action": "omarchy-default-dictation voxtype",
@@ -3987,7 +4059,7 @@
       "provider": null,
       "target": null,
       "title": null,
-      "when": null
+      "when": "! omarchy-hw-aarch64-apple"
     },
     {
       "action": "omarchy-launch-config-editor \"$HOME/.config/hypr/input.lua\"",
@@ -4429,6 +4501,78 @@
       "target": null,
       "title": null,
       "when": "omarchy-sudo-docker --configured"
+    },
+    {
+      "action": "omarchy-launch-floating-terminal-with-presentation omarchy-setup-security-thunderbolt-authorization",
+      "aliases": [],
+      "checked": null,
+      "command": null,
+      "declared": true,
+      "depth": 2,
+      "icon": "󱐋",
+      "iconFont": null,
+      "id": "setup.security.thunderbolt",
+      "kind": "action",
+      "label": "Thunderbolt",
+      "parent": "setup.security",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": null
+    },
+    {
+      "action": "omarchy-launch-floating-terminal-with-presentation omarchy-setup-security-thunderbolt-boot",
+      "aliases": [],
+      "checked": null,
+      "command": null,
+      "declared": true,
+      "depth": 2,
+      "icon": "󱐋",
+      "iconFont": null,
+      "id": "setup.security.thunderbolt-boot",
+      "kind": "action",
+      "label": "Thunderbolt Boot",
+      "parent": "setup.security",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": "[[ -f /etc/omarchy/thunderbolt-authorization.enabled ]]"
+    },
+    {
+      "action": "omarchy-launch-floating-terminal-with-presentation omarchy-setup-security-usb-authorization",
+      "aliases": [],
+      "checked": "systemctl is-enabled --quiet usbguard.service && systemctl --user is-enabled --quiet omarchy-usb-authorization.service",
+      "command": null,
+      "declared": true,
+      "depth": 2,
+      "icon": "󰖀",
+      "iconFont": null,
+      "id": "setup.security.usb-authorization",
+      "kind": "action",
+      "label": "USB Device Authorization",
+      "parent": "setup.security",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": null
+    },
+    {
+      "action": "omarchy-launch-floating-terminal-with-presentation 'omarchy-setup-security-usb-authorization --boot'",
+      "aliases": [],
+      "checked": "grep -Fqx 'KERNEL_CMDLINE[default]+=\" usbcore.authorized_default=0\"' /etc/limine-entry-tool.d/usb-authorization.conf 2>/dev/null",
+      "command": null,
+      "declared": true,
+      "depth": 2,
+      "icon": "󰖀",
+      "iconFont": null,
+      "id": "setup.security.usb-authorization-boot",
+      "kind": "action",
+      "label": "USB at Boot",
+      "parent": "setup.security",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": "! omarchy-hw-aarch64-apple"
     },
     {
       "action": null,
@@ -5128,7 +5272,7 @@
       "provider": null,
       "target": null,
       "title": null,
-      "when": "pgrep -f '^gpu-screen-recorder'"
+      "when": "omarchy-capture-screenrecording --status"
     },
     {
       "action": "omarchy-capture-screenrecording-with-webcam",
@@ -6754,7 +6898,7 @@
                   "provider": null,
                   "target": null,
                   "title": null,
-                  "when": "pgrep -f '^gpu-screen-recorder'"
+                  "when": "omarchy-capture-screenrecording --status"
                 },
                 {
                   "action": "omarchy-capture-screenrecording",
@@ -8641,7 +8785,7 @@
                   "provider": null,
                   "target": null,
                   "title": null,
-                  "when": null
+                  "when": "omarchy-hw-x86"
                 },
                 {
                   "action": "omarchy-default-dictation voxtype",
@@ -9084,6 +9228,44 @@
           "checked": null,
           "children": [
             {
+              "action": "omarchy-launch-floating-terminal-with-presentation omarchy-setup-security-thunderbolt-authorization",
+              "aliases": [],
+              "checked": null,
+              "children": [],
+              "command": null,
+              "declared": true,
+              "depth": 2,
+              "icon": "󱐋",
+              "iconFont": null,
+              "id": "setup.security.thunderbolt",
+              "kind": "action",
+              "label": "Thunderbolt",
+              "parent": "setup.security",
+              "provider": null,
+              "target": null,
+              "title": null,
+              "when": null
+            },
+            {
+              "action": "omarchy-launch-floating-terminal-with-presentation omarchy-setup-security-thunderbolt-boot",
+              "aliases": [],
+              "checked": null,
+              "children": [],
+              "command": null,
+              "declared": true,
+              "depth": 2,
+              "icon": "󱐋",
+              "iconFont": null,
+              "id": "setup.security.thunderbolt-boot",
+              "kind": "action",
+              "label": "Thunderbolt Boot",
+              "parent": "setup.security",
+              "provider": null,
+              "target": null,
+              "title": null,
+              "when": "[[ -f /etc/omarchy/thunderbolt-authorization.enabled ]]"
+            },
+            {
               "action": "omarchy-launch-floating-terminal-with-presentation omarchy-setup-security-fingerprint",
               "aliases": [],
               "checked": null,
@@ -9120,6 +9302,44 @@
               "target": null,
               "title": null,
               "when": null
+            },
+            {
+              "action": "omarchy-launch-floating-terminal-with-presentation omarchy-setup-security-usb-authorization",
+              "aliases": [],
+              "checked": "systemctl is-enabled --quiet usbguard.service && systemctl --user is-enabled --quiet omarchy-usb-authorization.service",
+              "children": [],
+              "command": null,
+              "declared": true,
+              "depth": 2,
+              "icon": "󰖀",
+              "iconFont": null,
+              "id": "setup.security.usb-authorization",
+              "kind": "action",
+              "label": "USB Device Authorization",
+              "parent": "setup.security",
+              "provider": null,
+              "target": null,
+              "title": null,
+              "when": null
+            },
+            {
+              "action": "omarchy-launch-floating-terminal-with-presentation 'omarchy-setup-security-usb-authorization --boot'",
+              "aliases": [],
+              "checked": "grep -Fqx 'KERNEL_CMDLINE[default]+=\" usbcore.authorized_default=0\"' /etc/limine-entry-tool.d/usb-authorization.conf 2>/dev/null",
+              "children": [],
+              "command": null,
+              "declared": true,
+              "depth": 2,
+              "icon": "󰖀",
+              "iconFont": null,
+              "id": "setup.security.usb-authorization-boot",
+              "kind": "action",
+              "label": "USB at Boot",
+              "parent": "setup.security",
+              "provider": null,
+              "target": null,
+              "title": null,
+              "when": "! omarchy-hw-aarch64-apple"
             },
             {
               "action": "omarchy-launch-floating-terminal-with-presentation omarchy-setup-security-sshd",
@@ -9306,7 +9526,7 @@
           "provider": null,
           "target": null,
           "title": null,
-          "when": null
+          "when": "! omarchy-hw-aarch64-apple"
         },
         {
           "action": "omarchy-launch-floating-terminal-with-presentation omarchy-system-factory-reset",
@@ -9598,7 +9818,7 @@
               "provider": null,
               "target": null,
               "title": null,
-              "when": null
+              "when": "omarchy-hw-x86"
             },
             {
               "action": "omarchy-launch-floating-terminal-with-presentation omarchy-install-service-spotify",
@@ -9617,7 +9837,7 @@
               "provider": null,
               "target": null,
               "title": null,
-              "when": null
+              "when": "omarchy-hw-x86"
             },
             {
               "action": "omarchy-launch-floating-terminal-with-presentation omarchy-install-service-signal",
@@ -10632,7 +10852,7 @@
               "provider": null,
               "target": null,
               "title": null,
-              "when": null
+              "when": "omarchy-hw-x86"
             },
             {
               "action": "omarchy-launch-floating-terminal-with-presentation omarchy-install-gaming-geforce-now",
@@ -10746,7 +10966,7 @@
               "provider": null,
               "target": null,
               "title": null,
-              "when": null
+              "when": "omarchy-hw-x86"
             },
             {
               "action": "omarchy-games-retro-install",
@@ -10823,7 +11043,7 @@
               "provider": null,
               "target": null,
               "title": null,
-              "when": null
+              "when": "omarchy-hw-x86"
             },
             {
               "action": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-browser brave'",
@@ -11067,7 +11287,7 @@
           "provider": null,
           "target": null,
           "title": null,
-          "when": null
+          "when": "omarchy-hw-x86"
         },
         {
           "action": "xdg-terminal-exec --app-id=org.omarchy.terminal omarchy-pkg-aur-install",
@@ -12341,6 +12561,44 @@
           "checked": null,
           "children": [
             {
+              "action": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-security-thunderbolt-authorization",
+              "aliases": [],
+              "checked": null,
+              "children": [],
+              "command": null,
+              "declared": true,
+              "depth": 2,
+              "icon": "󱐋",
+              "iconFont": null,
+              "id": "remove.security.thunderbolt",
+              "kind": "action",
+              "label": "Thunderbolt",
+              "parent": "remove.security",
+              "provider": null,
+              "target": null,
+              "title": null,
+              "when": "[[ -f /etc/omarchy/thunderbolt-authorization.enabled || -f /etc/omarchy/thunderbolt-authorization.pending ]]"
+            },
+            {
+              "action": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-security-thunderbolt-boot",
+              "aliases": [],
+              "checked": null,
+              "children": [],
+              "command": null,
+              "declared": true,
+              "depth": 2,
+              "icon": "󱐋",
+              "iconFont": null,
+              "id": "remove.security.thunderbolt-boot",
+              "kind": "action",
+              "label": "Thunderbolt Boot",
+              "parent": "remove.security",
+              "provider": null,
+              "target": null,
+              "title": null,
+              "when": "omarchy-thunderbolt-authorization-boot-enabled"
+            },
+            {
               "action": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-security-fingerprint",
               "aliases": [],
               "checked": null,
@@ -12377,6 +12635,44 @@
               "target": null,
               "title": null,
               "when": "omarchy-pkg-present pam-u2f"
+            },
+            {
+              "action": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-security-usb-authorization",
+              "aliases": [],
+              "checked": null,
+              "children": [],
+              "command": null,
+              "declared": true,
+              "depth": 2,
+              "icon": "󰖀",
+              "iconFont": null,
+              "id": "remove.security.usb-authorization",
+              "kind": "action",
+              "label": "USB Device Authorization",
+              "parent": "remove.security",
+              "provider": null,
+              "target": null,
+              "title": null,
+              "when": "systemctl is-enabled --quiet usbguard.service"
+            },
+            {
+              "action": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-security-usb-authorization --boot-only'",
+              "aliases": [],
+              "checked": null,
+              "children": [],
+              "command": null,
+              "declared": true,
+              "depth": 2,
+              "icon": "󰖀",
+              "iconFont": null,
+              "id": "remove.security.usb-authorization-boot",
+              "kind": "action",
+              "label": "USB at Boot",
+              "parent": "remove.security",
+              "provider": null,
+              "target": null,
+              "title": null,
+              "when": "! omarchy-hw-aarch64-apple && grep -Fqx 'KERNEL_CMDLINE[default]+=\" usbcore.authorized_default=0\"' /etc/limine-entry-tool.d/usb-authorization.conf 2>/dev/null"
             },
             {
               "action": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-security-sshd",

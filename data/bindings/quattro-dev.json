@@ -576,72 +576,10 @@
       ],
       "kind": "bind",
       "label": "Toggle dictation",
-      "line": 2,
+      "line": 10,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/dictation.lua#L2"
-    },
-    {
-      "action": "omarchy-dictation start",
-      "category": "dictation",
-      "chord": "F9",
-      "file": "default/hypr/bindings/dictation.lua",
-      "keys": [
-        "F9"
-      ],
-      "kind": "bind",
-      "label": "Start dictation (push-to-talk)",
-      "line": 3,
-      "note": null,
-      "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/dictation.lua#L3"
-    },
-    {
-      "action": "omarchy-dictation stop",
-      "category": "dictation",
-      "chord": "F9",
-      "file": "default/hypr/bindings/dictation.lua",
-      "keys": [
-        "F9"
-      ],
-      "kind": "bind",
-      "label": "Stop dictation (push-to-talk)",
-      "line": 4,
-      "note": null,
-      "options": "{ release = true }",
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/dictation.lua#L4"
-    },
-    {
-      "action": "omarchy-dictation start",
-      "category": "dictation",
-      "chord": "ALT + Alt_R",
-      "file": "default/hypr/bindings/dictation.lua",
-      "keys": [
-        "ALT",
-        "Alt_R"
-      ],
-      "kind": "bind",
-      "label": "Start dictation (push-to-talk)",
-      "line": 7,
-      "note": null,
-      "options": "{ ignore_mods = true }",
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/dictation.lua#L7"
-    },
-    {
-      "action": "omarchy-dictation stop",
-      "category": "dictation",
-      "chord": "ALT + Alt_R",
-      "file": "default/hypr/bindings/dictation.lua",
-      "keys": [
-        "ALT",
-        "Alt_R"
-      ],
-      "kind": "bind",
-      "label": "Stop dictation (push-to-talk)",
-      "line": 8,
-      "note": null,
-      "options": "{ release = true, ignore_mods = true }",
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/dictation.lua#L8"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/dictation.lua#L10"
     },
     {
       "action": "{ audio = \"raise\" }",
@@ -3346,6 +3284,36 @@
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L36"
     },
     {
+      "action": "omarchy-system-lid-close",
+      "category": "utilities",
+      "chord": "switch:on:Apple SMC power/lid events",
+      "file": "default/hypr/bindings/utilities.lua",
+      "keys": [
+        "switch:on:Apple SMC power/lid events"
+      ],
+      "kind": "bind",
+      "label": null,
+      "line": 38,
+      "note": null,
+      "options": "{ locked = true }",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L38"
+    },
+    {
+      "action": "omarchy-hyprland-monitor-clamshell",
+      "category": "utilities",
+      "chord": "switch:off:Apple SMC power/lid events",
+      "file": "default/hypr/bindings/utilities.lua",
+      "keys": [
+        "switch:off:Apple SMC power/lid events"
+      ],
+      "kind": "bind",
+      "label": null,
+      "line": 39,
+      "note": null,
+      "options": "{ locked = true }",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L39"
+    },
+    {
       "action": "omarchy-capture-screenshot",
       "category": "utilities",
       "chord": "PRINT",
@@ -3355,10 +3323,10 @@
       ],
       "kind": "bind",
       "label": "Screenshot",
-      "line": 38,
+      "line": 41,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L38"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L41"
     },
     {
       "action": "omarchy-capture-screenrecording --stop-recording || omarchy-menu toggle trigger.capture.screenrecord",
@@ -3371,10 +3339,10 @@
       ],
       "kind": "bind",
       "label": "Screenrecording",
-      "line": 39,
+      "line": 42,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L39"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L42"
     },
     {
       "action": "omarchy-capture-webcam-resize smaller",
@@ -3388,10 +3356,10 @@
       ],
       "kind": "bind",
       "label": "Make webcam overlay smaller",
-      "line": 40,
+      "line": 43,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L40"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L43"
     },
     {
       "action": "omarchy-capture-webcam-resize larger",
@@ -3405,10 +3373,10 @@
       ],
       "kind": "bind",
       "label": "Make webcam overlay larger",
-      "line": 41,
+      "line": 44,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L41"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L44"
     },
     {
       "action": "pkill hyprpicker || hyprpicker -a",
@@ -3421,10 +3389,10 @@
       ],
       "kind": "bind",
       "label": "Color picker",
-      "line": 42,
+      "line": 45,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L42"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L45"
     },
     {
       "action": "omarchy-capture-text",
@@ -3438,10 +3406,10 @@
       ],
       "kind": "bind",
       "label": "Extract text (OCR) from screenshot",
-      "line": 43,
+      "line": 46,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L43"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L46"
     },
     {
       "action": "{ menu = \"share\" }",
@@ -3455,10 +3423,10 @@
       ],
       "kind": "bind",
       "label": "Share",
-      "line": 85,
+      "line": 88,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L85"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L88"
     },
     {
       "action": "omarchy-transcode",
@@ -3472,10 +3440,10 @@
       ],
       "kind": "bind",
       "label": "Transcode",
-      "line": 87,
+      "line": 90,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L87"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L90"
     },
     {
       "action": "{ menu = \"reminder-set\" }",
@@ -3489,10 +3457,10 @@
       ],
       "kind": "bind",
       "label": "Set reminder",
-      "line": 89,
+      "line": 92,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L89"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L92"
     },
     {
       "action": "omarchy-reminder show",
@@ -3507,10 +3475,10 @@
       ],
       "kind": "bind",
       "label": "Show reminders",
-      "line": 90,
+      "line": 93,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L90"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L93"
     },
     {
       "action": "omarchy-reminder clear",
@@ -3525,10 +3493,10 @@
       ],
       "kind": "bind",
       "label": "Clear reminders",
-      "line": 91,
+      "line": 94,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L91"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L94"
     },
     {
       "action": "omarchy-notification-time",
@@ -3543,10 +3511,10 @@
       ],
       "kind": "bind",
       "label": "Show time",
-      "line": 93,
+      "line": 96,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L93"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L96"
     },
     {
       "action": "omarchy-notification-battery",
@@ -3561,10 +3529,10 @@
       ],
       "kind": "bind",
       "label": "Show battery remaining",
-      "line": 94,
+      "line": 97,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L94"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L97"
     },
     {
       "action": "omarchy-notification-weather",
@@ -3579,10 +3547,10 @@
       ],
       "kind": "bind",
       "label": "Toggle weather",
-      "line": 95,
+      "line": 98,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L95"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L98"
     },
     {
       "action": "omarchy-agent --pick",
@@ -3597,10 +3565,10 @@
       ],
       "kind": "bind",
       "label": "Agent",
-      "line": 97,
+      "line": 100,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L97"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L100"
     },
     {
       "action": "{ panel = \"omarchy.audio\" }",
@@ -3614,10 +3582,10 @@
       ],
       "kind": "bind",
       "label": "Audio",
-      "line": 98,
+      "line": 101,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L98"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L101"
     },
     {
       "action": "{ panel = \"omarchy.bluetooth\" }",
@@ -3631,10 +3599,10 @@
       ],
       "kind": "bind",
       "label": "Bluetooth",
-      "line": 99,
+      "line": 102,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L99"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L102"
     },
     {
       "action": "{ panel = \"omarchy.monitor\" }",
@@ -3648,10 +3616,10 @@
       ],
       "kind": "bind",
       "label": "Display",
-      "line": 100,
+      "line": 103,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L100"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L103"
     },
     {
       "action": "{ panel = \"omarchy.clock\" }",
@@ -3666,10 +3634,10 @@
       ],
       "kind": "bind",
       "label": "Calendar",
-      "line": 101,
+      "line": 104,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L101"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L104"
     },
     {
       "action": "{ panel = \"omarchy.elsewhen\" }",
@@ -3684,10 +3652,10 @@
       ],
       "kind": "bind",
       "label": "World clock",
-      "line": 102,
+      "line": 105,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L102"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L105"
     },
     {
       "action": "{ panel = \"omarchy.network\" }",
@@ -3701,10 +3669,10 @@
       ],
       "kind": "bind",
       "label": "Network",
-      "line": 103,
+      "line": 106,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L103"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L106"
     },
     {
       "action": "{ panel = \"omarchy.power\" }",
@@ -3718,10 +3686,10 @@
       ],
       "kind": "bind",
       "label": "Power",
-      "line": 104,
+      "line": 107,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L104"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L107"
     },
     {
       "action": "{ tui = \"btop\" }",
@@ -3735,10 +3703,10 @@
       ],
       "kind": "bind",
       "label": "Activity",
-      "line": 105,
+      "line": 108,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L105"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L108"
     },
     {
       "action": "omarchy-shell -q shell togglePanelAt right 1",
@@ -3752,10 +3720,10 @@
       ],
       "kind": "bind",
       "label": "Bar panel 1",
-      "line": 112,
+      "line": 115,
       "note": "generated: panel = 1-9",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L112"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L115"
     },
     {
       "action": "omarchy-shell -q shell togglePanelAt right 2",
@@ -3769,10 +3737,10 @@
       ],
       "kind": "bind",
       "label": "Bar panel 2",
-      "line": 112,
+      "line": 115,
       "note": "generated: panel = 1-9",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L112"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L115"
     },
     {
       "action": "omarchy-shell -q shell togglePanelAt right 3",
@@ -3786,10 +3754,10 @@
       ],
       "kind": "bind",
       "label": "Bar panel 3",
-      "line": 112,
+      "line": 115,
       "note": "generated: panel = 1-9",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L112"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L115"
     },
     {
       "action": "omarchy-shell -q shell togglePanelAt right 4",
@@ -3803,10 +3771,10 @@
       ],
       "kind": "bind",
       "label": "Bar panel 4",
-      "line": 112,
+      "line": 115,
       "note": "generated: panel = 1-9",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L112"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L115"
     },
     {
       "action": "omarchy-shell -q shell togglePanelAt right 5",
@@ -3820,10 +3788,10 @@
       ],
       "kind": "bind",
       "label": "Bar panel 5",
-      "line": 112,
+      "line": 115,
       "note": "generated: panel = 1-9",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L112"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L115"
     },
     {
       "action": "omarchy-shell -q shell togglePanelAt right 6",
@@ -3837,10 +3805,10 @@
       ],
       "kind": "bind",
       "label": "Bar panel 6",
-      "line": 112,
+      "line": 115,
       "note": "generated: panel = 1-9",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L112"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L115"
     },
     {
       "action": "omarchy-shell -q shell togglePanelAt right 7",
@@ -3854,10 +3822,10 @@
       ],
       "kind": "bind",
       "label": "Bar panel 7",
-      "line": 112,
+      "line": 115,
       "note": "generated: panel = 1-9",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L112"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L115"
     },
     {
       "action": "omarchy-shell -q shell togglePanelAt right 8",
@@ -3871,10 +3839,10 @@
       ],
       "kind": "bind",
       "label": "Bar panel 8",
-      "line": 112,
+      "line": 115,
       "note": "generated: panel = 1-9",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L112"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L115"
     },
     {
       "action": "omarchy-shell -q shell togglePanelAt right 9",
@@ -3888,10 +3856,10 @@
       ],
       "kind": "bind",
       "label": "Bar panel 9",
-      "line": 112,
+      "line": 115,
       "note": "generated: panel = 1-9",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L112"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L115"
     },
     {
       "action": "function() local zoom = hl.get_config(\"cursor.zoom_factor\") or 1 hl.config({ cursor = { zoom_factor = zoom + 1 } }) end",
@@ -3905,10 +3873,10 @@
       ],
       "kind": "bind",
       "label": "Zoom in",
-      "line": 119,
+      "line": 122,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L119"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L122"
     },
     {
       "action": "function() hl.config({ cursor = { zoom_factor = 1 } }) end",
@@ -3923,10 +3891,10 @@
       ],
       "kind": "bind",
       "label": "Reset zoom",
-      "line": 124,
+      "line": 127,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L124"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L127"
     },
     {
       "action": "omarchy-system-lock",
@@ -3940,13 +3908,13 @@
       ],
       "kind": "bind",
       "label": "Lock system",
-      "line": 128,
+      "line": 131,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L128"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L131"
     }
   ],
-  "count": 236,
+  "count": 234,
   "format": "lua",
   "generatedFrom": "data/source/quattro-dev/default/hypr/bindings",
   "prerelease": true,

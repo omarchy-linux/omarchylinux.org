@@ -1,5 +1,5 @@
 {
-  "count": 155,
+  "count": 163,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -1600,6 +1600,22 @@
       "touches": []
     },
     {
+      "body": "echo \"Drop saved workspace layouts belonging to named workspaces\"\n\n# omarchy-hyprland-workspace-layout-toggle acted on whatever id activeworkspace\n# reported, and a named workspace reports a negative one. Hyprland reads a\n# leading \"-\" as a selector relative to the current workspace, so a layout saved\n# for one is applied to workspace 1 at every login instead. The command no longer\n# writes these; this clears the ones already on disk. It wrote to ~/.local/state\n# whatever XDG_STATE_HOME said, so both are cleared.\nremoved=0\n\nfor state_home in \"$HOME/.local/state\" \"${XDG_STATE_HOME:-}\"; do\n  [[ -n $state_home ]] || continue\n\n  layouts_dir=\"$state_home/omarchy/workspace-layouts\"\n  [[ -d $layouts_dir ]] || continue\n\n  for saved in \"$layouts_dir\"/-*.lua; do\n    if [[ -f $saved ]]; then\n      rm -f -- \"$saved\"\n      removed=1\n    fi\n  done\ndone\n\n# The package hook reloads Hyprland before migrations run, so the rule from the\n# file just deleted is already applied to workspace 1. Hyprland watches the files\n# it required and picks the deletion up on its own, but not for a user who has\n# turned autoreload off, so ask for one.\nif (( removed )); then\n  hyprctl reload >/dev/null 2>&1 || true\nfi",
+      "bodyTruncated": false,
+      "date": "2026-08-25T17:42:55Z",
+      "description": "Drop saved workspace layouts belonging to named workspaces",
+      "file": "1787679775.sh",
+      "lineCount": 31,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1787679775.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1787679775.sh",
+      "timestamp": 1787679775,
+      "touches": [
+        "~/.local/state"
+      ]
+    },
+    {
       "body": "echo \"Skip Chromium's new first-run EULA on machines already on Quattro\"\n\n# Chromium 151 flipped MasterPrefs::eula_required from false to true, so an\n# unconfigured first run now stops on a blank terms-of-service dialog before the\n# browser opens. Omarchy answers that in the seed it writes next to the Chromium\n# binary, but that seed is only laid down by a fresh install and by the one-time\n# 3.x upgrade, so machines already on Quattro never receive it. Retrofit it here.\n#\n# The literal is deliberately duplicated rather than sourced: a migration repairs\n# the state of its own moment, and must not drift when the seed later changes.\n\nchromium_prefs=\"/usr/lib/chromium/initial_preferences\"\nchromium_seed='{\"distribution\":{\"require_eula\":false},\"browser\":{\"theme\":{\"color_scheme\":0,\"color_scheme2\":0}}}'\n\nif [[ $(cat \"$chromium_prefs\" 2>/dev/null) != \"$chromium_seed\" ]]; then\n  sudo mkdir -p \"$(dirname \"$chromium_prefs\")\"\n  echo \"$chromium_seed\" | sudo tee \"$chromium_prefs\" >/dev/null\nfi",
       "bodyTruncated": false,
       "date": "2026-08-25T20:53:20Z",
@@ -2238,7 +2254,7 @@
       "touches": []
     },
     {
-      "body": "echo \"Put Elsewhen, the world clock, on the bar\"\n\n# Best-effort, like the put below: an update whose shell cannot be asked still\n# finishes, and restarts the shell once the migrations are through.\nomarchy-shell -q shell rescanPlugins\n\n# A legacy omacom.elsewhen entry is renamed in place by a later migration.\nconfig_file=\"$HOME/.config/omarchy/shell.json\"\nif [[ -s $config_file ]] && jq -e '[.bar.layout[]?[]? | if type == \"object\" then .id else . end] | index(\"omacom.elsewhen\")' \"$config_file\" >/dev/null 2>&1; then\n  echo \"Elsewhen is already on the bar\"\nelse\n  omarchy-bar put omarchy.elsewhen --before omarchy.clock\nfi",
+      "body": "echo \"Put Elsewhen, the world clock, on the bar\"\n\n# Best-effort, like the put below: an update whose shell cannot be asked still\n# finishes, and restarts the shell once the migrations are through.\nomarchy-shell -q shell rescanPlugins\n\n# A legacy omacom.elsewhen entry is renamed in place by a later migration.\nconfig_file=\"$HOME/.config/omarchy/shell.json\"\nif [[ -s $config_file ]] && jq -e '[.bar.layout[]?[]? | if type == \"object\" then .id else . end] | index(\"omacom.elsewhen\")' \"$config_file\" >/dev/null 2>&1; then\n  echo \"Elsewhen is already on the bar\"\nelse\n  omarchy-bar put omarchy.elsewhen --after omarchy.clock\nfi",
       "bodyTruncated": false,
       "date": "2026-09-22T02:09:32Z",
       "description": "Put Elsewhen, the world clock, on the bar",
@@ -2553,6 +2569,25 @@
       ]
     },
     {
+      "body": "echo \"Configure shared input-method defaults and free desktop shortcuts\"\n\nomarchy-pkg-add fcitx5-mozc fcitx5-hangul fcitx5-chinese-addons fcitx5-chewing\nomarchy-input-method configure --defaults",
+      "bodyTruncated": false,
+      "date": "2026-10-07T10:03:54Z",
+      "description": "Configure shared input-method defaults and free desktop shortcuts",
+      "file": "1791367434.sh",
+      "lineCount": 4,
+      "packagesAdded": [
+        "fcitx5-chewing",
+        "fcitx5-chinese-addons",
+        "fcitx5-hangul",
+        "fcitx5-mozc"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1791367434.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791367434.sh",
+      "timestamp": 1791367434,
+      "touches": []
+    },
+    {
       "body": "echo \"Enable overlay scrollbars in Chromium-based browsers\"\n\nfor flags_file in \"$HOME\"/.config/{chromium,chrome,microsoft-edge-stable,brave,brave-origin}-flags.conf; do\n  [[ -f $flags_file ]] || continue\n  grep -Eq -- '^--enable-features=([^,]+,)*OverlayScrollbar([,:]|$)' \"$flags_file\" && continue\n\n  if grep -q -- '^--enable-features=' \"$flags_file\"; then\n    sed -i --follow-symlinks \\\n      -e '/^--enable-features=/ s/$/,OverlayScrollbar/' \\\n      -e '/^--enable-features=/ s/=,/=/' \"$flags_file\"\n  else\n    [[ -n $(tail -c1 \"$flags_file\") ]] && echo >>\"$flags_file\"\n    echo '--enable-features=OverlayScrollbar' >>\"$flags_file\"\n  fi\ndone",
       "bodyTruncated": false,
       "date": "2026-10-07T12:41:27Z",
@@ -2582,6 +2617,22 @@
         "/etc/pacman.conf",
         "/etc/pacman.conf.bak"
       ]
+    },
+    {
+      "body": "echo \"Install titlebars for floating workspaces\"\n\nomarchy-pkg-add omarchy-hyprland-titlebars",
+      "bodyTruncated": false,
+      "date": "2026-10-07T20:01:50Z",
+      "description": "Install titlebars for floating workspaces",
+      "file": "1791403310.sh",
+      "lineCount": 3,
+      "packagesAdded": [
+        "omarchy-hyprland-titlebars"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1791403310.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791403310.sh",
+      "timestamp": 1791403310,
+      "touches": []
     },
     {
       "body": "echo \"Repair background selections after bundled images moved to WebP\"\n\ntheme_webp_source() {\n  local theme=\"$1\"\n  local background=\"$2\"\n  local original_name=${background##*/}\n  local replacement_name=\"${original_name%.*}.webp\"\n  local user_theme_backgrounds=\"$HOME/.config/omarchy/themes/$theme/backgrounds\"\n  local bundled_theme_backgrounds=\"$OMARCHY_PATH/themes/$theme/backgrounds\"\n\n  if [[ -f $user_theme_backgrounds/$original_name || -f $bundled_theme_backgrounds/$original_name ]]; then\n    return 1\n  elif [[ -f $user_theme_backgrounds/$replacement_name ]]; then\n    printf '%s\\n' \"$user_theme_backgrounds/$replacement_name\"\n  elif [[ -f $bundled_theme_backgrounds/$replacement_name ]]; then\n    printf '%s\\n' \"$bundled_theme_backgrounds/$replacement_name\"\n  else\n    return 1\n  fi\n}\n\nreplacement_webp() {\n  local background=\"$1\"\n  local theme=\"${2:-}\"\n  local replacement\n\n  case ${background,,} in\n  *.jpg | *.jpeg | *.png) replacement=\"${background%.*}.webp\" ;;\n  *) return 1 ;;\n  esac\n\n  if [[ -n $theme && ${background%/*} == \"$HOME/.local/state/omarchy/current/theme/backgrounds\" ]]; then\n    theme_webp_source \"$theme\" \"$background\" >/dev/null || return 1\n    printf '%s\\n' \"$replacement\"\n    return 0\n  fi\n\n  [[ ! -e $background && -f $replacement ]] || return 1\n  printf '%s\\n' \"$replacement\"\n}",
@@ -2650,6 +2701,86 @@
         "/etc/default/limine",
         "/etc/limine-entry-tool.d/omarchy-defaults.conf",
         "/var/lib/omarchy/migrations/1791581004"
+      ]
+    },
+    {
+      "body": "echo \"Move the keyboard layout widget to the right side of the bar\"\n\n# An earlier migration put the widget just right of the clock. It now leads the\n# right-hand cluster. A widget the user moved out of the center stays put.\nomarchy-bar move omarchy.keyboard-layout --from-section center --section right --index 0 || true",
+      "bodyTruncated": false,
+      "date": "2026-10-10T13:54:09Z",
+      "description": "Move the keyboard layout widget to the right side of the bar",
+      "file": "1791640449.sh",
+      "lineCount": 5,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791640449.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791640449.sh",
+      "timestamp": 1791640449,
+      "touches": []
+    },
+    {
+      "body": "echo \"Let a lone Shift switch out of an input method and back\"\n\n# An earlier migration wrote this list empty. Fill only that empty list: a\n# missing one already falls back to Fcitx's Shift_L, and a filled one is the\n# user's choice.\nconfig=\"${XDG_CONFIG_HOME:-$HOME/.config}/fcitx5/config\"\nif [[ -f $config ]] && awk '/^\\[Hotkey\\/AltTriggerKeys\\]$/ { in_list = 1; found = 1; next } /^\\[/ { in_list = 0 } in_list && /=/ { filled = 1 } END { exit !(found && !filled) }' \"$config\"; then\n  sed -i --follow-symlinks '/^\\[Hotkey\\/AltTriggerKeys\\]$/a 0=Shift_L' \"$config\"\n  busctl --user call org.fcitx.Fcitx5 /controller org.fcitx.Fcitx.Controller1 ReloadConfig 2>/dev/null || true\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-11T00:01:47Z",
+      "description": "Let a lone Shift switch out of an input method and back",
+      "file": "1791676907.sh",
+      "lineCount": 10,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791676907.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791676907.sh",
+      "timestamp": 1791676907,
+      "touches": [
+        "~/.config"
+      ]
+    },
+    {
+      "body": "echo \"Name web app windows in their launchers, so titlebars show the app's name\"\n\n# Chromium names a web app window after its URL, and the launcher's\n# StartupWMClass is how titlebars find the launcher's Name for it. Launchers\n# that already name a class, and those with custom commands, are left alone.\nfor desktop in \"${XDG_DATA_HOME:-$HOME/.local/share}\"/applications/*.desktop; do\n  [[ -f $desktop ]] || continue\n  grep -q '^StartupWMClass=' \"$desktop\" && continue\n\n  exec_line=$(grep -m1 '^Exec=omarchy-launch-webapp ' \"$desktop\") || continue\n\n  # The installer escaped the URL twice: as one Exec argument, then as desktop\n  # file text. Undo the file layer, then the argument quoting.\n  url=${exec_line#Exec=omarchy-launch-webapp }\n  url=${url//\\\\\\\\/\\\\}\n  if [[ $url == \\\"*\\\" ]]; then\n    url=$(sed 's/\\\\\\(.\\)/\\1/g' <<<\"${url:1:${#url}-2}\")\n  fi\n  url=${url//%%/%}\n  [[ $url =~ ^https?:// && $url != *[[:space:]]* ]] || continue\n\n  class=$(omarchy-webapp-window-class \"$url\")\n  target=$(realpath \"$desktop\")\n  CLASS=${class//\\\\/\\\\\\\\} awk '!done && /^Exec=/ { print; print \"StartupWMClass=\" ENVIRON[\"CLASS\"]; done = 1; next } { print }' \"$target\" >\"$target.omarchy-migrate\" &&\n    cat \"$target.omarchy-migrate\" >\"$target\"\n  rm -f \"$target.omarchy-migrate\"\ndone",
+      "bodyTruncated": false,
+      "date": "2026-10-11T05:29:44Z",
+      "description": "Name web app windows in their launchers, so titlebars show the app's name",
+      "file": "1791696584.sh",
+      "lineCount": 27,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791696584.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791696584.sh",
+      "timestamp": 1791696584,
+      "touches": [
+        "~/.local/share"
+      ]
+    },
+    {
+      "body": "echo \"Save workspace layouts as modes, so a default layout keeps them\"\n\n# Workspace layouts were saved as plain Hyprland rules. Floating and the default\n# layout read the mode a workspace was given, and a rule names none, so a\n# workspace set to scrolling would follow a floating default instead. The old\n# toggle wrote to ~/.local/state whatever XDG_STATE_HOME said, so both are read.\nfor state_home in \"$HOME/.local/state\" \"${XDG_STATE_HOME:-}\"; do\n  [[ -n $state_home ]] || continue\n\n  for saved in \"$state_home\"/omarchy/workspace-layouts/*.lua; do\n    [[ -f $saved ]] || continue\n    sed -i --follow-symlinks 's/^hl\\.workspace_rule({ workspace = \"\\([0-9]*\\)\", layout = \"\\([a-z]*\\)\" })$/o.workspace_mode({ workspace = \"\\1\", mode = \"\\2\" })/' \"$saved\"\n  done\ndone",
+      "bodyTruncated": false,
+      "date": "2026-10-11T06:03:14Z",
+      "description": "Save workspace layouts as modes, so a default layout keeps them",
+      "file": "1791698594.sh",
+      "lineCount": 14,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791698594.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791698594.sh",
+      "timestamp": 1791698594,
+      "touches": [
+        "~/.local/state"
+      ]
+    },
+    {
+      "body": "echo \"Install Signed, the PDF signing app\"\n\nif [[ ! -f $HOME/.local/state/omarchy/preinstalls-removed ]]; then\n  omarchy-pkg-add signed\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-11T08:49:47Z",
+      "description": "Install Signed, the PDF signing app",
+      "file": "1791708587.sh",
+      "lineCount": 5,
+      "packagesAdded": [
+        "signed"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1791708587.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791708587.sh",
+      "timestamp": 1791708587,
+      "touches": [
+        "~/.local/state/omarchy/preinstalls-removed"
       ]
     }
   ],

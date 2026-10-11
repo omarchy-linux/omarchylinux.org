@@ -587,7 +587,7 @@
     },
     {
       "aliases": [],
-      "args": "use <id> | reset | defaults | position <top|bottom|left|right> | transparent <true|false|toggle> | put <id> [placement] | move <id> [placement] | set <id> <key> <value> [--json] [placement]",
+      "args": "use <id> | reset | defaults | position [top|bottom|left|right] | transparent <true|false|toggle> | put <id> [placement] | move <id> [placement] | set <id> <key> <value> [--json] [placement] | get <id> <key>",
       "cli": "omarchy bar",
       "examples": [
         "omarchy bar use local.neon-bar",
@@ -600,7 +600,7 @@
       "groupDescription": "Omarchy shell bar layout and settings",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 403,
+      "lineCount": 427,
       "name": "omarchy-bar",
       "path": "bin/omarchy-bar",
       "requiresSudo": false,
@@ -2676,6 +2676,26 @@
     },
     {
       "aliases": [],
+      "args": "[theme|sharp|rounded]",
+      "cli": "omarchy hyprland corners",
+      "examples": [
+        "omarchy hyprland corners",
+        "omarchy hyprland corners rounded"
+      ],
+      "executable": true,
+      "group": "hyprland",
+      "groupDescription": "Hyprland window, monitor, and toggle controls",
+      "hasMetadata": true,
+      "hidden": false,
+      "lineCount": 41,
+      "name": "omarchy-hyprland-corners",
+      "path": "bin/omarchy-hyprland-corners",
+      "requiresSudo": false,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-hyprland-corners",
+      "summary": "Show or set window corners: theme, sharp, or rounded"
+    },
+    {
+      "aliases": [],
       "args": "<app-name>",
       "cli": "omarchy hyprland focus app",
       "examples": [
@@ -3077,7 +3097,44 @@
     },
     {
       "aliases": [],
-      "args": "",
+      "args": "[workspace-id]",
+      "cli": "omarchy hyprland workspace layout current",
+      "examples": [],
+      "executable": true,
+      "group": "hyprland",
+      "groupDescription": "Hyprland window, monitor, and toggle controls",
+      "hasMetadata": true,
+      "hidden": false,
+      "lineCount": 28,
+      "name": "omarchy-hyprland-workspace-layout-current",
+      "path": "bin/omarchy-hyprland-workspace-layout-current",
+      "requiresSudo": false,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-hyprland-workspace-layout-current",
+      "summary": "Print the layout of a workspace: dwindle, scrolling, or floating"
+    },
+    {
+      "aliases": [],
+      "args": "[dwindle|scrolling|floating]",
+      "cli": "omarchy hyprland workspace layout default",
+      "examples": [
+        "omarchy hyprland workspace layout default",
+        "omarchy hyprland workspace layout default scrolling"
+      ],
+      "executable": true,
+      "group": "hyprland",
+      "groupDescription": "Hyprland window, monitor, and toggle controls",
+      "hasMetadata": true,
+      "hidden": false,
+      "lineCount": 35,
+      "name": "omarchy-hyprland-workspace-layout-default",
+      "path": "bin/omarchy-hyprland-workspace-layout-default",
+      "requiresSudo": false,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-hyprland-workspace-layout-default",
+      "summary": "Show or set the layout of workspaces without one of their own: dwindle, scrolling, or floating"
+    },
+    {
+      "aliases": [],
+      "args": "[back]",
       "cli": "omarchy hyprland workspace layout toggle",
       "examples": [],
       "executable": true,
@@ -3085,12 +3142,29 @@
       "groupDescription": "Hyprland window, monitor, and toggle controls",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 21,
+      "lineCount": 69,
       "name": "omarchy-hyprland-workspace-layout-toggle",
       "path": "bin/omarchy-hyprland-workspace-layout-toggle",
       "requiresSudo": false,
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-hyprland-workspace-layout-toggle",
-      "summary": "Toggle the layout on the current active workspace between dwindle and scrolling"
+      "summary": "Cycle the current active workspace through the dwindle, scrolling, and floating layouts"
+    },
+    {
+      "aliases": [],
+      "args": "<status|cycle [back]|configure --seed|--defaults>",
+      "cli": "omarchy input method",
+      "examples": [],
+      "executable": true,
+      "group": "input",
+      "groupDescription": "",
+      "hasMetadata": true,
+      "hidden": true,
+      "lineCount": 22,
+      "name": "omarchy-input-method",
+      "path": "bin/omarchy-input-method",
+      "requiresSudo": false,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-input-method",
+      "summary": "Configure, inspect, or switch input methods"
     },
     {
       "aliases": [],
@@ -3316,7 +3390,7 @@
       "groupDescription": "Optional software installers",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 128,
+      "lineCount": 131,
       "name": "omarchy-install-dev-env",
       "path": "bin/omarchy-install-dev-env",
       "requiresSudo": true,
@@ -3664,7 +3738,7 @@
       "groupDescription": "Optional software installers",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 37,
+      "lineCount": 35,
       "name": "omarchy-install-preinstalls",
       "path": "bin/omarchy-install-preinstalls",
       "requiresSudo": true,
@@ -4492,7 +4566,7 @@
     },
     {
       "aliases": [],
-      "args": "prompt [option...] [-- menu args...]",
+      "args": "prompt [option...] [-- --multiple --selected <value> --on-change <command-json> --change-key <key> --width <pixels> --maxheight <pixels>]",
       "cli": "omarchy menu select",
       "examples": [
         "omarchy menu select Format jpg png",
@@ -4503,12 +4577,12 @@
       "groupDescription": "Omarchy menu commands",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 99,
+      "lineCount": 141,
       "name": "omarchy-menu-select",
       "path": "bin/omarchy-menu-select",
       "requiresSudo": false,
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-menu-select",
-      "summary": "Pick one option from a menu"
+      "summary": "Pick one or multiple options from a menu"
     },
     {
       "aliases": [],
@@ -5436,7 +5510,7 @@
       "groupDescription": "",
       "hasMetadata": true,
       "hidden": true,
-      "lineCount": 1312,
+      "lineCount": 1313,
       "name": "omarchy-provision-owner",
       "path": "bin/omarchy-provision-owner",
       "requiresSudo": true,
@@ -6145,7 +6219,7 @@
       "groupDescription": "Removal workflows",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 48,
+      "lineCount": 46,
       "name": "omarchy-remove-preinstalls",
       "path": "bin/omarchy-remove-preinstalls",
       "requiresSudo": false,
@@ -6643,7 +6717,7 @@
       "groupDescription": "Restart Omarchy components",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 10,
+      "lineCount": 31,
       "name": "omarchy-restart-xcompose",
       "path": "bin/omarchy-restart-xcompose",
       "requiresSudo": false,
@@ -6700,6 +6774,43 @@
       "requiresSudo": true,
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-setup-direct-boot",
       "summary": "Add or remove an EFI boot entry for the Omarchy UKI, allowing the system to boot directly"
+    },
+    {
+      "aliases": [],
+      "args": "[mozc|hangul|pinyin|chewing]",
+      "cli": "omarchy setup input",
+      "examples": [
+        "omarchy setup input",
+        "omarchy setup input mozc"
+      ],
+      "executable": true,
+      "group": "setup",
+      "groupDescription": "Interactive setup wizards",
+      "hasMetadata": true,
+      "hidden": false,
+      "lineCount": 29,
+      "name": "omarchy-setup-input",
+      "path": "bin/omarchy-setup-input",
+      "requiresSudo": true,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-setup-input",
+      "summary": "Select input methods for Japanese, Korean, or Chinese typing"
+    },
+    {
+      "aliases": [],
+      "args": "",
+      "cli": "omarchy setup keyboard",
+      "examples": [],
+      "executable": true,
+      "group": "setup",
+      "groupDescription": "Interactive setup wizards",
+      "hasMetadata": true,
+      "hidden": false,
+      "lineCount": 7,
+      "name": "omarchy-setup-keyboard",
+      "path": "bin/omarchy-setup-keyboard",
+      "requiresSudo": false,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-setup-keyboard",
+      "summary": "Select the keyboard layouts available for switching"
     },
     {
       "aliases": [],
@@ -8097,7 +8208,7 @@
       "path": "bin/omarchy-toggle-bar",
       "requiresSudo": false,
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-toggle-bar",
-      "summary": "Toggle bar visibility without killing the Omarchy shell"
+      "summary": "Toggle bar visibility without killing the Omarchy shell (on hides the bar, off shows it)"
     },
     {
       "aliases": [],
@@ -8835,7 +8946,7 @@
       "groupDescription": "",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 2477,
+      "lineCount": 2479,
       "name": "omarchy-upgrade-to-quattro",
       "path": "bin/omarchy-upgrade-to-quattro",
       "requiresSudo": true,
@@ -9158,7 +9269,7 @@
       "groupDescription": "Web app launchers",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 241,
+      "lineCount": 246,
       "name": "omarchy-webapp-install",
       "path": "bin/omarchy-webapp-install",
       "requiresSudo": false,
@@ -9201,6 +9312,23 @@
     },
     {
       "aliases": [],
+      "args": "<url>",
+      "cli": "omarchy webapp window class",
+      "examples": [],
+      "executable": true,
+      "group": "webapp",
+      "groupDescription": "Web app launchers",
+      "hasMetadata": true,
+      "hidden": true,
+      "lineCount": 24,
+      "name": "omarchy-webapp-window-class",
+      "path": "bin/omarchy-webapp-window-class",
+      "requiresSudo": false,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-webapp-window-class",
+      "summary": "Print the window class Chromium gives a web app opened at a URL"
+    },
+    {
+      "aliases": [],
       "args": "",
       "cli": "omarchy windows key",
       "examples": [],
@@ -9234,7 +9362,7 @@
       "summary": "Install, launch, stop, inspect, or remove the Windows VM"
     }
   ],
-  "count": 520,
+  "count": 527,
   "generatedFrom": "data/source/quattro-dev/bin",
   "groups": {
     "agent": "AI coding agents, their usage, and subscription accounts",

@@ -2,8 +2,20 @@
   "bindings": {
     "added": [
       {
+        "chord": "CTRL + SHIFT + semicolon",
+        "label": "Zoom in (JIS + key)"
+      },
+      {
+        "chord": "CTRL + SPACE",
+        "label": "Direct input for the terminal prefix"
+      },
+      {
         "chord": "SUPER + A",
         "label": "Select all"
+      },
+      {
+        "chord": "SUPER + ALT + L",
+        "label": "Cycle workspace layout back"
       },
       {
         "chord": "SUPER + BACKSPACE",
@@ -22,12 +34,24 @@
         "label": "Toggle scratchpad"
       },
       {
+        "chord": "SUPER + I",
+        "label": "Switch input language"
+      },
+      {
+        "chord": "SUPER + L",
+        "label": "Cycle workspace layout"
+      },
+      {
         "chord": "SUPER + Q",
         "label": "Close window"
       },
       {
         "chord": "SUPER + SHIFT + grave",
         "label": "Move window to scratchpad"
+      },
+      {
+        "chord": "SUPER + SHIFT + I",
+        "label": "Switch input language back"
       },
       {
         "chord": "switch:off:Apple SMC power/lid events",
@@ -353,13 +377,13 @@
       }
     ],
     "counts": {
-      "added": 9,
+      "added": 15,
       "changedAction": 39,
       "from": 228,
       "fromRecords": 228,
-      "removed": 3,
-      "to": 234,
-      "toRecords": 234
+      "removed": 4,
+      "to": 239,
+      "toRecords": 239
     },
     "note": null,
     "removed": [
@@ -374,6 +398,10 @@
       {
         "chord": "SUPER + BACKSPACE",
         "label": "Toggle window transparency"
+      },
+      {
+        "chord": "SUPER + L",
+        "label": "Toggle workspace layout"
       }
     ]
   },
@@ -410,6 +438,10 @@
       "omarchy-hw-platform",
       "omarchy-hw-vm",
       "omarchy-hw-x86",
+      "omarchy-hyprland-corners",
+      "omarchy-hyprland-workspace-layout-current",
+      "omarchy-hyprland-workspace-layout-default",
+      "omarchy-input-method",
       "omarchy-install-ai-claude",
       "omarchy-install-chromium-claude",
       "omarchy-install-dictation-superwhisper",
@@ -431,6 +463,8 @@
       "omarchy-remove-service-microsoft",
       "omarchy-remove-service-ssh-agent",
       "omarchy-security-functions",
+      "omarchy-setup-input",
+      "omarchy-setup-keyboard",
       "omarchy-setup-security-ssh-agent",
       "omarchy-setup-security-thunderbolt-authorization",
       "omarchy-setup-security-thunderbolt-boot",
@@ -457,6 +491,7 @@
       "omarchy-usb-authorization-restore-default",
       "omarchy-usb-authorization-review",
       "omarchy-usb-authorization-watch",
+      "omarchy-webapp-window-class",
       "omarchy-windows-key"
     ],
     "changed": [
@@ -472,6 +507,15 @@
           ]
         },
         "name": "omarchy-audio-sink-availability"
+      },
+      {
+        "fields": {
+          "args": [
+            "use <id> | reset | defaults | position <top|bottom|left|right> | transparent <true|false|toggle> | put <id> [placement] | move <id> [placement] | set <id> <key> <value> [--json] [placement]",
+            "use <id> | reset | defaults | position [top|bottom|left|right] | transparent <true|false|toggle> | put <id> [placement] | move <id> [placement] | set <id> <key> <value> [--json] [placement] | get <id> <key>"
+          ]
+        },
+        "name": "omarchy-bar"
       },
       {
         "fields": {
@@ -517,6 +561,19 @@
           ]
         },
         "name": "omarchy-drive-password"
+      },
+      {
+        "fields": {
+          "args": [
+            "",
+            "[back]"
+          ],
+          "summary": [
+            "Toggle the layout on the current active workspace between dwindle and scrolling",
+            "Cycle the current active workspace through the dwindle, scrolling, and floating layouts"
+          ]
+        },
+        "name": "omarchy-hyprland-workspace-layout-toggle"
       },
       {
         "fields": {
@@ -613,6 +670,19 @@
       },
       {
         "fields": {
+          "args": [
+            "prompt [option...] [-- menu args...]",
+            "prompt [option...] [-- --multiple --selected <value> --on-change <command-json> --change-key <key> --width <pixels> --maxheight <pixels>]"
+          ],
+          "summary": [
+            "Pick one option from a menu",
+            "Pick one or multiple options from a menu"
+          ]
+        },
+        "name": "omarchy-menu-select"
+      },
+      {
+        "fields": {
           "summary": [
             "Reinstall all default Omarchy packages from the stable channel",
             "Reinstall all default Omarchy packages from the stable channel, or on aarch64 the edge channel"
@@ -686,6 +756,15 @@
       },
       {
         "fields": {
+          "summary": [
+            "Toggle bar visibility without killing the Omarchy shell",
+            "Toggle bar visibility without killing the Omarchy shell (on hides the bar, off shows it)"
+          ]
+        },
+        "name": "omarchy-toggle-bar"
+      },
+      {
+        "fields": {
           "aliases": [
             [],
             [
@@ -722,11 +801,11 @@
       }
     ],
     "counts": {
-      "added": 79,
-      "changed": 21,
+      "added": 86,
+      "changed": 25,
       "from": 444,
       "removed": 3,
-      "to": 520
+      "to": 527
     },
     "removed": [
       "omarchy-voxtype-install",
@@ -763,8 +842,50 @@
       "setup.security.thunderbolt-boot",
       "setup.security.usb-authorization",
       "setup.security.usb-authorization-boot",
-      "trigger.toggle.animations",
-      "trigger.toggle.theme-sync"
+      "setup.typing",
+      "setup.typing.input",
+      "setup.typing.keyboard",
+      "trigger.appearance",
+      "trigger.appearance.animations",
+      "trigger.appearance.one-window-ratio",
+      "trigger.appearance.theme-sync",
+      "trigger.appearance.top-bar",
+      "trigger.appearance.top-bar.hide",
+      "trigger.appearance.top-bar.indicators",
+      "trigger.appearance.top-bar.indicators.battery-percentage",
+      "trigger.appearance.top-bar.indicators.clock",
+      "trigger.appearance.top-bar.indicators.clock.date-12h",
+      "trigger.appearance.top-bar.indicators.clock.date-24h",
+      "trigger.appearance.top-bar.indicators.clock.iso",
+      "trigger.appearance.top-bar.indicators.clock.stacked-12h",
+      "trigger.appearance.top-bar.indicators.clock.stacked-24h",
+      "trigger.appearance.top-bar.indicators.clock.stacked-date",
+      "trigger.appearance.top-bar.indicators.clock.stacked-time",
+      "trigger.appearance.top-bar.indicators.clock.sunday-12h",
+      "trigger.appearance.top-bar.indicators.clock.sunday-24h",
+      "trigger.appearance.top-bar.indicators.clock.sunday-seconds-12h",
+      "trigger.appearance.top-bar.indicators.clock.sunday-seconds-24h",
+      "trigger.appearance.top-bar.indicators.clock.time-12h",
+      "trigger.appearance.top-bar.indicators.clock.time-24h",
+      "trigger.appearance.top-bar.indicators.clock.week",
+      "trigger.appearance.top-bar.opaque",
+      "trigger.appearance.top-bar.position",
+      "trigger.appearance.top-bar.position.bottom",
+      "trigger.appearance.top-bar.position.left",
+      "trigger.appearance.top-bar.position.right",
+      "trigger.appearance.top-bar.position.top",
+      "trigger.appearance.top-bar.show",
+      "trigger.appearance.top-bar.transparent",
+      "trigger.appearance.window-corners",
+      "trigger.appearance.window-corners.rounded",
+      "trigger.appearance.window-corners.sharp",
+      "trigger.appearance.window-corners.theme",
+      "trigger.appearance.window-gaps",
+      "trigger.appearance.workspace-layout",
+      "trigger.appearance.workspace-layout.dwindle",
+      "trigger.appearance.workspace-layout.floating",
+      "trigger.appearance.workspace-layout.scrolling",
+      "trigger.clipboard-history"
     ],
     "changed": [
       {
@@ -1569,23 +1690,35 @@
       }
     ],
     "counts": {
-      "added": 28,
+      "added": 70,
       "changed": 88,
       "from": 333,
-      "removed": 2,
-      "to": 359
+      "removed": 14,
+      "to": 389
     },
     "removed": [
       "install.ai.dictation",
-      "setup.default.agent.gemini"
+      "setup.default.agent.gemini",
+      "style.bar",
+      "style.bar.position",
+      "style.bar.position.bottom",
+      "style.bar.position.left",
+      "style.bar.position.right",
+      "style.bar.position.top",
+      "style.bar.transparency",
+      "trigger.toggle.battery-percentage",
+      "trigger.toggle.one-window-ratio",
+      "trigger.toggle.top-bar",
+      "trigger.toggle.window-gaps",
+      "trigger.toggle.workspace-layout"
     ]
   },
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 49,
+      "new": 57,
       "removed": 0,
-      "to": 155
+      "to": 163
     },
     "new": [
       {
@@ -1617,6 +1750,11 @@
         "date": "2026-08-25T14:07:17Z",
         "description": "Enable Dell XPS 13 sidecar speaker amplifiers",
         "file": "1787666837.sh"
+      },
+      {
+        "date": "2026-08-25T17:42:55Z",
+        "description": "Drop saved workspace layouts belonging to named workspaces",
+        "file": "1787679775.sh"
       },
       {
         "date": "2026-08-30T22:46:35Z",
@@ -1804,6 +1942,11 @@
         "file": "1791345484.sh"
       },
       {
+        "date": "2026-10-07T10:03:54Z",
+        "description": "Configure shared input-method defaults and free desktop shortcuts",
+        "file": "1791367434.sh"
+      },
+      {
         "date": "2026-10-07T12:41:27Z",
         "description": "Enable overlay scrollbars in Chromium-based browsers",
         "file": "1791376887.sh"
@@ -1812,6 +1955,11 @@
         "date": "2026-10-07T20:00:52Z",
         "description": "Prioritize the Omarchy package repository over Arch repositories",
         "file": "1791403252.sh"
+      },
+      {
+        "date": "2026-10-07T20:01:50Z",
+        "description": "Install titlebars for floating workspaces",
+        "file": "1791403310.sh"
       },
       {
         "date": "2026-10-08T14:40:56Z",
@@ -1832,6 +1980,31 @@
         "date": "2026-10-09T21:23:24Z",
         "description": "Stop the boot from waiting on a black screen for the console to answer",
         "file": "1791581004.sh"
+      },
+      {
+        "date": "2026-10-10T13:54:09Z",
+        "description": "Move the keyboard layout widget to the right side of the bar",
+        "file": "1791640449.sh"
+      },
+      {
+        "date": "2026-10-11T00:01:47Z",
+        "description": "Let a lone Shift switch out of an input method and back",
+        "file": "1791676907.sh"
+      },
+      {
+        "date": "2026-10-11T05:29:44Z",
+        "description": "Name web app windows in their launchers, so titlebars show the app's name",
+        "file": "1791696584.sh"
+      },
+      {
+        "date": "2026-10-11T06:03:14Z",
+        "description": "Save workspace layouts as modes, so a default layout keeps them",
+        "file": "1791698594.sh"
+      },
+      {
+        "date": "2026-10-11T08:49:47Z",
+        "description": "Install Signed, the PDF signing app",
+        "file": "1791708587.sh"
       }
     ],
     "removed": []

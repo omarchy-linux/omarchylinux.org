@@ -582,6 +582,72 @@
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/dictation.lua#L10"
     },
     {
+      "action": "omarchy-input-method cycle",
+      "category": "input-method",
+      "chord": "SUPER + I",
+      "file": "default/hypr/bindings/input-method.lua",
+      "keys": [
+        "SUPER",
+        "I"
+      ],
+      "kind": "bind",
+      "label": "Switch input language",
+      "line": 19,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/input-method.lua#L19"
+    },
+    {
+      "action": "omarchy-input-method cycle back",
+      "category": "input-method",
+      "chord": "SUPER + SHIFT + I",
+      "file": "default/hypr/bindings/input-method.lua",
+      "keys": [
+        "SUPER",
+        "SHIFT",
+        "I"
+      ],
+      "kind": "bind",
+      "label": "Switch input language back",
+      "line": 20,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/input-method.lua#L20"
+    },
+    {
+      "action": "function() if active_window_is_terminal() then -- Wait for the local controller reply before dispatching the next key. o.shell_succeeds(\"timeout 0.3 fcitx5-remote --check -c\") end end",
+      "category": "input-method",
+      "chord": "CTRL + SPACE",
+      "file": "default/hypr/bindings/input-method.lua",
+      "keys": [
+        "CTRL",
+        "SPACE"
+      ],
+      "kind": "bind",
+      "label": "Direct input for the terminal prefix",
+      "line": 24,
+      "note": null,
+      "options": "{ non_consuming = true }",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/input-method.lua#L24"
+    },
+    {
+      "action": "function() local class = active_window_class() for pattern",
+      "category": "jis",
+      "chord": "CTRL + SHIFT + semicolon",
+      "file": "default/hypr/bindings/jis.lua",
+      "keys": [
+        "CTRL",
+        "SHIFT",
+        "semicolon"
+      ],
+      "kind": "bind",
+      "label": "Zoom in (JIS + key)",
+      "line": 32,
+      "note": null,
+      "options": "chord in pairs(zoom_in_overrides) do if class:find(pattern, 1, true) then send_shortcut_once(chord[1], chord[2]) return end end send_shortcut_once(\"CTRL\", \"KP_Add\") end",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/jis.lua#L32"
+    },
+    {
       "action": "{ audio = \"raise\" }",
       "category": "media",
       "chord": "XF86AudioRaiseVolume",
@@ -1219,11 +1285,28 @@
         "L"
       ],
       "kind": "bind",
-      "label": "Toggle workspace layout",
+      "label": "Cycle workspace layout",
       "line": 14,
       "note": null,
       "options": null,
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L14"
+    },
+    {
+      "action": "omarchy-hyprland-workspace-layout-toggle back",
+      "category": "tiling",
+      "chord": "SUPER + ALT + L",
+      "file": "default/hypr/bindings/tiling.lua",
+      "keys": [
+        "SUPER",
+        "ALT",
+        "L"
+      ],
+      "kind": "bind",
+      "label": "Cycle workspace layout back",
+      "line": 15,
+      "note": null,
+      "options": null,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L15"
     },
     {
       "action": "hl.dsp.focus({ direction = \"l\" })",
@@ -1236,10 +1319,10 @@
       ],
       "kind": "bind",
       "label": "Focus on left window",
-      "line": 16,
+      "line": 17,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L16"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L17"
     },
     {
       "action": "hl.dsp.focus({ direction = \"r\" })",
@@ -1252,10 +1335,10 @@
       ],
       "kind": "bind",
       "label": "Focus on right window",
-      "line": 17,
+      "line": 18,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L17"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L18"
     },
     {
       "action": "hl.dsp.focus({ direction = \"u\" })",
@@ -1268,10 +1351,10 @@
       ],
       "kind": "bind",
       "label": "Focus on above window",
-      "line": 18,
+      "line": 19,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L18"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L19"
     },
     {
       "action": "hl.dsp.focus({ direction = \"d\" })",
@@ -1284,10 +1367,10 @@
       ],
       "kind": "bind",
       "label": "Focus on below window",
-      "line": 19,
+      "line": 20,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L19"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L20"
     },
     {
       "action": "hl.dsp.focus({ workspace = tostring(workspace) })",
@@ -1300,10 +1383,10 @@
       ],
       "kind": "bind",
       "label": "Switch to workspace 1",
-      "line": 23,
+      "line": 24,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L23"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L24"
     },
     {
       "action": "hl.dsp.focus({ workspace = tostring(workspace) })",
@@ -1316,10 +1399,10 @@
       ],
       "kind": "bind",
       "label": "Switch to workspace 2",
-      "line": 23,
+      "line": 24,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L23"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L24"
     },
     {
       "action": "hl.dsp.focus({ workspace = tostring(workspace) })",
@@ -1332,10 +1415,10 @@
       ],
       "kind": "bind",
       "label": "Switch to workspace 3",
-      "line": 23,
+      "line": 24,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L23"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L24"
     },
     {
       "action": "hl.dsp.focus({ workspace = tostring(workspace) })",
@@ -1348,10 +1431,10 @@
       ],
       "kind": "bind",
       "label": "Switch to workspace 4",
-      "line": 23,
+      "line": 24,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L23"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L24"
     },
     {
       "action": "hl.dsp.focus({ workspace = tostring(workspace) })",
@@ -1364,10 +1447,10 @@
       ],
       "kind": "bind",
       "label": "Switch to workspace 5",
-      "line": 23,
+      "line": 24,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L23"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L24"
     },
     {
       "action": "hl.dsp.focus({ workspace = tostring(workspace) })",
@@ -1380,10 +1463,10 @@
       ],
       "kind": "bind",
       "label": "Switch to workspace 6",
-      "line": 23,
+      "line": 24,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L23"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L24"
     },
     {
       "action": "hl.dsp.focus({ workspace = tostring(workspace) })",
@@ -1396,10 +1479,10 @@
       ],
       "kind": "bind",
       "label": "Switch to workspace 7",
-      "line": 23,
+      "line": 24,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L23"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L24"
     },
     {
       "action": "hl.dsp.focus({ workspace = tostring(workspace) })",
@@ -1412,10 +1495,10 @@
       ],
       "kind": "bind",
       "label": "Switch to workspace 8",
-      "line": 23,
+      "line": 24,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L23"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L24"
     },
     {
       "action": "hl.dsp.focus({ workspace = tostring(workspace) })",
@@ -1428,10 +1511,10 @@
       ],
       "kind": "bind",
       "label": "Switch to workspace 9",
-      "line": 23,
+      "line": 24,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L23"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L24"
     },
     {
       "action": "hl.dsp.focus({ workspace = tostring(workspace) })",
@@ -1444,10 +1527,10 @@
       ],
       "kind": "bind",
       "label": "Switch to workspace 10",
-      "line": 23,
+      "line": 24,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L23"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L24"
     },
     {
       "action": "hl.dsp.window.move({ workspace = tostring(workspace) })",
@@ -1461,10 +1544,10 @@
       ],
       "kind": "bind",
       "label": "Move window to workspace 1",
-      "line": 24,
+      "line": 25,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L24"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L25"
     },
     {
       "action": "hl.dsp.window.move({ workspace = tostring(workspace) })",
@@ -1478,10 +1561,10 @@
       ],
       "kind": "bind",
       "label": "Move window to workspace 2",
-      "line": 24,
+      "line": 25,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L24"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L25"
     },
     {
       "action": "hl.dsp.window.move({ workspace = tostring(workspace) })",
@@ -1495,10 +1578,10 @@
       ],
       "kind": "bind",
       "label": "Move window to workspace 3",
-      "line": 24,
+      "line": 25,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L24"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L25"
     },
     {
       "action": "hl.dsp.window.move({ workspace = tostring(workspace) })",
@@ -1512,10 +1595,10 @@
       ],
       "kind": "bind",
       "label": "Move window to workspace 4",
-      "line": 24,
+      "line": 25,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L24"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L25"
     },
     {
       "action": "hl.dsp.window.move({ workspace = tostring(workspace) })",
@@ -1529,10 +1612,10 @@
       ],
       "kind": "bind",
       "label": "Move window to workspace 5",
-      "line": 24,
+      "line": 25,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L24"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L25"
     },
     {
       "action": "hl.dsp.window.move({ workspace = tostring(workspace) })",
@@ -1546,10 +1629,10 @@
       ],
       "kind": "bind",
       "label": "Move window to workspace 6",
-      "line": 24,
+      "line": 25,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L24"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L25"
     },
     {
       "action": "hl.dsp.window.move({ workspace = tostring(workspace) })",
@@ -1563,10 +1646,10 @@
       ],
       "kind": "bind",
       "label": "Move window to workspace 7",
-      "line": 24,
+      "line": 25,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L24"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L25"
     },
     {
       "action": "hl.dsp.window.move({ workspace = tostring(workspace) })",
@@ -1580,10 +1663,10 @@
       ],
       "kind": "bind",
       "label": "Move window to workspace 8",
-      "line": 24,
+      "line": 25,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L24"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L25"
     },
     {
       "action": "hl.dsp.window.move({ workspace = tostring(workspace) })",
@@ -1597,10 +1680,10 @@
       ],
       "kind": "bind",
       "label": "Move window to workspace 9",
-      "line": 24,
+      "line": 25,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L24"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L25"
     },
     {
       "action": "hl.dsp.window.move({ workspace = tostring(workspace) })",
@@ -1614,10 +1697,10 @@
       ],
       "kind": "bind",
       "label": "Move window to workspace 10",
-      "line": 24,
+      "line": 25,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L24"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L25"
     },
     {
       "action": "hl.dsp.window.move({ workspace = tostring(workspace), follow = false })",
@@ -1632,10 +1715,10 @@
       ],
       "kind": "bind",
       "label": "Move window silently to workspace 1",
-      "line": 25,
+      "line": 26,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L25"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L26"
     },
     {
       "action": "hl.dsp.window.move({ workspace = tostring(workspace), follow = false })",
@@ -1650,10 +1733,10 @@
       ],
       "kind": "bind",
       "label": "Move window silently to workspace 2",
-      "line": 25,
+      "line": 26,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L25"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L26"
     },
     {
       "action": "hl.dsp.window.move({ workspace = tostring(workspace), follow = false })",
@@ -1668,10 +1751,10 @@
       ],
       "kind": "bind",
       "label": "Move window silently to workspace 3",
-      "line": 25,
+      "line": 26,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L25"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L26"
     },
     {
       "action": "hl.dsp.window.move({ workspace = tostring(workspace), follow = false })",
@@ -1686,10 +1769,10 @@
       ],
       "kind": "bind",
       "label": "Move window silently to workspace 4",
-      "line": 25,
+      "line": 26,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L25"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L26"
     },
     {
       "action": "hl.dsp.window.move({ workspace = tostring(workspace), follow = false })",
@@ -1704,10 +1787,10 @@
       ],
       "kind": "bind",
       "label": "Move window silently to workspace 5",
-      "line": 25,
+      "line": 26,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L25"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L26"
     },
     {
       "action": "hl.dsp.window.move({ workspace = tostring(workspace), follow = false })",
@@ -1722,10 +1805,10 @@
       ],
       "kind": "bind",
       "label": "Move window silently to workspace 6",
-      "line": 25,
+      "line": 26,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L25"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L26"
     },
     {
       "action": "hl.dsp.window.move({ workspace = tostring(workspace), follow = false })",
@@ -1740,10 +1823,10 @@
       ],
       "kind": "bind",
       "label": "Move window silently to workspace 7",
-      "line": 25,
+      "line": 26,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L25"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L26"
     },
     {
       "action": "hl.dsp.window.move({ workspace = tostring(workspace), follow = false })",
@@ -1758,10 +1841,10 @@
       ],
       "kind": "bind",
       "label": "Move window silently to workspace 8",
-      "line": 25,
+      "line": 26,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L25"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L26"
     },
     {
       "action": "hl.dsp.window.move({ workspace = tostring(workspace), follow = false })",
@@ -1776,10 +1859,10 @@
       ],
       "kind": "bind",
       "label": "Move window silently to workspace 9",
-      "line": 25,
+      "line": 26,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L25"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L26"
     },
     {
       "action": "hl.dsp.window.move({ workspace = tostring(workspace), follow = false })",
@@ -1794,10 +1877,10 @@
       ],
       "kind": "bind",
       "label": "Move window silently to workspace 10",
-      "line": 25,
+      "line": 26,
       "note": "generated: workspace = 1-10",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L25"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L26"
     },
     {
       "action": "hl.dsp.workspace.toggle_special(\"scratchpad\")",
@@ -1810,10 +1893,10 @@
       ],
       "kind": "bind",
       "label": "Toggle scratchpad",
-      "line": 28,
+      "line": 29,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L28"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L29"
     },
     {
       "action": "hl.dsp.window.move({ workspace = \"special:scratchpad\", follow = false })",
@@ -1827,10 +1910,10 @@
       ],
       "kind": "bind",
       "label": "Move window to scratchpad",
-      "line": 29,
+      "line": 30,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L29"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L30"
     },
     {
       "action": "hl.dsp.workspace.toggle_special(\"scratchpad\")",
@@ -1843,10 +1926,10 @@
       ],
       "kind": "bind",
       "label": "Toggle scratchpad",
-      "line": 30,
+      "line": 31,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L30"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L31"
     },
     {
       "action": "hl.dsp.window.move({ workspace = \"special:scratchpad\", follow = false })",
@@ -1860,10 +1943,10 @@
       ],
       "kind": "bind",
       "label": "Move window to scratchpad",
-      "line": 31,
+      "line": 32,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L31"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L32"
     },
     {
       "action": "hl.dsp.focus({ workspace = \"e+1\" })",
@@ -1876,10 +1959,10 @@
       ],
       "kind": "bind",
       "label": "Next workspace",
-      "line": 33,
+      "line": 34,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L33"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L34"
     },
     {
       "action": "hl.dsp.focus({ workspace = \"e-1\" })",
@@ -1893,10 +1976,10 @@
       ],
       "kind": "bind",
       "label": "Previous workspace",
-      "line": 34,
+      "line": 35,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L34"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L35"
     },
     {
       "action": "hl.dsp.focus({ workspace = \"previous\" })",
@@ -1910,10 +1993,10 @@
       ],
       "kind": "bind",
       "label": "Former workspace",
-      "line": 35,
+      "line": 36,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L35"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L36"
     },
     {
       "action": "hl.dsp.workspace.move({ monitor = \"l\" })",
@@ -1928,10 +2011,10 @@
       ],
       "kind": "bind",
       "label": "Move workspace to left monitor",
-      "line": 37,
+      "line": 38,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L37"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L38"
     },
     {
       "action": "hl.dsp.workspace.move({ monitor = \"r\" })",
@@ -1946,10 +2029,10 @@
       ],
       "kind": "bind",
       "label": "Move workspace to right monitor",
-      "line": 38,
+      "line": 39,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L38"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L39"
     },
     {
       "action": "hl.dsp.workspace.move({ monitor = \"u\" })",
@@ -1964,10 +2047,10 @@
       ],
       "kind": "bind",
       "label": "Move workspace to up monitor",
-      "line": 39,
+      "line": 40,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L39"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L40"
     },
     {
       "action": "hl.dsp.workspace.move({ monitor = \"d\" })",
@@ -1982,10 +2065,10 @@
       ],
       "kind": "bind",
       "label": "Move workspace to down monitor",
-      "line": 40,
+      "line": 41,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L40"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L41"
     },
     {
       "action": "hl.dsp.window.swap({ direction = \"l\" })",
@@ -1999,10 +2082,10 @@
       ],
       "kind": "bind",
       "label": "Swap window to the left",
-      "line": 42,
+      "line": 43,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L42"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L43"
     },
     {
       "action": "hl.dsp.window.swap({ direction = \"r\" })",
@@ -2016,10 +2099,10 @@
       ],
       "kind": "bind",
       "label": "Swap window to the right",
-      "line": 43,
+      "line": 44,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L43"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L44"
     },
     {
       "action": "hl.dsp.window.swap({ direction = \"u\" })",
@@ -2033,10 +2116,10 @@
       ],
       "kind": "bind",
       "label": "Swap window up",
-      "line": 44,
+      "line": 45,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L44"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L45"
     },
     {
       "action": "hl.dsp.window.swap({ direction = \"d\" })",
@@ -2050,10 +2133,10 @@
       ],
       "kind": "bind",
       "label": "Swap window down",
-      "line": 45,
+      "line": 46,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L45"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L46"
     },
     {
       "action": "hl.dsp.window.cycle_next()",
@@ -2066,10 +2149,10 @@
       ],
       "kind": "bind",
       "label": "Focus on next window",
-      "line": 47,
+      "line": 48,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L47"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L48"
     },
     {
       "action": "hl.dsp.window.cycle_next({ next = false })",
@@ -2083,10 +2166,10 @@
       ],
       "kind": "bind",
       "label": "Focus on previous window",
-      "line": 48,
+      "line": 49,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L48"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L49"
     },
     {
       "action": "hl.dsp.window.bring_to_top()",
@@ -2099,10 +2182,10 @@
       ],
       "kind": "bind",
       "label": "Reveal active window on top",
-      "line": 49,
+      "line": 50,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L49"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L50"
     },
     {
       "action": "hl.dsp.window.bring_to_top()",
@@ -2116,10 +2199,10 @@
       ],
       "kind": "bind",
       "label": "Reveal active window on top",
-      "line": 50,
+      "line": 51,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L50"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L51"
     },
     {
       "action": "hl.dsp.focus({ monitor = \"+1\" })",
@@ -2133,10 +2216,10 @@
       ],
       "kind": "bind",
       "label": "Focus on next monitor",
-      "line": 52,
+      "line": 53,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L52"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L53"
     },
     {
       "action": "hl.dsp.focus({ monitor = \"-1\" })",
@@ -2151,10 +2234,10 @@
       ],
       "kind": "bind",
       "label": "Focus on previous monitor",
-      "line": 53,
+      "line": 54,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L53"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L54"
     },
     {
       "action": "hl.dsp.window.resize({ x = -100, y = 0, relative = true })",
@@ -2167,10 +2250,10 @@
       ],
       "kind": "bind",
       "label": "Expand window left",
-      "line": 55,
+      "line": 56,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L55"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L56"
     },
     {
       "action": "hl.dsp.window.resize({ x = 100, y = 0, relative = true })",
@@ -2183,10 +2266,10 @@
       ],
       "kind": "bind",
       "label": "Shrink window left",
-      "line": 56,
+      "line": 57,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L56"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L57"
     },
     {
       "action": "hl.dsp.window.resize({ x = 0, y = -100, relative = true })",
@@ -2200,10 +2283,10 @@
       ],
       "kind": "bind",
       "label": "Shrink window up",
-      "line": 57,
+      "line": 58,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L57"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L58"
     },
     {
       "action": "hl.dsp.window.resize({ x = 0, y = 100, relative = true })",
@@ -2217,10 +2300,10 @@
       ],
       "kind": "bind",
       "label": "Expand window down",
-      "line": 58,
+      "line": 59,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L58"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L59"
     },
     {
       "action": "hl.dsp.window.resize({ x = -25, y = 0, relative = true })",
@@ -2234,10 +2317,10 @@
       ],
       "kind": "bind",
       "label": "Expand window left a little",
-      "line": 60,
+      "line": 61,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L60"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L61"
     },
     {
       "action": "hl.dsp.window.resize({ x = 25, y = 0, relative = true })",
@@ -2251,10 +2334,10 @@
       ],
       "kind": "bind",
       "label": "Shrink window left a little",
-      "line": 61,
+      "line": 62,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L61"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L62"
     },
     {
       "action": "hl.dsp.window.resize({ x = 0, y = -25, relative = true })",
@@ -2269,10 +2352,10 @@
       ],
       "kind": "bind",
       "label": "Shrink window up a little",
-      "line": 62,
+      "line": 63,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L62"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L63"
     },
     {
       "action": "hl.dsp.window.resize({ x = 0, y = 25, relative = true })",
@@ -2287,10 +2370,10 @@
       ],
       "kind": "bind",
       "label": "Expand window down a little",
-      "line": 63,
+      "line": 64,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L63"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L64"
     },
     {
       "action": "hl.dsp.window.resize({ x = -300, y = 0, relative = true })",
@@ -2304,10 +2387,10 @@
       ],
       "kind": "bind",
       "label": "Expand window left a lot",
-      "line": 65,
+      "line": 66,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L65"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L66"
     },
     {
       "action": "hl.dsp.window.resize({ x = 300, y = 0, relative = true })",
@@ -2321,10 +2404,10 @@
       ],
       "kind": "bind",
       "label": "Shrink window left a lot",
-      "line": 66,
+      "line": 67,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L66"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L67"
     },
     {
       "action": "hl.dsp.window.resize({ x = 0, y = -300, relative = true })",
@@ -2339,10 +2422,10 @@
       ],
       "kind": "bind",
       "label": "Shrink window up a lot",
-      "line": 67,
+      "line": 68,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L67"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L68"
     },
     {
       "action": "hl.dsp.window.resize({ x = 0, y = 300, relative = true })",
@@ -2357,10 +2440,10 @@
       ],
       "kind": "bind",
       "label": "Expand window down a lot",
-      "line": 68,
+      "line": 69,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L68"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L69"
     },
     {
       "action": "hl.dsp.focus({ workspace = \"e+1\" })",
@@ -2373,10 +2456,10 @@
       ],
       "kind": "bind",
       "label": "Scroll active workspace forward",
-      "line": 70,
+      "line": 71,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L70"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L71"
     },
     {
       "action": "hl.dsp.focus({ workspace = \"e-1\" })",
@@ -2389,10 +2472,10 @@
       ],
       "kind": "bind",
       "label": "Scroll active workspace backward",
-      "line": 71,
+      "line": 72,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L71"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L72"
     },
     {
       "action": "hl.dsp.window.drag()",
@@ -2405,10 +2488,10 @@
       ],
       "kind": "bind",
       "label": "Move window",
-      "line": 73,
+      "line": 74,
       "note": null,
       "options": "{ mouse = true }",
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L73"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L74"
     },
     {
       "action": "hl.dsp.window.resize()",
@@ -2421,10 +2504,10 @@
       ],
       "kind": "bind",
       "label": "Resize window",
-      "line": 74,
+      "line": 75,
       "note": null,
       "options": "{ mouse = true }",
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L74"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L75"
     },
     {
       "action": "hl.dsp.group.toggle()",
@@ -2437,10 +2520,10 @@
       ],
       "kind": "bind",
       "label": "Toggle window grouping",
-      "line": 76,
+      "line": 77,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L76"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L77"
     },
     {
       "action": "hl.dsp.window.move({ out_of_group = true })",
@@ -2454,10 +2537,10 @@
       ],
       "kind": "bind",
       "label": "Move active window out of group",
-      "line": 77,
+      "line": 78,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L77"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L78"
     },
     {
       "action": "hl.dsp.window.move({ into_group = \"l\" })",
@@ -2471,10 +2554,10 @@
       ],
       "kind": "bind",
       "label": "Move window to group on left",
-      "line": 79,
+      "line": 80,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L79"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L80"
     },
     {
       "action": "hl.dsp.window.move({ into_group = \"r\" })",
@@ -2488,10 +2571,10 @@
       ],
       "kind": "bind",
       "label": "Move window to group on right",
-      "line": 80,
+      "line": 81,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L80"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L81"
     },
     {
       "action": "hl.dsp.window.move({ into_group = \"u\" })",
@@ -2505,10 +2588,10 @@
       ],
       "kind": "bind",
       "label": "Move window to group on top",
-      "line": 81,
+      "line": 82,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L81"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L82"
     },
     {
       "action": "hl.dsp.window.move({ into_group = \"d\" })",
@@ -2522,10 +2605,10 @@
       ],
       "kind": "bind",
       "label": "Move window to group on bottom",
-      "line": 82,
+      "line": 83,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L82"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L83"
     },
     {
       "action": "hl.dsp.group.next()",
@@ -2539,10 +2622,10 @@
       ],
       "kind": "bind",
       "label": "Next window in group",
-      "line": 84,
+      "line": 85,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L84"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L85"
     },
     {
       "action": "hl.dsp.group.prev()",
@@ -2557,10 +2640,10 @@
       ],
       "kind": "bind",
       "label": "Previous window in group",
-      "line": 85,
+      "line": 86,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L85"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L86"
     },
     {
       "action": "hl.dsp.group.prev()",
@@ -2574,10 +2657,10 @@
       ],
       "kind": "bind",
       "label": "Move grouped window focus left",
-      "line": 87,
+      "line": 88,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L87"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L88"
     },
     {
       "action": "hl.dsp.group.next()",
@@ -2591,10 +2674,10 @@
       ],
       "kind": "bind",
       "label": "Move grouped window focus right",
-      "line": 88,
+      "line": 89,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L88"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L89"
     },
     {
       "action": "hl.dsp.group.next()",
@@ -2608,10 +2691,10 @@
       ],
       "kind": "bind",
       "label": "Next window in group",
-      "line": 90,
+      "line": 91,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L90"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L91"
     },
     {
       "action": "hl.dsp.group.prev()",
@@ -2625,10 +2708,10 @@
       ],
       "kind": "bind",
       "label": "Previous window in group",
-      "line": 91,
+      "line": 92,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L91"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L92"
     },
     {
       "action": "hl.dsp.group.active({ index = index })",
@@ -2642,10 +2725,10 @@
       ],
       "kind": "bind",
       "label": "Switch to group window 1",
-      "line": 94,
+      "line": 95,
       "note": "generated: index = 1-5",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L94"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L95"
     },
     {
       "action": "hl.dsp.group.active({ index = index })",
@@ -2659,10 +2742,10 @@
       ],
       "kind": "bind",
       "label": "Switch to group window 2",
-      "line": 94,
+      "line": 95,
       "note": "generated: index = 1-5",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L94"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L95"
     },
     {
       "action": "hl.dsp.group.active({ index = index })",
@@ -2676,10 +2759,10 @@
       ],
       "kind": "bind",
       "label": "Switch to group window 3",
-      "line": 94,
+      "line": 95,
       "note": "generated: index = 1-5",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L94"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L95"
     },
     {
       "action": "hl.dsp.group.active({ index = index })",
@@ -2693,10 +2776,10 @@
       ],
       "kind": "bind",
       "label": "Switch to group window 4",
-      "line": 94,
+      "line": 95,
       "note": "generated: index = 1-5",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L94"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L95"
     },
     {
       "action": "hl.dsp.group.active({ index = index })",
@@ -2710,10 +2793,10 @@
       ],
       "kind": "bind",
       "label": "Switch to group window 5",
-      "line": 94,
+      "line": 95,
       "note": "generated: index = 1-5",
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L94"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L95"
     },
     {
       "action": "omarchy-hyprland-monitor-scaling up",
@@ -2726,10 +2809,10 @@
       ],
       "kind": "bind",
       "label": "Monitor scaling up",
-      "line": 97,
+      "line": 98,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L97"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L98"
     },
     {
       "action": "omarchy-hyprland-monitor-scaling down",
@@ -2743,10 +2826,10 @@
       ],
       "kind": "bind",
       "label": "Monitor scaling down",
-      "line": 98,
+      "line": 99,
       "note": null,
       "options": null,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L98"
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/tiling.lua#L99"
     },
     {
       "action": "{ menu = \"root\" }",
@@ -3914,7 +3997,7 @@
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/bindings/utilities.lua#L131"
     }
   ],
-  "count": 234,
+  "count": 239,
   "format": "lua",
   "generatedFrom": "data/source/quattro-dev/default/hypr/bindings",
   "prerelease": true,

@@ -2,6 +2,10 @@
   "bindings": {
     "added": [
       {
+        "chord": "ALT + SPACE",
+        "label": "Toggle dictation"
+      },
+      {
         "chord": "CTRL + SHIFT + semicolon",
         "label": "Zoom in (JIS + key)"
       },
@@ -10,16 +14,44 @@
         "label": "Direct input for the terminal prefix"
       },
       {
+        "chord": "CTRL + XF86MonBrightnessDown",
+        "label": "Keyboard brightness down"
+      },
+      {
+        "chord": "CTRL + XF86MonBrightnessUp",
+        "label": "Keyboard brightness up"
+      },
+      {
         "chord": "SUPER + A",
         "label": "Select all"
+      },
+      {
+        "chord": "SUPER + ALT + comma",
+        "label": "Dismiss last notification"
       },
       {
         "chord": "SUPER + ALT + L",
         "label": "Cycle workspace layout back"
       },
       {
+        "chord": "SUPER + ALT + SPACE",
+        "label": "Apps"
+      },
+      {
         "chord": "SUPER + BACKSPACE",
         "label": "Toggle transparency on a window"
+      },
+      {
+        "chord": "SUPER + comma",
+        "label": "Dismiss, invoke, or focus last notification"
+      },
+      {
+        "chord": "SUPER + CTRL + ALT + C",
+        "label": "Screenshot"
+      },
+      {
+        "chord": "SUPER + CTRL + ALT + comma",
+        "label": "Toggle silencing notifications"
       },
       {
         "chord": "SUPER + CTRL + ALT + E",
@@ -30,8 +62,40 @@
         "label": "Toggle full screen desktop"
       },
       {
+        "chord": "SUPER + CTRL + comma",
+        "label": "Control notifications with the keyboard"
+      },
+      {
+        "chord": "SUPER + CTRL + N",
+        "label": "Network"
+      },
+      {
+        "chord": "SUPER + SHIFT + CTRL + DOWN",
+        "label": "Move window to down monitor"
+      },
+      {
+        "chord": "SUPER + SHIFT + CTRL + LEFT",
+        "label": "Move window to left monitor"
+      },
+      {
+        "chord": "SUPER + SHIFT + CTRL + RIGHT",
+        "label": "Move window to right monitor"
+      },
+      {
+        "chord": "SUPER + SHIFT + CTRL + UP",
+        "label": "Move window to up monitor"
+      },
+      {
+        "chord": "SUPER + CTRL + T",
+        "label": "Theme menu"
+      },
+      {
+        "chord": "SUPER + CTRL + W",
+        "label": "Background switcher"
+      },
+      {
         "chord": "SUPER + grave",
-        "label": "Toggle scratchpad"
+        "label": "Toggle Quake console"
       },
       {
         "chord": "SUPER + I",
@@ -42,16 +106,28 @@
         "label": "Cycle workspace layout"
       },
       {
+        "chord": "SUPER + M",
+        "label": "Minimize window to the dock"
+      },
+      {
         "chord": "SUPER + Q",
         "label": "Close window"
       },
       {
         "chord": "SUPER + SHIFT + grave",
-        "label": "Move window to scratchpad"
+        "label": "Move window to Quake console"
       },
       {
         "chord": "SUPER + SHIFT + I",
         "label": "Switch input language back"
+      },
+      {
+        "chord": "SUPER + SHIFT + Q",
+        "label": "Calculator"
+      },
+      {
+        "chord": "SUPER + SHIFT + T",
+        "label": "Activity"
       },
       {
         "chord": "switch:off:Apple SMC power/lid events",
@@ -60,9 +136,21 @@
       {
         "chord": "switch:on:Apple SMC power/lid events",
         "label": null
+      },
+      {
+        "chord": "XF86Display",
+        "label": "Cycle workspace layout"
       }
     ],
     "changedAction": [
+      {
+        "action": [
+          "hl.dsp.window.bring_to_top()",
+          "hl.dsp.window.alter_zorder({ mode = \"bottom\" })"
+        ],
+        "chord": "ALT + SHIFT + TAB",
+        "label": "Reveal active window on top"
+      },
       {
         "action": [
           "omarchy-shell media previous",
@@ -81,11 +169,83 @@
       },
       {
         "action": [
-          "omarchy-shell notifications invokeLast",
-          "{ ipc = \"notifications.invokeLast\" }"
+          "hl.dsp.window.move({ workspace = tostring(workspace), follow = false })",
+          "o.workspaces.move_window(workspace, false)"
         ],
-        "chord": "SUPER + ALT + comma",
-        "label": "Invoke last notification"
+        "chord": "SUPER + SHIFT + ALT + code:10",
+        "label": "Move window silently to workspace 1"
+      },
+      {
+        "action": [
+          "hl.dsp.window.move({ workspace = tostring(workspace), follow = false })",
+          "o.workspaces.move_window(workspace, false)"
+        ],
+        "chord": "SUPER + SHIFT + ALT + code:11",
+        "label": "Move window silently to workspace 2"
+      },
+      {
+        "action": [
+          "hl.dsp.window.move({ workspace = tostring(workspace), follow = false })",
+          "o.workspaces.move_window(workspace, false)"
+        ],
+        "chord": "SUPER + SHIFT + ALT + code:12",
+        "label": "Move window silently to workspace 3"
+      },
+      {
+        "action": [
+          "hl.dsp.window.move({ workspace = tostring(workspace), follow = false })",
+          "o.workspaces.move_window(workspace, false)"
+        ],
+        "chord": "SUPER + SHIFT + ALT + code:13",
+        "label": "Move window silently to workspace 4"
+      },
+      {
+        "action": [
+          "hl.dsp.window.move({ workspace = tostring(workspace), follow = false })",
+          "o.workspaces.move_window(workspace, false)"
+        ],
+        "chord": "SUPER + SHIFT + ALT + code:14",
+        "label": "Move window silently to workspace 5"
+      },
+      {
+        "action": [
+          "hl.dsp.window.move({ workspace = tostring(workspace), follow = false })",
+          "o.workspaces.move_window(workspace, false)"
+        ],
+        "chord": "SUPER + SHIFT + ALT + code:15",
+        "label": "Move window silently to workspace 6"
+      },
+      {
+        "action": [
+          "hl.dsp.window.move({ workspace = tostring(workspace), follow = false })",
+          "o.workspaces.move_window(workspace, false)"
+        ],
+        "chord": "SUPER + SHIFT + ALT + code:16",
+        "label": "Move window silently to workspace 7"
+      },
+      {
+        "action": [
+          "hl.dsp.window.move({ workspace = tostring(workspace), follow = false })",
+          "o.workspaces.move_window(workspace, false)"
+        ],
+        "chord": "SUPER + SHIFT + ALT + code:17",
+        "label": "Move window silently to workspace 8"
+      },
+      {
+        "action": [
+          "hl.dsp.window.move({ workspace = tostring(workspace), follow = false })",
+          "o.workspaces.move_window(workspace, false)"
+        ],
+        "chord": "SUPER + SHIFT + ALT + code:18",
+        "label": "Move window silently to workspace 9"
+      },
+      {
+        "action": [
+          "hl.dsp.window.move({ workspace = tostring(workspace), follow = false })",
+          "o.workspaces.move_window(workspace, false)"
+        ],
+        "chord": "SUPER + SHIFT + ALT + code:19",
+        "label": "Move window silently to workspace 10"
       },
       {
         "action": [
@@ -97,11 +257,35 @@
       },
       {
         "action": [
-          "omarchy-menu toggle apps",
-          "{ menu = \"apps\" }"
+          "hl.dsp.workspace.move({ monitor = \"d\" })",
+          "o.workspaces.move_to_monitor(\"d\")"
         ],
-        "chord": "SUPER + ALT + SPACE",
-        "label": "Apps menu"
+        "chord": "SUPER + SHIFT + ALT + DOWN",
+        "label": "Move workspace to down monitor"
+      },
+      {
+        "action": [
+          "hl.dsp.workspace.move({ monitor = \"l\" })",
+          "o.workspaces.move_to_monitor(\"l\")"
+        ],
+        "chord": "SUPER + SHIFT + ALT + LEFT",
+        "label": "Move workspace to left monitor"
+      },
+      {
+        "action": [
+          "hl.dsp.workspace.move({ monitor = \"r\" })",
+          "o.workspaces.move_to_monitor(\"r\")"
+        ],
+        "chord": "SUPER + SHIFT + ALT + RIGHT",
+        "label": "Move workspace to right monitor"
+      },
+      {
+        "action": [
+          "hl.dsp.workspace.move({ monitor = \"u\" })",
+          "o.workspaces.move_to_monitor(\"u\")"
+        ],
+        "chord": "SUPER + SHIFT + ALT + UP",
+        "label": "Move workspace to up monitor"
       },
       {
         "action": [
@@ -113,11 +297,83 @@
       },
       {
         "action": [
-          "omarchy-shell notifications dismissOne",
-          "{ ipc = \"notifications.dismissOne\" }"
+          "hl.dsp.focus({ workspace = tostring(workspace) })",
+          "o.workspaces.focus(workspace)"
         ],
-        "chord": "SUPER + comma",
-        "label": "Dismiss last notification"
+        "chord": "SUPER + code:10",
+        "label": "Switch to workspace 1"
+      },
+      {
+        "action": [
+          "hl.dsp.focus({ workspace = tostring(workspace) })",
+          "o.workspaces.focus(workspace)"
+        ],
+        "chord": "SUPER + code:11",
+        "label": "Switch to workspace 2"
+      },
+      {
+        "action": [
+          "hl.dsp.focus({ workspace = tostring(workspace) })",
+          "o.workspaces.focus(workspace)"
+        ],
+        "chord": "SUPER + code:12",
+        "label": "Switch to workspace 3"
+      },
+      {
+        "action": [
+          "hl.dsp.focus({ workspace = tostring(workspace) })",
+          "o.workspaces.focus(workspace)"
+        ],
+        "chord": "SUPER + code:13",
+        "label": "Switch to workspace 4"
+      },
+      {
+        "action": [
+          "hl.dsp.focus({ workspace = tostring(workspace) })",
+          "o.workspaces.focus(workspace)"
+        ],
+        "chord": "SUPER + code:14",
+        "label": "Switch to workspace 5"
+      },
+      {
+        "action": [
+          "hl.dsp.focus({ workspace = tostring(workspace) })",
+          "o.workspaces.focus(workspace)"
+        ],
+        "chord": "SUPER + code:15",
+        "label": "Switch to workspace 6"
+      },
+      {
+        "action": [
+          "hl.dsp.focus({ workspace = tostring(workspace) })",
+          "o.workspaces.focus(workspace)"
+        ],
+        "chord": "SUPER + code:16",
+        "label": "Switch to workspace 7"
+      },
+      {
+        "action": [
+          "hl.dsp.focus({ workspace = tostring(workspace) })",
+          "o.workspaces.focus(workspace)"
+        ],
+        "chord": "SUPER + code:17",
+        "label": "Switch to workspace 8"
+      },
+      {
+        "action": [
+          "hl.dsp.focus({ workspace = tostring(workspace) })",
+          "o.workspaces.focus(workspace)"
+        ],
+        "chord": "SUPER + code:18",
+        "label": "Switch to workspace 9"
+      },
+      {
+        "action": [
+          "hl.dsp.focus({ workspace = tostring(workspace) })",
+          "o.workspaces.focus(workspace)"
+        ],
+        "chord": "SUPER + code:19",
+        "label": "Switch to workspace 10"
       },
       {
         "action": [
@@ -225,27 +481,19 @@
       },
       {
         "action": [
+          "hl.dsp.focus({ workspace = \"previous\" })",
+          "hl.dsp.focus({ workspace = \"previous_per_monitor\" })"
+        ],
+        "chord": "SUPER + CTRL + TAB",
+        "label": "Former workspace"
+      },
+      {
+        "action": [
           "omarchy-shell shell toggle omarchy.clipboard",
           "{ panel = \"omarchy.clipboard\" }"
         ],
         "chord": "SUPER + CTRL + V",
         "label": "Clipboard manager"
-      },
-      {
-        "action": [
-          "omarchy-shell shell toggle omarchy.network",
-          "{ panel = \"omarchy.network\" }"
-        ],
-        "chord": "SUPER + CTRL + W",
-        "label": "Network"
-      },
-      {
-        "action": [
-          "voxtype record toggle",
-          "omarchy-dictation toggle"
-        ],
-        "chord": "SUPER + CTRL + X",
-        "label": "Toggle dictation"
       },
       {
         "action": [
@@ -257,11 +505,107 @@
       },
       {
         "action": [
+          "hl.dsp.focus({ workspace = \"e+1\" })",
+          "hl.dsp.focus({ workspace = \"m+1\" })"
+        ],
+        "chord": "SUPER + mouse_down",
+        "label": "Scroll active workspace forward"
+      },
+      {
+        "action": [
+          "hl.dsp.focus({ workspace = \"e-1\" })",
+          "hl.dsp.focus({ workspace = \"m-1\" })"
+        ],
+        "chord": "SUPER + mouse_up",
+        "label": "Scroll active workspace backward"
+      },
+      {
+        "action": [
           "{ omarchy = \"terminal\" }",
           "o.launch_terminal()"
         ],
         "chord": "SUPER + RETURN",
         "label": "Terminal"
+      },
+      {
+        "action": [
+          "hl.dsp.window.move({ workspace = tostring(workspace) })",
+          "o.workspaces.move_window(workspace)"
+        ],
+        "chord": "SUPER + SHIFT + code:10",
+        "label": "Move window to workspace 1"
+      },
+      {
+        "action": [
+          "hl.dsp.window.move({ workspace = tostring(workspace) })",
+          "o.workspaces.move_window(workspace)"
+        ],
+        "chord": "SUPER + SHIFT + code:11",
+        "label": "Move window to workspace 2"
+      },
+      {
+        "action": [
+          "hl.dsp.window.move({ workspace = tostring(workspace) })",
+          "o.workspaces.move_window(workspace)"
+        ],
+        "chord": "SUPER + SHIFT + code:12",
+        "label": "Move window to workspace 3"
+      },
+      {
+        "action": [
+          "hl.dsp.window.move({ workspace = tostring(workspace) })",
+          "o.workspaces.move_window(workspace)"
+        ],
+        "chord": "SUPER + SHIFT + code:13",
+        "label": "Move window to workspace 4"
+      },
+      {
+        "action": [
+          "hl.dsp.window.move({ workspace = tostring(workspace) })",
+          "o.workspaces.move_window(workspace)"
+        ],
+        "chord": "SUPER + SHIFT + code:14",
+        "label": "Move window to workspace 5"
+      },
+      {
+        "action": [
+          "hl.dsp.window.move({ workspace = tostring(workspace) })",
+          "o.workspaces.move_window(workspace)"
+        ],
+        "chord": "SUPER + SHIFT + code:15",
+        "label": "Move window to workspace 6"
+      },
+      {
+        "action": [
+          "hl.dsp.window.move({ workspace = tostring(workspace) })",
+          "o.workspaces.move_window(workspace)"
+        ],
+        "chord": "SUPER + SHIFT + code:16",
+        "label": "Move window to workspace 7"
+      },
+      {
+        "action": [
+          "hl.dsp.window.move({ workspace = tostring(workspace) })",
+          "o.workspaces.move_window(workspace)"
+        ],
+        "chord": "SUPER + SHIFT + code:17",
+        "label": "Move window to workspace 8"
+      },
+      {
+        "action": [
+          "hl.dsp.window.move({ workspace = tostring(workspace) })",
+          "o.workspaces.move_window(workspace)"
+        ],
+        "chord": "SUPER + SHIFT + code:18",
+        "label": "Move window to workspace 9"
+      },
+      {
+        "action": [
+          "hl.dsp.window.move({ workspace = tostring(workspace) })",
+          "o.workspaces.move_window(workspace)"
+        ],
+        "chord": "SUPER + SHIFT + code:19",
+        "label": "Move window to workspace 10"
       },
       {
         "action": [
@@ -281,11 +625,27 @@
       },
       {
         "action": [
+          "hl.dsp.focus({ workspace = \"e-1\" })",
+          "hl.dsp.focus({ workspace = \"m-1\" })"
+        ],
+        "chord": "SUPER + SHIFT + TAB",
+        "label": "Previous workspace"
+      },
+      {
+        "action": [
           "omarchy-menu toggle",
           "{ menu = \"root\" }"
         ],
         "chord": "SUPER + SPACE",
         "label": "Omarchy menu"
+      },
+      {
+        "action": [
+          "hl.dsp.focus({ workspace = \"e+1\" })",
+          "hl.dsp.focus({ workspace = \"m+1\" })"
+        ],
+        "chord": "SUPER + TAB",
+        "label": "Next workspace"
       },
       {
         "action": [
@@ -377,13 +737,13 @@
       }
     ],
     "counts": {
-      "added": 15,
-      "changedAction": 39,
+      "added": 35,
+      "changedAction": 74,
       "from": 228,
       "fromRecords": 228,
-      "removed": 4,
-      "to": 239,
-      "toRecords": 239
+      "removed": 13,
+      "to": 250,
+      "toRecords": 250
     },
     "note": null,
     "removed": [
@@ -396,8 +756,44 @@
         "label": "Stop dictation (push-to-talk)"
       },
       {
+        "chord": "SUPER + ALT + comma",
+        "label": "Invoke last notification"
+      },
+      {
+        "chord": "SUPER + ALT + SPACE",
+        "label": "Apps menu"
+      },
+      {
         "chord": "SUPER + BACKSPACE",
         "label": "Toggle window transparency"
+      },
+      {
+        "chord": "SUPER + comma",
+        "label": "Dismiss last notification"
+      },
+      {
+        "chord": "SUPER + CTRL + comma",
+        "label": "Toggle silencing notifications"
+      },
+      {
+        "chord": "SUPER + CTRL + N",
+        "label": "Toggle nightlight"
+      },
+      {
+        "chord": "SUPER + CTRL + Q",
+        "label": "Calculator"
+      },
+      {
+        "chord": "SUPER + CTRL + T",
+        "label": "Activity"
+      },
+      {
+        "chord": "SUPER + CTRL + W",
+        "label": "Network"
+      },
+      {
+        "chord": "SUPER + CTRL + X",
+        "label": "Toggle dictation"
       },
       {
         "chord": "SUPER + L",
@@ -408,6 +804,7 @@
   "commands": {
     "added": [
       "omarchy-agent-account-add",
+      "omarchy-agent-account-copy",
       "omarchy-agent-account-exec",
       "omarchy-agent-account-home",
       "omarchy-agent-account-list",
@@ -415,86 +812,165 @@
       "omarchy-agent-account-remove",
       "omarchy-agent-account-rename",
       "omarchy-agent-account-state",
+      "omarchy-agent-account-transfer",
       "omarchy-agent-account-use",
+      "omarchy-agent-integrate-herdr",
+      "omarchy-agent-local",
+      "omarchy-agent-usage-agy",
+      "omarchy-agent-usage-copilot",
+      "omarchy-agent-usage-cursor",
+      "omarchy-agent-usage-deepseek",
+      "omarchy-agent-usage-devin",
       "omarchy-agent-usage-grok",
+      "omarchy-agent-usage-grokbot",
+      "omarchy-agent-usage-hermes",
+      "omarchy-agent-usage-kimchi",
+      "omarchy-agent-usage-kimi",
+      "omarchy-agent-usage-local",
+      "omarchy-agent-usage-minimax",
+      "omarchy-agent-usage-muse",
+      "omarchy-agent-usage-ollama",
+      "omarchy-agent-usage-opencode",
+      "omarchy-agent-usage-openrouter",
+      "omarchy-agent-usage-qwen",
+      "omarchy-agent-usage-synthetic",
+      "omarchy-agent-usage-vibe",
+      "omarchy-agent-usage-zai",
+      "omarchy-apply-n1x-gpu-memory",
+      "omarchy-apply-pacman",
       "omarchy-ascii",
+      "omarchy-boot-direct",
       "omarchy-branding-about-animation",
       "omarchy-capture-screenrecording-process",
+      "omarchy-chromium-add-feature",
       "omarchy-cmd-browser-handoff",
       "omarchy-cmd-default-browser",
       "omarchy-crash-mute",
       "omarchy-default-dictation",
+      "omarchy-dev-notification-demo",
       "omarchy-dictation",
+      "omarchy-dictation-hex",
       "omarchy-dictation-superwhisper",
       "omarchy-dictation-use",
       "omarchy-dictation-voxtype",
+      "omarchy-dock",
+      "omarchy-font-cjk",
       "omarchy-hw-aarch64",
       "omarchy-hw-aarch64-apple",
+      "omarchy-hw-aarch64-gb10",
+      "omarchy-hw-aarch64-n1x",
+      "omarchy-hw-aarch64-qualcomm",
       "omarchy-hw-apple-silicon",
       "omarchy-hw-dell-xps13-dx13260-ptl",
       "omarchy-hw-dell-xps13-sidecar-amps",
       "omarchy-hw-elgato-camlink-4k",
+      "omarchy-hw-match-device-tree",
+      "omarchy-hw-n1x",
       "omarchy-hw-nvidia-display",
       "omarchy-hw-platform",
+      "omarchy-hw-software-rendering",
       "omarchy-hw-vm",
+      "omarchy-hw-wait-camera-access",
       "omarchy-hw-x86",
+      "omarchy-hyprland-animations-off",
       "omarchy-hyprland-corners",
+      "omarchy-hyprland-monitor-config-upgrade",
+      "omarchy-hyprland-monitor-identity",
+      "omarchy-hyprland-monitor-layout",
+      "omarchy-hyprland-monitor-persist",
+      "omarchy-hyprland-monitor-resolution",
+      "omarchy-hyprland-monitor-rotate",
+      "omarchy-hyprland-session-lock-stranded",
+      "omarchy-hyprland-software-rendering",
+      "omarchy-hyprland-window-minimize",
+      "omarchy-hyprland-window-transparency",
       "omarchy-hyprland-workspace-layout-current",
       "omarchy-hyprland-workspace-layout-default",
+      "omarchy-i18n",
       "omarchy-input-method",
       "omarchy-install-ai-claude",
+      "omarchy-install-ai-herdr",
+      "omarchy-install-camera",
       "omarchy-install-chromium-claude",
+      "omarchy-install-dictation-hex",
       "omarchy-install-dictation-superwhisper",
       "omarchy-install-dictation-voxtype",
       "omarchy-install-service-microsoft",
+      "omarchy-install-service-slack",
+      "omarchy-install-t3code-app",
+      "omarchy-install-video-decode",
+      "omarchy-kernel",
+      "omarchy-keyboard-toprow",
+      "omarchy-language",
+      "omarchy-launch-slack",
       "omarchy-lifecycle-dispatch",
+      "omarchy-locale-generate",
+      "omarchy-mise-default-tools",
+      "omarchy-n1x-probe",
+      "omarchy-network-captive-portal",
+      "omarchy-network-wifi-connected",
       "omarchy-pkg-defaults",
       "omarchy-provision-hardware",
+      "omarchy-realtime-repair",
+      "omarchy-remove-ai-amp",
       "omarchy-remove-ai-chatgpt",
       "omarchy-remove-ai-claude",
       "omarchy-remove-ai-grok-bot",
       "omarchy-remove-ai-lm-studio",
       "omarchy-remove-ai-ollama",
+      "omarchy-remove-dictation-hex",
       "omarchy-remove-dictation-superwhisper",
       "omarchy-remove-dictation-voxtype",
-      "omarchy-remove-security-thunderbolt-authorization",
-      "omarchy-remove-security-thunderbolt-boot",
-      "omarchy-remove-security-usb-authorization",
       "omarchy-remove-service-microsoft",
+      "omarchy-remove-service-slack",
       "omarchy-remove-service-ssh-agent",
       "omarchy-security-functions",
+      "omarchy-setup-git",
       "omarchy-setup-input",
       "omarchy-setup-keyboard",
       "omarchy-setup-security-ssh-agent",
-      "omarchy-setup-security-thunderbolt-authorization",
-      "omarchy-setup-security-thunderbolt-boot",
-      "omarchy-setup-security-usb-authorization",
+      "omarchy-setup-slack",
+      "omarchy-sleep-disabled",
+      "omarchy-system",
       "omarchy-system-lid-inhibit",
       "omarchy-theme-bg-boot-intro",
       "omarchy-theme-bg-intro",
+      "omarchy-theme-set-fcitx5",
+      "omarchy-theme-set-glass",
+      "omarchy-theme-set-herdr-app",
       "omarchy-theme-set-herdr-machines",
       "omarchy-theme-set-hunk",
-      "omarchy-thunderbolt-authorization-admin",
-      "omarchy-thunderbolt-authorization-approve",
-      "omarchy-thunderbolt-authorization-boot-enabled",
-      "omarchy-thunderbolt-authorization-daemon",
-      "omarchy-thunderbolt-authorization-review",
-      "omarchy-thunderbolt-authorization-watch",
+      "omarchy-theme-set-slack",
       "omarchy-toggle-animations",
       "omarchy-toggle-fullscreen-desktop",
       "omarchy-toggle-theme-sync",
       "omarchy-update-boot",
       "omarchy-update-pacman",
-      "omarchy-usb-authorization-approve",
-      "omarchy-usb-authorization-boot",
-      "omarchy-usb-authorization-event",
-      "omarchy-usb-authorization-restore-default",
-      "omarchy-usb-authorization-review",
-      "omarchy-usb-authorization-watch",
       "omarchy-webapp-window-class",
       "omarchy-windows-key"
     ],
     "changed": [
+      {
+        "fields": {
+          "args": [
+            "[--inline] [--pick]",
+            "[--inline] [--pick] [--local] [--local-model <recipe>] [--prefer-local] [--agent <id>]"
+          ],
+          "examples": [
+            [
+              "omarchy agent",
+              "omarchy agent --inline"
+            ],
+            [
+              "omarchy agent",
+              "omarchy agent --inline",
+              "omarchy agent --local",
+              "omarchy agent --agent codex"
+            ]
+          ]
+        },
+        "name": "omarchy-agent"
+      },
       {
         "fields": {
           "args": [
@@ -512,7 +988,21 @@
         "fields": {
           "args": [
             "use <id> | reset | defaults | position <top|bottom|left|right> | transparent <true|false|toggle> | put <id> [placement] | move <id> [placement] | set <id> <key> <value> [--json] [placement]",
-            "use <id> | reset | defaults | position [top|bottom|left|right] | transparent <true|false|toggle> | put <id> [placement] | move <id> [placement] | set <id> <key> <value> [--json] [placement] | get <id> <key>"
+            "use <id> | reset | defaults | position [top|bottom|left|right] | background [opaque|glassy|none|cycle] | put <id> [placement] | move <id> [placement] | set <id> <key> <value> [--json] [placement] | get <id> <key>"
+          ],
+          "examples": [
+            [
+              "omarchy bar use local.neon-bar",
+              "omarchy bar put omarchy.keyboard-layout --after omarchy.clock",
+              "omarchy bar move omarchy.clock --section center --index 0",
+              "omarchy bar set omarchy.clock format HH:mm"
+            ],
+            [
+              "omarchy bar use local.neon-bar",
+              "omarchy bar put omarchy.keyboard-layout --after omarchy.clock",
+              "omarchy bar move omarchy.weather --section centerBegin --index 0",
+              "omarchy bar set omarchy.clock format HH:mm"
+            ]
           ]
         },
         "name": "omarchy-bar"
@@ -548,7 +1038,7 @@
         "fields": {
           "args": [
             "[pi|omp|opencode|claude|codex|grok|gemini|openclaw|hermes|copilot|crush|cursor-agent|muse]",
-            "[pi|omp|opencode|ori|claude|codex|grok|openclaw|agy|hermes|copilot|crush|cursor-agent|muse]"
+            "[pi|omp|opencode|ori|claude|codex|grok|openclaw|agy|hermes|copilot|crush|cursor-agent|muse|kimi|qwen|dsh|mcode|kiro-cli|freebuff|kilo|devin|amp|commandcode]"
           ]
         },
         "name": "omarchy-default-agent"
@@ -564,6 +1054,51 @@
       },
       {
         "fields": {
+          "summary": [
+            "Enable, disable, toggle, or recover mirroring the internal display to an external monitor",
+            "Enable, disable, toggle, or recover mirroring the internal display to every external monitor"
+          ]
+        },
+        "name": "omarchy-hyprland-monitor-internal-mirror"
+      },
+      {
+        "fields": {
+          "args": [
+            "[up|down|SCALE]",
+            "[--monitor NAME] [up|down|SCALE]"
+          ],
+          "examples": [
+            [
+              "omarchy hyprland monitor scaling",
+              "omarchy hyprland monitor scaling 1.6",
+              "omarchy hyprland monitor scaling up",
+              "omarchy hyprland monitor scaling down"
+            ],
+            [
+              "omarchy hyprland monitor scaling",
+              "omarchy hyprland monitor scaling 1.6",
+              "omarchy hyprland monitor scaling up",
+              "omarchy hyprland monitor scaling --monitor DP-2 2"
+            ]
+          ],
+          "summary": [
+            "Show, set, or adjust focused Hyprland monitor scaling",
+            "Show, set, or adjust a Hyprland monitor's scaling (the focused one by default)"
+          ]
+        },
+        "name": "omarchy-hyprland-monitor-scaling"
+      },
+      {
+        "fields": {
+          "args": [
+            "",
+            "[--wait]"
+          ]
+        },
+        "name": "omarchy-hyprland-window-close-all"
+      },
+      {
+        "fields": {
           "args": [
             "",
             "[back]"
@@ -574,6 +1109,15 @@
           ]
         },
         "name": "omarchy-hyprland-workspace-layout-toggle"
+      },
+      {
+        "fields": {
+          "args": [
+            "",
+            "[stable|nightly] [--no-launch]"
+          ]
+        },
+        "name": "omarchy-install-ai-t3-code"
       },
       {
         "fields": {
@@ -652,6 +1196,28 @@
       },
       {
         "fields": {
+          "summary": [
+            "Install Spotify.",
+            "Install Spotify, as its web player where Spotify has no Linux client."
+          ]
+        },
+        "name": "omarchy-install-service-spotify"
+      },
+      {
+        "fields": {
+          "args": [
+            "",
+            "[force] [options]"
+          ],
+          "summary": [
+            "Launch the Omarchy screensaver in the default terminal on the system with the correct font configuration.",
+            "Launch the Omarchy screensaver on every display."
+          ]
+        },
+        "name": "omarchy-launch-screensaver"
+      },
+      {
+        "fields": {
           "args": [
             "[command...]",
             "[--pid=<terminal-pid>] [command...]"
@@ -661,9 +1227,28 @@
       },
       {
         "fields": {
+          "examples": [
+            [
+              "omarchy menu",
+              "omarchy menu toggle system",
+              "omarchy menu summon style.theme",
+              "omarchy menu refresh"
+            ],
+            [
+              "omarchy menu",
+              "omarchy menu toggle system",
+              "omarchy menu summon appearance.theme",
+              "omarchy menu refresh"
+            ]
+          ]
+        },
+        "name": "omarchy-menu"
+      },
+      {
+        "fields": {
           "args": [
             "[--selected <image>] [--print-name] [--show-labels] [--filterable] [--lazy-thumbnails] [--preload] [--cache-only] <image-dir>...",
-            "[--selected <image>] [--print-name] [--show-labels] [--filterable] [--lazy-thumbnails] [--preload] [--cache-only] [--print-rows] <image-dir>..."
+            "[--selected <image>] [--print-name] [--show-labels] [--filterable] [--lazy-thumbnails] [--preload] [--prepare-only] [--cache-only] [--print-rows] <image-dir>..."
           ]
         },
         "name": "omarchy-menu-images"
@@ -683,9 +1268,27 @@
       },
       {
         "fields": {
+          "args": [
+            "[--app-name <app-name>] [-g <glyph>] [-u <low|normal|critical>] [-i <icon>] [-t <ms>] [-r <id>] [-p] [--image <path-or-uri>] <headline> [description] [--exec <program> [args...]]",
+            "[--app-name <app-name>] [-g <glyph>] [-u <low|normal|critical>] [-i <icon>] [-t <ms>] [-r <id>] [-p] [--transient] [--image <path-or-uri>] <headline> [description] [--exec <program> [args...] | --action <label> <program> [words...]... [--with <args...>]]"
+          ]
+        },
+        "name": "omarchy-notification-send"
+      },
+      {
+        "fields": {
+          "summary": [
+            "Ensure default application launchers and mise wrappers are installed.",
+            "Ensure default application launchers are installed."
+          ]
+        },
+        "name": "omarchy-refresh-applications"
+      },
+      {
+        "fields": {
           "summary": [
             "Reinstall all default Omarchy packages from the stable channel",
-            "Reinstall all default Omarchy packages from the stable channel, or on aarch64 the edge channel"
+            "Reinstall all default Omarchy packages from the stable channel, or on Apple Silicon the edge channel"
           ]
         },
         "name": "omarchy-reinstall-pkgs"
@@ -698,6 +1301,15 @@
           ]
         },
         "name": "omarchy-remove-security-sshd"
+      },
+      {
+        "fields": {
+          "summary": [
+            "Reload hyprland configuration (used by the Omarchy theme switching).",
+            "Reload the Hyprland configuration, from inside or outside the session."
+          ]
+        },
+        "name": "omarchy-restart-hyprctl"
       },
       {
         "fields": {
@@ -757,11 +1369,29 @@
       {
         "fields": {
           "summary": [
+            "Apply current Omarchy theme colors to running Foot terminals",
+            "Apply current Omarchy theme colors and background alpha to running Foot terminals"
+          ]
+        },
+        "name": "omarchy-theme-set-foot"
+      },
+      {
+        "fields": {
+          "summary": [
             "Toggle bar visibility without killing the Omarchy shell",
             "Toggle bar visibility without killing the Omarchy shell (on hides the bar, off shows it)"
           ]
         },
         "name": "omarchy-toggle-bar"
+      },
+      {
+        "fields": {
+          "args": [
+            "<touchpad|touchscreen> [on|off|toggle]",
+            "<touchpad|touchscreen> [on|off|toggle|cycle]"
+          ]
+        },
+        "name": "omarchy-toggle-input-device"
       },
       {
         "fields": {
@@ -773,6 +1403,15 @@
           ]
         },
         "name": "omarchy-update"
+      },
+      {
+        "fields": {
+          "summary": [
+            "Ensure the Omarchy and Arch keyring packages are installed and populated",
+            "Ensure the Omarchy, Arch and (on aarch64) Arch Linux ARM keyring packages are installed and populated"
+          ]
+        },
+        "name": "omarchy-update-keyring"
       },
       {
         "fields": {
@@ -798,16 +1437,29 @@
           ]
         },
         "name": "omarchy-update-restart"
+      },
+      {
+        "fields": {
+          "summary": [
+            "Refresh the shell update status",
+            "Clear the shell update indicator after an update"
+          ]
+        },
+        "name": "omarchy-update-status"
       }
     ],
     "counts": {
-      "added": 86,
-      "changed": 25,
+      "added": 145,
+      "changed": 40,
       "from": 444,
-      "removed": 3,
-      "to": 527
+      "removed": 7,
+      "to": 582
     },
     "removed": [
+      "omarchy-screensaver",
+      "omarchy-system-logout",
+      "omarchy-system-reboot",
+      "omarchy-system-shutdown",
       "omarchy-voxtype-install",
       "omarchy-voxtype-remove",
       "omarchy-voxtype-status"
@@ -816,78 +1468,150 @@
   "from": "v4.0.4",
   "menu": {
     "added": [
+      "appearance",
+      "appearance.animations-off",
+      "appearance.animations-on",
+      "appearance.background",
+      "appearance.branding",
+      "appearance.branding.about",
+      "appearance.branding.about.default",
+      "appearance.branding.about.image",
+      "appearance.branding.about.text",
+      "appearance.branding.screensaver",
+      "appearance.branding.screensaver.default",
+      "appearance.branding.screensaver.image",
+      "appearance.branding.screensaver.text",
+      "appearance.dock",
+      "appearance.dock.always-on",
+      "appearance.dock.autohide",
+      "appearance.dock.position",
+      "appearance.dock.position.bottom",
+      "appearance.dock.position.left",
+      "appearance.dock.position.right",
+      "appearance.dock.position.top",
+      "appearance.font",
+      "appearance.theme",
+      "appearance.top-bar",
+      "appearance.top-bar.background",
+      "appearance.top-bar.background.clear",
+      "appearance.top-bar.background.glassy",
+      "appearance.top-bar.background.opaque",
+      "appearance.top-bar.hide",
+      "appearance.top-bar.indicators",
+      "appearance.top-bar.indicators.battery-percentage-off",
+      "appearance.top-bar.indicators.battery-percentage-on",
+      "appearance.top-bar.indicators.clock",
+      "appearance.top-bar.indicators.clock.date-12h",
+      "appearance.top-bar.indicators.clock.date-24h",
+      "appearance.top-bar.indicators.clock.iso",
+      "appearance.top-bar.indicators.clock.stacked-12h",
+      "appearance.top-bar.indicators.clock.stacked-24h",
+      "appearance.top-bar.indicators.clock.stacked-date",
+      "appearance.top-bar.indicators.clock.stacked-time",
+      "appearance.top-bar.indicators.clock.sunday-12h",
+      "appearance.top-bar.indicators.clock.sunday-24h",
+      "appearance.top-bar.indicators.clock.sunday-seconds-12h",
+      "appearance.top-bar.indicators.clock.sunday-seconds-24h",
+      "appearance.top-bar.indicators.clock.time-12h",
+      "appearance.top-bar.indicators.clock.time-24h",
+      "appearance.top-bar.indicators.clock.week",
+      "appearance.top-bar.position",
+      "appearance.top-bar.position.bottom",
+      "appearance.top-bar.position.left",
+      "appearance.top-bar.position.right",
+      "appearance.top-bar.position.top",
+      "appearance.top-bar.show",
+      "appearance.unlock",
+      "appearance.windows",
+      "appearance.windows.corners",
+      "appearance.windows.corners.rounded",
+      "appearance.windows.corners.sharp",
+      "appearance.windows.corners.theme",
+      "appearance.windows.gaps-off",
+      "appearance.windows.gaps-on",
+      "appearance.windows.one-window-ratio-off",
+      "appearance.windows.one-window-ratio-on",
+      "appearance.windows.transparency",
+      "appearance.windows.transparency.glassy",
+      "appearance.windows.transparency.opaque",
+      "appearance.windows.transparency.transparent",
+      "appearance.workspace-layout",
+      "appearance.workspace-layout.dwindle",
+      "appearance.workspace-layout.floating",
+      "appearance.workspace-layout.scrolling",
+      "install.ai.amp",
       "install.ai.claude",
+      "install.ai.herdr",
       "install.service.microsoft",
       "install.service.slack",
+      "remove.ai.amp",
       "remove.ai.chatgpt",
       "remove.ai.claude",
       "remove.ai.grok-bot",
       "remove.ai.lm-studio",
       "remove.ai.ollama",
+      "remove.dictation.hex",
       "remove.dictation.superwhisper",
       "remove.dictation.voxtype",
-      "remove.security.thunderbolt",
-      "remove.security.thunderbolt-boot",
-      "remove.security.usb-authorization",
-      "remove.security.usb-authorization-boot",
+      "remove.service.1password",
       "remove.service.microsoft",
       "remove.service.ssh-agent",
+      "setup.config.git",
       "setup.default.agent.agy",
+      "setup.default.agent.amp",
+      "setup.default.agent.commandcode",
+      "setup.default.agent.devin",
+      "setup.default.agent.dsh",
+      "setup.default.agent.freebuff",
+      "setup.default.agent.kilo",
+      "setup.default.agent.kimi",
+      "setup.default.agent.kiro-cli",
+      "setup.default.agent.mcode",
       "setup.default.agent.ori",
+      "setup.default.agent.qwen",
       "setup.default.dictation",
+      "setup.default.dictation.hex",
       "setup.default.dictation.superwhisper",
       "setup.default.dictation.voxtype",
+      "setup.keyboard",
+      "setup.keyboard.input-methods",
+      "setup.keyboard.inputs",
+      "setup.keyboard.keybindings",
+      "setup.language",
       "setup.security.ssh-agent",
-      "setup.security.thunderbolt",
-      "setup.security.thunderbolt-boot",
-      "setup.security.usb-authorization",
-      "setup.security.usb-authorization-boot",
-      "setup.typing",
-      "setup.typing.input",
-      "setup.typing.keyboard",
-      "trigger.appearance",
-      "trigger.appearance.animations",
-      "trigger.appearance.one-window-ratio",
-      "trigger.appearance.theme-sync",
-      "trigger.appearance.top-bar",
-      "trigger.appearance.top-bar.hide",
-      "trigger.appearance.top-bar.indicators",
-      "trigger.appearance.top-bar.indicators.battery-percentage",
-      "trigger.appearance.top-bar.indicators.clock",
-      "trigger.appearance.top-bar.indicators.clock.date-12h",
-      "trigger.appearance.top-bar.indicators.clock.date-24h",
-      "trigger.appearance.top-bar.indicators.clock.iso",
-      "trigger.appearance.top-bar.indicators.clock.stacked-12h",
-      "trigger.appearance.top-bar.indicators.clock.stacked-24h",
-      "trigger.appearance.top-bar.indicators.clock.stacked-date",
-      "trigger.appearance.top-bar.indicators.clock.stacked-time",
-      "trigger.appearance.top-bar.indicators.clock.sunday-12h",
-      "trigger.appearance.top-bar.indicators.clock.sunday-24h",
-      "trigger.appearance.top-bar.indicators.clock.sunday-seconds-12h",
-      "trigger.appearance.top-bar.indicators.clock.sunday-seconds-24h",
-      "trigger.appearance.top-bar.indicators.clock.time-12h",
-      "trigger.appearance.top-bar.indicators.clock.time-24h",
-      "trigger.appearance.top-bar.indicators.clock.week",
-      "trigger.appearance.top-bar.opaque",
-      "trigger.appearance.top-bar.position",
-      "trigger.appearance.top-bar.position.bottom",
-      "trigger.appearance.top-bar.position.left",
-      "trigger.appearance.top-bar.position.right",
-      "trigger.appearance.top-bar.position.top",
-      "trigger.appearance.top-bar.show",
-      "trigger.appearance.top-bar.transparent",
-      "trigger.appearance.window-corners",
-      "trigger.appearance.window-corners.rounded",
-      "trigger.appearance.window-corners.sharp",
-      "trigger.appearance.window-corners.theme",
-      "trigger.appearance.window-gaps",
-      "trigger.appearance.workspace-layout",
-      "trigger.appearance.workspace-layout.dwindle",
-      "trigger.appearance.workspace-layout.floating",
-      "trigger.appearance.workspace-layout.scrolling",
-      "trigger.clipboard-history"
+      "trigger.clipboard-history",
+      "trigger.hardware.hybrid-gpu-off",
+      "trigger.hardware.hybrid-gpu-on",
+      "trigger.hardware.laptop-display-off",
+      "trigger.hardware.laptop-display-on",
+      "trigger.hardware.mirror-display-off",
+      "trigger.hardware.mirror-display-on",
+      "trigger.hardware.touchpad-off",
+      "trigger.hardware.touchpad-on",
+      "trigger.hardware.touchscreen-off",
+      "trigger.hardware.touchscreen-on",
+      "trigger.toggle.crash-capture-off",
+      "trigger.toggle.crash-capture-on",
+      "trigger.toggle.idle-lock-off",
+      "trigger.toggle.idle-lock-on",
+      "trigger.toggle.nightlight-off",
+      "trigger.toggle.nightlight-on",
+      "trigger.toggle.notifications-off",
+      "trigger.toggle.notifications-on",
+      "trigger.toggle.screensaver-off",
+      "trigger.toggle.screensaver-on",
+      "update.kernel"
     ],
     "changed": [
+      {
+        "fields": {
+          "action": [
+            null,
+            "omarchy-shell omarchy.dock apps"
+          ]
+        },
+        "id": "apps"
+      },
       {
         "fields": {
           "when": [
@@ -1243,7 +1967,7 @@
         "fields": {
           "when": [
             "[[ ! -d $HOME/Games/battlenet ]]",
-            null
+            "omarchy-hw-x86"
           ]
         },
         "id": "install.gaming.battlenet"
@@ -1252,7 +1976,7 @@
         "fields": {
           "when": [
             "! flatpak info com.nvidia.geforcenow",
-            null
+            "omarchy-hw-x86"
           ]
         },
         "id": "install.gaming.geforce-now"
@@ -1270,7 +1994,7 @@
         "fields": {
           "when": [
             "! omarchy-pkg-present lutris",
-            null
+            "omarchy-hw-x86"
           ]
         },
         "id": "install.gaming.lutris"
@@ -1360,7 +2084,7 @@
         "fields": {
           "when": [
             "! omarchy-pkg-present dropbox",
-            "omarchy-hw-x86"
+            "[[ $(getconf PAGESIZE) == 4096 ]]"
           ]
         },
         "id": "install.service.dropbox"
@@ -1396,7 +2120,7 @@
         "fields": {
           "when": [
             "! omarchy-pkg-present spotify",
-            "omarchy-hw-x86"
+            null
           ]
         },
         "id": "install.service.spotify"
@@ -1458,6 +2182,15 @@
       {
         "fields": {
           "when": [
+            "omarchy-pkg-present t3code-bin",
+            "[[ -f \"$HOME/.local/share/t3code/T3-Code.AppImage\" ]] || omarchy-pkg-present t3code-bin || omarchy-pkg-present t3code-nightly-bin"
+          ]
+        },
+        "id": "remove.ai.t3-code"
+      },
+      {
+        "fields": {
+          "when": [
             "[[ -x $HOME/.config/composer/vendor/bin/laravel ]]",
             "[[ -x $HOME/.local/bin/laravel || -x $HOME/.config/composer/vendor/bin/laravel ]]"
           ]
@@ -1481,7 +2214,7 @@
           ],
           "when": [
             "omarchy-pkg-present voxtype-bin",
-            "omarchy-pkg-present voxtype-bin || omarchy-pkg-present superwhisper-bin"
+            "omarchy-pkg-present voxtype-bin || omarchy-pkg-present superwhisper-bin || omarchy-pkg-present hex-bin"
           ]
         },
         "id": "remove.dictation"
@@ -1665,19 +2398,64 @@
         "fields": {
           "when": [
             null,
-            "! omarchy-hw-aarch64-apple"
+            "! omarchy-hw-aarch64-apple && [[ ! -f /etc/limine-entry-tool.d/zz-omarchy-dgx-spark.conf ]]"
           ]
         },
         "id": "setup.direct-boot"
       },
       {
         "fields": {
-          "action": [
-            "theme=$(omarchy-theme-switcher); [[ -n $theme ]] && omarchy-theme-set \"$theme\"",
-            "omarchy-shell shell summon omarchy.image-picker '{\"source\":\"themes\"}'"
+          "when": [
+            "[[ $(omarchy-network-status) == wifi* ]]",
+            "omarchy-network-wifi-connected"
           ]
         },
-        "id": "style.theme"
+        "id": "setup.network.qr"
+      },
+      {
+        "fields": {
+          "when": [
+            "omarchy-hibernation-available",
+            "omarchy-hibernation-available && ! omarchy-sleep-disabled"
+          ]
+        },
+        "id": "system.hibernate"
+      },
+      {
+        "fields": {
+          "action": [
+            "omarchy-system-logout",
+            "omarchy-system logout"
+          ]
+        },
+        "id": "system.logout"
+      },
+      {
+        "fields": {
+          "action": [
+            "omarchy-system-reboot",
+            "omarchy-system reboot"
+          ]
+        },
+        "id": "system.reboot"
+      },
+      {
+        "fields": {
+          "action": [
+            "omarchy-system-shutdown",
+            "omarchy-system shutdown"
+          ]
+        },
+        "id": "system.shutdown"
+      },
+      {
+        "fields": {
+          "when": [
+            "! omarchy-toggle-enabled suspend-off",
+            "! omarchy-toggle-enabled suspend-off && ! omarchy-sleep-disabled"
+          ]
+        },
+        "id": "system.suspend"
       },
       {
         "fields": {
@@ -1690,15 +2468,23 @@
       }
     ],
     "counts": {
-      "added": 70,
-      "changed": 88,
+      "added": 133,
+      "changed": 95,
       "from": 333,
-      "removed": 14,
-      "to": 389
+      "removed": 40,
+      "to": 426
     },
     "removed": [
       "install.ai.dictation",
       "setup.default.agent.gemini",
+      "setup.keybindings",
+      "setup.monitors",
+      "style",
+      "style.about",
+      "style.about.default",
+      "style.about.image",
+      "style.about.text",
+      "style.background",
       "style.bar",
       "style.bar.position",
       "style.bar.position.bottom",
@@ -1706,8 +2492,26 @@
       "style.bar.position.right",
       "style.bar.position.top",
       "style.bar.transparency",
+      "style.font",
+      "style.hyprland",
+      "style.screensaver",
+      "style.screensaver.default",
+      "style.screensaver.image",
+      "style.screensaver.text",
+      "style.theme",
+      "style.unlock",
+      "trigger.hardware.hybrid-gpu",
+      "trigger.hardware.laptop-display",
+      "trigger.hardware.mirror-display",
+      "trigger.hardware.touchpad",
+      "trigger.hardware.touchscreen",
       "trigger.toggle.battery-percentage",
+      "trigger.toggle.crash-capture",
+      "trigger.toggle.idle-lock",
+      "trigger.toggle.nightlight",
+      "trigger.toggle.notifications",
       "trigger.toggle.one-window-ratio",
+      "trigger.toggle.screensaver",
       "trigger.toggle.top-bar",
       "trigger.toggle.window-gaps",
       "trigger.toggle.workspace-layout"
@@ -1716,9 +2520,9 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 57,
+      "new": 122,
       "removed": 0,
-      "to": 163
+      "to": 228
     },
     "new": [
       {
@@ -1730,6 +2534,11 @@
         "date": "2026-08-14T14:57:59Z",
         "description": "Replace the Gemini coding agent with Antigravity",
         "file": "1786719479.sh"
+      },
+      {
+        "date": "2026-08-17T11:50:03Z",
+        "description": "Install Kimi coding agent mise wrapper",
+        "file": "1786967403.sh"
       },
       {
         "date": "2026-08-20T08:50:24Z",
@@ -1812,11 +2621,6 @@
         "file": "1788996284.sh"
       },
       {
-        "date": "2026-09-11T01:47:30Z",
-        "description": "Activate the Omarchy theme for existing T3 Code installs",
-        "file": "1789091250.sh"
-      },
-      {
         "date": "2026-09-11T02:57:36Z",
         "description": "Remove automatic project bin directories from PATH",
         "file": "1789095456.sh"
@@ -1837,14 +2641,19 @@
         "file": "1789310715.sh"
       },
       {
-        "date": "2026-09-15T00:51:13Z",
-        "description": "Enable approval for newly connected USB devices",
-        "file": "1789433473.sh"
+        "date": "2026-09-18T16:07:47Z",
+        "description": "Install rtkit so PipeWire gets realtime priority",
+        "file": "1789747667.sh"
       },
       {
         "date": "2026-09-18T20:55:27Z",
         "description": "Enable OWE desktop video backgrounds and lock feed",
         "file": "1789764927.sh"
+      },
+      {
+        "date": "2026-09-20T18:23:06Z",
+        "description": "Retain the installed ARM Limine recovery packages during orphan cleanup",
+        "file": "1789928586.sh"
       },
       {
         "date": "2026-09-21T19:06:40Z",
@@ -1867,19 +2676,24 @@
         "file": "1790282866.sh"
       },
       {
-        "date": "2026-09-25T13:56:39Z",
-        "description": "Require approval for new Thunderbolt accessories",
-        "file": "1790344599.sh"
+        "date": "2026-09-25T19:36:18Z",
+        "description": "Disable system sleep on GB10 machines, as DGX OS does",
+        "file": "1790364978.sh"
       },
       {
         "date": "2026-09-26T04:36:21Z",
-        "description": "Move OpenClaw to a self-updating install under ~/.openclaw",
+        "description": "Retire the OpenClaw move that 4.0.5 shipped too early",
         "file": "1790397381.sh"
       },
       {
         "date": "2026-09-26T21:11:07Z",
         "description": "Loosen the offline install's exact Node pin so mise up tracks new releases",
         "file": "1790457067.sh"
+      },
+      {
+        "date": "2026-09-27T13:53:50Z",
+        "description": "Boot the DGX Spark without a UKI to skip a 20-second firmware delay",
+        "file": "1790517230.sh"
       },
       {
         "date": "2026-09-27T17:03:54Z",
@@ -1897,11 +2711,6 @@
         "file": "1790542069.sh"
       },
       {
-        "date": "2026-09-28T15:16:57Z",
-        "description": "Repair USB approval prompts and enable portable device approvals",
-        "file": "1790608617.sh"
-      },
-      {
         "date": "2026-09-29T17:19:22Z",
         "description": "Install the compiler and Qt pieces for building Omarchy-style apps",
         "file": "1790702362.sh"
@@ -1917,6 +2726,71 @@
         "file": "1790863209.sh"
       },
       {
+        "date": "2026-10-02T05:03:35Z",
+        "description": "Make the ASUS ProArt P14 (NVIDIA N1x) touchpad register touches",
+        "file": "1790917415.sh"
+      },
+      {
+        "date": "2026-10-02T05:06:11Z",
+        "description": "Route ASUS ProArt P14 (NVIDIA N1x) speakers, headphones and microphones",
+        "file": "1790917571.sh"
+      },
+      {
+        "date": "2026-10-02T05:07:00Z",
+        "description": "List Omarchy's aarch64 repository ahead of Arch Linux ARM's on the N1x",
+        "file": "1790917620.sh"
+      },
+      {
+        "date": "2026-10-02T05:09:33Z",
+        "description": "Boot N1x laptops quietly so Plymouth stays up from the LUKS prompt to login",
+        "file": "1790917773.sh"
+      },
+      {
+        "date": "2026-10-02T14:17:39Z",
+        "description": "Light the N1x panel for Plymouth's LUKS prompt",
+        "file": "1790950659.sh"
+      },
+      {
+        "date": "2026-10-02T15:09:55Z",
+        "description": "Give the ASUS ProArt P14 (NVIDIA N1x) the RAM its firmware reserves for Windows' GPU",
+        "file": "1790953795.sh"
+      },
+      {
+        "date": "2026-10-02T20:34:00Z",
+        "description": "Give the ASUS ProArt P14 (NVIDIA N1x) speakers ASUS's amplifier tuning and voicing",
+        "file": "1790973240.sh"
+      },
+      {
+        "date": "2026-10-02T23:40:00Z",
+        "description": "Give the Dell XPS 16 (NVIDIA N1x) the RAM its firmware reserves for Windows' GPU",
+        "file": "1790984400.sh"
+      },
+      {
+        "date": "2026-10-02T23:41:40Z",
+        "description": "Give the N1x swap on zram, the memory tuning and realtime audio scheduling",
+        "file": "1790984500.sh"
+      },
+      {
+        "date": "2026-10-02T23:43:20Z",
+        "description": "Turn on USB4 and Thunderbolt on the N1x",
+        "file": "1790984600.sh"
+      },
+      {
+        "date": "2026-10-02T23:45:00Z",
+        "description": "Leave the N1x GPU firmware room below its memory, which a large external display reaches into",
+        "file": "1790984700.sh"
+      },
+      {
+        "date": "2026-10-04T01:30:37Z",
+        "description": "Move NVIDIA N1x laptops to linux-omarchy-n1x and drop the bring-up scaffolding",
+        "file": "1791077437.sh"
+      },
+      {
+        "date": "2026-10-04T02:22:07Z",
+        "description": "Enable desktop camera access on Snapdragon ThinkPad T14s Gen 6",
+        "file": "1791080527.sh"
+      },
+      {
         "date": "2026-10-04T11:14:39Z",
         "description": "Make agent account selection apply to scripts and subprocesses",
         "file": "1791112479.sh"
@@ -1930,6 +2804,21 @@
         "date": "2026-10-04T14:54:10Z",
         "description": "Install the fingerprint resume hook on existing fingerprint setups",
         "file": "1791125650.sh"
+      },
+      {
+        "date": "2026-10-04T17:14:53Z",
+        "description": "Keep the ASUS ProArt P14's USB4 tunnel root ports awake so a dock's Ethernet appears",
+        "file": "1791134093.sh"
+      },
+      {
+        "date": "2026-10-04T21:03:11Z",
+        "description": "Answer ARP only for each interface's own address, so a dock and Wi-Fi on one network keep their routes",
+        "file": "1791147791.sh"
+      },
+      {
+        "date": "2026-10-04T22:21:20Z",
+        "description": "Drop the N1x rescue entry and pacman hook that the fallback entry replaces",
+        "file": "1791152480.sh"
       },
       {
         "date": "2026-10-06T05:46:53Z",
@@ -1952,6 +2841,11 @@
         "file": "1791376887.sh"
       },
       {
+        "date": "2026-10-07T14:21:12Z",
+        "description": "Switch default mise tools to native lazy shims",
+        "file": "1791382872.sh"
+      },
+      {
         "date": "2026-10-07T20:00:52Z",
         "description": "Prioritize the Omarchy package repository over Arch repositories",
         "file": "1791403252.sh"
@@ -1960,6 +2854,11 @@
         "date": "2026-10-07T20:01:50Z",
         "description": "Install titlebars for floating workspaces",
         "file": "1791403310.sh"
+      },
+      {
+        "date": "2026-10-07T21:21:53Z",
+        "description": "Make the ASUS ProArt P14 keyboard's top row send media keys by default",
+        "file": "1791408113.sh"
       },
       {
         "date": "2026-10-08T14:40:56Z",
@@ -1977,9 +2876,19 @@
         "file": "1791542175.sh"
       },
       {
+        "date": "2026-10-09T14:04:59Z",
+        "description": "Switch to Omarchy's power-profiles-daemon build with CPPC support for ARM laptops",
+        "file": "1791554699.sh"
+      },
+      {
         "date": "2026-10-09T21:23:24Z",
         "description": "Stop the boot from waiting on a black screen for the console to answer",
         "file": "1791581004.sh"
+      },
+      {
+        "date": "2026-10-10T08:42:45Z",
+        "description": "Rebuild the boot image so a non-Latin keyboard layout stays out of the LUKS prompt",
+        "file": "1791621765.sh"
       },
       {
         "date": "2026-10-10T13:54:09Z",
@@ -2002,9 +2911,229 @@
         "file": "1791698594.sh"
       },
       {
+        "date": "2026-10-11T07:52:22Z",
+        "description": "Keep windows opaque where animations are turned off",
+        "file": "1791705142.sh"
+      },
+      {
         "date": "2026-10-11T08:49:47Z",
         "description": "Install Signed, the PDF signing app",
         "file": "1791708587.sh"
+      },
+      {
+        "date": "2026-10-11T12:46:49Z",
+        "description": "Let herdr's tab bar show the terminal's background, so it turns glassy too",
+        "file": "1791722809.sh"
+      },
+      {
+        "date": "2026-10-11T12:56:38Z",
+        "description": "Let Neovim's current line and status line show the terminal background",
+        "file": "1791723398.sh"
+      },
+      {
+        "date": "2026-10-12T01:44:46Z",
+        "description": "Remove approval for new USB and Thunderbolt devices",
+        "file": "1791769486.sh"
+      },
+      {
+        "date": "2026-10-12T05:51:18Z",
+        "description": "Have the N1x firmware reserve 4 GiB for the GPU instead of reclaiming its 62.5 GiB in the kernel",
+        "file": "1791784278.sh"
+      },
+      {
+        "date": "2026-10-13T05:03:51Z",
+        "description": "Turn on CPPC autonomous frequency selection on the N1x so power profiles take effect",
+        "file": "1791867831.sh"
+      },
+      {
+        "date": "2026-10-13T07:15:54Z",
+        "description": "Name web app windows in launchers that run their own command",
+        "file": "1791875754.sh"
+      },
+      {
+        "date": "2026-10-13T13:32:45Z",
+        "description": "Speed up the boot menu and keep it quiet until a key is pressed",
+        "file": "1791898365.sh"
+      },
+      {
+        "date": "2026-10-13T23:37:54Z",
+        "description": "Route links from every app through the running default browser",
+        "file": "1791934674.sh"
+      },
+      {
+        "date": "2026-10-13T23:46:28Z",
+        "description": "Stop browsers asking to be the default behind Omarchy's link routing",
+        "file": "1791935188.sh"
+      },
+      {
+        "date": "2026-10-14T09:08:45Z",
+        "description": "Write the bar's tray where the bar drew it",
+        "file": "1791968925.sh"
+      },
+      {
+        "date": "2026-10-14T09:15:55Z",
+        "description": "Split the bar's center section at its anchor into centerBegin, center and centerEnd",
+        "file": "1791969355.sh"
+      },
+      {
+        "date": "2026-10-14T23:29:19Z",
+        "description": "Theme the Fcitx candidate window with the current Omarchy theme",
+        "file": "1792020559.sh"
+      },
+      {
+        "date": "2026-10-15T05:16:04Z",
+        "description": "Install Gliff on aarch64, now that Omarchy's repositories build it there",
+        "file": "1792041364.sh"
+      },
+      {
+        "date": "2026-10-17T02:07:16Z",
+        "description": "Let mpv and Chromium decode video on the video chip of Snapdragon laptops",
+        "file": "1792202836.sh"
+      },
+      {
+        "date": "2026-10-17T17:43:58Z",
+        "description": "Keep background selections across renumbered bundled backgrounds",
+        "file": "1792259038.sh"
+      },
+      {
+        "date": "2026-10-18T14:45:54Z",
+        "description": "Move OpenClaw to a self-updating install under ~/.openclaw",
+        "file": "1792334754.sh"
+      },
+      {
+        "date": "2026-10-18T17:04:59Z",
+        "description": "Leave Node to Omarchy's mise declaration instead of the user's config",
+        "file": "1792343099.sh"
+      },
+      {
+        "date": "2026-10-18T17:07:05Z",
+        "description": "Leave mise's upgrade pruning setting to Omarchy's config instead of the user's",
+        "file": "1792343225.sh"
+      },
+      {
+        "date": "2026-10-18T17:45:11Z",
+        "description": "Replace the T3 Code package with the T3 Code app, which updates itself",
+        "file": "1792345511.sh"
+      },
+      {
+        "date": "2026-10-18T21:35:08Z",
+        "description": "Let Chromium use the cameras of Snapdragon laptops through PipeWire",
+        "file": "1792359308.sh"
+      },
+      {
+        "date": "2026-10-20T05:41:48Z",
+        "description": "Repair the Copy URL shortcut for Brave Origin profiles",
+        "file": "1792474908.sh"
+      },
+      {
+        "date": "2026-10-20T13:51:35Z",
+        "description": "Build the lazy shims for the newly declared default coding agents",
+        "file": "1792504295.sh"
+      },
+      {
+        "date": "2026-10-20T14:37:14Z",
+        "description": "Check network connectivity against ping.omacom.io",
+        "file": "1792507034.sh"
+      },
+      {
+        "date": "2026-10-22T02:03:14Z",
+        "description": "Clear SoundWire routes the retired N1x UCM profiles left in the saved mixer state",
+        "file": "1792634594.sh"
+      },
+      {
+        "date": "2026-10-22T05:53:56Z",
+        "description": "Remove the files the 4.0 notification engine left behind",
+        "file": "1792648436.sh"
+      },
+      {
+        "date": "2026-10-25T21:51:02Z",
+        "description": "Name the hibernation resume device by its filesystem UUID",
+        "file": "1792965062.sh"
+      },
+      {
+        "date": "2026-10-27T02:55:44Z",
+        "description": "Recheck FIDO2 authfile paths previously marked repaired",
+        "file": "1793069744.sh"
+      },
+      {
+        "date": "2026-10-27T13:34:14Z",
+        "description": "Install the native Omarchy screensaver",
+        "file": "1793108054.sh"
+      },
+      {
+        "date": "2026-10-28T09:32:29Z",
+        "description": "Keep your own touchpad gestures instead of Omarchy's new defaults",
+        "file": "1793179949.sh"
+      },
+      {
+        "date": "2026-10-29T19:25:31Z",
+        "description": "Give the ASUS Zenbook A16 (UX3607OA) working speakers, microphones and ASUS's speaker voicing",
+        "file": "1793301931.sh"
+      },
+      {
+        "date": "2026-10-29T23:04:36Z",
+        "description": "Load Omarchy's shell setup on Apple Silicon",
+        "file": "1793315076.sh"
+      },
+      {
+        "date": "2026-10-30T12:55:21Z",
+        "description": "Give the ASUS Zenbook A16 (UX3607OA) its DSP firmware, Wi-Fi board data, text-console unlock and suspend to idle",
+        "file": "1793364921.sh"
+      },
+      {
+        "date": "2026-10-31T13:15:44Z",
+        "description": "Install Intel hardware video decoding on GPUs named only \\",
+        "file": "1793452544.sh"
+      },
+      {
+        "date": "2026-10-31T15:47:10Z",
+        "description": "Move each monitor's workspace blocks and scaling log into ~/.local/state/omarchy/monitors",
+        "file": "1793461630.sh"
+      },
+      {
+        "date": "2026-10-31T17:22:49Z",
+        "description": "Move monitors.lua's defaults and saved monitor scales over to the monitor panel's settings",
+        "file": "1793467369.sh"
+      },
+      {
+        "date": "2026-10-31T20:17:55Z",
+        "description": "Move dictation to Alt + Space, keeping F9 and Super + Ctrl + X for existing dictation users",
+        "file": "1793477875.sh"
+      },
+      {
+        "date": "2026-11-01T05:53:22Z",
+        "description": "Install xorg-xsetroot for X11/XWayland root cursor restoration",
+        "file": "1793512402.sh"
+      },
+      {
+        "date": "2026-11-01T11:10:26Z",
+        "description": "Keep GB10 CPU cores out of deep idle states whose wakeup latency the firmware understates",
+        "file": "1793531426.sh"
+      },
+      {
+        "date": "2026-11-01T14:57:46Z",
+        "description": "Make the ASUS Zenbook A16 keyboard's top row send media keys by default",
+        "file": "1793545066.sh"
+      },
+      {
+        "date": "2026-11-01T20:04:35Z",
+        "description": "Install omarchy-local-ai so the agents panel can offer local models that fit this machine",
+        "file": "1793563475.sh"
+      },
+      {
+        "date": "2026-11-01T20:43:16Z",
+        "description": "Open OpenCode 2 with the Omarchy theme",
+        "file": "1793565796.sh"
+      },
+      {
+        "date": "2026-11-03T00:59:41Z",
+        "description": "Finish Superwhisper setup for installs that came up with it unconfigured",
+        "file": "1793667581.sh"
+      },
+      {
+        "date": "2026-11-03T05:51:23Z",
+        "description": "Switch NVIDIA machines on linux-omarchy from DKMS to prebuilt NVIDIA modules",
+        "file": "1793685083.sh"
       }
     ],
     "removed": []

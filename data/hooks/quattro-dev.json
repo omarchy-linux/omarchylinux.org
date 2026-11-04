@@ -42,9 +42,9 @@
       "firedBy": [
         {
           "file": "bin/omarchy-font-set",
-          "line": 84,
+          "line": 89,
           "snippet": "omarchy-hook font-set \"$font_name\"",
-          "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-font-set#L84"
+          "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-font-set#L89"
         }
       ],
       "samples": [
@@ -67,17 +67,17 @@
       "firedBy": [
         {
           "file": "default/hypr/autostart.lua",
-          "line": 21,
+          "line": 27,
           "snippet": "hl.exec_cmd(\"sleep 2 && omarchy-hook post-boot\")",
-          "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/autostart.lua#L21"
+          "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/default/hypr/autostart.lua#L27"
         }
       ],
       "samples": [
         {
-          "content": "#!/bin/bash\n\n# Show the weather status notification after Omarchy has started.\n# To put it into use, remove .sample from this file name.\n\nweather=$(omarchy-weather-status 2>/dev/null) || true\n\nif [[ -n $weather && $weather != \"Weather unavailable\" ]]; then\n  omarchy-notification-send -u low \"$weather\"\nfi\n",
+          "content": "#!/bin/bash\n\n# Show the weather status notification after Omarchy has started.\n# To put it into use, remove .sample from this file name.\n\n# The status fails when the weather is unavailable, in whatever language it says so.\nif weather=$(omarchy-weather-status 2>/dev/null) && [[ -n $weather ]]; then\n  omarchy-notification-send -u low \"$weather\"\nfi\n",
           "description": "Show the weather status notification after Omarchy has started. To put it into use, remove .sample from this file name.",
           "isSample": true,
-          "lineCount": 10,
+          "lineCount": 9,
           "name": "weather.sample",
           "path": "config/omarchy/hooks/post-boot.d/weather.sample",
           "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/config/omarchy/hooks/post-boot.d/weather.sample"
@@ -89,7 +89,14 @@
     {
       "directory": "config/omarchy/hooks/post-update.d",
       "event": "post-update",
-      "firedBy": [],
+      "firedBy": [
+        {
+          "file": "bin/omarchy-update",
+          "line": 117,
+          "snippet": "omarchy-hook post-update",
+          "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-update#L117"
+        }
+      ],
       "samples": [
         {
           "content": "#!/bin/bash\n\n# This hook is called after an Omarchy system update has been performed.\n# To put it into use, remove .sample from this file name.\n\n# Example: Show notification after the system has been updated.\n# omarchy-notification-send -u low \"Update Performed\" \"Your system is now up to date\"\n",
@@ -107,7 +114,14 @@
     {
       "directory": "config/omarchy/hooks/pre-refresh-pacman.d",
       "event": "pre-refresh-pacman",
-      "firedBy": [],
+      "firedBy": [
+        {
+          "file": "bin/omarchy-refresh-pacman",
+          "line": 55,
+          "snippet": "omarchy-hook pre-refresh-pacman",
+          "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-refresh-pacman#L55"
+        }
+      ],
       "samples": [
         {
           "content": "#!/bin/bash\n\n# This hook is called by `omarchy refresh pacman` AFTER the channel template\n# is copied and BEFORE the package transaction runs, so your changes shape\n# that transaction. Use it to layer customizations onto the freshly-written\n# pacman.conf — common cases are adding a custom repository (e.g. CachyOS,\n# Chaotic-AUR, an internal company repo) or extra IgnorePkg lines.\n#\n# The hook runs as the invoking user after Omarchy invalidates its sudo cache.\n# A sudo command here therefore requires its own explicit authorization.\n#\n# To put it into use, remove .sample from this file name.\n\n# Example: add an Include line above the first repository, [omarchy].\n# Maintain the repo entries in /etc/pacman.d/custom-repos.conf yourself.\n\nCONF=/etc/pacman.conf\nSNIPPET=/etc/pacman.d/custom-repos.conf\nMARKER=\"Include = $SNIPPET\"\n\n[[ -r $SNIPPET ]] || exit 0\ngrep -qxF \"$MARKER\" \"$CONF\" && exit 0\n\nsudo sed -i \"0,/^\\[omarchy\\]/s||$MARKER\\n\\n[omarchy]|\" \"$CONF\"\n",
@@ -128,9 +142,9 @@
       "firedBy": [
         {
           "file": "bin/omarchy-theme-set",
-          "line": 521,
+          "line": 600,
           "snippet": "omarchy-hook theme-set \"$THEME_NAME\" >/dev/null",
-          "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-theme-set#L521"
+          "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-theme-set#L600"
         }
       ],
       "samples": [

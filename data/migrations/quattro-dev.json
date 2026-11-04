@@ -1,5 +1,5 @@
 {
-  "count": 163,
+  "count": 228,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -1321,7 +1321,7 @@
       "date": "2026-08-13T17:49:06Z",
       "description": "Repair the Copy URL shortcut for profiles that predate its pinned extension id",
       "file": "1786643346.sh",
-      "lineCount": 204,
+      "lineCount": 205,
       "packagesAdded": [],
       "packagesRemoved": [],
       "path": "migrations/1786643346.sh",
@@ -1395,6 +1395,22 @@
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1786952219.sh",
       "timestamp": 1786952219,
       "touches": []
+    },
+    {
+      "body": "echo \"Install Kimi coding agent mise wrapper\"\n\nif [[ ! -f $HOME/.local/state/omarchy/preinstalls-removed ]] && omarchy-cmd-missing kimi; then\n  omarchy-mise-install npm:@moonshot-ai/kimi-code kimi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-08-17T11:50:03Z",
+      "description": "Install Kimi coding agent mise wrapper",
+      "file": "1786967403.sh",
+      "lineCount": 5,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1786967403.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1786967403.sh",
+      "timestamp": 1786967403,
+      "touches": [
+        "~/.local/state/omarchy/preinstalls-removed"
+      ]
     },
     {
       "body": "echo \"Add webp decoding to the shell\"\n\nomarchy-pkg-add qt6-imageformats",
@@ -1492,12 +1508,12 @@
       ]
     },
     {
-      "body": "echo \"Take ownership of the FIDO2 authfile so it cannot be rewritten without root\"\n\nauthfile=\"/etc/fido2/fido2\"\n\n# omarchy-migrate records this migration as complete whenever it exits zero, so\n# a line printed here scrolls past once in the update terminal and is never\n# shown again. The states below cannot be repaired without deciding what to do\n# with a file we do not own, and they are exactly the ones where the authfile\n# may already be under someone else's control, so say so where it outlives the\n# scrollback as well.\nreport_unrepairable() {\n  echo \"  $1\"\n  echo \"  $2\"\n  omarchy-notification-send -u critical -g  \"FIDO2 authfile needs attention\" \"$1 $2\" || true\n}\n\n# Nothing to repair on any machine that never set FIDO2 up, which is almost all\n# of them. Checked before any sudo so those machines never see a password\n# prompt. -L as well as -e: a dangling symlink is invisible to -e.\nif [[ ! -L $authfile && ! -e $authfile ]]; then\n  # Absence and \"cannot look\" are the same answer to the tests above. The old\n  # setup created /etc/fido2 with `sudo mkdir -p`, which took the union of the\n  # caller's umask and sudoers' 0022, so anyone registering under `umask 077`\n  # left it mode 0700 with the user-owned authfile still inside. Escalate for\n  # that case alone -- a machine that never set FIDO2 up has no directory here\n  # and still reaches exit 0 without a password prompt. Not through a symlink:\n  # chmod would act on whatever it points at.\n  authdir=${authfile%/*}\n\n  if [[ -L $authdir || ! -d $authdir || -x $authdir ]]; then\n    exit 0\n  fi\n\n  # Ask root whether a registration is behind it before touching the directory\n  # itself. An aborted setup that left an empty 0700 directory, or one an\n  # administrator deliberately keeps private, must not have its mode widened\n  # and its group and special bits discarded for a repair it does not need.\n  if ! sudo test -e \"$authfile\" && ! sudo test -L \"$authfile\"; then\n    exit 0\n  fi",
+      "body": "echo \"Take ownership of the FIDO2 authfile so it cannot be rewritten without root\"\n\nauthfile=\"/etc/fido2/fido2\"\nauthdir=${authfile%/*}\n\n# An unresolved path must remain pending. Preserve it for inspection rather\n# than following it or removing a credential the user may depend on.\nreport_unrepairable() {\n  echo \"  $1\"\n  local recovery=\"Review this path with an administrator. Before using Remove > Security > Fido2 and Setup > Security > Fido2, verify that your password can authenticate sudo with the token unplugged and cached authorization cleared. If the token is your only credential, an administrator must retain root access throughout recovery instead.\"\n  local retry=\"After recovery, retry omarchy update if it was interrupted; otherwise re-run omarchy-migrate. This migration remains pending.\"\n  echo \"  $recovery\"\n  echo \"  $retry\"\n  omarchy-notification-send -u critical -g  \"FIDO2 authfile needs attention\" \"$1 $recovery $retry\" || true\n  exit 1\n}\n\n# A symlinked parent redirects all checks and staging too, even when its\n# target is absent or already contains a root-owned registration.\nif [[ -L $authdir || ( -e $authdir && ! -d $authdir ) ]]; then\n  report_unrepairable \"$authdir is not a regular configuration directory.\"\nfi\n\n# Nothing to repair on any machine that never set FIDO2 up, which is almost all\n# of them. Checked before any sudo so those machines never see a password\n# prompt. -L as well as -e: a dangling symlink is invisible to -e.\nif [[ ! -L $authfile && ! -e $authfile ]]; then\n  # Absence and \"cannot look\" are the same answer to the tests above. The old\n  # setup created /etc/fido2 with `sudo mkdir -p`, which took the union of the\n  # caller's umask and sudoers' 0022, so anyone registering under `umask 077`\n  # left it mode 0700 with the user-owned authfile still inside. Escalate for\n  # that case alone -- a machine that never set FIDO2 up has no directory here\n  # and still reaches exit 0 without a password prompt. Not through a symlink:\n  # chmod would act on whatever it points at.\n  if [[ ! -d $authdir || -x $authdir ]]; then\n    exit 0\n  fi\n\n  # Ask root whether a registration is behind it before touching the directory\n  # itself. An aborted setup that left an empty 0700 directory, or one an",
       "bodyTruncated": true,
       "date": "2026-08-23T14:18:38Z",
       "description": "Take ownership of the FIDO2 authfile so it cannot be rewritten without root",
       "file": "1787494718.sh",
-      "lineCount": 116,
+      "lineCount": 124,
       "packagesAdded": [],
       "packagesRemoved": [],
       "path": "migrations/1787494718.sh",
@@ -2095,20 +2111,6 @@
       ]
     },
     {
-      "body": "echo \"Activate the Omarchy theme for existing T3 Code installs\"\n\nomarchy-pkg-present t3code-bin || exit 0\nomarchy-install-ai-t3-code",
-      "bodyTruncated": false,
-      "date": "2026-09-11T01:47:30Z",
-      "description": "Activate the Omarchy theme for existing T3 Code installs",
-      "file": "1789091250.sh",
-      "lineCount": 4,
-      "packagesAdded": [],
-      "packagesRemoved": [],
-      "path": "migrations/1789091250.sh",
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1789091250.sh",
-      "timestamp": 1789091250,
-      "touches": []
-    },
-    {
       "body": "echo \"Remove automatic project bin directories from PATH\"\n\nwork_dir=\"$HOME/Work\"\nmise_config=\"$work_dir/.mise.toml\"\n# install/user/mise-work.sh as shipped in Omarchy 4.0.3.\nstock_sha=\"bd04f191d63bbde86920f44f76f0989fad980afc84e268e8474c201ec7149245\"\ncwd_bin='\\{\\{[[:space:]]*cwd[[:space:]]*\\}\\}/bin'\nunsafe_path=\"^[[:space:]]*_[.]path[[:space:]]*=[[:space:]]*(\\\"$cwd_bin\\\"|'$cwd_bin')[[:space:]]*(#.*)?$\"\nenv_section='^[[:space:]]*\\[[[:space:]]*env[[:space:]]*\\][[:space:]]*(#.*)?$'\nany_section='^[[:space:]]*\\[\\[?.*\\]\\]?[[:space:]]*(#.*)?$'\n\nremove_empty_work_dir=false\nif [[ ! -e $work_dir ]]; then\n  mkdir -p \"$work_dir\"\n  remove_empty_work_dir=true\nfi\n\nwas_ignored=false\nif [[ -d $work_dir ]]; then\n  mise_state_dir=${MISE_STATE_DIR:-${XDG_STATE_HOME:-$HOME/.local/state}/mise}\n  ignored_configs_dir=\"$mise_state_dir/ignored-configs\"\n  work_target=$(readlink -m \"$work_dir\")\n  config_path_target=\"$work_target/.mise.toml\"\n  config_target=$(readlink -m \"$mise_config\")\n\n  if [[ -d $ignored_configs_dir ]]; then\n    for ignored_entry in \"$ignored_configs_dir\"/*; do\n      [[ -L $ignored_entry ]] || continue\n      ignored_target=$(readlink \"$ignored_entry\")\n      if [[ $ignored_target == $work_target || $ignored_target == $config_path_target || $ignored_target == $config_target ]]; then\n        was_ignored=true\n        break\n      fi\n    done\n  fi\n\n  if [[ $was_ignored == \"false\" ]]; then\n    # Normal Mise trust is recorded against the config-root directory, while\n    # paranoid trust is recorded against the file and its contents. Stage an\n    # empty, inert config when the legacy file is gone so either trust mode can",
       "bodyTruncated": true,
       "date": "2026-09-11T02:57:36Z",
@@ -2174,12 +2176,12 @@
       ]
     },
     {
-      "body": "echo \"Install the Omarchy kernel and make it the first Limine boot entry\"\n\n# linux-omarchy is an x86_64 kernel. T2 Macs must keep their specialized kernel,\n# including when other kernels are installed or the running T2 package is gone.\n[[ $(uname -m) == \"x86_64\" ]] || exit 0\nrunning_kernel=$(uname -r)\nif omarchy-pkg-present linux-t2 || [[ ${running_kernel,,} == *-t2* ]]; then\n  exit 0\nfi\n\nlimine_conf=\"${OMARCHY_KERNEL_LIMINE_CONF:-/etc/default/limine}\"\nrebuild_marker=\"${OMARCHY_KERNEL_REBUILD_MARKER:-/var/lib/omarchy/migrations/1789325478}\"\nkernel=\"linux-omarchy\"\n\n# Completion is machine-wide even though migrations run once per user. Leave\n# the old kernel installed so it remains available if the new one cannot boot.\n# The new filename and marker also reach users who completed 1789095456.\n[[ ! -e $rebuild_marker ]] || exit 0\nomarchy-pkg-add \"$kernel\" \"$kernel-headers\"\n\n# /etc/default/limine has priority over every drop-in, including old Dell\n# settings and customized package files whose updates landed in a .pacnew.\n# Set the exact kernel first: linux-omarchy-* only matches its older variants.\n# Preserve unrelated settings, especially the root filesystem's kernel cmdline.\nsudo mkdir -p \"$(dirname \"$limine_conf\")\"\nsudo touch \"$limine_conf\"\nsudo sed -i -E '/^[[:space:]]*BOOT_ORDER[[:space:]]*=/d' \"$limine_conf\"\nprintf '\\n%s\\n' 'BOOT_ORDER=\"linux-omarchy, linux-omarchy-*, *, *fallback, Snapshots\"' | sudo tee -a \"$limine_conf\" >/dev/null\n\n# Package hooks ran before the config repair. Rebuild the new kernel's image\n# and boot entry explicitly, including on retries after a failed rebuild.\nsudo limine-mkinitcpio \"$kernel\"\n\n# limine-mkinitcpio can return success after skipping a failed kernel build.\n# Do not mark the migration complete unless the new kernel is in the menu.\nif ! sudo limine-entry-tool --tree | grep -E \"(^|[^[:alnum:]_-])$kernel([^[:alnum:]_-]|$)\" >/dev/null; then\n  echo \"The Omarchy kernel has no Limine boot entry; rerun omarchy-migrate after fixing the boot image build.\" >&2\n  exit 1\nfi\n",
+      "body": "echo \"Install the Omarchy kernel and make it the first Limine boot entry\"\n\n# linux-omarchy is an x86_64 kernel. T2 Macs must keep their specialized kernel,\n# including when other kernels are installed or the running T2 package is gone.\n[[ $(uname -m) == \"x86_64\" ]] || exit 0\nrunning_kernel=$(uname -r)\nif omarchy-pkg-present linux-t2 || [[ ${running_kernel,,} == *-t2* ]]; then\n  exit 0\nfi\n\nif ! omarchy-cmd-present limine-mkinitcpio; then\n  echo \"This machine has no Limine tooling; leaving its kernel alone\"\n  exit 0\nfi\n\nlimine_conf=\"${OMARCHY_KERNEL_LIMINE_CONF:-/etc/default/limine}\"\nrebuild_marker=\"${OMARCHY_KERNEL_REBUILD_MARKER:-/var/lib/omarchy/migrations/1789325478}\"\nkernel=\"linux-omarchy\"\n\n# Completion is machine-wide even though migrations run once per user. Leave\n# the old kernel installed so it remains available if the new one cannot boot.\n# The new filename and marker also reach users who completed 1789095456.\n[[ ! -e $rebuild_marker ]] || exit 0\nomarchy-pkg-add \"$kernel\" \"$kernel-headers\"\n\n# /etc/default/limine has priority over every drop-in, including old Dell\n# settings and customized package files whose updates landed in a .pacnew.\n# Set the exact kernel first: linux-omarchy-* only matches its older variants.\n# Preserve unrelated settings, especially the root filesystem's kernel cmdline.\nsudo mkdir -p \"$(dirname \"$limine_conf\")\"\nsudo touch \"$limine_conf\"\nsudo sed -i -E '/^[[:space:]]*BOOT_ORDER[[:space:]]*=/d' \"$limine_conf\"\nprintf '\\n%s\\n' 'BOOT_ORDER=\"linux-omarchy, linux-omarchy-*, *, *fallback, Snapshots\"' | sudo tee -a \"$limine_conf\" >/dev/null\n\n# Package hooks ran before the config repair. Rebuild the new kernel's image\n# and boot entry explicitly, including on retries after a failed rebuild.\nsudo limine-mkinitcpio \"$kernel\"\n\n# limine-mkinitcpio can return success after skipping a failed kernel build.\n# Do not mark the migration complete unless the new kernel is in the menu.",
       "bodyTruncated": true,
       "date": "2026-09-13T18:51:18Z",
       "description": "Install the Omarchy kernel and make it the first Limine boot entry",
       "file": "1789325478.sh",
-      "lineCount": 44,
+      "lineCount": 49,
       "packagesAdded": [],
       "packagesRemoved": [],
       "path": "migrations/1789325478.sh",
@@ -2189,20 +2191,6 @@
         "/etc/default/limine",
         "/var/lib/omarchy/migrations/1789325478"
       ]
-    },
-    {
-      "body": "echo \"Enable approval for newly connected USB devices\"\n\nomarchy-setup-security-usb-authorization --yes",
-      "bodyTruncated": false,
-      "date": "2026-09-15T00:51:13Z",
-      "description": "Enable approval for newly connected USB devices",
-      "file": "1789433473.sh",
-      "lineCount": 3,
-      "packagesAdded": [],
-      "packagesRemoved": [],
-      "path": "migrations/1789433473.sh",
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1789433473.sh",
-      "timestamp": 1789433473,
-      "touches": []
     },
     {
       "body": "echo \"Install missing headers for the Omarchy or T2 kernel\"\n\n# Fresh ISO installs mark earlier migrations complete, so the kernel migration\n# cannot repair headers omitted by those installers. Package installation is\n# idempotent when another user has already applied this repair.\nfor kernel in linux-omarchy linux-t2; do\n  if omarchy-pkg-present \"$kernel\"; then\n    omarchy-pkg-add \"$kernel-headers\"\n  fi\ndone",
@@ -2216,6 +2204,20 @@
       "path": "migrations/1789444024.sh",
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1789444024.sh",
       "timestamp": 1789444024,
+      "touches": []
+    },
+    {
+      "body": "echo \"Install rtkit so PipeWire gets realtime priority\"\n\n# PipeWire requests realtime scheduling via RealtimeKit at startup, but rtkit\n# is not a dependency of Arch's pipewire packages and the rlimits fallback is\n# not configured either (see https://github.com/omacom/omarchy/issues/9390).\n# Without it, audio threads run at SCHED_OTHER nice 0 and produce xruns under\n# sustained load.\n#\n# Processes started while rtkit was missing can carry a hard RLIMIT_RTTIME of\n# 0, which the kernel enforces with SIGKILL once rtkit makes a thread\n# realtime, so omarchy-realtime-repair raises those limits around the install.\n# It fails, and keeps this migration pending, while anything is left that it\n# could not repair or inspect.\nomarchy-realtime-repair",
+      "bodyTruncated": false,
+      "date": "2026-09-18T16:07:47Z",
+      "description": "Install rtkit so PipeWire gets realtime priority",
+      "file": "1789747667.sh",
+      "lineCount": 14,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1789747667.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1789747667.sh",
+      "timestamp": 1789747667,
       "touches": []
     },
     {
@@ -2237,6 +2239,22 @@
         "/usr/lib/systemd/user/owed.service",
         "/usr/share/owe/10-owe-sync",
         "~/.config/systemd/user/graphical-session.target.wants"
+      ]
+    },
+    {
+      "body": "echo \"Retain the installed ARM Limine recovery packages during orphan cleanup\"\n\n[[ $(uname -m) == \"aarch64\" && -f ${OMARCHY_LIMINE_CONF:-/etc/default/limine} ]] || exit 0\n\n# ARM also supports boot stacks such as Asahi's, so the runtime package cannot\n# depend on Limine unconditionally. The ISO installs its chosen stack explicitly;\n# older ARM installations can still have these packages marked as dependencies.\n# Preserve only installed packages, without installing a different boot stack.\nmapfile -t recovery_packages < <(pacman -Qqd limine limine-mkinitcpio-hook limine-snapper-sync snapper 2>/dev/null)\n\nif (( ${#recovery_packages[@]} )); then\n  sudo pacman -D --asexplicit \"${recovery_packages[@]}\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-09-20T18:23:06Z",
+      "description": "Retain the installed ARM Limine recovery packages during orphan cleanup",
+      "file": "1789928586.sh",
+      "lineCount": 13,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1789928586.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1789928586.sh",
+      "timestamp": 1789928586,
+      "touches": [
+        "/etc/default/limine"
       ]
     },
     {
@@ -2300,36 +2318,32 @@
       "touches": []
     },
     {
-      "body": "echo \"Require approval for new Thunderbolt accessories\"\nomarchy-setup-security-thunderbolt-authorization --quiet",
+      "body": "echo \"Disable system sleep on GB10 machines, as DGX OS does\"\n\n# Suspend has not been shown to work on GB10 machines. Existing installs predate\n# the install-time setting, so apply it here too.\nomarchy-hw-aarch64-gb10 || exit 0\nomarchy-sleep-disabled && exit 0\n\nsudo bash \"$OMARCHY_PATH/install/hardware/gb10/sleep.sh\"",
       "bodyTruncated": false,
-      "date": "2026-09-25T13:56:39Z",
-      "description": "Require approval for new Thunderbolt accessories",
-      "file": "1790344599.sh",
-      "lineCount": 2,
+      "date": "2026-09-25T19:36:18Z",
+      "description": "Disable system sleep on GB10 machines, as DGX OS does",
+      "file": "1790364978.sh",
+      "lineCount": 8,
       "packagesAdded": [],
       "packagesRemoved": [],
-      "path": "migrations/1790344599.sh",
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790344599.sh",
-      "timestamp": 1790344599,
+      "path": "migrations/1790364978.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790364978.sh",
+      "timestamp": 1790364978,
       "touches": []
     },
     {
-      "body": "echo \"Move OpenClaw to a self-updating install under ~/.openclaw\"\n\n# The openclaw package used to be OpenClaw itself, installed under /usr where `openclaw update` and the Control UI's Update button cannot write. It is now the seed for a copy under ~/.openclaw that updates itself, and omarchy-install-openclaw-cli sets that copy up, points the command on PATH at it and moves a gateway service the old package installed over to it. Only machines with the package have an OpenClaw of Omarchy's to move.\nomarchy-pkg-present openclaw || exit 0\n\n# Updates install packages before migrations. An older package is still the runtime and has no seed, so this stays pending until it is updated.\nif [[ ! -r /usr/share/openclaw/install-cli.sh || ! -r /usr/share/openclaw/openclaw.tgz ]]; then\n  echo \"Update the openclaw package before rerunning this migration.\" >&2\n  exit 1\nfi\n\nomarchy-install-openclaw-cli --now",
+      "body": "echo \"Retire the OpenClaw move that 4.0.5 shipped too early\"\n\n# This migration shipped in 4.0.5 to move OpenClaw to a self-updating copy under ~/.openclaw, before the seed package that move needs. Wherever that package was missing it stopped the update and every migration after it (#15804). It now finishes without changing anything: a copy that was already moved stays as it is, and a packaged OpenClaw keeps running from its package. The move is 1792334754.sh now, which ships with the seed package; this filename stays inert.\nexit 0",
       "bodyTruncated": false,
       "date": "2026-09-26T04:36:21Z",
-      "description": "Move OpenClaw to a self-updating install under ~/.openclaw",
+      "description": "Retire the OpenClaw move that 4.0.5 shipped too early",
       "file": "1790397381.sh",
-      "lineCount": 12,
+      "lineCount": 4,
       "packagesAdded": [],
       "packagesRemoved": [],
       "path": "migrations/1790397381.sh",
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790397381.sh",
       "timestamp": 1790397381,
-      "touches": [
-        "/usr/share/openclaw/install-cli.sh",
-        "/usr/share/openclaw/openclaw.tgz",
-        "~/.openclaw"
-      ]
+      "touches": []
     },
     {
       "body": "echo \"Loosen the offline install's exact Node pin so mise up tracks new releases\"\n\nmise_config=\"$HOME/.config/mise/config.toml\"\n\nif [[ -f $mise_config ]] && grep -qE '^node = \"[0-9]+\\.[0-9]+\\.[0-9]+\"$' \"$mise_config\"; then\n  sed -i -E 's/^node = \"[0-9]+\\.[0-9]+\\.[0-9]+\"$/node = \"latest\"/' \"$mise_config\"\nfi",
@@ -2345,6 +2359,23 @@
       "timestamp": 1790457067,
       "touches": [
         "~/.config/mise/config.toml"
+      ]
+    },
+    {
+      "body": "echo \"Boot the DGX Spark without a UKI to skip a 20-second firmware delay\"\n\n# Existing installs predate the install-time setting, which Limine only applies\n# on a rebuild. The marker stops another user's run from repeating the\n# machine-wide rebuild, while a missing marker retries an interrupted one.\nlimine_config_dir=${OMARCHY_LIMINE_CONFIG_DIR:-/etc/limine-entry-tool.d}\nrebuild_marker=${OMARCHY_DGX_SPARK_BOOT_MARKER:-/var/lib/omarchy/migrations/1790517230}\n\nomarchy-hw-aarch64-gb10 && omarchy-hw-match \"NVIDIA_DGX_Spark\" || exit 0\nomarchy-cmd-present limine-mkinitcpio || exit 0\n[[ ! -e $rebuild_marker ]] || exit 0\n\n# Direct Boot loads the UKI through firmware. Rebuilding without a UKI would\n# delete its boot target; leave that choice intact, including its boot files.\n# A drop-in already on disk would do the same on the next kernel rebuild.\ndirect_boot_status=0\nomarchy-boot-direct || direct_boot_status=$?\nif (( direct_boot_status == 0 )); then\n  # Drop the file here. The hardware leaf exits 0 when a second read fails, and\n  # it can write ENABLE_UKI=no again if that read says Direct Boot is gone.\n  drop_in=$limine_config_dir/zz-omarchy-dgx-spark.conf\n  if [[ -f $drop_in ]]; then\n    sudo rm -f \"$drop_in\"\n    if [[ -f $drop_in ]]; then\n      echo \"Couldn't remove the DGX Spark drop-in that would delete the Direct Boot UKI\" >&2\n      exit 1\n    fi\n  fi\n  echo \"Keeping the UKI because Omarchy Direct Boot is configured\"\n  exit 0\nfi\nif (( direct_boot_status != 1 )); then\n  exit \"$direct_boot_status\"\nfi\n\n# Only an inactive Omarchy entry is named below. efibootmgr 18 follows each\n# label with a tab and the device path, so keep the label field.\nefi_labels=$(efibootmgr | cut -f1)\n\nif [[ ! -f $limine_config_dir/zz-omarchy-dgx-spark.conf ]]; then",
+      "bodyTruncated": true,
+      "date": "2026-09-27T13:53:50Z",
+      "description": "Boot the DGX Spark without a UKI to skip a 20-second firmware delay",
+      "file": "1790517230.sh",
+      "lineCount": 55,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1790517230.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790517230.sh",
+      "timestamp": 1790517230,
+      "touches": [
+        "/etc/limine-entry-tool.d",
+        "/var/lib/omarchy/migrations/1790517230"
       ]
     },
     {
@@ -2403,20 +2434,6 @@
       "touches": [
         "~/.local/state/omarchy/preinstalls-removed"
       ]
-    },
-    {
-      "body": "echo \"Repair USB approval prompts and enable portable device approvals\"\n\n# Preserve an explicit opt-out. Existing users with an active/enabled daemon\n# need a working watcher even if their old checkout link has become dangling.\nif systemctl is-enabled --quiet usbguard.service || systemctl is-active --quiet usbguard.service; then\n  omarchy-setup-security-usb-authorization --yes\nfi",
-      "bodyTruncated": false,
-      "date": "2026-09-28T15:16:57Z",
-      "description": "Repair USB approval prompts and enable portable device approvals",
-      "file": "1790608617.sh",
-      "lineCount": 7,
-      "packagesAdded": [],
-      "packagesRemoved": [],
-      "path": "migrations/1790608617.sh",
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790608617.sh",
-      "timestamp": 1790608617,
-      "touches": []
     },
     {
       "body": "echo \"Install the compiler and Qt pieces for building Omarchy-style apps\"\n\n# The omarchy-app agent skill builds apps the way Hype, Monologue, and Omacut\n# are built: C++ and Qt Quick, compiled with qmake6 and make, with SVG icons,\n# audio and video through Qt Multimedia, and heavy media work through ffmpeg.\n# Qt arrived only as a dependency of those apps, and the compiler not at all.\nomarchy-pkg-add base-devel qt6-base qt6-declarative qt6-multimedia qt6-svg qt6-wayland ffmpeg",
@@ -2486,6 +2503,232 @@
       ]
     },
     {
+      "body": "echo \"Make the ASUS ProArt P14 (NVIDIA N1x) touchpad register touches\"\n\n# See install/hardware/asus/fix-asus-proart-p14-touchpad.sh: the haptic pad's\n# pressure axis never reaches libinput's default touch threshold. The quirk\n# takes effect at the next login, when the compositor reloads libinput.\nif ! omarchy-hw-match \"H7407BA\"; then\n  exit 0\nfi\n\nquirks=/etc/libinput/local-overrides.quirks\n\nif grep -qxF '[ASUS ProArt P14 Touchpad]' \"$quirks\" 2>/dev/null; then\n  exit 0\nfi\n\nsudo mkdir -p /etc/libinput\nsudo tee -a \"$quirks\" >/dev/null <<'EOF'\n\n[ASUS ProArt P14 Touchpad]\nMatchBus=i2c\nMatchUdevType=touchpad\nMatchVendor=0x093A\nMatchProduct=0x4F02\nMatchDMIModalias=dmi:*svnASUS*:pn*H7407BA*\nAttrInputProp=+INPUT_PROP_PRESSUREPAD\nEOF",
+      "bodyTruncated": false,
+      "date": "2026-10-02T05:03:35Z",
+      "description": "Make the ASUS ProArt P14 (NVIDIA N1x) touchpad register touches",
+      "file": "1790917415.sh",
+      "lineCount": 26,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1790917415.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790917415.sh",
+      "timestamp": 1790917415,
+      "touches": [
+        "/etc/libinput",
+        "/etc/libinput/local-overrides.quirks"
+      ]
+    },
+    {
+      "body": "echo \"Route ASUS ProArt P14 (NVIDIA N1x) speakers, headphones and microphones\"\n\n# omarchy-settings now ships a UCM profile for this model's MediaTek MT8901\n# SoundWire card, which until now only gave PipeWire a dummy output. PipeWire\n# reads UCM profiles when it opens the card, so restart it to pick it up.\nif ! omarchy-hw-match \"H7407BA\"; then\n  exit 0\nfi\n\nsystemctl --user restart wireplumber pipewire pipewire-pulse 2>/dev/null || true",
+      "bodyTruncated": false,
+      "date": "2026-10-02T05:06:11Z",
+      "description": "Route ASUS ProArt P14 (NVIDIA N1x) speakers, headphones and microphones",
+      "file": "1790917571.sh",
+      "lineCount": 10,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1790917571.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790917571.sh",
+      "timestamp": 1790917571,
+      "touches": []
+    },
+    {
+      "body": "echo \"List Omarchy's aarch64 repository ahead of Arch Linux ARM's on the N1x\"\n\n# default/pacman/aarch64/pacman-edge.conf puts [omarchy] first so Omarchy's builds\n# (its NVIDIA driver among them) win over Arch Linux ARM's. Installs from\n# earlier N1x images list it last, where an Arch Linux ARM update could replace\n# them. Move the [omarchy] section in place so other edits to the file survive.\nif ! omarchy-hw-aarch64-n1x; then\n  exit 0\nfi\n\nconf=/etc/pacman.conf\nfirst_repo=$(grep -E '^\\[[^]]+\\]' \"$conf\" | grep -vx '\\[options\\]' | head -1)\n\nif [[ $first_repo == \"[omarchy]\" ]] || ! grep -qx '\\[omarchy\\]' \"$conf\"; then\n  exit 0\nfi\n\nreordered=$(mktemp)\nawk '\n  # Split the file into the [omarchy] section and everything else, then print\n  # the section again just before the first repository after [options].\n  /^\\[[^]]+\\]/ { in_omarchy = ($0 == \"[omarchy]\") }\n  in_omarchy { omarchy = omarchy $0 \"\\n\"; next }\n  { rest[++n] = $0 }\n  END {\n    sub(/\\n+$/, \"\\n\", omarchy)\n    for (i = 1; i <= n; i++) {\n      if (!placed && rest[i] ~ /^\\[[^]]+\\]/ && rest[i] != \"[options]\") {\n        printf \"%s\\n\", omarchy\n        placed = 1\n      }\n      print rest[i]\n    }\n  }\n' \"$conf\" >\"$reordered\"\n\nsudo cp -f \"$conf\" \"$conf.bak\"\nsudo install -m644 \"$reordered\" \"$conf\"\nrm -f \"$reordered\"",
+      "bodyTruncated": false,
+      "date": "2026-10-02T05:07:00Z",
+      "description": "List Omarchy's aarch64 repository ahead of Arch Linux ARM's on the N1x",
+      "file": "1790917620.sh",
+      "lineCount": 39,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1790917620.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790917620.sh",
+      "timestamp": 1790917620,
+      "touches": [
+        "/etc/pacman.conf"
+      ]
+    },
+    {
+      "body": "echo \"Boot N1x laptops quietly so Plymouth stays up from the LUKS prompt to login\"\n\n# Early N1x installs added loglevel=7, systemd.show_status=1 and friends to the\n# default boot entry for bring-up. They come after Omarchy's quiet splash on the\n# command line and win, so kernel and systemd messages print over Plymouth after\n# unlocking and during shutdown. The rescue entry keeps its own verbose line.\nconsole_conf=\"${OMARCHY_N1X_CONSOLE_CONF:-/etc/limine-entry-tool.d/00-omarchy-n1x-console.conf}\"\nrunning_cmdline=\"${OMARCHY_RUNNING_CMDLINE:-/proc/cmdline}\"\nrebuild_marker=\"${OMARCHY_LIMINE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1790917773}\"\n\n[[ -f $console_conf ]] || exit 0\n\nif grep -Fq 'loglevel=7' \"$console_conf\"; then\n  sudo tee \"$console_conf\" >/dev/null <<'EOF'\n# N1x: keep the console on the panel rather than the firmware's serial port;\n# see install/hardware/n1x.sh.\nKERNEL_CMDLINE[default]+=\" console=tty0 acpi=nospcr\"\nEOF\nfi\n\n# The running kernel keeps the verbose command line until reboot, so a marker\n# records the machine-wide rebuild: another user's run must not repeat it, while\n# a missing marker still retries an interrupted rebuild.\n[[ ! -e $rebuild_marker ]] || exit 0\n[[ \" $(<\"$running_cmdline\") \" == *\" rd.udev.log_level=info \"* ]] || exit 0\n\nsudo limine-mkinitcpio\nsudo install -Dm644 /dev/null \"$rebuild_marker\"",
+      "bodyTruncated": false,
+      "date": "2026-10-02T05:09:33Z",
+      "description": "Boot N1x laptops quietly so Plymouth stays up from the LUKS prompt to login",
+      "file": "1790917773.sh",
+      "lineCount": 28,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1790917773.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790917773.sh",
+      "timestamp": 1790917773,
+      "touches": [
+        "/etc/limine-entry-tool.d/00-omarchy-n1x-console.conf",
+        "/var/lib/omarchy/migrations/1790917773"
+      ]
+    },
+    {
+      "body": "echo \"Light the N1x panel for Plymouth's LUKS prompt\"\n\n# See install/hardware/n1x.sh: the panel stays at its dim power-on backlight\n# until the NVIDIA backlight is first written, which only happened after unlock.\n# Only N1x installs where the GPU drives the panel have that backlight.\ngpu_conf=\"${OMARCHY_N1X_GPU_CONF:-/etc/limine-entry-tool.d/00-omarchy-n1x-gpu.conf}\"\ninitcpio_dir=\"${OMARCHY_INITCPIO_DIR:-/etc/initcpio}\"\nhooks_conf=\"${OMARCHY_N1X_BRIGHTNESS_HOOKS_CONF:-/etc/mkinitcpio.conf.d/zz-omarchy-n1x-boot-brightness.conf}\"\nrebuild_marker=\"${OMARCHY_LIMINE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1790950659}\"\n\n[[ -f $gpu_conf ]] || exit 0\n\nsudo install -Dm644 /dev/stdin \"$initcpio_dir/install/omarchy-n1x-boot-brightness\" <<'EOF'\n#!/bin/bash\n\nbuild() {\n    add_runscript\n}\n\nhelp() {\n    cat <<HELPEOF\nLight the NVIDIA N1x panel for Plymouth's LUKS prompt.\nHELPEOF\n}\nEOF\n\nsudo install -Dm644 /dev/stdin \"$initcpio_dir/hooks/omarchy-n1x-boot-brightness\" <<'EOF'\n#!/usr/bin/ash\n\n# The panel stays at its dim power-on backlight until the NVIDIA backlight is\n# first written, which systemd-backlight only does once the root filesystem is\n# unlocked. Write it here so Plymouth's LUKS prompt is readable;\n# systemd-backlight restores the saved level after unlock.\nrun_hook() {\n    if [ -w /sys/class/backlight/nvidia_0/brightness ]; then\n        echo 60 > /sys/class/backlight/nvidia_0/brightness\n    fi\n}\nEOF\n",
+      "bodyTruncated": true,
+      "date": "2026-10-02T14:17:39Z",
+      "description": "Light the N1x panel for Plymouth's LUKS prompt",
+      "file": "1790950659.sh",
+      "lineCount": 59,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1790950659.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790950659.sh",
+      "timestamp": 1790950659,
+      "touches": [
+        "/etc/initcpio",
+        "/etc/limine-entry-tool.d/00-omarchy-n1x-gpu.conf",
+        "/etc/mkinitcpio.conf.d/zz-omarchy-n1x-boot-brightness.conf",
+        "/var/lib/omarchy/migrations/1790950659"
+      ]
+    },
+    {
+      "body": "echo \"Give the ASUS ProArt P14 (NVIDIA N1x) the RAM its firmware reserves for Windows' GPU\"\n\n# See install/hardware/asus/fix-asus-proart-p14-gpu-memory.sh. The kernel option\n# takes effect with linux-omarchy-n1x; older N1x kernels ignore it.\ndropin=\"${OMARCHY_PROART_GPU_MEMORY_CONF:-/etc/limine-entry-tool.d/omarchy-n1x-gpu-memory.conf}\"\niomem=\"${OMARCHY_IOMEM:-/proc/iomem}\"\nrunning_cmdline=\"${OMARCHY_RUNNING_CMDLINE:-/proc/cmdline}\"\nrebuild_marker=\"${OMARCHY_LIMINE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1790953795}\"\n\nif ! omarchy-hw-match \"H7407BA\"; then\n  exit 0\nfi\n\nif [[ ! -f $dropin ]]; then\n  # /proc/iomem only shows addresses to root.\n  sudo grep -qx '1fd000000-119fffffff : reserved' \"$iomem\" || exit 0\n\n  sudo install -Dm644 /dev/stdin \"$dropin\" <<'EOF'\n# ASUS ProArt P14: use the idle part of the firmware's Windows GPU memory as RAM;\n# see install/hardware/asus/fix-asus-proart-p14-gpu-memory.sh.\nKERNEL_CMDLINE[default]+=\" efi_reclaim_reserved=58G@8G,3968M@67712M\"\nEOF\nfi\n\n# The running kernel keeps its command line until reboot, so a marker records\n# the machine-wide rebuild: another user's run must not repeat it, while a\n# missing marker still retries an interrupted rebuild.\n[[ ! -e $rebuild_marker ]] || exit 0\n[[ \" $(<\"$running_cmdline\") \" != *\" efi_reclaim_reserved=\"* ]] || exit 0\n\nsudo limine-mkinitcpio\nsudo install -Dm644 /dev/null \"$rebuild_marker\"",
+      "bodyTruncated": false,
+      "date": "2026-10-02T15:09:55Z",
+      "description": "Give the ASUS ProArt P14 (NVIDIA N1x) the RAM its firmware reserves for Windows' GPU",
+      "file": "1790953795.sh",
+      "lineCount": 32,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1790953795.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790953795.sh",
+      "timestamp": 1790953795,
+      "touches": [
+        "/etc/limine-entry-tool.d/omarchy-n1x-gpu-memory.conf",
+        "/var/lib/omarchy/migrations/1790953795"
+      ]
+    },
+    {
+      "body": "echo \"Give the ASUS ProArt P14 (NVIDIA N1x) speakers ASUS's amplifier tuning and voicing\"\n\n# See install/hardware/asus/fix-asus-proart-p14-speakers.sh and the\n# asus-proart-p14-n1x speaker tuning. The amplifiers load the new tuning at the\n# next boot, under a linux-omarchy-n1x that passes them the laptop's subsystem ID.\nif ! omarchy-hw-match \"H7407BA\"; then\n  exit 0\nfi\n\nomarchy-pkg-add asus-proart-p14-speaker-firmware\n\nif omarchy-audio-tuning match >/dev/null 2>&1; then\n  omarchy-pkg-add lsp-plugins-lv2\n  omarchy-audio-tuning on\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-02T20:34:00Z",
+      "description": "Give the ASUS ProArt P14 (NVIDIA N1x) speakers ASUS's amplifier tuning and voicing",
+      "file": "1790973240.sh",
+      "lineCount": 15,
+      "packagesAdded": [
+        "asus-proart-p14-speaker-firmware",
+        "lsp-plugins-lv2"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1790973240.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790973240.sh",
+      "timestamp": 1790973240,
+      "touches": []
+    },
+    {
+      "body": "echo \"Give the Dell XPS 16 (NVIDIA N1x) the RAM its firmware reserves for Windows' GPU\"\n\n# See install/hardware/fix-n1x-gpu-memory.sh. The kernel option takes effect\n# with linux-omarchy-n1x; older N1x kernels ignore it.\ndropin=\"${OMARCHY_N1X_GPU_MEMORY_CONF:-/etc/limine-entry-tool.d/omarchy-n1x-gpu-memory.conf}\"\niomem=\"${OMARCHY_IOMEM:-/proc/iomem}\"\nrunning_cmdline=\"${OMARCHY_RUNNING_CMDLINE:-/proc/cmdline}\"\nrebuild_marker=\"${OMARCHY_LIMINE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1790984400}\"\n\nif ! omarchy-hw-match \"DX16263\"; then\n  exit 0\nfi\n\nif [[ ! -f $dropin ]]; then\n  # /proc/iomem only shows addresses to root.\n  sudo grep -qx '1fd000000-119fffffff : reserved' \"$iomem\" || exit 0\n\n  sudo install -Dm644 /dev/stdin \"$dropin\" <<'CONF'\n# NVIDIA N1x: use the idle part of the firmware's Windows GPU memory as RAM; see\n# install/hardware/fix-n1x-gpu-memory.sh.\nKERNEL_CMDLINE[default]+=\" efi_reclaim_reserved=58G@8G\"\nCONF\nfi\n\n# The running kernel keeps its command line until reboot, so a marker records\n# the machine-wide rebuild: another user's run must not repeat it, while a\n# missing marker still retries an interrupted rebuild.\n[[ ! -e $rebuild_marker ]] || exit 0\n[[ \" $(<\"$running_cmdline\") \" != *\" efi_reclaim_reserved=\"* ]] || exit 0\n\nsudo limine-mkinitcpio\nsudo install -Dm644 /dev/null \"$rebuild_marker\"",
+      "bodyTruncated": false,
+      "date": "2026-10-02T23:40:00Z",
+      "description": "Give the Dell XPS 16 (NVIDIA N1x) the RAM its firmware reserves for Windows' GPU",
+      "file": "1790984400.sh",
+      "lineCount": 32,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1790984400.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790984400.sh",
+      "timestamp": 1790984400,
+      "touches": [
+        "/etc/limine-entry-tool.d/omarchy-n1x-gpu-memory.conf",
+        "/var/lib/omarchy/migrations/1790984400"
+      ]
+    },
+    {
+      "body": "echo \"Give the N1x swap on zram, the memory tuning and realtime audio scheduling\"\n\n# omarchy-settings now ships the x86_64 memory stack on N1x too (see\n# default/settings-runtime-profile): zram, zswap off, the reclaim sysctls and\n# systemd-oomd's slice policy. Installs from the earlier N1x images ran with no\n# swap at all, and without rtkit, which nothing pulls in on aarch64, so\n# PipeWire got no realtime scheduling.\nif ! omarchy-hw-aarch64-n1x; then\n  exit 0\nfi\n\nomarchy-pkg-add rtkit zram-generator\n\nsudo sysctl --system >/dev/null\nsudo systemctl try-restart systemd-oomd.service\n\n# Installing the generator's configuration while swap.target is already active\n# leaves dev-zram0.swap generated but stopped until the next boot.\nif [[ -f /usr/lib/systemd/zram-generator.conf.d/90-omarchy.conf ]] &&\n  ! systemctl is-active --quiet dev-zram0.swap; then\n  sudo systemctl daemon-reload\n  sudo systemctl start dev-zram0.swap\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-02T23:41:40Z",
+      "description": "Give the N1x swap on zram, the memory tuning and realtime audio scheduling",
+      "file": "1790984500.sh",
+      "lineCount": 23,
+      "packagesAdded": [
+        "rtkit",
+        "zram-generator"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1790984500.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790984500.sh",
+      "timestamp": 1790984500,
+      "touches": [
+        "/usr/lib/systemd/zram-generator.conf.d/90-omarchy.conf"
+      ]
+    },
+    {
+      "body": "echo \"Turn on USB4 and Thunderbolt on the N1x\"\n\n# See install/hardware/n1x.sh: linux-omarchy-n1x drives the USB4 host routers\n# only when the USB4 resources stay powered, and docks need bus numbers set\n# aside below the unconfigured tunnel root ports.\ndropin=/etc/limine-entry-tool.d/00-omarchy-n1x-usb4.conf\n\n# The ASUS ProArt P14 gets its own, validated USB4 settings from 1791077437.\nif ! omarchy-hw-aarch64-n1x || omarchy-hw-match \"H7407BA\" || [[ -f $dropin ]]; then\n  exit 0\nfi\n\nsudo install -Dm644 /dev/stdin \"$dropin\" <<'CONF'\n# N1x: keep USB4 powered for the Thunderbolt connection manager, and leave bus\n# numbers for docks. See install/hardware/n1x.sh.\nKERNEL_CMDLINE[default]+=\" power_wrap_drv.usb4_release=0 pci=hpbussize=0x20\"\nCONF\n\nsudo limine-mkinitcpio",
+      "bodyTruncated": false,
+      "date": "2026-10-02T23:43:20Z",
+      "description": "Turn on USB4 and Thunderbolt on the N1x",
+      "file": "1790984600.sh",
+      "lineCount": 19,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1790984600.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790984600.sh",
+      "timestamp": 1790984600,
+      "touches": [
+        "/etc/limine-entry-tool.d/00-omarchy-n1x-usb4.conf"
+      ]
+    },
+    {
+      "body": "echo \"Leave the N1x GPU firmware room below its memory, which a large external display reaches into\"\n\n# See install/hardware/fix-n1x-gpu-memory.sh. Installs from before it reclaim a\n# second range right under the block the GPU firmware keeps; with a 5K monitor\n# the firmware wrote into it and corrupted kernel memory. Keep the first range.\ndropin=\"${OMARCHY_N1X_GPU_MEMORY_CONF:-/etc/limine-entry-tool.d/omarchy-n1x-gpu-memory.conf}\"\n\nif [[ ! -f $dropin ]] || ! grep -q 'efi_reclaim_reserved=58G@8G,3968M@67712M' \"$dropin\"; then\n  exit 0\nfi\n\nsudo sed -i 's/efi_reclaim_reserved=58G@8G,3968M@67712M/efi_reclaim_reserved=58G@8G/' \"$dropin\"\nsudo limine-mkinitcpio",
+      "bodyTruncated": false,
+      "date": "2026-10-02T23:45:00Z",
+      "description": "Leave the N1x GPU firmware room below its memory, which a large external display reaches into",
+      "file": "1790984700.sh",
+      "lineCount": 13,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1790984700.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1790984700.sh",
+      "timestamp": 1790984700,
+      "touches": [
+        "/etc/limine-entry-tool.d/omarchy-n1x-gpu-memory.conf"
+      ]
+    },
+    {
+      "body": "echo \"Move NVIDIA N1x laptops to linux-omarchy-n1x and drop the bring-up scaffolding\"\n\n# See install/hardware/n1x.sh, which sets up new installs the same way.\nlimine_conf_dir=\"${OMARCHY_LIMINE_ENTRY_TOOL_DIR:-/etc/limine-entry-tool.d}\"\nmkinitcpio_conf_dir=\"${OMARCHY_MKINITCPIO_CONF_DIR:-/etc/mkinitcpio.conf.d}\"\nmodules_dir=\"${OMARCHY_MODULES_DIR:-/usr/lib/modules}\"\nkernel_cmdline=\"${OMARCHY_KERNEL_CMDLINE:-/etc/kernel/cmdline}\"\nprobe_unit=\"${OMARCHY_N1X_PROBE_UNIT:-/etc/systemd/system/omarchy-n1x-probe.service}\"\nrebuild_marker=\"${OMARCHY_LIMINE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1791077437}\"\n\nomarchy-hw-aarch64-n1x || exit 0\n\n# Everything below is machine-wide. The marker lets another user's run skip it,\n# while a missing marker still retries an interrupted run.\n[[ ! -e $rebuild_marker ]] || exit 0\n\nomarchy-pkg-add linux-omarchy-n1x linux-omarchy-n1x-headers\n\nmapfile -t pkgbase_files < <(grep -lFx linux-omarchy-n1x \"$modules_dir\"/*/pkgbase 2>/dev/null || true)\nif (( ${#pkgbase_files[@]} != 1 )); then\n  echo \"Error: expected one installed linux-omarchy-n1x module tree, found ${#pkgbase_files[@]}\" >&2\n  exit 1\nfi\nkernel_version=${pkgbase_files[0]#\"$modules_dir\"/}\nkernel_version=${kernel_version%/pkgbase}\n\n# Early KMS lists the NVIDIA modules in the initramfs. Leave the boot order alone\n# until DKMS has built every one of them for the new kernel.\nif [[ -f $mkinitcpio_conf_dir/nvidia.conf ]] &&\n  ! modinfo -k \"$kernel_version\" nvidia nvidia_modeset nvidia_uvm nvidia_drm &>/dev/null; then\n  echo \"Error: no NVIDIA DKMS modules for $kernel_version yet; run 'omarchy update' again once they build\" >&2\n  exit 1\nfi\n\nroot_cmdline=$(sudo cat \"$kernel_cmdline\" 2>/dev/null || true)\nif [[ $root_cmdline != *root=* ]]; then\n  echo \"Error: $kernel_cmdline has no root=\" >&2\n  exit 1\nfi\n",
+      "bodyTruncated": true,
+      "date": "2026-10-04T01:30:37Z",
+      "description": "Move NVIDIA N1x laptops to linux-omarchy-n1x and drop the bring-up scaffolding",
+      "file": "1791077437.sh",
+      "lineCount": 86,
+      "packagesAdded": [
+        "linux-omarchy-n1x",
+        "linux-omarchy-n1x-headers"
+      ],
+      "packagesRemoved": [
+        "linux-n1x",
+        "linux-n1x-headers"
+      ],
+      "path": "migrations/1791077437.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791077437.sh",
+      "timestamp": 1791077437,
+      "touches": [
+        "/etc/kernel/cmdline",
+        "/etc/limine-entry-tool.d",
+        "/etc/mkinitcpio.conf.d",
+        "/etc/systemd/system/omarchy-n1x-probe.service",
+        "/usr/lib/modules",
+        "/var/lib/omarchy/migrations/1791077437"
+      ]
+    },
+    {
+      "body": "echo \"Enable desktop camera access on Snapdragon ThinkPad T14s Gen 6\"\n\nif omarchy-hw-aarch64-qualcomm && omarchy-hw-match '^21N[12]'; then\n  source \"$OMARCHY_PATH/install/hardware/lenovo/thinkpad-t14s-camera.sh\"\n\n  sudo udevadm control --reload\n  sudo udevadm trigger --action=add --subsystem-match=dma_heap --sysname-match=system\n  sudo udevadm settle\n\n  echo \"Log out and back in to load the PipeWire camera backend.\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-04T02:22:07Z",
+      "description": "Enable desktop camera access on Snapdragon ThinkPad T14s Gen 6",
+      "file": "1791080527.sh",
+      "lineCount": 11,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791080527.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791080527.sh",
+      "timestamp": 1791080527,
+      "touches": []
+    },
+    {
       "body": "echo \"Make agent account selection apply to scripts and subprocesses\"\n\n# The settings package ships the mise wrapper declarations. Build the dispatch\n# links for this user without installing or changing any agent version.\nmise reshim",
       "bodyTruncated": false,
       "date": "2026-10-04T11:14:39Z",
@@ -2531,6 +2774,54 @@
         "/etc/pam.d/omarchy-lock-fingerprint",
         "/etc/systemd/system/fprintd.service.d/10-stop-timeout.conf",
         "/usr/lib/systemd/system-sleep/fprintd-resume"
+      ]
+    },
+    {
+      "body": "echo \"Keep the ASUS ProArt P14's USB4 tunnel root ports awake so a dock's Ethernet appears\"\n\n# See install/hardware/n1x.sh, which sets up new installs the same way.\nrules=\"${OMARCHY_N1X_USB4_ROOT_PORT_RULES:-/etc/udev/rules.d/71-omarchy-n1x-usb4-root-ports.rules}\"\npci_devices=\"${OMARCHY_PCI_DEVICES_PATH:-/sys/bus/pci/devices}\"\n\nif ! omarchy-hw-aarch64-n1x || ! omarchy-hw-match \"H7407BA\"; then\n  exit 0\nfi\n\nif [[ ! -f $rules ]]; then\n  sudo install -Dm644 /dev/stdin \"$rules\" <<'EOF'\n# N1x: the USB4 tunnel root ports cannot wake for a hotplug, so keep them out of\n# runtime suspend; see install/hardware/n1x.sh.\nACTION==\"add|bind\", SUBSYSTEM==\"pci\", ATTR{vendor}==\"0x10de\", ATTR{device}==\"0x22cf\", ATTR{power/control}=\"on\"\nEOF\nfi\n\n# udev only applies the rule to new events, so replay one for any port that is\n# still allowed to suspend. Once they are all on, another user's run is a no-op.\nfor port in \"$pci_devices\"/*; do\n  [[ $(cat \"$port/vendor\" 2>/dev/null) == \"0x10de\" && $(cat \"$port/device\" 2>/dev/null) == \"0x22cf\" ]] || continue\n  [[ $(cat \"$port/power/control\" 2>/dev/null) != \"on\" ]] || continue\n  sudo udevadm control --reload\n  sudo udevadm trigger --action=add --subsystem-match=pci --attr-match=vendor=0x10de --attr-match=device=0x22cf\n  break\ndone",
+      "bodyTruncated": false,
+      "date": "2026-10-04T17:14:53Z",
+      "description": "Keep the ASUS ProArt P14's USB4 tunnel root ports awake so a dock's Ethernet appears",
+      "file": "1791134093.sh",
+      "lineCount": 27,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791134093.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791134093.sh",
+      "timestamp": 1791134093,
+      "touches": [
+        "/etc/udev/rules.d/71-omarchy-n1x-usb4-root-ports.rules"
+      ]
+    },
+    {
+      "body": "echo \"Answer ARP only for each interface's own address, so a dock and Wi-Fi on one network keep their routes\"\n\n# Boot applies the shipped file regardless; this applies it now. The kernel\n# uses the higher of the \"all\" value and an interface's own, so \"all\" covers\n# the interfaces that already exist.\nsysctl_conf=\"${OMARCHY_ARP_SYSCTL_CONF:-/etc/sysctl.d/90-omarchy-arp.conf}\"\n\nif [[ $(sysctl -n net.ipv4.conf.all.arp_ignore) == \"1\" && $(sysctl -n net.ipv4.conf.all.arp_announce) == \"2\" ]]; then\n  exit 0\nfi\n\nsudo sysctl -p \"$sysctl_conf\" >/dev/null || omarchy-state set reboot-required",
+      "bodyTruncated": false,
+      "date": "2026-10-04T21:03:11Z",
+      "description": "Answer ARP only for each interface's own address, so a dock and Wi-Fi on one network keep their routes",
+      "file": "1791147791.sh",
+      "lineCount": 12,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791147791.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791147791.sh",
+      "timestamp": 1791147791,
+      "touches": [
+        "/etc/sysctl.d/90-omarchy-arp.conf"
+      ]
+    },
+    {
+      "body": "echo \"Drop the N1x rescue entry and pacman hook that the fallback entry replaces\"\n\n# Installs that ran the n1x-xps16 branch built the N1x rescue entry as its own\n# UKI (linux-omarchy-n1x-rescue) and rebuilt it from a pacman hook running\n# omarchy-refresh-n1x-rescue. limine-mkinitcpio-hook's fallback entry replaces\n# both (1791077437), and that command is gone, so the hook would fail on every\n# kernel update while the old entry kept booting the kernel it was built from.\nhook=\"${OMARCHY_N1X_RESCUE_HOOK:-/etc/pacman.d/hooks/zz-omarchy-n1x-rescue.hook}\"\n\n[[ -f $hook ]] || exit 0\n\nsudo limine-entry-tool --remove-uki linux-omarchy-n1x-rescue --quiet 2>/dev/null || true\nsudo rm -f \"$hook\"",
+      "bodyTruncated": false,
+      "date": "2026-10-04T22:21:20Z",
+      "description": "Drop the N1x rescue entry and pacman hook that the fallback entry replaces",
+      "file": "1791152480.sh",
+      "lineCount": 13,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791152480.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791152480.sh",
+      "timestamp": 1791152480,
+      "touches": [
+        "/etc/pacman.d/hooks/zz-omarchy-n1x-rescue.hook"
       ]
     },
     {
@@ -2602,6 +2893,24 @@
       "touches": []
     },
     {
+      "body": "echo \"Switch default mise tools to native lazy shims\"\n\nlegacy_wrapper_template() {\n  local form=$1 package=$2 bin=$3\n\n  case $form in\n  quiet)\n    printf '#!/bin/bash\\nexport MISE_MINIMUM_RELEASE_AGE=0\\nmise use -g --quiet \"%s\" || exit 1\\nexec mise x \"%s\" -- \"%s\" \"$@\"\\n' \"$package\" \"$package\" \"$bin\" ;;\n  cooldown-export)\n    printf '#!/bin/bash\\nexport MISE_MINIMUM_RELEASE_AGE=0\\nmise use -g \"%s\" || exit 1\\nexec mise x \"%s\" -- \"%s\" \"$@\"\\n' \"$package\" \"$package\" \"$bin\" ;;\n  bail-on-failure)\n    printf '#!/bin/bash\\nmise use -g \"%s\" || exit 1\\nexec mise x \"%s\" -- \"%s\" \"$@\"\\n' \"$package\" \"$package\" \"$bin\" ;;\n  mise-exec)\n    printf '#!/bin/bash\\nmise use -g \"%s\"\\nexec mise exec \"%s\" -- \"%s\" \"$@\"\\n' \"$package\" \"$package\" \"$bin\" ;;\n  bare-exec)\n    printf '#!/bin/bash\\nmise use -g \"%s\"\\nexec \"%s\" \"$@\"\\n' \"$package\" \"$bin\" ;;\n  esac\n}\n\nlegacy_wrapper() {\n  local command=$1 package=$2 wrapper=\"$HOME/.local/bin/$1\" form\n\n  [[ -f $wrapper && ! -L $wrapper && -r $wrapper ]] || return 1\n  (($(stat -c%s \"$wrapper\") <= 1024)) || return 1\n\n  # Match complete shipped templates, including the binary name and final\n  # newline. Matching only the mise lines would discard user customizations.\n  for form in quiet cooldown-export bail-on-failure mise-exec bare-exec; do\n    if cmp -s \"$wrapper\" <(legacy_wrapper_template \"$form\" \"$package\" \"$command\"); then\n      return 0\n    fi\n  done\n  return 1\n}\n\nwrapper_packages=()\n\nremove_legacy_wrapper() {\n  local command=$1\n  shift",
+      "bodyTruncated": true,
+      "date": "2026-10-07T14:21:12Z",
+      "description": "Switch default mise tools to native lazy shims",
+      "file": "1791382872.sh",
+      "lineCount": 94,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791382872.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791382872.sh",
+      "timestamp": 1791382872,
+      "touches": [
+        "/etc/mise/conf.d/omarchy-tools.toml",
+        "~/.local/bin/",
+        "~/.local/state/omarchy/preinstalls-removed"
+      ]
+    },
+    {
       "body": "echo \"Prioritize the Omarchy package repository over Arch repositories\"\n\n# Move the existing section rather than replacing pacman.conf so channel URLs,\n# custom repositories, and administrator options survive the migration.\npacman_config=$(mktemp)\ntrap 'rm -f \"$pacman_config\"' EXIT\n\nawk '\n  /^[[:space:]]*\\[[^]]+\\]/ {\n    section = $0\n    sub(/^[[:space:]]*\\[/, \"\", section)\n    sub(/\\].*$/, \"\", section)\n    if (section != \"options\") repositories = 1\n  }\n  !repositories { prefix = prefix $0 \"\\n\"; next }\n  section == \"omarchy\" { omarchy = omarchy $0 \"\\n\"; next }\n  { others = others $0 \"\\n\" }\n  END { printf \"%s%s%s\", prefix, omarchy, others }\n' /etc/pacman.conf >\"$pacman_config\"\n\nif ! cmp -s /etc/pacman.conf \"$pacman_config\"; then\n  sudo cp -a /etc/pacman.conf /etc/pacman.conf.bak\n  sudo install -m 644 -o root -g root \"$pacman_config\" /etc/pacman.conf\nfi\n\n# Refresh databases and upgrade against the new repository priority. Run this\n# even when the config is already ordered so a failed upgrade can be retried.\nomarchy-update-system-pkgs",
       "bodyTruncated": false,
       "date": "2026-10-07T20:00:52Z",
@@ -2633,6 +2942,23 @@
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791403310.sh",
       "timestamp": 1791403310,
       "touches": []
+    },
+    {
+      "body": "echo \"Make the ASUS ProArt P14 keyboard's top row send media keys by default\"\n\n# See install/hardware/asus/fix-asus-proart-p14-fkeys.sh. hid-asus loads from\n# the initramfs, so the option needs a rebuild to reach it.\nconf=\"${OMARCHY_HID_ASUS_CONF:-/etc/modprobe.d/hid_asus.conf}\"\nrebuild_marker=\"${OMARCHY_LIMINE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1791408113}\"\n\nif ! omarchy-hw-match \"H7407BA\"; then\n  exit 0\nfi\n\n# A hid_asus.conf already there is the administrator's choice; leave it.\nif [[ ! -f $conf ]]; then\n  sudo install -Dm644 /dev/stdin \"$conf\" <<'CONF'\n# ASUS ProArt P14: the top row sends media keys by default; Fn+Esc switches to F1-F12.\noptions hid_asus fnlock_default=0\nCONF\nelif [[ ! -e $rebuild_marker ]] && ! grep -qx 'options hid_asus fnlock_default=0' \"$conf\"; then\n  exit 0\nfi\n\n# A marker records the machine-wide rebuild: another user's run must not repeat\n# it, while a missing marker still retries an interrupted rebuild.\n[[ ! -e $rebuild_marker ]] || exit 0\n\nsudo limine-mkinitcpio\nsudo install -Dm644 /dev/null \"$rebuild_marker\"",
+      "bodyTruncated": false,
+      "date": "2026-10-07T21:21:53Z",
+      "description": "Make the ASUS ProArt P14 keyboard's top row send media keys by default",
+      "file": "1791408113.sh",
+      "lineCount": 27,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791408113.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791408113.sh",
+      "timestamp": 1791408113,
+      "touches": [
+        "/etc/modprobe.d/hid_asus.conf",
+        "/var/lib/omarchy/migrations/1791408113"
+      ]
     },
     {
       "body": "echo \"Repair background selections after bundled images moved to WebP\"\n\ntheme_webp_source() {\n  local theme=\"$1\"\n  local background=\"$2\"\n  local original_name=${background##*/}\n  local replacement_name=\"${original_name%.*}.webp\"\n  local user_theme_backgrounds=\"$HOME/.config/omarchy/themes/$theme/backgrounds\"\n  local bundled_theme_backgrounds=\"$OMARCHY_PATH/themes/$theme/backgrounds\"\n\n  if [[ -f $user_theme_backgrounds/$original_name || -f $bundled_theme_backgrounds/$original_name ]]; then\n    return 1\n  elif [[ -f $user_theme_backgrounds/$replacement_name ]]; then\n    printf '%s\\n' \"$user_theme_backgrounds/$replacement_name\"\n  elif [[ -f $bundled_theme_backgrounds/$replacement_name ]]; then\n    printf '%s\\n' \"$bundled_theme_backgrounds/$replacement_name\"\n  else\n    return 1\n  fi\n}\n\nreplacement_webp() {\n  local background=\"$1\"\n  local theme=\"${2:-}\"\n  local replacement\n\n  case ${background,,} in\n  *.jpg | *.jpeg | *.png) replacement=\"${background%.*}.webp\" ;;\n  *) return 1 ;;\n  esac\n\n  if [[ -n $theme && ${background%/*} == \"$HOME/.local/state/omarchy/current/theme/backgrounds\" ]]; then\n    theme_webp_source \"$theme\" \"$background\" >/dev/null || return 1\n    printf '%s\\n' \"$replacement\"\n    return 0\n  fi\n\n  [[ ! -e $background && -f $replacement ]] || return 1\n  printf '%s\\n' \"$replacement\"\n}",
@@ -2686,12 +3012,28 @@
       "touches": []
     },
     {
-      "body": "echo \"Stop the boot from waiting on a black screen for the console to answer\"\n\n# systemd asks the console for its size when PID 1 starts and waits for the\n# reply. With Plymouth holding the screen the reply sometimes never comes, and\n# about 1 boot in 10 sits on a black screen until a key is pressed.\n# omarchy-defaults.conf now carries systemd.tty.term.console=dumb, which makes\n# systemd skip the query. The package has already written that file by the\n# time this runs; the boot image still holds the old command line until it is\n# rebuilt.\n\ndefaults_conf=\"${OMARCHY_LIMINE_DEFAULTS_CONF:-/etc/limine-entry-tool.d/omarchy-defaults.conf}\"\nrunning_cmdline=\"${OMARCHY_RUNNING_CMDLINE:-/proc/cmdline}\"\nrebuild_marker=\"${OMARCHY_LIMINE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1791581004}\"\nparam=\"systemd.tty.term.console=dumb\"\n\nomarchy-cmd-present limine-mkinitcpio || exit 0\n[[ -f $defaults_conf && -r $running_cmdline ]] || exit 0\n\n# The running kernel keeps its old command line until reboot, so a marker\n# records the machine-wide rebuild: another user's migration must not repeat\n# it before then, while a missing marker still retries an interrupted rebuild.\n[[ ! -e $rebuild_marker ]] || exit 0\n\n# A machine that boots with it already, or whose defaults were edited to leave\n# it out, has nothing to rebuild.\n[[ \" $(<\"$running_cmdline\") \" != *\" $param \"* ]] || exit 0\ngrep -Eq \"^KERNEL_CMDLINE\\[default\\]\\+=\\\".*${param//./\\\\.}.*\\\"\" \"$defaults_conf\" || exit 0\n\necho \"The booted kernel is missing $param; rebuilding the boot image\"\nsudo limine-mkinitcpio\n\n# The boot menu is on the ESP, which /etc/default/limine names; /boot when it\n# does not, or is not there.\nlimine_conf=\"${OMARCHY_LIMINE_CONF:-}\"\nif [[ -z $limine_conf ]]; then\n  esp=\"\"\n  if [[ -r /etc/default/limine ]]; then\n    esp=$(sed -n 's/^ESP_PATH=[\"'\\'']\\?\\([^\"'\\'']*\\).*/\\1/p' /etc/default/limine | tail -n 1)\n  fi\n  limine_conf=\"${esp:-/boot}/limine.conf\"",
+      "body": "echo \"Switch to Omarchy's power-profiles-daemon build with CPPC support for ARM laptops\"\n\n# Stock power-profiles-daemon has no driver for cppc_cpufreq, so ARM laptops\n# only get placeholder profiles that change nothing. pacman -Q also answers for\n# the provided name, so check for the Omarchy build itself.\nif omarchy-pkg-present power-profiles-daemon && omarchy-pkg-missing omarchy-power-profiles-daemon; then\n  # One transaction with --ask 4 so pacman accepts replacing the conflicting\n  # power-profiles-daemon in place; dependents stay satisfied through the\n  # provides.\n  sudo pacman -S --noconfirm --ask 4 omarchy-power-profiles-daemon\n\n  # The running daemon keeps the old binary until restarted, and only the new\n  # one offers a performance profile, so reapply the AC/battery choice after.\n  # Leave a daemon the user stopped or masked alone: setting a profile would\n  # start it through D-Bus activation, or fail when it is masked.\n  if systemctl is-active --quiet power-profiles-daemon.service; then\n    sudo systemctl try-restart power-profiles-daemon.service\n    # Switching needs polkit's active-session grant, which an update over SSH\n    # lacks; omarchy-powerprofiles-init applies it at the next login instead.\n    omarchy-powerprofiles-set autodetect || echo \"The power profile will be applied at the next login\"\n  fi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-09T14:04:59Z",
+      "description": "Switch to Omarchy's power-profiles-daemon build with CPPC support for ARM laptops",
+      "file": "1791554699.sh",
+      "lineCount": 22,
+      "packagesAdded": [
+        "omarchy-power-profiles-daemon"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1791554699.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791554699.sh",
+      "timestamp": 1791554699,
+      "touches": []
+    },
+    {
+      "body": "echo \"Stop the boot from waiting on a black screen for the console to answer\"\n\n# systemd asks the console for its size when PID 1 starts and waits for the\n# reply. With Plymouth holding the screen the reply sometimes never comes, and\n# about 1 boot in 10 sits on a black screen until a key is pressed.\n# omarchy-defaults.conf now carries systemd.tty.term.console=dumb, which makes\n# systemd skip the query. The package has already written that file by the\n# time this runs; the boot image still holds the old command line until it is\n# rebuilt.\n\ndefaults_conf=\"${OMARCHY_LIMINE_DEFAULTS_CONF:-/etc/limine-entry-tool.d/omarchy-defaults.conf}\"\nrunning_cmdline=\"${OMARCHY_RUNNING_CMDLINE:-/proc/cmdline}\"\nrebuild_marker=\"${OMARCHY_LIMINE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1791581004}\"\nmodules_dir=\"${OMARCHY_KERNEL_MODULES_DIR:-/usr/lib/modules}\"\nlimine_functions=\"${OMARCHY_LIMINE_FUNCTIONS:-/usr/lib/limine/limine-common-functions}\"\nparam=\"systemd.tty.term.console=dumb\"\n\n# Whether a command line carries the parameter as systemd reads it: split on\n# spaces, tabs and newlines outside single or double quotes, which it drops, the\n# last assignment of the key winning, even one an unclosed quote runs to the end.\ncarries_param() {\n  local cmdline=$1 word=\"\" last=\"\" quote=\"\" char i\n  for ((i = 0; i < ${#cmdline}; i++)); do\n    char=${cmdline:i:1}\n    if [[ -z $quote && ($char == '\"' || $char == \"'\") ]]; then\n      quote=$char\n    elif [[ $char == \"$quote\" ]]; then\n      quote=\"\"\n    elif [[ -z $quote && $' \\t\\n\\r' == *\"$char\"* ]]; then\n      [[ $word != \"${param%%=*}=\"* ]] || last=$word\n      word=\"\"\n    else\n      word+=$char\n    fi\n  done\n  [[ $word != \"${param%%=*}=\"* ]] || last=$word\n  [[ $last == \"$param\" ]]\n}\n\nomarchy-cmd-present limine-mkinitcpio || exit 0",
       "bodyTruncated": true,
       "date": "2026-10-09T21:23:24Z",
       "description": "Stop the boot from waiting on a black screen for the console to answer",
       "file": "1791581004.sh",
-      "lineCount": 54,
+      "lineCount": 108,
       "packagesAdded": [],
       "packagesRemoved": [],
       "path": "migrations/1791581004.sh",
@@ -2700,7 +3042,29 @@
       "touches": [
         "/etc/default/limine",
         "/etc/limine-entry-tool.d/omarchy-defaults.conf",
+        "/usr/lib/limine/limine-common-functions",
+        "/usr/lib/modules",
         "/var/lib/omarchy/migrations/1791581004"
+      ]
+    },
+    {
+      "body": "echo \"Rebuild the boot image so a non-Latin keyboard layout stays out of the LUKS prompt\"\n\n# Since 26.134.222-3, Arch's plymouth hook copies vconsole.conf into the\n# initramfs itself, although omarchy_hooks.conf leaves it out of FILES for a\n# first layout that types no Latin letters. Plymouth then asks for the LUKS\n# passphrase in that layout, and it cannot be typed (#14246).\n# omarchy_vconsole.conf now refuses the file unless FILES lists it, but nothing\n# rebuilds the boot image when a drop-in changes, so an image built since\n# plymouth updated still holds it.\n\nmkinitcpio_conf=\"${OMARCHY_MKINITCPIO_CONF:-/etc/mkinitcpio.conf}\"\nconf_dir=\"${OMARCHY_MKINITCPIO_CONF_DIR:-/etc/mkinitcpio.conf.d}\"\nvconsole_conf=\"${OMARCHY_VCONSOLE_CONF:-/etc/vconsole.conf}\"\nplymouth_hook=\"${OMARCHY_PLYMOUTH_INSTALL_HOOK:-/usr/lib/initcpio/install/plymouth}\"\nrebuild_marker=\"${OMARCHY_VCONSOLE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1791621765}\"\n\nomarchy-cmd-present limine-mkinitcpio || exit 0\n[[ -f $plymouth_hook ]] || exit 0\n\n# The rebuild is machine-wide: another user's migration must not repeat it.\n[[ ! -e $rebuild_marker ]] || exit 0\n\n# Only a plymouth hook that copies the file itself can have put it in the image.\ngrep -q 'vconsole\\.conf' \"$plymouth_hook\" || exit 0\n\n# Evaluate the configuration the way mkinitcpio does, the main file and then\n# every drop-in sourced as one, and rebuild only where its final FILES now\n# leaves the file out. Skip conservatively if evaluation fails.\nadded=$(bash -c '\n  unset XKBLAYOUT\n  add_file() { echo added; }\n  source <(cat -- \"$1\" \"$2\"/*.conf 2>/dev/null) || exit 1\n  add_file \"$3\"\n' -- \"$mkinitcpio_conf\" \"$conf_dir\" \"$vconsole_conf\") || exit 0\n[[ -z $added ]] || exit 0\n\necho \"Rebuilding the boot image without the non-Latin keyboard layout\"\nrebuild_log=$(mktemp)\ntrap 'rm -f \"$rebuild_log\"' EXIT\nsudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"",
+      "bodyTruncated": true,
+      "date": "2026-10-10T08:42:45Z",
+      "description": "Rebuild the boot image so a non-Latin keyboard layout stays out of the LUKS prompt",
+      "file": "1791621765.sh",
+      "lineCount": 49,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791621765.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791621765.sh",
+      "timestamp": 1791621765,
+      "touches": [
+        "/etc/mkinitcpio.conf",
+        "/etc/mkinitcpio.conf.d",
+        "/etc/vconsole.conf",
+        "/usr/lib/initcpio/install/plymouth",
+        "/var/lib/omarchy/migrations/1791621765"
       ]
     },
     {
@@ -2766,6 +3130,22 @@
       ]
     },
     {
+      "body": "echo \"Keep windows opaque where animations are turned off\"\n\n# Turning animations off used to make windows opaque too. It no longer touches\n# transparency, so drop that rule from the saved flag, where it would keep\n# windows opaque whatever Appearance > Window Transparency says, and carry it\n# over as Window Transparency > Opaque for anyone who has not picked one yet.\n# omarchy-hyprland-toggle saved flags under ~/.local/state whatever\n# XDG_STATE_HOME said, while Hyprland reads them from XDG_STATE_HOME, so both\n# are fixed.\nfor state_home in \"$HOME/.local/state\" \"${XDG_STATE_HOME:-}\"; do\n  [[ -n $state_home ]] || continue\n  toggles_dir=\"$state_home/omarchy/toggles/hypr\"\n  [[ -f $toggles_dir/no-animations.lua ]] || continue\n\n  sed -i '/^o\\.window(\"\\.\\*\", { opacity = \"1 1\" })$/d' \"$toggles_dir/no-animations.lua\"\n\n  if [[ ! -f $toggles_dir/window-opaque.lua && ! -f $toggles_dir/window-glassy.lua ]]; then\n    cp \"$OMARCHY_PATH/default/hypr/toggles/window-opaque.lua\" \"$toggles_dir/\"\n  fi\ndone",
+      "bodyTruncated": false,
+      "date": "2026-10-11T07:52:22Z",
+      "description": "Keep windows opaque where animations are turned off",
+      "file": "1791705142.sh",
+      "lineCount": 20,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791705142.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791705142.sh",
+      "timestamp": 1791705142,
+      "touches": [
+        "~/.local/state"
+      ]
+    },
+    {
       "body": "echo \"Install Signed, the PDF signing app\"\n\nif [[ ! -f $HOME/.local/state/omarchy/preinstalls-removed ]]; then\n  omarchy-pkg-add signed\nfi",
       "bodyTruncated": false,
       "date": "2026-10-11T08:49:47Z",
@@ -2781,6 +3161,717 @@
       "timestamp": 1791708587,
       "touches": [
         "~/.local/state/omarchy/preinstalls-removed"
+      ]
+    },
+    {
+      "body": "echo \"Let herdr's tab bar show the terminal's background, so it turns glassy too\"\n\nconfig=\"$HOME/.config/herdr/config.toml\"\n\n# Dotfile managers may own the file or a parent directory through a symlink.\n# Preserve that layout rather than detaching or editing its target.\npath=\"$config\"\nwhile [[ $path != \"$HOME\" && $path != / ]]; do\n  if [[ -L $path ]]; then\n    echo \"Preserving symlink-managed herdr config: $config\"\n    exit 0\n  fi\n  path=$(dirname \"$path\")\ndone\n\n# Only a tab bar still on the shipped black changes; any other choice is kept,\n# and a surface_dim of the user's own is never given a second one.\nif [[ -f $config ]] && grep -qx 'panel_bg = \"black\"' \"$config\" && ! grep -q '^[[:space:]]*surface_dim[[:space:]]*=' \"$config\"; then\n  sed -i 's/^panel_bg = \"black\"$/panel_bg = \"reset\"\\nsurface_dim = \"black\"/' \"$config\"\n  omarchy-restart-herdr || true\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-11T12:46:49Z",
+      "description": "Let herdr's tab bar show the terminal's background, so it turns glassy too",
+      "file": "1791722809.sh",
+      "lineCount": 21,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791722809.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791722809.sh",
+      "timestamp": 1791722809,
+      "touches": [
+        "~/.config/herdr/config.toml"
+      ]
+    },
+    {
+      "body": "echo \"Let Neovim's current line and status line show the terminal background\"\n\n# ~/.config/nvim is copied once from omarchy-nvim, so it misses the package's\n# later changes. Bring in the transparency file and lualine spec it now ships.\nconfig=\"$HOME/.config/nvim\"\npackage=\"/usr/share/omarchy-nvim/config\"\nfiles=(plugin/after/transparency.lua lua/plugins/lualine-transparent.lua)\n\n[[ -d $config ]] || exit 0\n\n# Users without omarchy-nvim manage their own Neovim configuration.\nomarchy-pkg-present omarchy-nvim || exit 0\n\n# Dotfile managers may own a file or a parent directory through a symlink.\n# Preserve that layout rather than detaching or editing its target.\nfor file in \"${files[@]}\"; do\n  path=\"$config/$file\"\n  while [[ $path != \"$HOME\" && $path != / ]]; do\n    if [[ -L $path ]]; then\n      echo \"Preserving symlink-managed Neovim config: $path\"\n      exit 0\n    fi\n    path=$(dirname \"$path\")\n  done\ndone\n\n# Updates install packages before migrations. An older package leaves this\n# pending rather than copying files it does not have yet.\nif [[ ! -f $package/${files[1]} ]]; then\n  echo \"Update omarchy-nvim to 2026.9.21-5 or newer before rerunning this migration.\" >&2\n  exit 1\nfi\n\n# A copy staged beside its target and moved into place whole, so a failed\n# write leaves the original for a retry.\nstaged=\"\"\ntrap 'rm -f -- ${staged:+\"$staged\"}' EXIT\ninstall_from_package() {\n  staged=$(mktemp \"$config/$1.new.XXXXXX\")\n  install -m 0644 \"$package/$1\" \"$staged\"",
+      "bodyTruncated": true,
+      "date": "2026-10-11T12:56:38Z",
+      "description": "Let Neovim's current line and status line show the terminal background",
+      "file": "1791723398.sh",
+      "lineCount": 58,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791723398.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791723398.sh",
+      "timestamp": 1791723398,
+      "touches": [
+        "/usr/share/omarchy-nvim/config",
+        "~/.config/nvim"
+      ]
+    },
+    {
+      "body": "echo \"Remove approval for new USB and Thunderbolt devices\"\n\n# Approval for new accessories (#11874) shipped briefly to edge and dev. The\n# package update has already removed its commands, units and Polkit rules; this\n# undoes what they left on the machine so devices connect as they did before.\n\nusb_state=$HOME/.local/state/omarchy/usb-authorization\ntb_dir=/var/lib/omarchy/thunderbolt-authorization\nusb_boot_drop_in=/etc/limine-entry-tool.d/usb-authorization.conf\nusb_boot_pending=/var/lib/omarchy/usb-authorization-boot.removing\nusb_boot_parameter=usbcore.authorized_default=0\nusbguard_shipped=1791573373 # when usbguard joined the default packages\n# The access every Omarchy path granted with `usbguard add-user`.\nusbguard_grant=$'Devices=list,modify,listen\\nPolicy=list\\nExceptions=listen'\n\n# The approval watchers. Their unit files are gone, so systemctl disable can't\n# find them; drop the enablement links directly.\nfor unit in omarchy-usb-authorization.service omarchy-thunderbolt-authorization.service; do\n  systemctl --user stop \"$unit\" 2>/dev/null || true\n  rm -f \"$HOME\"/.config/systemd/user/*.wants/\"$unit\"\ndone\nrm -f \"$HOME/.config/systemd/user/omarchy-usb-authorization.service\"\nsystemctl --user daemon-reload\n\nbolt_list() {\n  sudo busctl --system --json=short call org.freedesktop.bolt /org/freedesktop/bolt org.freedesktop.bolt1.Manager \"$1\" | jq -r '.data[0][]'\n}\n\n# A device or controller missing from Bolt's inventory has nothing to restore.\n# Any other failed read stops the migration, so it is retried.\nbolt_has() {\n  grep -qxF \"/org/freedesktop/bolt/$1/${2//-/_}\" <<<\"$bolt_known\"\n}\n\nbolt_get() {\n  sudo busctl --system --json=short get-property org.freedesktop.bolt \"/org/freedesktop/bolt/$1/${2//-/_}\" \"org.freedesktop.bolt1.$3\" \"$4\" | jq -c .data\n}\n\nif [[ -d $tb_dir || -e /etc/omarchy/thunderbolt-authorization.enabled || -e /etc/omarchy/thunderbolt-authorization.pending ]]; then\n  sudo systemctl stop omarchy-thunderbolt-authorization.service 2>/dev/null || true",
+      "bodyTruncated": true,
+      "date": "2026-10-12T01:44:46Z",
+      "description": "Remove approval for new USB and Thunderbolt devices",
+      "file": "1791769486.sh",
+      "lineCount": 212,
+      "packagesAdded": [],
+      "packagesRemoved": [
+        "usbguard"
+      ],
+      "path": "migrations/1791769486.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791769486.sh",
+      "timestamp": 1791769486,
+      "touches": [
+        "/etc/default/limine",
+        "/etc/limine-entry-tool.d/usb-authorization.conf",
+        "/etc/omarchy/thunderbolt-authorization.enabled",
+        "/etc/omarchy/thunderbolt-authorization.pending",
+        "/etc/systemd/system/multi-user.target.wants/omarchy-thunderbolt-authorization.service",
+        "/etc/usbguard",
+        "/etc/usbguard/IPCAccessControl.d",
+        "/etc/usbguard/IPCAccessControl.d/",
+        "/usr/share/polkit-1/actions/org.omarchy.thunderbolt.policy",
+        "/usr/share/polkit-1/actions/org.omarchy.usb.policy",
+        "/var/lib/omarchy/thunderbolt-authorization",
+        "/var/lib/omarchy/usb-authorization-boot.removing",
+        "/var/log/pacman.log",
+        "~/.config/systemd/user/omarchy-usb-authorization.service",
+        "~/.local/state/omarchy/usb-authorization"
+      ]
+    },
+    {
+      "body": "echo \"Have the N1x firmware reserve 4 GiB for the GPU instead of reclaiming its 62.5 GiB in the kernel\"\n\n# See omarchy-apply-n1x-gpu-memory. The firmware's own setting replaces the\n# efi_reclaim_reserved= kernel option the earlier migrations added, which\n# linux-omarchy-n1x is dropping.\ndropin=\"${OMARCHY_N1X_GPU_MEMORY_CONF:-/etc/limine-entry-tool.d/omarchy-n1x-gpu-memory.conf}\"\ncmdline=\"${OMARCHY_N1X_PROC_CMDLINE:-/proc/cmdline}\"\n\nomarchy-hw-aarch64-n1x || exit 0\n\nsudo omarchy-apply-n1x-gpu-memory\n\n# Rebuild while the running kernel still has the option, not only while the\n# drop-in is there: a retry after a failed rebuild finds the drop-in gone.\nif [[ -f $dropin ]] || grep -q 'efi_reclaim_reserved=' \"$cmdline\"; then\n  sudo rm -f \"$dropin\"\n  sudo limine-mkinitcpio\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-12T05:51:18Z",
+      "description": "Have the N1x firmware reserve 4 GiB for the GPU instead of reclaiming its 62.5 GiB in the kernel",
+      "file": "1791784278.sh",
+      "lineCount": 18,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791784278.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791784278.sh",
+      "timestamp": 1791784278,
+      "touches": [
+        "/etc/limine-entry-tool.d/omarchy-n1x-gpu-memory.conf"
+      ]
+    },
+    {
+      "body": "echo \"Turn on CPPC autonomous frequency selection on the N1x so power profiles take effect\"\n\n# See install/hardware/n1x.sh, which sets up new installs the same way. The\n# rule applies when cppc_cpufreq next loads, at the next boot, together with\n# the power-profiles-daemon that relies on it.\nrules=\"${OMARCHY_N1X_CPPC_RULES:-/etc/udev/rules.d/71-omarchy-n1x-cppc.rules}\"\n\nomarchy-hw-aarch64-n1x || exit 0\n\nif [[ ! -f $rules ]]; then\n  sudo install -Dm644 /dev/stdin \"$rules\" <<'EOF'\n# N1x: the firmware hands over each core with its CPPC floor raised to its\n# ceiling, so restore the full range and turn on autonomous selection, which\n# programs the floor and ceiling from it; see install/hardware/n1x.sh.\nACTION==\"add\", SUBSYSTEM==\"module\", KERNEL==\"cppc_cpufreq\", RUN+=\"/usr/bin/sh -c 'for p in /sys/devices/system/cpu/cpufreq/policy*; do echo 0 >$$p/auto_select; cat $$p/cpuinfo_max_freq >$$p/scaling_max_freq; cat $$p/cpuinfo_min_freq >$$p/scaling_min_freq; echo 1 >$$p/auto_select; done'\"\nACTION==\"online\", SUBSYSTEM==\"cpu\", TEST==\"cpufreq/auto_select\", ATTR{cpufreq/auto_select}=\"0\", ATTR{cpufreq/scaling_max_freq}=\"$attr{cpufreq/cpuinfo_max_freq}\", ATTR{cpufreq/scaling_min_freq}=\"$attr{cpufreq/cpuinfo_min_freq}\", ATTR{cpufreq/auto_select}=\"1\"\nEOF\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-13T05:03:51Z",
+      "description": "Turn on CPPC autonomous frequency selection on the N1x so power profiles take effect",
+      "file": "1791867831.sh",
+      "lineCount": 18,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791867831.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791867831.sh",
+      "timestamp": 1791867831,
+      "touches": [
+        "/etc/udev/rules.d/71-omarchy-n1x-cppc.rules",
+        "/usr/bin/sh"
+      ]
+    },
+    {
+      "body": "echo \"Name web app windows in launchers that run their own command\"\n\n# A web app installed with its own Exec, such as HEY with its mailto handler,\n# got no StartupWMClass, so nothing tied its window to its launcher: the dock\n# left it out and titlebars showed the page title. Its window class follows\n# from the URL it opens, as it does for every other web app.\n\napplications=$HOME/.local/share/applications\n\nfor desktop_file in \"$applications\"/*.desktop; do\n  [[ -f $desktop_file ]] || continue\n  grep -q '^StartupWMClass=' \"$desktop_file\" && continue\n\n  # An entry without an Exec, such as a Hidden=true override, opens nothing.\n  exec_line=$(grep -m1 '^Exec=' \"$desktop_file\" || true)\n  url=\"\"\n\n  if [[ $exec_line =~ ^Exec=omarchy-webapp-handler-hey ]]; then\n    url=\"https://app.hey.com\"\n  elif [[ $exec_line =~ ^Exec=omarchy-launch-webapp[[:space:]]+\\\"?([^\\\"[:space:]]+) ]]; then\n    url=${BASH_REMATCH[1]}\n  fi\n\n  [[ -n $url ]] || continue\n\n  window_class=$(omarchy-webapp-window-class \"$url\") || continue\n  if [[ -n $window_class ]]; then\n    printf 'StartupWMClass=%s\\n' \"$window_class\" >>\"$desktop_file\"\n  fi\ndone",
+      "bodyTruncated": false,
+      "date": "2026-10-13T07:15:54Z",
+      "description": "Name web app windows in launchers that run their own command",
+      "file": "1791875754.sh",
+      "lineCount": 30,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791875754.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791875754.sh",
+      "timestamp": 1791875754,
+      "touches": [
+        "~/.local/share/applications"
+      ]
+    },
+    {
+      "body": "echo \"Speed up the boot menu and keep it quiet until a key is pressed\"\n\n# Limine waits out its menu timeout on every boot and draws the menu while\n# it does. timeout: 1 with quiet: yes makes the boot silent and\n# near-instant; any key still shows the menu, and System > Reboot to Boot\n# Menu asks for it explicitly. Only machines that never set a timeout of\n# their own get the new one: an uncommented timeout: is the user's and\n# stays. quiet is added wherever it is missing. Running this twice\n# changes nothing the second time.\n\nlimine_conf=\"${OMARCHY_LIMINE_CONF:-}\"\nif [[ -z $limine_conf ]]; then\n  esp=\"\"\n  if [[ -r /etc/default/limine ]]; then\n    esp=$(sed -n 's/^ESP_PATH=[\"'\\'']\\?\\([^\"'\\'']*\\).*/\\1/p' /etc/default/limine | tail -n 1)\n  fi\n  limine_conf=\"${esp:-/boot}/limine.conf\"\nfi\n\nif [[ ! -f $limine_conf ]]; then\n  # The ESP is often mounted umask=0077, so an unreadable menu is not a\n  # missing one; and a denied prompt must leave this migration pending,\n  # not done, so authentication failure stops it here.\n  sudo -v\n  sudo test -f \"$limine_conf\" || exit 0\nfi\n\nset_timeout=\"\"\nadded_quiet=\"\"\nif ! sudo grep -Eqi '^[[:space:]]*timeout:' \"$limine_conf\"; then\n  if sudo grep -Eqi '^[[:space:]]*#timeout:' \"$limine_conf\"; then\n    sudo sed -i -E 's/^[[:space:]]*#timeout:.*/timeout: 1/I' \"$limine_conf\"\n  else\n    sudo sed -i '1i timeout: 1' \"$limine_conf\"\n  fi\n  set_timeout=1\nfi\n\nif ! sudo grep -Eqi '^[[:space:]]*quiet:' \"$limine_conf\"; then\n  sudo sed -i -E '/^[[:space:]]*timeout:/I a quiet: yes' \"$limine_conf\"",
+      "bodyTruncated": true,
+      "date": "2026-10-13T13:32:45Z",
+      "description": "Speed up the boot menu and keep it quiet until a key is pressed",
+      "file": "1791898365.sh",
+      "lineCount": 50,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791898365.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791898365.sh",
+      "timestamp": 1791898365,
+      "touches": [
+        "/etc/default/limine"
+      ]
+    },
+    {
+      "body": "echo \"Route links from every app through the running default browser\"\n\nmkdir -p ~/.local/share/applications\ncp -f \"$OMARCHY_PATH/applications/omarchy-browser.desktop\" ~/.local/share/applications/\nupdate-desktop-database ~/.local/share/applications\n\n# Keep an http or https handler the user already set for Hyprland.\nlist=~/.config/hyprland-mimeapps.list\nif [[ ! -f $list ]]; then\n  cp \"$OMARCHY_PATH/config/hyprland-mimeapps.list\" \"$list\"\nelif ! grep -qE '^x-scheme-handler/https?=' \"$list\"; then\n  handlers=$'x-scheme-handler/http=omarchy-browser.desktop\\nx-scheme-handler/https=omarchy-browser.desktop'\n  if grep -qxF \"[Default Applications]\" \"$list\"; then\n    awk -v handlers=\"$handlers\" '{ print } $0 == \"[Default Applications]\" { print handlers }' \"$list\" >\"$list.tmp\"\n    mv \"$list.tmp\" \"$list\"\n  else\n    printf '\\n[Default Applications]\\n%s\\n' \"$handlers\" >>\"$list\"\n  fi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-13T23:37:54Z",
+      "description": "Route links from every app through the running default browser",
+      "file": "1791934674.sh",
+      "lineCount": 19,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791934674.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791934674.sh",
+      "timestamp": 1791934674,
+      "touches": [
+        "~/.config/hyprland-mimeapps.list",
+        "~/.local/share/applications",
+        "~/.local/share/applications/"
+      ]
+    },
+    {
+      "body": "echo \"Stop browsers asking to be the default behind Omarchy's link routing\"\n\nfor flags_file in \"$HOME\"/.config/{chromium,chrome,microsoft-edge-stable,brave,brave-origin}-flags.conf; do\n  [[ -f $flags_file ]] || continue\n  grep -qxF -- '--no-default-browser-check' \"$flags_file\" && continue\n\n  [[ -n $(tail -c1 \"$flags_file\") ]] && echo >>\"$flags_file\"\n  echo '--no-default-browser-check' >>\"$flags_file\"\ndone\n\nsource \"$OMARCHY_PATH/install/helpers/browser-policy.sh\"\n\nfor dir in \"${BROWSER_POLICY_FIREFOX_DIRS[@]}\"; do\n  if browser_policy_firefox_hardened \"$dir\"; then\n    browser_policy_firefox_skip_default_check \"$dir\"\n  fi\ndone\n\nfor dir in \"${BROWSER_POLICY_MANAGED_DIRS[@]}\"; do\n  if browser_policy_dir_hardened \"$dir\" && browser_policy_parents_hardened \"$dir\"; then\n    browser_policy_install_defaults \"$dir\"\n  fi\ndone",
+      "bodyTruncated": false,
+      "date": "2026-10-13T23:46:28Z",
+      "description": "Stop browsers asking to be the default behind Omarchy's link routing",
+      "file": "1791935188.sh",
+      "lineCount": 23,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791935188.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791935188.sh",
+      "timestamp": 1791935188,
+      "touches": []
+    },
+    {
+      "body": "echo \"Write the bar's tray where the bar drew it\"\n\n# The bar used to draw the tray at the inner end of its section, whatever the\n# layout said: first in the right section, last in the left and center ones,\n# and only the last tray a section listed. It now draws every widget in the\n# order the layout lists them, so the tray moves there in the layout, any\n# other trays in the section go, and the bar looks as it did. This runs\n# before the center section is split around its anchor (1791969355), as the\n# bar pinned the tray before splitting it.\n#\n# A replacement bar (a clone of the built-in one, or a third party's) reads the\n# layout the way it was written for, so its config is left as it is.\nconfig_file=\"$HOME/.config/omarchy/shell.json\"\nif [[ -s $config_file ]] && jq -e '\n  (.bar | type) == \"object\" and ((.bar.id // \"\" | tostring) | IN(\"\", \"omarchy.bar\")) and (.bar.layout | type) == \"object\"\n' \"$config_file\" >/dev/null; then\n  tmp=$(mktemp)\n  jq '\n    def entry_id: if type == \"object\" then (.id // \"\" | tostring) else tostring end;\n    def pin($first):\n      if type == \"array\" then\n        map(select(entry_id == \"omarchy.tray\"))[-1:] as $tray\n        | map(select(entry_id != \"omarchy.tray\")) as $rest\n        | if $first then $tray + $rest else $rest + $tray end\n      end;\n\n    .bar.layout |= with_entries(\n      if .key == \"right\" then .value |= pin(true)\n      elif .key == \"left\" or .key == \"center\" then .value |= pin(false)\n      end\n    )\n  ' \"$config_file\" >\"$tmp\"\n  if [[ $(jq -cS . \"$tmp\") != \"$(jq -cS . \"$config_file\")\" ]]; then\n    mv \"$tmp\" \"$config_file\"\n  else\n    rm -f \"$tmp\"\n  fi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-14T09:08:45Z",
+      "description": "Write the bar's tray where the bar drew it",
+      "file": "1791968925.sh",
+      "lineCount": 38,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791968925.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791968925.sh",
+      "timestamp": 1791968925,
+      "touches": [
+        "~/.config/omarchy/shell.json"
+      ]
+    },
+    {
+      "body": "echo \"Split the bar's center section at its anchor into centerBegin, center and centerEnd\"\n\n# The center section is now a box whose widgets are centered as one group, with\n# centerBegin and centerEnd hanging off its two edges. centerAnchor named the\n# one center widget pinned to the middle of the bar, with the rest flanking it:\n# it stays in the box, and what flanked it moves to the sections either side,\n# so the bar looks as it did. A center list without its anchor was centered as\n# one group already, and stays whole in the box.\n#\n# A replacement bar (a clone of the built-in one, or a third party's) reads the\n# layout the way it was written for, so its config is left as it is.\nconfig_file=\"$HOME/.config/omarchy/shell.json\"\nif [[ -s $config_file ]] && jq -e '\n  (.bar | type) == \"object\" and (.bar | has(\"centerAnchor\")) and ((.bar.id // \"\" | tostring) | IN(\"\", \"omarchy.bar\"))\n' \"$config_file\" >/dev/null; then\n  tmp=$(mktemp)\n  jq '\n    def entry_id: if type == \"object\" then (.id // \"\" | tostring) else tostring end;\n    def list: if type == \"array\" then . else [] end;\n\n    (.bar.centerAnchor | if type == \"string\" then . else \"\" end) as $anchor\n    | (if (.bar.layout | type) == \"object\" then .bar.layout.center | list else [] end) as $center\n    | (first(range(0; $center | length) | select($anchor != \"\" and ($center[.] | entry_id) == $anchor)) // null) as $index\n    | if $index != null then\n        .bar.layout.centerBegin = (.bar.layout.centerBegin | list) + $center[0:$index]\n        | .bar.layout.center = [$center[$index]]\n        | .bar.layout.centerEnd = $center[$index + 1:] + (.bar.layout.centerEnd | list)\n      end\n    | del(.bar.centerAnchor)\n  ' \"$config_file\" >\"$tmp\"\n  mv \"$tmp\" \"$config_file\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-14T09:15:55Z",
+      "description": "Split the bar's center section at its anchor into centerBegin, center and centerEnd",
+      "file": "1791969355.sh",
+      "lineCount": 32,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1791969355.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791969355.sh",
+      "timestamp": 1791969355,
+      "touches": [
+        "~/.config/omarchy/shell.json"
+      ]
+    },
+    {
+      "body": "echo \"Theme the Fcitx candidate window with the current Omarchy theme\"\n\n# Activation selects the theme; the refresh then renders it, since the current\n# theme was staged before its template existed.\nomarchy-theme-set-fcitx5 --activate\nomarchy-theme-refresh",
+      "bodyTruncated": false,
+      "date": "2026-10-14T23:29:19Z",
+      "description": "Theme the Fcitx candidate window with the current Omarchy theme",
+      "file": "1792020559.sh",
+      "lineCount": 6,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1792020559.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1792020559.sh",
+      "timestamp": 1792020559,
+      "touches": []
+    },
+    {
+      "body": "echo \"Install Gliff on aarch64, now that Omarchy's repositories build it there\"\n\nif omarchy-hw-aarch64; then\n  omarchy-pkg-add gliff\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-15T05:16:04Z",
+      "description": "Install Gliff on aarch64, now that Omarchy's repositories build it there",
+      "file": "1792041364.sh",
+      "lineCount": 5,
+      "packagesAdded": [
+        "gliff"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1792041364.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1792041364.sh",
+      "timestamp": 1792041364,
+      "touches": []
+    },
+    {
+      "body": "echo \"Let mpv and Chromium decode video on the video chip of Snapdragon laptops\"\n\nomarchy-install-video-decode",
+      "bodyTruncated": false,
+      "date": "2026-10-17T02:07:16Z",
+      "description": "Let mpv and Chromium decode video on the video chip of Snapdragon laptops",
+      "file": "1792202836.sh",
+      "lineCount": 3,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1792202836.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1792202836.sh",
+      "timestamp": 1792202836,
+      "touches": []
+    },
+    {
+      "body": "echo \"Keep background selections across renumbered bundled backgrounds\"\n\n# Tokyo Night's backgrounds moved up a number when Liftoff took the lead, so\n# 0-winding-road became 1-winding-road. A selection of a theme background whose\n# name, and its WebP, are gone from the theme moves to the theme's one\n# background with the same name under another number. A theme is its bundled\n# backgrounds with a user theme of the same name laid over them, as\n# omarchy-theme-set stages it. A background that still opens, a user's own\n# backgrounds, and anything without exactly one match stay as they are. So does\n# a name a symlink stands for: staging keeps some symlinks and not others (not\n# those of a cloned theme), so it is left rather than guessed at.\ncurrent_dir=\"$HOME/.local/state/omarchy/current\"\nstaged_backgrounds=\"$current_dir/theme/backgrounds\"\n\n# Prints the theme's file for a renumbered background name.\nrenumbered_source() {\n  local theme=\"$1\" name=\"$2\" stem dir file found=\"\"\n  local -A seen=()\n\n  [[ -n $theme && ${theme##*/} == \"$theme\" && $name =~ ^[0-9]+-(.+)\\.[^.]+$ ]] || return 1\n  stem=${BASH_REMATCH[1]}\n\n  # The user theme first: its files shadow bundled ones of the same name.\n  for dir in \"$HOME/.config/omarchy/themes/$theme/backgrounds\" \"$OMARCHY_PATH/themes/$theme/backgrounds\"; do\n    # A symlinked backgrounds folder is not staged from a cloned theme.\n    [[ ! -L $dir ]] || return 1\n    [[ -e $dir/$name || -e $dir/${name%.*}.webp ]] && return 1\n    for file in \"$dir\"/*; do\n      [[ ${file##*/} =~ ^[0-9]+-(.+)\\.[^.]+$ && ${BASH_REMATCH[1]} == \"$stem\" ]] || continue\n      # Even one of the old name: whether staging keeps it is not known here.\n      [[ ! -L $file ]] || return 1\n      [[ -f $file && -z ${seen[${file##*/}]:-} ]] || continue\n      seen[${file##*/}]=1\n      [[ -z $found ]] || return 1\n      found=$file\n    done\n  done\n\n  [[ -n $found ]] && printf '%s\\n' \"$found\"\n}",
+      "bodyTruncated": true,
+      "date": "2026-10-17T17:43:58Z",
+      "description": "Keep background selections across renumbered bundled backgrounds",
+      "file": "1792259038.sh",
+      "lineCount": 65,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1792259038.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1792259038.sh",
+      "timestamp": 1792259038,
+      "touches": [
+        "~/.config/omarchy/themes/",
+        "~/.local/state/omarchy/current",
+        "~/.local/state/omarchy/theme-backgrounds/"
+      ]
+    },
+    {
+      "body": "echo \"Move OpenClaw to a self-updating install under ~/.openclaw\"\n\n# The openclaw package used to be OpenClaw itself, installed under /usr where `openclaw update` and the Control UI's Update button cannot write. It is now the seed for a copy under ~/.openclaw that updates itself, and omarchy-install-openclaw-cli sets that copy up, points the command on PATH at it and moves a gateway service the old package installed over to it. Only machines with the package have an OpenClaw of Omarchy's to move.\nomarchy-pkg-present openclaw || exit 0\n\n# This release and the seed package reach a channel together. A package that is still the runtime has nothing to set up from, and the OpenClaw it runs keeps working as it is.\nif [[ ! -r /usr/share/openclaw/install-cli.sh || ! -r /usr/share/openclaw/openclaw.tgz ]]; then\n  exit 0\nfi\n\n# An OpenClaw of the user's own in the way, a command, another one on PATH or a\n# gateway running it, is theirs to move aside, and nothing was changed. Failing\n# here would stop every update until they did, so the move is left to launching\n# OpenClaw from Omarchy, which sets it up once the way is clear. A setup that\n# failed, the npm registry out of reach for one, stays pending as before.\nstatus=0\nomarchy-install-openclaw-cli --now || status=$?\nif ((status == 79)); then\n  echo \"Leaving OpenClaw as it is; launching it from Omarchy finishes the move once the OpenClaw above is out of the way.\"\n  exit 0\nfi\nexit \"$status\"",
+      "bodyTruncated": false,
+      "date": "2026-10-18T14:45:54Z",
+      "description": "Move OpenClaw to a self-updating install under ~/.openclaw",
+      "file": "1792334754.sh",
+      "lineCount": 22,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1792334754.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1792334754.sh",
+      "timestamp": 1792334754,
+      "touches": [
+        "/usr/share/openclaw/install-cli.sh",
+        "/usr/share/openclaw/openclaw.tgz",
+        "~/.openclaw"
+      ]
+    },
+    {
+      "body": "echo \"Leave Node to Omarchy's mise declaration instead of the user's config\"\n\n# Setup used to write `node = \"latest\"` into the user's mise config. Node now\n# ships as a lazy default in /etc/mise/conf.d, and that entry would outrank it.\n# Drop only the exact latest request, since a pinned version is the user's\n# choice, and keep the install for the declaration to reuse. After an opt-out\n# the entry is what still provides Node, so it stays.\nif omarchy-mise-default-tools declares node; then\n  mise unuse -g --no-prune node@latest\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-18T17:04:59Z",
+      "description": "Leave Node to Omarchy's mise declaration instead of the user's config",
+      "file": "1792343099.sh",
+      "lineCount": 10,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1792343099.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1792343099.sh",
+      "timestamp": 1792343099,
+      "touches": []
+    },
+    {
+      "body": "echo \"Leave mise's upgrade pruning setting to Omarchy's config instead of the user's\"\n\n# Setup and an earlier migration wrote upgrade.auto_prune = false into the\n# user's mise config. The settings package ships it in /etc/mise/conf.d now, so\n# that copy only clutters a file that is the user's. A different value is the\n# user's choice and stays. The file is mise's global config, found the way\n# mise finds it, since that's where `mise settings set` wrote.\nmise_config=${MISE_GLOBAL_CONFIG_FILE:-${MISE_CONFIG_DIR:-${XDG_CONFIG_HOME:-$HOME/.config}/mise}/config.toml}\n\nif [[ -f $mise_config ]] && [[ $(mise config get -f \"$mise_config\" settings.upgrade.auto_prune 2>/dev/null) == \"false\" ]]; then\n  mise settings unset upgrade.auto_prune\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-18T17:07:05Z",
+      "description": "Leave mise's upgrade pruning setting to Omarchy's config instead of the user's",
+      "file": "1792343225.sh",
+      "lineCount": 12,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1792343225.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1792343225.sh",
+      "timestamp": 1792343225,
+      "touches": [
+        "~/.config"
+      ]
+    },
+    {
+      "body": "echo \"Replace the T3 Code package with the T3 Code app, which updates itself\"\n\nif omarchy-pkg-present t3code-nightly-bin; then\n  channel=\"nightly\"\nelif omarchy-pkg-present t3code-bin; then\n  channel=\"stable\"\nelse\n  exit 0\nfi\n\n# The package is installed for the whole machine, but only a user who has run\n# T3 Code has anything to carry over. Leave it in place for whoever does.\nif [[ ! -d ${T3CODE_HOME:-$HOME/.t3} && ! -d $HOME/.config/t3code && ! -d $HOME/.config/t3code-v2 ]]; then\n  exit 0\nfi\n\n# Threads, settings, and the theme stay in ~/.t3, which the app keeps using.\n# The package's channel carries over, and the running app stays open. The\n# package goes last, so an install that fails partway is retried in full.\nomarchy-install-ai-t3-code \"$channel\" --no-launch\n\necho \"T3 Code now updates itself. If it is open, quit and reopen it to run the new app.\"",
+      "bodyTruncated": false,
+      "date": "2026-10-18T17:45:11Z",
+      "description": "Replace the T3 Code package with the T3 Code app, which updates itself",
+      "file": "1792345511.sh",
+      "lineCount": 22,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1792345511.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1792345511.sh",
+      "timestamp": 1792345511,
+      "touches": [
+        "~/.config/t3code",
+        "~/.config/t3code-v2",
+        "~/.t3"
+      ]
+    },
+    {
+      "body": "echo \"Let Chromium use the cameras of Snapdragon laptops through PipeWire\"\n\nif omarchy-hw-aarch64-qualcomm; then\n  source \"$OMARCHY_PATH/install/hardware/qualcomm/camera.sh\"\n  omarchy-install-camera\n\n  echo \"Log out and back in to load the PipeWire camera backend.\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-18T21:35:08Z",
+      "description": "Let Chromium use the cameras of Snapdragon laptops through PipeWire",
+      "file": "1792359308.sh",
+      "lineCount": 8,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1792359308.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1792359308.sh",
+      "timestamp": 1792359308,
+      "touches": []
+    },
+    {
+      "body": "echo \"Repair the Copy URL shortcut for Brave Origin profiles\"\n\n# The repair in 1786643346 walked every Chromium-family profile root except\n# Brave Origin's, which Omarchy has installed since before the extension id\n# was pinned. Those profiles still bind Alt+Shift+L to a ghost id.\n#\n# Rerun it on Brave Origin's roots alone: every profile it already repaired\n# kept a backup it reads as a repair still to verify, and would ask for that\n# browser to be closed again.\nprofile_roots=(\n  \"$HOME/.config/BraveSoftware/Brave-Origin\"\n  \"$HOME/.config/BraveSoftware/Brave-Origin-Beta\"\n  \"$HOME/.config/BraveSoftware/Brave-Origin-Nightly\"\n)\nsource \"$OMARCHY_PATH/migrations/1786643346.sh\"",
+      "bodyTruncated": false,
+      "date": "2026-10-20T05:41:48Z",
+      "description": "Repair the Copy URL shortcut for Brave Origin profiles",
+      "file": "1792474908.sh",
+      "lineCount": 15,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1792474908.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1792474908.sh",
+      "timestamp": 1792474908,
+      "touches": [
+        "~/.config/BraveSoftware/Brave-Origin",
+        "~/.config/BraveSoftware/Brave-Origin-Beta",
+        "~/.config/BraveSoftware/Brave-Origin-Nightly"
+      ]
+    },
+    {
+      "body": "echo \"Build the lazy shims for the newly declared default coding agents\"\n\n# The settings package ships the declarations for Qwen Code, DeepSeek Harness,\n# MiniMax Code, Kiro CLI, Freebuff, Kilo, Devin CLI, Amp, and Command Code.\n# Until it has, stay pending so the shims are built once they arrive.\nif ! omarchy-mise-default-tools list | grep -qxF qwen; then\n  echo \"Waiting for the omarchy-settings package that declares the new coding agents\" >&2\n  exit 1\nfi\n\n# A user who removed the preinstalls skips Omarchy's declarations, so there is\n# nothing to build for them.\nif omarchy-mise-default-tools declares qwen; then\n  mise reshim --system\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-20T13:51:35Z",
+      "description": "Build the lazy shims for the newly declared default coding agents",
+      "file": "1792504295.sh",
+      "lineCount": 15,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1792504295.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1792504295.sh",
+      "timestamp": 1792504295,
+      "touches": []
+    },
+    {
+      "body": "echo \"Check network connectivity against ping.omacom.io\"\n\nas_root() {\n  if (( EUID == 0 )); then\n    \"$@\"\n  else\n    sudo \"$@\"\n  fi\n}\n\n# omarchy-settings ships the drop-in; a running NetworkManager only reads it on\n# reload. A failed reload fails the migration so it stays pending.\nif systemctl is-active --quiet NetworkManager; then\n  as_root nmcli general reload conf\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-20T14:37:14Z",
+      "description": "Check network connectivity against ping.omacom.io",
+      "file": "1792507034.sh",
+      "lineCount": 15,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1792507034.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1792507034.sh",
+      "timestamp": 1792507034,
+      "touches": []
+    },
+    {
+      "body": "echo \"Clear SoundWire routes the retired N1x UCM profiles left in the saved mixer state\"\n\n# Omarchy's own MT8901 UCM profiles, replaced by NVIDIA's in 3a209895e4, routed\n# PDI2 to DP3 (ASUS ProArt P14) and PDI7/PDI8 to codec ports (ProArt P14 and\n# Dell XPS 16). alsactl saved those routes and restores them every boot, and\n# NVIDIA's profiles only set the routes they use, so a host port ends up fed by\n# two PDIs. The MT8901 SoundWire driver then rejects the 2-channel speaker and\n# microphone streams with EINVAL, PipeWire drops the HiFi profile, and the\n# internal speakers and microphones vanish. No current profile routes PDI7 or\n# PDI8, or PDI2 to DP3, so those values can only be leftovers.\nif ! omarchy-hw-aarch64-n1x; then\n  exit 0\nfi\n\ncard=mt8901soundwire\nstate_file=\"${OMARCHY_ALSA_STATE:-/var/lib/alsa/asound.state}\"\ncard_path=\"${OMARCHY_PROC_ROOT:-/proc}/asound/$card\"\n\n# amixer can't find a card the user has no seat ACL for (an update over SSH),\n# so ask the kernel whether it exists, and fail rather than complete unrepaired.\nif [[ ! -e $card_path ]]; then\n  exit 0\nfi\n\namixer -c \"$card\" info >/dev/null\n\nlive_route() {\n  amixer -c \"$card\" sget \"$1\" | sed -n \"s/^  Item0: '\\(.*\\)'$/\\1/p\"\n}\n\nsaved_route() {\n  if [[ -e $state_file ]]; then\n    awk -v card=\"state.$card\" -v name=\"name '$1'\" '\n      /^state\\./ { in_card = ($1 == card) }\n      in_card && $0 ~ \"^[ \\t]*\" name \"$\" { found = 1; next }\n      found && $1 == \"value\" { print $2; exit }\n    ' \"$state_file\"\n  fi\n}\n",
+      "bodyTruncated": true,
+      "date": "2026-10-22T02:03:14Z",
+      "description": "Clear SoundWire routes the retired N1x UCM profiles left in the saved mixer state",
+      "file": "1792634594.sh",
+      "lineCount": 77,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1792634594.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1792634594.sh",
+      "timestamp": 1792634594,
+      "touches": [
+        "/var/lib/alsa/asound.state"
+      ]
+    },
+    {
+      "body": "echo \"Remove the files the 4.0 notification engine left behind\"\n\n# They hold old message content: its per-popup files, history and images.\n# rm and find never follow a symlink they are given.\ndir=\"$HOME/.local/state/omarchy/notifications\"\nlegacy=\"$HOME/.local/state/omarchy/notifications.json\"\n\n# 4.0 kept Do Not Disturb on its own. It carries over unless the shell has\n# already written quiet state of its own.\nif [[ -f $legacy && ! -s $dir/quiet.json ]] && jq -e '.dnd == true' \"$legacy\" >/dev/null 2>&1; then\n  mkdir -p \"$dir\"\n  chmod 700 \"$dir\"\n  rm -f \"$dir/quiet.json\"\n  (umask 077 && printf '%s\\n' '{\"snoozes\":{},\"dnd\":true,\"silencedSince\":0,\"codesBypassQuiet\":true}' >\"$dir/quiet.json\")\nfi\nrm -f \"$legacy\"\n\nrm -rf \"$dir/history\" \"$dir/images\"\nif [[ -d $dir ]]; then\n  find \"$dir/\" -maxdepth 1 -type f -regex '.*/[0-9]+-[^/]+\\.json' -delete\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-22T05:53:56Z",
+      "description": "Remove the files the 4.0 notification engine left behind",
+      "file": "1792648436.sh",
+      "lineCount": 21,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1792648436.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1792648436.sh",
+      "timestamp": 1792648436,
+      "touches": [
+        "~/.local/state/omarchy/notifications",
+        "~/.local/state/omarchy/notifications.json"
+      ]
+    },
+    {
+      "body": "echo \"Name the hibernation resume device by its filesystem UUID\"\n\n# Hibernation setup named an unencrypted root by its kernel name. With two NVMe\n# disks that name can belong to the other disk at the next boot, and resume then\n# finds no image and the session is lost. Setup now writes the filesystem UUID,\n# and on a configured machine renames the device and rebuilds the boot image.\ndrop_in=/etc/limine-entry-tool.d/resume.conf\nhook=/etc/mkinitcpio.conf.d/omarchy_resume.conf\npending=/var/lib/omarchy/hibernation-resume-rebuild\n\n# A pending marker means setup renamed the device but the boot image was not\n# rebuilt with it yet.\nif [[ ! -e $pending ]]; then\n  [[ -f $drop_in ]] && grep -q 'resume=/dev/' \"$drop_in\" && ! grep -q 'resume=/dev/mapper/' \"$drop_in\" || exit 0\nfi\n\n# Without the resume hook, setup would offer to set hibernation up from scratch.\n[[ -f $hook ]] && grep -q '^HOOKS+=(resume)$' \"$hook\" || exit 0\n\n# Setup leaves the marker if the boot image is not rebuilt and exits 1, which\n# keeps this migration pending for the next omarchy-migrate.\nomarchy-hibernation-setup",
+      "bodyTruncated": false,
+      "date": "2026-10-25T21:51:02Z",
+      "description": "Name the hibernation resume device by its filesystem UUID",
+      "file": "1792965062.sh",
+      "lineCount": 22,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1792965062.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1792965062.sh",
+      "timestamp": 1792965062,
+      "touches": [
+        "/etc/limine-entry-tool.d/resume.conf",
+        "/etc/mkinitcpio.conf.d/omarchy_resume.conf",
+        "/var/lib/omarchy/hibernation-resume-rebuild"
+      ]
+    },
+    {
+      "body": "echo \"Recheck FIDO2 authfile paths previously marked repaired\"\n\n# The original repair returned success for symlinked or non-regular authfiles.\n# Recheck even when that migration already has a completion marker. Unresolved\n# paths now fail and remain pending until the user reviews and repairs them.\nsource \"$OMARCHY_PATH/migrations/1787494718.sh\"",
+      "bodyTruncated": false,
+      "date": "2026-10-27T02:55:44Z",
+      "description": "Recheck FIDO2 authfile paths previously marked repaired",
+      "file": "1793069744.sh",
+      "lineCount": 6,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1793069744.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793069744.sh",
+      "timestamp": 1793069744,
+      "touches": []
+    },
+    {
+      "body": "echo \"Install the native Omarchy screensaver\"\n\nomarchy-pkg-add omarchy-screensaver",
+      "bodyTruncated": false,
+      "date": "2026-10-27T13:34:14Z",
+      "description": "Install the native Omarchy screensaver",
+      "file": "1793108054.sh",
+      "lineCount": 3,
+      "packagesAdded": [
+        "omarchy-screensaver"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1793108054.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793108054.sh",
+      "timestamp": 1793108054,
+      "touches": []
+    },
+    {
+      "body": "echo \"Keep your own touchpad gestures instead of Omarchy's new defaults\"\n\n# Hyprland rejects a second gesture on the same fingers and direction, so\n# gestures already set up in ~/.config/hypr would now fail against the defaults.\n# Leave those setups as they were by turning the defaults off for them.\nhypr_dir=\"$HOME/.config/hypr\"\nhyprland=\"$hypr_dir/hyprland.lua\"\n\n[[ -f $hyprland ]] || exit 0\ngrep -qE '^[[:space:]]*omarchy_default_gestures[[:space:]]*=' \"$hyprland\" && exit 0\ngrep -RqE --include='*.lua' '^[[:space:]]*hl\\.gesture[[:space:]]*\\(' \"$hypr_dir\" || exit 0\n\n# The flag has to be set before the defaults load, so it goes above the line\n# that requires them, however that is spelled, or at the top of the file.\nline=$(grep -nE -m1 \"^[[:space:]]*require[[:space:]]*\\(?[[:space:]]*[\\\"']default\\.hypr\\.omarchy[\\\"']\" \"$hyprland\" | cut -d: -f1 || true)\n\n# Follow a symlink into a dotfiles repo rather than replacing it with a copy.\nsed -i --follow-symlinks \"${line:-1}i -- Your own gestures replace Omarchy's defaults.\\nomarchy_default_gestures = false\\n\" \"$hyprland\"",
+      "bodyTruncated": false,
+      "date": "2026-10-28T09:32:29Z",
+      "description": "Keep your own touchpad gestures instead of Omarchy's new defaults",
+      "file": "1793179949.sh",
+      "lineCount": 18,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1793179949.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793179949.sh",
+      "timestamp": 1793179949,
+      "touches": [
+        "~/.config/hypr"
+      ]
+    },
+    {
+      "body": "echo \"Give the ASUS Zenbook A16 (UX3607OA) working speakers, microphones and ASUS's speaker voicing\"\n\n# See install/hardware/asus/fix-asus-zenbook-a16-speakers.sh and the\n# asus-zenbook-a16-ux3607oa speaker tuning.\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match \"UX3607OA\"; then\n  exit 0\nfi\n\nomarchy-pkg-add asus-zenbook-a16-audio\n\n# Without the package's topology the sound card failed to probe at boot and is\n# not retried, so probe it again now that the topology is there. Its SoundWire\n# and software-volume rules only take full effect from the next boot.\ncard_driver=/sys/bus/platform/drivers/snd-x1e80100\nif [[ -d $card_driver && -e /sys/bus/platform/devices/sound && ! -e $card_driver/sound ]]; then\n  echo sound | sudo tee \"$card_driver/bind\" >/dev/null || true\nfi\nomarchy-state set reboot-required\n\nif omarchy-audio-tuning match >/dev/null 2>&1; then\n  omarchy-pkg-add lsp-plugins-lv2\n  # The tuning needs the speaker sink. If the card is still not up, a missing\n  # tuning must not stop the remaining migrations; it can be applied after the\n  # reboot.\n  omarchy-audio-tuning on ||\n    echo \"Speaker tuning not applied yet. After rebooting, run: omarchy audio tuning on\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-29T19:25:31Z",
+      "description": "Give the ASUS Zenbook A16 (UX3607OA) working speakers, microphones and ASUS's speaker voicing",
+      "file": "1793301931.sh",
+      "lineCount": 27,
+      "packagesAdded": [
+        "asus-zenbook-a16-audio",
+        "lsp-plugins-lv2"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1793301931.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793301931.sh",
+      "timestamp": 1793301931,
+      "touches": []
+    },
+    {
+      "body": "echo \"Load Omarchy's shell setup on Apple Silicon\"\n\n# omarchy-settings skipped every etc-override on Apple Silicon, including the\n# /etc/skel/.bashrc that sources default/bash/rc, so Mac accounts were created\n# with Arch's stock ~/.bashrc and none of Omarchy's aliases, functions or env.\nif ! omarchy-hw-aarch64-apple; then\n  exit 0\nfi\n\nbashrc=\"$HOME/.bashrc\"\n\n# A bashrc that already loads Omarchy's, or one kept in a dotfiles repo, is the\n# user's own to keep.\nif [[ -L $bashrc ]] || { [[ -f $bashrc ]] && grep -q 'default/bash/rc' \"$bashrc\"; }; then\n  exit 0\nfi\n\n# Back up under a name nothing else holds, so an earlier ~/.bashrc.bak survives.\nif [[ -f $bashrc ]]; then\n  backup=$(mktemp \"$bashrc.bak.XXXXXX\")\n  cp -a \"$bashrc\" \"$backup\"\n  echo \"Your previous ~/.bashrc is saved as ~${backup#\"$HOME\"}\"\nfi\n\ncp -f \"$OMARCHY_PATH/default/bashrc\" \"$bashrc\"",
+      "bodyTruncated": false,
+      "date": "2026-10-29T23:04:36Z",
+      "description": "Load Omarchy's shell setup on Apple Silicon",
+      "file": "1793315076.sh",
+      "lineCount": 25,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1793315076.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793315076.sh",
+      "timestamp": 1793315076,
+      "touches": [
+        "~/.bashrc"
+      ]
+    },
+    {
+      "body": "echo \"Give the ASUS Zenbook A16 (UX3607OA) its DSP firmware, Wi-Fi board data, text-console unlock and suspend to idle\"\n\n# See install/hardware/asus/fix-asus-zenbook-a16-firmware.sh and\n# fix-asus-zenbook-a16-boot.sh.\nrebuild_marker=\"${OMARCHY_LIMINE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1793364921}\"\n\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match \"UX3607OA\"; then\n  exit 0\nfi\n\nomarchy-pkg-add asus-zenbook-a16-firmware\n\n# Setup kept the DSP driver off while its firmware was missing; with the\n# package in place the same step now lets it start. An install from before the\n# Glymur pin control and interconnect drivers joined the Qualcomm initramfs list\n# gets them too. The boot settings change the initramfs and the kernel command\n# line, so the image is rebuilt once. The root shell is as strict as this one,\n# so a failed step keeps it pending.\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n  source \"$OMARCHY_PATH/install/hardware/qualcomm/initramfs.sh\"\n  source \"$OMARCHY_PATH/install/hardware/qualcomm/firmware.sh\"\n  source \"$OMARCHY_PATH/install/hardware/asus/fix-asus-zenbook-a16-boot.sh\"\n'\n\n# A marker records the machine-wide rebuild: another user's run must not repeat\n# it, while a missing marker still retries an interrupted rebuild.\nif [[ ! -e $rebuild_marker ]]; then\n  rebuild_log=$(mktemp)\n  trap 'rm -f \"$rebuild_log\"' EXIT\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n  # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n  # That image lacks the unlock drivers, so the migration stays pending.\n  if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n    exit 1\n  fi\n\n  sudo install -Dm644 /dev/null \"$rebuild_marker\"\nfi",
+      "bodyTruncated": true,
+      "date": "2026-10-30T12:55:21Z",
+      "description": "Give the ASUS Zenbook A16 (UX3607OA) its DSP firmware, Wi-Fi board data, text-console unlock and suspend to idle",
+      "file": "1793364921.sh",
+      "lineCount": 42,
+      "packagesAdded": [
+        "asus-zenbook-a16-firmware"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1793364921.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793364921.sh",
+      "timestamp": 1793364921,
+      "touches": [
+        "/var/lib/omarchy/migrations/1793364921"
+      ]
+    },
+    {
+      "body": "echo \"Install Intel hardware video decoding on GPUs named only \\\"[Intel Graphics]\\\", such as Wildcat Lake\"\n\n# Hardware setup missed these GPUs, so video was decoded on the CPU.\n# See install/hardware/intel/video-acceleration.sh.\nif lspci | grep -iE 'vga|3d|display' | grep -qi '\\[intel graphics'; then\n  omarchy-pkg-add intel-media-driver libvpl vpl-gpu-rt\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-31T13:15:44Z",
+      "description": "Install Intel hardware video decoding on GPUs named only \\",
+      "file": "1793452544.sh",
+      "lineCount": 7,
+      "packagesAdded": [
+        "intel-media-driver",
+        "libvpl",
+        "vpl-gpu-rt"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1793452544.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793452544.sh",
+      "timestamp": 1793452544,
+      "touches": []
+    },
+    {
+      "body": "echo \"Move each monitor's workspace blocks and scaling log into ~/.local/state/omarchy/monitors\"\n\nstate_dir=\"${XDG_STATE_HOME:-$HOME/.local/state}/omarchy\"\nmkdir -p \"$state_dir/monitors\"\n\n# The blocks give every monitor back its own workspaces when it's plugged in,\n# and the merged list sends an unplugged monitor's workspaces home when it\n# returns, which an update in the middle of a session must not forget. The old\n# files win: anything a config reload wrote under monitors/ before this ran\n# started from nothing.\nfor name in workspaces workspaces-merged; do\n  if [[ -f $state_dir/monitor-$name ]]; then\n    mv -f \"$state_dir/monitor-$name\" \"$state_dir/monitors/$name\"\n  fi\ndone\n\n# The scaling log is history, kept ahead of any entries written since. A copy\n# that fails stops the migration before anything is replaced or deleted.\nif [[ -f $state_dir/monitor-scaling.log ]]; then\n  if [[ -f $state_dir/monitors/scaling ]]; then\n    cat \"$state_dir/monitor-scaling.log\" \"$state_dir/monitors/scaling\" >\"$state_dir/monitors/scaling.tmp\"\n    mv \"$state_dir/monitors/scaling.tmp\" \"$state_dir/monitors/scaling\"\n    rm -f \"$state_dir/monitor-scaling.log\"\n  else\n    mv \"$state_dir/monitor-scaling.log\" \"$state_dir/monitors/scaling\"\n  fi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-31T15:47:10Z",
+      "description": "Move each monitor's workspace blocks and scaling log into ~/.local/state/omarchy/monitors",
+      "file": "1793461630.sh",
+      "lineCount": 27,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1793461630.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793461630.sh",
+      "timestamp": 1793461630,
+      "touches": [
+        "~/.local/state",
+        "~/.local/state/omarchy/monitors"
+      ]
+    },
+    {
+      "body": "echo \"Move monitors.lua's defaults and saved monitor scales over to the monitor panel's settings\"\n\n# Omarchy's monitor defaults now live in default/hypr/monitors.lua and the\n# panel's choices are saved per monitor, so hypr/monitors.lua becomes the new\n# template plus whatever else it held. The old file is kept as a backup.\nomarchy-hyprland-monitor-config-upgrade",
+      "bodyTruncated": false,
+      "date": "2026-10-31T17:22:49Z",
+      "description": "Move monitors.lua's defaults and saved monitor scales over to the monitor panel's settings",
+      "file": "1793467369.sh",
+      "lineCount": 6,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1793467369.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793467369.sh",
+      "timestamp": 1793467369,
+      "touches": []
+    },
+    {
+      "body": "echo \"Move dictation to Alt + Space, keeping F9 and Super + Ctrl + X for existing dictation users\"\n\nbindings=\"$HOME/.config/hypr/bindings.lua\"\nif omarchy-default-dictation >/dev/null 2>&1 && [[ -f $bindings ]]; then\n  legacy=\"\"\n  if ! grep -qF '\"SUPER + CTRL + X\"' \"$bindings\"; then\n    legacy+=$'  o.bind(\"SUPER + CTRL + X\", \"Toggle dictation\", \"omarchy-dictation toggle\")\\n'\n  fi\n  if ! grep -qF '\"F9\"' \"$bindings\"; then\n    legacy+=$'  o.bind_hold(\"F9\", \"Start dictation (push-to-talk)\", \"omarchy-dictation start\", \"Stop dictation (push-to-talk)\", \"omarchy-dictation stop\")\\n'\n  fi\n\n  if [[ -n $legacy ]]; then\n    {\n      printf '\\n-- Dictation keys from before Alt + Space and Right Alt became the defaults.\\n'\n      printf -- '-- Remove these lines to give the keys back to applications.\\n'\n      printf 'if o.dictation_installed and o.dictation_installed() then\\n'\n      printf '%s' \"$legacy\"\n      printf 'end\\n'\n    } >> \"$bindings\"\n  fi\nfi\n\n# Superwhisper needs a recording shortcut of its own; move it off Alt + Space,\n# which Omarchy now binds for every dictation backend. A user who never set\n# Superwhisper up has no preferences to move.\nif omarchy-cmd-present superwhisper && [[ -f $HOME/.config/superwhisper/preferences.json ]]; then\n  toggle=$(superwhisper shortcuts show | jq -r '.shortcuts.toggle // empty')\n  if [[ $toggle == \"Alt+Space\" ]]; then\n    superwhisper shortcuts set toggle \"Ctrl+Alt+Space\" >/dev/null\n  fi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-31T20:17:55Z",
+      "description": "Move dictation to Alt + Space, keeping F9 and Super + Ctrl + X for existing dictation users",
+      "file": "1793477875.sh",
+      "lineCount": 32,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1793477875.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793477875.sh",
+      "timestamp": 1793477875,
+      "touches": [
+        "~/.config/hypr/bindings.lua",
+        "~/.config/superwhisper/preferences.json"
+      ]
+    },
+    {
+      "body": "echo \"Install xorg-xsetroot for X11/XWayland root cursor restoration\"\n\nomarchy-pkg-add xorg-xsetroot",
+      "bodyTruncated": false,
+      "date": "2026-11-01T05:53:22Z",
+      "description": "Install xorg-xsetroot for X11/XWayland root cursor restoration",
+      "file": "1793512402.sh",
+      "lineCount": 3,
+      "packagesAdded": [
+        "xorg-xsetroot"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1793512402.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793512402.sh",
+      "timestamp": 1793512402,
+      "touches": []
+    },
+    {
+      "body": "echo \"Keep GB10 CPU cores out of deep idle states whose wakeup latency the firmware understates\"\n\n# See install/hardware/gb10/cpuidle.sh, which sets up new installs the same way.\nomarchy-hw-aarch64-gb10 || exit 0\n\nsudo bash \"$OMARCHY_PATH/install/hardware/gb10/cpuidle.sh\"",
+      "bodyTruncated": false,
+      "date": "2026-11-01T11:10:26Z",
+      "description": "Keep GB10 CPU cores out of deep idle states whose wakeup latency the firmware understates",
+      "file": "1793531426.sh",
+      "lineCount": 6,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1793531426.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793531426.sh",
+      "timestamp": 1793531426,
+      "touches": []
+    },
+    {
+      "body": "echo \"Make the ASUS Zenbook A16 keyboard's top row send media keys by default\"\n\n# hid-asus set the A16 back to F1-F12 at every boot, whatever Fn+Esc was last\n# set to. New installs start every such keyboard on the media keys; see\n# install/hardware/fix-fkeys.sh. hid-asus loads from the A16's initramfs, so the\n# option needs a rebuild to reach it.\nconf=/etc/modprobe.d/omarchy-toprow.conf\nrebuild_marker=/var/lib/omarchy/migrations/1793545066\n\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match \"UX3607OA\"; then\n  exit 0\nfi\n\n# An Fn-lock option already set is the administrator's choice; leave it.\nif [[ ! -f $conf ]] && ! grep -qsE '^[[:space:]]*options[[:space:]]+hid_asus[[:space:]].*fnlock_default=' /etc/modprobe.d/*.conf; then\n  sudo install -Dm644 /dev/stdin \"$conf\" <<'CONF'\n# Written by omarchy-keyboard-toprow: the top row sends the media keys by default,\n# and Fn (Fn+Esc to lock it) gives F1-F12.\noptions hid_apple fnmode=1\noptions hid_asus fnlock_default=0\noptions asus_wmi fnlock_default=0\nCONF\nelif [[ ! -e $rebuild_marker ]] && ! grep -qx 'options hid_asus fnlock_default=0' \"$conf\" 2>/dev/null; then\n  exit 0\nfi\n\n# A marker records the machine-wide rebuild: another user's run must not repeat\n# it, while a missing marker still retries an interrupted rebuild.\n[[ ! -e $rebuild_marker ]] || exit 0\n\nlog=$(mktemp)\ntrap 'rm -f \"$log\"' EXIT\nsudo limine-mkinitcpio 2>&1 | tee \"$log\"\n\n# limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n# Without the marker, this migration stays pending and retries.\nif grep -q 'mkinitcpio failed for kernel' \"$log\"; then\n  echo \"Could not rebuild the boot image; this migration stays pending.\" >&2\n  exit 1\nfi",
+      "bodyTruncated": true,
+      "date": "2026-11-01T14:57:46Z",
+      "description": "Make the ASUS Zenbook A16 keyboard's top row send media keys by default",
+      "file": "1793545066.sh",
+      "lineCount": 41,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1793545066.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793545066.sh",
+      "timestamp": 1793545066,
+      "touches": [
+        "/etc/modprobe.d/",
+        "/etc/modprobe.d/omarchy-toprow.conf",
+        "/var/lib/omarchy/migrations/1793545066"
+      ]
+    },
+    {
+      "body": "echo \"Install omarchy-local-ai so the agents panel can offer local models that fit this machine\"\n\nomarchy-pkg-add omarchy-local-ai",
+      "bodyTruncated": false,
+      "date": "2026-11-01T20:04:35Z",
+      "description": "Install omarchy-local-ai so the agents panel can offer local models that fit this machine",
+      "file": "1793563475.sh",
+      "lineCount": 3,
+      "packagesAdded": [
+        "omarchy-local-ai"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1793563475.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793563475.sh",
+      "timestamp": 1793563475,
+      "touches": []
+    },
+    {
+      "body": "echo \"Open OpenCode 2 with the Omarchy theme\"\n\n# OpenCode 2 reads its theme from cli.json, not opencode.json. Leave a theme\n# the user picked alone, and leave a missing cli.json to OpenCode's own\n# migration when it has an older tui.json or kv.json to carry over.\nconfig_dir=\"${XDG_CONFIG_HOME:-$HOME/.config}/opencode\"\ncli_config=\"$config_dir/cli.json\"\n\nif [[ -f $cli_config ]]; then\n  if updated=$(jq 'if has(\"theme\") then empty else .theme = {name: \"system\"} end' \"$cli_config\" 2>/dev/null) && [[ -n $updated ]]; then\n    printf '%s\\n' \"$updated\" >\"$cli_config.tmp\"\n    chmod 600 \"$cli_config.tmp\"\n    mv \"$cli_config.tmp\" \"$cli_config\"\n  fi\nelif [[ -d $config_dir && ! -e $config_dir/tui.json && ! -e ${XDG_STATE_HOME:-$HOME/.local/state}/opencode/kv.json ]]; then\n  cp \"$OMARCHY_PATH/config/opencode/cli.json\" \"$cli_config\"\n  chmod 600 \"$cli_config\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-01T20:43:16Z",
+      "description": "Open OpenCode 2 with the Omarchy theme",
+      "file": "1793565796.sh",
+      "lineCount": 18,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1793565796.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793565796.sh",
+      "timestamp": 1793565796,
+      "touches": [
+        "~/.config",
+        "~/.local/state"
+      ]
+    },
+    {
+      "body": "echo \"Finish Superwhisper setup for installs that came up with it unconfigured\"\n\n# Superwhisper became the default dictation backend before first run set it up\n# (#17286), and aarch64 images before omacom/omarchy-iso#377 left the package\n# out entirely. Both left dictation selected but unusable. setup-user creates\n# the app/current link, so its presence means setup already ran.\nif [[ $(omarchy-default-dictation 2>/dev/null) == \"superwhisper\" ]] &&\n  [[ ! -e ${XDG_DATA_HOME:-$HOME/.local/share}/superwhisper/app/current ]]; then\n  omarchy-install-dictation-superwhisper --background\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-03T00:59:41Z",
+      "description": "Finish Superwhisper setup for installs that came up with it unconfigured",
+      "file": "1793667581.sh",
+      "lineCount": 10,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1793667581.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793667581.sh",
+      "timestamp": 1793667581,
+      "touches": [
+        "~/.local/share"
+      ]
+    },
+    {
+      "body": "echo \"Switch NVIDIA machines on linux-omarchy from DKMS to prebuilt NVIDIA modules\"\n\n# linux-omarchy-nvidia-open ships the modules built with each kernel, so\n# kernel updates no longer compile them. It only covers linux-omarchy, so a\n# machine with another kernel installed (1789325478 kept the previous one for\n# recovery) stays on DKMS. One transaction with --ask 4 so pacman accepts\n# replacing the conflicting nvidia-open-dkms in place.\nif omarchy-pkg-present nvidia-open-dkms linux-omarchy &&\n  [[ $(cat /usr/lib/modules/*/pkgbase 2>/dev/null | sort -u) == \"linux-omarchy\" ]]; then\n  sudo pacman -S --noconfirm --ask 4 linux-omarchy-nvidia-open\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-03T05:51:23Z",
+      "description": "Switch NVIDIA machines on linux-omarchy from DKMS to prebuilt NVIDIA modules",
+      "file": "1793685083.sh",
+      "lineCount": 11,
+      "packagesAdded": [
+        "linux-omarchy-nvidia-open"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1793685083.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793685083.sh",
+      "timestamp": 1793685083,
+      "touches": [
+        "/usr/lib/modules/"
       ]
     }
   ],

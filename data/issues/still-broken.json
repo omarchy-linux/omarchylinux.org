@@ -1,7 +1,7 @@
 {
  "source": "github.com/omacom/omarchy",
- "fetchedAt": "2026-10-11T10:54:11.683234+00:00",
- "derivedAt": "2026-10-11T11:03:19.293160+00:00",
+ "fetchedAt": "2026-11-04T12:17:49.670609+00:00",
+ "derivedAt": "2026-11-04T12:26:52.169520+00:00",
  "criteria": {
   "stateReason": "COMPLETED",
   "minPostCloseComments": 2,
@@ -17,14 +17,125 @@
   ],
   "commentWindow": "last 5 comments fetched per closed issue"
  },
- "count": 41,
+ "count": 43,
  "funnel": {
-  "completedIssues": 2799,
-  "withFetchedComments": 1760,
-  "withAtLeastOnePostCloseMarker": 140,
-  "withAtLeastTwoPostCloseMarkers": 41
+  "completedIssues": 3055,
+  "withFetchedComments": 1946,
+  "withAtLeastOnePostCloseMarker": 145,
+  "withAtLeastTwoPostCloseMarkers": 43
  },
  "issues": [
+  {
+   "number": 6952,
+   "title": "Quickshell SIGSEGV in QQuickRepeater when PipeWire removes USB audio nodes",
+   "url": "https://github.com/omacom/omarchy/issues/6952",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2026-10-04T00:33:48Z",
+   "closer": {
+    "type": "pull_request",
+    "number": 7783,
+    "url": "https://github.com/omacom/omarchy/pull/7783",
+    "merged": true,
+    "mergedAt": "2026-10-04T00:33:47Z"
+   },
+   "fixedBy": [
+    7783
+   ],
+   "components": [
+    "nvidia",
+    "amd-gpu",
+    "multi-monitor",
+    "audio"
+   ],
+   "comments": 44,
+   "postCloseComments": 3,
+   "sampleSnippets": [
+    {
+     "author": "dustinthomas",
+     "createdAt": "2026-10-19T20:59:31Z",
+     "url": "https://github.com/omacom/omarchy/issues/6952#issuecomment-6277198656",
+     "snippet": "Still reproduces on Omarchy 4.0.5-1 (installed 2026-10-19), quickshell 0.3.2 revision 2b4501a, Qt 6.12.0. The installed `plugins/panels/audio/Panel.qml` (mtime 2026-10-17) still binds `Repeater { model: root.displayAudioSources }` to `SourceRow { node: modelData }`, and `Model.js` `listSnapshot()` i"
+    },
+    {
+     "author": "jtomaspm",
+     "createdAt": "2026-10-20T06:57:29Z",
+     "url": "https://github.com/omacom/omarchy/issues/6952#issuecomment-6285271728",
+     "snippet": "**Reproduced on Omarchy 4.0.6**\n\nI can reproduce this by disconnecting Bluetooth headphones using the Bluetooth icon in Quickshell, then opening the sound widget. Quickshell crashes and restarts.\n\nSystem: Omarchy 4.0.6-1, Quickshell 0.3.2 (`2b4501a`), Qt 6.12.0, kernel 7.2.8-9-omarchy.\n\nThe October "
+    },
+    {
+     "author": "pshouse",
+     "createdAt": "2026-10-28T14:52:19Z",
+     "url": "https://github.com/omacom/omarchy/issues/6952#issuecomment-6472283430",
+     "snippet": "## Still reproduces on Omarchy 4.0.6-1 / Qt 6.12.0-2\n\n#7783 merged to `quattro` on 2026-10-04. The installed stable package on this machine, omarchy 4.0.6-1 (upgraded 2026-10-23), still ships the pre-fix audio panel:\n\n- `plugins/panels/audio/Model.js` `listSnapshot()` is still `return list && list.s"
+    }
+   ],
+   "lastActivity": "2026-10-28T14:52:19Z"
+  },
+  {
+   "number": 14548,
+   "title": "Qt 6.12's new QtQuick `Color` singleton shadows `qs.Commons.Color`, leaving the bar, menu and panels blank",
+   "url": "https://github.com/omacom/omarchy/issues/14548",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2026-10-08T15:11:59Z",
+   "closer": null,
+   "fixedBy": [
+    16
+   ],
+   "components": [],
+   "comments": 9,
+   "postCloseComments": 2,
+   "sampleSnippets": [
+    {
+     "author": "cklxx",
+     "createdAt": "2026-10-08T16:13:06Z",
+     "url": "https://github.com/omacom/omarchy/issues/14548#issuecomment-6064125492",
+     "snippet": "Additional confirmation on the currently installed Omarchy 4.0.4-1 package after a system upgrade on October 8, 2026. This is evidence for affected packaged builds, not a claim that the merged fix regressed.\n\n### System details\n\n- AMD Ryzen 7 3700X; NVIDIA GeForce RTX 4070 Ti SUPER; Wayland\n- Kernel"
+    },
+    {
+     "author": "mouadse",
+     "createdAt": "2026-10-17T14:01:18Z",
+     "url": "https://github.com/omacom/omarchy/issues/14548#issuecomment-6234801583",
+     "snippet": "Additional confirmation on **2026-10-17**: an x86_64 installation configured for the **RC package repository** still has `omarchy 4.0.4-1` with unqualified palette references. The overnight Qt 6.12 update broke the top bar and menus. This adds current package-availability evidence for the fix merged"
+    }
+   ],
+   "lastActivity": "2026-10-17T14:01:18Z"
+  },
+  {
+   "number": 1846,
+   "title": "unable to write 3.0.1 ISO using balenaEtcher",
+   "url": "https://github.com/omacom/omarchy/issues/1846",
+   "state": "CLOSED",
+   "stateReason": "COMPLETED",
+   "closedAt": "2025-09-29T13:46:38Z",
+   "closer": null,
+   "fixedBy": [],
+   "components": [],
+   "comments": 16,
+   "postCloseComments": 5,
+   "sampleSnippets": [
+    {
+     "author": "alaycock",
+     "createdAt": "2026-09-25T18:54:05Z",
+     "url": "https://github.com/omacom/omarchy/issues/1846#issuecomment-5837899104",
+     "snippet": "I ran into this too. I instead used `dd`, which worked fine when BalenaEtcher did not:\n`sudo dd if=/path/to/omarchy-4.0.4.iso of=/dev/disk4 bs=1m status=progress`\n\nFind your disk number via `diskutil list`, no need to install BalenaEtcher."
+    },
+    {
+     "author": "Afsal102",
+     "createdAt": "2026-09-30T05:42:19Z",
+     "url": "https://github.com/omacom/omarchy/issues/1846#issuecomment-5904890706",
+     "snippet": "> This is back with v4.0.4\n\nyea looks to be back, unable to flash it from balenaEtcher"
+    },
+    {
+     "author": "dwllnet",
+     "createdAt": "2026-10-06T15:05:35Z",
+     "url": "https://github.com/omacom/omarchy/issues/1846#issuecomment-6019165297",
+     "snippet": "First time with Omarchy, same issue while using balenaEtcher Version 2.1.7, omarchy  4.0.4 ISO.\n\nUpdate: No issues using macUSB to create a bootable thumb drive."
+    }
+   ],
+   "lastActivity": "2026-10-13T20:48:11Z"
+  },
   {
    "number": 1670,
    "title": "xdg-mime and xdg-open not detecting all mime filetypes correctly",
@@ -88,40 +199,6 @@
     }
    ],
    "lastActivity": "2026-10-08T14:00:10Z"
-  },
-  {
-   "number": 1846,
-   "title": "unable to write 3.0.1 ISO using balenaEtcher",
-   "url": "https://github.com/omacom/omarchy/issues/1846",
-   "state": "CLOSED",
-   "stateReason": "COMPLETED",
-   "closedAt": "2025-09-29T13:46:38Z",
-   "closer": null,
-   "fixedBy": [],
-   "components": [],
-   "comments": 14,
-   "postCloseComments": 4,
-   "sampleSnippets": [
-    {
-     "author": "dtellz",
-     "createdAt": "2026-09-25T09:44:16Z",
-     "url": "https://github.com/omacom/omarchy/issues/1846#issuecomment-5830291235",
-     "snippet": "This is back with v4.0.4"
-    },
-    {
-     "author": "alaycock",
-     "createdAt": "2026-09-25T18:54:05Z",
-     "url": "https://github.com/omacom/omarchy/issues/1846#issuecomment-5837899104",
-     "snippet": "I ran into this too. I instead used `dd`, which worked fine when BalenaEtcher did not:\n`sudo dd if=/path/to/omarchy-4.0.4.iso of=/dev/disk4 bs=1m status=progress`\n\nFind your disk number via `diskutil list`, no need to install BalenaEtcher."
-    },
-    {
-     "author": "Afsal102",
-     "createdAt": "2026-09-30T05:42:19Z",
-     "url": "https://github.com/omacom/omarchy/issues/1846#issuecomment-5904890706",
-     "snippet": "> This is back with v4.0.4\n\nyea looks to be back, unable to flash it from balenaEtcher"
-    }
-   ],
-   "lastActivity": "2026-10-06T17:27:02Z"
   },
   {
    "number": 3619,

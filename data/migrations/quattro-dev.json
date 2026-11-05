@@ -1,5 +1,5 @@
 {
-  "count": 228,
+  "count": 230,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -745,12 +745,12 @@
       ]
     },
     {
-      "body": "echo \"Add the agents widget to the bar\"\n\n# The widget is now in the default layout. It draws nothing until a provider\n# reports usage — Panel.qml is `visible: providers.length > 0`, and Main.qml\n# only counts a provider that is enabled *and* has recorded prompts, sessions,\n# active days, or a rate limit. So adding it to every existing bar is free:\n# machines without Claude Code or Codex never see it.\n\nconfig_file=\"$HOME/.config/omarchy/shell.json\"\n\nif [[ -s $config_file ]]; then\n  tmp=$(mktemp)\n  jq '\n    def entry_id:\n      if type == \"string\" then\n        .\n      elif type == \"object\" then\n        (.id // \"\")\n      else\n        \"\"\n      end;\n\n    def has_widget($id):\n      [(.bar.layout // {}) | to_entries[] | .value | select(type == \"array\") | .[] | entry_id]\n        | any(. == $id);\n\n    def insert_after($anchor; $entry):\n      if type != \"array\" then\n        [$entry]\n      else\n        ([range(0; length) as $i | select((.[$i] | entry_id) == $anchor) | $i][0]) as $anchor_index |\n        if $anchor_index == null then\n          [$entry] + .\n        else\n          .[0:$anchor_index + 1] + [$entry] + .[$anchor_index + 1:]\n        end\n      end;\n\n    # Respect a bar the user already curated: only place the widget when it is\n    # absent from every section, never a second copy.",
+      "body": "echo \"Add the agents widget to the bar\"\n\n# The widget is now in the default layout. It draws nothing until a provider\n# reports usage — Panel.qml is `visible: providers.length > 0`, and Main.qml\n# only counts a provider that is enabled *and* has recorded prompts, sessions,\n# active days, or a rate limit. So adding it to every existing bar is free:\n# machines without Claude Code or Codex never see it.\n\nconfig_file=\"$HOME/.config/omarchy/shell.json\"\n\nif [[ -s $config_file ]]; then\n  tmp=$(mktemp)\n  jq '\n    def entry_id:\n      if type == \"string\" then\n        .\n      elif type == \"object\" then\n        (.id // \"\")\n      else\n        \"\"\n      end;\n\n    def has_widget($id):\n      [(.bar.layout // {}) | to_entries[] | .value | select(type == \"array\") | .[] | entry_id]\n        | any(. == $id);\n\n    def insert_after($anchor; $entry):\n      if type != \"array\" then\n        [$entry]\n      else\n        ([range(0; length) as $i | select((.[$i] | entry_id) == $anchor) | $i][0]) as $anchor_index |\n        if $anchor_index == null then\n          [$entry] + .\n        else\n          .[0:$anchor_index + 1] + [$entry] + .[$anchor_index + 1:]\n        end\n      end;\n\n    # Respect a bar the user already curated: only place the widget when it is\n    # absent from every section, never a second copy. A bar still carrying the",
       "bodyTruncated": true,
       "date": "2026-07-29T17:09:45Z",
       "description": "Add the agents widget to the bar",
       "file": "1785344985.sh",
-      "lineCount": 47,
+      "lineCount": 48,
       "packagesAdded": [],
       "packagesRemoved": [],
       "path": "migrations/1785344985.sh",
@@ -3873,6 +3873,34 @@
       "touches": [
         "/usr/lib/modules/"
       ]
+    },
+    {
+      "body": "echo \"Bring up the HP ZBook Ultra G3a speakers and microphones with its own UCM profile\"\n\n# The generic AMD SoundWire profile can't load on this laptop (alsa-ucm-conf\n# has no TAS2783 speaker config yet), so PipeWire offered only a dummy output.\n# The machine profile now ships in omarchy-settings, and PipeWire only probes a\n# card's UCM profiles when WirePlumber opens it.\nif omarchy-hw-match \"ZBook Ultra G3a\"; then\n  systemctl --user try-restart wireplumber.service 2>/dev/null || true\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-04T23:54:36Z",
+      "description": "Bring up the HP ZBook Ultra G3a speakers and microphones with its own UCM profile",
+      "file": "1793836476.sh",
+      "lineCount": 9,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1793836476.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793836476.sh",
+      "timestamp": 1793836476,
+      "touches": []
+    },
+    {
+      "body": "echo \"Disable the HP ZBook Ultra G3a's phantom USB port that stalls the fingerprint reader\"\n\n# The udev rule now ships in omarchy-settings and runs on every boot. Trigger\n# the root hubs once so the port goes quiet without waiting for a reboot.\nif omarchy-hw-match \"ZBook Ultra G3a\"; then\n  sudo udevadm control --reload\n  sudo udevadm trigger --action=add --subsystem-match=usb --sysname-match='*-0:1.0'\n  sudo udevadm settle\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-05T03:24:37Z",
+      "description": "Disable the HP ZBook Ultra G3a's phantom USB port that stalls the fingerprint reader",
+      "file": "1793849077.sh",
+      "lineCount": 9,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1793849077.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793849077.sh",
+      "timestamp": 1793849077,
+      "touches": []
     }
   ],
   "prerelease": true,

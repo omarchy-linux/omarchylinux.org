@@ -650,7 +650,7 @@
       {
         "action": [
           "universal_clipboard_shortcut(\"CTRL\", \"V\", \"SHIFT\", \"Insert\")",
-          "universal_clipboard_shortcut(\"CTRL\", \"V\", \"CTRL SHIFT\", \"V\")"
+          "o.universal_paste"
         ],
         "chord": "SUPER + V",
         "label": "Universal paste"
@@ -1024,6 +1024,15 @@
           ]
         },
         "name": "omarchy-capture-screenshot"
+      },
+      {
+        "fields": {
+          "args": [
+            "[--shift-insert] [--copy-only] [--history-index <index>|<text>]",
+            "[--shift-insert|--universal] [--copy-only] [--history-index <index>|<text>]"
+          ]
+        },
+        "name": "omarchy-clipboard-paste-text"
       },
       {
         "fields": {
@@ -1450,7 +1459,7 @@
     ],
     "counts": {
       "added": 145,
-      "changed": 40,
+      "changed": 41,
       "from": 444,
       "removed": 7,
       "to": 582

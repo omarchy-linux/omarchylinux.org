@@ -1,7 +1,7 @@
 {
  "source": "github.com/omacom/omarchy",
- "fetchedAt": "2026-11-06T12:14:27.943761+00:00",
- "derivedAt": "2026-11-06T12:23:07.084587+00:00",
+ "fetchedAt": "2026-11-07T11:10:33.741179+00:00",
+ "derivedAt": "2026-11-07T11:18:54.415909+00:00",
  "counts": {
   "clusters": 178,
   "seed": 74,
@@ -17,20 +17,20 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 1160,
-    "open": 586,
-    "closed": 574,
+    "issues": 1165,
+    "open": 590,
+    "closed": 575,
     "discussions": 115
    },
    "versionsMentioned": {
-    "4.0.4": 311,
+    "4.0.4": 312,
     "3.x": 262,
     "4.0.0": 215,
     "4.0.2": 163,
     "4.0.1": 143,
-    "4.0.x": 140,
+    "4.0.x": 141,
     "4.0.3": 119,
-    "4.5.x": 35,
+    "4.5.x": 46,
     "4.22.x": 10,
     "4.24.x": 3,
     "4.6.x": 2,
@@ -277,26 +277,26 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 998,
-    "open": 619,
-    "closed": 379,
-    "discussions": 98
+    "issues": 1004,
+    "open": 624,
+    "closed": 380,
+    "discussions": 100
    },
    "versionsMentioned": {
     "4.0.4": 373,
     "4.0.0": 247,
     "4.0.2": 222,
     "4.0.3": 179,
-    "4.0.x": 173,
+    "4.0.x": 176,
     "4.0.1": 150,
-    "4.5.x": 37,
-    "3.x": 32,
+    "4.5.x": 57,
+    "3.x": 33,
     "4.22.x": 4,
     "4.25.x": 3,
     "4.1.x": 1,
     "4.7.x": 1,
-    "4.30.x": 1,
-    "4.31.x": 1
+    "4.31.x": 1,
+    "4.30.x": 1
    },
    "topIssues": [
     {
@@ -304,7 +304,7 @@
      "title": "[Quattro] D-Bus idle inhibits are silently dropped since hypridle was replaced — screensaver fires during video playback (reproduced with Zen browser)",
      "url": "https://github.com/omacom/omarchy/issues/6475",
      "state": "OPEN",
-     "comments": 17,
+     "comments": 18,
      "reactions": 29,
      "createdAt": "2026-08-01T08:33:54Z",
      "closedAt": null
@@ -347,7 +347,7 @@
      "title": "Lock shell dies during normal idle->lock; session permanently locked, reboot required",
      "url": "https://github.com/omacom/omarchy/issues/6628",
      "state": "OPEN",
-     "comments": 23,
+     "comments": 24,
      "reactions": 1,
      "createdAt": "2026-08-08T09:23:08Z",
      "closedAt": null,
@@ -483,7 +483,7 @@
      "title": "Quattro lock screen: support FIDO2/YubiKey unlock",
      "url": "https://github.com/omacom/omarchy/discussions/6910",
      "category": "Suggestions",
-     "upvoteCount": 10,
+     "upvoteCount": 12,
      "kind": "top-comment",
      "author": "wmauz677",
      "answerUrl": "https://github.com/omacom/omarchy/discussions/6910#discussioncomment-18126965",
@@ -540,20 +540,20 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 709,
-    "open": 425,
+    "issues": 714,
+    "open": 430,
     "closed": 284,
-    "discussions": 250
+    "discussions": 254
    },
    "versionsMentioned": {
-    "4.0.4": 221,
+    "4.0.4": 222,
     "4.0.0": 154,
-    "4.0.2": 145,
+    "4.0.2": 144,
     "4.0.3": 137,
     "4.0.1": 105,
-    "4.0.x": 94,
-    "3.x": 38,
-    "4.5.x": 23,
+    "4.0.x": 99,
+    "3.x": 39,
+    "4.5.x": 37,
     "4.25.x": 3,
     "4.22.x": 2,
     "4.9.x": 1,
@@ -641,7 +641,7 @@
      "title": "Lock shell dies during normal idle->lock; session permanently locked, reboot required",
      "url": "https://github.com/omacom/omarchy/issues/6628",
      "state": "OPEN",
-     "comments": 23,
+     "comments": 24,
      "reactions": 1,
      "createdAt": "2026-08-08T09:23:08Z",
      "closedAt": null,
@@ -751,6 +751,17 @@
      "snippet": "A few comments:\n\n- When installing the dependencies, I had to install: cpio, cmake, and meson.\n- I recommend creating the new config for split-monitor-workspace first, and then adding the source command to hyprland.conf. That avoids a nasty error message that stays on your screen until you save hyprland.conf again.\n- And @jpSkipper is right about editing the config instead of the stylesheet.\n\nAnyway, thanks a lot for this walkthrough! Really helpful. Without it, I would have ditched Omarchy beca"
     },
     {
+     "discussion": 6910,
+     "title": "Quattro lock screen: support FIDO2/YubiKey unlock",
+     "url": "https://github.com/omacom/omarchy/discussions/6910",
+     "category": "Suggestions",
+     "upvoteCount": 12,
+     "kind": "top-comment",
+     "author": "wmauz677",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/6910#discussioncomment-18126965",
+     "snippet": "I'd like to contribute FIDO2 (YubiKey / security key) unlock support for the Quattro lock screen, and before opening a PR I want to check direction and a few design decisions with maintainers. I've gone through the current `quattro` code (lock plugin, `omarchy-apply-lock`, the `omarchy setup security fido2` scripts, and the migration/upgrade paths), so each question below comes with my current read and -- where I have one -- a suggestion.\n\n```mermaid\nflowchart LR\n    LOCK([Locked]) --> PW[Passwo"
+    },
+    {
      "discussion": 250,
      "title": "Guide - Install HP Printer",
      "url": "https://github.com/omacom/omarchy/discussions/250",
@@ -760,17 +771,6 @@
      "author": "d0369440-dot",
      "answerUrl": "https://github.com/omacom/omarchy/discussions/250#discussioncomment-17525327",
      "snippet": "Great guide—thanks for putting this together!\n\nOne additional tip that may help after the printer is configured: before assuming everything is working correctly, it's worth printing a more comprehensive test page instead of the basic CUPS test page.\n\nI've had good results using **PrintTestPage.net**, which offers downloadable [printer test pages](http://printtestpage.net/) for color, black & white, alignment, gradients, and nozzle checks. These are useful for verifying that the printer is produc"
-    },
-    {
-     "discussion": 6910,
-     "title": "Quattro lock screen: support FIDO2/YubiKey unlock",
-     "url": "https://github.com/omacom/omarchy/discussions/6910",
-     "category": "Suggestions",
-     "upvoteCount": 10,
-     "kind": "top-comment",
-     "author": "wmauz677",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/6910#discussioncomment-18126965",
-     "snippet": "I'd like to contribute FIDO2 (YubiKey / security key) unlock support for the Quattro lock screen, and before opening a PR I want to check direction and a few design decisions with maintainers. I've gone through the current `quattro` code (lock plugin, `omarchy-apply-lock`, the `omarchy setup security fido2` scripts, and the migration/upgrade paths), so each question below comes with my current read and -- where I have one -- a suggestion.\n\n```mermaid\nflowchart LR\n    LOCK([Locked]) --> PW[Passwo"
     },
     {
      "discussion": 3993,
@@ -801,23 +801,23 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 690,
-    "open": 419,
+    "issues": 696,
+    "open": 425,
     "closed": 271,
-    "discussions": 114
+    "discussions": 116
    },
    "versionsMentioned": {
     "4.0.4": 252,
     "4.0.0": 136,
-    "4.0.2": 119,
-    "4.0.x": 89,
+    "4.0.2": 118,
+    "4.0.x": 90,
     "4.0.3": 82,
     "4.0.1": 82,
     "3.x": 73,
-    "4.5.x": 20,
+    "4.5.x": 34,
     "4.22.x": 6,
     "4.1.x": 3,
-    "4.24.x": 2,
+    "4.24.x": 3,
     "4.2.x": 1,
     "4.25.x": 1,
     "4.16.x": 1,
@@ -993,6 +993,17 @@
    ],
    "bestAnswers": [
     {
+     "discussion": 17647,
+     "title": "Per-monitor workspaces: add an opt-out for global workspace numbers",
+     "url": "https://github.com/omacom/omarchy/discussions/17647",
+     "category": "Suggestions",
+     "upvoteCount": 9,
+     "kind": "top-comment",
+     "author": "leonardowolf",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/17647#discussioncomment-19426110",
+     "snippet": "+1, same situation here (Omarchy 4.5.0, laptop eDP-1 + external HDMI-A-1).\n\nBefore 4.5 my workflow was plain global workspaces: Super+N went to workspace N, and a new workspace opened on whichever monitor had focus. After the update, the reconciler renumbered my existing workspaces into per-monitor blocks (1 → 11, 3 → 13 on the external), which also left my cloned `omarchy.workspaces` widget out of sync with the shortcuts.\n\nMy current workaround, in `~/.config/hypr/bindings.lua`, is to no-op `o."
+    },
+    {
      "discussion": 7855,
      "title": "[GUIDE] Working boot + suspend of Omarchy v4 on MBP 2019",
      "url": "https://github.com/omacom/omarchy/discussions/7855",
@@ -1002,17 +1013,6 @@
      "author": "TAR5",
      "answerUrl": "https://github.com/omacom/omarchy/discussions/7855#discussioncomment-18141327",
      "snippet": "plugging in a studio display is also not working. had codex try to fix it by building a linux-t2 kernel with a patch for studio display support, but it did not work. "
-    },
-    {
-     "discussion": 17647,
-     "title": "Per-monitor workspaces: add an opt-out for global workspace numbers",
-     "url": "https://github.com/omacom/omarchy/discussions/17647",
-     "category": "Suggestions",
-     "upvoteCount": 6,
-     "kind": "top-comment",
-     "author": "leonardowolf",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/17647#discussioncomment-19426110",
-     "snippet": "+1, same situation here (Omarchy 4.5.0, laptop eDP-1 + external HDMI-A-1).\n\nBefore 4.5 my workflow was plain global workspaces: Super+N went to workspace N, and a new workspace opened on whichever monitor had focus. After the update, the reconciler renumbered my existing workspaces into per-monitor blocks (1 → 11, 3 → 13 on the external), which also left my cloned `omarchy.workspaces` widget out of sync with the shortcuts.\n\nMy current workaround, in `~/.config/hypr/bindings.lua`, is to no-op `o."
     },
     {
      "discussion": 10090,
@@ -1066,26 +1066,26 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 632,
-    "open": 244,
-    "closed": 388,
+    "issues": 636,
+    "open": 247,
+    "closed": 389,
     "discussions": 95
    },
    "versionsMentioned": {
     "4.0.4": 161,
     "3.x": 155,
     "4.0.0": 132,
-    "4.0.x": 104,
-    "4.0.2": 65,
+    "4.0.x": 107,
+    "4.0.2": 66,
     "4.0.3": 55,
     "4.0.1": 43,
-    "4.5.x": 15,
+    "4.5.x": 21,
     "4.50.x": 2,
     "4.22.x": 2,
     "4.20.x": 1,
     "4.29.x": 1,
-    "4.30.x": 1,
     "4.31.x": 1,
+    "4.30.x": 1,
     "4.2.x": 1,
     "4.4.x": 1,
     "4.24.x": 1
@@ -1254,7 +1254,7 @@
      "title": "Support Multiple Users",
      "url": "https://github.com/omacom/omarchy/discussions/532",
      "category": "Ideas",
-     "upvoteCount": 40,
+     "upvoteCount": 41,
      "kind": "top-comment",
      "author": "andrewib",
      "answerUrl": "https://github.com/omacom/omarchy/discussions/532#discussioncomment-14486409",
@@ -1322,9 +1322,9 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 609,
+    "issues": 610,
     "open": 397,
-    "closed": 212,
+    "closed": 213,
     "discussions": 66
    },
    "versionsMentioned": {
@@ -1335,7 +1335,7 @@
     "4.0.3": 84,
     "4.0.x": 63,
     "3.x": 53,
-    "4.5.x": 14,
+    "4.5.x": 17,
     "4.1.x": 3,
     "4.22.x": 3,
     "4.2.x": 1,
@@ -1579,20 +1579,20 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 536,
-    "open": 312,
-    "closed": 224,
-    "discussions": 53
+    "issues": 545,
+    "open": 320,
+    "closed": 225,
+    "discussions": 54
    },
    "versionsMentioned": {
-    "4.0.0": 131,
-    "4.0.4": 126,
+    "4.0.0": 132,
+    "4.0.4": 127,
     "3.x": 105,
-    "4.0.x": 68,
+    "4.0.x": 70,
     "4.0.2": 67,
     "4.0.1": 60,
     "4.0.3": 56,
-    "4.5.x": 24,
+    "4.5.x": 35,
     "4.22.x": 2,
     "4.50.x": 1,
     "4.1.x": 1,
@@ -1764,7 +1764,7 @@
      "title": "Quattro lock screen: support FIDO2/YubiKey unlock",
      "url": "https://github.com/omacom/omarchy/discussions/6910",
      "category": "Suggestions",
-     "upvoteCount": 10,
+     "upvoteCount": 12,
      "kind": "top-comment",
      "author": "wmauz677",
      "answerUrl": "https://github.com/omacom/omarchy/discussions/6910#discussioncomment-18126965",
@@ -1832,20 +1832,20 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 524,
-    "open": 216,
-    "closed": 308,
-    "discussions": 229
+    "issues": 527,
+    "open": 218,
+    "closed": 309,
+    "discussions": 231
    },
    "versionsMentioned": {
     "4.0.4": 107,
     "3.x": 102,
     "4.0.0": 74,
-    "4.0.x": 67,
+    "4.0.x": 69,
     "4.0.2": 53,
     "4.0.1": 34,
     "4.0.3": 33,
-    "4.5.x": 16,
+    "4.5.x": 20,
     "4.22.x": 7,
     "4.24.x": 4,
     "4.50.x": 2,
@@ -2078,9 +2078,9 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 520,
-    "open": 331,
-    "closed": 189,
+    "issues": 524,
+    "open": 334,
+    "closed": 190,
     "discussions": 49
    },
    "versionsMentioned": {
@@ -2089,9 +2089,9 @@
     "4.0.0": 96,
     "4.0.3": 82,
     "3.x": 75,
-    "4.0.x": 71,
+    "4.0.x": 72,
     "4.0.1": 62,
-    "4.5.x": 10,
+    "4.5.x": 20,
     "4.22.x": 2,
     "4.25.x": 1
    },
@@ -2324,8 +2324,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 500,
-    "open": 242,
+    "issues": 504,
+    "open": 246,
     "closed": 258,
     "discussions": 124
    },
@@ -2337,7 +2337,7 @@
     "4.0.0": 65,
     "4.0.3": 53,
     "4.0.1": 50,
-    "4.5.x": 10,
+    "4.5.x": 16,
     "4.2.x": 2,
     "4.22.x": 2,
     "4.24.x": 2,
@@ -2425,7 +2425,7 @@
      "title": "[Quattro] D-Bus idle inhibits are silently dropped since hypridle was replaced — screensaver fires during video playback (reproduced with Zen browser)",
      "url": "https://github.com/omacom/omarchy/issues/6475",
      "state": "OPEN",
-     "comments": 17,
+     "comments": 18,
      "reactions": 29,
      "createdAt": "2026-08-01T08:33:54Z",
      "closedAt": null
@@ -2578,10 +2578,10 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 388,
-    "open": 223,
+    "issues": 396,
+    "open": 231,
     "closed": 165,
-    "discussions": 99
+    "discussions": 100
    },
    "versionsMentioned": {
     "4.0.4": 137,
@@ -2589,10 +2589,10 @@
     "4.0.2": 56,
     "4.0.3": 52,
     "3.x": 51,
-    "4.0.x": 40,
+    "4.0.x": 42,
     "4.0.1": 32,
+    "4.5.x": 18,
     "4.2.x": 5,
-    "4.5.x": 5,
     "4.3.x": 1,
     "4.4.x": 1,
     "4.29.x": 1,
@@ -2843,8 +2843,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 382,
-    "open": 217,
+    "issues": 385,
+    "open": 220,
     "closed": 165,
     "discussions": 76
    },
@@ -2856,7 +2856,7 @@
     "4.0.x": 52,
     "4.0.3": 40,
     "4.0.1": 28,
-    "4.5.x": 10,
+    "4.5.x": 13,
     "4.22.x": 3,
     "4.25.x": 1
    },
@@ -3095,20 +3095,20 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 366,
-    "open": 210,
-    "closed": 156,
-    "discussions": 61
+    "issues": 368,
+    "open": 211,
+    "closed": 157,
+    "discussions": 63
    },
    "versionsMentioned": {
     "4.0.4": 128,
-    "4.0.0": 72,
-    "4.0.x": 65,
+    "4.0.0": 73,
+    "4.0.x": 67,
     "4.0.2": 64,
     "4.0.3": 50,
     "4.0.1": 49,
     "3.x": 36,
-    "4.5.x": 12,
+    "4.5.x": 18,
     "4.22.x": 2
    },
    "topIssues": [
@@ -3227,7 +3227,7 @@
      "title": "Lock shell dies during normal idle->lock; session permanently locked, reboot required",
      "url": "https://github.com/omacom/omarchy/issues/6628",
      "state": "OPEN",
-     "comments": 23,
+     "comments": 24,
      "reactions": 1,
      "createdAt": "2026-08-08T09:23:08Z",
      "closedAt": null,
@@ -3308,7 +3308,7 @@
      "title": "Quattro lock screen: support FIDO2/YubiKey unlock",
      "url": "https://github.com/omacom/omarchy/discussions/6910",
      "category": "Suggestions",
-     "upvoteCount": 10,
+     "upvoteCount": 12,
      "kind": "top-comment",
      "author": "wmauz677",
      "answerUrl": "https://github.com/omacom/omarchy/discussions/6910#discussioncomment-18126965",
@@ -3343,8 +3343,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 319,
-    "open": 139,
+    "issues": 323,
+    "open": 143,
     "closed": 180,
     "discussions": 125
    },
@@ -3355,8 +3355,8 @@
     "4.0.3": 37,
     "4.0.2": 36,
     "4.0.1": 29,
-    "4.0.x": 22,
-    "4.5.x": 11,
+    "4.0.x": 24,
+    "4.5.x": 18,
     "4.2.x": 1,
     "4.22.x": 1
    },
@@ -3396,7 +3396,7 @@
      "title": "[Quattro] D-Bus idle inhibits are silently dropped since hypridle was replaced — screensaver fires during video playback (reproduced with Zen browser)",
      "url": "https://github.com/omacom/omarchy/issues/6475",
      "state": "OPEN",
-     "comments": 17,
+     "comments": 18,
      "reactions": 29,
      "createdAt": "2026-08-01T08:33:54Z",
      "closedAt": null
@@ -3590,8 +3590,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 287,
-    "open": 153,
+    "issues": 288,
+    "open": 154,
     "closed": 134,
     "discussions": 73
    },
@@ -3602,8 +3602,8 @@
     "4.0.3": 32,
     "4.0.1": 29,
     "4.0.2": 29,
-    "4.0.x": 26,
-    "4.5.x": 11,
+    "4.0.x": 27,
+    "4.5.x": 13,
     "4.18.x": 1,
     "4.14.x": 1
    },
@@ -3839,20 +3839,20 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 277,
-    "open": 148,
+    "issues": 283,
+    "open": 154,
     "closed": 129,
     "discussions": 79
    },
    "versionsMentioned": {
     "4.0.4": 88,
     "3.x": 53,
-    "4.0.0": 41,
+    "4.0.0": 42,
+    "4.0.x": 34,
     "4.0.3": 33,
-    "4.0.x": 32,
     "4.0.2": 32,
     "4.0.1": 22,
-    "4.5.x": 4,
+    "4.5.x": 10,
     "4.3.x": 1
    },
    "topIssues": [
@@ -4101,7 +4101,7 @@
     "4.0.3": 19,
     "4.0.1": 17,
     "4.0.x": 16,
-    "4.5.x": 5,
+    "4.5.x": 8,
     "4.3.x": 1
    },
    "topIssues": [
@@ -4336,8 +4336,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 253,
-    "open": 123,
+    "issues": 254,
+    "open": 124,
     "closed": 130,
     "discussions": 68
    },
@@ -4349,7 +4349,7 @@
     "4.0.x": 17,
     "4.0.3": 17,
     "4.0.1": 12,
-    "4.5.x": 4,
+    "4.5.x": 8,
     "4.22.x": 1,
     "4.2.x": 1
    },
@@ -4591,20 +4591,20 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 240,
-    "open": 133,
+    "issues": 242,
+    "open": 135,
     "closed": 107,
     "discussions": 42
    },
    "versionsMentioned": {
     "4.0.4": 59,
-    "3.x": 53,
-    "4.0.x": 32,
+    "3.x": 54,
+    "4.0.x": 33,
     "4.0.0": 29,
     "4.0.2": 25,
     "4.0.3": 21,
     "4.0.1": 16,
-    "4.5.x": 8,
+    "4.5.x": 13,
     "4.2.x": 1
    },
    "topIssues": [
@@ -4773,7 +4773,7 @@
      "title": "Support Multiple Users",
      "url": "https://github.com/omacom/omarchy/discussions/532",
      "category": "Ideas",
-     "upvoteCount": 40,
+     "upvoteCount": 41,
      "kind": "top-comment",
      "author": "andrewib",
      "answerUrl": "https://github.com/omacom/omarchy/discussions/532#discussioncomment-14486409",
@@ -4841,8 +4841,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 229,
-    "open": 108,
+    "issues": 230,
+    "open": 109,
     "closed": 121,
     "discussions": 24
    },
@@ -4851,10 +4851,10 @@
     "3.x": 51,
     "4.0.0": 36,
     "4.0.1": 23,
+    "4.0.x": 22,
     "4.0.3": 21,
     "4.0.2": 21,
-    "4.0.x": 21,
-    "4.5.x": 4,
+    "4.5.x": 9,
     "4.22.x": 1
    },
    "topIssues": [
@@ -5082,8 +5082,8 @@
     "4.0.0": 15,
     "4.0.4": 6,
     "4.0.2": 4,
-    "4.0.1": 3,
     "4.0.3": 3,
+    "4.0.1": 3,
     "4.50.x": 1,
     "4.22.x": 1,
     "4.5.x": 1
@@ -5807,9 +5807,9 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 196,
-    "open": 119,
-    "closed": 77,
+    "issues": 198,
+    "open": 120,
+    "closed": 78,
     "discussions": 30
    },
    "versionsMentioned": {
@@ -5817,10 +5817,10 @@
     "4.0.0": 37,
     "4.0.2": 35,
     "3.x": 33,
+    "4.0.x": 27,
     "4.0.3": 27,
-    "4.0.x": 26,
     "4.0.1": 23,
-    "4.5.x": 9,
+    "4.5.x": 14,
     "4.4.x": 2,
     "4.8.x": 1
    },
@@ -5990,7 +5990,7 @@
      "title": "Support Multiple Users",
      "url": "https://github.com/omacom/omarchy/discussions/532",
      "category": "Ideas",
-     "upvoteCount": 40,
+     "upvoteCount": 41,
      "kind": "top-comment",
      "author": "andrewib",
      "answerUrl": "https://github.com/omacom/omarchy/discussions/532#discussioncomment-14486409",
@@ -6061,7 +6061,7 @@
     "issues": 190,
     "open": 86,
     "closed": 104,
-    "discussions": 62
+    "discussions": 63
    },
    "versionsMentioned": {
     "3.x": 53,
@@ -6071,11 +6071,11 @@
     "4.0.x": 16,
     "4.0.1": 15,
     "4.0.3": 14,
+    "4.5.x": 3,
     "4.1.x": 2,
     "4.2.x": 1,
     "4.25.x": 1,
-    "4.22.x": 1,
-    "4.5.x": 1
+    "4.22.x": 1
    },
    "topIssues": [
     {
@@ -6314,8 +6314,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 181,
-    "open": 80,
+    "issues": 183,
+    "open": 82,
     "closed": 101,
     "discussions": 63
    },
@@ -6327,7 +6327,7 @@
     "4.0.1": 16,
     "4.0.x": 14,
     "4.0.3": 10,
-    "4.5.x": 3,
+    "4.5.x": 8,
     "4.22.x": 2,
     "4.18.x": 1
    },
@@ -6566,10 +6566,10 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 169,
-    "open": 97,
+    "issues": 171,
+    "open": 99,
     "closed": 72,
-    "discussions": 51
+    "discussions": 53
    },
    "versionsMentioned": {
     "4.0.4": 60,
@@ -6577,9 +6577,9 @@
     "4.0.0": 32,
     "4.0.3": 30,
     "4.0.1": 26,
-    "4.0.x": 20,
+    "4.0.x": 22,
     "3.x": 16,
-    "4.5.x": 12
+    "4.5.x": 16
    },
    "topIssues": [
     {
@@ -6684,6 +6684,16 @@
      "closedAt": null
     },
     {
+     "number": 15619,
+     "title": "Lock screen holds the fingerprint verify across suspend, leaving fprintd with a stale claim and a post-resume \"already claimed\" storm",
+     "url": "https://github.com/omacom/omarchy/issues/15619",
+     "state": "OPEN",
+     "comments": 11,
+     "reactions": 1,
+     "createdAt": "2026-10-16T08:03:26Z",
+     "closedAt": null
+    },
+    {
      "number": 170,
      "title": "Fingerprint Reader for t480",
      "url": "https://github.com/omacom/omarchy/issues/170",
@@ -6714,6 +6724,16 @@
      "closedAt": "2025-10-22T10:22:53Z"
     },
     {
+     "number": 12208,
+     "title": "Lock screen dies during HDMI/display thrash → Hyprland “lockscreen app died” failsafe loop",
+     "url": "https://github.com/omacom/omarchy/issues/12208",
+     "state": "OPEN",
+     "comments": 10,
+     "reactions": 1,
+     "createdAt": "2026-09-17T00:27:37Z",
+     "closedAt": null
+    },
+    {
      "number": 13748,
      "title": "Lock-screen fingerprint retries with no backoff, overheats/disables sensor overnight; polkit fingerprint never actually captures",
      "url": "https://github.com/omacom/omarchy/issues/13748",
@@ -6722,26 +6742,6 @@
      "reactions": 0,
      "createdAt": "2026-09-29T13:53:07Z",
      "closedAt": null
-    },
-    {
-     "number": 15619,
-     "title": "Lock screen holds the fingerprint verify across suspend, leaving fprintd with a stale claim and a post-resume \"already claimed\" storm",
-     "url": "https://github.com/omacom/omarchy/issues/15619",
-     "state": "OPEN",
-     "comments": 10,
-     "reactions": 1,
-     "createdAt": "2026-10-16T08:03:26Z",
-     "closedAt": null
-    },
-    {
-     "number": 8847,
-     "title": "Locked session re-arms a hardcoded 5s display-blank timer, so slow displays can never finish waking",
-     "url": "https://github.com/omacom/omarchy/issues/8847",
-     "state": "CLOSED",
-     "comments": 8,
-     "reactions": 2,
-     "createdAt": "2026-08-29T00:16:11Z",
-     "closedAt": "2026-10-09T06:43:04Z"
     }
    ],
    "bestAnswers": [
@@ -6761,7 +6761,7 @@
      "title": "Quattro lock screen: support FIDO2/YubiKey unlock",
      "url": "https://github.com/omacom/omarchy/discussions/6910",
      "category": "Suggestions",
-     "upvoteCount": 10,
+     "upvoteCount": 12,
      "kind": "top-comment",
      "author": "wmauz677",
      "answerUrl": "https://github.com/omacom/omarchy/discussions/6910#discussioncomment-18126965",
@@ -6818,24 +6818,24 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 162,
-    "open": 79,
+    "issues": 163,
+    "open": 80,
     "closed": 83,
-    "discussions": 48
+    "discussions": 49
    },
    "versionsMentioned": {
     "4.0.0": 48,
     "4.0.4": 36,
     "3.x": 26,
     "4.0.1": 24,
-    "4.0.x": 18,
+    "4.0.x": 19,
     "4.0.3": 14,
     "4.0.2": 11,
-    "4.5.x": 4,
+    "4.5.x": 7,
     "4.22.x": 1,
     "4.4.x": 1,
-    "4.30.x": 1,
     "4.31.x": 1,
+    "4.30.x": 1,
     "4.1.x": 1
    },
    "topIssues": [
@@ -7067,8 +7067,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 151,
-    "open": 59,
+    "issues": 152,
+    "open": 60,
     "closed": 92,
     "discussions": 36
    },
@@ -7079,8 +7079,8 @@
     "4.0.x": 14,
     "4.0.2": 12,
     "4.0.1": 11,
-    "4.0.3": 5,
-    "4.5.x": 4
+    "4.5.x": 6,
+    "4.0.3": 5
    },
    "topIssues": [
     {
@@ -7318,22 +7318,23 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 141,
+    "issues": 142,
     "open": 61,
-    "closed": 80,
-    "discussions": 41
+    "closed": 81,
+    "discussions": 42
    },
    "versionsMentioned": {
     "3.x": 34,
     "4.0.0": 31,
     "4.0.4": 29,
     "4.0.2": 19,
-    "4.0.x": 17,
+    "4.0.x": 18,
     "4.0.1": 14,
     "4.0.3": 11,
-    "4.5.x": 7,
+    "4.5.x": 8,
     "4.9.x": 1,
-    "4.7.x": 1
+    "4.7.x": 1,
+    "4.2.x": 1
    },
    "topIssues": [
     {
@@ -7361,7 +7362,7 @@
      "title": "[Quattro] D-Bus idle inhibits are silently dropped since hypridle was replaced — screensaver fires during video playback (reproduced with Zen browser)",
      "url": "https://github.com/omacom/omarchy/issues/6475",
      "state": "OPEN",
-     "comments": 17,
+     "comments": 18,
      "reactions": 29,
      "createdAt": "2026-08-01T08:33:54Z",
      "closedAt": null
@@ -7565,8 +7566,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 137,
-    "open": 65,
+    "issues": 139,
+    "open": 67,
     "closed": 72,
     "discussions": 31
    },
@@ -7574,10 +7575,10 @@
     "3.x": 32,
     "4.0.0": 32,
     "4.0.4": 26,
-    "4.0.2": 18,
+    "4.0.2": 19,
     "4.0.1": 11,
     "4.0.x": 11,
-    "4.5.x": 7,
+    "4.5.x": 9,
     "4.0.3": 6,
     "4.29.x": 1
    },
@@ -7838,7 +7839,7 @@
     "4.0.x": 17,
     "4.0.1": 16,
     "4.0.3": 15,
-    "4.5.x": 2
+    "4.5.x": 7
    },
    "topIssues": [
     {
@@ -7979,6 +7980,16 @@
      "closedAt": null
     },
     {
+     "number": 10108,
+     "title": "quickshell wedges alive (spinning, IPC-dead) after S3 resume on single-GPU NVIDIA desktop; omarchy-restart-shell cannot recover it",
+     "url": "https://github.com/omacom/omarchy/issues/10108",
+     "state": "OPEN",
+     "comments": 13,
+     "reactions": 0,
+     "createdAt": "2026-09-04T04:04:51Z",
+     "closedAt": null
+    },
+    {
      "number": 10433,
      "title": "install/hardware/nvidia.sh never enables nvidia-suspend/resume/hibernate services, leaving stale GPU memory after suspend (causes Chromium renderer SIGILL crashes)",
      "url": "https://github.com/omacom/omarchy/issues/10433",
@@ -7986,16 +7997,6 @@
      "comments": 11,
      "reactions": 2,
      "createdAt": "2026-09-06T05:31:07Z",
-     "closedAt": null
-    },
-    {
-     "number": 1125,
-     "title": "Cannot Recover from Suspense Mode",
-     "url": "https://github.com/omacom/omarchy/issues/1125",
-     "state": "OPEN",
-     "comments": 12,
-     "reactions": 0,
-     "createdAt": "2025-08-26T16:12:26Z",
      "closedAt": null
     }
    ],
@@ -8073,20 +8074,20 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 133,
-    "open": 71,
+    "issues": 135,
+    "open": 73,
     "closed": 62,
-    "discussions": 27
+    "discussions": 28
    },
    "versionsMentioned": {
     "4.0.4": 62,
-    "4.0.x": 30,
+    "4.0.x": 32,
     "4.0.2": 28,
     "4.0.0": 26,
     "4.0.3": 18,
     "4.0.1": 15,
+    "4.5.x": 7,
     "3.x": 6,
-    "4.5.x": 3,
     "4.25.x": 1
    },
    "topIssues": [
@@ -8268,7 +8269,7 @@
      "title": "Quattro lock screen: support FIDO2/YubiKey unlock",
      "url": "https://github.com/omacom/omarchy/discussions/6910",
      "category": "Suggestions",
-     "upvoteCount": 10,
+     "upvoteCount": 12,
      "kind": "top-comment",
      "author": "wmauz677",
      "answerUrl": "https://github.com/omacom/omarchy/discussions/6910#discussioncomment-18126965",
@@ -8787,8 +8788,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 106,
-    "open": 58,
+    "issues": 107,
+    "open": 59,
     "closed": 48,
     "discussions": 24
    },
@@ -8895,6 +8896,16 @@
      "closedAt": "2026-02-21T06:21:30Z"
     },
     {
+     "number": 11619,
+     "title": "MacBook Pro 2015-2017 audio broken — need snd_hda_macbookpro driver",
+     "url": "https://github.com/omacom/omarchy/issues/11619",
+     "state": "OPEN",
+     "comments": 11,
+     "reactions": 0,
+     "createdAt": "2026-09-13T04:26:13Z",
+     "closedAt": null
+    },
+    {
      "number": 4070,
      "title": "Cannot record audio via built in stereo microphone",
      "url": "https://github.com/omacom/omarchy/issues/4070",
@@ -8959,16 +8970,6 @@
      "fixedBy": [
       15111
      ]
-    },
-    {
-     "number": 10940,
-     "title": "Dropbox cannot complete account linking because generated systemd service kills self-updated daemon",
-     "url": "https://github.com/omacom/omarchy/issues/10940",
-     "state": "OPEN",
-     "comments": 8,
-     "reactions": 1,
-     "createdAt": "2026-09-09T07:28:17Z",
-     "closedAt": null
     }
    ],
    "bestAnswers": [
@@ -9046,8 +9047,8 @@
     "4.0.1": 8,
     "4.0.x": 5,
     "4.0.2": 5,
+    "4.5.x": 4,
     "4.0.3": 3,
-    "4.5.x": 3,
     "4.22.x": 1
    },
    "topIssues": [
@@ -9233,7 +9234,7 @@
      "title": "Quattro lock screen: support FIDO2/YubiKey unlock",
      "url": "https://github.com/omacom/omarchy/discussions/6910",
      "category": "Suggestions",
-     "upvoteCount": 10,
+     "upvoteCount": 12,
      "kind": "top-comment",
      "author": "wmauz677",
      "answerUrl": "https://github.com/omacom/omarchy/discussions/6910#discussioncomment-18126965",
@@ -9279,8 +9280,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 102,
-    "open": 68,
+    "issues": 103,
+    "open": 69,
     "closed": 34,
     "discussions": 18
    },
@@ -9291,7 +9292,7 @@
     "4.0.2": 16,
     "4.0.1": 13,
     "4.0.3": 12,
-    "4.5.x": 7,
+    "4.5.x": 9,
     "3.x": 6
    },
    "topIssues": [
@@ -9376,6 +9377,16 @@
      "closedAt": null
     },
     {
+     "number": 7388,
+     "title": "Apple Studio Display over USB4 flashes: stock preferred is 5K@120, then DP tunnel drops while Thunderbolt stays authorized",
+     "url": "https://github.com/omacom/omarchy/issues/7388",
+     "state": "OPEN",
+     "comments": 7,
+     "reactions": 0,
+     "createdAt": "2026-08-18T13:45:12Z",
+     "closedAt": null
+    },
+    {
      "number": 10912,
      "title": "Hyprland 0.56.2 crash on mouse input: Lua Check::string bad_any_cast (SEGV -> ABRT)",
      "url": "https://github.com/omacom/omarchy/issues/10912",
@@ -9444,22 +9455,20 @@
      "reactions": 0,
      "createdAt": "2026-09-19T02:26:31Z",
      "closedAt": null
-    },
-    {
-     "number": 7242,
-     "title": "omarchy hyprland monitor scaling reverts instantly when monitors.lua has per-monitor rules",
-     "url": "https://github.com/omacom/omarchy/issues/7242",
-     "state": "CLOSED",
-     "comments": 4,
-     "reactions": 1,
-     "createdAt": "2026-08-17T08:12:05Z",
-     "closedAt": "2026-09-21T05:57:54Z",
-     "fixedBy": [
-      5
-     ]
     }
    ],
    "bestAnswers": [
+    {
+     "discussion": 17647,
+     "title": "Per-monitor workspaces: add an opt-out for global workspace numbers",
+     "url": "https://github.com/omacom/omarchy/discussions/17647",
+     "category": "Suggestions",
+     "upvoteCount": 9,
+     "kind": "top-comment",
+     "author": "leonardowolf",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/17647#discussioncomment-19426110",
+     "snippet": "+1, same situation here (Omarchy 4.5.0, laptop eDP-1 + external HDMI-A-1).\n\nBefore 4.5 my workflow was plain global workspaces: Super+N went to workspace N, and a new workspace opened on whichever monitor had focus. After the update, the reconciler renumbered my existing workspaces into per-monitor blocks (1 → 11, 3 → 13 on the external), which also left my cloned `omarchy.workspaces` widget out of sync with the shortcuts.\n\nMy current workaround, in `~/.config/hypr/bindings.lua`, is to no-op `o."
+    },
     {
      "discussion": 8105,
      "title": "Feature Request: Out-of-the-box DisplayLink support",
@@ -9470,17 +9479,6 @@
      "author": "lordyoyi",
      "answerUrl": "https://github.com/omacom/omarchy/discussions/8105#discussioncomment-18439317",
      "snippet": "+1 — confirming DisplayLink works fine on Omarchy 4.0.3 with the AUR packages, so this should be a small, contained addition.\n\n**Setup tested**\n- Device: Elgato Prompter (USB `17e9:ff1a`, DisplayLink), 1024x600 panel\n- Omarchy 4.0.3, kernel `7.2.3-arch1-3`, Hyprland 0.56.2, AMD GPU, Secure Boot off\n- Packages: `linux-headers`, `dkms`, `evdi-dkms` 1.15.0 + `displaylink` 6.3 (AUR)\n\n**Steps that got it working**\n```bash\nsudo pacman -S --needed linux-headers dkms\nyay -S evdi-dkms displaylink\nsudo sy"
-    },
-    {
-     "discussion": 17647,
-     "title": "Per-monitor workspaces: add an opt-out for global workspace numbers",
-     "url": "https://github.com/omacom/omarchy/discussions/17647",
-     "category": "Suggestions",
-     "upvoteCount": 6,
-     "kind": "top-comment",
-     "author": "leonardowolf",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/17647#discussioncomment-19426110",
-     "snippet": "+1, same situation here (Omarchy 4.5.0, laptop eDP-1 + external HDMI-A-1).\n\nBefore 4.5 my workflow was plain global workspaces: Super+N went to workspace N, and a new workspace opened on whichever monitor had focus. After the update, the reconciler renumbered my existing workspaces into per-monitor blocks (1 → 11, 3 → 13 on the external), which also left my cloned `omarchy.workspaces` widget out of sync with the shortcuts.\n\nMy current workaround, in `~/.config/hypr/bindings.lua`, is to no-op `o."
     },
     {
      "discussion": 11029,
@@ -9532,8 +9530,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 85,
-    "open": 40,
+    "issues": 86,
+    "open": 41,
     "closed": 45,
     "discussions": 20
    },
@@ -9543,9 +9541,9 @@
     "4.0.0": 17,
     "4.0.2": 10,
     "4.0.x": 7,
-    "4.0.3": 5,
     "4.0.1": 5,
-    "4.5.x": 2,
+    "4.0.3": 5,
+    "4.5.x": 3,
     "4.4.x": 2
    },
    "topIssues": [
@@ -9781,8 +9779,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 70,
-    "open": 23,
+    "issues": 71,
+    "open": 24,
     "closed": 47,
     "discussions": 22
    },
@@ -9794,9 +9792,9 @@
     "4.0.1": 7,
     "4.0.3": 7,
     "4.0.x": 6,
-    "4.4.x": 2,
-    "4.16.x": 1,
-    "4.5.x": 1
+    "4.4.x": 3,
+    "4.5.x": 2,
+    "4.16.x": 1
    },
    "topIssues": [
     {
@@ -10035,7 +10033,7 @@
     "issues": 69,
     "open": 36,
     "closed": 33,
-    "discussions": 18
+    "discussions": 19
    },
    "versionsMentioned": {
     "4.0.2": 14,
@@ -10045,7 +10043,7 @@
     "4.0.3": 6,
     "3.x": 4,
     "4.0.x": 4,
-    "4.5.x": 1
+    "4.5.x": 2
    },
    "topIssues": [
     {
@@ -10769,8 +10767,8 @@
     "4.0.2": 11,
     "4.0.1": 8,
     "4.0.x": 7,
-    "4.22.x": 2,
-    "4.0.3": 2
+    "4.0.3": 2,
+    "4.22.x": 2
    },
    "topIssues": [
     {
@@ -11012,12 +11010,12 @@
     "4.0.3": 12,
     "3.x": 10,
     "4.0.0": 10,
-    "4.0.x": 8,
+    "4.0.x": 9,
     "4.0.2": 8,
     "4.0.1": 5,
+    "4.5.x": 2,
     "4.22.x": 2,
-    "4.24.x": 1,
-    "4.5.x": 1
+    "4.24.x": 1
    },
    "topIssues": [
     {
@@ -11049,9 +11047,19 @@
      "title": "Browser crash, probably from video autoplay, freezes Hyprland",
      "url": "https://github.com/omacom/omarchy/issues/6024",
      "state": "OPEN",
-     "comments": 10,
+     "comments": 11,
      "reactions": 1,
      "createdAt": "2026-06-02T15:00:40Z",
+     "closedAt": null
+    },
+    {
+     "number": 12208,
+     "title": "Lock screen dies during HDMI/display thrash → Hyprland “lockscreen app died” failsafe loop",
+     "url": "https://github.com/omacom/omarchy/issues/12208",
+     "state": "OPEN",
+     "comments": 10,
+     "reactions": 1,
+     "createdAt": "2026-09-17T00:27:37Z",
      "closedAt": null
     },
     {
@@ -11073,16 +11081,6 @@
      "reactions": 0,
      "createdAt": "2026-01-09T12:24:38Z",
      "closedAt": "2026-04-08T09:06:29Z"
-    },
-    {
-     "number": 12208,
-     "title": "Lock screen dies during HDMI/display thrash → Hyprland “lockscreen app died” failsafe loop",
-     "url": "https://github.com/omacom/omarchy/issues/12208",
-     "state": "OPEN",
-     "comments": 8,
-     "reactions": 1,
-     "createdAt": "2026-09-17T00:27:37Z",
-     "closedAt": null
     },
     {
      "number": 7135,
@@ -11250,6 +11248,246 @@
     "bash: line 1: voxtype: command not found",
     "==> ERROR: voxtype-bin is not available for the 'aarch64' architecture.",
     "voxtype-bin-0.4.9-1-x86_64.pkg.tar.zst failed to download"
+   ]
+  },
+  {
+   "key": "webcam",
+   "label": "webcam",
+   "query": [
+    "webcam"
+   ],
+   "discovered": "seed",
+   "searchScope": "title+body+comments",
+   "counts": {
+    "issues": 54,
+    "open": 33,
+    "closed": 21,
+    "discussions": 13
+   },
+   "versionsMentioned": {
+    "4.0.4": 17,
+    "3.x": 12,
+    "4.0.3": 8,
+    "4.0.0": 7,
+    "4.0.1": 6,
+    "4.0.2": 6,
+    "4.0.x": 5,
+    "4.5.x": 4
+   },
+   "topIssues": [
+    {
+     "number": 6000,
+     "title": "Camera (IPU7-PTL / OV08X40) on ThinkPad X1 Carbon Gen 14: ACPI status=0, sensor invisible to Linux",
+     "url": "https://github.com/omacom/omarchy/issues/6000",
+     "state": "OPEN",
+     "comments": 25,
+     "reactions": 1,
+     "createdAt": "2026-05-30T12:37:49Z",
+     "closedAt": null
+    },
+    {
+     "number": 4291,
+     "title": "Config errors after update",
+     "url": "https://github.com/omacom/omarchy/issues/4291",
+     "state": "CLOSED",
+     "comments": 17,
+     "reactions": 1,
+     "createdAt": "2026-01-17T14:24:33Z",
+     "closedAt": "2026-02-01T10:32:52Z"
+    },
+    {
+     "number": 8641,
+     "title": "XPS 14 (Panther Lake): Windows Hello IR camera (Himax HM1092) has no Linux driver",
+     "url": "https://github.com/omacom/omarchy/issues/8641",
+     "state": "OPEN",
+     "comments": 8,
+     "reactions": 3,
+     "createdAt": "2026-08-27T17:41:13Z",
+     "closedAt": null
+    },
+    {
+     "number": 15831,
+     "title": "linux-omarchy 7.2.8-9: webcam broken on XPS 13 9340 (IPU6), HIMX1092 ipu-bridge entry blocks ISYS notifier without an hm1092 driver",
+     "url": "https://github.com/omacom/omarchy/issues/15831",
+     "state": "OPEN",
+     "comments": 9,
+     "reactions": 2,
+     "createdAt": "2026-10-18T11:36:53Z",
+     "closedAt": null
+    },
+    {
+     "number": 8271,
+     "title": "Installer erases T1/T2 firmware on Apple hardware, permanently disabling Touch Bar / camera / Touch ID",
+     "url": "https://github.com/omacom/omarchy/issues/8271",
+     "state": "OPEN",
+     "comments": 10,
+     "reactions": 0,
+     "createdAt": "2026-08-25T18:56:42Z",
+     "closedAt": null
+    },
+    {
+     "number": 11864,
+     "title": "USB-C→HDMI DisplayPort Alt Mode negotiation fails and stays wedged until reboot (Panther Lake xe/ucsi_acpi)",
+     "url": "https://github.com/omacom/omarchy/issues/11864",
+     "state": "CLOSED",
+     "comments": 9,
+     "reactions": 1,
+     "createdAt": "2026-09-14T22:52:49Z",
+     "closedAt": "2026-10-06T16:32:18Z"
+    },
+    {
+     "number": 9708,
+     "title": "Display flashing in Chromium on X.com on hybrid Intel+NVIDIA laptop (LIBVA_DRIVER_NAME=nvidia forces NVIDIA VA-API while Chromium renders on iGPU)",
+     "url": "https://github.com/omacom/omarchy/issues/9708",
+     "state": "CLOSED",
+     "comments": 6,
+     "reactions": 3,
+     "createdAt": "2026-09-02T00:38:22Z",
+     "closedAt": "2026-09-20T20:04:49Z"
+    },
+    {
+     "number": 4058,
+     "title": "Hyprland 0.53 compatibility - window/layer rule syntax breaking changes",
+     "url": "https://github.com/omacom/omarchy/issues/4058",
+     "state": "CLOSED",
+     "comments": 7,
+     "reactions": 1,
+     "createdAt": "2026-01-02T13:53:46Z",
+     "closedAt": "2026-01-03T03:56:04Z"
+    },
+    {
+     "number": 9256,
+     "title": "Restarting audio services crashes QuickShell in QQuickRepeater::regenerate",
+     "url": "https://github.com/omacom/omarchy/issues/9256",
+     "state": "CLOSED",
+     "comments": 8,
+     "reactions": 0,
+     "createdAt": "2026-08-30T21:29:45Z",
+     "closedAt": "2026-09-20T20:10:23Z"
+    },
+    {
+     "number": 10837,
+     "title": "RC jsoncpp 1.9.8 soname bump breaks intel-ipu7-camera 1.0.5",
+     "url": "https://github.com/omacom/omarchy/issues/10837",
+     "state": "OPEN",
+     "comments": 6,
+     "reactions": 2,
+     "createdAt": "2026-09-08T17:02:38Z",
+     "closedAt": null,
+     "fixedBy": [
+      418
+     ]
+    },
+    {
+     "number": 3883,
+     "title": "In Macbook pro with T2 chip keyboard, wake-from-suspend, and webcam not working",
+     "url": "https://github.com/omacom/omarchy/issues/3883",
+     "state": "OPEN",
+     "comments": 6,
+     "reactions": 0,
+     "createdAt": "2025-12-15T17:25:44Z",
+     "closedAt": null
+    },
+    {
+     "number": 7217,
+     "title": "screenrecord: NVENC fallback doesn't trigger on API version mismatch (Pascal/580xx driver)",
+     "url": "https://github.com/omacom/omarchy/issues/7217",
+     "state": "OPEN",
+     "comments": 6,
+     "reactions": 0,
+     "createdAt": "2026-08-17T03:40:35Z",
+     "closedAt": null
+    },
+    {
+     "number": 7697,
+     "title": "ipu7-camera.sh misdetects Meteor Lake (IPU6) hardware as IPU7, breaking the webcam",
+     "url": "https://github.com/omacom/omarchy/issues/7697",
+     "state": "OPEN",
+     "comments": 6,
+     "reactions": 0,
+     "createdAt": "2026-08-21T17:48:47Z",
+     "closedAt": null
+    },
+    {
+     "number": 3743,
+     "title": "Screen Recording with Web Cam /  \"Window mode\" issue",
+     "url": "https://github.com/omacom/omarchy/issues/3743",
+     "state": "OPEN",
+     "comments": 5,
+     "reactions": 0,
+     "createdAt": "2025-12-02T19:55:19Z",
+     "closedAt": null
+    },
+    {
+     "number": 12050,
+     "title": "[hyprland] Lua binds written as \"MODS + code:N\" don't parse — all binds sharing a modifier fire at once (SUPER+RETURN lands you on workspace 10)",
+     "url": "https://github.com/omacom/omarchy/issues/12050",
+     "state": "CLOSED",
+     "comments": 4,
+     "reactions": 1,
+     "createdAt": "2026-09-16T03:32:33Z",
+     "closedAt": "2026-10-12T02:55:02Z"
+    }
+   ],
+   "bestAnswers": [
+    {
+     "discussion": 15977,
+     "title": "Face unlock for Omarchy (omaFace), and a small ask: a hook for extra login methods in the lock screen",
+     "url": "https://github.com/omacom/omarchy/discussions/15977",
+     "category": "Suggestions",
+     "upvoteCount": 7,
+     "kind": "top-comment",
+     "author": "L0adn9",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/15977#discussioncomment-19093627",
+     "snippet": "Small update on this.\n\nI was using it daily and noticed IR unlocks were slow, so I dug into it. Two things were wrong. The attention check basically wanted you to stare into the lens instead of the screen, so I swapped it for an eyelid + gaze model, and now it unlocks when you're just looking at the screen normally (still refuses eyes closed or looking down at your phone). The other one was weirder: my IR camera was metering exposure off a 1x1 pixel in the corner and blowing my face out to pure "
+    },
+    {
+     "discussion": 15885,
+     "title": "Microsoft Surface Laptop Ultra (NVIDIA N1X) — hardware support, open issues and testing",
+     "url": "https://github.com/omacom/omarchy/discussions/15885",
+     "category": "Show and tell",
+     "upvoteCount": 3,
+     "kind": "top-comment",
+     "author": "teo-casares",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/15885#discussioncomment-19026599",
+     "snippet": "**Update: DAILY DRIVER STATUS** Here's the live state from the running machine, Omarchy 4 aarch64 on `linux-omarchy` 7.2.8-13. I captured it today, 2 h 19 min into the current boot, with 0 failed units and 0 kernel `WARNING`/`Xid`/oops lines this boot.\n\n```\n$ cat /sys/class/dmi/id/{sys_vendor,product_name,bios_version}\nMicrosoft Corporation\nMicrosoft Surface Laptop Ultra\n7.1.0\n\n# GPU: Hyprland on nvidia-drm, panel at native resolution\n$ nvidia-smi --query-gpu=name,driver_version,pstate --format="
+    },
+    {
+     "discussion": 3799,
+     "title": "Philosophy of Omarchy 3.2",
+     "url": "https://github.com/omacom/omarchy/discussions/3799",
+     "category": "Suggestions",
+     "upvoteCount": 3,
+     "kind": "top-comment",
+     "author": "brink-lab",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/3799#discussioncomment-15213449",
+     "snippet": "Who's the chef? Ultimately DHH. \n\nI have been following Omarchy from early days, so I can see some guiding principles and ambitions that have driven Omarchy to where it is today:\n\n- A preconfigured Arch + Hyprland setup that works out of the box. Including utilities such as screen capture tools.\n\n- Particularly catering to professional developers which raises the bar for stability and dependability. DHH is building this for himself and his team of developers. If you depend on your setup to do yo"
+    },
+    {
+     "discussion": 6298,
+     "title": "Built-in webcam not working on Acer Nitro laptop, also broken on Ubuntu",
+     "url": "https://github.com/omacom/omarchy/discussions/6298",
+     "category": "Support",
+     "upvoteCount": 1,
+     "kind": "accepted-answer",
+     "author": "abduvaliy-engineer",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/6298#discussioncomment-18713336",
+     "snippet": "I found a way to fix this if you are interested refer to here https://github.com/abduvaliy-engineer/acer-nitro-anv16s-camera-fix"
+    },
+    {
+     "discussion": 6280,
+     "title": "Built-in webcam not detected on Arch / Omarchy (/dev/video* missing)",
+     "url": "https://github.com/omacom/omarchy/discussions/6280",
+     "category": "Support",
+     "upvoteCount": 1,
+     "kind": "top-comment",
+     "author": "Mrid22",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/6280#discussioncomment-17683964",
+     "snippet": "The webcam seems to be fine for me (/dev/video returns a bunch of results), can you check your bios settings and look for other devices or something like that https://askubuntu.com/questions/1230239/built-in-webcam-not-detected-also-no-dev-video-in-ubuntu-20-04-and-18-04"
+    }
+   ],
+   "exampleErrorLines": [
+    "- `omarchy capture screenrecording --with-webcam` auto-detects the first entry, so it always lands on the Bayer-only node and produces a black overlay with no error — the same symptom #5722 described."
    ]
   },
   {
@@ -11472,246 +11710,6 @@
    "exampleErrorLines": []
   },
   {
-   "key": "webcam",
-   "label": "webcam",
-   "query": [
-    "webcam"
-   ],
-   "discovered": "seed",
-   "searchScope": "title+body+comments",
-   "counts": {
-    "issues": 51,
-    "open": 30,
-    "closed": 21,
-    "discussions": 13
-   },
-   "versionsMentioned": {
-    "4.0.4": 17,
-    "3.x": 12,
-    "4.0.3": 8,
-    "4.0.0": 7,
-    "4.0.1": 6,
-    "4.0.2": 6,
-    "4.0.x": 5,
-    "4.5.x": 1
-   },
-   "topIssues": [
-    {
-     "number": 6000,
-     "title": "Camera (IPU7-PTL / OV08X40) on ThinkPad X1 Carbon Gen 14: ACPI status=0, sensor invisible to Linux",
-     "url": "https://github.com/omacom/omarchy/issues/6000",
-     "state": "OPEN",
-     "comments": 25,
-     "reactions": 1,
-     "createdAt": "2026-05-30T12:37:49Z",
-     "closedAt": null
-    },
-    {
-     "number": 4291,
-     "title": "Config errors after update",
-     "url": "https://github.com/omacom/omarchy/issues/4291",
-     "state": "CLOSED",
-     "comments": 17,
-     "reactions": 1,
-     "createdAt": "2026-01-17T14:24:33Z",
-     "closedAt": "2026-02-01T10:32:52Z"
-    },
-    {
-     "number": 8641,
-     "title": "XPS 14 (Panther Lake): Windows Hello IR camera (Himax HM1092) has no Linux driver",
-     "url": "https://github.com/omacom/omarchy/issues/8641",
-     "state": "OPEN",
-     "comments": 8,
-     "reactions": 3,
-     "createdAt": "2026-08-27T17:41:13Z",
-     "closedAt": null
-    },
-    {
-     "number": 15831,
-     "title": "linux-omarchy 7.2.8-9: webcam broken on XPS 13 9340 (IPU6), HIMX1092 ipu-bridge entry blocks ISYS notifier without an hm1092 driver",
-     "url": "https://github.com/omacom/omarchy/issues/15831",
-     "state": "OPEN",
-     "comments": 9,
-     "reactions": 2,
-     "createdAt": "2026-10-18T11:36:53Z",
-     "closedAt": null
-    },
-    {
-     "number": 8271,
-     "title": "Installer erases T1/T2 firmware on Apple hardware, permanently disabling Touch Bar / camera / Touch ID",
-     "url": "https://github.com/omacom/omarchy/issues/8271",
-     "state": "OPEN",
-     "comments": 10,
-     "reactions": 0,
-     "createdAt": "2026-08-25T18:56:42Z",
-     "closedAt": null
-    },
-    {
-     "number": 11864,
-     "title": "USB-C→HDMI DisplayPort Alt Mode negotiation fails and stays wedged until reboot (Panther Lake xe/ucsi_acpi)",
-     "url": "https://github.com/omacom/omarchy/issues/11864",
-     "state": "CLOSED",
-     "comments": 9,
-     "reactions": 1,
-     "createdAt": "2026-09-14T22:52:49Z",
-     "closedAt": "2026-10-06T16:32:18Z"
-    },
-    {
-     "number": 9708,
-     "title": "Display flashing in Chromium on X.com on hybrid Intel+NVIDIA laptop (LIBVA_DRIVER_NAME=nvidia forces NVIDIA VA-API while Chromium renders on iGPU)",
-     "url": "https://github.com/omacom/omarchy/issues/9708",
-     "state": "CLOSED",
-     "comments": 6,
-     "reactions": 3,
-     "createdAt": "2026-09-02T00:38:22Z",
-     "closedAt": "2026-09-20T20:04:49Z"
-    },
-    {
-     "number": 4058,
-     "title": "Hyprland 0.53 compatibility - window/layer rule syntax breaking changes",
-     "url": "https://github.com/omacom/omarchy/issues/4058",
-     "state": "CLOSED",
-     "comments": 7,
-     "reactions": 1,
-     "createdAt": "2026-01-02T13:53:46Z",
-     "closedAt": "2026-01-03T03:56:04Z"
-    },
-    {
-     "number": 9256,
-     "title": "Restarting audio services crashes QuickShell in QQuickRepeater::regenerate",
-     "url": "https://github.com/omacom/omarchy/issues/9256",
-     "state": "CLOSED",
-     "comments": 8,
-     "reactions": 0,
-     "createdAt": "2026-08-30T21:29:45Z",
-     "closedAt": "2026-09-20T20:10:23Z"
-    },
-    {
-     "number": 10837,
-     "title": "RC jsoncpp 1.9.8 soname bump breaks intel-ipu7-camera 1.0.5",
-     "url": "https://github.com/omacom/omarchy/issues/10837",
-     "state": "OPEN",
-     "comments": 6,
-     "reactions": 2,
-     "createdAt": "2026-09-08T17:02:38Z",
-     "closedAt": null,
-     "fixedBy": [
-      418
-     ]
-    },
-    {
-     "number": 3883,
-     "title": "In Macbook pro with T2 chip keyboard, wake-from-suspend, and webcam not working",
-     "url": "https://github.com/omacom/omarchy/issues/3883",
-     "state": "OPEN",
-     "comments": 6,
-     "reactions": 0,
-     "createdAt": "2025-12-15T17:25:44Z",
-     "closedAt": null
-    },
-    {
-     "number": 7217,
-     "title": "screenrecord: NVENC fallback doesn't trigger on API version mismatch (Pascal/580xx driver)",
-     "url": "https://github.com/omacom/omarchy/issues/7217",
-     "state": "OPEN",
-     "comments": 6,
-     "reactions": 0,
-     "createdAt": "2026-08-17T03:40:35Z",
-     "closedAt": null
-    },
-    {
-     "number": 7697,
-     "title": "ipu7-camera.sh misdetects Meteor Lake (IPU6) hardware as IPU7, breaking the webcam",
-     "url": "https://github.com/omacom/omarchy/issues/7697",
-     "state": "OPEN",
-     "comments": 6,
-     "reactions": 0,
-     "createdAt": "2026-08-21T17:48:47Z",
-     "closedAt": null
-    },
-    {
-     "number": 3743,
-     "title": "Screen Recording with Web Cam /  \"Window mode\" issue",
-     "url": "https://github.com/omacom/omarchy/issues/3743",
-     "state": "OPEN",
-     "comments": 5,
-     "reactions": 0,
-     "createdAt": "2025-12-02T19:55:19Z",
-     "closedAt": null
-    },
-    {
-     "number": 12050,
-     "title": "[hyprland] Lua binds written as \"MODS + code:N\" don't parse — all binds sharing a modifier fire at once (SUPER+RETURN lands you on workspace 10)",
-     "url": "https://github.com/omacom/omarchy/issues/12050",
-     "state": "CLOSED",
-     "comments": 4,
-     "reactions": 1,
-     "createdAt": "2026-09-16T03:32:33Z",
-     "closedAt": "2026-10-12T02:55:02Z"
-    }
-   ],
-   "bestAnswers": [
-    {
-     "discussion": 15977,
-     "title": "Face unlock for Omarchy (omaFace), and a small ask: a hook for extra login methods in the lock screen",
-     "url": "https://github.com/omacom/omarchy/discussions/15977",
-     "category": "Suggestions",
-     "upvoteCount": 7,
-     "kind": "top-comment",
-     "author": "L0adn9",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/15977#discussioncomment-19093627",
-     "snippet": "Small update on this.\n\nI was using it daily and noticed IR unlocks were slow, so I dug into it. Two things were wrong. The attention check basically wanted you to stare into the lens instead of the screen, so I swapped it for an eyelid + gaze model, and now it unlocks when you're just looking at the screen normally (still refuses eyes closed or looking down at your phone). The other one was weirder: my IR camera was metering exposure off a 1x1 pixel in the corner and blowing my face out to pure "
-    },
-    {
-     "discussion": 15885,
-     "title": "Microsoft Surface Laptop Ultra (NVIDIA N1X) — hardware support, open issues and testing",
-     "url": "https://github.com/omacom/omarchy/discussions/15885",
-     "category": "Show and tell",
-     "upvoteCount": 3,
-     "kind": "top-comment",
-     "author": "teo-casares",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/15885#discussioncomment-19026599",
-     "snippet": "**Update: DAILY DRIVER STATUS** Here's the live state from the running machine, Omarchy 4 aarch64 on `linux-omarchy` 7.2.8-13. I captured it today, 2 h 19 min into the current boot, with 0 failed units and 0 kernel `WARNING`/`Xid`/oops lines this boot.\n\n```\n$ cat /sys/class/dmi/id/{sys_vendor,product_name,bios_version}\nMicrosoft Corporation\nMicrosoft Surface Laptop Ultra\n7.1.0\n\n# GPU: Hyprland on nvidia-drm, panel at native resolution\n$ nvidia-smi --query-gpu=name,driver_version,pstate --format="
-    },
-    {
-     "discussion": 3799,
-     "title": "Philosophy of Omarchy 3.2",
-     "url": "https://github.com/omacom/omarchy/discussions/3799",
-     "category": "Suggestions",
-     "upvoteCount": 3,
-     "kind": "top-comment",
-     "author": "brink-lab",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/3799#discussioncomment-15213449",
-     "snippet": "Who's the chef? Ultimately DHH. \n\nI have been following Omarchy from early days, so I can see some guiding principles and ambitions that have driven Omarchy to where it is today:\n\n- A preconfigured Arch + Hyprland setup that works out of the box. Including utilities such as screen capture tools.\n\n- Particularly catering to professional developers which raises the bar for stability and dependability. DHH is building this for himself and his team of developers. If you depend on your setup to do yo"
-    },
-    {
-     "discussion": 6298,
-     "title": "Built-in webcam not working on Acer Nitro laptop, also broken on Ubuntu",
-     "url": "https://github.com/omacom/omarchy/discussions/6298",
-     "category": "Support",
-     "upvoteCount": 1,
-     "kind": "accepted-answer",
-     "author": "abduvaliy-engineer",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/6298#discussioncomment-18713336",
-     "snippet": "I found a way to fix this if you are interested refer to here https://github.com/abduvaliy-engineer/acer-nitro-anv16s-camera-fix"
-    },
-    {
-     "discussion": 6280,
-     "title": "Built-in webcam not detected on Arch / Omarchy (/dev/video* missing)",
-     "url": "https://github.com/omacom/omarchy/discussions/6280",
-     "category": "Support",
-     "upvoteCount": 1,
-     "kind": "top-comment",
-     "author": "Mrid22",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/6280#discussioncomment-17683964",
-     "snippet": "The webcam seems to be fine for me (/dev/video returns a bunch of results), can you check your bios settings and look for other devices or something like that https://askubuntu.com/questions/1230239/built-in-webcam-not-detected-also-no-dev-video-in-ubuntu-20-04-and-18-04"
-    }
-   ],
-   "exampleErrorLines": [
-    "- `omarchy capture screenrecording --with-webcam` auto-detects the first entry, so it always lands on the Bayer-only node and produces a black overlay with no error — the same symptom #5722 described."
-   ]
-  },
-  {
    "key": "dictation",
    "label": "dictation",
    "query": [
@@ -11723,7 +11721,7 @@
     "issues": 47,
     "open": 31,
     "closed": 16,
-    "discussions": 16
+    "discussions": 17
    },
    "versionsMentioned": {
     "4.0.0": 14,
@@ -11972,8 +11970,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 39,
-    "open": 30,
+    "issues": 40,
+    "open": 31,
     "closed": 9,
     "discussions": 16
    },
@@ -11981,14 +11979,14 @@
     "4.22.x": 16,
     "4.0.4": 15,
     "4.0.2": 9,
-    "4.24.x": 8,
-    "4.0.x": 7,
+    "4.24.x": 9,
+    "4.0.x": 8,
     "4.0.3": 7,
     "4.0.0": 5,
     "4.0.1": 4,
+    "4.5.x": 3,
     "3.x": 2,
     "4.20.x": 1,
-    "4.5.x": 1,
     "4.3.x": 1
    },
    "topIssues": [
@@ -12007,7 +12005,7 @@
      "title": "Lock shell dies during normal idle->lock; session permanently locked, reboot required",
      "url": "https://github.com/omacom/omarchy/issues/6628",
      "state": "OPEN",
-     "comments": 23,
+     "comments": 24,
      "reactions": 1,
      "createdAt": "2026-08-08T09:23:08Z",
      "closedAt": null,
@@ -12046,6 +12044,16 @@
      "closedAt": null
     },
     {
+     "number": 12208,
+     "title": "Lock screen dies during HDMI/display thrash → Hyprland “lockscreen app died” failsafe loop",
+     "url": "https://github.com/omacom/omarchy/issues/12208",
+     "state": "OPEN",
+     "comments": 10,
+     "reactions": 1,
+     "createdAt": "2026-09-17T00:27:37Z",
+     "closedAt": null
+    },
+    {
      "number": 855,
      "title": "Old GTK2-style file chooser shown when selecting files to upload",
      "url": "https://github.com/omacom/omarchy/issues/855",
@@ -12063,16 +12071,6 @@
      "comments": 6,
      "reactions": 3,
      "createdAt": "2026-08-17T00:21:40Z",
-     "closedAt": null
-    },
-    {
-     "number": 12208,
-     "title": "Lock screen dies during HDMI/display thrash → Hyprland “lockscreen app died” failsafe loop",
-     "url": "https://github.com/omacom/omarchy/issues/12208",
-     "state": "OPEN",
-     "comments": 8,
-     "reactions": 1,
-     "createdAt": "2026-09-17T00:27:37Z",
      "closedAt": null
     },
     {
@@ -12400,8 +12398,8 @@
     "3.x": 5,
     "4.0.2": 4,
     "4.0.0": 4,
-    "4.0.1": 1,
-    "4.5.x": 1
+    "4.5.x": 2,
+    "4.0.1": 1
    },
    "topIssues": [
     {
@@ -12531,6 +12529,16 @@
      "closedAt": null
     },
     {
+     "number": 8843,
+     "title": "Browser cannot access built-in camera even when libcamera, pipewire-libcamera, and qcam all work",
+     "url": "https://github.com/omacom/omarchy/issues/8843",
+     "state": "OPEN",
+     "comments": 3,
+     "reactions": 0,
+     "createdAt": "2026-08-28T23:59:29Z",
+     "closedAt": null
+    },
+    {
      "number": 10624,
      "title": "IPU7 camera: ov08x40 sensor bind is lost on suspend/resume and camera-init can't restore it (XPS 16 DA16260)",
      "url": "https://github.com/omacom/omarchy/issues/10624",
@@ -12555,16 +12563,6 @@
      "fixedBy": [
       418
      ]
-    },
-    {
-     "number": 12178,
-     "title": "Lunar Lake: intel-ipu7-camera is installed by detection but built for Panther Lake only — no camera on any Core Ultra 200V laptop, fix open since 09-09",
-     "url": "https://github.com/omacom/omarchy/issues/12178",
-     "state": "OPEN",
-     "comments": 3,
-     "reactions": 0,
-     "createdAt": "2026-09-16T19:31:53Z",
-     "closedAt": null
     }
    ],
    "bestAnswers": [],
@@ -12818,8 +12816,8 @@
     "4.0.0": 7,
     "4.0.1": 2,
     "4.0.4": 2,
-    "4.2.x": 1,
     "4.12.x": 1,
+    "4.2.x": 1,
     "4.4.x": 1,
     "4.99.x": 1,
     "4.0.2": 1,
@@ -13485,8 +13483,8 @@
    "versionsMentioned": {
     "3.x": 14,
     "4.0.0": 4,
-    "4.2.x": 1,
     "4.12.x": 1,
+    "4.2.x": 1,
     "4.4.x": 1,
     "4.99.x": 1
    },
@@ -13671,8 +13669,8 @@
    "discovered": "seed",
    "searchScope": "title+body+comments",
    "counts": {
-    "issues": 22,
-    "open": 14,
+    "issues": 23,
+    "open": 15,
     "closed": 8,
     "discussions": 3
    },
@@ -13680,10 +13678,10 @@
     "4.0.4": 6,
     "4.0.x": 5,
     "4.0.0": 4,
+    "4.5.x": 4,
     "3.x": 3,
     "4.0.2": 3,
     "4.0.3": 2,
-    "4.5.x": 2,
     "4.0.1": 1
    },
    "topIssues": [
@@ -13751,6 +13749,16 @@
      "closedAt": "2026-02-21T06:23:11Z"
     },
     {
+     "number": 9609,
+     "title": "MacBookPro16,1 (T2, hybrid graphics): gmux leaves the internal panel on the AMD dGPU, hard-hanging the machine at session start",
+     "url": "https://github.com/omacom/omarchy/issues/9609",
+     "state": "OPEN",
+     "comments": 6,
+     "reactions": 0,
+     "createdAt": "2026-09-01T13:17:33Z",
+     "closedAt": null
+    },
+    {
      "number": 11173,
      "title": "nvidia.lua forces LIBVA_DRIVER_NAME=nvidia on hybrid laptops where the iGPU drives the displays, breaking browser video (repro of #11168 on Arrow Lake + Blackwell)",
      "url": "https://github.com/omacom/omarchy/issues/11173",
@@ -13759,16 +13767,6 @@
      "reactions": 0,
      "createdAt": "2026-09-10T16:37:24Z",
      "closedAt": "2026-10-14T00:13:52Z"
-    },
-    {
-     "number": 9609,
-     "title": "MacBookPro16,1 (T2, hybrid graphics): gmux leaves the internal panel on the AMD dGPU, hard-hanging the machine at session start",
-     "url": "https://github.com/omacom/omarchy/issues/9609",
-     "state": "OPEN",
-     "comments": 5,
-     "reactions": 0,
-     "createdAt": "2026-09-01T13:17:33Z",
-     "closedAt": null
     },
     {
      "number": 12041,
@@ -14463,13 +14461,13 @@
    },
    "versionsMentioned": {
     "3.x": 11,
-    "4.2.x": 1,
     "4.12.x": 1,
+    "4.2.x": 1,
     "4.4.x": 1,
     "4.99.x": 1,
     "4.0.1": 1,
-    "4.0.4": 1,
-    "4.0.3": 1
+    "4.0.3": 1,
+    "4.0.4": 1
    },
    "topIssues": [
     {
@@ -14679,7 +14677,8 @@
     "4.0.2": 5,
     "4.0.0": 3,
     "4.0.1": 2,
-    "4.0.x": 2
+    "4.0.x": 2,
+    "4.5.x": 1
    },
    "topIssues": [
     {
@@ -14697,7 +14696,7 @@
      "title": "Lock shell dies during normal idle->lock; session permanently locked, reboot required",
      "url": "https://github.com/omacom/omarchy/issues/6628",
      "state": "OPEN",
-     "comments": 23,
+     "comments": 24,
      "reactions": 1,
      "createdAt": "2026-08-08T09:23:08Z",
      "closedAt": null,
@@ -15533,8 +15532,8 @@
     "4.0.0": 3,
     "4.0.x": 3,
     "4.0.3": 2,
-    "4.0.1": 1,
-    "4.5.x": 1
+    "4.5.x": 2,
+    "4.0.1": 1
    },
    "topIssues": [
     {
@@ -15608,6 +15607,16 @@
      "closedAt": "2025-12-08T08:54:47Z"
     },
     {
+     "number": 8843,
+     "title": "Browser cannot access built-in camera even when libcamera, pipewire-libcamera, and qcam all work",
+     "url": "https://github.com/omacom/omarchy/issues/8843",
+     "state": "OPEN",
+     "comments": 3,
+     "reactions": 0,
+     "createdAt": "2026-08-28T23:59:29Z",
+     "closedAt": null
+    },
+    {
      "number": 14069,
      "title": "ipu7-camera.sh installs intel-ipu7-camera on IPU6 (Arrow Lake) laptops with an OV08X40 sensor",
      "url": "https://github.com/omacom/omarchy/issues/14069",
@@ -15639,16 +15648,6 @@
      "fixedBy": [
       6732
      ]
-    },
-    {
-     "number": 8843,
-     "title": "Browser cannot access built-in camera even when libcamera, pipewire-libcamera, and qcam all work",
-     "url": "https://github.com/omacom/omarchy/issues/8843",
-     "state": "OPEN",
-     "comments": 2,
-     "reactions": 0,
-     "createdAt": "2026-08-28T23:59:29Z",
-     "closedAt": null
     },
     {
      "number": 11850,
@@ -15929,8 +15928,8 @@
    },
    "versionsMentioned": {
     "3.x": 11,
-    "4.0.4": 2,
     "4.0.x": 2,
+    "4.0.4": 2,
     "4.0.1": 1,
     "4.0.0": 1,
     "4.5.x": 1
@@ -16132,10 +16131,10 @@
    "versionsMentioned": {
     "4.0.4": 4,
     "4.0.0": 3,
-    "4.0.x": 2,
     "4.5.x": 2,
-    "4.0.1": 1,
+    "4.0.x": 2,
     "4.0.2": 1,
+    "4.0.1": 1,
     "4.0.3": 1
    },
    "topIssues": [
@@ -16284,8 +16283,8 @@
    },
    "versionsMentioned": {
     "4.0.2": 8,
-    "4.0.3": 5,
     "4.0.1": 5,
+    "4.0.3": 5,
     "4.0.4": 4,
     "4.0.0": 3,
     "3.x": 2
@@ -16436,8 +16435,8 @@
    },
    "versionsMentioned": {
     "4.22.x": 4,
-    "4.0.x": 3,
     "4.24.x": 3,
+    "4.0.x": 3,
     "4.0.0": 2,
     "4.0.1": 2,
     "4.18.x": 1,
@@ -16919,8 +16918,8 @@
     "4.0.2": 2,
     "4.0.x": 2,
     "4.5.x": 1,
-    "4.0.3": 1,
-    "4.2.x": 1
+    "4.2.x": 1,
+    "4.0.3": 1
    },
    "topIssues": [
     {
@@ -17122,8 +17121,8 @@
    "versionsMentioned": {
     "3.x": 3,
     "4.0.0": 3,
-    "4.0.4": 2,
     "4.0.3": 2,
+    "4.0.4": 2,
     "4.5.x": 2,
     "4.0.x": 2,
     "4.0.2": 1
@@ -17252,8 +17251,8 @@
    "versionsMentioned": {
     "3.x": 3,
     "4.0.0": 3,
-    "4.0.4": 2,
     "4.0.3": 2,
+    "4.0.4": 2,
     "4.5.x": 2,
     "4.0.x": 2,
     "4.0.2": 1
@@ -17643,15 +17642,16 @@
     "issues": 9,
     "open": 7,
     "closed": 2,
-    "discussions": 2
+    "discussions": 3
    },
    "versionsMentioned": {
     "4.0.4": 3,
     "3.x": 2,
     "4.0.3": 2,
-    "4.0.0": 1,
     "4.0.2": 1,
-    "4.0.x": 1
+    "4.0.0": 1,
+    "4.0.x": 1,
+    "4.5.x": 1
    },
    "topIssues": [
     {
@@ -17756,6 +17756,17 @@
      "author": "dcunited001",
      "answerUrl": "https://github.com/omacom/omarchy/discussions/3765#discussioncomment-15335687",
      "snippet": "i have an `HP 845 g7`. i haven't experienced these issues.\n\n- do you happen to know whether the enrollment and authentication worked in windows?\n- are you restarting `fprintd.service`? if not, it may be crashing\n- can you run `journalctl -u fprintd.service -p7` to get more detail? or `journalctl -xb -f -p7` while testing enrollment? \n- after boot, run `sudo dmesg | less` and hit `/` then search for `06cb:00f0` or `synaptic` \n\nEDIT: the specific hardware error code is `104`. try searching for inf"
+    },
+    {
+     "discussion": 17938,
+     "title": "Fingerprint setup fails on Goodix 27c6:521d (ASUS ROG Zephyrus G14 GA401QM): no libfprint driver",
+     "url": "https://github.com/omacom/omarchy/discussions/17938",
+     "category": "Suggestions",
+     "upvoteCount": 1,
+     "kind": "top-comment",
+     "author": "martinsoengas",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/17938#discussioncomment-19448886",
+     "snippet": "Update: I built `djnz00/libfprint` (commit `72cacc3`, `goodixtls52xd` driver) without installing it and ran `img-capture` once on this G14.\n\n```\nDevice firmware: \"GFUSB_GM168SEC_APP_10034\"\nDevice PSK flags: 0xbb020001\nUnsupported device PSK hash\n```\n\nSo this reader runs the stock `10034` firmware that the fork targets, but its PSK hash doesn't match the one embedded in the driver. The driver stops before resetting the sensor, so no image was captured. The embedded key may be specific to the fork"
     }
    ],
    "exampleErrorLines": [
@@ -17777,12 +17788,13 @@
     "discussions": 0
    },
    "versionsMentioned": {
+    "4.0.x": 5,
     "4.0.4": 5,
-    "4.0.x": 4,
     "4.0.0": 2,
     "4.0.3": 2,
     "4.0.1": 1,
     "4.0.2": 1,
+    "4.5.x": 1,
     "4.22.x": 1
    },
    "topIssues": [
@@ -17791,7 +17803,7 @@
      "title": "Lock screen dies during HDMI/display thrash → Hyprland “lockscreen app died” failsafe loop",
      "url": "https://github.com/omacom/omarchy/issues/12208",
      "state": "OPEN",
-     "comments": 8,
+     "comments": 10,
      "reactions": 1,
      "createdAt": "2026-09-17T00:27:37Z",
      "closedAt": null
@@ -18544,6 +18556,271 @@
    ]
   },
   {
+   "key": "err-traceback-most-recent-call-last",
+   "label": "Traceback (most recent call last):",
+   "query": [
+    "traceback (most recent call last):"
+   ],
+   "discovered": "auto",
+   "searchScope": "title+body+error-signature",
+   "counts": {
+    "issues": 8,
+    "open": 3,
+    "closed": 5,
+    "discussions": 0
+   },
+   "versionsMentioned": {
+    "3.x": 4,
+    "4.0.0": 2,
+    "4.0.4": 2,
+    "4.5.x": 1,
+    "4.0.x": 1
+   },
+   "topIssues": [
+    {
+     "number": 4263,
+     "title": "missing module TerminalTextEffects after update",
+     "url": "https://github.com/omacom/omarchy/issues/4263",
+     "state": "CLOSED",
+     "comments": 18,
+     "reactions": 25,
+     "createdAt": "2026-01-14T17:44:13Z",
+     "closedAt": "2026-07-18T19:42:50Z"
+    },
+    {
+     "number": 2629,
+     "title": "Power settings \"not found\"",
+     "url": "https://github.com/omacom/omarchy/issues/2629",
+     "state": "CLOSED",
+     "comments": 4,
+     "reactions": 2,
+     "createdAt": "2025-10-20T17:26:39Z",
+     "closedAt": "2026-07-18T19:42:31Z"
+    },
+    {
+     "number": 3637,
+     "title": "autostarting mise breaks arch (python) packages",
+     "url": "https://github.com/omacom/omarchy/issues/3637",
+     "state": "CLOSED",
+     "comments": 6,
+     "reactions": 0,
+     "createdAt": "2025-11-26T23:04:03Z",
+     "closedAt": "2026-09-21T09:50:58Z"
+    },
+    {
+     "number": 5885,
+     "title": "Empty bootloader after fresh Omarchy install",
+     "url": "https://github.com/omacom/omarchy/issues/5885",
+     "state": "OPEN",
+     "comments": 2,
+     "reactions": 1,
+     "createdAt": "2026-05-17T08:07:30Z",
+     "closedAt": null
+    },
+    {
+     "number": 13866,
+     "title": "hermes-desktop launcher crashes: _desktop_launch_options() now returns 5 values",
+     "url": "https://github.com/omacom/omarchy/issues/13866",
+     "state": "OPEN",
+     "comments": 3,
+     "reactions": 0,
+     "createdAt": "2026-09-30T13:03:56Z",
+     "closedAt": null
+    },
+    {
+     "number": 13491,
+     "title": "Hermes Desktop launcher crashes: \"too many values to unpack (expected 4)\" — _desktop_launch_options() now returns >4 values",
+     "url": "https://github.com/omacom/omarchy/issues/13491",
+     "state": "CLOSED",
+     "comments": 2,
+     "reactions": 0,
+     "createdAt": "2026-09-28T00:22:29Z",
+     "closedAt": "2026-09-29T21:35:31Z",
+     "fixedBy": [
+      718
+     ]
+    },
+    {
+     "number": 6649,
+     "title": "omarchy-agent-usage-claude: race condition in scan_opencode_usage's write_json crashes during omarchy update",
+     "url": "https://github.com/omacom/omarchy/issues/6649",
+     "state": "CLOSED",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-08-09T01:22:03Z",
+     "closedAt": "2026-08-09T11:19:47Z",
+     "fixedBy": [
+      6654
+     ]
+    },
+    {
+     "number": 17922,
+     "title": "Omarchy Quattro RS 4.5 ISO/USB Installation Failure",
+     "url": "https://github.com/omacom/omarchy/issues/17922",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-11-06T16:18:06Z",
+     "closedAt": null
+    }
+   ],
+   "bestAnswers": [],
+   "exampleErrorLines": [
+    "Traceback (most recent call last):"
+   ]
+  },
+  {
+   "key": "gamescope",
+   "label": "gamescope",
+   "query": [
+    "gamescope"
+   ],
+   "discovered": "seed",
+   "searchScope": "title+body+comments",
+   "counts": {
+    "issues": 8,
+    "open": 5,
+    "closed": 3,
+    "discussions": 5
+   },
+   "versionsMentioned": {
+    "3.x": 5,
+    "4.0.4": 3,
+    "4.5.x": 2,
+    "4.0.x": 2,
+    "4.0.0": 1
+   },
+   "topIssues": [
+    {
+     "number": 5372,
+     "title": "Brave/Chromium lock up and performance glitches",
+     "url": "https://github.com/omacom/omarchy/issues/5372",
+     "state": "OPEN",
+     "comments": 23,
+     "reactions": 3,
+     "createdAt": "2026-04-20T20:29:01Z",
+     "closedAt": null
+    },
+    {
+     "number": 3971,
+     "title": "Steam/Proton games crash immediately on Hyprland - fix: gamescope",
+     "url": "https://github.com/omacom/omarchy/issues/3971",
+     "state": "CLOSED",
+     "comments": 11,
+     "reactions": 6,
+     "createdAt": "2025-12-23T14:50:09Z",
+     "closedAt": "2026-05-07T11:00:26Z"
+    },
+    {
+     "number": 17759,
+     "title": "4.5 per-monitor workspace change breaks existing global shortcuts and cloned workspace indicators",
+     "url": "https://github.com/omacom/omarchy/issues/17759",
+     "state": "OPEN",
+     "comments": 5,
+     "reactions": 9,
+     "createdAt": "2026-11-05T15:59:43Z",
+     "closedAt": null
+    },
+    {
+     "number": 6947,
+     "title": "Steam idle-inhibit rule matches the client but not steam_app games",
+     "url": "https://github.com/omacom/omarchy/issues/6947",
+     "state": "OPEN",
+     "comments": 9,
+     "reactions": 4,
+     "createdAt": "2026-08-15T09:46:09Z",
+     "closedAt": null
+    },
+    {
+     "number": 12411,
+     "title": "Codex usage collector rereads GB of history and saturates CPU",
+     "url": "https://github.com/omacom/omarchy/issues/12411",
+     "state": "OPEN",
+     "comments": 10,
+     "reactions": 0,
+     "createdAt": "2026-09-18T15:06:27Z",
+     "closedAt": null
+    },
+    {
+     "number": 4016,
+     "title": "Paradox native titles (HoI4, Stellaris) fail to launch after the first run",
+     "url": "https://github.com/omacom/omarchy/issues/4016",
+     "state": "CLOSED",
+     "comments": 5,
+     "reactions": 0,
+     "createdAt": "2025-12-29T16:05:25Z",
+     "closedAt": "2026-07-18T21:58:55Z"
+    },
+    {
+     "number": 4595,
+     "title": "Steam games (xwayland) won't fullscreen.",
+     "url": "https://github.com/omacom/omarchy/issues/4595",
+     "state": "CLOSED",
+     "comments": 3,
+     "reactions": 2,
+     "createdAt": "2026-02-13T16:07:11Z",
+     "closedAt": "2026-07-18T21:59:17Z"
+    },
+    {
+     "number": 15806,
+     "title": "Battle.net window missing through Lutris/Gamescope; stock Omarchy launcher works",
+     "url": "https://github.com/omacom/omarchy/issues/15806",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-10-18T07:06:29Z",
+     "closedAt": null
+    }
+   ],
+   "bestAnswers": [
+    {
+     "discussion": 3602,
+     "title": "Opinionated Steam Game Scope TUI",
+     "url": "https://github.com/omacom/omarchy/discussions/3602",
+     "category": "Show and tell",
+     "upvoteCount": 6,
+     "kind": "top-comment",
+     "author": "amagriz",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/3602#discussioncomment-15069183",
+     "snippet": "This looks like it has some great potential, is there any way to test this out? I've been having a very hit or miss experience with Steam on Omarchy and this could be a huge time saver."
+    },
+    {
+     "discussion": 4534,
+     "title": "Omarchy STEAM DECK MODE",
+     "url": "https://github.com/omacom/omarchy/discussions/4534",
+     "category": "Show and tell",
+     "upvoteCount": 4,
+     "kind": "top-comment",
+     "author": "darkstarlabs-accounts",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/4534#discussioncomment-15803996",
+     "snippet": "Love this thanks for all your work. Will there be more on the nvidia limitation? Really need it above that resolution!"
+    },
+    {
+     "discussion": 6277,
+     "title": "Paradox native titles (HoI4, Stellaris) fail to launch after the first run",
+     "url": "https://github.com/omacom/omarchy/discussions/6277",
+     "category": "Support",
+     "upvoteCount": 1,
+     "kind": "top-comment",
+     "author": "MAnitosik",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/6277#discussioncomment-17683918",
+     "snippet": "Probably not related to omarchy itself, have you tried using gamescope? "
+    },
+    {
+     "discussion": 6281,
+     "title": "Steam games (xwayland) won't fullscreen.",
+     "url": "https://github.com/omacom/omarchy/discussions/6281",
+     "category": "Support",
+     "upvoteCount": 1,
+     "kind": "top-comment",
+     "author": "Mrid22",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/6281#discussioncomment-17683965",
+     "snippet": "try setting STEAM_FORCE_DESKTOPUI_SCALING=1?"
+    }
+   ],
+   "exampleErrorLines": []
+  },
+  {
    "key": "conflicting-files",
    "label": "conflicting files",
    "query": [
@@ -18561,8 +18838,8 @@
     "4.0.0": 4,
     "3.x": 1,
     "4.0.1": 1,
-    "4.0.4": 1,
-    "4.5.x": 1
+    "4.5.x": 1,
+    "4.0.4": 1
    },
    "topIssues": [
     {
@@ -18656,15 +18933,15 @@
     "issues": 7,
     "open": 5,
     "closed": 2,
-    "discussions": 1
+    "discussions": 2
    },
    "versionsMentioned": {
     "3.x": 2,
     "4.0.3": 2,
     "4.0.4": 2,
-    "4.0.0": 1,
+    "4.5.x": 2,
     "4.0.2": 1,
-    "4.5.x": 1
+    "4.0.0": 1
    },
    "topIssues": [
     {
@@ -18738,7 +19015,19 @@
      "closedAt": null
     }
    ],
-   "bestAnswers": [],
+   "bestAnswers": [
+    {
+     "discussion": 17938,
+     "title": "Fingerprint setup fails on Goodix 27c6:521d (ASUS ROG Zephyrus G14 GA401QM): no libfprint driver",
+     "url": "https://github.com/omacom/omarchy/discussions/17938",
+     "category": "Suggestions",
+     "upvoteCount": 1,
+     "kind": "top-comment",
+     "author": "martinsoengas",
+     "answerUrl": "https://github.com/omacom/omarchy/discussions/17938#discussioncomment-19448886",
+     "snippet": "Update: I built `djnz00/libfprint` (commit `72cacc3`, `goodixtls52xd` driver) without installing it and ran `img-capture` once on this G14.\n\n```\nDevice firmware: \"GFUSB_GM168SEC_APP_10034\"\nDevice PSK flags: 0xbb020001\nUnsupported device PSK hash\n```\n\nSo this reader runs the stock `10034` firmware that the fork targets, but its PSK hash doesn't match the one embedded in the driver. The driver stops before resetting the sensor, so no image was captured. The embedded key may be specific to the fork"
+    }
+   ],
    "exampleErrorLines": [
     "Impossible to enroll: GDBus.Error:net.reactivated.Fprint.Error.NoSuchDevice: No devices available"
    ]
@@ -18864,8 +19153,8 @@
    "versionsMentioned": {
     "4.0.2": 5,
     "4.0.0": 2,
-    "4.0.4": 1,
     "4.0.3": 1,
+    "4.0.4": 1,
     "4.0.1": 1
    },
    "topIssues": [
@@ -19044,249 +19333,6 @@
    "exampleErrorLines": [
     "TimeoutError(\"account/read\")"
    ]
-  },
-  {
-   "key": "err-traceback-most-recent-call-last",
-   "label": "Traceback (most recent call last):",
-   "query": [
-    "traceback (most recent call last):"
-   ],
-   "discovered": "auto",
-   "searchScope": "title+body+error-signature",
-   "counts": {
-    "issues": 7,
-    "open": 2,
-    "closed": 5,
-    "discussions": 0
-   },
-   "versionsMentioned": {
-    "3.x": 4,
-    "4.0.0": 2,
-    "4.0.4": 2
-   },
-   "topIssues": [
-    {
-     "number": 4263,
-     "title": "missing module TerminalTextEffects after update",
-     "url": "https://github.com/omacom/omarchy/issues/4263",
-     "state": "CLOSED",
-     "comments": 18,
-     "reactions": 25,
-     "createdAt": "2026-01-14T17:44:13Z",
-     "closedAt": "2026-07-18T19:42:50Z"
-    },
-    {
-     "number": 2629,
-     "title": "Power settings \"not found\"",
-     "url": "https://github.com/omacom/omarchy/issues/2629",
-     "state": "CLOSED",
-     "comments": 4,
-     "reactions": 2,
-     "createdAt": "2025-10-20T17:26:39Z",
-     "closedAt": "2026-07-18T19:42:31Z"
-    },
-    {
-     "number": 3637,
-     "title": "autostarting mise breaks arch (python) packages",
-     "url": "https://github.com/omacom/omarchy/issues/3637",
-     "state": "CLOSED",
-     "comments": 6,
-     "reactions": 0,
-     "createdAt": "2025-11-26T23:04:03Z",
-     "closedAt": "2026-09-21T09:50:58Z"
-    },
-    {
-     "number": 5885,
-     "title": "Empty bootloader after fresh Omarchy install",
-     "url": "https://github.com/omacom/omarchy/issues/5885",
-     "state": "OPEN",
-     "comments": 2,
-     "reactions": 1,
-     "createdAt": "2026-05-17T08:07:30Z",
-     "closedAt": null
-    },
-    {
-     "number": 13866,
-     "title": "hermes-desktop launcher crashes: _desktop_launch_options() now returns 5 values",
-     "url": "https://github.com/omacom/omarchy/issues/13866",
-     "state": "OPEN",
-     "comments": 3,
-     "reactions": 0,
-     "createdAt": "2026-09-30T13:03:56Z",
-     "closedAt": null
-    },
-    {
-     "number": 13491,
-     "title": "Hermes Desktop launcher crashes: \"too many values to unpack (expected 4)\" — _desktop_launch_options() now returns >4 values",
-     "url": "https://github.com/omacom/omarchy/issues/13491",
-     "state": "CLOSED",
-     "comments": 2,
-     "reactions": 0,
-     "createdAt": "2026-09-28T00:22:29Z",
-     "closedAt": "2026-09-29T21:35:31Z",
-     "fixedBy": [
-      718
-     ]
-    },
-    {
-     "number": 6649,
-     "title": "omarchy-agent-usage-claude: race condition in scan_opencode_usage's write_json crashes during omarchy update",
-     "url": "https://github.com/omacom/omarchy/issues/6649",
-     "state": "CLOSED",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-08-09T01:22:03Z",
-     "closedAt": "2026-08-09T11:19:47Z",
-     "fixedBy": [
-      6654
-     ]
-    }
-   ],
-   "bestAnswers": [],
-   "exampleErrorLines": [
-    "Traceback (most recent call last):"
-   ]
-  },
-  {
-   "key": "gamescope",
-   "label": "gamescope",
-   "query": [
-    "gamescope"
-   ],
-   "discovered": "seed",
-   "searchScope": "title+body+comments",
-   "counts": {
-    "issues": 7,
-    "open": 4,
-    "closed": 3,
-    "discussions": 5
-   },
-   "versionsMentioned": {
-    "3.x": 5,
-    "4.0.4": 3,
-    "4.0.x": 2,
-    "4.0.0": 1,
-    "4.5.x": 1
-   },
-   "topIssues": [
-    {
-     "number": 5372,
-     "title": "Brave/Chromium lock up and performance glitches",
-     "url": "https://github.com/omacom/omarchy/issues/5372",
-     "state": "OPEN",
-     "comments": 23,
-     "reactions": 3,
-     "createdAt": "2026-04-20T20:29:01Z",
-     "closedAt": null
-    },
-    {
-     "number": 3971,
-     "title": "Steam/Proton games crash immediately on Hyprland - fix: gamescope",
-     "url": "https://github.com/omacom/omarchy/issues/3971",
-     "state": "CLOSED",
-     "comments": 11,
-     "reactions": 6,
-     "createdAt": "2025-12-23T14:50:09Z",
-     "closedAt": "2026-05-07T11:00:26Z"
-    },
-    {
-     "number": 6947,
-     "title": "Steam idle-inhibit rule matches the client but not steam_app games",
-     "url": "https://github.com/omacom/omarchy/issues/6947",
-     "state": "OPEN",
-     "comments": 9,
-     "reactions": 4,
-     "createdAt": "2026-08-15T09:46:09Z",
-     "closedAt": null
-    },
-    {
-     "number": 12411,
-     "title": "Codex usage collector rereads GB of history and saturates CPU",
-     "url": "https://github.com/omacom/omarchy/issues/12411",
-     "state": "OPEN",
-     "comments": 10,
-     "reactions": 0,
-     "createdAt": "2026-09-18T15:06:27Z",
-     "closedAt": null
-    },
-    {
-     "number": 4016,
-     "title": "Paradox native titles (HoI4, Stellaris) fail to launch after the first run",
-     "url": "https://github.com/omacom/omarchy/issues/4016",
-     "state": "CLOSED",
-     "comments": 5,
-     "reactions": 0,
-     "createdAt": "2025-12-29T16:05:25Z",
-     "closedAt": "2026-07-18T21:58:55Z"
-    },
-    {
-     "number": 4595,
-     "title": "Steam games (xwayland) won't fullscreen.",
-     "url": "https://github.com/omacom/omarchy/issues/4595",
-     "state": "CLOSED",
-     "comments": 3,
-     "reactions": 2,
-     "createdAt": "2026-02-13T16:07:11Z",
-     "closedAt": "2026-07-18T21:59:17Z"
-    },
-    {
-     "number": 15806,
-     "title": "Battle.net window missing through Lutris/Gamescope; stock Omarchy launcher works",
-     "url": "https://github.com/omacom/omarchy/issues/15806",
-     "state": "OPEN",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-10-18T07:06:29Z",
-     "closedAt": null
-    }
-   ],
-   "bestAnswers": [
-    {
-     "discussion": 3602,
-     "title": "Opinionated Steam Game Scope TUI",
-     "url": "https://github.com/omacom/omarchy/discussions/3602",
-     "category": "Show and tell",
-     "upvoteCount": 6,
-     "kind": "top-comment",
-     "author": "amagriz",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/3602#discussioncomment-15069183",
-     "snippet": "This looks like it has some great potential, is there any way to test this out? I've been having a very hit or miss experience with Steam on Omarchy and this could be a huge time saver."
-    },
-    {
-     "discussion": 4534,
-     "title": "Omarchy STEAM DECK MODE",
-     "url": "https://github.com/omacom/omarchy/discussions/4534",
-     "category": "Show and tell",
-     "upvoteCount": 4,
-     "kind": "top-comment",
-     "author": "darkstarlabs-accounts",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/4534#discussioncomment-15803996",
-     "snippet": "Love this thanks for all your work. Will there be more on the nvidia limitation? Really need it above that resolution!"
-    },
-    {
-     "discussion": 6277,
-     "title": "Paradox native titles (HoI4, Stellaris) fail to launch after the first run",
-     "url": "https://github.com/omacom/omarchy/discussions/6277",
-     "category": "Support",
-     "upvoteCount": 1,
-     "kind": "top-comment",
-     "author": "MAnitosik",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/6277#discussioncomment-17683918",
-     "snippet": "Probably not related to omarchy itself, have you tried using gamescope? "
-    },
-    {
-     "discussion": 6281,
-     "title": "Steam games (xwayland) won't fullscreen.",
-     "url": "https://github.com/omacom/omarchy/discussions/6281",
-     "category": "Support",
-     "upvoteCount": 1,
-     "kind": "top-comment",
-     "author": "Mrid22",
-     "answerUrl": "https://github.com/omacom/omarchy/discussions/6281#discussioncomment-17683965",
-     "snippet": "try setting STEAM_FORCE_DESKTOPUI_SCALING=1?"
-    }
-   ],
-   "exampleErrorLines": []
   },
   {
    "key": "nil-value-global-o",
@@ -20393,8 +20439,8 @@
    "versionsMentioned": {
     "4.0.0": 3,
     "4.0.4": 1,
-    "4.0.x": 1,
-    "4.5.x": 1
+    "4.5.x": 1,
+    "4.0.x": 1
    },
    "topIssues": [
     {
@@ -20549,8 +20595,8 @@
     "4.0.0": 2,
     "4.0.1": 1,
     "4.0.2": 1,
-    "4.0.x": 1,
-    "4.5.x": 1
+    "4.5.x": 1,
+    "4.0.x": 1
    },
    "topIssues": [
     {
@@ -21927,8 +21973,8 @@
    "versionsMentioned": {
     "4.0.0": 2,
     "4.0.4": 2,
-    "4.0.1": 1,
     "4.0.2": 1,
+    "4.0.1": 1,
     "4.0.3": 1,
     "4.22.x": 1
    },
@@ -21995,8 +22041,8 @@
    },
    "versionsMentioned": {
     "3.x": 3,
-    "4.2.x": 1,
     "4.12.x": 1,
+    "4.2.x": 1,
     "4.99.x": 1,
     "4.0.4": 1,
     "4.0.0": 1
@@ -22229,7 +22275,7 @@
      "title": "Plugin hot-reload duplicates IPC handlers and leaks GPU surfaces until VRAM exhausts and the bar dies",
      "url": "https://github.com/omacom/omarchy/issues/10746",
      "state": "OPEN",
-     "comments": 2,
+     "comments": 3,
      "reactions": 0,
      "createdAt": "2026-09-08T00:45:53Z",
      "closedAt": null
@@ -22266,9 +22312,9 @@
    },
    "versionsMentioned": {
     "4.0.3": 2,
-    "4.0.4": 1,
     "4.0.x": 1,
-    "3.x": 1
+    "3.x": 1,
+    "4.0.4": 1
    },
    "topIssues": [
     {
@@ -22750,8 +22796,8 @@
     "4.0.0": 2,
     "4.0.3": 2,
     "4.0.2": 1,
-    "4.0.4": 1,
-    "4.0.x": 1
+    "4.0.x": 1,
+    "4.0.4": 1
    },
    "topIssues": [
     {
@@ -22862,6 +22908,76 @@
    "bestAnswers": [],
    "exampleErrorLines": [
     "org.freedesktop.DBus.Error.Failed"
+   ]
+  },
+  {
+   "key": "err-the-wayland-connection-experienced-a-fatal-error-invalid-arg",
+   "label": "The Wayland connection experienced a fatal error: Invalid argument",
+   "query": [
+    "the wayland connection experienced a fatal error: invalid argument"
+   ],
+   "discovered": "auto",
+   "searchScope": "title+body+error-signature",
+   "counts": {
+    "issues": 4,
+    "open": 3,
+    "closed": 1,
+    "discussions": 0
+   },
+   "versionsMentioned": {
+    "4.0.3": 2,
+    "4.0.2": 1,
+    "4.0.4": 1,
+    "4.0.0": 1,
+    "4.22.x": 1,
+    "4.0.x": 1,
+    "4.5.x": 1
+   },
+   "topIssues": [
+    {
+     "number": 9745,
+     "title": "omarchy-shell crash-loops after stranded-lock recovery hits a placeholder screen, eventually filling the runtime tmpfs and killing all keybindings",
+     "url": "https://github.com/omacom/omarchy/issues/9745",
+     "state": "OPEN",
+     "comments": 6,
+     "reactions": 0,
+     "createdAt": "2026-09-02T05:07:01Z",
+     "closedAt": null
+    },
+    {
+     "number": 11383,
+     "title": "Plugin watcher outlives a shell crash, leaking an inotifywait each time until inotify instances are exhausted",
+     "url": "https://github.com/omacom/omarchy/issues/11383",
+     "state": "CLOSED",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-09-11T22:57:15Z",
+     "closedAt": "2026-09-21T09:51:54Z"
+    },
+    {
+     "number": 17989,
+     "title": "omarchy-shell dies with Wayland fatal error when HDMI output drops while locked (Apple M1 + KVM)",
+     "url": "https://github.com/omacom/omarchy/issues/17989",
+     "state": "OPEN",
+     "comments": 1,
+     "reactions": 0,
+     "createdAt": "2026-11-07T07:05:28Z",
+     "closedAt": null
+    },
+    {
+     "number": 17123,
+     "title": "omarchy-shell exits 255 in loop on lock: no lock surface for empty screen",
+     "url": "https://github.com/omacom/omarchy/issues/17123",
+     "state": "OPEN",
+     "comments": 0,
+     "reactions": 0,
+     "createdAt": "2026-10-31T02:18:00Z",
+     "closedAt": null
+    }
+   ],
+   "bestAnswers": [],
+   "exampleErrorLines": [
+    "The Wayland connection experienced a fatal error: Invalid argument"
    ]
   },
   {
@@ -23013,11 +23129,11 @@
     "discussions": 7
    },
    "versionsMentioned": {
-    "4.0.x": 2,
     "4.0.4": 2,
-    "4.0.0": 1,
+    "4.0.x": 2,
+    "4.25.x": 1,
     "4.0.1": 1,
-    "4.25.x": 1
+    "4.0.0": 1
    },
    "topIssues": [
     {
@@ -23573,6 +23689,7 @@
    "versionsMentioned": {
     "4.0.4": 3,
     "4.0.3": 1,
+    "4.5.x": 1,
     "4.0.x": 1
    },
    "topIssues": [
@@ -23591,7 +23708,7 @@
      "title": "Lock screen wakes in a loop on monitors that drop HDMI hotplug in standby",
      "url": "https://github.com/omacom/omarchy/issues/13812",
      "state": "OPEN",
-     "comments": 7,
+     "comments": 9,
      "reactions": 0,
      "createdAt": "2026-09-29T23:40:28Z",
      "closedAt": null
@@ -24262,8 +24379,8 @@
     "discussions": 0
    },
    "versionsMentioned": {
-    "4.0.4": 3,
     "4.0.x": 3,
+    "4.0.4": 3,
     "4.0.3": 1
    },
    "topIssues": [
@@ -24321,8 +24438,8 @@
    },
    "versionsMentioned": {
     "4.0.1": 1,
-    "4.0.4": 1,
     "4.0.3": 1,
+    "4.0.4": 1,
     "4.0.x": 1
    },
    "topIssues": [
@@ -24492,10 +24609,10 @@
    },
    "versionsMentioned": {
     "4.0.4": 3,
-    "4.0.1": 1,
     "4.0.2": 1,
-    "3.x": 1,
+    "4.0.1": 1,
     "4.0.0": 1,
+    "3.x": 1,
     "4.0.x": 1
    },
    "topIssues": [
@@ -24725,8 +24842,8 @@
    "versionsMentioned": {
     "4.0.1": 1,
     "4.0.4": 1,
-    "4.0.x": 1,
-    "4.0.2": 1
+    "4.0.2": 1,
+    "4.0.x": 1
    },
    "topIssues": [
     {
@@ -24763,65 +24880,6 @@
    "bestAnswers": [],
    "exampleErrorLines": [
     "target not found"
-   ]
-  },
-  {
-   "key": "err-the-wayland-connection-experienced-a-fatal-error-invalid-arg",
-   "label": "The Wayland connection experienced a fatal error: Invalid argument",
-   "query": [
-    "the wayland connection experienced a fatal error: invalid argument"
-   ],
-   "discovered": "auto",
-   "searchScope": "title+body+error-signature",
-   "counts": {
-    "issues": 3,
-    "open": 2,
-    "closed": 1,
-    "discussions": 0
-   },
-   "versionsMentioned": {
-    "4.0.3": 2,
-    "4.22.x": 1,
-    "4.0.2": 1,
-    "4.0.0": 1,
-    "4.0.4": 1,
-    "4.0.x": 1
-   },
-   "topIssues": [
-    {
-     "number": 9745,
-     "title": "omarchy-shell crash-loops after stranded-lock recovery hits a placeholder screen, eventually filling the runtime tmpfs and killing all keybindings",
-     "url": "https://github.com/omacom/omarchy/issues/9745",
-     "state": "OPEN",
-     "comments": 6,
-     "reactions": 0,
-     "createdAt": "2026-09-02T05:07:01Z",
-     "closedAt": null
-    },
-    {
-     "number": 11383,
-     "title": "Plugin watcher outlives a shell crash, leaking an inotifywait each time until inotify instances are exhausted",
-     "url": "https://github.com/omacom/omarchy/issues/11383",
-     "state": "CLOSED",
-     "comments": 1,
-     "reactions": 0,
-     "createdAt": "2026-09-11T22:57:15Z",
-     "closedAt": "2026-09-21T09:51:54Z"
-    },
-    {
-     "number": 17123,
-     "title": "omarchy-shell exits 255 in loop on lock: no lock surface for empty screen",
-     "url": "https://github.com/omacom/omarchy/issues/17123",
-     "state": "OPEN",
-     "comments": 0,
-     "reactions": 0,
-     "createdAt": "2026-10-31T02:18:00Z",
-     "closedAt": null
-    }
-   ],
-   "bestAnswers": [],
-   "exampleErrorLines": [
-    "The Wayland connection experienced a fatal error: Invalid argument"
    ]
   },
   {
@@ -24895,8 +24953,8 @@
     "discussions": 0
    },
    "versionsMentioned": {
-    "4.0.4": 3,
     "4.0.x": 3,
+    "4.0.4": 3,
     "4.0.2": 1
    },
    "topIssues": [
@@ -24954,8 +25012,8 @@
     "discussions": 0
    },
    "versionsMentioned": {
-    "4.0.4": 3,
     "4.0.x": 3,
+    "4.0.4": 3,
     "4.0.2": 1
    },
    "topIssues": [
@@ -25072,8 +25130,8 @@
    },
    "versionsMentioned": {
     "4.0.2": 2,
-    "4.0.4": 1,
-    "4.0.x": 1
+    "4.0.x": 1,
+    "4.0.4": 1
    },
    "topIssues": [
     {
@@ -25087,6 +25145,16 @@
      "closedAt": null
     },
     {
+     "number": 10746,
+     "title": "Plugin hot-reload duplicates IPC handlers and leaks GPU surfaces until VRAM exhausts and the bar dies",
+     "url": "https://github.com/omacom/omarchy/issues/10746",
+     "state": "OPEN",
+     "comments": 3,
+     "reactions": 0,
+     "createdAt": "2026-09-08T00:45:53Z",
+     "closedAt": null
+    },
+    {
      "number": 9843,
      "title": "omarchy-shell crash-loops (fatal Wayland error) after idle-lock DPMS toggle and hibernate resume",
      "url": "https://github.com/omacom/omarchy/issues/9843",
@@ -25094,16 +25162,6 @@
      "comments": 2,
      "reactions": 0,
      "createdAt": "2026-09-02T16:42:34Z",
-     "closedAt": null
-    },
-    {
-     "number": 10746,
-     "title": "Plugin hot-reload duplicates IPC handlers and leaks GPU surfaces until VRAM exhausts and the bar dies",
-     "url": "https://github.com/omacom/omarchy/issues/10746",
-     "state": "OPEN",
-     "comments": 2,
-     "reactions": 0,
-     "createdAt": "2026-09-08T00:45:53Z",
      "closedAt": null
     }
    ],
@@ -25127,8 +25185,8 @@
     "discussions": 0
    },
    "versionsMentioned": {
-    "4.0.4": 2,
     "4.0.2": 2,
+    "4.0.4": 2,
     "4.0.x": 1
    },
    "topIssues": [

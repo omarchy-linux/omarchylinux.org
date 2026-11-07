@@ -946,6 +946,7 @@
       "omarchy-toggle-theme-sync",
       "omarchy-update-boot",
       "omarchy-update-pacman",
+      "omarchy-update-qualcomm-device-trees",
       "omarchy-webapp-window-class",
       "omarchy-windows-key"
     ],
@@ -1458,11 +1459,11 @@
       }
     ],
     "counts": {
-      "added": 145,
+      "added": 146,
       "changed": 41,
       "from": 444,
       "removed": 7,
-      "to": 582
+      "to": 583
     },
     "removed": [
       "omarchy-screensaver",
@@ -2530,9 +2531,9 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 124,
+      "new": 128,
       "removed": 0,
-      "to": 230
+      "to": 234
     },
     "new": [
       {
@@ -2559,6 +2560,11 @@
         "date": "2026-08-21T20:09:53Z",
         "description": "Install ori (OpenRouter's agent harness) via mise wrapper",
         "file": "1787342993.sh"
+      },
+      {
+        "date": "2026-08-23T10:35:14Z",
+        "description": "Install Osaka Jade from its own repo for anyone still on it",
+        "file": "1787481314.sh"
       },
       {
         "date": "2026-08-24T12:13:49Z",
@@ -3136,6 +3142,11 @@
         "file": "1793565796.sh"
       },
       {
+        "date": "2026-11-02T20:15:06Z",
+        "description": "Install the OEM firmware package on Snapdragon machines that have one",
+        "file": "1793650506.sh"
+      },
+      {
         "date": "2026-11-03T00:59:41Z",
         "description": "Finish Superwhisper setup for installs that came up with it unconfigured",
         "file": "1793667581.sh"
@@ -3154,6 +3165,16 @@
         "date": "2026-11-05T03:24:37Z",
         "description": "Disable the HP ZBook Ultra G3a's phantom USB port that stalls the fingerprint reader",
         "file": "1793849077.sh"
+      },
+      {
+        "date": "2026-11-05T05:02:13Z",
+        "description": "Show the disk unlock prompt on Snapdragon X2 machines by loading their USB-C display drivers early",
+        "file": "1793854933.sh"
+      },
+      {
+        "date": "2026-11-06T18:20:40Z",
+        "description": "Keep the Snapdragon device tree list current when a kernel update brings new trees",
+        "file": "1793989240.sh"
       }
     ],
     "removed": []

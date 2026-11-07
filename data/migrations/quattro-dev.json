@@ -1,5 +1,5 @@
 {
-  "count": 230,
+  "count": 234,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -1489,6 +1489,24 @@
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1787399318.sh",
       "timestamp": 1787399318,
       "touches": []
+    },
+    {
+      "body": "echo \"Install Osaka Jade from its own repo for anyone still on it\"\n\n# Osaka Jade moved to its own repo under the same name. Dated before 1787481315 so\n# a 4.0 upgrade installs it before that refresh swaps it for the default, and a 4.5\n# install the refresh left with no colors.toml still gets it.\ntheme_name_path=\"$HOME/.local/state/omarchy/current/theme.name\"\nuser_theme=\"$HOME/.config/omarchy/themes/osaka-jade\"\nrepo=\"https://github.com/omacom/omarchy-osaka-jade-theme\"\n\n[[ -s $theme_name_path && $(<\"$theme_name_path\") == \"osaka-jade\" ]] || exit 0\n\n[[ -f $OMARCHY_PATH/themes/osaka-jade/colors.toml ]] && exit 0\n\nif [[ -f $user_theme/colors.toml ]]; then\n  [[ -f $HOME/.local/state/omarchy/current/theme/colors.toml ]] || omarchy-theme-set osaka-jade\n  exit 0\nfi\n\nif [[ -d $user_theme ]]; then\n  # Overrides that were layered on the bundled theme: give back its palette, icons\n  # and wallpapers beside them, never over them, rather than replacing the directory.\n  clone=$(mktemp -d)\n  if GIT_TERMINAL_PROMPT=0 git clone -q --depth 1 -- \"$repo\" \"$clone\"; then\n    [[ -L $user_theme/backgrounds ]] || cp -rn \"$clone/backgrounds\" \"$user_theme/\"\n    cp -n \"$clone/icons.theme\" \"$clone/colors.toml\" \"$user_theme/\"\n    rm -rf \"$clone\"\n    omarchy-theme-set osaka-jade\n    exit 0\n  fi\n  rm -rf \"$clone\"\nelif GIT_TERMINAL_PROMPT=0 omarchy-theme-install \"$repo\"; then\n  exit 0\nfi\n\necho \"Could not install Osaka Jade; applying Jade Horse, which replaced it\"\nomarchy-theme-set \"Jade Horse\"",
+      "bodyTruncated": false,
+      "date": "2026-08-23T10:35:14Z",
+      "description": "Install Osaka Jade from its own repo for anyone still on it",
+      "file": "1787481314.sh",
+      "lineCount": 36,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1787481314.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1787481314.sh",
+      "timestamp": 1787481314,
+      "touches": [
+        "~/.config/omarchy/themes/osaka-jade",
+        "~/.local/state/omarchy/current/theme.name",
+        "~/.local/state/omarchy/current/theme/colors.toml"
+      ]
     },
     {
       "body": "echo \"Re-stage the current theme so an installed theme's code is dropped\"\n\n# A theme installed from a repo could ship hyprland.lua, gum_env.lua, neovim.lua\n# and terminal configs, and they were copied straight into the staged theme that\n# Hyprland requires at login and the terminals include at launch. Staging drops\n# them now, but an install that already applied such a theme keeps the staged\n# copies until something changes the theme, which may be never. Re-stage once so\n# the fix reaches the themes already in place rather than only the next one.\ntheme_name_path=\"$HOME/.local/state/omarchy/current/theme.name\"\n\n[[ -s $theme_name_path ]] || exit 0\n\ntheme_name=$(<\"$theme_name_path\")\n\n# A theme removed while it was still current leaves theme.name naming it and the\n# staged copy behind, so there is nothing left to re-stage from and those staged\n# files are exactly the ones this is here to drop. Seed the default instead,\n# which is where a fresh install starts and what the removal should have left.\nif [[ ! -d $OMARCHY_PATH/themes/$theme_name && ! -d $HOME/.config/omarchy/themes/$theme_name ]]; then\n  echo \"Theme '$theme_name' no longer exists; applying the default instead\"\n  omarchy-theme-set \"Tokyo Night\"\n  exit 0\nfi\n\nomarchy-theme-refresh",
@@ -3743,12 +3761,12 @@
       "touches": []
     },
     {
-      "body": "echo \"Move dictation to Alt + Space, keeping F9 and Super + Ctrl + X for existing dictation users\"\n\nbindings=\"$HOME/.config/hypr/bindings.lua\"\nif omarchy-default-dictation >/dev/null 2>&1 && [[ -f $bindings ]]; then\n  legacy=\"\"\n  if ! grep -qF '\"SUPER + CTRL + X\"' \"$bindings\"; then\n    legacy+=$'  o.bind(\"SUPER + CTRL + X\", \"Toggle dictation\", \"omarchy-dictation toggle\")\\n'\n  fi\n  if ! grep -qF '\"F9\"' \"$bindings\"; then\n    legacy+=$'  o.bind_hold(\"F9\", \"Start dictation (push-to-talk)\", \"omarchy-dictation start\", \"Stop dictation (push-to-talk)\", \"omarchy-dictation stop\")\\n'\n  fi\n\n  if [[ -n $legacy ]]; then\n    {\n      printf '\\n-- Dictation keys from before Alt + Space and Right Alt became the defaults.\\n'\n      printf -- '-- Remove these lines to give the keys back to applications.\\n'\n      printf 'if o.dictation_installed and o.dictation_installed() then\\n'\n      printf '%s' \"$legacy\"\n      printf 'end\\n'\n    } >> \"$bindings\"\n  fi\nfi\n\n# Superwhisper needs a recording shortcut of its own; move it off Alt + Space,\n# which Omarchy now binds for every dictation backend. A user who never set\n# Superwhisper up has no preferences to move.\nif omarchy-cmd-present superwhisper && [[ -f $HOME/.config/superwhisper/preferences.json ]]; then\n  toggle=$(superwhisper shortcuts show | jq -r '.shortcuts.toggle // empty')\n  if [[ $toggle == \"Alt+Space\" ]]; then\n    superwhisper shortcuts set toggle \"Ctrl+Alt+Space\" >/dev/null\n  fi\nfi",
+      "body": "echo \"Move dictation to Alt + Space, keeping F9 and Super + Ctrl + X for existing dictation users\"\n\nbindings=\"$HOME/.config/hypr/bindings.lua\"\nif omarchy-default-dictation >/dev/null 2>&1 && [[ -f $bindings ]]; then\n  legacy=\"\"\n  if ! grep -qF '\"SUPER + CTRL + X\"' \"$bindings\"; then\n    legacy+=$'  o.bind(\"SUPER + CTRL + X\", \"Toggle dictation\", \"omarchy-dictation toggle\")\\n'\n  fi\n  if ! grep -qF '\"F9\"' \"$bindings\"; then\n    legacy+=$'  o.bind_hold(\"F9\", \"Start dictation (push-to-talk)\", \"omarchy-dictation start\", \"Stop dictation (push-to-talk)\", \"omarchy-dictation stop\")\\n'\n  fi\n\n  if [[ -n $legacy ]]; then\n    {\n      printf '\\n-- Dictation keys from before Alt + Space and Right Alt became the defaults.\\n'\n      printf -- '-- Remove these lines to give the keys back to applications.\\n'\n      printf 'if o.dictation_installed and o.dictation_installed() then\\n'\n      printf '%s' \"$legacy\"\n      printf 'end\\n'\n    } >> \"$bindings\"\n  fi\nfi\n\n# Superwhisper needs a recording shortcut of its own; move it off Alt + Space,\n# which Omarchy now binds for every dictation backend. Edit its files because\n# `superwhisper shortcuts set` rolls back on any Hyprland config error, and the\n# compositor this update just upgraded runs the old binary until the next login.\n# Restarting the service regenerates its bindings and reloads Hyprland.\nsuperwhisper_config=\"$HOME/.config/superwhisper\"\nif omarchy-cmd-present superwhisper && [[ -f $superwhisper_config/preferences.json ]]; then\n  sed -i 's/\"Alt+Space\"/\"Ctrl+Alt+Space\"/' \"$superwhisper_config/preferences.json\"\n  if [[ -f $superwhisper_config/shortcuts.active.json ]]; then\n    sed -i 's/\"Alt+Space\"/\"Ctrl+Alt+Space\"/' \"$superwhisper_config/shortcuts.active.json\"\n  fi\n  systemctl --user try-restart superwhisper.service\nfi",
       "bodyTruncated": false,
       "date": "2026-10-31T20:17:55Z",
       "description": "Move dictation to Alt + Space, keeping F9 and Super + Ctrl + X for existing dictation users",
       "file": "1793477875.sh",
-      "lineCount": 32,
+      "lineCount": 36,
       "packagesAdded": [],
       "packagesRemoved": [],
       "path": "migrations/1793477875.sh",
@@ -3756,7 +3774,7 @@
       "timestamp": 1793477875,
       "touches": [
         "~/.config/hypr/bindings.lua",
-        "~/.config/superwhisper/preferences.json"
+        "~/.config/superwhisper"
       ]
     },
     {
@@ -3841,6 +3859,22 @@
       ]
     },
     {
+      "body": "echo \"Install the OEM firmware package on Snapdragon machines that have one\"\n\n# See install/hardware/qualcomm/oem-firmware.sh. A machine installed without\n# Windows has no sound, battery reading or GPU acceleration until its firmware\n# is there, and one set up from Windows moves to the package's known set.\n# Installing a package rebuilds the boot image through mkinitcpio's hook, and\n# qcom-firmware-extract's retire hook removes the Windows copies the package\n# covers. qualcomm/firmware.sh then runs again so the DSP driver is no longer\n# held back, which needs one more rebuild.\n#\n# Once a package is in, a rerun no longer sees the package list change, so a\n# marker keeps the firmware setup and the rebuild pending until both finish.\nif omarchy-hw-aarch64-qualcomm; then\n  pending=\"$HOME/.local/state/omarchy/qcom-oem-firmware-pending\"\n  packages_before=$(pacman -Qq)\n  status=0\n  bash -euo pipefail -c 'source \"$OMARCHY_PATH/install/hardware/qualcomm/oem-firmware.sh\"' || status=$?\n\n  if [[ $(pacman -Qq) != \"$packages_before\" ]]; then\n    omarchy-state set qcom-oem-firmware-pending\n  fi\n\n  if ((status != 0)); then\n    exit \"$status\"\n  elif [[ -f $pending ]]; then\n    sudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n      source \"$OMARCHY_PATH/install/hardware/qualcomm/firmware.sh\"\n    '\n\n    rebuild_log=$(mktemp)\n    trap 'rm -f \"$rebuild_log\"' EXIT\n    sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n    # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n    if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n      echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n      exit 1\n    fi\n\n    omarchy-state set reboot-required\n    omarchy-state clear qcom-oem-firmware-pending",
+      "bodyTruncated": true,
+      "date": "2026-11-02T20:15:06Z",
+      "description": "Install the OEM firmware package on Snapdragon machines that have one",
+      "file": "1793650506.sh",
+      "lineCount": 42,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1793650506.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793650506.sh",
+      "timestamp": 1793650506,
+      "touches": [
+        "~/.local/state/omarchy/qcom-oem-firmware-pending"
+      ]
+    },
+    {
       "body": "echo \"Finish Superwhisper setup for installs that came up with it unconfigured\"\n\n# Superwhisper became the default dictation backend before first run set it up\n# (#17286), and aarch64 images before omacom/omarchy-iso#377 left the package\n# out entirely. Both left dictation selected but unusable. setup-user creates\n# the app/current link, so its presence means setup already ran.\nif [[ $(omarchy-default-dictation 2>/dev/null) == \"superwhisper\" ]] &&\n  [[ ! -e ${XDG_DATA_HOME:-$HOME/.local/share}/superwhisper/app/current ]]; then\n  omarchy-install-dictation-superwhisper --background\nfi",
       "bodyTruncated": false,
       "date": "2026-11-03T00:59:41Z",
@@ -3901,6 +3935,41 @@
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793849077.sh",
       "timestamp": 1793849077,
       "touches": []
+    },
+    {
+      "body": "echo \"Show the disk unlock prompt on Snapdragon X2 machines by loading their USB-C display drivers early\"\n\n# See install/hardware/qualcomm/glymur-display.sh.\nrebuild_marker=\"${OMARCHY_LIMINE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1793854933}\"\n\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match-device-tree qcom,glymur; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n  source \"$OMARCHY_PATH/install/hardware/qualcomm/glymur-display.sh\"\n'\n\n# A marker records the machine-wide rebuild: another user's run must not repeat\n# it, while a missing marker still retries an interrupted rebuild.\nif [[ ! -e $rebuild_marker ]]; then\n  rebuild_log=$(mktemp)\n  trap 'rm -f \"$rebuild_log\"' EXIT\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n  # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n  # That image lacks the display drivers, so the migration stays pending.\n  if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n    exit 1\n  fi\n\n  sudo install -Dm644 /dev/null \"$rebuild_marker\"\nfi\n\nomarchy-state set reboot-required",
+      "bodyTruncated": false,
+      "date": "2026-11-05T05:02:13Z",
+      "description": "Show the disk unlock prompt on Snapdragon X2 machines by loading their USB-C display drivers early",
+      "file": "1793854933.sh",
+      "lineCount": 31,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1793854933.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793854933.sh",
+      "timestamp": 1793854933,
+      "touches": [
+        "/var/lib/omarchy/migrations/1793854933"
+      ]
+    },
+    {
+      "body": "echo \"Keep the Snapdragon device tree list current when a kernel update brings new trees\"\n\n# See install/hardware/qualcomm/dtb-uki.sh. Installs made before it list the\n# trees their first kernel had, so a later kernel's new or renamed tree never\n# reaches the boot image and a machine whose hardware IDs moved to it boots\n# without one.\nuki_config=/etc/kernel/uki.conf\nboot_hook=/etc/boot/hooks/pre.d/20-omarchy-qualcomm-device-trees\n\nif ! omarchy-hw-aarch64-qualcomm || ! grep -Fqx \"# BEGIN OMARCHY QUALCOMM DEVICE TREES\" \"$uki_config\" 2>/dev/null; then\n  exit 0\nfi\n\nif [[ ! -L $boot_hook ]]; then\n  sudo mkdir -p \"$(dirname \"$boot_hook\")\"\n  sudo ln -sfn /usr/bin/omarchy-update-qualcomm-device-trees \"$boot_hook\"\nfi\n\n# A changed list needs one rebuild. The marker records it as owed before the\n# list can change, so a run that stops in between still rebuilds on retry; an\n# unchanged list takes it back, which is what another user's run finds.\nrebuild_pending=/var/lib/omarchy/migrations/1793989240-rebuild-pending\nif [[ ! -e $rebuild_pending ]]; then\n  listed=$(<\"$uki_config\")\n  sudo install -Dm644 /dev/null \"$rebuild_pending\" || exit 1\n  sudo omarchy-update-qualcomm-device-trees\n  if [[ $(<\"$uki_config\") == \"$listed\" ]]; then\n    sudo rm -f \"$rebuild_pending\"\n  fi\nfi\n\n# limine refreshes the list again from the hook before it builds.\nif [[ -e $rebuild_pending ]]; then\n  rebuild_log=$(mktemp)\n  trap 'rm -f \"$rebuild_log\"' EXIT\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n  # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n  if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2",
+      "bodyTruncated": true,
+      "date": "2026-11-06T18:20:40Z",
+      "description": "Keep the Snapdragon device tree list current when a kernel update brings new trees",
+      "file": "1793989240.sh",
+      "lineCount": 46,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1793989240.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793989240.sh",
+      "timestamp": 1793989240,
+      "touches": [
+        "/etc/boot/hooks/pre.d/20-omarchy-qualcomm-device-trees",
+        "/etc/kernel/uki.conf",
+        "/usr/bin/omarchy-update-qualcomm-device-trees",
+        "/var/lib/omarchy/migrations/1793989240-rebuild-pending"
+      ]
     }
   ],
   "prerelease": true,

@@ -1203,6 +1203,23 @@
     },
     {
       "aliases": [],
+      "args": "[name|details]",
+      "cli": "omarchy branding about cpu",
+      "examples": [],
+      "executable": true,
+      "group": "branding",
+      "groupDescription": "About and screensaver branding",
+      "hasMetadata": true,
+      "hidden": true,
+      "lineCount": 38,
+      "name": "omarchy-branding-about-cpu",
+      "path": "bin/omarchy-branding-about-cpu",
+      "requiresSudo": false,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-branding-about-cpu",
+      "summary": "Print the CPU line of the About box, split in two when it overruns the box."
+    },
+    {
+      "aliases": [],
       "args": "<image|text|reset>",
       "cli": "omarchy branding screensaver",
       "examples": [
@@ -4091,7 +4108,7 @@
       "groupDescription": "Optional software installers",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 46,
+      "lineCount": 49,
       "name": "omarchy-install-ai-herdr",
       "path": "bin/omarchy-install-ai-herdr",
       "requiresSudo": false,
@@ -6766,6 +6783,23 @@
       "requiresSudo": false,
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-refresh-herdr",
       "summary": "Overwrite the user herdr config with the Omarchy default and reload herdr."
+    },
+    {
+      "aliases": [],
+      "args": "",
+      "cli": "omarchy refresh herdr app",
+      "examples": [],
+      "executable": true,
+      "group": "refresh",
+      "groupDescription": "Reset config to defaults",
+      "hasMetadata": true,
+      "hidden": false,
+      "lineCount": 27,
+      "name": "omarchy-refresh-herdr-app",
+      "path": "bin/omarchy-refresh-herdr-app",
+      "requiresSudo": false,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-refresh-herdr-app",
+      "summary": "Overwrite the Herdr desktop app's keys with the Omarchy default (backs up your version)."
     },
     {
       "aliases": [],
@@ -10353,7 +10387,7 @@
       "summary": "Install, launch, stop, inspect, or remove the Windows VM"
     }
   ],
-  "count": 583,
+  "count": 585,
   "generatedFrom": "data/source/quattro-dev/bin",
   "groups": {
     "agent": "AI coding agents, their usage, and subscription accounts",

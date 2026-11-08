@@ -841,6 +841,7 @@
       "omarchy-ascii",
       "omarchy-boot-direct",
       "omarchy-branding-about-animation",
+      "omarchy-branding-about-cpu",
       "omarchy-capture-screenrecording-process",
       "omarchy-chromium-add-feature",
       "omarchy-cmd-browser-handoff",
@@ -912,6 +913,7 @@
       "omarchy-pkg-defaults",
       "omarchy-provision-hardware",
       "omarchy-realtime-repair",
+      "omarchy-refresh-herdr-app",
       "omarchy-remove-ai-amp",
       "omarchy-remove-ai-chatgpt",
       "omarchy-remove-ai-claude",
@@ -1459,11 +1461,11 @@
       }
     ],
     "counts": {
-      "added": 146,
+      "added": 148,
       "changed": 41,
       "from": 444,
       "removed": 7,
-      "to": 583
+      "to": 585
     },
     "removed": [
       "omarchy-screensaver",
@@ -2531,9 +2533,9 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 128,
+      "new": 132,
       "removed": 0,
-      "to": 234
+      "to": 238
     },
     "new": [
       {
@@ -3175,6 +3177,26 @@
         "date": "2026-11-06T18:20:40Z",
         "description": "Keep the Snapdragon device tree list current when a kernel update brings new trees",
         "file": "1793989240.sh"
+      },
+      {
+        "date": "2026-11-07T09:41:21Z",
+        "description": "Bring up the Anduril BlueChip's speakers and microphones with its own UCM profile",
+        "file": "1794044481.sh"
+      },
+      {
+        "date": "2026-11-07T14:04:29Z",
+        "description": "Quiet the efivarfs mount error Snapdragon laptops print at boot",
+        "file": "1794060269.sh"
+      },
+      {
+        "date": "2026-11-07T15:34:48Z",
+        "description": "Stop the watchdog timeout error Snapdragon laptops print at shutdown",
+        "file": "1794065688.sh"
+      },
+      {
+        "date": "2026-11-07T16:21:41Z",
+        "description": "Give the Herdr desktop app the same keybindings as the terminal herdr",
+        "file": "1794068501.sh"
       }
     ],
     "removed": []

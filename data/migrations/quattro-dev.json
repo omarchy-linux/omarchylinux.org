@@ -1,5 +1,5 @@
 {
-  "count": 234,
+  "count": 238,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -3969,6 +3969,69 @@
         "/etc/kernel/uki.conf",
         "/usr/bin/omarchy-update-qualcomm-device-trees",
         "/var/lib/omarchy/migrations/1793989240-rebuild-pending"
+      ]
+    },
+    {
+      "body": "echo \"Bring up the Anduril BlueChip's speakers and microphones with its own UCM profile\"\n\n# alsa-ucm-conf has no profile for the BlueChip, so PipeWire offered only a\n# dummy output. The machine profile now ships in omarchy-settings, and PipeWire\n# only probes a card's UCM profiles when WirePlumber opens it. The speakers also\n# need linux-omarchy-aarch64 7.3-27's tree, which links only the left pair.\nif omarchy-hw-match-device-tree anduril,bluechip; then\n  systemctl --user try-restart wireplumber.service 2>/dev/null || true\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-07T09:41:21Z",
+      "description": "Bring up the Anduril BlueChip's speakers and microphones with its own UCM profile",
+      "file": "1794044481.sh",
+      "lineCount": 9,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794044481.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794044481.sh",
+      "timestamp": 1794044481,
+      "touches": []
+    },
+    {
+      "body": "echo \"Quiet the efivarfs mount error Snapdragon laptops print at boot\"\n\n# See install/hardware/qualcomm/initramfs.sh. The boot image picks the hook up\n# the next time it is rebuilt, which every kernel update does; the message is\n# harmless until then, so this does not rebuild it now.\nif ! omarchy-hw-aarch64-qualcomm; then\n  exit 0\nfi\n\n# Another user's run already wrote it.\nif [[ -f /etc/initcpio/install/omarchy-quiet-efivars ]] &&\n  grep -Fqx \"HOOKS+=(omarchy-quiet-efivars)\" /etc/mkinitcpio.conf.d/qualcomm-platform.conf 2>/dev/null; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n  source \"$OMARCHY_PATH/install/hardware/qualcomm/initramfs.sh\"\n'",
+      "bodyTruncated": false,
+      "date": "2026-11-07T14:04:29Z",
+      "description": "Quiet the efivarfs mount error Snapdragon laptops print at boot",
+      "file": "1794060269.sh",
+      "lineCount": 18,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794060269.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794060269.sh",
+      "timestamp": 1794060269,
+      "touches": [
+        "/etc/initcpio/install/omarchy-quiet-efivars",
+        "/etc/mkinitcpio.conf.d/qualcomm-platform.conf"
+      ]
+    },
+    {
+      "body": "echo \"Stop the watchdog timeout error Snapdragon laptops print at shutdown\"\n\n# See install/hardware/qualcomm/reboot-watchdog.sh. systemd reads it at the\n# next boot, so the shutdown after that one is the first without the error.\nif ! omarchy-hw-aarch64-qualcomm; then\n  exit 0\nfi\n\n# Another user's run already wrote it.\nif grep -Fqx \"RebootWatchdogSec=off\" /etc/systemd/system.conf.d/60-omarchy-qualcomm-reboot-watchdog.conf 2>/dev/null; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n  source \"$OMARCHY_PATH/install/hardware/qualcomm/reboot-watchdog.sh\"\n'",
+      "bodyTruncated": false,
+      "date": "2026-11-07T15:34:48Z",
+      "description": "Stop the watchdog timeout error Snapdragon laptops print at shutdown",
+      "file": "1794065688.sh",
+      "lineCount": 16,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794065688.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794065688.sh",
+      "timestamp": 1794065688,
+      "touches": [
+        "/etc/systemd/system.conf.d/60-omarchy-qualcomm-reboot-watchdog.conf"
+      ]
+    },
+    {
+      "body": "echo \"Give the Herdr desktop app the same keybindings as the terminal herdr\"\n\napp_home=\"${HERDR_APP_HOME:-${XDG_CONFIG_HOME:-$HOME/.config}/herdr-app}\"\n\n# Leave people who never installed the app alone; its installer seeds the keys.\n[[ -d $app_home ]] || exit 0\n\nomarchy-refresh-herdr-app",
+      "bodyTruncated": false,
+      "date": "2026-11-07T16:21:41Z",
+      "description": "Give the Herdr desktop app the same keybindings as the terminal herdr",
+      "file": "1794068501.sh",
+      "lineCount": 8,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794068501.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794068501.sh",
+      "timestamp": 1794068501,
+      "touches": [
+        "~/.config"
       ]
     }
   ],

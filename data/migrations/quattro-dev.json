@@ -1,5 +1,5 @@
 {
-  "count": 238,
+  "count": 240,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -2621,14 +2621,14 @@
       ]
     },
     {
-      "body": "echo \"Give the ASUS ProArt P14 (NVIDIA N1x) speakers ASUS's amplifier tuning and voicing\"\n\n# See install/hardware/asus/fix-asus-proart-p14-speakers.sh and the\n# asus-proart-p14-n1x speaker tuning. The amplifiers load the new tuning at the\n# next boot, under a linux-omarchy-n1x that passes them the laptop's subsystem ID.\nif ! omarchy-hw-match \"H7407BA\"; then\n  exit 0\nfi\n\nomarchy-pkg-add asus-proart-p14-speaker-firmware\n\nif omarchy-audio-tuning match >/dev/null 2>&1; then\n  omarchy-pkg-add lsp-plugins-lv2\n  omarchy-audio-tuning on\nfi",
+      "body": "echo \"Give the ASUS ProArt P14 (NVIDIA N1x) speakers ASUS's amplifier tuning and voicing\"\n\n# See install/hardware/asus/fix-asus-proart-p14-speakers.sh and the\n# asus-proart-p14-n1x speaker tuning. The amplifiers load the new tuning at the\n# next boot, under a linux-omarchy-n1x that passes them the laptop's subsystem ID.\nif ! omarchy-hw-match \"H7407BA\"; then\n  exit 0\nfi\n\nomarchy-pkg-add asus-proart-p14-audio\n\nif omarchy-audio-tuning match >/dev/null 2>&1; then\n  omarchy-pkg-add lsp-plugins-lv2\n  omarchy-audio-tuning on\nfi",
       "bodyTruncated": false,
       "date": "2026-10-02T20:34:00Z",
       "description": "Give the ASUS ProArt P14 (NVIDIA N1x) speakers ASUS's amplifier tuning and voicing",
       "file": "1790973240.sh",
       "lineCount": 15,
       "packagesAdded": [
-        "asus-proart-p14-speaker-firmware",
+        "asus-proart-p14-audio",
         "lsp-plugins-lv2"
       ],
       "packagesRemoved": [],
@@ -4032,6 +4032,43 @@
       "timestamp": 1794068501,
       "touches": [
         "~/.config"
+      ]
+    },
+    {
+      "body": "echo \"Turn off suspend on the ASUS Zenbook A16 (UX3607OA) until it sleeps reliably\"\n\n# See install/hardware/asus/fix-asus-zenbook-a16-boot.sh. Rerunning the leaf\n# rewrites its initramfs and command line files with the same content they\n# already have, so no boot image rebuild is needed.\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match \"UX3607OA\"; then\n  exit 0\nfi\n\n# Another user on this machine may already have applied it.\nif [[ -f /etc/systemd/sleep.conf.d/omarchy-sleep-disabled.conf && ! -e /etc/systemd/sleep.conf.d/zenbook-a16.conf ]]; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n  source \"$OMARCHY_PATH/install/hardware/asus/fix-asus-zenbook-a16-boot.sh\"\n'",
+      "bodyTruncated": false,
+      "date": "2026-11-07T21:52:17Z",
+      "description": "Turn off suspend on the ASUS Zenbook A16 (UX3607OA) until it sleeps reliably",
+      "file": "1794088337.sh",
+      "lineCount": 17,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794088337.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794088337.sh",
+      "timestamp": 1794088337,
+      "touches": [
+        "/etc/systemd/sleep.conf.d/omarchy-sleep-disabled.conf",
+        "/etc/systemd/sleep.conf.d/zenbook-a16.conf"
+      ]
+    },
+    {
+      "body": "echo \"Replace Evince with Papers as the document viewer\"\n\nomarchy-pkg-add papers\n\n# The packaged mimeapps.list now names Papers, but a personal one in ~/.config\n# still wins, so point any Evince association there at Papers too.\nuser_mimeapps=\"$HOME/.config/mimeapps.list\"\nif [[ -f $user_mimeapps ]] && grep -q \"org.gnome.Evince.desktop\" \"$user_mimeapps\"; then\n  sed --follow-symlinks -i 's/org\\.gnome\\.Evince\\.desktop/org.gnome.Papers.desktop/g' \"$user_mimeapps\"\nfi\n\nomarchy-pkg-drop evince",
+      "bodyTruncated": false,
+      "date": "2026-11-08T19:10:02Z",
+      "description": "Replace Evince with Papers as the document viewer",
+      "file": "1794165002.sh",
+      "lineCount": 12,
+      "packagesAdded": [
+        "papers"
+      ],
+      "packagesRemoved": [
+        "evince"
+      ],
+      "path": "migrations/1794165002.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794165002.sh",
+      "timestamp": 1794165002,
+      "touches": [
+        "~/.config/mimeapps.list"
       ]
     }
   ],

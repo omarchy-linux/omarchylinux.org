@@ -1,7 +1,7 @@
 {
  "source": "github.com/omacom/omarchy",
- "fetchedAt": "2026-11-09T13:01:20.484275+00:00",
- "derivedAt": "2026-11-09T13:10:03.260400+00:00",
+ "fetchedAt": "2026-11-10T12:46:22.653030+00:00",
+ "derivedAt": "2026-11-10T12:55:27.569492+00:00",
  "quirkScriptRef": "v4.0.4",
  "counts": {
   "models": 168,
@@ -44,27 +44,27 @@
     "2024"
    ],
    "counts": {
-    "issues": 140,
-    "open": 82,
-    "closed": 58,
+    "issues": 143,
+    "open": 84,
+    "closed": 59,
     "discussions": 23
    },
    "components": [
     {
      "key": "multi-monitor",
-     "issues": 49
+     "issues": 50
     },
     {
      "key": "apple-silicon-asahi",
-     "issues": 48
+     "issues": 50
     },
     {
      "key": "boot-limine",
-     "issues": 46
+     "issues": 47
     },
     {
      "key": "t2-mac",
-     "issues": 33
+     "issues": 34
     },
     {
      "key": "wifi",
@@ -76,7 +76,7 @@
     },
     {
      "key": "suspend-sleep",
-     "issues": 22
+     "issues": 23
     },
     {
      "key": "battery-power",
@@ -96,7 +96,7 @@
     },
     {
      "key": "audio",
-     "issues": 13
+     "issues": 14
     },
     {
      "key": "thunderbolt-dock",
@@ -128,6 +128,40 @@
     }
    ],
    "issues": [
+    {
+     "number": 18354,
+     "title": "`omarchy font set` strips `style` from Alacritty font lines (greedy sed match)",
+     "url": "https://github.com/omacom/omarchy/issues/18354",
+     "state": "OPEN",
+     "components": [
+      "t2-mac"
+     ],
+     "createdAt": "2026-11-10T12:03:43Z"
+    },
+    {
+     "number": 18308,
+     "title": "XWayland cursor renders oversized on HiDPI (scale=2) monitors by default",
+     "url": "https://github.com/omacom/omarchy/issues/18308",
+     "state": "OPEN",
+     "components": [
+      "multi-monitor",
+      "apple-silicon-asahi"
+     ],
+     "createdAt": "2026-11-09T21:58:39Z"
+    },
+    {
+     "number": 18285,
+     "title": "Built-in microphone returns silence at ALSA level on MacBook Pro 13\" M1 (J293)",
+     "url": "https://github.com/omacom/omarchy/issues/18285",
+     "state": "OPEN",
+     "components": [
+      "suspend-sleep",
+      "audio",
+      "boot-limine",
+      "apple-silicon-asahi"
+     ],
+     "createdAt": "2026-11-09T18:32:18Z"
+    },
     {
      "number": 18262,
      "title": "Captive portal + Tailscale: getting online needs a manual DNS-mode and Tailscale toggle sequence (Boingo, 100.64.0.0/10 lease)",
@@ -464,7 +498,7 @@
      "number": 16493,
      "title": "mesa-aurora 26.3.0-devel (Oct 17 build) leaks GPU VMA: USC window exhausts in ~40–65 min, crashes Hyprland (Apple M1 Pro, AARCH64)",
      "url": "https://github.com/omacom/omarchy/issues/16493",
-     "state": "OPEN",
+     "state": "CLOSED",
      "components": [
       "apple-silicon-asahi"
      ],
@@ -4037,19 +4071,19 @@
     "Gen 9"
    ],
    "counts": {
-    "issues": 64,
-    "open": 32,
-    "closed": 32,
+    "issues": 65,
+    "open": 31,
+    "closed": 34,
     "discussions": 7
    },
    "components": [
     {
      "key": "intel-gpu",
-     "issues": 23
+     "issues": 24
     },
     {
      "key": "multi-monitor",
-     "issues": 21
+     "issues": 22
     },
     {
      "key": "boot-limine",
@@ -4057,7 +4091,7 @@
     },
     {
      "key": "suspend-sleep",
-     "issues": 18
+     "issues": 19
     },
     {
      "key": "battery-power",
@@ -4122,6 +4156,18 @@
    ],
    "issues": [
     {
+     "number": 18323,
+     "title": "Monitor deep sleep after DPMS-off triggers watcher recover: lock screen wake/blank loop and manual internal-off flag cleared",
+     "url": "https://github.com/omacom/omarchy/issues/18323",
+     "state": "OPEN",
+     "components": [
+      "intel-gpu",
+      "suspend-sleep",
+      "multi-monitor"
+     ],
+     "createdAt": "2026-11-10T00:52:02Z"
+    },
+    {
      "number": 17861,
      "title": "Lenovo IdeaPad Slim 5 14IRH10R (83J0): battery drains with lid closed; no lid action configured, hibernate not used",
      "url": "https://github.com/omacom/omarchy/issues/17861",
@@ -4157,7 +4203,7 @@
      "number": 17315,
      "title": "Set HYPRCURSOR_THEME in the session env so the startup-cursor reveal can't abort Hyprland via a first-found SVG theme",
      "url": "https://github.com/omacom/omarchy/issues/17315",
-     "state": "OPEN",
+     "state": "CLOSED",
      "components": [
       "boot-limine"
      ],
@@ -4167,7 +4213,7 @@
      "number": 16941,
      "title": "4.5.0rc2: every cold boot segfaults Hyprland ~5s in — startup-cursor window + null cursor surface",
      "url": "https://github.com/omacom/omarchy/issues/16941",
-     "state": "OPEN",
+     "state": "CLOSED",
      "components": [
       "intel-gpu",
       "boot-limine"
@@ -4889,11 +4935,11 @@
     "MacBook Air (2017",
     "MacBook Air (M1, 2020",
     "MacBook Air (M2, 2022",
+    "MacBook Air (Retina, 13-inch, 2018",
     "MacBook Air 13\" A1466 2015",
     "MacBook Air 13\" M3 (2024",
     "MacBook Air 13\" mid 2013",
-    "MacBook Air 13-inch Early 2015",
-    "MacBook Air 15\" (M2, 2023"
+    "MacBook Air 13-inch Early 2015"
    ],
    "variants": [
     "2011",
@@ -4902,25 +4948,26 @@
     "2014",
     "2015",
     "2017",
+    "2018",
     "2020",
     "2022",
     "2023",
     "2024"
    ],
    "counts": {
-    "issues": 61,
-    "open": 34,
+    "issues": 62,
+    "open": 35,
     "closed": 27,
-    "discussions": 11
+    "discussions": 12
    },
    "components": [
     {
      "key": "apple-silicon-asahi",
-     "issues": 27
+     "issues": 28
     },
     {
      "key": "boot-limine",
-     "issues": 17
+     "issues": 18
     },
     {
      "key": "multi-monitor",
@@ -4928,7 +4975,7 @@
     },
     {
      "key": "touchpad-input",
-     "issues": 15
+     "issues": 16
     },
     {
      "key": "suspend-sleep",
@@ -4940,11 +4987,11 @@
     },
     {
      "key": "wifi",
-     "issues": 7
+     "issues": 8
     },
     {
      "key": "t2-mac",
-     "issues": 6
+     "issues": 7
     },
     {
      "key": "intel-gpu",
@@ -4955,11 +5002,11 @@
      "issues": 4
     },
     {
-     "key": "vm",
-     "issues": 2
+     "key": "bluetooth",
+     "issues": 3
     },
     {
-     "key": "bluetooth",
+     "key": "vm",
      "issues": 2
     },
     {
@@ -4988,6 +5035,21 @@
     }
    ],
    "issues": [
+    {
+     "number": 18341,
+     "title": "T2 MacBook Air (MacBookAir8,1 | A1932): no Wi-Fi on boot, no keyboard at LUKS prompt on Omarchy 4.5.0",
+     "url": "https://github.com/omacom/omarchy/issues/18341",
+     "state": "OPEN",
+     "components": [
+      "wifi",
+      "bluetooth",
+      "boot-limine",
+      "touchpad-input",
+      "t2-mac",
+      "apple-silicon-asahi"
+     ],
+     "createdAt": "2026-11-10T08:48:21Z"
+    },
     {
      "number": 18196,
      "title": "Low-battery warning expires unseen when it fires while the session is locked, and nothing else warns before UPower's forced suspend at 2%",
@@ -6498,6 +6560,652 @@
    "legacyPrototypeSource": "legacy-prototype-unverified"
   },
   {
+   "key": "dell-xps-13",
+   "vendor": "Dell",
+   "model": "Dell XPS 13",
+   "aliases": [
+    "Dell XPS 13",
+    "Dell XPS 13 (DX13260",
+    "Dell XPS 13 9305",
+    "Dell XPS 13 9315",
+    "Dell XPS 13 9340",
+    "Dell XPS 13 9343",
+    "Dell XPS 13 9345",
+    "Dell XPS 13 9350",
+    "Dell XPS 13 9370",
+    "Dell XPS 13 DX13260",
+    "Dell XPS 13 model 9315",
+    "XPS 13",
+    "XPS 13 (DX13260",
+    "XPS 13 9340",
+    "XPS 13 9345"
+   ],
+   "variants": [
+    "9305",
+    "9315",
+    "9340",
+    "9343",
+    "9345",
+    "9350",
+    "9360",
+    "9370",
+    "DX13260",
+    "dx13260"
+   ],
+   "counts": {
+    "issues": 43,
+    "open": 28,
+    "closed": 15,
+    "discussions": 9
+   },
+   "components": [
+    {
+     "key": "boot-limine",
+     "issues": 16
+    },
+    {
+     "key": "multi-monitor",
+     "issues": 12
+    },
+    {
+     "key": "audio",
+     "issues": 11
+    },
+    {
+     "key": "intel-gpu",
+     "issues": 11
+    },
+    {
+     "key": "suspend-sleep",
+     "issues": 9
+    },
+    {
+     "key": "battery-power",
+     "issues": 6
+    },
+    {
+     "key": "webcam",
+     "issues": 5
+    },
+    {
+     "key": "hybrid-gpu",
+     "issues": 4
+    },
+    {
+     "key": "touchpad-input",
+     "issues": 4
+    },
+    {
+     "key": "thunderbolt-dock",
+     "issues": 3
+    },
+    {
+     "key": "wifi",
+     "issues": 2
+    },
+    {
+     "key": "nvidia",
+     "issues": 2
+    },
+    {
+     "key": "storage-nvme",
+     "issues": 1
+    },
+    {
+     "key": "vm",
+     "issues": 1
+    }
+   ],
+   "issues": [
+    {
+     "number": 18281,
+     "title": "Dell XPS 13 DX13260 Wildcat Lake: Dell-signed ISH firmware restores missing ambient-light sensors",
+     "url": "https://github.com/omacom/omarchy/issues/18281",
+     "state": "OPEN",
+     "components": [
+      "touchpad-input",
+      "webcam"
+     ],
+     "createdAt": "2026-11-09T17:17:47Z"
+    },
+    {
+     "number": 18226,
+     "title": "Dell XPS 13 DX13260 (Wildcat Lake, Bamboo panel): patch 0406 flickers brightness while typing; PSR1-only freezes the screen; only full self-refresh off is clean",
+     "url": "https://github.com/omacom/omarchy/issues/18226",
+     "state": "OPEN",
+     "components": [
+      "intel-gpu",
+      "boot-limine",
+      "touchpad-input"
+     ],
+     "createdAt": "2026-11-09T04:44:28Z"
+    },
+    {
+     "number": 18175,
+     "title": "Captive portal sign-in window loads https://ping.omacom.io and fails, so the portal page never appears",
+     "url": "https://github.com/omacom/omarchy/issues/18175",
+     "state": "OPEN",
+     "components": [
+      "wifi"
+     ],
+     "createdAt": "2026-11-08T15:32:24Z"
+    },
+    {
+     "number": 18078,
+     "title": "XPS 13 9345: stale V4L2 codec discovery blocks audio policy and libcamera export",
+     "url": "https://github.com/omacom/omarchy/issues/18078",
+     "state": "OPEN",
+     "components": [
+      "multi-monitor",
+      "audio",
+      "webcam"
+     ],
+     "createdAt": "2026-11-07T21:15:12Z"
+    },
+    {
+     "number": 17824,
+     "title": "Hibernation aborts with ENOMEM inside suspend_nvs_save() after the image preallocation consumes all free memory (XPS 13 DX13260, 7.2.15-1-omarchy)",
+     "url": "https://github.com/omacom/omarchy/issues/17824",
+     "state": "OPEN",
+     "components": [
+      "intel-gpu",
+      "hybrid-gpu",
+      "suspend-sleep",
+      "boot-limine",
+      "battery-power"
+     ],
+     "createdAt": "2026-11-06T00:55:23Z"
+    },
+    {
+     "number": 17137,
+     "title": "Dell XPS 13 DX13260: charge threshold reported as 75-80% although the EC refuses every operation (ENXIO)",
+     "url": "https://github.com/omacom/omarchy/issues/17137",
+     "state": "OPEN",
+     "components": [
+      "intel-gpu",
+      "battery-power"
+     ],
+     "createdAt": "2026-10-31T10:40:42Z"
+    },
+    {
+     "number": 16997,
+     "title": "Shell: the full-screen bar window and per-switch re-renders make every change a full-screen repaint",
+     "url": "https://github.com/omacom/omarchy/issues/16997",
+     "state": "OPEN",
+     "components": [
+      "multi-monitor",
+      "thunderbolt-dock"
+     ],
+     "createdAt": "2026-10-29T14:42:52Z"
+    },
+    {
+     "number": 16653,
+     "title": "Power panel \"Time to full\" counts to 100% when the battery's charge limit stops charging earlier",
+     "url": "https://github.com/omacom/omarchy/issues/16653",
+     "state": "OPEN",
+     "components": [
+      "battery-power"
+     ],
+     "createdAt": "2026-10-25T21:00:50Z"
+    },
+    {
+     "number": 16514,
+     "title": "`omarchy plugin clone omarchy.menu` times out and leaves shell.json pointing at a deleted plugin",
+     "url": "https://github.com/omacom/omarchy/issues/16514",
+     "state": "OPEN",
+     "components": [],
+     "createdAt": "2026-10-24T19:02:20Z"
+    },
+    {
+     "number": 16513,
+     "title": "Cloned menu plugin gets `shell.appLibrary == null`, so Apps is empty and apps cannot be searched",
+     "url": "https://github.com/omacom/omarchy/issues/16513",
+     "state": "OPEN",
+     "components": [],
+     "createdAt": "2026-10-24T19:02:18Z"
+    },
+    {
+     "number": 16242,
+     "title": "Fullscreening a second window on a floating workspace restores the first to its old size",
+     "url": "https://github.com/omacom/omarchy/issues/16242",
+     "state": "OPEN",
+     "components": [
+      "intel-gpu"
+     ],
+     "createdAt": "2026-10-22T06:53:08Z"
+    },
+    {
+     "number": 16241,
+     "title": "Fullscreen window on a floating workspace is focused by Alt-Tab but never raised",
+     "url": "https://github.com/omacom/omarchy/issues/16241",
+     "state": "OPEN",
+     "components": [
+      "intel-gpu",
+      "touchpad-input"
+     ],
+     "createdAt": "2026-10-22T06:48:14Z"
+    },
+    {
+     "number": 15882,
+     "title": "XPS 13 (DX13260): cursor and moving text turn rose with night light on, since linux-omarchy 7.2.8",
+     "url": "https://github.com/omacom/omarchy/issues/15882",
+     "state": "OPEN",
+     "components": [
+      "intel-gpu"
+     ],
+     "createdAt": "2026-10-18T20:08:53Z"
+    },
+    {
+     "number": 15831,
+     "title": "linux-omarchy 7.2.8-9: webcam broken on XPS 13 9340 (IPU6), HIMX1092 ipu-bridge entry blocks ISYS notifier without an hm1092 driver",
+     "url": "https://github.com/omacom/omarchy/issues/15831",
+     "state": "OPEN",
+     "components": [
+      "audio",
+      "boot-limine",
+      "webcam"
+     ],
+     "createdAt": "2026-10-18T11:36:53Z"
+    },
+    {
+     "number": 15207,
+     "title": "Docked laptop with lid closed suspends after every lock: lock-screen blank makes logind treat external displays as undocked",
+     "url": "https://github.com/omacom/omarchy/issues/15207",
+     "state": "OPEN",
+     "components": [
+      "suspend-sleep",
+      "multi-monitor",
+      "thunderbolt-dock"
+     ],
+     "createdAt": "2026-10-12T18:36:01Z"
+    },
+    {
+     "number": 14750,
+     "title": "USB-C dock monitor appears for a few seconds after boot, then drops and returns as DP-1 stuck at 0x0 (ThinkPad X1 Carbon Gen 13, Arrow Lake; same on Dell XPS 13 2024)",
+     "url": "https://github.com/omacom/omarchy/issues/14750",
+     "state": "CLOSED",
+     "components": [
+      "nvidia",
+      "intel-gpu",
+      "hybrid-gpu",
+      "suspend-sleep",
+      "multi-monitor",
+      "boot-limine",
+      "thunderbolt-dock"
+     ],
+     "createdAt": "2026-10-09T16:27:02Z"
+    },
+    {
+     "number": 14463,
+     "title": "Agents usage refresh: Claude collector rescans all transcripts every run (~15 s CPU), and collectors run for agents never signed in",
+     "url": "https://github.com/omacom/omarchy/issues/14463",
+     "state": "OPEN",
+     "components": [
+      "multi-monitor"
+     ],
+     "createdAt": "2026-10-07T19:01:30Z"
+    },
+    {
+     "number": 14208,
+     "title": "Omarchy font set: restart notification fails (-g has no glyph) and pgrep prints PIDs",
+     "url": "https://github.com/omacom/omarchy/issues/14208",
+     "state": "CLOSED",
+     "components": [
+      "intel-gpu"
+     ],
+     "createdAt": "2026-10-04T05:10:35Z"
+    },
+    {
+     "number": 14207,
+     "title": "OSD card uses Color.background while its icon/percentage use Color.popups.text",
+     "url": "https://github.com/omacom/omarchy/issues/14207",
+     "state": "OPEN",
+     "components": [
+      "intel-gpu"
+     ],
+     "createdAt": "2026-10-04T05:00:53Z"
+    },
+    {
+     "number": 14064,
+     "title": "Shell background: setInstant flashes black until the new image decodes",
+     "url": "https://github.com/omacom/omarchy/issues/14064",
+     "state": "OPEN",
+     "components": [
+      "multi-monitor"
+     ],
+     "createdAt": "2026-10-02T15:52:50Z"
+    },
+    {
+     "number": 13504,
+     "title": "Bar clock shows pre-suspend time for up to a minute after resume",
+     "url": "https://github.com/omacom/omarchy/issues/13504",
+     "state": "CLOSED",
+     "components": [
+      "suspend-sleep",
+      "multi-monitor"
+     ],
+     "createdAt": "2026-09-28T03:07:56Z"
+    },
+    {
+     "number": 13196,
+     "title": "linux-omarchy 7.2.5-3: ThinkPad P50s (Skylake + NVIDIA Maxwell) never wakes from S3 suspend; stock `linux` works",
+     "url": "https://github.com/omacom/omarchy/issues/13196",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "hybrid-gpu",
+      "suspend-sleep",
+      "boot-limine",
+      "battery-power"
+     ],
+     "createdAt": "2026-09-25T02:45:49Z"
+    },
+    {
+     "number": 13157,
+     "title": "Dismissing the screensaver with the trackpad leaves the app underneath fullscreen (on_focus_under_fullscreen = 1 hands fullscreen to the window that gains focus)",
+     "url": "https://github.com/omacom/omarchy/issues/13157",
+     "state": "OPEN",
+     "components": [
+      "intel-gpu",
+      "multi-monitor",
+      "touchpad-input"
+     ],
+     "createdAt": "2026-09-24T14:59:04Z"
+    },
+    {
+     "number": 12664,
+     "title": "limine template hardcodes default_entry: 2, so the linux-omarchy migration silently keeps booting the stock kernel",
+     "url": "https://github.com/omacom/omarchy/issues/12664",
+     "state": "OPEN",
+     "components": [
+      "boot-limine"
+     ],
+     "createdAt": "2026-09-20T19:04:32Z"
+    },
+    {
+     "number": 12228,
+     "title": "1Password autostart entry lacks --force-device-scale-factor=1, so windows mis-render when text size != 12px (default on XPS 13)",
+     "url": "https://github.com/omacom/omarchy/issues/12228",
+     "state": "OPEN",
+     "components": [
+      "multi-monitor"
+     ],
+     "createdAt": "2026-09-17T06:09:27Z"
+    },
+    {
+     "number": 12190,
+     "title": "`linux-omarchy` 7.2.5-3 hangs during suspend entry on Wildcat Lake (XPS 13 DX13260); stock `linux` 7.2.3 suspends fine",
+     "url": "https://github.com/omacom/omarchy/issues/12190",
+     "state": "OPEN",
+     "components": [
+      "suspend-sleep",
+      "boot-limine",
+      "battery-power"
+     ],
+     "createdAt": "2026-09-16T21:53:20Z"
+    },
+    {
+     "number": 12178,
+     "title": "Lunar Lake: intel-ipu7-camera is installed by detection but built for Panther Lake only — no camera on any Core Ultra 200V laptop, fix open since 09-09",
+     "url": "https://github.com/omacom/omarchy/issues/12178",
+     "state": "OPEN",
+     "components": [
+      "webcam",
+      "battery-power"
+     ],
+     "createdAt": "2026-09-16T19:31:53Z"
+    },
+    {
+     "number": 11374,
+     "title": "No sound from internal speakers on Dell XPS 13 DX13260 (Panther Lake, CS42L43+CS35L56A) — speaker-ID/tuning read failure",
+     "url": "https://github.com/omacom/omarchy/issues/11374",
+     "state": "CLOSED",
+     "components": [
+      "audio",
+      "boot-limine"
+     ],
+     "createdAt": "2026-09-11T21:21:27Z"
+    },
+    {
+     "number": 11356,
+     "title": "Dell XPS 13 DX13260 (0E54): silent speakers due to missing Cirrus firmware links",
+     "url": "https://github.com/omacom/omarchy/issues/11356",
+     "state": "CLOSED",
+     "components": [
+      "audio",
+      "boot-limine"
+     ],
+     "createdAt": "2026-09-11T18:50:36Z"
+    },
+    {
+     "number": 11320,
+     "title": "No speaker audio on Dell XPS 13 DX13260 (2026) — CS35L56 amp firmware never loads",
+     "url": "https://github.com/omacom/omarchy/issues/11320",
+     "state": "CLOSED",
+     "components": [
+      "audio"
+     ],
+     "createdAt": "2026-09-11T13:06:45Z"
+    },
+    {
+     "number": 10987,
+     "title": "Dell XPS 13 DX13260 (1028:0e53): intermittent sof_sdw card-instantiation failure (-16 EBUSY) + CS35L56 amps can't read tuning IDs even when files exist",
+     "url": "https://github.com/omacom/omarchy/issues/10987",
+     "state": "CLOSED",
+     "components": [
+      "suspend-sleep",
+      "audio",
+      "boot-limine"
+     ],
+     "createdAt": "2026-09-09T14:51:58Z"
+    },
+    {
+     "number": 10761,
+     "title": "Open whatsapp:// links in the bundled WhatsApp web app",
+     "url": "https://github.com/omacom/omarchy/issues/10761",
+     "state": "OPEN",
+     "components": [],
+     "createdAt": "2026-09-08T03:23:13Z"
+    },
+    {
+     "number": 10543,
+     "title": "Dell XPS 13 DX13260 (1028:0e53): no sound at all after dell-xps13-sidecar-amps workaround — CS35L56 firmware never downloads despite blobs being present",
+     "url": "https://github.com/omacom/omarchy/issues/10543",
+     "state": "CLOSED",
+     "components": [
+      "audio",
+      "boot-limine"
+     ],
+     "createdAt": "2026-09-06T20:10:36Z"
+    },
+    {
+     "number": 9879,
+     "title": "IPU6 MIPI cameras (ov01a10 / OVTI01A0) get no setup — hardware detection only covers IPU7",
+     "url": "https://github.com/omacom/omarchy/issues/9879",
+     "state": "CLOSED",
+     "components": [
+      "audio",
+      "webcam"
+     ],
+     "createdAt": "2026-09-02T19:29:51Z"
+    },
+    {
+     "number": 9817,
+     "title": "Launch feedback OSD remains stuck after Cursor and Grok Bot launch",
+     "url": "https://github.com/omacom/omarchy/issues/9817",
+     "state": "OPEN",
+     "components": [
+      "intel-gpu",
+      "multi-monitor"
+     ],
+     "createdAt": "2026-09-02T13:57:27Z"
+    },
+    {
+     "number": 9687,
+     "title": "dell-xps13-sidecar-amps: reports success but speakers stay silent on spkid0 units (XPS 13 DX13260)",
+     "url": "https://github.com/omacom/omarchy/issues/9687",
+     "state": "OPEN",
+     "components": [
+      "audio",
+      "boot-limine"
+     ],
+     "createdAt": "2026-09-01T21:50:30Z"
+    },
+    {
+     "number": 7427,
+     "title": "Dell XPS 13 (0E53) has no bass: CS35L56 woofer amps never load firmware without the sof_sdw sidecar quirk",
+     "url": "https://github.com/omacom/omarchy/issues/7427",
+     "state": "CLOSED",
+     "components": [
+      "audio",
+      "boot-limine"
+     ],
+     "createdAt": "2026-08-18T21:48:04Z"
+    },
+    {
+     "number": 6853,
+     "title": "Jittery scrolling on Dell XPS 13 (Wildcat Lake): Panel Replay stalls frame delivery",
+     "url": "https://github.com/omacom/omarchy/issues/6853",
+     "state": "CLOSED",
+     "components": [
+      "hybrid-gpu",
+      "suspend-sleep",
+      "multi-monitor",
+      "boot-limine"
+     ],
+     "createdAt": "2026-08-14T06:27:32Z"
+    },
+    {
+     "number": 6551,
+     "title": "Wifi (Intel BE213 on Dell XPS 13) doesn't work out of the box - linux-firmware on install media too old",
+     "url": "https://github.com/omacom/omarchy/issues/6551",
+     "state": "OPEN",
+     "components": [
+      "wifi",
+      "boot-limine"
+     ],
+     "createdAt": "2026-08-05T02:35:51Z"
+    },
+    {
+     "number": 5342,
+     "title": "SUPER+CTRL+Delete shortcut to toggle internal display doesn't work on lock screen after external monitor is disconnected",
+     "url": "https://github.com/omacom/omarchy/issues/5342",
+     "state": "CLOSED",
+     "components": [
+      "suspend-sleep",
+      "multi-monitor"
+     ],
+     "createdAt": "2026-04-17T11:28:16Z"
+    },
+    {
+     "number": 5298,
+     "title": "Installer should backup the files it modifies when executing on an existing arch install",
+     "url": "https://github.com/omacom/omarchy/issues/5298",
+     "state": "CLOSED",
+     "components": [
+      "vm"
+     ],
+     "createdAt": "2026-04-14T00:40:15Z"
+    },
+    {
+     "number": 1868,
+     "title": "Omarchy audio broken on dell xps 13",
+     "url": "https://github.com/omacom/omarchy/issues/1868",
+     "state": "CLOSED",
+     "components": [
+      "audio"
+     ],
+     "createdAt": "2025-09-22T08:41:14Z"
+    },
+    {
+     "number": 1814,
+     "title": "Problem with installation Omarchy 3.0 ISO using Ventoy as boot media",
+     "url": "https://github.com/omacom/omarchy/issues/1814",
+     "state": "CLOSED",
+     "components": [
+      "boot-limine",
+      "storage-nvme"
+     ],
+     "createdAt": "2025-09-19T20:33:35Z"
+    }
+   ],
+   "issuesTruncated": false,
+   "quirkScripts": [
+    {
+     "name": "omarchy-hw-dell-xps-haptic-touchpad",
+     "path": "bin/omarchy-hw-dell-xps-haptic-touchpad",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-hw-dell-xps-haptic-touchpad",
+     "summary": "Match Dell XPS systems with the Synaptics haptic touchpad."
+    },
+    {
+     "name": "omarchy-hw-dell-xps-oled",
+     "path": "bin/omarchy-hw-dell-xps-oled",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-hw-dell-xps-oled",
+     "summary": "Match Dell XPS systems with LG OLED panel on Intel Panther Lake (Xe3) GPU."
+    },
+    {
+     "name": "omarchy-hw-fingerprint",
+     "path": "bin/omarchy-hw-fingerprint",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-hw-fingerprint",
+     "summary": "Returns true when a fingerprint reader is present"
+    },
+    {
+     "name": "dell-xps-touchpad-haptics.sh",
+     "path": "install/hardware/dell-xps-touchpad-haptics.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/dell-xps-touchpad-haptics.sh",
+     "summary": ""
+    },
+    {
+     "name": "fix-wifi7-eht.sh",
+     "path": "install/hardware/intel/fix-wifi7-eht.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/intel/fix-wifi7-eht.sh",
+     "summary": "Disable WiFi 7 (EHT/802.11be) on Intel BE200/BE211 cards"
+    },
+    {
+     "name": "xps13-text-scaling.sh",
+     "path": "install/user/hardware/dell/xps13-text-scaling.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/user/hardware/dell/xps13-text-scaling.sh",
+     "summary": "panel renders the default size a touch large. Uses the unified display text"
+    }
+   ],
+   "dmiHints": [],
+   "legacyPrototype": {
+    "id": "dell-xps-13-2026",
+    "name": "Dell XPS 13 (2026, Wildcat Lake)",
+    "brand": "Dell",
+    "rating": "gold",
+    "summary": "DHH’s value pick vs MacBook Neo. 120 Hz matte, ~$699 US. Sidecar-amp quirk package for SKU 0E53.",
+    "type": "laptop",
+    "tags": "xps wildcat DX13260 sidecar",
+    "wifi": "works",
+    "audio": "works",
+    "webcam": "works",
+    "fingerprint": "works",
+    "gpu": "works",
+    "suspend": "works",
+    "href": "dell.html#dell-xps-13-2026"
+   },
+   "legacyPrototypeAlso": [
+    {
+     "id": "dell-xps-13-9370",
+     "name": "Dell XPS 13 9370 (2018)",
+     "brand": "Dell",
+     "rating": "silver",
+     "summary": "Community daily driver next to Beelink minis. Old but installs cleanly.",
+     "type": "laptop",
+     "tags": "xps 9370",
+     "wifi": "works",
+     "audio": "works",
+     "webcam": "works",
+     "fingerprint": "unknown",
+     "gpu": "works",
+     "suspend": "works",
+     "href": "dell.html#dell-xps-13-9370"
+    }
+   ],
+   "legacyPrototypeSource": "legacy-prototype-unverified"
+  },
+  {
    "key": "msi",
    "vendor": "MSI",
    "model": "MSI",
@@ -7159,641 +7867,6 @@
    "dmiHints": []
   },
   {
-   "key": "dell-xps-13",
-   "vendor": "Dell",
-   "model": "Dell XPS 13",
-   "aliases": [
-    "Dell XPS 13",
-    "Dell XPS 13 (DX13260",
-    "Dell XPS 13 9305",
-    "Dell XPS 13 9315",
-    "Dell XPS 13 9340",
-    "Dell XPS 13 9343",
-    "Dell XPS 13 9345",
-    "Dell XPS 13 9350",
-    "Dell XPS 13 9370",
-    "Dell XPS 13 DX13260",
-    "Dell XPS 13 model 9315",
-    "XPS 13",
-    "XPS 13 (DX13260",
-    "XPS 13 9340",
-    "XPS 13 9345"
-   ],
-   "variants": [
-    "9305",
-    "9315",
-    "9340",
-    "9343",
-    "9345",
-    "9350",
-    "9360",
-    "9370",
-    "DX13260",
-    "dx13260"
-   ],
-   "counts": {
-    "issues": 42,
-    "open": 27,
-    "closed": 15,
-    "discussions": 9
-   },
-   "components": [
-    {
-     "key": "boot-limine",
-     "issues": 16
-    },
-    {
-     "key": "multi-monitor",
-     "issues": 12
-    },
-    {
-     "key": "audio",
-     "issues": 11
-    },
-    {
-     "key": "intel-gpu",
-     "issues": 11
-    },
-    {
-     "key": "suspend-sleep",
-     "issues": 9
-    },
-    {
-     "key": "battery-power",
-     "issues": 6
-    },
-    {
-     "key": "hybrid-gpu",
-     "issues": 4
-    },
-    {
-     "key": "webcam",
-     "issues": 4
-    },
-    {
-     "key": "touchpad-input",
-     "issues": 3
-    },
-    {
-     "key": "thunderbolt-dock",
-     "issues": 3
-    },
-    {
-     "key": "wifi",
-     "issues": 2
-    },
-    {
-     "key": "nvidia",
-     "issues": 2
-    },
-    {
-     "key": "storage-nvme",
-     "issues": 1
-    },
-    {
-     "key": "vm",
-     "issues": 1
-    }
-   ],
-   "issues": [
-    {
-     "number": 18226,
-     "title": "Dell XPS 13 DX13260 (Wildcat Lake, Bamboo panel): patch 0406 flickers brightness while typing; PSR1-only freezes the screen; only full self-refresh off is clean",
-     "url": "https://github.com/omacom/omarchy/issues/18226",
-     "state": "OPEN",
-     "components": [
-      "intel-gpu",
-      "boot-limine",
-      "touchpad-input"
-     ],
-     "createdAt": "2026-11-09T04:44:28Z"
-    },
-    {
-     "number": 18175,
-     "title": "Captive portal sign-in window loads https://ping.omacom.io and fails, so the portal page never appears",
-     "url": "https://github.com/omacom/omarchy/issues/18175",
-     "state": "OPEN",
-     "components": [
-      "wifi"
-     ],
-     "createdAt": "2026-11-08T15:32:24Z"
-    },
-    {
-     "number": 18078,
-     "title": "XPS 13 9345: stale V4L2 codec discovery blocks audio policy and libcamera export",
-     "url": "https://github.com/omacom/omarchy/issues/18078",
-     "state": "OPEN",
-     "components": [
-      "multi-monitor",
-      "audio",
-      "webcam"
-     ],
-     "createdAt": "2026-11-07T21:15:12Z"
-    },
-    {
-     "number": 17824,
-     "title": "Hibernation aborts with ENOMEM inside suspend_nvs_save() after the image preallocation consumes all free memory (XPS 13 DX13260, 7.2.15-1-omarchy)",
-     "url": "https://github.com/omacom/omarchy/issues/17824",
-     "state": "OPEN",
-     "components": [
-      "intel-gpu",
-      "hybrid-gpu",
-      "suspend-sleep",
-      "boot-limine",
-      "battery-power"
-     ],
-     "createdAt": "2026-11-06T00:55:23Z"
-    },
-    {
-     "number": 17137,
-     "title": "Dell XPS 13 DX13260: charge threshold reported as 75-80% although the EC refuses every operation (ENXIO)",
-     "url": "https://github.com/omacom/omarchy/issues/17137",
-     "state": "OPEN",
-     "components": [
-      "intel-gpu",
-      "battery-power"
-     ],
-     "createdAt": "2026-10-31T10:40:42Z"
-    },
-    {
-     "number": 16997,
-     "title": "Shell: the full-screen bar window and per-switch re-renders make every change a full-screen repaint",
-     "url": "https://github.com/omacom/omarchy/issues/16997",
-     "state": "OPEN",
-     "components": [
-      "multi-monitor",
-      "thunderbolt-dock"
-     ],
-     "createdAt": "2026-10-29T14:42:52Z"
-    },
-    {
-     "number": 16653,
-     "title": "Power panel \"Time to full\" counts to 100% when the battery's charge limit stops charging earlier",
-     "url": "https://github.com/omacom/omarchy/issues/16653",
-     "state": "OPEN",
-     "components": [
-      "battery-power"
-     ],
-     "createdAt": "2026-10-25T21:00:50Z"
-    },
-    {
-     "number": 16514,
-     "title": "`omarchy plugin clone omarchy.menu` times out and leaves shell.json pointing at a deleted plugin",
-     "url": "https://github.com/omacom/omarchy/issues/16514",
-     "state": "OPEN",
-     "components": [],
-     "createdAt": "2026-10-24T19:02:20Z"
-    },
-    {
-     "number": 16513,
-     "title": "Cloned menu plugin gets `shell.appLibrary == null`, so Apps is empty and apps cannot be searched",
-     "url": "https://github.com/omacom/omarchy/issues/16513",
-     "state": "OPEN",
-     "components": [],
-     "createdAt": "2026-10-24T19:02:18Z"
-    },
-    {
-     "number": 16242,
-     "title": "Fullscreening a second window on a floating workspace restores the first to its old size",
-     "url": "https://github.com/omacom/omarchy/issues/16242",
-     "state": "OPEN",
-     "components": [
-      "intel-gpu"
-     ],
-     "createdAt": "2026-10-22T06:53:08Z"
-    },
-    {
-     "number": 16241,
-     "title": "Fullscreen window on a floating workspace is focused by Alt-Tab but never raised",
-     "url": "https://github.com/omacom/omarchy/issues/16241",
-     "state": "OPEN",
-     "components": [
-      "intel-gpu",
-      "touchpad-input"
-     ],
-     "createdAt": "2026-10-22T06:48:14Z"
-    },
-    {
-     "number": 15882,
-     "title": "XPS 13 (DX13260): cursor and moving text turn rose with night light on, since linux-omarchy 7.2.8",
-     "url": "https://github.com/omacom/omarchy/issues/15882",
-     "state": "OPEN",
-     "components": [
-      "intel-gpu"
-     ],
-     "createdAt": "2026-10-18T20:08:53Z"
-    },
-    {
-     "number": 15831,
-     "title": "linux-omarchy 7.2.8-9: webcam broken on XPS 13 9340 (IPU6), HIMX1092 ipu-bridge entry blocks ISYS notifier without an hm1092 driver",
-     "url": "https://github.com/omacom/omarchy/issues/15831",
-     "state": "OPEN",
-     "components": [
-      "audio",
-      "boot-limine",
-      "webcam"
-     ],
-     "createdAt": "2026-10-18T11:36:53Z"
-    },
-    {
-     "number": 15207,
-     "title": "Docked laptop with lid closed suspends after every lock: lock-screen blank makes logind treat external displays as undocked",
-     "url": "https://github.com/omacom/omarchy/issues/15207",
-     "state": "OPEN",
-     "components": [
-      "suspend-sleep",
-      "multi-monitor",
-      "thunderbolt-dock"
-     ],
-     "createdAt": "2026-10-12T18:36:01Z"
-    },
-    {
-     "number": 14750,
-     "title": "USB-C dock monitor appears for a few seconds after boot, then drops and returns as DP-1 stuck at 0x0 (ThinkPad X1 Carbon Gen 13, Arrow Lake; same on Dell XPS 13 2024)",
-     "url": "https://github.com/omacom/omarchy/issues/14750",
-     "state": "CLOSED",
-     "components": [
-      "nvidia",
-      "intel-gpu",
-      "hybrid-gpu",
-      "suspend-sleep",
-      "multi-monitor",
-      "boot-limine",
-      "thunderbolt-dock"
-     ],
-     "createdAt": "2026-10-09T16:27:02Z"
-    },
-    {
-     "number": 14463,
-     "title": "Agents usage refresh: Claude collector rescans all transcripts every run (~15 s CPU), and collectors run for agents never signed in",
-     "url": "https://github.com/omacom/omarchy/issues/14463",
-     "state": "OPEN",
-     "components": [
-      "multi-monitor"
-     ],
-     "createdAt": "2026-10-07T19:01:30Z"
-    },
-    {
-     "number": 14208,
-     "title": "Omarchy font set: restart notification fails (-g has no glyph) and pgrep prints PIDs",
-     "url": "https://github.com/omacom/omarchy/issues/14208",
-     "state": "CLOSED",
-     "components": [
-      "intel-gpu"
-     ],
-     "createdAt": "2026-10-04T05:10:35Z"
-    },
-    {
-     "number": 14207,
-     "title": "OSD card uses Color.background while its icon/percentage use Color.popups.text",
-     "url": "https://github.com/omacom/omarchy/issues/14207",
-     "state": "OPEN",
-     "components": [
-      "intel-gpu"
-     ],
-     "createdAt": "2026-10-04T05:00:53Z"
-    },
-    {
-     "number": 14064,
-     "title": "Shell background: setInstant flashes black until the new image decodes",
-     "url": "https://github.com/omacom/omarchy/issues/14064",
-     "state": "OPEN",
-     "components": [
-      "multi-monitor"
-     ],
-     "createdAt": "2026-10-02T15:52:50Z"
-    },
-    {
-     "number": 13504,
-     "title": "Bar clock shows pre-suspend time for up to a minute after resume",
-     "url": "https://github.com/omacom/omarchy/issues/13504",
-     "state": "CLOSED",
-     "components": [
-      "suspend-sleep",
-      "multi-monitor"
-     ],
-     "createdAt": "2026-09-28T03:07:56Z"
-    },
-    {
-     "number": 13196,
-     "title": "linux-omarchy 7.2.5-3: ThinkPad P50s (Skylake + NVIDIA Maxwell) never wakes from S3 suspend; stock `linux` works",
-     "url": "https://github.com/omacom/omarchy/issues/13196",
-     "state": "OPEN",
-     "components": [
-      "nvidia",
-      "hybrid-gpu",
-      "suspend-sleep",
-      "boot-limine",
-      "battery-power"
-     ],
-     "createdAt": "2026-09-25T02:45:49Z"
-    },
-    {
-     "number": 13157,
-     "title": "Dismissing the screensaver with the trackpad leaves the app underneath fullscreen (on_focus_under_fullscreen = 1 hands fullscreen to the window that gains focus)",
-     "url": "https://github.com/omacom/omarchy/issues/13157",
-     "state": "OPEN",
-     "components": [
-      "intel-gpu",
-      "multi-monitor",
-      "touchpad-input"
-     ],
-     "createdAt": "2026-09-24T14:59:04Z"
-    },
-    {
-     "number": 12664,
-     "title": "limine template hardcodes default_entry: 2, so the linux-omarchy migration silently keeps booting the stock kernel",
-     "url": "https://github.com/omacom/omarchy/issues/12664",
-     "state": "OPEN",
-     "components": [
-      "boot-limine"
-     ],
-     "createdAt": "2026-09-20T19:04:32Z"
-    },
-    {
-     "number": 12228,
-     "title": "1Password autostart entry lacks --force-device-scale-factor=1, so windows mis-render when text size != 12px (default on XPS 13)",
-     "url": "https://github.com/omacom/omarchy/issues/12228",
-     "state": "OPEN",
-     "components": [
-      "multi-monitor"
-     ],
-     "createdAt": "2026-09-17T06:09:27Z"
-    },
-    {
-     "number": 12190,
-     "title": "`linux-omarchy` 7.2.5-3 hangs during suspend entry on Wildcat Lake (XPS 13 DX13260); stock `linux` 7.2.3 suspends fine",
-     "url": "https://github.com/omacom/omarchy/issues/12190",
-     "state": "OPEN",
-     "components": [
-      "suspend-sleep",
-      "boot-limine",
-      "battery-power"
-     ],
-     "createdAt": "2026-09-16T21:53:20Z"
-    },
-    {
-     "number": 12178,
-     "title": "Lunar Lake: intel-ipu7-camera is installed by detection but built for Panther Lake only — no camera on any Core Ultra 200V laptop, fix open since 09-09",
-     "url": "https://github.com/omacom/omarchy/issues/12178",
-     "state": "OPEN",
-     "components": [
-      "webcam",
-      "battery-power"
-     ],
-     "createdAt": "2026-09-16T19:31:53Z"
-    },
-    {
-     "number": 11374,
-     "title": "No sound from internal speakers on Dell XPS 13 DX13260 (Panther Lake, CS42L43+CS35L56A) — speaker-ID/tuning read failure",
-     "url": "https://github.com/omacom/omarchy/issues/11374",
-     "state": "CLOSED",
-     "components": [
-      "audio",
-      "boot-limine"
-     ],
-     "createdAt": "2026-09-11T21:21:27Z"
-    },
-    {
-     "number": 11356,
-     "title": "Dell XPS 13 DX13260 (0E54): silent speakers due to missing Cirrus firmware links",
-     "url": "https://github.com/omacom/omarchy/issues/11356",
-     "state": "CLOSED",
-     "components": [
-      "audio",
-      "boot-limine"
-     ],
-     "createdAt": "2026-09-11T18:50:36Z"
-    },
-    {
-     "number": 11320,
-     "title": "No speaker audio on Dell XPS 13 DX13260 (2026) — CS35L56 amp firmware never loads",
-     "url": "https://github.com/omacom/omarchy/issues/11320",
-     "state": "CLOSED",
-     "components": [
-      "audio"
-     ],
-     "createdAt": "2026-09-11T13:06:45Z"
-    },
-    {
-     "number": 10987,
-     "title": "Dell XPS 13 DX13260 (1028:0e53): intermittent sof_sdw card-instantiation failure (-16 EBUSY) + CS35L56 amps can't read tuning IDs even when files exist",
-     "url": "https://github.com/omacom/omarchy/issues/10987",
-     "state": "CLOSED",
-     "components": [
-      "suspend-sleep",
-      "audio",
-      "boot-limine"
-     ],
-     "createdAt": "2026-09-09T14:51:58Z"
-    },
-    {
-     "number": 10761,
-     "title": "Open whatsapp:// links in the bundled WhatsApp web app",
-     "url": "https://github.com/omacom/omarchy/issues/10761",
-     "state": "OPEN",
-     "components": [],
-     "createdAt": "2026-09-08T03:23:13Z"
-    },
-    {
-     "number": 10543,
-     "title": "Dell XPS 13 DX13260 (1028:0e53): no sound at all after dell-xps13-sidecar-amps workaround — CS35L56 firmware never downloads despite blobs being present",
-     "url": "https://github.com/omacom/omarchy/issues/10543",
-     "state": "CLOSED",
-     "components": [
-      "audio",
-      "boot-limine"
-     ],
-     "createdAt": "2026-09-06T20:10:36Z"
-    },
-    {
-     "number": 9879,
-     "title": "IPU6 MIPI cameras (ov01a10 / OVTI01A0) get no setup — hardware detection only covers IPU7",
-     "url": "https://github.com/omacom/omarchy/issues/9879",
-     "state": "CLOSED",
-     "components": [
-      "audio",
-      "webcam"
-     ],
-     "createdAt": "2026-09-02T19:29:51Z"
-    },
-    {
-     "number": 9817,
-     "title": "Launch feedback OSD remains stuck after Cursor and Grok Bot launch",
-     "url": "https://github.com/omacom/omarchy/issues/9817",
-     "state": "OPEN",
-     "components": [
-      "intel-gpu",
-      "multi-monitor"
-     ],
-     "createdAt": "2026-09-02T13:57:27Z"
-    },
-    {
-     "number": 9687,
-     "title": "dell-xps13-sidecar-amps: reports success but speakers stay silent on spkid0 units (XPS 13 DX13260)",
-     "url": "https://github.com/omacom/omarchy/issues/9687",
-     "state": "OPEN",
-     "components": [
-      "audio",
-      "boot-limine"
-     ],
-     "createdAt": "2026-09-01T21:50:30Z"
-    },
-    {
-     "number": 7427,
-     "title": "Dell XPS 13 (0E53) has no bass: CS35L56 woofer amps never load firmware without the sof_sdw sidecar quirk",
-     "url": "https://github.com/omacom/omarchy/issues/7427",
-     "state": "CLOSED",
-     "components": [
-      "audio",
-      "boot-limine"
-     ],
-     "createdAt": "2026-08-18T21:48:04Z"
-    },
-    {
-     "number": 6853,
-     "title": "Jittery scrolling on Dell XPS 13 (Wildcat Lake): Panel Replay stalls frame delivery",
-     "url": "https://github.com/omacom/omarchy/issues/6853",
-     "state": "CLOSED",
-     "components": [
-      "hybrid-gpu",
-      "suspend-sleep",
-      "multi-monitor",
-      "boot-limine"
-     ],
-     "createdAt": "2026-08-14T06:27:32Z"
-    },
-    {
-     "number": 6551,
-     "title": "Wifi (Intel BE213 on Dell XPS 13) doesn't work out of the box - linux-firmware on install media too old",
-     "url": "https://github.com/omacom/omarchy/issues/6551",
-     "state": "OPEN",
-     "components": [
-      "wifi",
-      "boot-limine"
-     ],
-     "createdAt": "2026-08-05T02:35:51Z"
-    },
-    {
-     "number": 5342,
-     "title": "SUPER+CTRL+Delete shortcut to toggle internal display doesn't work on lock screen after external monitor is disconnected",
-     "url": "https://github.com/omacom/omarchy/issues/5342",
-     "state": "CLOSED",
-     "components": [
-      "suspend-sleep",
-      "multi-monitor"
-     ],
-     "createdAt": "2026-04-17T11:28:16Z"
-    },
-    {
-     "number": 5298,
-     "title": "Installer should backup the files it modifies when executing on an existing arch install",
-     "url": "https://github.com/omacom/omarchy/issues/5298",
-     "state": "CLOSED",
-     "components": [
-      "vm"
-     ],
-     "createdAt": "2026-04-14T00:40:15Z"
-    },
-    {
-     "number": 1868,
-     "title": "Omarchy audio broken on dell xps 13",
-     "url": "https://github.com/omacom/omarchy/issues/1868",
-     "state": "CLOSED",
-     "components": [
-      "audio"
-     ],
-     "createdAt": "2025-09-22T08:41:14Z"
-    },
-    {
-     "number": 1814,
-     "title": "Problem with installation Omarchy 3.0 ISO using Ventoy as boot media",
-     "url": "https://github.com/omacom/omarchy/issues/1814",
-     "state": "CLOSED",
-     "components": [
-      "boot-limine",
-      "storage-nvme"
-     ],
-     "createdAt": "2025-09-19T20:33:35Z"
-    }
-   ],
-   "issuesTruncated": false,
-   "quirkScripts": [
-    {
-     "name": "omarchy-hw-dell-xps-haptic-touchpad",
-     "path": "bin/omarchy-hw-dell-xps-haptic-touchpad",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-hw-dell-xps-haptic-touchpad",
-     "summary": "Match Dell XPS systems with the Synaptics haptic touchpad."
-    },
-    {
-     "name": "omarchy-hw-dell-xps-oled",
-     "path": "bin/omarchy-hw-dell-xps-oled",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-hw-dell-xps-oled",
-     "summary": "Match Dell XPS systems with LG OLED panel on Intel Panther Lake (Xe3) GPU."
-    },
-    {
-     "name": "omarchy-hw-fingerprint",
-     "path": "bin/omarchy-hw-fingerprint",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-hw-fingerprint",
-     "summary": "Returns true when a fingerprint reader is present"
-    },
-    {
-     "name": "dell-xps-touchpad-haptics.sh",
-     "path": "install/hardware/dell-xps-touchpad-haptics.sh",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/dell-xps-touchpad-haptics.sh",
-     "summary": ""
-    },
-    {
-     "name": "fix-wifi7-eht.sh",
-     "path": "install/hardware/intel/fix-wifi7-eht.sh",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/intel/fix-wifi7-eht.sh",
-     "summary": "Disable WiFi 7 (EHT/802.11be) on Intel BE200/BE211 cards"
-    },
-    {
-     "name": "xps13-text-scaling.sh",
-     "path": "install/user/hardware/dell/xps13-text-scaling.sh",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/user/hardware/dell/xps13-text-scaling.sh",
-     "summary": "panel renders the default size a touch large. Uses the unified display text"
-    }
-   ],
-   "dmiHints": [],
-   "legacyPrototype": {
-    "id": "dell-xps-13-2026",
-    "name": "Dell XPS 13 (2026, Wildcat Lake)",
-    "brand": "Dell",
-    "rating": "gold",
-    "summary": "DHH’s value pick vs MacBook Neo. 120 Hz matte, ~$699 US. Sidecar-amp quirk package for SKU 0E53.",
-    "type": "laptop",
-    "tags": "xps wildcat DX13260 sidecar",
-    "wifi": "works",
-    "audio": "works",
-    "webcam": "works",
-    "fingerprint": "works",
-    "gpu": "works",
-    "suspend": "works",
-    "href": "dell.html#dell-xps-13-2026"
-   },
-   "legacyPrototypeAlso": [
-    {
-     "id": "dell-xps-13-9370",
-     "name": "Dell XPS 13 9370 (2018)",
-     "brand": "Dell",
-     "rating": "silver",
-     "summary": "Community daily driver next to Beelink minis. Old but installs cleanly.",
-     "type": "laptop",
-     "tags": "xps 9370",
-     "wifi": "works",
-     "audio": "works",
-     "webcam": "works",
-     "fingerprint": "unknown",
-     "gpu": "works",
-     "suspend": "works",
-     "href": "dell.html#dell-xps-13-9370"
-    }
-   ],
-   "legacyPrototypeSource": "legacy-prototype-unverified"
-  },
-  {
    "key": "lenovo-yoga",
    "vendor": "Lenovo",
    "model": "Lenovo Yoga",
@@ -7828,7 +7901,7 @@
     "issues": 39,
     "open": 26,
     "closed": 13,
-    "discussions": 12
+    "discussions": 13
    },
    "components": [
     {
@@ -7837,7 +7910,7 @@
     },
     {
      "key": "multi-monitor",
-     "issues": 13
+     "issues": 14
     },
     {
      "key": "suspend-sleep",
@@ -7860,16 +7933,16 @@
      "issues": 5
     },
     {
+     "key": "wifi",
+     "issues": 4
+    },
+    {
      "key": "thunderbolt-dock",
      "issues": 4
     },
     {
      "key": "fingerprint",
      "issues": 4
-    },
-    {
-     "key": "wifi",
-     "issues": 3
     },
     {
      "key": "storage-nvme",
@@ -7896,6 +7969,8 @@
      "state": "OPEN",
      "components": [
       "suspend-sleep",
+      "multi-monitor",
+      "wifi",
       "boot-limine",
       "battery-power"
      ],
@@ -14298,19 +14373,19 @@
     "x360"
    ],
    "counts": {
-    "issues": 20,
-    "open": 12,
+    "issues": 21,
+    "open": 13,
     "closed": 8,
     "discussions": 5
    },
    "components": [
     {
      "key": "multi-monitor",
-     "issues": 9
+     "issues": 10
     },
     {
      "key": "amd-gpu",
-     "issues": 5
+     "issues": 6
     },
     {
      "key": "audio",
@@ -14359,9 +14434,25 @@
     {
      "key": "intel-gpu",
      "issues": 1
+    },
+    {
+     "key": "vm",
+     "issues": 1
     }
    ],
    "issues": [
+    {
+     "number": 18315,
+     "title": "KVM switch back makes Steam borderless fullscreen; visible bar passes clicks to Steam menus",
+     "url": "https://github.com/omacom/omarchy/issues/18315",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu",
+      "multi-monitor",
+      "vm"
+     ],
+     "createdAt": "2026-11-09T22:53:09Z"
+    },
     {
      "number": 18172,
      "title": "Menu: 'No matches for …' text overflows the card on long searches",
@@ -19627,11 +19718,11 @@
    },
    "components": [
     {
-     "key": "intel-gpu",
-     "issues": 3
+     "key": "multi-monitor",
+     "issues": 4
     },
     {
-     "key": "multi-monitor",
+     "key": "intel-gpu",
      "issues": 3
     },
     {
@@ -19651,12 +19742,12 @@
      "issues": 2
     },
     {
-     "key": "touchpad-input",
+     "key": "wifi",
      "issues": 2
     },
     {
-     "key": "wifi",
-     "issues": 1
+     "key": "touchpad-input",
+     "issues": 2
     },
     {
      "key": "webcam",
@@ -19679,6 +19770,8 @@
      "state": "OPEN",
      "components": [
       "suspend-sleep",
+      "multi-monitor",
+      "wifi",
       "boot-limine",
       "battery-power"
      ],
@@ -21089,6 +21182,137 @@
    "legacyPrototypeSource": "legacy-prototype-unverified"
   },
   {
+   "key": "hp-probook",
+   "vendor": "HP",
+   "model": "HP Probook",
+   "aliases": [
+    "HP ProBook 445",
+    "HP ProBook 450",
+    "HP Probook 455"
+   ],
+   "variants": [
+    "445",
+    "450",
+    "455"
+   ],
+   "counts": {
+    "issues": 8,
+    "open": 6,
+    "closed": 2,
+    "discussions": 2
+   },
+   "components": [
+    {
+     "key": "wifi",
+     "issues": 2
+    },
+    {
+     "key": "multi-monitor",
+     "issues": 2
+    },
+    {
+     "key": "amd-gpu",
+     "issues": 2
+    },
+    {
+     "key": "boot-limine",
+     "issues": 2
+    },
+    {
+     "key": "battery-power",
+     "issues": 1
+    },
+    {
+     "key": "storage-nvme",
+     "issues": 1
+    }
+   ],
+   "issues": [
+    {
+     "number": 18295,
+     "title": "Unexpected AMD reset: Data Fabric Sync Flood on HP ProBook 445 G9",
+     "url": "https://github.com/omacom/omarchy/issues/18295",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu",
+      "boot-limine"
+     ],
+     "createdAt": "2026-11-09T20:10:38Z"
+    },
+    {
+     "number": 18180,
+     "title": "Kernel panic: double fault on HP ProBook 445 G9 (Ryzen 5 5625U, linux-omarchy 7.2.15)",
+     "url": "https://github.com/omacom/omarchy/issues/18180",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu",
+      "multi-monitor",
+      "boot-limine",
+      "storage-nvme"
+     ],
+     "createdAt": "2026-11-08T16:53:27Z"
+    },
+    {
+     "number": 8249,
+     "title": "/usr/bin/btop installed with CAP_DAC_READ_SEARCH (bypasses file read permissions)",
+     "url": "https://github.com/omacom/omarchy/issues/8249",
+     "state": "OPEN",
+     "components": [
+      "multi-monitor"
+     ],
+     "createdAt": "2026-08-25T17:27:39Z"
+    },
+    {
+     "number": 8248,
+     "title": "OpenSSH daemon bound to all interfaces",
+     "url": "https://github.com/omacom/omarchy/issues/8248",
+     "state": "OPEN",
+     "components": [],
+     "createdAt": "2026-08-25T17:23:49Z"
+    },
+    {
+     "number": 8245,
+     "title": "`gsr-kms-server` ships with `cap_sys_admin` (root-equivalent capability)",
+     "url": "https://github.com/omacom/omarchy/issues/8245",
+     "state": "OPEN",
+     "components": [],
+     "createdAt": "2026-08-25T17:10:11Z"
+    },
+    {
+     "number": 8239,
+     "title": "Omarchy 'omarchy update'",
+     "url": "https://github.com/omacom/omarchy/issues/8239",
+     "state": "OPEN",
+     "components": [],
+     "createdAt": "2026-08-25T16:38:54Z"
+    },
+    {
+     "number": 4843,
+     "title": "webex-bin .. crashing hyprland",
+     "url": "https://github.com/omacom/omarchy/issues/4843",
+     "state": "CLOSED",
+     "components": [
+      "wifi",
+      "battery-power"
+     ],
+     "createdAt": "2026-03-01T17:13:50Z"
+    },
+    {
+     "number": 3836,
+     "title": "WiFi TUI not working, only Ethernet works",
+     "url": "https://github.com/omacom/omarchy/issues/3836",
+     "state": "CLOSED",
+     "components": [
+      "wifi"
+     ],
+     "createdAt": "2025-12-10T13:03:44Z"
+    }
+   ],
+   "issuesTruncated": false,
+   "quirkScripts": [],
+   "dmiHints": []
+  },
+  {
    "key": "minisforum",
    "vendor": "Minisforum",
    "model": "Minisforum",
@@ -21992,126 +22216,6 @@
     "href": "asus.html#asus-flow-z13-2025"
    },
    "legacyPrototypeSource": "legacy-prototype-unverified"
-  },
-  {
-   "key": "hp-probook",
-   "vendor": "HP",
-   "model": "HP Probook",
-   "aliases": [
-    "HP ProBook 445",
-    "HP ProBook 450",
-    "HP Probook 455"
-   ],
-   "variants": [
-    "445",
-    "450",
-    "455"
-   ],
-   "counts": {
-    "issues": 7,
-    "open": 5,
-    "closed": 2,
-    "discussions": 2
-   },
-   "components": [
-    {
-     "key": "wifi",
-     "issues": 2
-    },
-    {
-     "key": "multi-monitor",
-     "issues": 2
-    },
-    {
-     "key": "battery-power",
-     "issues": 1
-    },
-    {
-     "key": "amd-gpu",
-     "issues": 1
-    },
-    {
-     "key": "boot-limine",
-     "issues": 1
-    },
-    {
-     "key": "storage-nvme",
-     "issues": 1
-    }
-   ],
-   "issues": [
-    {
-     "number": 18180,
-     "title": "Kernel panic: double fault on HP ProBook 445 G9 (Ryzen 5 5625U, linux-omarchy 7.2.15)",
-     "url": "https://github.com/omacom/omarchy/issues/18180",
-     "state": "OPEN",
-     "components": [
-      "amd-gpu",
-      "multi-monitor",
-      "boot-limine",
-      "storage-nvme"
-     ],
-     "createdAt": "2026-11-08T16:53:27Z"
-    },
-    {
-     "number": 8249,
-     "title": "/usr/bin/btop installed with CAP_DAC_READ_SEARCH (bypasses file read permissions)",
-     "url": "https://github.com/omacom/omarchy/issues/8249",
-     "state": "OPEN",
-     "components": [
-      "multi-monitor"
-     ],
-     "createdAt": "2026-08-25T17:27:39Z"
-    },
-    {
-     "number": 8248,
-     "title": "OpenSSH daemon bound to all interfaces",
-     "url": "https://github.com/omacom/omarchy/issues/8248",
-     "state": "OPEN",
-     "components": [],
-     "createdAt": "2026-08-25T17:23:49Z"
-    },
-    {
-     "number": 8245,
-     "title": "`gsr-kms-server` ships with `cap_sys_admin` (root-equivalent capability)",
-     "url": "https://github.com/omacom/omarchy/issues/8245",
-     "state": "OPEN",
-     "components": [],
-     "createdAt": "2026-08-25T17:10:11Z"
-    },
-    {
-     "number": 8239,
-     "title": "Omarchy 'omarchy update'",
-     "url": "https://github.com/omacom/omarchy/issues/8239",
-     "state": "OPEN",
-     "components": [],
-     "createdAt": "2026-08-25T16:38:54Z"
-    },
-    {
-     "number": 4843,
-     "title": "webex-bin .. crashing hyprland",
-     "url": "https://github.com/omacom/omarchy/issues/4843",
-     "state": "CLOSED",
-     "components": [
-      "wifi",
-      "battery-power"
-     ],
-     "createdAt": "2026-03-01T17:13:50Z"
-    },
-    {
-     "number": 3836,
-     "title": "WiFi TUI not working, only Ethernet works",
-     "url": "https://github.com/omacom/omarchy/issues/3836",
-     "state": "CLOSED",
-     "components": [
-      "wifi"
-     ],
-     "createdAt": "2025-12-10T13:03:44Z"
-    }
-   ],
-   "issuesTruncated": false,
-   "quirkScripts": [],
-   "dmiHints": []
   },
   {
    "key": "lenovo-thinkpad-t14s",
@@ -24526,6 +24630,146 @@
    "dmiHints": []
   },
   {
+   "key": "lenovo-thinkpad-e15",
+   "vendor": "Lenovo",
+   "model": "ThinkPad E15",
+   "aliases": [
+    "ThinkPad E15",
+    "ThinkPad E15 Gen 2",
+    "ThinkPad E15 Gen 3"
+   ],
+   "variants": [
+    "Gen 2",
+    "Gen 3"
+   ],
+   "counts": {
+    "issues": 5,
+    "open": 5,
+    "closed": 0,
+    "discussions": 0
+   },
+   "components": [
+    {
+     "key": "suspend-sleep",
+     "issues": 3
+    },
+    {
+     "key": "amd-gpu",
+     "issues": 2
+    },
+    {
+     "key": "multi-monitor",
+     "issues": 2
+    },
+    {
+     "key": "boot-limine",
+     "issues": 2
+    },
+    {
+     "key": "battery-power",
+     "issues": 2
+    },
+    {
+     "key": "audio",
+     "issues": 2
+    },
+    {
+     "key": "intel-gpu",
+     "issues": 2
+    },
+    {
+     "key": "fingerprint",
+     "issues": 1
+    },
+    {
+     "key": "nvidia",
+     "issues": 1
+    },
+    {
+     "key": "hybrid-gpu",
+     "issues": 1
+    },
+    {
+     "key": "touchpad-input",
+     "issues": 1
+    },
+    {
+     "key": "bluetooth",
+     "issues": 1
+    }
+   ],
+   "issues": [
+    {
+     "number": 18299,
+     "title": "wireplumber segfaults in libspa-bluez5 during hibernate with Bluetooth headset connected",
+     "url": "https://github.com/omacom/omarchy/issues/18299",
+     "state": "OPEN",
+     "components": [
+      "intel-gpu",
+      "suspend-sleep",
+      "audio",
+      "bluetooth"
+     ],
+     "createdAt": "2026-11-09T20:40:53Z"
+    },
+    {
+     "number": 18049,
+     "title": "Agents plugin shows false warning when Codex Business spend limit is $0",
+     "url": "https://github.com/omacom/omarchy/issues/18049",
+     "state": "OPEN",
+     "components": [
+      "intel-gpu",
+      "multi-monitor"
+     ],
+     "createdAt": "2026-11-07T15:18:21Z"
+    },
+    {
+     "number": 13752,
+     "title": "AMD Lucienne (ThinkPad E15 Gen 3): reg-write failures start at a hibernate resume, hibernation writes degrade to worst-ever, final hibernate froze during image write (no image, silent journal end)",
+     "url": "https://github.com/omacom/omarchy/issues/13752",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "amd-gpu",
+      "hybrid-gpu",
+      "suspend-sleep",
+      "audio",
+      "boot-limine",
+      "touchpad-input",
+      "battery-power"
+     ],
+     "createdAt": "2026-09-29T14:42:21Z"
+    },
+    {
+     "number": 11413,
+     "title": "Intermittent freeze after hibernation on AMD Lucienne; upstream investigation #5808",
+     "url": "https://github.com/omacom/omarchy/issues/11413",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu",
+      "suspend-sleep",
+      "multi-monitor",
+      "boot-limine",
+      "battery-power"
+     ],
+     "createdAt": "2026-09-12T04:36:47Z"
+    },
+    {
+     "number": 7483,
+     "title": "ELAN 04f3:0c4b fingerprint reader never matches under stock libfprint (ThinkPad E14/E15 Gen 3/4) — works with libfprint-tod instead",
+     "url": "https://github.com/omacom/omarchy/issues/7483",
+     "state": "OPEN",
+     "components": [
+      "fingerprint"
+     ],
+     "createdAt": "2026-08-19T11:18:12Z"
+    }
+   ],
+   "issuesTruncated": false,
+   "quirkScripts": [],
+   "dmiHints": []
+  },
+  {
    "key": "lenovo-thinkpad-x1",
    "vendor": "Lenovo",
    "model": "ThinkPad X1",
@@ -25506,127 +25750,6 @@
     "href": "framework.html#framework-12"
    },
    "legacyPrototypeSource": "legacy-prototype-unverified"
-  },
-  {
-   "key": "lenovo-thinkpad-e15",
-   "vendor": "Lenovo",
-   "model": "ThinkPad E15",
-   "aliases": [
-    "ThinkPad E15",
-    "ThinkPad E15 Gen 3"
-   ],
-   "variants": [
-    "Gen 3"
-   ],
-   "counts": {
-    "issues": 4,
-    "open": 4,
-    "closed": 0,
-    "discussions": 0
-   },
-   "components": [
-    {
-     "key": "amd-gpu",
-     "issues": 2
-    },
-    {
-     "key": "suspend-sleep",
-     "issues": 2
-    },
-    {
-     "key": "multi-monitor",
-     "issues": 2
-    },
-    {
-     "key": "boot-limine",
-     "issues": 2
-    },
-    {
-     "key": "battery-power",
-     "issues": 2
-    },
-    {
-     "key": "fingerprint",
-     "issues": 1
-    },
-    {
-     "key": "nvidia",
-     "issues": 1
-    },
-    {
-     "key": "hybrid-gpu",
-     "issues": 1
-    },
-    {
-     "key": "audio",
-     "issues": 1
-    },
-    {
-     "key": "touchpad-input",
-     "issues": 1
-    },
-    {
-     "key": "intel-gpu",
-     "issues": 1
-    }
-   ],
-   "issues": [
-    {
-     "number": 18049,
-     "title": "Agents plugin shows false warning when Codex Business spend limit is $0",
-     "url": "https://github.com/omacom/omarchy/issues/18049",
-     "state": "OPEN",
-     "components": [
-      "intel-gpu",
-      "multi-monitor"
-     ],
-     "createdAt": "2026-11-07T15:18:21Z"
-    },
-    {
-     "number": 13752,
-     "title": "AMD Lucienne (ThinkPad E15 Gen 3): reg-write failures start at a hibernate resume, hibernation writes degrade to worst-ever, final hibernate froze during image write (no image, silent journal end)",
-     "url": "https://github.com/omacom/omarchy/issues/13752",
-     "state": "OPEN",
-     "components": [
-      "nvidia",
-      "amd-gpu",
-      "hybrid-gpu",
-      "suspend-sleep",
-      "audio",
-      "boot-limine",
-      "touchpad-input",
-      "battery-power"
-     ],
-     "createdAt": "2026-09-29T14:42:21Z"
-    },
-    {
-     "number": 11413,
-     "title": "Intermittent freeze after hibernation on AMD Lucienne; upstream investigation #5808",
-     "url": "https://github.com/omacom/omarchy/issues/11413",
-     "state": "OPEN",
-     "components": [
-      "amd-gpu",
-      "suspend-sleep",
-      "multi-monitor",
-      "boot-limine",
-      "battery-power"
-     ],
-     "createdAt": "2026-09-12T04:36:47Z"
-    },
-    {
-     "number": 7483,
-     "title": "ELAN 04f3:0c4b fingerprint reader never matches under stock libfprint (ThinkPad E14/E15 Gen 3/4) — works with libfprint-tod instead",
-     "url": "https://github.com/omacom/omarchy/issues/7483",
-     "state": "OPEN",
-     "components": [
-      "fingerprint"
-     ],
-     "createdAt": "2026-08-19T11:18:12Z"
-    }
-   ],
-   "issuesTruncated": false,
-   "quirkScripts": [],
-   "dmiHints": []
   },
   {
    "key": "lenovo-thinkpad-e16",
@@ -27184,6 +27307,109 @@
       "touchpad-input"
      ],
      "createdAt": "2026-09-16T11:28:57Z"
+    }
+   ],
+   "issuesTruncated": false,
+   "quirkScripts": [
+    {
+     "name": "omarchy-hw-display",
+     "path": "bin/omarchy-hw-display",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-hw-display",
+     "summary": "Print the most likely display backlight device."
+    },
+    {
+     "name": "fix-brcmfmac-supplicant.sh",
+     "path": "install/hardware/apple/fix-brcmfmac-supplicant.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-brcmfmac-supplicant.sh",
+     "summary": "handshake itself. On these parts that offload fails against an access point in"
+    },
+    {
+     "name": "fix-spi-keyboard.sh",
+     "path": "install/hardware/apple/fix-spi-keyboard.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-spi-keyboard.sh",
+     "summary": ""
+    },
+    {
+     "name": "fix-suspend-nvme.sh",
+     "path": "install/hardware/apple/fix-suspend-nvme.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-suspend-nvme.sh",
+     "summary": "This prevents NVMe drives from failing to wake from sleep properly"
+    },
+    {
+     "name": "fix-t2.sh",
+     "path": "install/hardware/apple/fix-t2.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-t2.sh",
+     "summary": "Vendor: 106b (Apple), Device IDs: 1801 or 1802 (T2 Security Chip)"
+    }
+   ],
+   "dmiHints": []
+  },
+  {
+   "key": "apple-macbookair8-1",
+   "vendor": "Apple",
+   "model": "MacBookAir8,1",
+   "aliases": [
+    "MacBook Air 8,1",
+    "MacBookAir8,1"
+   ],
+   "variants": [],
+   "counts": {
+    "issues": 2,
+    "open": 2,
+    "closed": 0,
+    "discussions": 1
+   },
+   "components": [
+    {
+     "key": "t2-mac",
+     "issues": 2
+    },
+    {
+     "key": "wifi",
+     "issues": 1
+    },
+    {
+     "key": "bluetooth",
+     "issues": 1
+    },
+    {
+     "key": "boot-limine",
+     "issues": 1
+    },
+    {
+     "key": "touchpad-input",
+     "issues": 1
+    },
+    {
+     "key": "apple-silicon-asahi",
+     "issues": 1
+    }
+   ],
+   "issues": [
+    {
+     "number": 18341,
+     "title": "T2 MacBook Air (MacBookAir8,1 | A1932): no Wi-Fi on boot, no keyboard at LUKS prompt on Omarchy 4.5.0",
+     "url": "https://github.com/omacom/omarchy/issues/18341",
+     "state": "OPEN",
+     "components": [
+      "wifi",
+      "bluetooth",
+      "boot-limine",
+      "touchpad-input",
+      "t2-mac",
+      "apple-silicon-asahi"
+     ],
+     "createdAt": "2026-11-10T08:48:21Z"
+    },
+    {
+     "number": 5155,
+     "title": "T2 Mac: fan control broken after system update (applesmc kernel bug)",
+     "url": "https://github.com/omacom/omarchy/issues/5155",
+     "state": "OPEN",
+     "components": [
+      "t2-mac"
+     ],
+     "createdAt": "2026-03-30T10:38:59Z"
     }
    ],
    "issuesTruncated": false,
@@ -28834,73 +29060,6 @@
       "boot-limine"
      ],
      "createdAt": "2026-09-21T10:27:00Z"
-    }
-   ],
-   "issuesTruncated": false,
-   "quirkScripts": [
-    {
-     "name": "omarchy-hw-display",
-     "path": "bin/omarchy-hw-display",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-hw-display",
-     "summary": "Print the most likely display backlight device."
-    },
-    {
-     "name": "fix-brcmfmac-supplicant.sh",
-     "path": "install/hardware/apple/fix-brcmfmac-supplicant.sh",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-brcmfmac-supplicant.sh",
-     "summary": "handshake itself. On these parts that offload fails against an access point in"
-    },
-    {
-     "name": "fix-spi-keyboard.sh",
-     "path": "install/hardware/apple/fix-spi-keyboard.sh",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-spi-keyboard.sh",
-     "summary": ""
-    },
-    {
-     "name": "fix-suspend-nvme.sh",
-     "path": "install/hardware/apple/fix-suspend-nvme.sh",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-suspend-nvme.sh",
-     "summary": "This prevents NVMe drives from failing to wake from sleep properly"
-    },
-    {
-     "name": "fix-t2.sh",
-     "path": "install/hardware/apple/fix-t2.sh",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-t2.sh",
-     "summary": "Vendor: 106b (Apple), Device IDs: 1801 or 1802 (T2 Security Chip)"
-    }
-   ],
-   "dmiHints": []
-  },
-  {
-   "key": "apple-macbookair8-1",
-   "vendor": "Apple",
-   "model": "MacBookAir8,1",
-   "aliases": [
-    "MacBook Air 8,1"
-   ],
-   "variants": [],
-   "counts": {
-    "issues": 1,
-    "open": 1,
-    "closed": 0,
-    "discussions": 1
-   },
-   "components": [
-    {
-     "key": "t2-mac",
-     "issues": 1
-    }
-   ],
-   "issues": [
-    {
-     "number": 5155,
-     "title": "T2 Mac: fan control broken after system update (applesmc kernel bug)",
-     "url": "https://github.com/omacom/omarchy/issues/5155",
-     "state": "OPEN",
-     "components": [
-      "t2-mac"
-     ],
-     "createdAt": "2026-03-30T10:38:59Z"
     }
    ],
    "issuesTruncated": false,

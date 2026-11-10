@@ -856,6 +856,7 @@
       "omarchy-dictation-voxtype",
       "omarchy-dock",
       "omarchy-font-cjk",
+      "omarchy-hibernation-encrypted",
       "omarchy-hw-aarch64",
       "omarchy-hw-aarch64-apple",
       "omarchy-hw-aarch64-gb10",
@@ -942,6 +943,7 @@
       "omarchy-theme-set-herdr-app",
       "omarchy-theme-set-herdr-machines",
       "omarchy-theme-set-hunk",
+      "omarchy-theme-set-qt",
       "omarchy-theme-set-slack",
       "omarchy-toggle-animations",
       "omarchy-toggle-fullscreen-desktop",
@@ -1461,11 +1463,11 @@
       }
     ],
     "counts": {
-      "added": 148,
+      "added": 150,
       "changed": 41,
       "from": 444,
       "removed": 7,
-      "to": 585
+      "to": 587
     },
     "removed": [
       "omarchy-screensaver",
@@ -2533,9 +2535,9 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 134,
+      "new": 136,
       "removed": 0,
-      "to": 240
+      "to": 242
     },
     "new": [
       {
@@ -3064,6 +3066,11 @@
         "file": "1792648436.sh"
       },
       {
+        "date": "2026-10-25T04:27:37Z",
+        "description": "Theme Qt apps through qtengine instead of the GTK platform theme",
+        "file": "1792902457.sh"
+      },
+      {
         "date": "2026-10-25T21:51:02Z",
         "description": "Name the hibernation resume device by its filesystem UUID",
         "file": "1792965062.sh"
@@ -3119,11 +3126,6 @@
         "file": "1793477875.sh"
       },
       {
-        "date": "2026-11-01T05:53:22Z",
-        "description": "Install xorg-xsetroot for X11/XWayland root cursor restoration",
-        "file": "1793512402.sh"
-      },
-      {
         "date": "2026-11-01T11:10:26Z",
         "description": "Keep GB10 CPU cores out of deep idle states whose wakeup latency the firmware understates",
         "file": "1793531426.sh"
@@ -3149,6 +3151,11 @@
         "file": "1793650506.sh"
       },
       {
+        "date": "2026-11-02T23:56:24Z",
+        "description": "Embed the machine's own device tree in a Snapdragon boot image",
+        "file": "1793663784.sh"
+      },
+      {
         "date": "2026-11-03T00:59:41Z",
         "description": "Finish Superwhisper setup for installs that came up with it unconfigured",
         "file": "1793667581.sh"
@@ -3157,6 +3164,11 @@
         "date": "2026-11-03T05:51:23Z",
         "description": "Switch NVIDIA machines on linux-omarchy from DKMS to prebuilt NVIDIA modules",
         "file": "1793685083.sh"
+      },
+      {
+        "date": "2026-11-04T16:18:22Z",
+        "description": "Give a Qualcomm Wi-Fi card that linux-firmware does not list its card family's board data",
+        "file": "1793809102.sh"
       },
       {
         "date": "2026-11-04T23:54:36Z",

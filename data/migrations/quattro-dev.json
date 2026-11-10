@@ -1,5 +1,5 @@
 {
-  "count": 240,
+  "count": 242,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -3597,6 +3597,24 @@
       ]
     },
     {
+      "body": "echo \"Theme Qt apps through qtengine instead of the GTK platform theme\"\n\nomarchy-pkg-add qtengine\n\n# A qtengine config the user already wrote is theirs; only seed a missing one,\n# where qtengine and omarchy-theme-set-qt look for it.\nconfig=\"${XDG_CONFIG_HOME:-$HOME/.config}/qtengine/config.json\"\nif [[ ! -e $config && ! -L $config ]]; then\n  install -Dm644 \"$OMARCHY_PATH/config/qtengine/config.json\" \"$config\"\nfi\n\n# The current theme was staged before qtengine.colors had a template. The\n# refresh renders it, and its retints point the config at the theme's icons.\nomarchy-theme-refresh",
+      "bodyTruncated": false,
+      "date": "2026-10-25T04:27:37Z",
+      "description": "Theme Qt apps through qtengine instead of the GTK platform theme",
+      "file": "1792902457.sh",
+      "lineCount": 14,
+      "packagesAdded": [
+        "qtengine"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1792902457.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1792902457.sh",
+      "timestamp": 1792902457,
+      "touches": [
+        "~/.config"
+      ]
+    },
+    {
       "body": "echo \"Name the hibernation resume device by its filesystem UUID\"\n\n# Hibernation setup named an unencrypted root by its kernel name. With two NVMe\n# disks that name can belong to the other disk at the next boot, and resume then\n# finds no image and the session is lost. Setup now writes the filesystem UUID,\n# and on a configured machine renames the device and rebuilds the boot image.\ndrop_in=/etc/limine-entry-tool.d/resume.conf\nhook=/etc/mkinitcpio.conf.d/omarchy_resume.conf\npending=/var/lib/omarchy/hibernation-resume-rebuild\n\n# A pending marker means setup renamed the device but the boot image was not\n# rebuilt with it yet.\nif [[ ! -e $pending ]]; then\n  [[ -f $drop_in ]] && grep -q 'resume=/dev/' \"$drop_in\" && ! grep -q 'resume=/dev/mapper/' \"$drop_in\" || exit 0\nfi\n\n# Without the resume hook, setup would offer to set hibernation up from scratch.\n[[ -f $hook ]] && grep -q '^HOOKS+=(resume)$' \"$hook\" || exit 0\n\n# Setup leaves the marker if the boot image is not rebuilt and exits 1, which\n# keeps this migration pending for the next omarchy-migrate.\nomarchy-hibernation-setup",
       "bodyTruncated": false,
       "date": "2026-10-25T21:51:02Z",
@@ -3778,22 +3796,6 @@
       ]
     },
     {
-      "body": "echo \"Install xorg-xsetroot for X11/XWayland root cursor restoration\"\n\nomarchy-pkg-add xorg-xsetroot",
-      "bodyTruncated": false,
-      "date": "2026-11-01T05:53:22Z",
-      "description": "Install xorg-xsetroot for X11/XWayland root cursor restoration",
-      "file": "1793512402.sh",
-      "lineCount": 3,
-      "packagesAdded": [
-        "xorg-xsetroot"
-      ],
-      "packagesRemoved": [],
-      "path": "migrations/1793512402.sh",
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793512402.sh",
-      "timestamp": 1793512402,
-      "touches": []
-    },
-    {
       "body": "echo \"Keep GB10 CPU cores out of deep idle states whose wakeup latency the firmware understates\"\n\n# See install/hardware/gb10/cpuidle.sh, which sets up new installs the same way.\nomarchy-hw-aarch64-gb10 || exit 0\n\nsudo bash \"$OMARCHY_PATH/install/hardware/gb10/cpuidle.sh\"",
       "bodyTruncated": false,
       "date": "2026-11-01T11:10:26Z",
@@ -3875,6 +3877,23 @@
       ]
     },
     {
+      "body": "echo \"Embed the machine's own device tree in a Snapdragon boot image\"\n\n# See install/hardware/qualcomm/dtb-uki.sh. The boot image carried every\n# Snapdragon device tree for systemd-stub to choose from by SMBIOS data; it now\n# also carries the one this machine runs on, to fall back on. The Surface Pro 11\n# already pins its own tree in microsoft/surface-pro-11.sh. A machine with no\n# single matching tree keeps the list alone, so its boot image is left as it is.\nuki_config=/etc/kernel/uki.conf\nrebuild_marker=/var/lib/omarchy/migrations/1793663784\n\nif omarchy-hw-aarch64-qualcomm && ! omarchy-hw-match-device-tree microsoft,denali-oled; then\n  sudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n    source \"$OMARCHY_PATH/install/hardware/qualcomm/dtb-uki.sh\"\n  '\n\n  # A marker records the machine-wide rebuild: another user's run must not repeat\n  # it, while a missing marker still retries an interrupted rebuild. The config\n  # keeps whatever permissions it had, so root reads it; a missing one pinned\n  # nothing.\n  if [[ ! -e $rebuild_marker ]] && sudo grep -qs '^DeviceTree=' \"$uki_config\"; then\n    rebuild_log=$(mktemp)\n    trap 'rm -f \"$rebuild_log\"' EXIT\n    sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n    # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n    if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n      echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again.\" >&2\n      exit 1\n    fi\n\n    sudo install -Dm644 /dev/null \"$rebuild_marker\"\n  fi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-02T23:56:24Z",
+      "description": "Embed the machine's own device tree in a Snapdragon boot image",
+      "file": "1793663784.sh",
+      "lineCount": 33,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1793663784.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793663784.sh",
+      "timestamp": 1793663784,
+      "touches": [
+        "/etc/kernel/uki.conf",
+        "/var/lib/omarchy/migrations/1793663784"
+      ]
+    },
+    {
       "body": "echo \"Finish Superwhisper setup for installs that came up with it unconfigured\"\n\n# Superwhisper became the default dictation backend before first run set it up\n# (#17286), and aarch64 images before omacom/omarchy-iso#377 left the package\n# out entirely. Both left dictation selected but unusable. setup-user creates\n# the app/current link, so its presence means setup already ran.\nif [[ $(omarchy-default-dictation 2>/dev/null) == \"superwhisper\" ]] &&\n  [[ ! -e ${XDG_DATA_HOME:-$HOME/.local/share}/superwhisper/app/current ]]; then\n  omarchy-install-dictation-superwhisper --background\nfi",
       "bodyTruncated": false,
       "date": "2026-11-03T00:59:41Z",
@@ -3906,6 +3925,22 @@
       "timestamp": 1793685083,
       "touches": [
         "/usr/lib/modules/"
+      ]
+    },
+    {
+      "body": "echo \"Give a Qualcomm Wi-Fi card that linux-firmware does not list its card family's board data\"\n\n# See install/hardware/fix-ath12k-board-data.sh. ath12k reads board data when\n# it probes the card, so a copy the package installs takes effect after a\n# reboot. A second user finds the package installed and has nothing to do.\nif omarchy-pkg-missing ath12k-board-fallback; then\n  bash -euo pipefail -c 'source \"$OMARCHY_PATH/install/hardware/fix-ath12k-board-data.sh\"'\n  if omarchy-pkg-present ath12k-board-fallback && [[ -s /var/lib/ath12k-board-fallback/installed ]]; then\n    omarchy-state set reboot-required\n  fi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-04T16:18:22Z",
+      "description": "Give a Qualcomm Wi-Fi card that linux-firmware does not list its card family's board data",
+      "file": "1793809102.sh",
+      "lineCount": 11,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1793809102.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793809102.sh",
+      "timestamp": 1793809102,
+      "touches": [
+        "/var/lib/ath12k-board-fallback/installed"
       ]
     },
     {

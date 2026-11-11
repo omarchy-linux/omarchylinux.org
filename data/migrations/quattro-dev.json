@@ -1,5 +1,5 @@
 {
-  "count": 242,
+  "count": 251,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -3861,6 +3861,22 @@
       ]
     },
     {
+      "body": "echo \"Show the disk unlock prompt on the ASUS Vivobook S 15 (S5507QA, Snapdragon X Elite)\"\n\n# See install/hardware/asus/fix-asus-vivobook-s15-boot.sh.\nrebuild_marker=\"${OMARCHY_LIMINE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1793620666}\"\n\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match \"S5507QAD\"; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n  source \"$OMARCHY_PATH/install/hardware/asus/fix-asus-vivobook-s15-boot.sh\"\n'\n\n# A marker records the machine-wide rebuild: another user's run must not repeat\n# it, while a missing marker still retries an interrupted rebuild.\nif [[ ! -e $rebuild_marker ]]; then\n  rebuild_log=$(mktemp)\n  trap 'rm -f \"$rebuild_log\"' EXIT\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n  # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n  # That image lacks the display drivers, so the migration stays pending.\n  if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n    exit 1\n  fi\n\n  sudo install -Dm644 /dev/null \"$rebuild_marker\"\nfi\n\nomarchy-state set reboot-required",
+      "bodyTruncated": false,
+      "date": "2026-11-02T11:57:46Z",
+      "description": "Show the disk unlock prompt on the ASUS Vivobook S 15 (S5507QA, Snapdragon X Elite)",
+      "file": "1793620666.sh",
+      "lineCount": 31,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1793620666.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793620666.sh",
+      "timestamp": 1793620666,
+      "touches": [
+        "/var/lib/omarchy/migrations/1793620666"
+      ]
+    },
+    {
       "body": "echo \"Install the OEM firmware package on Snapdragon machines that have one\"\n\n# See install/hardware/qualcomm/oem-firmware.sh. A machine installed without\n# Windows has no sound, battery reading or GPU acceleration until its firmware\n# is there, and one set up from Windows moves to the package's known set.\n# Installing a package rebuilds the boot image through mkinitcpio's hook, and\n# qcom-firmware-extract's retire hook removes the Windows copies the package\n# covers. qualcomm/firmware.sh then runs again so the DSP driver is no longer\n# held back, which needs one more rebuild.\n#\n# Once a package is in, a rerun no longer sees the package list change, so a\n# marker keeps the firmware setup and the rebuild pending until both finish.\nif omarchy-hw-aarch64-qualcomm; then\n  pending=\"$HOME/.local/state/omarchy/qcom-oem-firmware-pending\"\n  packages_before=$(pacman -Qq)\n  status=0\n  bash -euo pipefail -c 'source \"$OMARCHY_PATH/install/hardware/qualcomm/oem-firmware.sh\"' || status=$?\n\n  if [[ $(pacman -Qq) != \"$packages_before\" ]]; then\n    omarchy-state set qcom-oem-firmware-pending\n  fi\n\n  if ((status != 0)); then\n    exit \"$status\"\n  elif [[ -f $pending ]]; then\n    sudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n      source \"$OMARCHY_PATH/install/hardware/qualcomm/firmware.sh\"\n    '\n\n    rebuild_log=$(mktemp)\n    trap 'rm -f \"$rebuild_log\"' EXIT\n    sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n    # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n    if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n      echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n      exit 1\n    fi\n\n    omarchy-state set reboot-required\n    omarchy-state clear qcom-oem-firmware-pending",
       "bodyTruncated": true,
       "date": "2026-11-02T20:15:06Z",
@@ -4007,6 +4023,22 @@
       ]
     },
     {
+      "body": "echo \"Give the ASUS ProArt PZ13 (HT5306QA) working speakers and microphones\"\n\n# See install/hardware/asus/fix-asus-proart-pz13-speakers.sh. The sound card\n# needs the kernel's ProArt PZ13 device tree as well, so it comes up from the\n# next boot. Migrations run once per user, so a later user finds the package\n# installed and leaves the machine as it is.\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match \"HT5306QA\" || omarchy-pkg-present asus-proart-pz13-audio; then\n  exit 0\nfi\n\nomarchy-pkg-add asus-proart-pz13-audio\nomarchy-state set reboot-required",
+      "bodyTruncated": false,
+      "date": "2026-11-07T02:17:02Z",
+      "description": "Give the ASUS ProArt PZ13 (HT5306QA) working speakers and microphones",
+      "file": "1794017822.sh",
+      "lineCount": 12,
+      "packagesAdded": [
+        "asus-proart-pz13-audio"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1794017822.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794017822.sh",
+      "timestamp": 1794017822,
+      "touches": []
+    },
+    {
       "body": "echo \"Bring up the Anduril BlueChip's speakers and microphones with its own UCM profile\"\n\n# alsa-ucm-conf has no profile for the BlueChip, so PipeWire offered only a\n# dummy output. The machine profile now ships in omarchy-settings, and PipeWire\n# only probes a card's UCM profiles when WirePlumber opens it. The speakers also\n# need linux-omarchy-aarch64 7.3-27's tree, which links only the left pair.\nif omarchy-hw-match-device-tree anduril,bluechip; then\n  systemctl --user try-restart wireplumber.service 2>/dev/null || true\nfi",
       "bodyTruncated": false,
       "date": "2026-11-07T09:41:21Z",
@@ -4105,6 +4137,124 @@
       "touches": [
         "~/.config/mimeapps.list"
       ]
+    },
+    {
+      "body": "echo \"Replace Nautilus with Files as the file manager\"\n\nomarchy-pkg-add folio\n\n# The packaged mimeapps.list now names Files, but a personal one in ~/.config\n# still wins, so point any Nautilus association there at Files too.\nuser_mimeapps=\"$HOME/.config/mimeapps.list\"\nif [[ -f $user_mimeapps ]] && grep -q \"org.gnome.Nautilus.desktop\" \"$user_mimeapps\"; then\n  sed --follow-symlinks -i 's/org\\.gnome\\.Nautilus\\.desktop/folio.desktop/g' \"$user_mimeapps\"\nfi\n\n# A dock that still pins Nautilus pins Files instead.\nshell_json=\"$HOME/.config/omarchy/shell.json\"\nif [[ -f $shell_json ]] && grep -q '\"org.gnome.Nautilus\"' \"$shell_json\"; then\n  sed --follow-symlinks -i 's/\"org\\.gnome\\.Nautilus\"/\"folio\"/' \"$shell_json\"\nfi\n\n# Nautilus goes, with its extensions and its previewer. nautilus-dropbox\n# depends on it, so it goes too. Only these: removing their dependencies as\n# well (pacman -s) would take whatever arrived with them first, which on some\n# installs is Papers and xdg-user-dirs, both Omarchy defaults.\nnautilus_packages=()\nfor package_name in nautilus nautilus-python nautilus-dropbox sushi; do\n  pacman -Qq \"$package_name\" &>/dev/null && nautilus_packages+=(\"$package_name\")\ndone\nif ((${#nautilus_packages[@]})); then\n  sudo pacman -Rn --noconfirm \"${nautilus_packages[@]}\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-10T17:16:19Z",
+      "description": "Replace Nautilus with Files as the file manager",
+      "file": "1794330979.sh",
+      "lineCount": 28,
+      "packagesAdded": [
+        "folio"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1794330979.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794330979.sh",
+      "timestamp": 1794330979,
+      "touches": [
+        "~/.config/mimeapps.list",
+        "~/.config/omarchy/shell.json"
+      ]
+    },
+    {
+      "body": "echo \"Keep Neovim as the editor on existing installs now that new ones start with Plain\"\n\n# New installs edit in Plain. An existing install keeps the editor it has\n# until its owner picks another under Setup > Default > Editor. Without a saved\n# choice it has been Neovim, so save that.\neditor_file=\"$HOME/.local/state/omarchy/defaults/editor\"\nif [[ ! -s $editor_file ]]; then\n  mkdir -p \"$(dirname \"$editor_file\")\"\n  printf 'nvim\\n' >\"$editor_file\"\nfi\n\n# The packaged mimeapps.list now opens text files in Plain. A personal list in\n# ~/.config wins, so keep Neovim there for each type the user hasn't set.\nuser_mimeapps=\"$HOME/.config/mimeapps.list\"\ntypes=(\n  text/plain text/english text/x-makefile text/x-c++hdr text/x-c++src text/x-chdr text/x-csrc text/x-java\n  text/x-moc text/x-pascal text/x-tcl text/x-tex application/x-shellscript text/x-c text/x-c++\n  application/xml text/xml\n)\n\n# Only [Default Applications] picks what opens a type; [Added Associations]\n# just offers more choices. A choice saved in the older ~/.local/share list\n# counts too, since a Neovim line in ~/.config would hide it.\nchosen=\"\"\nfor list in \"$user_mimeapps\" \"$HOME/.local/share/applications/mimeapps.list\"; do\n  if [[ -f $list ]]; then\n    chosen+=$(awk '/^\\[/ { defaults = ($0 == \"[Default Applications]\") } defaults && /=/ { sub(/=.*/, \"\"); print }' \"$list\")$'\\n'\n  fi\ndone\n\nmissing=()\nfor type in \"${types[@]}\"; do\n  grep -qxF \"$type\" <<<\"$chosen\" && continue\n  missing+=(\"$type=nvim.desktop\")\ndone\n((${#missing[@]})) || exit 0\n\nmkdir -p \"$(dirname \"$user_mimeapps\")\"\nlines=$(printf '%s\\n' \"${missing[@]}\")\nif [[ -f $user_mimeapps ]] && grep -qxF \"[Default Applications]\" \"$user_mimeapps\"; then",
+      "bodyTruncated": true,
+      "date": "2026-11-10T20:15:36Z",
+      "description": "Keep Neovim as the editor on existing installs now that new ones start with Plain",
+      "file": "1794341736.sh",
+      "lineCount": 46,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794341736.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794341736.sh",
+      "timestamp": 1794341736,
+      "touches": [
+        "~/.config/mimeapps.list",
+        "~/.local/share/applications/mimeapps.list",
+        "~/.local/state/omarchy/defaults/editor"
+      ]
+    },
+    {
+      "body": "echo \"Share the global AGENTS.md with added Grok accounts\"\n\n# An added Grok account links its shared files back to ~/.grok when it\n# becomes active, so one that already is gets the newly shared AGENTS.md here.\nomarchy-agent-account-state homes grok | while IFS=$'\\t' read -r _ home _; do\n  if [[ $home != \"$HOME/.grok\" && -d $home ]]; then\n    omarchy-agent-account-state link grok \"$home\"\n  fi\ndone",
+      "bodyTruncated": false,
+      "date": "2026-11-10T21:04:36Z",
+      "description": "Share the global AGENTS.md with added Grok accounts",
+      "file": "1794344676.sh",
+      "lineCount": 9,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794344676.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794344676.sh",
+      "timestamp": 1794344676,
+      "touches": [
+        "~/.grok"
+      ]
+    },
+    {
+      "body": "echo \"Install xdg-user-dirs, which left with Nautilus\"\n\nomarchy-pkg-add xdg-user-dirs",
+      "bodyTruncated": false,
+      "date": "2026-11-10T23:05:44Z",
+      "description": "Install xdg-user-dirs, which left with Nautilus",
+      "file": "1794351944.sh",
+      "lineCount": 3,
+      "packagesAdded": [
+        "xdg-user-dirs"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1794351944.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794351944.sh",
+      "timestamp": 1794351944,
+      "touches": []
+    },
+    {
+      "body": "echo \"Set up the Surface Laptop 8 on installs made before its board setup\"\n\n# See install/hardware/microsoft/surface-laptop8.sh. It loads the panel and\n# keyboard drivers early, installs microsoft-surface-laptop-8-support and copies\n# the USB4 router firmware from Windows, then the boot image is rebuilt to pick\n# up the drivers, the firmware and the package's hardware IDs. Rerunning the\n# setup rewrites the same file and skips what is installed.\nrebuild_marker=/var/lib/omarchy/migrations/1794380120\n\nif ! omarchy-hw-aarch64-qualcomm ||\n  ! omarchy-hw-match-device-tree microsoft,surface-laptop-8-13p8 microsoft,surface-laptop-8-15; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n  source \"$OMARCHY_PATH/install/hardware/microsoft/surface-laptop8.sh\"\n'\n\n# A marker records the machine-wide rebuild: another user's run must not repeat\n# it, while a missing marker still retries an interrupted rebuild.\nif [[ ! -e $rebuild_marker ]]; then\n  rebuild_log=$(mktemp)\n  trap 'rm -f \"$rebuild_log\"' EXIT\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n  # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n  # That image lacks the early drivers, so the migration stays pending.\n  if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n    exit 1\n  fi\n\n  sudo install -Dm644 /dev/null \"$rebuild_marker\"\n  omarchy-state set reboot-required\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-11T06:55:20Z",
+      "description": "Set up the Surface Laptop 8 on installs made before its board setup",
+      "file": "1794380120.sh",
+      "lineCount": 35,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794380120.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794380120.sh",
+      "timestamp": 1794380120,
+      "touches": [
+        "/var/lib/omarchy/migrations/1794380120"
+      ]
+    },
+    {
+      "body": "echo \"Keep the legacy Super + Ctrl + X dictation toggle ahead of the new agents panel hotkey\"\n\n# Super + Ctrl + X now opens the agents panel. Hyprland runs every bind on a key,\n# so the legacy dictation toggle 1793477875 wrote would fire alongside the panel.\n# o.rebind replaces the default instead. That migration only added the toggle to\n# a file with no other Super + Ctrl + X binding, appended at the end, so the\n# rebind drops nothing personal, and it stays inside the dictation-installed\n# check, so the panel keeps the key wherever that is false. Only that exact line\n# is changed; bindings written by hand are left as written, like any personal\n# binding that shares a key with a new default.\nbindings=\"$HOME/.config/hypr/bindings.lua\"\nlegacy='  o.bind(\"SUPER + CTRL + X\", \"Toggle dictation\", \"omarchy-dictation toggle\")'\n\nif [[ -f $bindings ]] && grep -qxF \"$legacy\" \"$bindings\"; then\n  sed -i --follow-symlinks 's/^  o\\.bind(\"SUPER + CTRL + X\", \"Toggle dictation\", \"omarchy-dictation toggle\")$/  o.rebind(\"SUPER + CTRL + X\", \"Toggle dictation\", \"omarchy-dictation toggle\")/' \"$bindings\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-11T08:56:27Z",
+      "description": "Keep the legacy Super + Ctrl + X dictation toggle ahead of the new agents panel hotkey",
+      "file": "1794387387.sh",
+      "lineCount": 16,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794387387.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794387387.sh",
+      "timestamp": 1794387387,
+      "touches": [
+        "~/.config/hypr/bindings.lua"
+      ]
+    },
+    {
+      "body": "echo \"Bring back Papers and xdg-user-dirs, removed along with Nautilus\"\n\n# The first version of the Nautilus migration removed sushi with pacman -Rns,\n# which also took the dependencies nothing else needed. Where Papers and\n# xdg-user-dirs had first arrived as its dependencies, they went with it, and\n# PDFs fell back to whatever else claims them. That migration no longer does\n# this; this puts them back where it already ran, and does nothing elsewhere.\nomarchy-pkg-add papers xdg-user-dirs",
+      "bodyTruncated": false,
+      "date": "2026-11-11T10:32:36Z",
+      "description": "Bring back Papers and xdg-user-dirs, removed along with Nautilus",
+      "file": "1794393156.sh",
+      "lineCount": 8,
+      "packagesAdded": [
+        "papers",
+        "xdg-user-dirs"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1794393156.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794393156.sh",
+      "timestamp": 1794393156,
+      "touches": []
     }
   ],
   "prerelease": true,

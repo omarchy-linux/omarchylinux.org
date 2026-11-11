@@ -271,6 +271,27 @@
     },
     {
       "aliases": [],
+      "args": "[--edit] [harness...]",
+      "cli": "omarchy agent instructions",
+      "examples": [
+        "omarchy agent instructions",
+        "omarchy agent instructions --edit",
+        "omarchy agent instructions codex"
+      ],
+      "executable": true,
+      "group": "agent",
+      "groupDescription": "AI coding agents, their usage, and subscription accounts",
+      "hasMetadata": true,
+      "hidden": false,
+      "lineCount": 121,
+      "name": "omarchy-agent-instructions",
+      "path": "bin/omarchy-agent-instructions",
+      "requiresSudo": false,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-agent-instructions",
+      "summary": "Link every agent harness's global instructions to ~/.agents/AGENTS.md"
+    },
+    {
+      "aliases": [],
       "args": "",
       "cli": "omarchy agent integrate herdr",
       "examples": [],
@@ -288,7 +309,7 @@
     },
     {
       "aliases": [],
-      "args": "<use|list|status|start|stop|remove> [args]",
+      "args": "<use|list|status|start|stop|remove|logs> [args]",
       "cli": "omarchy agent local",
       "examples": [
         "omarchy agent local use best",
@@ -301,12 +322,32 @@
       "groupDescription": "AI coding agents, their usage, and subscription accounts",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 32,
+      "lineCount": 44,
       "name": "omarchy-agent-local",
       "path": "bin/omarchy-agent-local",
       "requiresSudo": false,
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-agent-local",
       "summary": "Run open models on this machine for your agents"
+    },
+    {
+      "aliases": [],
+      "args": "[--default] <theme|plugin|app>",
+      "cli": "omarchy agent make",
+      "examples": [
+        "omarchy agent make theme",
+        "omarchy agent make --default app"
+      ],
+      "executable": true,
+      "group": "agent",
+      "groupDescription": "AI coding agents, their usage, and subscription accounts",
+      "hasMetadata": true,
+      "hidden": false,
+      "lineCount": 28,
+      "name": "omarchy-agent-make",
+      "path": "bin/omarchy-agent-make",
+      "requiresSudo": false,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-agent-make",
+      "summary": "Have an agent make a new theme, plugin, or app"
     },
     {
       "aliases": [],
@@ -1827,7 +1868,7 @@
       "groupDescription": "Default application selection",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 196,
+      "lineCount": 199,
       "name": "omarchy-default-agent",
       "path": "bin/omarchy-default-agent",
       "requiresSudo": false,
@@ -1876,11 +1917,11 @@
     },
     {
       "aliases": [],
-      "args": "[code|cursor|zed|sublime_text|helix|vim|emacs|nvim]",
+      "args": "[plain|code|cursor|zed|sublime_text|helix|vim|emacs|nvim]",
       "cli": "omarchy default editor",
       "examples": [
         "omarchy default editor",
-        "omarchy default editor code",
+        "omarchy default editor plain",
         "omarchy default editor helix"
       ],
       "executable": true,
@@ -1888,7 +1929,7 @@
       "groupDescription": "Default application selection",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 62,
+      "lineCount": 64,
       "name": "omarchy-default-editor",
       "path": "bin/omarchy-default-editor",
       "requiresSudo": false,
@@ -2297,7 +2338,7 @@
       "cli": "omarchy dock",
       "examples": [
         "omarchy dock position left",
-        "omarchy dock pin org.gnome.Nautilus"
+        "omarchy dock pin folio"
       ],
       "executable": true,
       "group": "dock",
@@ -4704,7 +4745,7 @@
       "groupDescription": "Optional software installers",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 40,
+      "lineCount": 39,
       "name": "omarchy-install-preinstalls",
       "path": "bin/omarchy-install-preinstalls",
       "requiresSudo": true,
@@ -5163,12 +5204,46 @@
       "groupDescription": "Application launchers",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 37,
+      "lineCount": 50,
       "name": "omarchy-launch-editor",
       "path": "bin/omarchy-launch-editor",
       "requiresSudo": false,
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-launch-editor",
       "summary": "Launch the default editor selected via Omarchy defaults."
+    },
+    {
+      "aliases": [],
+      "args": "",
+      "cli": "omarchy launch files",
+      "examples": [],
+      "executable": true,
+      "group": "launch",
+      "groupDescription": "Application launchers",
+      "hasMetadata": true,
+      "hidden": false,
+      "lineCount": 5,
+      "name": "omarchy-launch-files",
+      "path": "bin/omarchy-launch-files",
+      "requiresSudo": false,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-launch-files",
+      "summary": "Launch Files"
+    },
+    {
+      "aliases": [],
+      "args": "",
+      "cli": "omarchy launch files cwd",
+      "examples": [],
+      "executable": true,
+      "group": "launch",
+      "groupDescription": "Application launchers",
+      "hasMetadata": true,
+      "hidden": false,
+      "lineCount": 5,
+      "name": "omarchy-launch-files-cwd",
+      "path": "bin/omarchy-launch-files-cwd",
+      "requiresSudo": false,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-launch-files-cwd",
+      "summary": "Launch Files in the active terminal's current directory"
     },
     {
       "aliases": [],
@@ -5196,13 +5271,13 @@
       "group": "launch",
       "groupDescription": "Application launchers",
       "hasMetadata": true,
-      "hidden": false,
-      "lineCount": 5,
+      "hidden": true,
+      "lineCount": 6,
       "name": "omarchy-launch-nautilus",
       "path": "bin/omarchy-launch-nautilus",
       "requiresSudo": false,
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-launch-nautilus",
-      "summary": "Launch Files"
+      "summary": "Launch Files (the old name, kept for personal bindings)"
     },
     {
       "aliases": [],
@@ -5213,13 +5288,13 @@
       "group": "launch",
       "groupDescription": "Application launchers",
       "hasMetadata": true,
-      "hidden": false,
-      "lineCount": 5,
+      "hidden": true,
+      "lineCount": 6,
       "name": "omarchy-launch-nautilus-cwd",
       "path": "bin/omarchy-launch-nautilus-cwd",
       "requiresSudo": false,
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-launch-nautilus-cwd",
-      "summary": "Launch Files in the active terminal's current directory"
+      "summary": "Launch Files in the terminal's directory (the old name, kept for personal bindings)"
     },
     {
       "aliases": [],
@@ -6709,7 +6784,7 @@
       "groupDescription": "",
       "hasMetadata": true,
       "hidden": true,
-      "lineCount": 139,
+      "lineCount": 143,
       "name": "omarchy-provision-user",
       "path": "bin/omarchy-provision-user",
       "requiresSudo": false,
@@ -7377,6 +7452,23 @@
     {
       "aliases": [],
       "args": "",
+      "cli": "omarchy remove gaming moonlight",
+      "examples": [],
+      "executable": true,
+      "group": "remove",
+      "groupDescription": "Removal workflows",
+      "hasMetadata": true,
+      "hidden": false,
+      "lineCount": 15,
+      "name": "omarchy-remove-gaming-moonlight",
+      "path": "bin/omarchy-remove-gaming-moonlight",
+      "requiresSudo": true,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-remove-gaming-moonlight",
+      "summary": "Remove the Moonlight game streaming client along with its paired hosts and settings."
+    },
+    {
+      "aliases": [],
+      "args": "",
       "cli": "omarchy remove gaming retroarch",
       "examples": [],
       "executable": true,
@@ -7469,7 +7561,7 @@
       "groupDescription": "Removal workflows",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 55,
+      "lineCount": 54,
       "name": "omarchy-remove-preinstalls",
       "path": "bin/omarchy-remove-preinstalls",
       "requiresSudo": false,
@@ -10421,7 +10513,7 @@
       "summary": "Install, launch, stop, inspect, or remove the Windows VM"
     }
   ],
-  "count": 587,
+  "count": 592,
   "generatedFrom": "data/source/quattro-dev/bin",
   "groups": {
     "agent": "AI coding agents, their usage, and subscription accounts",

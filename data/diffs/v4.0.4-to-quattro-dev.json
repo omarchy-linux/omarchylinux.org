@@ -94,6 +94,10 @@
         "label": "Background switcher"
       },
       {
+        "chord": "SUPER + CTRL + X",
+        "label": "Agents"
+      },
+      {
         "chord": "SUPER + grave",
         "label": "Toggle Quake console"
       },
@@ -262,6 +266,14 @@
         ],
         "chord": "SUPER + SHIFT + ALT + DOWN",
         "label": "Move workspace to down monitor"
+      },
+      {
+        "action": [
+          "{ omarchy = \"nautilus-cwd\" }",
+          "{ omarchy = \"files-cwd\" }"
+        ],
+        "chord": "SUPER + ALT + SHIFT + F",
+        "label": "File manager (cwd)"
       },
       {
         "action": [
@@ -625,6 +637,14 @@
       },
       {
         "action": [
+          "{ omarchy = \"nautilus\" }",
+          "{ omarchy = \"files\" }"
+        ],
+        "chord": "SUPER + SHIFT + F",
+        "label": "File manager"
+      },
+      {
+        "action": [
           "hl.dsp.focus({ workspace = \"e-1\" })",
           "hl.dsp.focus({ workspace = \"m-1\" })"
         ],
@@ -737,13 +757,13 @@
       }
     ],
     "counts": {
-      "added": 35,
-      "changedAction": 74,
+      "added": 36,
+      "changedAction": 76,
       "from": 228,
       "fromRecords": 228,
       "removed": 13,
-      "to": 250,
-      "toRecords": 250
+      "to": 251,
+      "toRecords": 251
     },
     "note": null,
     "removed": [
@@ -814,8 +834,10 @@
       "omarchy-agent-account-state",
       "omarchy-agent-account-transfer",
       "omarchy-agent-account-use",
+      "omarchy-agent-instructions",
       "omarchy-agent-integrate-herdr",
       "omarchy-agent-local",
+      "omarchy-agent-make",
       "omarchy-agent-usage-agy",
       "omarchy-agent-usage-copilot",
       "omarchy-agent-usage-cursor",
@@ -904,6 +926,8 @@
       "omarchy-kernel",
       "omarchy-keyboard-toprow",
       "omarchy-language",
+      "omarchy-launch-files",
+      "omarchy-launch-files-cwd",
       "omarchy-launch-slack",
       "omarchy-lifecycle-dispatch",
       "omarchy-locale-generate",
@@ -924,6 +948,7 @@
       "omarchy-remove-dictation-hex",
       "omarchy-remove-dictation-superwhisper",
       "omarchy-remove-dictation-voxtype",
+      "omarchy-remove-gaming-moonlight",
       "omarchy-remove-service-microsoft",
       "omarchy-remove-service-slack",
       "omarchy-remove-service-ssh-agent",
@@ -1056,6 +1081,27 @@
           ]
         },
         "name": "omarchy-default-agent"
+      },
+      {
+        "fields": {
+          "args": [
+            "[code|cursor|zed|sublime_text|helix|vim|emacs|nvim]",
+            "[plain|code|cursor|zed|sublime_text|helix|vim|emacs|nvim]"
+          ],
+          "examples": [
+            [
+              "omarchy default editor",
+              "omarchy default editor code",
+              "omarchy default editor helix"
+            ],
+            [
+              "omarchy default editor",
+              "omarchy default editor plain",
+              "omarchy default editor helix"
+            ]
+          ]
+        },
+        "name": "omarchy-default-editor"
       },
       {
         "fields": {
@@ -1216,6 +1262,32 @@
           ]
         },
         "name": "omarchy-install-service-spotify"
+      },
+      {
+        "fields": {
+          "hidden": [
+            false,
+            true
+          ],
+          "summary": [
+            "Launch Files",
+            "Launch Files (the old name, kept for personal bindings)"
+          ]
+        },
+        "name": "omarchy-launch-nautilus"
+      },
+      {
+        "fields": {
+          "hidden": [
+            false,
+            true
+          ],
+          "summary": [
+            "Launch Files in the active terminal's current directory",
+            "Launch Files in the terminal's directory (the old name, kept for personal bindings)"
+          ]
+        },
+        "name": "omarchy-launch-nautilus-cwd"
       },
       {
         "fields": {
@@ -1463,11 +1535,11 @@
       }
     ],
     "counts": {
-      "added": 150,
-      "changed": 41,
+      "added": 155,
+      "changed": 44,
       "from": 444,
       "removed": 7,
-      "to": 587
+      "to": 592
     },
     "removed": [
       "omarchy-screensaver",
@@ -1482,6 +1554,37 @@
   "from": "v4.0.4",
   "menu": {
     "added": [
+      "agent",
+      "agent.harness",
+      "agent.harness.agy",
+      "agent.harness.amp",
+      "agent.harness.claude",
+      "agent.harness.codex",
+      "agent.harness.commandcode",
+      "agent.harness.copilot",
+      "agent.harness.crush",
+      "agent.harness.cursor-agent",
+      "agent.harness.devin",
+      "agent.harness.dsh",
+      "agent.harness.freebuff",
+      "agent.harness.grok",
+      "agent.harness.hermes",
+      "agent.harness.kilo",
+      "agent.harness.kimi",
+      "agent.harness.kiro-cli",
+      "agent.harness.mcode",
+      "agent.harness.muse",
+      "agent.harness.omp",
+      "agent.harness.openclaw",
+      "agent.harness.opencode",
+      "agent.harness.ori",
+      "agent.harness.pi",
+      "agent.harness.qwen",
+      "agent.instructions",
+      "agent.make",
+      "agent.make.app",
+      "agent.make.plugin",
+      "agent.make.theme",
       "appearance",
       "appearance.animations-off",
       "appearance.animations-on",
@@ -1556,6 +1659,7 @@
       "install.ai.amp",
       "install.ai.claude",
       "install.ai.herdr",
+      "install.gaming.moonlight",
       "install.service.microsoft",
       "install.service.notion",
       "install.service.slack",
@@ -1568,26 +1672,16 @@
       "remove.dictation.hex",
       "remove.dictation.superwhisper",
       "remove.dictation.voxtype",
+      "remove.gaming.moonlight",
       "remove.service.1password",
       "remove.service.microsoft",
       "remove.service.ssh-agent",
       "setup.config.git",
-      "setup.default.agent.agy",
-      "setup.default.agent.amp",
-      "setup.default.agent.commandcode",
-      "setup.default.agent.devin",
-      "setup.default.agent.dsh",
-      "setup.default.agent.freebuff",
-      "setup.default.agent.kilo",
-      "setup.default.agent.kimi",
-      "setup.default.agent.kiro-cli",
-      "setup.default.agent.mcode",
-      "setup.default.agent.ori",
-      "setup.default.agent.qwen",
       "setup.default.dictation",
       "setup.default.dictation.hex",
       "setup.default.dictation.superwhisper",
       "setup.default.dictation.voxtype",
+      "setup.default.editor.plain",
       "setup.keyboard",
       "setup.keyboard.input-methods",
       "setup.keyboard.inputs",
@@ -2483,15 +2577,28 @@
       }
     ],
     "counts": {
-      "added": 134,
+      "added": 156,
       "changed": 95,
       "from": 333,
-      "removed": 40,
-      "to": 427
+      "removed": 53,
+      "to": 436
     },
     "removed": [
       "install.ai.dictation",
+      "setup.default.agent",
+      "setup.default.agent.claude",
+      "setup.default.agent.codex",
+      "setup.default.agent.copilot",
+      "setup.default.agent.crush",
+      "setup.default.agent.cursor-agent",
       "setup.default.agent.gemini",
+      "setup.default.agent.grok",
+      "setup.default.agent.hermes",
+      "setup.default.agent.muse",
+      "setup.default.agent.omp",
+      "setup.default.agent.openclaw",
+      "setup.default.agent.opencode",
+      "setup.default.agent.pi",
       "setup.keybindings",
       "setup.monitors",
       "style",
@@ -2535,9 +2642,9 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 136,
+      "new": 145,
       "removed": 0,
-      "to": 242
+      "to": 251
     },
     "new": [
       {
@@ -3146,6 +3253,11 @@
         "file": "1793565796.sh"
       },
       {
+        "date": "2026-11-02T11:57:46Z",
+        "description": "Show the disk unlock prompt on the ASUS Vivobook S 15 (S5507QA, Snapdragon X Elite)",
+        "file": "1793620666.sh"
+      },
+      {
         "date": "2026-11-02T20:15:06Z",
         "description": "Install the OEM firmware package on Snapdragon machines that have one",
         "file": "1793650506.sh"
@@ -3191,6 +3303,11 @@
         "file": "1793989240.sh"
       },
       {
+        "date": "2026-11-07T02:17:02Z",
+        "description": "Give the ASUS ProArt PZ13 (HT5306QA) working speakers and microphones",
+        "file": "1794017822.sh"
+      },
+      {
         "date": "2026-11-07T09:41:21Z",
         "description": "Bring up the Anduril BlueChip's speakers and microphones with its own UCM profile",
         "file": "1794044481.sh"
@@ -3219,6 +3336,41 @@
         "date": "2026-11-08T19:10:02Z",
         "description": "Replace Evince with Papers as the document viewer",
         "file": "1794165002.sh"
+      },
+      {
+        "date": "2026-11-10T17:16:19Z",
+        "description": "Replace Nautilus with Files as the file manager",
+        "file": "1794330979.sh"
+      },
+      {
+        "date": "2026-11-10T20:15:36Z",
+        "description": "Keep Neovim as the editor on existing installs now that new ones start with Plain",
+        "file": "1794341736.sh"
+      },
+      {
+        "date": "2026-11-10T21:04:36Z",
+        "description": "Share the global AGENTS.md with added Grok accounts",
+        "file": "1794344676.sh"
+      },
+      {
+        "date": "2026-11-10T23:05:44Z",
+        "description": "Install xdg-user-dirs, which left with Nautilus",
+        "file": "1794351944.sh"
+      },
+      {
+        "date": "2026-11-11T06:55:20Z",
+        "description": "Set up the Surface Laptop 8 on installs made before its board setup",
+        "file": "1794380120.sh"
+      },
+      {
+        "date": "2026-11-11T08:56:27Z",
+        "description": "Keep the legacy Super + Ctrl + X dictation toggle ahead of the new agents panel hotkey",
+        "file": "1794387387.sh"
+      },
+      {
+        "date": "2026-11-11T10:32:36Z",
+        "description": "Bring back Papers and xdg-user-dirs, removed along with Nautilus",
+        "file": "1794393156.sh"
       }
     ],
     "removed": []

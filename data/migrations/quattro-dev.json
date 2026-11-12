@@ -1,5 +1,5 @@
 {
-  "count": 251,
+  "count": 261,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -3438,6 +3438,23 @@
       ]
     },
     {
+      "body": "echo \"Install PipeWire's JACK and GStreamer plugins on ARM\"\n\n# x86_64 gets pipewire-jack and gst-plugin-pipewire from the ISO\n# (install/omarchy-other.packages). ARM installs have no ISO, so they got\n# neither, and the first package that needs jack (obs-studio, ffmpeg, mpv,\n# portaudio) pulled in jack2 instead of PipeWire's implementation.\nif ! omarchy-hw-aarch64; then\n  exit 0\nfi\n\nomarchy-pkg-add gst-plugin-pipewire\n\n# An owner who installed a JACK server on purpose keeps it; only one pulled in\n# as a dependency is replaced. pipewire-jack provides jack, so the swap is one\n# transaction, and --ask=4 answers pacman's conflict question with yes, which\n# omarchy-pkg-add cannot (see 1786952219.sh).\nif omarchy-pkg-missing pipewire-jack; then\n  # Captured, not piped: grep -q quitting early would SIGPIPE pacman under\n  # pipefail. jack2-dbus needs jack2 by name, and pipewire-jack-client runs on it.\n  explicit=$(pacman -Qqe)\n  if ! grep -Fxq -e jack -e jack2 <<<\"$explicit\" &&\n    ! omarchy-pkg-present jack2-dbus && ! omarchy-pkg-present pipewire-jack-client; then\n    sudo pacman -S --noconfirm --needed --ask=4 pipewire-jack\n  fi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-10-17T22:09:28Z",
+      "description": "Install PipeWire's JACK and GStreamer plugins on ARM",
+      "file": "1792274968.sh",
+      "lineCount": 25,
+      "packagesAdded": [
+        "gst-plugin-pipewire",
+        "pipewire-jack"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1792274968.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1792274968.sh",
+      "timestamp": 1792274968,
+      "touches": []
+    },
+    {
       "body": "echo \"Move OpenClaw to a self-updating install under ~/.openclaw\"\n\n# The openclaw package used to be OpenClaw itself, installed under /usr where `openclaw update` and the Control UI's Update button cannot write. It is now the seed for a copy under ~/.openclaw that updates itself, and omarchy-install-openclaw-cli sets that copy up, points the command on PATH at it and moves a gateway service the old package installed over to it. Only machines with the package have an OpenClaw of Omarchy's to move.\nomarchy-pkg-present openclaw || exit 0\n\n# This release and the seed package reach a channel together. A package that is still the runtime has nothing to set up from, and the OpenClaw it runs keeps working as it is.\nif [[ ! -r /usr/share/openclaw/install-cli.sh || ! -r /usr/share/openclaw/openclaw.tgz ]]; then\n  exit 0\nfi\n\n# An OpenClaw of the user's own in the way, a command, another one on PATH or a\n# gateway running it, is theirs to move aside, and nothing was changed. Failing\n# here would stop every update until they did, so the move is left to launching\n# OpenClaw from Omarchy, which sets it up once the way is clear. A setup that\n# failed, the npm registry out of reach for one, stays pending as before.\nstatus=0\nomarchy-install-openclaw-cli --now || status=$?\nif ((status == 79)); then\n  echo \"Leaving OpenClaw as it is; launching it from Omarchy finishes the move once the OpenClaw above is out of the way.\"\n  exit 0\nfi\nexit \"$status\"",
       "bodyTruncated": false,
       "date": "2026-10-18T14:45:54Z",
@@ -4139,6 +4156,39 @@
       ]
     },
     {
+      "body": "echo \"Install Omarchy's browser extensions in Google Chrome, which ignores --load-extension\"\n\n# Only for machines that already chose Chrome: Chromium and every other browser\n# stay exactly as they are, and nobody is moved to Chrome.\nomarchy-pkg-present google-chrome || exit 0\n\nsource \"$OMARCHY_PATH/install/helpers/browser-policy.sh\"\n\ndir=/etc/opt/chrome/policies/managed\nif browser_policy_dir_hardened \"$dir\" && browser_policy_parents_hardened \"$dir\"; then\n  browser_policy_install_defaults \"$dir\"\nfi\n\n# The native hosts in Chrome's profile are copies that admit only the Chromium\n# ids, so rewrite them to admit the CRXs' ids as well.\nomarchy-install-chromium-copy-url\nomarchy-install-chromium-ytdlp",
+      "bodyTruncated": false,
+      "date": "2026-11-09T07:50:26Z",
+      "description": "Install Omarchy's browser extensions in Google Chrome, which ignores --load-extension",
+      "file": "1794210626.sh",
+      "lineCount": 17,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794210626.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794210626.sh",
+      "timestamp": 1794210626,
+      "touches": [
+        "/etc/opt/chrome/policies/managed"
+      ]
+    },
+    {
+      "body": "echo \"Boot the LCD Surface Pro 11 (Snapdragon X Plus) on its own device tree\"\n\n# See install/hardware/microsoft/surface-pro-11.sh. Installs made before it\n# told the models apart pinned the OLED model's tree on the LCD model too, so\n# its brightness never changed and six of its ten cores had no cpufreq.\nuki_config=/etc/kernel/uki.conf\nsoc_id=/sys/devices/soc0/soc_id\n\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match-device-tree microsoft,denali ||\n  [[ ! -r $soc_id || $(<\"$soc_id\") != \"615\" ]]; then\n  exit 0\nfi\n\n# The marker records the setup and rebuild as owed before the setup changes\n# the pin. The setup pins the tree before it writes the early modules and adds\n# the packages, so a retry reruns all of it while the marker is there, not only\n# when the pin is missing. Another user's run finds the LCD tree pinned and\n# nothing owed.\nrebuild_pending=/var/lib/omarchy/migrations/1794228778-rebuild-pending\nif [[ -e $rebuild_pending ]] || ! grep -q '^DeviceTree=.*/x1p64100-microsoft-denali\\.dtb$' \"$uki_config\" 2>/dev/null; then\n  sudo install -Dm644 /dev/null \"$rebuild_pending\" || exit 1\n  sudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n    source \"$OMARCHY_PATH/install/hardware/microsoft/surface-pro-11.sh\"\n  '\nfi\n\nif [[ -e $rebuild_pending ]]; then\n  rebuild_log=$(mktemp)\n  trap 'rm -f \"$rebuild_log\"' EXIT\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n  # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n  if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n    exit 1\n  fi\n\n  sudo rm -f \"$rebuild_pending\"\n  omarchy-state set reboot-required\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-09T12:52:58Z",
+      "description": "Boot the LCD Surface Pro 11 (Snapdragon X Plus) on its own device tree",
+      "file": "1794228778.sh",
+      "lineCount": 40,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794228778.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794228778.sh",
+      "timestamp": 1794228778,
+      "touches": [
+        "/etc/kernel/uki.conf",
+        "/var/lib/omarchy/migrations/1794228778-rebuild-pending"
+      ]
+    },
+    {
       "body": "echo \"Replace Nautilus with Files as the file manager\"\n\nomarchy-pkg-add folio\n\n# The packaged mimeapps.list now names Files, but a personal one in ~/.config\n# still wins, so point any Nautilus association there at Files too.\nuser_mimeapps=\"$HOME/.config/mimeapps.list\"\nif [[ -f $user_mimeapps ]] && grep -q \"org.gnome.Nautilus.desktop\" \"$user_mimeapps\"; then\n  sed --follow-symlinks -i 's/org\\.gnome\\.Nautilus\\.desktop/folio.desktop/g' \"$user_mimeapps\"\nfi\n\n# A dock that still pins Nautilus pins Files instead.\nshell_json=\"$HOME/.config/omarchy/shell.json\"\nif [[ -f $shell_json ]] && grep -q '\"org.gnome.Nautilus\"' \"$shell_json\"; then\n  sed --follow-symlinks -i 's/\"org\\.gnome\\.Nautilus\"/\"folio\"/' \"$shell_json\"\nfi\n\n# Nautilus goes, with its extensions and its previewer. nautilus-dropbox\n# depends on it, so it goes too. Only these: removing their dependencies as\n# well (pacman -s) would take whatever arrived with them first, which on some\n# installs is Papers and xdg-user-dirs, both Omarchy defaults.\nnautilus_packages=()\nfor package_name in nautilus nautilus-python nautilus-dropbox sushi; do\n  pacman -Qq \"$package_name\" &>/dev/null && nautilus_packages+=(\"$package_name\")\ndone\nif ((${#nautilus_packages[@]})); then\n  sudo pacman -Rn --noconfirm \"${nautilus_packages[@]}\"\nfi",
       "bodyTruncated": false,
       "date": "2026-11-10T17:16:19Z",
@@ -4240,6 +4290,37 @@
       ]
     },
     {
+      "body": "echo \"Open text files in the default editor from every app\"\n\n# Setup > Default > Editor only steered Omarchy's own editor launches; Files\n# and every other app kept opening text files in what mimeapps.list named,\n# Neovim on older installs. Point text files at the editor handler, which\n# follows that choice, except where the user picked an app themselves.\nomarchy-cmd-editor-mimetypes --unless-chosen",
+      "bodyTruncated": false,
+      "date": "2026-11-11T09:40:43Z",
+      "description": "Open text files in the default editor from every app",
+      "file": "1794390043.sh",
+      "lineCount": 7,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794390043.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794390043.sh",
+      "timestamp": 1794390043,
+      "touches": []
+    },
+    {
+      "body": "echo \"Seed the 1Password extension for Google Chrome where Chromium has it\"\n\n# 1Password's installer only seeded Chromium's external extensions until Chrome\n# became the default, so switching to Chrome left the extension behind. Chrome\n# reads its own directory whenever it is installed.\nextension=aeblfdkhhhdcdjpifhhbdiojplfjncoa.json\nif [[ -f /usr/share/chromium/extensions/$extension && ! -f /usr/share/google-chrome/extensions/$extension ]]; then\n  sudo install -D -m 644 \"/usr/share/chromium/extensions/$extension\" \"/usr/share/google-chrome/extensions/$extension\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-11T10:10:47Z",
+      "description": "Seed the 1Password extension for Google Chrome where Chromium has it",
+      "file": "1794391847.sh",
+      "lineCount": 9,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794391847.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794391847.sh",
+      "timestamp": 1794391847,
+      "touches": [
+        "/usr/share/chromium/extensions/",
+        "/usr/share/google-chrome/extensions/"
+      ]
+    },
+    {
       "body": "echo \"Bring back Papers and xdg-user-dirs, removed along with Nautilus\"\n\n# The first version of the Nautilus migration removed sushi with pacman -Rns,\n# which also took the dependencies nothing else needed. Where Papers and\n# xdg-user-dirs had first arrived as its dependencies, they went with it, and\n# PDFs fell back to whatever else claims them. That migration no longer does\n# this; this puts them back where it already ran, and does nothing elsewhere.\nomarchy-pkg-add papers xdg-user-dirs",
       "bodyTruncated": false,
       "date": "2026-11-11T10:32:36Z",
@@ -4254,6 +4335,90 @@
       "path": "migrations/1794393156.sh",
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794393156.sh",
       "timestamp": 1794393156,
+      "touches": []
+    },
+    {
+      "body": "echo \"Install CMake for building Omarchy-style apps\"\n\n# The omarchy-app agent skill now builds apps with CMake, Qt 6's own build\n# system, as Folio does, rather than qmake6.\nomarchy-pkg-add cmake",
+      "bodyTruncated": false,
+      "date": "2026-11-11T11:27:58Z",
+      "description": "Install CMake for building Omarchy-style apps",
+      "file": "1794396478.sh",
+      "lineCount": 5,
+      "packagesAdded": [
+        "cmake"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1794396478.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794396478.sh",
+      "timestamp": 1794396478,
+      "touches": []
+    },
+    {
+      "body": "echo \"Drop the Yaru icon theme, now that Files draws its own icons\"\n\n# Only Yaru itself goes: removing its dependencies as well (pacman -s) would\n# take whatever arrived with it first. It stays where another package needs it.\nif pacman -Qttq yaru-icon-theme &>/dev/null; then\n  sudo pacman -Rn --noconfirm yaru-icon-theme\nfi\n\n# Setup linked Adwaita's back and forward arrows into Yaru for Nautilus, outside\n# the package, and built an icon cache for them. Once Yaru is gone and no\n# package owns the folder, clear exactly those and any folders left empty.\nyaru=/usr/share/icons/Yaru\nif [[ -d $yaru && ! -e $yaru/index.theme ]] && ! pacman -Qqo \"$yaru\" &>/dev/null; then\n  for icon in go-previous-symbolic go-next-symbolic; do\n    link=\"$yaru/scalable/actions/$icon.svg\"\n    if [[ -L $link && $(readlink \"$link\") == \"/usr/share/icons/Adwaita/symbolic/actions/$icon.svg\" ]]; then\n      sudo rm -f \"$link\"\n    fi\n  done\n\n  sudo rm -f \"$yaru/icon-theme.cache\"\n\n  for dir in \"$yaru/scalable/actions\" \"$yaru/scalable\" \"$yaru\"; do\n    if [[ -d $dir ]]; then\n      sudo rmdir --ignore-fail-on-non-empty \"$dir\"\n    fi\n  done\nfi\n\n# GTK and Qt apps that named a Yaru colour, Omarchy's old default, get the\n# Adwaita icons every theme uses now. An icon theme the user picked themselves\n# stays, and so\n# does the rest of their GTK appearance. Without a session bus the setting waits\n# for the next theme switch; GTK falls back to Adwaita for it meanwhile.\nif [[ -n ${DBUS_SESSION_BUS_ADDRESS:-} && $(gsettings get org.gnome.desktop.interface icon-theme) == \"'Yaru\"* ]]; then\n  gsettings set org.gnome.desktop.interface icon-theme \"Adwaita\"\nfi\n\nqt_config=\"${XDG_CONFIG_HOME:-$HOME/.config}/qtengine/config.json\"\nif [[ -f $qt_config && $(jq -r '.theme.iconTheme // empty' \"$qt_config\") == Yaru* ]]; then",
+      "bodyTruncated": true,
+      "date": "2026-11-11T11:39:04Z",
+      "description": "Drop the Yaru icon theme, now that Files draws its own icons",
+      "file": "1794397144.sh",
+      "lineCount": 42,
+      "packagesAdded": [],
+      "packagesRemoved": [
+        "yaru-icon-theme"
+      ],
+      "path": "migrations/1794397144.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794397144.sh",
+      "timestamp": 1794397144,
+      "touches": [
+        "/usr/share/icons/Adwaita/symbolic/actions/",
+        "/usr/share/icons/Yaru",
+        "~/.config"
+      ]
+    },
+    {
+      "body": "echo \"Show the disk unlock prompt on the HP OmniBook X 14 (14-fe0, Snapdragon X Elite)\"\n\n# See install/hardware/hp/fix-hp-omnibook-x14-boot.sh.\nrebuild_marker=\"${OMARCHY_LIMINE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1794416700}\"\n\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match \"OmniBook X Laptop 14-fe0\"; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n  source \"$OMARCHY_PATH/install/hardware/hp/fix-hp-omnibook-x14-boot.sh\"\n'\n\n# A marker records the machine-wide rebuild: another user's run must not repeat\n# it, while a missing marker still retries an interrupted rebuild.\nif [[ ! -e $rebuild_marker ]]; then\n  rebuild_log=$(mktemp)\n  trap 'rm -f \"$rebuild_log\"' EXIT\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n  # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n  # That image lacks the display drivers, so the migration stays pending.\n  if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n    exit 1\n  fi\n\n  sudo install -Dm644 /dev/null \"$rebuild_marker\"\n  omarchy-state set reboot-required\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-11T17:05:00Z",
+      "description": "Show the disk unlock prompt on the HP OmniBook X 14 (14-fe0, Snapdragon X Elite)",
+      "file": "1794416700.sh",
+      "lineCount": 30,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794416700.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794416700.sh",
+      "timestamp": 1794416700,
+      "touches": [
+        "/var/lib/omarchy/migrations/1794416700"
+      ]
+    },
+    {
+      "body": "echo \"Give the Wi-Fi card of the HP OmniBook X 14 (WCN6855) its card family's board data\"\n\n# See install/hardware/fix-ath12k-board-data.sh, which now also covers ath11k's\n# WCN6855. ath11k reads board data when it probes the card, so a copy the\n# package installs takes effect after a reboot. A second user finds the\n# package installed and has nothing to do.\nif omarchy-pkg-missing ath12k-board-fallback; then\n  bash -euo pipefail -c 'source \"$OMARCHY_PATH/install/hardware/fix-ath12k-board-data.sh\"'\n  if omarchy-pkg-present ath12k-board-fallback && [[ -s /var/lib/ath12k-board-fallback/installed ]]; then\n    omarchy-state set reboot-required\n  fi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-11T17:15:00Z",
+      "description": "Give the Wi-Fi card of the HP OmniBook X 14 (WCN6855) its card family's board data",
+      "file": "1794417300.sh",
+      "lineCount": 12,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794417300.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794417300.sh",
+      "timestamp": 1794417300,
+      "touches": [
+        "/var/lib/ath12k-board-fallback/installed"
+      ]
+    },
+    {
+      "body": "echo \"Give the Acer Aspire 16 AI (A16-11M) working speakers and microphones\"\n\n# See install/hardware/acer/fix-acer-aspire-16-ai-speakers.sh. The sound card\n# comes with linux-omarchy-dtbs' Aspire 16 AI tree, so it comes up from the\n# next boot. Migrations run once per user, so a later user finds the package\n# installed and leaves the machine as it is.\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match \"Aspire A16-11M\" || omarchy-pkg-present acer-aspire-16-ai-audio; then\n  exit 0\nfi\n\nomarchy-pkg-add acer-aspire-16-ai-audio\nomarchy-state set reboot-required",
+      "bodyTruncated": false,
+      "date": "2026-11-11T21:25:05Z",
+      "description": "Give the Acer Aspire 16 AI (A16-11M) working speakers and microphones",
+      "file": "1794432305.sh",
+      "lineCount": 12,
+      "packagesAdded": [
+        "acer-aspire-16-ai-audio"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1794432305.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794432305.sh",
+      "timestamp": 1794432305,
       "touches": []
     }
   ],

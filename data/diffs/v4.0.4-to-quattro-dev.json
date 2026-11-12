@@ -868,9 +868,11 @@
       "omarchy-chromium-add-feature",
       "omarchy-cmd-browser-handoff",
       "omarchy-cmd-default-browser",
+      "omarchy-cmd-editor-mimetypes",
       "omarchy-crash-mute",
       "omarchy-default-dictation",
       "omarchy-dev-notification-demo",
+      "omarchy-dev-pack-chrome-extensions",
       "omarchy-dictation",
       "omarchy-dictation-hex",
       "omarchy-dictation-superwhisper",
@@ -1069,6 +1071,10 @@
           "args": [
             "",
             "[terminal-pid]"
+          ],
+          "summary": [
+            "Print the current working directory of the active terminal window",
+            "Print the current working directory of the active terminal or Files window"
           ]
         },
         "name": "omarchy-cmd-terminal-cwd"
@@ -1247,21 +1253,21 @@
       },
       {
         "fields": {
+          "summary": [
+            "Install 1Password and its Chromium extension.",
+            "Install 1Password and its browser extension."
+          ]
+        },
+        "name": "omarchy-install-service-1password"
+      },
+      {
+        "fields": {
           "requiresSudo": [
             false,
             true
           ]
         },
         "name": "omarchy-install-service-dropbox"
-      },
-      {
-        "fields": {
-          "summary": [
-            "Install Spotify.",
-            "Install Spotify, as its web player where Spotify has no Linux client."
-          ]
-        },
-        "name": "omarchy-install-service-spotify"
       },
       {
         "fields": {
@@ -1301,6 +1307,15 @@
           ]
         },
         "name": "omarchy-launch-screensaver"
+      },
+      {
+        "fields": {
+          "summary": [
+            "Launch Spotify or start its installer when missing.",
+            "Launch or focus Spotify, preferring a natively installed client over the web app."
+          ]
+        },
+        "name": "omarchy-launch-spotify"
       },
       {
         "fields": {
@@ -1381,12 +1396,30 @@
       },
       {
         "fields": {
+          "args": [
+            "<chrome|brave|brave-origin|edge|firefox|zen>",
+            "<chrome|chromium|brave|brave-origin|edge|firefox|zen>"
+          ]
+        },
+        "name": "omarchy-remove-browser"
+      },
+      {
+        "fields": {
           "summary": [
             "Disable the OpenSSH server, close the firewall port, and optionally remove authorized keys",
             "Disable the OpenSSH server, remove standard firewall rules, and optionally remove authorized keys"
           ]
         },
         "name": "omarchy-remove-security-sshd"
+      },
+      {
+        "fields": {
+          "summary": [
+            "Remove 1Password and its Chromium extension.",
+            "Remove 1Password and its browser extension."
+          ]
+        },
+        "name": "omarchy-remove-service-1password"
       },
       {
         "fields": {
@@ -1535,13 +1568,15 @@
       }
     ],
     "counts": {
-      "added": 155,
-      "changed": 44,
+      "added": 157,
+      "changed": 47,
       "from": 444,
-      "removed": 7,
+      "removed": 9,
       "to": 592
     },
     "removed": [
+      "omarchy-install-chromium-google-account",
+      "omarchy-install-service-spotify",
       "omarchy-screensaver",
       "omarchy-system-logout",
       "omarchy-system-reboot",
@@ -1659,6 +1694,7 @@
       "install.ai.amp",
       "install.ai.claude",
       "install.ai.herdr",
+      "install.browser.chromium",
       "install.gaming.moonlight",
       "install.service.microsoft",
       "install.service.notion",
@@ -1669,6 +1705,7 @@
       "remove.ai.grok-bot",
       "remove.ai.lm-studio",
       "remove.ai.ollama",
+      "remove.browser.chromium",
       "remove.dictation.hex",
       "remove.dictation.superwhisper",
       "remove.dictation.voxtype",
@@ -2183,15 +2220,6 @@
       {
         "fields": {
           "when": [
-            "[[ -f ~/.config/chromium-flags.conf ]] && ! grep -q oauth2-client-id ~/.config/chromium-flags.conf",
-            "[[ -f ~/.config/chromium-flags.conf ]]"
-          ]
-        },
-        "id": "install.service.chromium-account"
-      },
-      {
-        "fields": {
-          "when": [
             "! omarchy-pkg-present dropbox",
             "[[ $(getconf PAGESIZE) == 4096 ]]"
           ]
@@ -2224,15 +2252,6 @@
           ]
         },
         "id": "install.service.signal"
-      },
-      {
-        "fields": {
-          "when": [
-            "! omarchy-pkg-present spotify",
-            null
-          ]
-        },
-        "id": "install.service.spotify"
       },
       {
         "fields": {
@@ -2577,14 +2596,16 @@
       }
     ],
     "counts": {
-      "added": 156,
-      "changed": 95,
+      "added": 158,
+      "changed": 93,
       "from": 333,
-      "removed": 53,
+      "removed": 55,
       "to": 436
     },
     "removed": [
       "install.ai.dictation",
+      "install.service.chromium-account",
+      "install.service.spotify",
       "setup.default.agent",
       "setup.default.agent.claude",
       "setup.default.agent.codex",
@@ -2642,9 +2663,9 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 145,
+      "new": 155,
       "removed": 0,
-      "to": 251
+      "to": 261
     },
     "new": [
       {
@@ -3123,6 +3144,11 @@
         "file": "1792259038.sh"
       },
       {
+        "date": "2026-10-17T22:09:28Z",
+        "description": "Install PipeWire's JACK and GStreamer plugins on ARM",
+        "file": "1792274968.sh"
+      },
+      {
         "date": "2026-10-18T14:45:54Z",
         "description": "Move OpenClaw to a self-updating install under ~/.openclaw",
         "file": "1792334754.sh"
@@ -3338,6 +3364,16 @@
         "file": "1794165002.sh"
       },
       {
+        "date": "2026-11-09T07:50:26Z",
+        "description": "Install Omarchy's browser extensions in Google Chrome, which ignores --load-extension",
+        "file": "1794210626.sh"
+      },
+      {
+        "date": "2026-11-09T12:52:58Z",
+        "description": "Boot the LCD Surface Pro 11 (Snapdragon X Plus) on its own device tree",
+        "file": "1794228778.sh"
+      },
+      {
         "date": "2026-11-10T17:16:19Z",
         "description": "Replace Nautilus with Files as the file manager",
         "file": "1794330979.sh"
@@ -3368,9 +3404,44 @@
         "file": "1794387387.sh"
       },
       {
+        "date": "2026-11-11T09:40:43Z",
+        "description": "Open text files in the default editor from every app",
+        "file": "1794390043.sh"
+      },
+      {
+        "date": "2026-11-11T10:10:47Z",
+        "description": "Seed the 1Password extension for Google Chrome where Chromium has it",
+        "file": "1794391847.sh"
+      },
+      {
         "date": "2026-11-11T10:32:36Z",
         "description": "Bring back Papers and xdg-user-dirs, removed along with Nautilus",
         "file": "1794393156.sh"
+      },
+      {
+        "date": "2026-11-11T11:27:58Z",
+        "description": "Install CMake for building Omarchy-style apps",
+        "file": "1794396478.sh"
+      },
+      {
+        "date": "2026-11-11T11:39:04Z",
+        "description": "Drop the Yaru icon theme, now that Files draws its own icons",
+        "file": "1794397144.sh"
+      },
+      {
+        "date": "2026-11-11T17:05:00Z",
+        "description": "Show the disk unlock prompt on the HP OmniBook X 14 (14-fe0, Snapdragon X Elite)",
+        "file": "1794416700.sh"
+      },
+      {
+        "date": "2026-11-11T17:15:00Z",
+        "description": "Give the Wi-Fi card of the HP OmniBook X 14 (WCN6855) its card family's board data",
+        "file": "1794417300.sh"
+      },
+      {
+        "date": "2026-11-11T21:25:05Z",
+        "description": "Give the Acer Aspire 16 AI (A16-11M) working speakers and microphones",
+        "file": "1794432305.sh"
       }
     ],
     "removed": []

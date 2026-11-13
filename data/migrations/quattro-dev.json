@@ -1,5 +1,5 @@
 {
-  "count": 261,
+  "count": 263,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -4420,6 +4420,40 @@
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794432305.sh",
       "timestamp": 1794432305,
       "touches": []
+    },
+    {
+      "body": "echo \"Draw Omarchy's own app icons in the current theme's colors\"\n\n# The refresh draws the icons in the current theme's colors and links them over\n# the packaged ones. A theme the user removed can't be refreshed; its icons come\n# with the next theme they pick.\ntheme=$(cat \"$HOME/.local/state/omarchy/current/theme.name\" 2>/dev/null || true)\nif [[ -n $theme && ( -d $OMARCHY_PATH/themes/$theme || -d $HOME/.config/omarchy/themes/$theme ) ]]; then\n  omarchy-theme-refresh\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-12T11:46:50Z",
+      "description": "Draw Omarchy's own app icons in the current theme's colors",
+      "file": "1794484010.sh",
+      "lineCount": 9,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794484010.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794484010.sh",
+      "timestamp": 1794484010,
+      "touches": [
+        "~/.config/omarchy/themes/",
+        "~/.local/state/omarchy/current/theme.name"
+      ]
+    },
+    {
+      "body": "echo \"Add Terminal and Browser to the app launcher\"\n\n# Only these two, so apps the user removed from the launcher stay removed.\nmkdir -p ~/.local/share/applications\ncp \"$OMARCHY_PATH/applications/omarchy-terminal.desktop\" \"$OMARCHY_PATH/applications/omarchy-browser.desktop\" ~/.local/share/applications/\nupdate-desktop-database ~/.local/share/applications\nomarchy-theme-set-icons || true",
+      "bodyTruncated": false,
+      "date": "2026-11-12T14:51:05Z",
+      "description": "Add Terminal and Browser to the app launcher",
+      "file": "1794495065.sh",
+      "lineCount": 7,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794495065.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794495065.sh",
+      "timestamp": 1794495065,
+      "touches": [
+        "~/.local/share/applications",
+        "~/.local/share/applications/"
+      ]
     }
   ],
   "prerelease": true,

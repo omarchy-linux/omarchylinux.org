@@ -922,7 +922,6 @@
       "omarchy-install-dictation-superwhisper",
       "omarchy-install-dictation-voxtype",
       "omarchy-install-service-microsoft",
-      "omarchy-install-service-slack",
       "omarchy-install-t3code-app",
       "omarchy-install-video-decode",
       "omarchy-kernel",
@@ -930,7 +929,6 @@
       "omarchy-language",
       "omarchy-launch-files",
       "omarchy-launch-files-cwd",
-      "omarchy-launch-slack",
       "omarchy-launch-versions",
       "omarchy-lifecycle-dispatch",
       "omarchy-locale-generate",
@@ -939,6 +937,7 @@
       "omarchy-network-captive-portal",
       "omarchy-network-wifi-connected",
       "omarchy-pkg-defaults",
+      "omarchy-powerprofiles-floor",
       "omarchy-provision-hardware",
       "omarchy-realtime-repair",
       "omarchy-refresh-herdr-app",
@@ -953,14 +952,12 @@
       "omarchy-remove-dictation-voxtype",
       "omarchy-remove-gaming-moonlight",
       "omarchy-remove-service-microsoft",
-      "omarchy-remove-service-slack",
       "omarchy-remove-service-ssh-agent",
       "omarchy-security-functions",
       "omarchy-setup-git",
       "omarchy-setup-input",
       "omarchy-setup-keyboard",
       "omarchy-setup-security-ssh-agent",
-      "omarchy-setup-slack",
       "omarchy-sleep-disabled",
       "omarchy-system",
       "omarchy-system-lid-inhibit",
@@ -974,10 +971,10 @@
       "omarchy-theme-set-hunk",
       "omarchy-theme-set-icons",
       "omarchy-theme-set-qt",
-      "omarchy-theme-set-slack",
       "omarchy-toggle-animations",
       "omarchy-toggle-fullscreen-desktop",
       "omarchy-toggle-theme-sync",
+      "omarchy-tray-context-menu",
       "omarchy-update-boot",
       "omarchy-update-pacman",
       "omarchy-update-qualcomm-device-trees",
@@ -1571,11 +1568,11 @@
       }
     ],
     "counts": {
-      "added": 160,
+      "added": 157,
       "changed": 47,
       "from": 444,
       "removed": 9,
-      "to": 595
+      "to": 592
     },
     "removed": [
       "omarchy-install-chromium-google-account",
@@ -2666,9 +2663,9 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 157,
+      "new": 160,
       "removed": 0,
-      "to": 263
+      "to": 266
     },
     "new": [
       {
@@ -3455,6 +3452,21 @@
         "date": "2026-11-12T14:51:05Z",
         "description": "Add Terminal and Browser to the app launcher",
         "file": "1794495065.sh"
+      },
+      {
+        "date": "2026-11-12T17:08:01Z",
+        "description": "Give Snapdragon power profiles a CPU frequency floor for bursty work",
+        "file": "1794503281.sh"
+      },
+      {
+        "date": "2026-11-12T21:19:31Z",
+        "description": "Install xrandr so Wine tray menus open at the pointer",
+        "file": "1794518371.sh"
+      },
+      {
+        "date": "2026-11-14T07:49:37Z",
+        "description": "Open Slack with its own launcher again, now that Slack theme sync is gone",
+        "file": "1794642577.sh"
       }
     ],
     "removed": []

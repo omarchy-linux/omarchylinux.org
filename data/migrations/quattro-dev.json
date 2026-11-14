@@ -1,5 +1,5 @@
 {
-  "count": 263,
+  "count": 266,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -4453,6 +4453,55 @@
       "touches": [
         "~/.local/share/applications",
         "~/.local/share/applications/"
+      ]
+    },
+    {
+      "body": "echo \"Give Snapdragon power profiles a CPU frequency floor for bursty work\"\n\n# See bin/omarchy-powerprofiles-floor. Another user's run has already enabled\n# the service, so it is only started.\nif ! omarchy-hw-aarch64-qualcomm; then\n  exit 0\nfi\n\nif [[ ! -e /etc/systemd/system/omarchy-powerprofiles-floor.service ]]; then\n  sudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n    source \"$OMARCHY_PATH/install/hardware/qualcomm/powerprofiles-floor.sh\"\n  '\nfi\n\nsudo systemctl start omarchy-powerprofiles-floor.service",
+      "bodyTruncated": false,
+      "date": "2026-11-12T17:08:01Z",
+      "description": "Give Snapdragon power profiles a CPU frequency floor for bursty work",
+      "file": "1794503281.sh",
+      "lineCount": 15,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794503281.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794503281.sh",
+      "timestamp": 1794503281,
+      "touches": [
+        "/etc/systemd/system/omarchy-powerprofiles-floor.service"
+      ]
+    },
+    {
+      "body": "echo \"Install xrandr so Wine tray menus open at the pointer\"\n\n# omarchy-tray-context-menu reads Xwayland's monitor layout with xrandr to\n# place a Wine app's own tray menu where it was right-clicked.\nomarchy-pkg-add xorg-xrandr",
+      "bodyTruncated": false,
+      "date": "2026-11-12T21:19:31Z",
+      "description": "Install xrandr so Wine tray menus open at the pointer",
+      "file": "1794518371.sh",
+      "lineCount": 5,
+      "packagesAdded": [
+        "xorg-xrandr"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1794518371.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794518371.sh",
+      "timestamp": 1794518371,
+      "touches": []
+    },
+    {
+      "body": "echo \"Open Slack with its own launcher again, now that Slack theme sync is gone\"\n\n# Theme sync replaced Slack's launcher with one that runs omarchy-launch-slack,\n# which no longer exists. Slack 4.53 refuses the debugging pipe it relied on.\noverride=\"$HOME/.local/share/applications/slack.desktop\"\nif [[ -f $override ]] && grep -qE '^Exec=omarchy-launch-slack( |$)' \"$override\"; then\n  if [[ -f $override.before-omarchy ]]; then\n    mv \"$override.before-omarchy\" \"$override\"\n  else\n    rm \"$override\"\n  fi\n  update-desktop-database \"${override%/*}\"\nfi\nrm -rf \"$HOME/.local/state/omarchy/slack\"",
+      "bodyTruncated": false,
+      "date": "2026-11-14T07:49:37Z",
+      "description": "Open Slack with its own launcher again, now that Slack theme sync is gone",
+      "file": "1794642577.sh",
+      "lineCount": 14,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794642577.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794642577.sh",
+      "timestamp": 1794642577,
+      "touches": [
+        "~/.local/share/applications/slack.desktop",
+        "~/.local/state/omarchy/slack"
       ]
     }
   ],

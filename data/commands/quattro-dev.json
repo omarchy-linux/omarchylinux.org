@@ -4874,23 +4874,6 @@
     {
       "aliases": [],
       "args": "",
-      "cli": "omarchy install service slack",
-      "examples": [],
-      "executable": true,
-      "group": "install",
-      "groupDescription": "Optional software installers",
-      "hasMetadata": true,
-      "hidden": false,
-      "lineCount": 14,
-      "name": "omarchy-install-service-slack",
-      "path": "bin/omarchy-install-service-slack",
-      "requiresSudo": true,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-install-service-slack",
-      "summary": "Install Slack Desktop with live Omarchy theme support"
-    },
-    {
-      "aliases": [],
-      "args": "",
       "cli": "omarchy install service sunshine",
       "examples": [],
       "executable": true,
@@ -5414,23 +5397,6 @@
       "requiresSudo": false,
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-launch-signal",
       "summary": "Launch Signal or start its installer when missing."
-    },
-    {
-      "aliases": [],
-      "args": "[slack-arguments...]",
-      "cli": "omarchy launch slack",
-      "examples": [],
-      "executable": true,
-      "group": "launch",
-      "groupDescription": "Application launchers",
-      "hasMetadata": true,
-      "hidden": true,
-      "lineCount": 18,
-      "name": "omarchy-launch-slack",
-      "path": "bin/omarchy-launch-slack",
-      "requiresSudo": false,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-launch-slack",
-      "summary": "Launch Slack with live Omarchy theme support"
     },
     {
       "aliases": [],
@@ -6691,6 +6657,23 @@
     },
     {
       "aliases": [],
+      "args": "[monitor|apply|release]",
+      "cli": "omarchy powerprofiles floor",
+      "examples": [],
+      "executable": true,
+      "group": "powerprofiles",
+      "groupDescription": "Power profile management",
+      "hasMetadata": true,
+      "hidden": true,
+      "lineCount": 79,
+      "name": "omarchy-powerprofiles-floor",
+      "path": "bin/omarchy-powerprofiles-floor",
+      "requiresSudo": true,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-powerprofiles-floor",
+      "summary": "Give logged-in users' work a CPU frequency floor that follows the power profile"
+    },
+    {
+      "aliases": [],
       "args": "",
       "cli": "omarchy powerprofiles init",
       "examples": [],
@@ -6784,7 +6767,7 @@
       "groupDescription": "",
       "hasMetadata": true,
       "hidden": true,
-      "lineCount": 1283,
+      "lineCount": 1449,
       "name": "omarchy-provision-owner",
       "path": "bin/omarchy-provision-owner",
       "requiresSudo": true,
@@ -7561,7 +7544,7 @@
       "groupDescription": "Removal workflows",
       "hasMetadata": true,
       "hidden": true,
-      "lineCount": 105,
+      "lineCount": 101,
       "name": "omarchy-remove-launcher-entry",
       "path": "bin/omarchy-remove-launcher-entry",
       "requiresSudo": true,
@@ -7703,23 +7686,6 @@
       "requiresSudo": false,
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-remove-service-microsoft",
       "summary": "Remove the Microsoft Outlook, Word, Excel, PowerPoint, Teams, and OneDrive web apps."
-    },
-    {
-      "aliases": [],
-      "args": "",
-      "cli": "omarchy remove service slack",
-      "examples": [],
-      "executable": true,
-      "group": "remove",
-      "groupDescription": "Removal workflows",
-      "hasMetadata": true,
-      "hidden": true,
-      "lineCount": 15,
-      "name": "omarchy-remove-service-slack",
-      "path": "bin/omarchy-remove-service-slack",
-      "requiresSudo": true,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-remove-service-slack",
-      "summary": "Uninstall Slack Desktop and clean up its theme integration"
     },
     {
       "aliases": [],
@@ -8228,23 +8194,6 @@
       "requiresSudo": true,
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-setup-security-sudoless-docker",
       "summary": "Enable sudoless Docker by adding your user to the docker group (root-equivalent!)"
-    },
-    {
-      "aliases": [],
-      "args": "",
-      "cli": "omarchy setup slack",
-      "examples": [],
-      "executable": true,
-      "group": "setup",
-      "groupDescription": "Interactive setup wizards",
-      "hasMetadata": true,
-      "hidden": false,
-      "lineCount": 43,
-      "name": "omarchy-setup-slack",
-      "path": "bin/omarchy-setup-slack",
-      "requiresSudo": false,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-setup-slack",
-      "summary": "Make Slack follow Omarchy themes live"
     },
     {
       "aliases": [],
@@ -9006,7 +8955,7 @@
       "groupDescription": "Theme management",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 637,
+      "lineCount": 636,
       "name": "omarchy-theme-set",
       "path": "bin/omarchy-theme-set",
       "requiresSudo": false,
@@ -9318,23 +9267,6 @@
       "requiresSudo": false,
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-theme-set-qt",
       "summary": "Apply the current theme's icon theme to Qt apps"
-    },
-    {
-      "aliases": [],
-      "args": "",
-      "cli": "omarchy theme set slack",
-      "examples": [],
-      "executable": true,
-      "group": "theme",
-      "groupDescription": "Theme management",
-      "hasMetadata": true,
-      "hidden": true,
-      "lineCount": 21,
-      "name": "omarchy-theme-set-slack",
-      "path": "bin/omarchy-theme-set-slack",
-      "requiresSudo": false,
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-theme-set-slack",
-      "summary": "Sync the generated Omarchy theme to running Slack windows"
     },
     {
       "aliases": [],
@@ -9769,6 +9701,25 @@
       "requiresSudo": false,
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-transcode-ascii",
       "summary": "Transcode an image into ASCII/Unicode art text"
+    },
+    {
+      "aliases": [],
+      "args": "<item-id>",
+      "cli": "omarchy tray context menu",
+      "examples": [
+        "omarchy tray context menu wine-0x200d4-0"
+      ],
+      "executable": true,
+      "group": "tray",
+      "groupDescription": "",
+      "hasMetadata": true,
+      "hidden": true,
+      "lineCount": 96,
+      "name": "omarchy-tray-context-menu",
+      "path": "bin/omarchy-tray-context-menu",
+      "requiresSudo": false,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-tray-context-menu",
+      "summary": "Open a tray item's own context menu at the pointer"
     },
     {
       "aliases": [],
@@ -10564,7 +10515,7 @@
       "summary": "Install, launch, stop, inspect, or remove the Windows VM"
     }
   ],
-  "count": 595,
+  "count": 592,
   "generatedFrom": "data/source/quattro-dev/bin",
   "groups": {
     "agent": "AI coding agents, their usage, and subscription accounts",

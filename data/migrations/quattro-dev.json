@@ -1,5 +1,5 @@
 {
-  "count": 266,
+  "count": 275,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -4488,6 +4488,56 @@
       "touches": []
     },
     {
+      "body": "echo \"Show the disk unlock prompt on the Acer Aspire 16 AI (A16-11M, Snapdragon X)\"\n\n# See install/hardware/acer/fix-acer-aspire-16-ai-boot.sh.\nrebuild_marker=\"${OMARCHY_LIMINE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1794526429}\"\n\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match \"Aspire A16-11M\"; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n  source \"$OMARCHY_PATH/install/hardware/acer/fix-acer-aspire-16-ai-boot.sh\"\n'\n\n# A marker records the machine-wide rebuild: another user's run must not repeat\n# it, while a missing marker still retries an interrupted rebuild.\nif [[ ! -e $rebuild_marker ]]; then\n  rebuild_log=$(mktemp)\n  trap 'rm -f \"$rebuild_log\"' EXIT\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n  # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n  # That image lacks the display drivers, so the migration stays pending.\n  if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n    exit 1\n  fi\n\n  sudo install -Dm644 /dev/null \"$rebuild_marker\"\n  omarchy-state set reboot-required\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-12T23:33:49Z",
+      "description": "Show the disk unlock prompt on the Acer Aspire 16 AI (A16-11M, Snapdragon X)",
+      "file": "1794526429.sh",
+      "lineCount": 30,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794526429.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794526429.sh",
+      "timestamp": 1794526429,
+      "touches": [
+        "/var/lib/omarchy/migrations/1794526429"
+      ]
+    },
+    {
+      "body": "echo \"Copy the USB4 router firmware for the Surface Laptop 8's second USB-C port\"\n\n# linux-omarchy now runs USB4 on the laptop's second USB-C port. That port's\n# router takes a firmware image of its own, which\n# microsoft-surface-laptop-8-support copies out of the Windows USB4 driver from\n# 1-7; installs set up before that have only the first port's image. The router\n# driver reads its image from the boot image, so that is rebuilt.\nrebuild_marker=/var/lib/omarchy/migrations/1794594909\nfirmware=/usr/lib/firmware/updates/qcom/glymur/surface-laptop8\n\nif ! omarchy-hw-aarch64-qualcomm ||\n  ! omarchy-hw-match-device-tree microsoft,surface-laptop-8-13p8 microsoft,surface-laptop-8-15; then\n  exit 0\nfi\n\n# A marker records the machine-wide work: another user's run must not repeat\n# it, while a missing marker still retries an interrupted rebuild.\n[[ ! -e $rebuild_marker ]] || exit 0\n\n# An older package's tool copies only the first port's image.\nif ! grep -qs usb4-router-v2.bin /usr/bin/surface-laptop8-usb4-firmware; then\n  echo \"microsoft-surface-laptop-8-support 1-7 or newer is needed. Update the system, then run omarchy-migrate again.\" >&2\n  exit 1\nfi\n\n# The tool says which port stays without USB4 when Windows or its USB4 driver\n# is gone or cannot be read. That is no reason to stop the other migrations.\nif ! sudo surface-laptop8-usb4-firmware --no-rebuild; then\n  echo \"To copy the missing firmware later: sudo surface-laptop8-usb4-firmware\" >&2\nfi\n\n# Either image can be new here, and a rebuild that failed last time left no\n# marker, so the boot image is rebuilt whenever there is an image to put in it.\nif [[ -e $firmware/usb4-router-legacy.bin || -e $firmware/usb4-router-v2.bin ]]; then\n  rebuild_log=$(mktemp)\n  trap 'rm -f \"$rebuild_log\"' EXIT\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n  # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n  # That image lacks the firmware, so the migration stays pending.",
+      "bodyTruncated": true,
+      "date": "2026-11-13T18:35:09Z",
+      "description": "Copy the USB4 router firmware for the Surface Laptop 8's second USB-C port",
+      "file": "1794594909.sh",
+      "lineCount": 49,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794594909.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794594909.sh",
+      "timestamp": 1794594909,
+      "touches": [
+        "/usr/bin/surface-laptop8-usb4-firmware",
+        "/usr/lib/firmware/updates/qcom/glymur/surface-laptop8",
+        "/var/lib/omarchy/migrations/1794594909"
+      ]
+    },
+    {
+      "body": "echo \"Keep the Lenovo Yoga Slim 7x from waking itself in deep suspend with the lid open\"\n\nhook=/usr/lib/systemd/system-sleep/yoga-slim7x-lid-wake\n\nif omarchy-hw-aarch64-qualcomm && omarchy-hw-match \"83ED\" && [[ ! -e $hook ]]; then\n  sudo install -Dm755 \"$OMARCHY_PATH/default/systemd/system-sleep/yoga-slim7x-lid-wake\" \"$hook\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-13T22:35:53Z",
+      "description": "Keep the Lenovo Yoga Slim 7x from waking itself in deep suspend with the lid open",
+      "file": "1794609353.sh",
+      "lineCount": 7,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794609353.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794609353.sh",
+      "timestamp": 1794609353,
+      "touches": [
+        "/usr/lib/systemd/system-sleep/yoga-slim7x-lid-wake"
+      ]
+    },
+    {
       "body": "echo \"Open Slack with its own launcher again, now that Slack theme sync is gone\"\n\n# Theme sync replaced Slack's launcher with one that runs omarchy-launch-slack,\n# which no longer exists. Slack 4.53 refuses the debugging pipe it relied on.\noverride=\"$HOME/.local/share/applications/slack.desktop\"\nif [[ -f $override ]] && grep -qE '^Exec=omarchy-launch-slack( |$)' \"$override\"; then\n  if [[ -f $override.before-omarchy ]]; then\n    mv \"$override.before-omarchy\" \"$override\"\n  else\n    rm \"$override\"\n  fi\n  update-desktop-database \"${override%/*}\"\nfi\nrm -rf \"$HOME/.local/state/omarchy/slack\"",
       "bodyTruncated": false,
       "date": "2026-11-14T07:49:37Z",
@@ -4502,6 +4552,104 @@
       "touches": [
         "~/.local/share/applications/slack.desktop",
         "~/.local/state/omarchy/slack"
+      ]
+    },
+    {
+      "body": "echo \"Draw the default apps' icons as an icon set in the current theme's colors\"\n\n# App icons are now an icon set, picked with `omarchy icons set` apart from the\n# theme, and the default set covers the other apps of a fresh install: Image\n# Viewer, Media Player, Disks, Document Viewer and the rest.\n\n# Icon templates of the user's own moved from ~/.config/omarchy/themed/icons to\n# the set they redraw.\nold_templates=\"$HOME/.config/omarchy/themed/icons\"\nif [[ -d $old_templates ]]; then\n  mkdir -p \"$HOME/.config/omarchy/icons/papercraft\"\n  find \"$old_templates\" -maxdepth 1 -name '*.svg.tpl' -exec mv -n -t \"$HOME/.config/omarchy/icons/papercraft\" {} +\n  rmdir \"$old_templates\" 2>/dev/null || true\nfi\n\n# Drawing the set here links the new icons in right away, where they would\n# otherwise wait for the next theme switch.\nomarchy-theme-set-icons || true",
+      "bodyTruncated": false,
+      "date": "2026-11-14T08:20:24Z",
+      "description": "Draw the default apps' icons as an icon set in the current theme's colors",
+      "file": "1794644424.sh",
+      "lineCount": 18,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794644424.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794644424.sh",
+      "timestamp": 1794644424,
+      "touches": [
+        "~/.config/omarchy/icons/papercraft",
+        "~/.config/omarchy/themed/icons"
+      ]
+    },
+    {
+      "body": "echo \"Drop the N1x rescue boot entry\"\n\n# N1x laptops booted a text-console rescue entry from a fallback UKI built with\n# every module, which cost about a minute on every kernel update and install.\n# Release firmware boots the GPU, and snapshots cover recovery. A rebuild with\n# no fallback configured removes the fallback UKI and its menu entry.\nconf=\"${OMARCHY_N1X_BOOT_ORDER_CONF:-/etc/limine-entry-tool.d/zz-omarchy-n1x-boot-order.conf}\"\n# Removing the drop-in also removes what this migration looks for, so a marker\n# keeps the rebuild pending until it finishes: an interrupted run retries it.\npending=\"${OMARCHY_N1X_RESCUE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1794673542.pending}\"\n\nif [[ -f $conf ]]; then\n  sudo install -Dm644 /dev/null \"$pending\"\n  sudo rm -f \"$conf\"\nfi\n\n[[ -e $pending ]] || exit 0\n\nsudo limine-mkinitcpio\nsudo rm -f \"$pending\"",
+      "bodyTruncated": false,
+      "date": "2026-11-14T16:25:42Z",
+      "description": "Drop the N1x rescue boot entry",
+      "file": "1794673542.sh",
+      "lineCount": 20,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794673542.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794673542.sh",
+      "timestamp": 1794673542,
+      "touches": [
+        "/etc/limine-entry-tool.d/zz-omarchy-n1x-boot-order.conf",
+        "/var/lib/omarchy/migrations/1794673542.pending"
+      ]
+    },
+    {
+      "body": "echo \"Leave Turing's NVIDIA firmware out of the N1x initramfs\"\n\n# See install/hardware/n1x.sh, which writes the same drop-in for new installs.\n# Only where the GPU drives the panel, which early-loads the NVIDIA modules.\n# The next initramfs rebuild picks it up.\nconf_dir=\"${OMARCHY_MKINITCPIO_CONF_DIR:-/etc/mkinitcpio.conf.d}\"\n\nomarchy-hw-aarch64-n1x || exit 0\n[[ -f $conf_dir/nvidia.conf && ! -f $conf_dir/omarchy-n1x-nvidia-firmware.conf ]] || exit 0\n\nsudo install -Dm644 /dev/stdin \"$conf_dir/omarchy-n1x-nvidia-firmware.conf\" <<'CONF'\n# N1x: the Blackwell GPU boots its GSP from the ga10x firmware. The nvidia\n# module also lists Turing's (tu10x), which only Turing GPUs load: leave it out\n# of the initramfs, about 32 MB. mkinitcpio sources this file again after the\n# hooks run, so add_firmware is wrapped only once. It returns the status of the\n# firmware it did add, which add_module reads to warn about missing firmware.\nif declare -F add_firmware >/dev/null && ! declare -F _omarchy_n1x_add_firmware >/dev/null; then\n  eval \"_omarchy_n1x_$(declare -f add_firmware)\"\n  add_firmware() {\n    local fw\n    local -a kept=()\n    local -i status=0\n    for fw; do\n      case $fw in\n        nvidia/*/gsp_tu10x.bin | nvidia/*/ucodes_tu10x.bin) ;;\n        *) kept+=(\"$fw\") ;;\n      esac\n    done\n    if ((${#kept[@]})); then\n      _omarchy_n1x_add_firmware \"${kept[@]}\" || status=$?\n    fi\n    return \"$status\"\n  }\nfi\nCONF",
+      "bodyTruncated": false,
+      "date": "2026-11-14T16:37:09Z",
+      "description": "Leave Turing's NVIDIA firmware out of the N1x initramfs",
+      "file": "1794674229.sh",
+      "lineCount": 35,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794674229.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794674229.sh",
+      "timestamp": 1794674229,
+      "touches": [
+        "/etc/mkinitcpio.conf.d"
+      ]
+    },
+    {
+      "body": "echo \"Give the HP OmniBook 3 working speakers and microphones\"\n\n# See install/hardware/hp/fix-hp-omnibook-3-speakers.sh. The sound card comes\n# with linux-omarchy-dtbs' OmniBook 3 tree, so it comes up from the next boot.\n# Migrations run once per user, so a later user finds the package installed\n# and leaves the machine as it is.\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match \"OmniBook 3 Laptop\" || omarchy-pkg-present hp-omnibook-3-audio; then\n  exit 0\nfi\n\nomarchy-pkg-add hp-omnibook-3-audio\nomarchy-state set reboot-required",
+      "bodyTruncated": false,
+      "date": "2026-11-14T17:03:11Z",
+      "description": "Give the HP OmniBook 3 working speakers and microphones",
+      "file": "1794675791.sh",
+      "lineCount": 12,
+      "packagesAdded": [
+        "hp-omnibook-3-audio"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1794675791.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794675791.sh",
+      "timestamp": 1794675791,
+      "touches": []
+    },
+    {
+      "body": "echo \"Show the disk unlock prompt on the ASUS Vivobook S 16 (S3607QA, Snapdragon X)\"\n\n# See install/hardware/asus/fix-asus-vivobook-s16-boot.sh.\nrebuild_marker=\"${OMARCHY_LIMINE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1794695964}\"\n\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match \"S3607QA\"; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n  source \"$OMARCHY_PATH/install/hardware/asus/fix-asus-vivobook-s16-boot.sh\"\n'\n\n# A marker records the machine-wide rebuild: another user's run must not repeat\n# it, while a missing marker still retries an interrupted rebuild.\nif [[ ! -e $rebuild_marker ]]; then\n  rebuild_log=$(mktemp)\n  trap 'rm -f \"$rebuild_log\"' EXIT\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n  # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n  # That image lacks the display drivers, so the migration stays pending.\n  if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n    exit 1\n  fi\n\n  sudo install -Dm644 /dev/null \"$rebuild_marker\"\n  omarchy-state set reboot-required\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-14T22:39:24Z",
+      "description": "Show the disk unlock prompt on the ASUS Vivobook S 16 (S3607QA, Snapdragon X)",
+      "file": "1794695964.sh",
+      "lineCount": 30,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794695964.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794695964.sh",
+      "timestamp": 1794695964,
+      "touches": [
+        "/var/lib/omarchy/migrations/1794695964"
+      ]
+    },
+    {
+      "body": "echo \"Start the Snapdragon CPU floor at boot, out of its ordering cycle with power-profiles-daemon\"\n\n# The floor service was wanted by multi-user.target while ordered after\n# power-profiles-daemon, which orders itself after multi-user.target. systemd\n# broke that cycle every boot by dropping the floor's start job.\nif ! omarchy-hw-aarch64-qualcomm; then\n  exit 0\nfi\n\nunit=/etc/systemd/system/omarchy-powerprofiles-floor.service\n\nif [[ ! -e $unit ]]; then\n  exit 0\nfi\n\nif ! grep -qx \"WantedBy=graphical.target\" \"$unit\"; then\n  sudo install -Dm644 \"$OMARCHY_PATH/default/systemd/system/omarchy-powerprofiles-floor.service\" \"$unit\"\nfi\n\n# Outside the check so a run interrupted after the install still moves the link\nsudo systemctl daemon-reload\nsudo systemctl reenable omarchy-powerprofiles-floor.service\n\nsudo systemctl start omarchy-powerprofiles-floor.service",
+      "bodyTruncated": false,
+      "date": "2026-11-15T09:26:37Z",
+      "description": "Start the Snapdragon CPU floor at boot, out of its ordering cycle with power-profiles-daemon",
+      "file": "1794734797.sh",
+      "lineCount": 24,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794734797.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794734797.sh",
+      "timestamp": 1794734797,
+      "touches": [
+        "/etc/systemd/system/omarchy-powerprofiles-floor.service"
       ]
     }
   ],

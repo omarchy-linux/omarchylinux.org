@@ -1,5 +1,5 @@
 {
-  "count": 436,
+  "count": 440,
   "flat": [
     {
       "action": "omarchy-launch-about",
@@ -974,6 +974,24 @@
       "label": "Font",
       "parent": "appearance",
       "provider": "fonts",
+      "target": null,
+      "title": null,
+      "when": null
+    },
+    {
+      "action": "icons=$(omarchy-icons-switcher); [[ -n $icons ]] && omarchy-icons-set \"$icons\"",
+      "aliases": [],
+      "checked": null,
+      "command": null,
+      "declared": true,
+      "depth": 1,
+      "icon": "󰠱",
+      "iconFont": null,
+      "id": "appearance.icons",
+      "kind": "action",
+      "label": "Icons",
+      "parent": "appearance",
+      "provider": null,
       "target": null,
       "title": null,
       "when": null
@@ -3453,6 +3471,24 @@
       "when": null
     },
     {
+      "action": "omarchy-launch-floating-terminal-with-presentation omarchy-icons-install",
+      "aliases": [],
+      "checked": null,
+      "command": null,
+      "declared": true,
+      "depth": 2,
+      "icon": "󰠱",
+      "iconFont": null,
+      "id": "install.style.icons",
+      "kind": "action",
+      "label": "Icons",
+      "parent": "install.style",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": null
+    },
+    {
       "action": "omarchy-launch-floating-terminal-with-presentation omarchy-theme-install",
       "aliases": [],
       "checked": null,
@@ -4821,6 +4857,24 @@
       "target": null,
       "title": null,
       "when": "omarchy-pkg-present xpadneo-dkms"
+    },
+    {
+      "action": "omarchy-icons-remove",
+      "aliases": [],
+      "checked": null,
+      "command": null,
+      "declared": true,
+      "depth": 1,
+      "icon": "󰠱",
+      "iconFont": null,
+      "id": "remove.icons",
+      "kind": "action",
+      "label": "Icons",
+      "parent": "remove",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": null
     },
     {
       "action": "xdg-terminal-exec --app-id=org.omarchy.terminal omarchy-pkg-remove",
@@ -7708,6 +7762,24 @@
       "when": null
     },
     {
+      "action": "omarchy-launch-floating-terminal-with-presentation omarchy-icons-update",
+      "aliases": [],
+      "checked": null,
+      "command": null,
+      "declared": true,
+      "depth": 1,
+      "icon": "󰠱",
+      "iconFont": null,
+      "id": "update.icons",
+      "kind": "action",
+      "label": "Extra Icons",
+      "parent": "update",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": "omarchy-icons-extras"
+    },
+    {
       "action": null,
       "aliases": [],
       "checked": null,
@@ -8592,6 +8664,25 @@
           "label": "Font",
           "parent": "appearance",
           "provider": "fonts",
+          "target": null,
+          "title": null,
+          "when": null
+        },
+        {
+          "action": "icons=$(omarchy-icons-switcher); [[ -n $icons ]] && omarchy-icons-set \"$icons\"",
+          "aliases": [],
+          "checked": null,
+          "children": [],
+          "command": null,
+          "declared": true,
+          "depth": 1,
+          "icon": "󰠱",
+          "iconFont": null,
+          "id": "appearance.icons",
+          "kind": "action",
+          "label": "Icons",
+          "parent": "appearance",
+          "provider": null,
           "target": null,
           "title": null,
           "when": null
@@ -13243,6 +13334,25 @@
               "when": null
             },
             {
+              "action": "omarchy-launch-floating-terminal-with-presentation omarchy-icons-install",
+              "aliases": [],
+              "checked": null,
+              "children": [],
+              "command": null,
+              "declared": true,
+              "depth": 2,
+              "icon": "󰠱",
+              "iconFont": null,
+              "id": "install.style.icons",
+              "kind": "action",
+              "label": "Icons",
+              "parent": "install.style",
+              "provider": null,
+              "target": null,
+              "title": null,
+              "when": null
+            },
+            {
               "action": null,
               "aliases": [],
               "checked": null,
@@ -14849,6 +14959,25 @@
           "when": null
         },
         {
+          "action": "omarchy-icons-remove",
+          "aliases": [],
+          "checked": null,
+          "children": [],
+          "command": null,
+          "declared": true,
+          "depth": 1,
+          "icon": "󰠱",
+          "iconFont": null,
+          "id": "remove.icons",
+          "kind": "action",
+          "label": "Icons",
+          "parent": "remove",
+          "provider": null,
+          "target": null,
+          "title": null,
+          "when": null
+        },
+        {
           "action": null,
           "aliases": [],
           "checked": null,
@@ -15673,6 +15802,25 @@
           "target": null,
           "title": null,
           "when": "omarchy-theme-extras"
+        },
+        {
+          "action": "omarchy-launch-floating-terminal-with-presentation omarchy-icons-update",
+          "aliases": [],
+          "checked": null,
+          "children": [],
+          "command": null,
+          "declared": true,
+          "depth": 1,
+          "icon": "󰠱",
+          "iconFont": null,
+          "id": "update.icons",
+          "kind": "action",
+          "label": "Extra Icons",
+          "parent": "update",
+          "provider": null,
+          "target": null,
+          "title": null,
+          "when": "omarchy-icons-extras"
         },
         {
           "action": null,

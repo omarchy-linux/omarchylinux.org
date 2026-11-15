@@ -913,6 +913,15 @@
       "omarchy-hyprland-workspace-layout-current",
       "omarchy-hyprland-workspace-layout-default",
       "omarchy-i18n",
+      "omarchy-icons-current",
+      "omarchy-icons-extras",
+      "omarchy-icons-install",
+      "omarchy-icons-list",
+      "omarchy-icons-preview",
+      "omarchy-icons-remove",
+      "omarchy-icons-set",
+      "omarchy-icons-switcher",
+      "omarchy-icons-update",
       "omarchy-input-method",
       "omarchy-install-ai-claude",
       "omarchy-install-ai-herdr",
@@ -1328,6 +1337,15 @@
       },
       {
         "fields": {
+          "summary": [
+            "Launch or attach to the persistent herdr session in a terminal",
+            "Focus the herdr terminal, or launch one attached to the persistent session"
+          ]
+        },
+        "name": "omarchy-launch-terminal-herdr"
+      },
+      {
+        "fields": {
           "examples": [
             [
               "omarchy menu",
@@ -1568,11 +1586,11 @@
       }
     ],
     "counts": {
-      "added": 157,
-      "changed": 47,
+      "added": 166,
+      "changed": 48,
       "from": 444,
       "removed": 9,
-      "to": 592
+      "to": 601
     },
     "removed": [
       "omarchy-install-chromium-google-account",
@@ -1642,6 +1660,7 @@
       "appearance.dock.position.right",
       "appearance.dock.position.top",
       "appearance.font",
+      "appearance.icons",
       "appearance.theme",
       "appearance.top-bar",
       "appearance.top-bar.background",
@@ -1699,6 +1718,7 @@
       "install.service.microsoft",
       "install.service.notion",
       "install.service.slack",
+      "install.style.icons",
       "remove.ai.amp",
       "remove.ai.chatgpt",
       "remove.ai.claude",
@@ -1710,6 +1730,7 @@
       "remove.dictation.superwhisper",
       "remove.dictation.voxtype",
       "remove.gaming.moonlight",
+      "remove.icons",
       "remove.service.1password",
       "remove.service.microsoft",
       "remove.service.ssh-agent",
@@ -1746,6 +1767,7 @@
       "trigger.toggle.notifications-on",
       "trigger.toggle.screensaver-off",
       "trigger.toggle.screensaver-on",
+      "update.icons",
       "update.kernel"
     ],
     "changed": [
@@ -2596,11 +2618,11 @@
       }
     ],
     "counts": {
-      "added": 158,
+      "added": 162,
       "changed": 93,
       "from": 333,
       "removed": 55,
-      "to": 436
+      "to": 440
     },
     "removed": [
       "install.ai.dictation",
@@ -2663,9 +2685,9 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 160,
+      "new": 169,
       "removed": 0,
-      "to": 266
+      "to": 275
     },
     "new": [
       {
@@ -3464,9 +3486,54 @@
         "file": "1794518371.sh"
       },
       {
+        "date": "2026-11-12T23:33:49Z",
+        "description": "Show the disk unlock prompt on the Acer Aspire 16 AI (A16-11M, Snapdragon X)",
+        "file": "1794526429.sh"
+      },
+      {
+        "date": "2026-11-13T18:35:09Z",
+        "description": "Copy the USB4 router firmware for the Surface Laptop 8's second USB-C port",
+        "file": "1794594909.sh"
+      },
+      {
+        "date": "2026-11-13T22:35:53Z",
+        "description": "Keep the Lenovo Yoga Slim 7x from waking itself in deep suspend with the lid open",
+        "file": "1794609353.sh"
+      },
+      {
         "date": "2026-11-14T07:49:37Z",
         "description": "Open Slack with its own launcher again, now that Slack theme sync is gone",
         "file": "1794642577.sh"
+      },
+      {
+        "date": "2026-11-14T08:20:24Z",
+        "description": "Draw the default apps' icons as an icon set in the current theme's colors",
+        "file": "1794644424.sh"
+      },
+      {
+        "date": "2026-11-14T16:25:42Z",
+        "description": "Drop the N1x rescue boot entry",
+        "file": "1794673542.sh"
+      },
+      {
+        "date": "2026-11-14T16:37:09Z",
+        "description": "Leave Turing's NVIDIA firmware out of the N1x initramfs",
+        "file": "1794674229.sh"
+      },
+      {
+        "date": "2026-11-14T17:03:11Z",
+        "description": "Give the HP OmniBook 3 working speakers and microphones",
+        "file": "1794675791.sh"
+      },
+      {
+        "date": "2026-11-14T22:39:24Z",
+        "description": "Show the disk unlock prompt on the ASUS Vivobook S 16 (S3607QA, Snapdragon X)",
+        "file": "1794695964.sh"
+      },
+      {
+        "date": "2026-11-15T09:26:37Z",
+        "description": "Start the Snapdragon CPU floor at boot, out of its ordering cycle with power-profiles-daemon",
+        "file": "1794734797.sh"
       }
     ],
     "removed": []

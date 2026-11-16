@@ -1,5 +1,5 @@
 {
-  "count": 440,
+  "count": 441,
   "flat": [
     {
       "action": "omarchy-launch-about",
@@ -5239,7 +5239,7 @@
       "when": null
     },
     {
-      "action": "omarchy-launch-config-editor \"$HOME/.config/hypr/hyprland.lua\"",
+      "action": "omarchy-launch-editor \"$HOME/.config/hypr/hyprland.lua\"",
       "aliases": [],
       "checked": null,
       "command": null,
@@ -5257,7 +5257,7 @@
       "when": null
     },
     {
-      "action": "omarchy-launch-config-editor ~/.config/hypr/hyprsunset.conf && omarchy-restart-hyprsunset",
+      "action": "omarchy-launch-editor ~/.config/hypr/hyprsunset.conf && omarchy-restart-hyprsunset",
       "aliases": [],
       "checked": null,
       "command": null,
@@ -5275,7 +5275,7 @@
       "when": null
     },
     {
-      "action": "omarchy-launch-config-editor ~/.XCompose && omarchy-restart-xcompose",
+      "action": "omarchy-launch-editor ~/.XCompose && omarchy-restart-xcompose",
       "aliases": [],
       "checked": null,
       "command": null,
@@ -5818,7 +5818,7 @@
       "when": "! omarchy-hw-aarch64-apple && [[ ! -f /etc/limine-entry-tool.d/zz-omarchy-dgx-spark.conf ]]"
     },
     {
-      "action": "omarchy-launch-config-editor \"$HOME/.config/hypr/input.lua\"",
+      "action": "omarchy-launch-editor \"$HOME/.config/hypr/input.lua\"",
       "aliases": [],
       "checked": null,
       "command": null,
@@ -5890,7 +5890,7 @@
       "when": null
     },
     {
-      "action": "omarchy-launch-config-editor \"$HOME/.config/hypr/bindings.lua\"",
+      "action": "omarchy-launch-editor \"$HOME/.config/hypr/bindings.lua\"",
       "aliases": [],
       "checked": null,
       "command": null,
@@ -6331,6 +6331,24 @@
       "target": null,
       "title": null,
       "when": null
+    },
+    {
+      "action": "omarchy-system firmware",
+      "aliases": [],
+      "checked": null,
+      "command": null,
+      "declared": true,
+      "depth": 1,
+      "icon": "󰘚",
+      "iconFont": null,
+      "id": "system.firmware",
+      "kind": "action",
+      "label": "Reboot to BIOS",
+      "parent": "system",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": "[[ -d /sys/firmware/efi ]]"
     },
     {
       "action": "systemctl hibernate",
@@ -11853,7 +11871,7 @@
               "when": null
             },
             {
-              "action": "omarchy-launch-config-editor \"$HOME/.config/hypr/hyprland.lua\"",
+              "action": "omarchy-launch-editor \"$HOME/.config/hypr/hyprland.lua\"",
               "aliases": [],
               "checked": null,
               "children": [],
@@ -11872,7 +11890,7 @@
               "when": null
             },
             {
-              "action": "omarchy-launch-config-editor ~/.config/hypr/hyprsunset.conf && omarchy-restart-hyprsunset",
+              "action": "omarchy-launch-editor ~/.config/hypr/hyprsunset.conf && omarchy-restart-hyprsunset",
               "aliases": [],
               "checked": null,
               "children": [],
@@ -11891,7 +11909,7 @@
               "when": null
             },
             {
-              "action": "omarchy-launch-config-editor ~/.XCompose && omarchy-restart-xcompose",
+              "action": "omarchy-launch-editor ~/.XCompose && omarchy-restart-xcompose",
               "aliases": [],
               "checked": null,
               "children": [],
@@ -11930,7 +11948,7 @@
           "checked": null,
           "children": [
             {
-              "action": "omarchy-launch-config-editor \"$HOME/.config/hypr/bindings.lua\"",
+              "action": "omarchy-launch-editor \"$HOME/.config/hypr/bindings.lua\"",
               "aliases": [],
               "checked": null,
               "children": [],
@@ -12002,7 +12020,7 @@
           "when": null
         },
         {
-          "action": "omarchy-launch-config-editor \"$HOME/.config/hypr/input.lua\"",
+          "action": "omarchy-launch-editor \"$HOME/.config/hypr/input.lua\"",
           "aliases": [],
           "checked": null,
           "children": [],
@@ -16436,6 +16454,25 @@
           "target": null,
           "title": null,
           "when": null
+        },
+        {
+          "action": "omarchy-system firmware",
+          "aliases": [],
+          "checked": null,
+          "children": [],
+          "command": null,
+          "declared": true,
+          "depth": 1,
+          "icon": "󰘚",
+          "iconFont": null,
+          "id": "system.firmware",
+          "kind": "action",
+          "label": "Reboot to BIOS",
+          "parent": "system",
+          "provider": null,
+          "target": null,
+          "title": null,
+          "when": "[[ -d /sys/firmware/efi ]]"
         },
         {
           "action": "omarchy-system shutdown",

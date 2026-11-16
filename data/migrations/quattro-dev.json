@@ -1,5 +1,5 @@
 {
-  "count": 275,
+  "count": 283,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -4637,6 +4637,22 @@
       ]
     },
     {
+      "body": "echo \"Set up the Surface Laptop 7 15\\\" on installs made before its board setup\"\n\n# See install/hardware/microsoft/surface-laptop-7.sh. It loads the panel and\n# keyboard drivers early and installs microsoft-surface-snapdragon-addresses\n# and iptsd, then the boot image is rebuilt to pick up the drivers. Rerunning\n# the setup rewrites the same file and skips what is installed.\nrebuild_marker=/var/lib/omarchy/migrations/1794718518\n\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match-device-tree microsoft,romulus15; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n  source \"$OMARCHY_PATH/install/hardware/microsoft/surface-laptop-7.sh\"\n'\n\n# A marker records the machine-wide rebuild: another user's run must not repeat\n# it, while a missing marker still retries an interrupted rebuild.\nif [[ ! -e $rebuild_marker ]]; then\n  rebuild_log=$(mktemp)\n  trap 'rm -f \"$rebuild_log\"' EXIT\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n  # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n  # That image lacks the early drivers, so the migration stays pending.\n  if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n    exit 1\n  fi\n\n  sudo install -Dm644 /dev/null \"$rebuild_marker\"\n  omarchy-state set reboot-required\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-15T04:55:18Z",
+      "description": "Set up the Surface Laptop 7 15\\",
+      "file": "1794718518.sh",
+      "lineCount": 33,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794718518.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794718518.sh",
+      "timestamp": 1794718518,
+      "touches": [
+        "/var/lib/omarchy/migrations/1794718518"
+      ]
+    },
+    {
       "body": "echo \"Start the Snapdragon CPU floor at boot, out of its ordering cycle with power-profiles-daemon\"\n\n# The floor service was wanted by multi-user.target while ordered after\n# power-profiles-daemon, which orders itself after multi-user.target. systemd\n# broke that cycle every boot by dropping the floor's start job.\nif ! omarchy-hw-aarch64-qualcomm; then\n  exit 0\nfi\n\nunit=/etc/systemd/system/omarchy-powerprofiles-floor.service\n\nif [[ ! -e $unit ]]; then\n  exit 0\nfi\n\nif ! grep -qx \"WantedBy=graphical.target\" \"$unit\"; then\n  sudo install -Dm644 \"$OMARCHY_PATH/default/systemd/system/omarchy-powerprofiles-floor.service\" \"$unit\"\nfi\n\n# Outside the check so a run interrupted after the install still moves the link\nsudo systemctl daemon-reload\nsudo systemctl reenable omarchy-powerprofiles-floor.service\n\nsudo systemctl start omarchy-powerprofiles-floor.service",
       "bodyTruncated": false,
       "date": "2026-11-15T09:26:37Z",
@@ -4650,6 +4666,123 @@
       "timestamp": 1794734797,
       "touches": [
         "/etc/systemd/system/omarchy-powerprofiles-floor.service"
+      ]
+    },
+    {
+      "body": "echo \"Point Google Chrome at the bundled extensions' current ids\"\n\n# Moving the CRX signing keys to 1Password gave the extensions new ids. Machines\n# that installed Chrome's policy before that still force-install the old ids,\n# which updates.xml no longer lists, so Chrome installs none of them.\nomarchy-pkg-present google-chrome || exit 0\n\nomarchy-install-browser-extensions chrome",
+      "bodyTruncated": false,
+      "date": "2026-11-15T11:24:46Z",
+      "description": "Point Google Chrome at the bundled extensions' current ids",
+      "file": "1794741886.sh",
+      "lineCount": 8,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794741886.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794741886.sh",
+      "timestamp": 1794741886,
+      "touches": []
+    },
+    {
+      "body": "echo \"Install the OEM firmware packages added since the first run\"\n\n# Five Lenovo laptops got firmware packages after 1793650506.sh had run on\n# most machines: the IdeaPad 5x 2-in-1, IdeaPad Slim 5x, IdeaPad Slim 3x,\n# ThinkBook 16 G7 QOY and Flex 5G. Run it again so installed machines get\n# theirs. It installs nothing on a machine whose firmware is all there.\nsource \"$OMARCHY_PATH/migrations/1793650506.sh\"",
+      "bodyTruncated": false,
+      "date": "2026-11-15T12:42:52Z",
+      "description": "Install the OEM firmware packages added since the first run",
+      "file": "1794746572.sh",
+      "lineCount": 7,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794746572.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794746572.sh",
+      "timestamp": 1794746572,
+      "touches": []
+    },
+    {
+      "body": "echo \"Add launchers for the coding agents already signed in\"\n\n# Signing in to Claude, Codex or Grok from the agents panel now adds a launcher\n# of its own (Claude Code, Codex, Grok Build) beside Agent. Agents signed in\n# before that get theirs here.\nfor provider in claude codex grok; do\n  entry=\"omarchy-agent-$provider.desktop\"\n  [[ -f $HOME/.local/share/applications/$entry ]] && continue\n  if omarchy-agent-account-state list \"$provider\" 2>/dev/null | jq -e '.[0].accounts | any(.signedIn)' >/dev/null 2>&1; then\n    mkdir -p \"$HOME/.local/share/applications\"\n    install -m 644 \"$OMARCHY_PATH/default/applications/$entry\" \"$HOME/.local/share/applications/$entry\"\n  fi\ndone\nupdate-desktop-database \"$HOME/.local/share/applications\" 2>/dev/null || true\n\n# Drawing the icon set links the launchers' new icons in right away, where they\n# would otherwise wait for the next theme switch.\nomarchy-theme-set-icons || true",
+      "bodyTruncated": false,
+      "date": "2026-11-15T17:19:40Z",
+      "description": "Add launchers for the coding agents already signed in",
+      "file": "1794763180.sh",
+      "lineCount": 18,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794763180.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794763180.sh",
+      "timestamp": 1794763180,
+      "touches": [
+        "~/.local/share/applications",
+        "~/.local/share/applications/"
+      ]
+    },
+    {
+      "body": "echo \"Boot the LCD IdeaPad Slim 5x on its own device tree\"\n\n# See install/hardware/lenovo/ideapad-slim-5x.sh. Installs made before it told\n# the models apart boot the LCD model on the OLED tree, so its brightness\n# never changes.\nuki_config=/etc/kernel/uki.conf\n\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match-device-tree lenovo,ideapad-slim5x-oled lenovo,ideapad-slim5x-lcd; then\n  exit 0\nfi\n\n# The marker records the setup and rebuild as owed before the setup changes the\n# pin, so a retry reruns both while it is there, not only when the pin is\n# missing. The setup pins nothing on the OLED model, which then owes nothing.\nrebuild_pending=/var/lib/omarchy/migrations/1794767451-rebuild-pending\nlcd_pinned() {\n  grep -q '^DeviceTree=.*/x1p42100-lenovo-ideapad-slim5x-lcd\\.dtb$' \"$uki_config\" 2>/dev/null\n}\nif [[ -e $rebuild_pending ]] || ! lcd_pinned; then\n  sudo install -Dm644 /dev/null \"$rebuild_pending\" || exit 1\n  sudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n    source \"$OMARCHY_PATH/install/hardware/lenovo/ideapad-slim-5x.sh\"\n  '\n  if ! lcd_pinned; then\n    sudo rm -f \"$rebuild_pending\"\n  fi\nfi\n\nif [[ -e $rebuild_pending ]]; then\n  rebuild_log=$(mktemp)\n  trap 'rm -f \"$rebuild_log\"' EXIT\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n  # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n  if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n    exit 1\n  fi\n\n  sudo rm -f \"$rebuild_pending\"",
+      "bodyTruncated": true,
+      "date": "2026-11-15T18:30:51Z",
+      "description": "Boot the LCD IdeaPad Slim 5x on its own device tree",
+      "file": "1794767451.sh",
+      "lineCount": 42,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794767451.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794767451.sh",
+      "timestamp": 1794767451,
+      "touches": [
+        "/etc/kernel/uki.conf",
+        "/var/lib/omarchy/migrations/1794767451-rebuild-pending"
+      ]
+    },
+    {
+      "body": "echo \"Replace imv and mpv with Omaview\"\n\nomarchy-pkg-add omaview\n\n# Omarchy's own Image Viewer (imv) and Media Player (mpv) launchers give way to\n# Omaview's Media Viewer. Only a copy still as Omarchy shipped it goes, so one\n# the user changed, or linked from their dotfiles, stays theirs.\napplications=\"$HOME/.local/share/applications\"\nfor entry in imv.desktop mpv.desktop; do\n  file=\"$applications/$entry\"\n  [[ -f $file && ! -L $file ]] || continue\n  case $(sha256sum <\"$file\") in\n    120d30326a77e1f23d050e52293d0acf1aeb9499bf9cd47b93996d6e2be99480* | \\\n      a7a75999f161c6a409ff4c5da26ad9c79fc1ffdd4e633aac87f972ad72fc85d4* | \\\n      d105a16b60ecc1c67f6cc37e5bb7831ca8a08d0e602cb64dd4a1386703362385* | \\\n      9844e9d22d1b4b9801965afea1eb250103cfc6f12e6e62e542ac47abd4b8094d*)\n      rm -f \"$file\"\n      ;;\n  esac\ndone\nif [[ -d $applications ]]; then\n  update-desktop-database \"$applications\"\nfi\n\n# imv and mpv-mpris go. mpv stays, as Omarchy's wallpaper engine, owe, plays\n# video wallpapers through it. A mimeapps.list line naming imv.desktop stops\n# resolving, and Omarchy's default, Omaview, opens those files instead.\nomarchy-pkg-drop imv mpv-mpris",
+      "bodyTruncated": false,
+      "date": "2026-11-15T20:23:54Z",
+      "description": "Replace imv and mpv with Omaview",
+      "file": "1794774234.sh",
+      "lineCount": 28,
+      "packagesAdded": [
+        "omaview"
+      ],
+      "packagesRemoved": [
+        "imv",
+        "mpv-mpris"
+      ],
+      "path": "migrations/1794774234.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794774234.sh",
+      "timestamp": 1794774234,
+      "touches": [
+        "~/.local/share/applications"
+      ]
+    },
+    {
+      "body": "echo \"Use Files for other apps' Open and Save dialogs\"\n\nportal_config=\"${XDG_CONFIG_HOME:-$HOME/.config}/xdg-desktop-portal/hyprland-portals.conf\"\n\n# Only the portal config Omarchy installs, and only where no file chooser has\n# been picked in it: a user's own portals.conf or choice stays as it is.\nif [[ ! -f $portal_config ]]; then\n  echo \"No Omarchy portal config, skipping...\"\n  exit 0\nfi\nif grep -q '^org\\.freedesktop\\.impl\\.portal\\.FileChooser=' \"$portal_config\"; then\n  echo \"File chooser already configured, skipping...\"\n  exit 0\nfi\nif ! grep -qx '\\[preferred\\]' \"$portal_config\"; then\n  echo \"Portal config has no [preferred] section, skipping...\"\n  exit 0\nfi\n\n# Files first, GTK where Files doesn't provide the chooser yet.\nsed --follow-symlinks -i '/^\\[preferred\\]$/a org.freedesktop.impl.portal.FileChooser=folio;gtk' \"$portal_config\"\n\n# Activate it immediately in a live desktop\nif systemctl --user is-active --quiet xdg-desktop-portal.service 2>/dev/null; then\n  if ! systemctl --user restart xdg-desktop-portal.service; then\n    echo \"Failed to restart xdg-desktop-portal\" >&2\n  fi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-15T20:42:38Z",
+      "description": "Use Files for other apps' Open and Save dialogs",
+      "file": "1794775358.sh",
+      "lineCount": 28,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794775358.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794775358.sh",
+      "timestamp": 1794775358,
+      "touches": [
+        "~/.config"
+      ]
+    },
+    {
+      "body": "echo \"Install Checkmate, the 3D chess game\"\n\nif [[ ! -f $HOME/.local/state/omarchy/preinstalls-removed ]]; then\n  omarchy-pkg-add checkmate\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-16T11:08:08Z",
+      "description": "Install Checkmate, the 3D chess game",
+      "file": "1794827288.sh",
+      "lineCount": 5,
+      "packagesAdded": [
+        "checkmate"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1794827288.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794827288.sh",
+      "timestamp": 1794827288,
+      "touches": [
+        "~/.local/state/omarchy/preinstalls-removed"
       ]
     }
   ],

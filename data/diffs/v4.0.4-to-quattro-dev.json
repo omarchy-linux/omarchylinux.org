@@ -62,6 +62,10 @@
         "label": "Toggle full screen desktop"
       },
       {
+        "chord": "SUPER + SHIFT + CTRL + ALT + C",
+        "label": "Screenrecording with no audio"
+      },
+      {
         "chord": "SUPER + CTRL + comma",
         "label": "Control notifications with the keyboard"
       },
@@ -138,7 +142,15 @@
         "label": null
       },
       {
+        "chord": "switch:off:cros_ec_buttons",
+        "label": null
+      },
+      {
         "chord": "switch:on:Apple SMC power/lid events",
+        "label": null
+      },
+      {
+        "chord": "switch:on:cros_ec_buttons",
         "label": null
       },
       {
@@ -757,13 +769,13 @@
       }
     ],
     "counts": {
-      "added": 36,
+      "added": 39,
       "changedAction": 76,
       "from": 228,
       "fromRecords": 228,
       "removed": 13,
-      "to": 251,
-      "toRecords": 251
+      "to": 254,
+      "toRecords": 254
     },
     "note": null,
     "removed": [
@@ -837,6 +849,7 @@
       "omarchy-agent-instructions",
       "omarchy-agent-integrate-herdr",
       "omarchy-agent-local",
+      "omarchy-agent-logo",
       "omarchy-agent-make",
       "omarchy-agent-usage-agy",
       "omarchy-agent-usage-copilot",
@@ -925,6 +938,7 @@
       "omarchy-input-method",
       "omarchy-install-ai-claude",
       "omarchy-install-ai-herdr",
+      "omarchy-install-browser-extensions",
       "omarchy-install-camera",
       "omarchy-install-chromium-claude",
       "omarchy-install-dictation-hex",
@@ -995,7 +1009,7 @@
         "fields": {
           "args": [
             "[--inline] [--pick]",
-            "[--inline] [--pick] [--local] [--local-model <recipe>] [--prefer-local] [--agent <id>]"
+            "[--inline] [--pick] [--local] [--local-model <recipe>] [--prefer-local] [--agent <id>] [--app-id=<app-id>]"
           ],
           "examples": [
             [
@@ -1087,6 +1101,34 @@
           ]
         },
         "name": "omarchy-cmd-terminal-cwd"
+      },
+      {
+        "fields": {
+          "examples": [
+            [
+              "omarchy debug --print --no-sudo"
+            ],
+            [
+              "omarchy-debug --print --no-sudo"
+            ]
+          ]
+        },
+        "name": "omarchy-debug"
+      },
+      {
+        "fields": {
+          "examples": [
+            [
+              "omarchy debug idle",
+              "omarchy-debug-idle 400"
+            ],
+            [
+              "omarchy-debug-idle",
+              "omarchy-debug-idle 400"
+            ]
+          ]
+        },
+        "name": "omarchy-debug-idle"
       },
       {
         "fields": {
@@ -1505,6 +1547,19 @@
       },
       {
         "fields": {
+          "examples": [
+            [
+              "omarchy theme remove \"Tokyo Night\""
+            ],
+            [
+              "omarchy theme remove \"My Theme\""
+            ]
+          ]
+        },
+        "name": "omarchy-theme-remove"
+      },
+      {
+        "fields": {
           "summary": [
             "Apply current Omarchy theme colors to running Foot terminals",
             "Apply current Omarchy theme colors and background alpha to running Foot terminals"
@@ -1586,15 +1641,16 @@
       }
     ],
     "counts": {
-      "added": 166,
-      "changed": 48,
+      "added": 168,
+      "changed": 51,
       "from": 444,
-      "removed": 9,
-      "to": 601
+      "removed": 10,
+      "to": 602
     },
     "removed": [
       "omarchy-install-chromium-google-account",
       "omarchy-install-service-spotify",
+      "omarchy-launch-config-editor",
       "omarchy-screensaver",
       "omarchy-system-logout",
       "omarchy-system-reboot",
@@ -1746,6 +1802,7 @@
       "setup.keyboard.keybindings",
       "setup.language",
       "setup.security.ssh-agent",
+      "system.firmware",
       "trigger.clipboard-history",
       "trigger.hardware.hybrid-gpu-off",
       "trigger.hardware.hybrid-gpu-on",
@@ -2371,6 +2428,33 @@
       },
       {
         "fields": {
+          "action": [
+            "omarchy-launch-config-editor \"$HOME/.config/hypr/hyprland.lua\"",
+            "omarchy-launch-editor \"$HOME/.config/hypr/hyprland.lua\""
+          ]
+        },
+        "id": "setup.config.hyprland"
+      },
+      {
+        "fields": {
+          "action": [
+            "omarchy-launch-config-editor ~/.config/hypr/hyprsunset.conf && omarchy-restart-hyprsunset",
+            "omarchy-launch-editor ~/.config/hypr/hyprsunset.conf && omarchy-restart-hyprsunset"
+          ]
+        },
+        "id": "setup.config.hyprsunset"
+      },
+      {
+        "fields": {
+          "action": [
+            "omarchy-launch-config-editor ~/.XCompose && omarchy-restart-xcompose",
+            "omarchy-launch-editor ~/.XCompose && omarchy-restart-xcompose"
+          ]
+        },
+        "id": "setup.config.xcompose"
+      },
+      {
+        "fields": {
           "when": [
             "omarchy-cmd-present brave",
             null
@@ -2555,6 +2639,15 @@
       },
       {
         "fields": {
+          "action": [
+            "omarchy-launch-config-editor \"$HOME/.config/hypr/input.lua\"",
+            "omarchy-launch-editor \"$HOME/.config/hypr/input.lua\""
+          ]
+        },
+        "id": "setup.input"
+      },
+      {
+        "fields": {
           "when": [
             "[[ $(omarchy-network-status) == wifi* ]]",
             "omarchy-network-wifi-connected"
@@ -2618,11 +2711,11 @@
       }
     ],
     "counts": {
-      "added": 162,
-      "changed": 93,
+      "added": 163,
+      "changed": 97,
       "from": 333,
       "removed": 55,
-      "to": 440
+      "to": 441
     },
     "removed": [
       "install.ai.dictation",
@@ -2685,9 +2778,9 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 169,
+      "new": 177,
       "removed": 0,
-      "to": 275
+      "to": 283
     },
     "new": [
       {
@@ -3531,9 +3624,49 @@
         "file": "1794695964.sh"
       },
       {
+        "date": "2026-11-15T04:55:18Z",
+        "description": "Set up the Surface Laptop 7 15\\",
+        "file": "1794718518.sh"
+      },
+      {
         "date": "2026-11-15T09:26:37Z",
         "description": "Start the Snapdragon CPU floor at boot, out of its ordering cycle with power-profiles-daemon",
         "file": "1794734797.sh"
+      },
+      {
+        "date": "2026-11-15T11:24:46Z",
+        "description": "Point Google Chrome at the bundled extensions' current ids",
+        "file": "1794741886.sh"
+      },
+      {
+        "date": "2026-11-15T12:42:52Z",
+        "description": "Install the OEM firmware packages added since the first run",
+        "file": "1794746572.sh"
+      },
+      {
+        "date": "2026-11-15T17:19:40Z",
+        "description": "Add launchers for the coding agents already signed in",
+        "file": "1794763180.sh"
+      },
+      {
+        "date": "2026-11-15T18:30:51Z",
+        "description": "Boot the LCD IdeaPad Slim 5x on its own device tree",
+        "file": "1794767451.sh"
+      },
+      {
+        "date": "2026-11-15T20:23:54Z",
+        "description": "Replace imv and mpv with Omaview",
+        "file": "1794774234.sh"
+      },
+      {
+        "date": "2026-11-15T20:42:38Z",
+        "description": "Use Files for other apps' Open and Save dialogs",
+        "file": "1794775358.sh"
+      },
+      {
+        "date": "2026-11-16T11:08:08Z",
+        "description": "Install Checkmate, the 3D chess game",
+        "file": "1794827288.sh"
       }
     ],
     "removed": []

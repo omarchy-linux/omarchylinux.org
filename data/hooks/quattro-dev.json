@@ -24,7 +24,7 @@
       ],
       "samples": [
         {
-          "content": "#!/bin/bash\n\n# This hook is called with the current battery percentage when the low battery\n# notification is sent. To put it into use, remove .sample from this file name.\n\nSOUND_FILE=\"/usr/share/sounds/freedesktop/stereo/dialog-warning.oga\"\n\nif omarchy-cmd-present mpv && [[ -f $SOUND_FILE ]]; then\n  mpv --no-video \"$SOUND_FILE\" >/dev/null 2>&1\nfi\n",
+          "content": "#!/bin/bash\n\n# This hook is called with the current battery percentage when the low battery\n# notification is sent. To put it into use, remove .sample from this file name.\n\nSOUND_FILE=\"/usr/share/sounds/freedesktop/stereo/dialog-warning.oga\"\n\nif omarchy-cmd-present pw-play && [[ -f $SOUND_FILE ]]; then\n  pw-play \"$SOUND_FILE\" >/dev/null 2>&1\nfi\n",
           "description": "This hook is called with the current battery percentage when the low battery notification is sent. To put it into use, remove .sample from this file name.",
           "isSample": true,
           "lineCount": 10,
@@ -142,9 +142,9 @@
       "firedBy": [
         {
           "file": "bin/omarchy-theme-set",
-          "line": 605,
+          "line": 610,
           "snippet": "omarchy-hook theme-set \"$THEME_NAME\" >/dev/null",
-          "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-theme-set#L605"
+          "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-theme-set#L610"
         }
       ],
       "samples": [

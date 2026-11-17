@@ -800,6 +800,23 @@
     {
       "aliases": [],
       "args": "",
+      "cli": "omarchy apply amd gpu memory",
+      "examples": [],
+      "executable": true,
+      "group": "apply",
+      "groupDescription": "",
+      "hasMetadata": true,
+      "hidden": true,
+      "lineCount": 55,
+      "name": "omarchy-apply-amd-gpu-memory",
+      "path": "bin/omarchy-apply-amd-gpu-memory",
+      "requiresSudo": true,
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-apply-amd-gpu-memory",
+      "summary": "Let an AMD GPU map all of RAM but 8 GiB from the next boot"
+    },
+    {
+      "aliases": [],
+      "args": "",
       "cli": "omarchy apply hardware",
       "examples": [
         "omarchy apply hardware --install-user dhh"
@@ -4959,7 +4976,7 @@
       "groupDescription": "Optional software installers",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 40,
+      "lineCount": 41,
       "name": "omarchy-install-preinstalls",
       "path": "bin/omarchy-install-preinstalls",
       "requiresSudo": true,
@@ -7722,7 +7739,7 @@
       "groupDescription": "Removal workflows",
       "hasMetadata": true,
       "hidden": true,
-      "lineCount": 101,
+      "lineCount": 111,
       "name": "omarchy-remove-launcher-entry",
       "path": "bin/omarchy-remove-launcher-entry",
       "requiresSudo": true,
@@ -7739,7 +7756,7 @@
       "groupDescription": "Removal workflows",
       "hasMetadata": true,
       "hidden": false,
-      "lineCount": 55,
+      "lineCount": 56,
       "name": "omarchy-remove-preinstalls",
       "path": "bin/omarchy-remove-preinstalls",
       "requiresSudo": false,
@@ -10224,7 +10241,7 @@
       "groupDescription": "Omarchy and system updates",
       "hasMetadata": true,
       "hidden": true,
-      "lineCount": 153,
+      "lineCount": 165,
       "name": "omarchy-update-qualcomm-device-trees",
       "path": "bin/omarchy-update-qualcomm-device-trees",
       "requiresSudo": true,
@@ -10694,7 +10711,7 @@
       "summary": "Install, launch, stop, inspect, or remove the Windows VM"
     }
   ],
-  "count": 602,
+  "count": 603,
   "generatedFrom": "data/source/quattro-dev/bin",
   "groups": {
     "agent": "AI coding agents, their usage, and subscription accounts",

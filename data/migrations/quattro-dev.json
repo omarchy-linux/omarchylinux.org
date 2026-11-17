@@ -1,5 +1,5 @@
 {
-  "count": 283,
+  "count": 292,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -4422,6 +4422,22 @@
       "touches": []
     },
     {
+      "body": "echo \"Show the disk unlock prompt on the Lenovo IdeaCentre Mini 01Q8X10 (Snapdragon X Plus and Snapdragon X)\"\n\n# See install/hardware/lenovo/fix-lenovo-ideacentre-mini-boot.sh.\nrebuild_marker=\"${OMARCHY_LIMINE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1794481999}\"\n\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match \"IdeaCentre Mini 01Q8X10\"; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n  source \"$OMARCHY_PATH/install/hardware/lenovo/fix-lenovo-ideacentre-mini-boot.sh\"\n'\n\n# A marker records the machine-wide rebuild: another user's run must not repeat\n# it, while a missing marker still retries an interrupted rebuild.\nif [[ ! -e $rebuild_marker ]]; then\n  rebuild_log=$(mktemp)\n  trap 'rm -f \"$rebuild_log\"' EXIT\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n  # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n  # That image lacks the display drivers, so the migration stays pending.\n  if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n    exit 1\n  fi\n\n  sudo install -Dm644 /dev/null \"$rebuild_marker\"\n  omarchy-state set reboot-required\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-12T11:13:19Z",
+      "description": "Show the disk unlock prompt on the Lenovo IdeaCentre Mini 01Q8X10 (Snapdragon X Plus and Snapdragon X)",
+      "file": "1794481999.sh",
+      "lineCount": 30,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794481999.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794481999.sh",
+      "timestamp": 1794481999,
+      "touches": [
+        "/var/lib/omarchy/migrations/1794481999"
+      ]
+    },
+    {
       "body": "echo \"Draw Omarchy's own app icons in the current theme's colors\"\n\n# The refresh draws the icons in the current theme's colors and links them over\n# the packaged ones. A theme the user removed can't be refreshed; its icons come\n# with the next theme they pick.\ntheme=$(cat \"$HOME/.local/state/omarchy/current/theme.name\" 2>/dev/null || true)\nif [[ -n $theme && ( -d $OMARCHY_PATH/themes/$theme || -d $HOME/.config/omarchy/themes/$theme ) ]]; then\n  omarchy-theme-refresh\nfi",
       "bodyTruncated": false,
       "date": "2026-11-12T11:46:50Z",
@@ -4501,6 +4517,23 @@
       "timestamp": 1794526429,
       "touches": [
         "/var/lib/omarchy/migrations/1794526429"
+      ]
+    },
+    {
+      "body": "echo \"Let the DSPs start on Snapdragon machines whose root disk is on a USB-A port\"\n\n# See install/hardware/qualcomm/firmware.sh. Starting the DSPs only drops a root\n# disk on the USB-C ports, so one on the USB-A ports no longer keeps them off,\n# and with them USB-C, sound and the battery reading. The boot image holds the\n# blacklist too, so lifting it takes a rebuild. The marker records the rebuild\n# as owed before the setup can lift it, so a run cut short between the two still\n# rebuilds on the next one; a machine whose disk stays on USB-C owes nothing.\nif omarchy-hw-aarch64-qualcomm; then\n  adsp_conf=/etc/modprobe.d/qualcomm-adsp-nofw.conf\n  rebuild_pending=/var/lib/omarchy/migrations/1794593943-rebuild-pending\n\n  if grep -qF 'attached over USB' \"$adsp_conf\" 2>/dev/null; then\n    sudo install -Dm644 /dev/null \"$rebuild_pending\" || exit 1\n    sudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n      source \"$OMARCHY_PATH/install/hardware/qualcomm/firmware.sh\"\n    ' || exit 1\n    if grep -qF 'attached over USB' \"$adsp_conf\" 2>/dev/null; then\n      sudo rm -f \"$rebuild_pending\"\n    fi\n  fi\n\n  if [[ -e $rebuild_pending ]]; then\n    rebuild_log=$(mktemp)\n    trap 'rm -f \"$rebuild_log\"' EXIT\n    sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n    # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n    if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n      echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n      exit 1\n    fi\n\n    sudo rm -f \"$rebuild_pending\"\n    omarchy-state set reboot-required\n  fi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-13T18:19:03Z",
+      "description": "Let the DSPs start on Snapdragon machines whose root disk is on a USB-A port",
+      "file": "1794593943.sh",
+      "lineCount": 36,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794593943.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794593943.sh",
+      "timestamp": 1794593943,
+      "touches": [
+        "/etc/modprobe.d/qualcomm-adsp-nofw.conf",
+        "/var/lib/omarchy/migrations/1794593943-rebuild-pending"
       ]
     },
     {
@@ -4714,6 +4747,22 @@
       ]
     },
     {
+      "body": "echo \"Show the disk unlock prompt on the ASUS Zenbook A14 (UX3407QA and UX3407RA)\"\n\n# See install/hardware/asus/fix-asus-zenbook-a14-boot.sh.\nrebuild_marker=\"${OMARCHY_LIMINE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1794765111}\"\n\nif ! omarchy-hw-aarch64-qualcomm || ! { omarchy-hw-match \"UX3407QA\" || omarchy-hw-match \"UX3407RA\"; }; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n  source \"$OMARCHY_PATH/install/hardware/asus/fix-asus-zenbook-a14-boot.sh\"\n'\n\n# A marker records the machine-wide rebuild: another user's run must not repeat\n# it, while a missing marker still retries an interrupted rebuild.\nif [[ ! -e $rebuild_marker ]]; then\n  rebuild_log=$(mktemp)\n  trap 'rm -f \"$rebuild_log\"' EXIT\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n  # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n  # That image lacks the display drivers, so the migration stays pending.\n  if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n    exit 1\n  fi\n\n  sudo install -Dm644 /dev/null \"$rebuild_marker\"\n  omarchy-state set reboot-required\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-15T17:51:51Z",
+      "description": "Show the disk unlock prompt on the ASUS Zenbook A14 (UX3407QA and UX3407RA)",
+      "file": "1794765111.sh",
+      "lineCount": 30,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794765111.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794765111.sh",
+      "timestamp": 1794765111,
+      "touches": [
+        "/var/lib/omarchy/migrations/1794765111"
+      ]
+    },
+    {
       "body": "echo \"Boot the LCD IdeaPad Slim 5x on its own device tree\"\n\n# See install/hardware/lenovo/ideapad-slim-5x.sh. Installs made before it told\n# the models apart boot the LCD model on the OLED tree, so its brightness\n# never changes.\nuki_config=/etc/kernel/uki.conf\n\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match-device-tree lenovo,ideapad-slim5x-oled lenovo,ideapad-slim5x-lcd; then\n  exit 0\nfi\n\n# The marker records the setup and rebuild as owed before the setup changes the\n# pin, so a retry reruns both while it is there, not only when the pin is\n# missing. The setup pins nothing on the OLED model, which then owes nothing.\nrebuild_pending=/var/lib/omarchy/migrations/1794767451-rebuild-pending\nlcd_pinned() {\n  grep -q '^DeviceTree=.*/x1p42100-lenovo-ideapad-slim5x-lcd\\.dtb$' \"$uki_config\" 2>/dev/null\n}\nif [[ -e $rebuild_pending ]] || ! lcd_pinned; then\n  sudo install -Dm644 /dev/null \"$rebuild_pending\" || exit 1\n  sudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n    source \"$OMARCHY_PATH/install/hardware/lenovo/ideapad-slim-5x.sh\"\n  '\n  if ! lcd_pinned; then\n    sudo rm -f \"$rebuild_pending\"\n  fi\nfi\n\nif [[ -e $rebuild_pending ]]; then\n  rebuild_log=$(mktemp)\n  trap 'rm -f \"$rebuild_log\"' EXIT\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n  # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n  if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n    exit 1\n  fi\n\n  sudo rm -f \"$rebuild_pending\"",
       "bodyTruncated": true,
       "date": "2026-11-15T18:30:51Z",
@@ -4768,12 +4817,45 @@
       ]
     },
     {
-      "body": "echo \"Install Checkmate, the 3D chess game\"\n\nif [[ ! -f $HOME/.local/state/omarchy/preinstalls-removed ]]; then\n  omarchy-pkg-add checkmate\nfi",
+      "body": "echo \"Keep the Samsung Galaxy Book4 Edge 14 from sleeping the AOSS\"\n\n# See install/hardware/samsung/galaxy-book4-edge-14.sh. The kernel command line\n# is in the boot image, so it takes a rebuild. The marker records the rebuild as\n# owed before the setup writes the drop-in, so a retry rebuilds even when the\n# drop-in is already there.\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match-device-tree samsung,galaxy-book4-edge-14; then\n  exit 0\nfi\n\ndrop_in=/etc/limine-entry-tool.d/samsung-galaxy-book4-edge-14.conf\nrebuild_pending=/var/lib/omarchy/migrations/1794778430-rebuild-pending\nif [[ -e $rebuild_pending ]] || ! grep -q 'qcom_aoss.prevent_aoss_sleep=1' \"$drop_in\" 2>/dev/null; then\n  sudo install -Dm644 /dev/null \"$rebuild_pending\" || exit 1\n  sudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n    source \"$OMARCHY_PATH/install/hardware/samsung/galaxy-book4-edge-14.sh\"\n  '\nfi\n\nif [[ -e $rebuild_pending ]]; then\n  rebuild_log=$(mktemp)\n  trap 'rm -f \"$rebuild_log\"' EXIT\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n  # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n  if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n    exit 1\n  fi\n\n  sudo rm -f \"$rebuild_pending\"\n  omarchy-state set reboot-required\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-15T21:33:50Z",
+      "description": "Keep the Samsung Galaxy Book4 Edge 14 from sleeping the AOSS",
+      "file": "1794778430.sh",
+      "lineCount": 33,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794778430.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794778430.sh",
+      "timestamp": 1794778430,
+      "touches": [
+        "/etc/limine-entry-tool.d/samsung-galaxy-book4-edge-14.conf",
+        "/var/lib/omarchy/migrations/1794778430-rebuild-pending"
+      ]
+    },
+    {
+      "body": "echo \"Show the disk unlock prompt on the Lenovo IdeaPad Slim 5x\"\n\n# See install/hardware/lenovo/ideapad-slim-5x.sh. The prompt needs the display\n# chain in the boot image, so it takes a rebuild. The drop-in alone doesn't\n# show the image has it: 1794767451 runs the same setup, which writes the\n# drop-in, and on the OLED model rebuilds nothing. So a machine-wide marker,\n# written only after a rebuild, records that this one is done, and a retry\n# after a failed rebuild runs the setup and the rebuild again.\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match-device-tree lenovo,ideapad-slim5x-oled lenovo,ideapad-slim5x-lcd; then\n  exit 0\nfi\n\ndone_marker=/var/lib/omarchy/migrations/1794784953-done\nif [[ -e $done_marker ]]; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n  source \"$OMARCHY_PATH/install/hardware/lenovo/ideapad-slim-5x.sh\"\n' || exit 1\n\nrebuild_log=$(mktemp)\ntrap 'rm -f \"$rebuild_log\"' EXIT\nsudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n# limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\nif grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n  echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n  exit 1\nfi\n\nsudo install -Dm644 /dev/null \"$done_marker\"\nomarchy-state set reboot-required",
+      "bodyTruncated": false,
+      "date": "2026-11-15T23:22:33Z",
+      "description": "Show the disk unlock prompt on the Lenovo IdeaPad Slim 5x",
+      "file": "1794784953.sh",
+      "lineCount": 33,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794784953.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794784953.sh",
+      "timestamp": 1794784953,
+      "touches": [
+        "/var/lib/omarchy/migrations/1794784953-done"
+      ]
+    },
+    {
+      "body": "echo \"Install Checkmate, the 3D chess game\"\n\nif [[ ! -f $HOME/.local/state/omarchy/preinstalls-removed ]]; then\n  omarchy-pkg-add checkmate\nfi\n\n# Drawing the icon set puts its themed icon in the launcher right away, where\n# it would otherwise wait for the next theme switch.\nomarchy-theme-set-icons || true",
       "bodyTruncated": false,
       "date": "2026-11-16T11:08:08Z",
       "description": "Install Checkmate, the 3D chess game",
       "file": "1794827288.sh",
-      "lineCount": 5,
+      "lineCount": 9,
       "packagesAdded": [
         "checkmate"
       ],
@@ -4783,6 +4865,78 @@
       "timestamp": 1794827288,
       "touches": [
         "~/.local/state/omarchy/preinstalls-removed"
+      ]
+    },
+    {
+      "body": "echo \"Install Cards, the Klondike solitaire game\"\n\nif [[ ! -f $HOME/.local/state/omarchy/preinstalls-removed ]]; then\n  omarchy-pkg-add cards\nfi\n\n# Drawing the icon set puts its themed icon in the launcher right away, where\n# it would otherwise wait for the next theme switch.\nomarchy-theme-set-icons || true",
+      "bodyTruncated": false,
+      "date": "2026-11-16T14:25:03Z",
+      "description": "Install Cards, the Klondike solitaire game",
+      "file": "1794839103.sh",
+      "lineCount": 9,
+      "packagesAdded": [
+        "cards"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1794839103.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794839103.sh",
+      "timestamp": 1794839103,
+      "touches": [
+        "~/.local/state/omarchy/preinstalls-removed"
+      ]
+    },
+    {
+      "body": "echo \"Build Snapdragon boot images with a stub that holds every device tree\"\n\n# linux-omarchy-dtbs 7.3-42 ships more Snapdragon device trees than Arch Linux\n# ARM's systemd stub has header room for, so ukify stops building the boot\n# image. systemd-stub-omarchy is the same stub with room for all of them, and\n# omarchy-update-qualcomm-device-trees names it in the UKI configuration once\n# it is installed. The image is rebuilt, as the last kernel update's build may\n# have failed. The marker records the rebuild as owed before the package is\n# added, so a retry rebuilds even when the package is already there.\nif ! omarchy-hw-aarch64-qualcomm || ! grep -Fqx '# BEGIN OMARCHY QUALCOMM DEVICE TREES' /etc/kernel/uki.conf 2>/dev/null; then\n  exit 0\nfi\n\nrebuild_pending=/var/lib/omarchy/migrations/1794844505-rebuild-pending\nif [[ -e $rebuild_pending ]] || omarchy-pkg-missing systemd-stub-omarchy; then\n  sudo install -Dm644 /dev/null \"$rebuild_pending\" || exit 1\n  omarchy-pkg-add systemd-stub-omarchy || exit 1\nfi\n\nif [[ -e $rebuild_pending ]]; then\n  rebuild_log=$(mktemp)\n  trap 'rm -f \"$rebuild_log\"' EXIT\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n  # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n  if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n    exit 1\n  fi\n\n  sudo rm -f \"$rebuild_pending\"\n  omarchy-state set reboot-required\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-16T15:55:05Z",
+      "description": "Build Snapdragon boot images with a stub that holds every device tree",
+      "file": "1794844505.sh",
+      "lineCount": 33,
+      "packagesAdded": [
+        "systemd-stub-omarchy"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1794844505.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794844505.sh",
+      "timestamp": 1794844505,
+      "touches": [
+        "/etc/kernel/uki.conf",
+        "/var/lib/omarchy/migrations/1794844505-rebuild-pending"
+      ]
+    },
+    {
+      "body": "echo \"Let AMD GPUs map all of RAM but 8 GiB, not half\"\n\n# See omarchy-apply-amd-gpu-memory. The cap is a kernel option, so it takes a\n# boot image rebuild and applies from the next boot. A machine-wide marker,\n# written only after the rebuild, records that this one is done, so a retry\n# after a failed rebuild writes and rebuilds again and a second user's run\n# does nothing.\ndone_marker=/var/lib/omarchy/migrations/1794855305-done\nif [[ -e $done_marker ]]; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" omarchy-apply-amd-gpu-memory || exit 1\n\n# No AMD GPU, or 16 GB or less where the kernel's default is as high.\nif [[ ! -f /etc/limine-entry-tool.d/amd-gpu-memory.conf ]]; then\n  exit 0\nfi\n\nrebuild_log=$(mktemp)\ntrap 'rm -f \"$rebuild_log\"' EXIT\nsudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n# limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\nif grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n  echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n  exit 1\nfi\n\nsudo install -Dm644 /dev/null \"$done_marker\"\nomarchy-state set reboot-required",
+      "bodyTruncated": false,
+      "date": "2026-11-16T18:55:05Z",
+      "description": "Let AMD GPUs map all of RAM but 8 GiB, not half",
+      "file": "1794855305.sh",
+      "lineCount": 31,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794855305.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794855305.sh",
+      "timestamp": 1794855305,
+      "touches": [
+        "/etc/limine-entry-tool.d/amd-gpu-memory.conf",
+        "/var/lib/omarchy/migrations/1794855305-done"
+      ]
+    },
+    {
+      "body": "echo \"Take the T2 Mac packages from the Omarchy repository\"\n\n# Omarchy builds linux-t2 and the T2 support packages in its own repository\n# now, so the extra repository T2 installs used to add is no longer needed.\n# Done once per machine; other users find the marker.\nmarker=\"${OMARCHY_T2_REPO_MARKER:-/var/lib/omarchy/migrations/1794859637}\"\n[[ ! -e $marker ]] || exit 0\n\npacman_conf=/etc/pacman.conf\nold_repo=arch-mact2\nt2_packages=(linux-t2 linux-t2-headers apple-t2-audio-config apple-bcm-firmware-fetcher t2fanrd)\n\nrepos=$(pacman-conf --repo-list)\ngrep -qx \"$old_repo\" <<<\"$repos\" || exit 0\n\n# Every installed T2 package must come from [omarchy]. Reinstall them from\n# there by name first, while the old repository is still configured, so a\n# failed transaction leaves this migration pending with nothing removed.\ntargets=()\nfor pkg in \"${t2_packages[@]}\"; do\n  pacman -Q -- \"$pkg\" &>/dev/null || continue\n  if ! pacman -Si \"omarchy/$pkg\" &>/dev/null; then\n    echo \"omarchy/$pkg is not available on this channel yet; leaving the $old_repo repository in place\" >&2\n    exit 1\n  fi\n  targets+=(\"omarchy/$pkg\")\ndone\nif (( ${#targets[@]} )); then\n  sudo pacman -S --noconfirm \"${targets[@]}\"\nfi\n\n# Drop the section the way pacman reads headers: trimmed of whitespace and\n# carriage returns, a line in brackets starts a section.\nnew_conf=$(sudo mktemp /etc/pacman.conf.XXXXXX)\nsudo chmod 644 \"$new_conf\"\nsudo awk -v drop=\"[$old_repo]\" '\n  { header = $0; gsub(/^[[:space:]]+|[[:space:]]+$/, \"\", header) }\n  header ~ /^\\[.*\\]$/ { skip = (header == drop) }\n  !skip\n' \"$pacman_conf\" | sudo tee \"$new_conf\" >/dev/null",
+      "bodyTruncated": true,
+      "date": "2026-11-16T20:07:17Z",
+      "description": "Take the T2 Mac packages from the Omarchy repository",
+      "file": "1794859637.sh",
+      "lineCount": 51,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794859637.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794859637.sh",
+      "timestamp": 1794859637,
+      "touches": [
+        "/etc/pacman.conf",
+        "/etc/pacman.conf.XXXXXX",
+        "/var/lib/omarchy/migrations/1794859637"
       ]
     }
   ],

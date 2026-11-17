@@ -871,6 +871,7 @@
       "omarchy-agent-usage-synthetic",
       "omarchy-agent-usage-vibe",
       "omarchy-agent-usage-zai",
+      "omarchy-apply-amd-gpu-memory",
       "omarchy-apply-n1x-gpu-memory",
       "omarchy-apply-pacman",
       "omarchy-ascii",
@@ -1641,11 +1642,11 @@
       }
     ],
     "counts": {
-      "added": 168,
+      "added": 169,
       "changed": 51,
       "from": 444,
       "removed": 10,
-      "to": 602
+      "to": 603
     },
     "removed": [
       "omarchy-install-chromium-google-account",
@@ -2778,9 +2779,9 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 177,
+      "new": 186,
       "removed": 0,
-      "to": 283
+      "to": 292
     },
     "new": [
       {
@@ -3559,6 +3560,11 @@
         "file": "1794432305.sh"
       },
       {
+        "date": "2026-11-12T11:13:19Z",
+        "description": "Show the disk unlock prompt on the Lenovo IdeaCentre Mini 01Q8X10 (Snapdragon X Plus and Snapdragon X)",
+        "file": "1794481999.sh"
+      },
+      {
         "date": "2026-11-12T11:46:50Z",
         "description": "Draw Omarchy's own app icons in the current theme's colors",
         "file": "1794484010.sh"
@@ -3582,6 +3588,11 @@
         "date": "2026-11-12T23:33:49Z",
         "description": "Show the disk unlock prompt on the Acer Aspire 16 AI (A16-11M, Snapdragon X)",
         "file": "1794526429.sh"
+      },
+      {
+        "date": "2026-11-13T18:19:03Z",
+        "description": "Let the DSPs start on Snapdragon machines whose root disk is on a USB-A port",
+        "file": "1794593943.sh"
       },
       {
         "date": "2026-11-13T18:35:09Z",
@@ -3649,6 +3660,11 @@
         "file": "1794763180.sh"
       },
       {
+        "date": "2026-11-15T17:51:51Z",
+        "description": "Show the disk unlock prompt on the ASUS Zenbook A14 (UX3407QA and UX3407RA)",
+        "file": "1794765111.sh"
+      },
+      {
         "date": "2026-11-15T18:30:51Z",
         "description": "Boot the LCD IdeaPad Slim 5x on its own device tree",
         "file": "1794767451.sh"
@@ -3664,9 +3680,39 @@
         "file": "1794775358.sh"
       },
       {
+        "date": "2026-11-15T21:33:50Z",
+        "description": "Keep the Samsung Galaxy Book4 Edge 14 from sleeping the AOSS",
+        "file": "1794778430.sh"
+      },
+      {
+        "date": "2026-11-15T23:22:33Z",
+        "description": "Show the disk unlock prompt on the Lenovo IdeaPad Slim 5x",
+        "file": "1794784953.sh"
+      },
+      {
         "date": "2026-11-16T11:08:08Z",
         "description": "Install Checkmate, the 3D chess game",
         "file": "1794827288.sh"
+      },
+      {
+        "date": "2026-11-16T14:25:03Z",
+        "description": "Install Cards, the Klondike solitaire game",
+        "file": "1794839103.sh"
+      },
+      {
+        "date": "2026-11-16T15:55:05Z",
+        "description": "Build Snapdragon boot images with a stub that holds every device tree",
+        "file": "1794844505.sh"
+      },
+      {
+        "date": "2026-11-16T18:55:05Z",
+        "description": "Let AMD GPUs map all of RAM but 8 GiB, not half",
+        "file": "1794855305.sh"
+      },
+      {
+        "date": "2026-11-16T20:07:17Z",
+        "description": "Take the T2 Mac packages from the Omarchy repository",
+        "file": "1794859637.sh"
       }
     ],
     "removed": []

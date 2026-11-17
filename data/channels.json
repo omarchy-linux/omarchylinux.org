@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-16T13:05:08Z",
+  "fetchedAt": "2026-11-17T13:48:59Z",
   "mirrors": [
     {
       "name": "stable-mirror",
@@ -12,7 +12,7 @@
         "unix": 1792636269,
         "iso": "2026-10-22T02:31:09Z"
       },
-      "lagHoursVsUpstream": 610.65
+      "lagHoursVsUpstream": 635.5
     },
     {
       "name": "rc-mirror",
@@ -25,32 +25,32 @@
         "unix": 1792636269,
         "iso": "2026-10-22T02:31:09Z"
       },
-      "lagHoursVsUpstream": 610.65
+      "lagHoursVsUpstream": 635.5
     },
     {
       "name": "mirror",
       "url": "https://mirror.omarchy.org",
       "lastupdate": {
-        "unix": 1794831037,
-        "iso": "2026-11-16T12:10:37Z"
+        "unix": 1794917908,
+        "iso": "2026-11-17T12:18:28Z"
       },
       "lastsync": {
-        "unix": 1794832102,
-        "iso": "2026-11-16T12:28:22Z"
+        "unix": 1794920529,
+        "iso": "2026-11-17T13:02:09Z"
       },
-      "lagHoursVsUpstream": 0.76
+      "lagHoursVsUpstream": 1.49
     }
   ],
   "upstream": {
     "name": "arch-geo-mirror",
     "url": "https://geo.mirror.pkgbuild.com",
     "lastupdate": {
-      "unix": 1794833771,
-      "iso": "2026-11-16T12:56:11Z"
+      "unix": 1794923259,
+      "iso": "2026-11-17T13:47:39Z"
     },
     "lastsync": {
-      "unix": 1794834290,
-      "iso": "2026-11-16T13:04:50Z"
+      "unix": 1794923232,
+      "iso": "2026-11-17T13:47:12Z"
     }
   },
   "channels": {
@@ -58,7 +58,7 @@
       "arch": "x86_64",
       "url": "https://pkgs.omarchy.org/stable/x86_64/omarchy.db",
       "ok": true,
-      "packageCount": 258,
+      "packageCount": 264,
       "packages": {
         "1password": {
           "version": "8.12.44-1",
@@ -86,9 +86,19 @@
           "builddate": 1791465153
         },
         "amp-desktop-bin": {
-          "version": "0.1.29913241-1",
+          "version": "0.1.29915281-1",
           "desc": "Amp, the frontier coding agent, as a desktop app",
-          "builddate": 1794796876
+          "builddate": 1794919457
+        },
+        "apple-bcm-firmware-fetcher": {
+          "version": "1-2",
+          "desc": "Fetches Wi-Fi and Bluetooth firmware for T2 Macs from the on-disk macOS volume (t2linux firmware.sh, method 4 only)",
+          "builddate": 1794844621
+        },
+        "apple-t2-audio-config": {
+          "version": "0.4.r21.ga973d53-2",
+          "desc": "ALSA UCM configuration for the t2bce audio driver on Apple T2 Macs",
+          "builddate": 1794856712
         },
         "asdcontrol": {
           "version": "1:0.6.0-2",
@@ -146,9 +156,9 @@
           "builddate": 1785110135
         },
         "claude-code": {
-          "version": "2.1.325-1",
+          "version": "2.1.326-1",
           "desc": "An agentic coding tool that lives in your terminal",
-          "builddate": 1794610229
+          "builddate": 1794868855
         },
         "claude-desktop": {
           "version": "5.11492.5-1",
@@ -266,14 +276,14 @@
           "builddate": 1794644081
         },
         "ghost": {
-          "version": "0.11.8-1",
+          "version": "0.11.9-1",
           "desc": "Ghost HUD and desktop integration for Omarchy",
-          "builddate": 1794800492
+          "builddate": 1794889128
         },
         "ghost-runtime": {
-          "version": "0.11.8-1",
+          "version": "0.11.9-1",
           "desc": "Ghost daemon, API, CLI, and desktop/browser automation without the HUD",
-          "builddate": 1794800492
+          "builddate": 1794889128
         },
         "ghostty": {
           "version": "1.4.0-1",
@@ -321,9 +331,9 @@
           "builddate": 1794530454
         },
         "grok-bot": {
-          "version": "1.1.0-1",
+          "version": "1.2.0-1",
           "desc": "Grok Bot desktop agent",
-          "builddate": 1794620515
+          "builddate": 1794879896
         },
         "helium-browser-bin": {
           "version": "0.21.3.1-1",
@@ -585,6 +595,16 @@
           "desc": "Headers and scripts for building modules for the Omarchy Linux (MuQSS CPU scheduler) kernel",
           "builddate": 1793545663
         },
+        "linux-t2": {
+          "version": "1:7.2.15.arch1-1",
+          "desc": "The Linux for T2 Macs kernel and modules",
+          "builddate": 1794856760
+        },
+        "linux-t2-headers": {
+          "version": "1:7.2.15.arch1-1",
+          "desc": "Headers and scripts for building modules for the Linux for T2 Macs kernel",
+          "builddate": 1794856760
+        },
         "linuxqq": {
           "version": "3.2.34_53644-1",
           "desc": "QQ, the instant messenger from Tencent (official Electron client)",
@@ -656,9 +676,9 @@
           "builddate": 1763739709
         },
         "mise-bin": {
-          "version": "2026.11.8-1",
+          "version": "2026.11.9-1",
           "desc": "dev tools, env vars, task runner",
-          "builddate": 1794663676
+          "builddate": 1794915886
         },
         "monologue": {
           "version": "0.3.1-1",
@@ -1021,9 +1041,9 @@
           "builddate": 1792040964
         },
         "rawmakase-bin": {
-          "version": "0.5.0-1",
+          "version": "0.6.0-1",
           "desc": "Fast, Lightroom-compatible RAW photo editor (binary release)",
-          "builddate": 1794573704
+          "builddate": 1794915679
         },
         "retroarch-joypad-autoconfig-git": {
           "version": "1.22.0.r96.g0331510-1",
@@ -1125,15 +1145,25 @@
           "desc": "Detached debugging symbols for symfony-cli",
           "builddate": 1792169666
         },
+        "t2fanrd": {
+          "version": "r16.48baf96-2",
+          "desc": "Fan control daemon for Macs with the Apple T2 chip",
+          "builddate": 1794844624
+        },
+        "t2fanrd-debug": {
+          "version": "r16.48baf96-2",
+          "desc": "Detached debugging symbols for t2fanrd",
+          "builddate": 1794844624
+        },
         "t3code-bin": {
-          "version": "0.1.9-1",
+          "version": "0.1.10-1",
           "desc": "Open-source control plane for coding agents",
-          "builddate": 1794408629
+          "builddate": 1794921511
         },
         "t3code-nightly-bin": {
-          "version": "0.1.10_nightly.20261113.4643-1",
+          "version": "0.1.11_nightly.20261117.4814-1",
           "desc": "Open-source control plane for coding agents (nightly)",
-          "builddate": 1794594418
+          "builddate": 1794922541
         },
         "tensaku": {
           "version": "0.29.0-2",
@@ -1356,7 +1386,7 @@
       "arch": "x86_64",
       "url": "https://pkgs.omarchy.org/rc/x86_64/omarchy.db",
       "ok": true,
-      "packageCount": 261,
+      "packageCount": 267,
       "packages": {
         "1password": {
           "version": "8.12.44-1",
@@ -1389,9 +1419,19 @@
           "builddate": 1792308548
         },
         "amp-desktop-bin": {
-          "version": "0.1.29913241-1",
+          "version": "0.1.29915281-1",
           "desc": "Amp, the frontier coding agent, as a desktop app",
-          "builddate": 1794796876
+          "builddate": 1794919457
+        },
+        "apple-bcm-firmware-fetcher": {
+          "version": "1-2",
+          "desc": "Fetches Wi-Fi and Bluetooth firmware for T2 Macs from the on-disk macOS volume (t2linux firmware.sh, method 4 only)",
+          "builddate": 1794844621
+        },
+        "apple-t2-audio-config": {
+          "version": "0.4.r21.ga973d53-2",
+          "desc": "ALSA UCM configuration for the t2bce audio driver on Apple T2 Macs",
+          "builddate": 1794856712
         },
         "asdcontrol": {
           "version": "1:0.6.0-2",
@@ -1454,9 +1494,9 @@
           "builddate": 1785110135
         },
         "claude-code": {
-          "version": "2.1.325-1",
+          "version": "2.1.326-1",
           "desc": "An agentic coding tool that lives in your terminal",
-          "builddate": 1794610229
+          "builddate": 1794868855
         },
         "claude-desktop": {
           "version": "5.11492.5-1",
@@ -1574,14 +1614,14 @@
           "builddate": 1794644081
         },
         "ghost": {
-          "version": "0.11.8-1",
+          "version": "0.11.9-1",
           "desc": "Ghost HUD and desktop integration for Omarchy",
-          "builddate": 1794800492
+          "builddate": 1794889128
         },
         "ghost-runtime": {
-          "version": "0.11.8-1",
+          "version": "0.11.9-1",
           "desc": "Ghost daemon, API, CLI, and desktop/browser automation without the HUD",
-          "builddate": 1794800492
+          "builddate": 1794889128
         },
         "ghostty": {
           "version": "1.4.0-1",
@@ -1629,9 +1669,9 @@
           "builddate": 1794530454
         },
         "grok-bot": {
-          "version": "1.1.0-1",
+          "version": "1.2.0-1",
           "desc": "Grok Bot desktop agent",
-          "builddate": 1794620515
+          "builddate": 1794879896
         },
         "helium-browser-bin": {
           "version": "0.21.3.1-1",
@@ -1893,6 +1933,16 @@
           "desc": "Headers and scripts for building modules for the Omarchy Linux (MuQSS CPU scheduler) kernel",
           "builddate": 1793545663
         },
+        "linux-t2": {
+          "version": "1:7.2.15.arch1-1",
+          "desc": "The Linux for T2 Macs kernel and modules",
+          "builddate": 1794856760
+        },
+        "linux-t2-headers": {
+          "version": "1:7.2.15.arch1-1",
+          "desc": "Headers and scripts for building modules for the Linux for T2 Macs kernel",
+          "builddate": 1794856760
+        },
         "linuxqq": {
           "version": "3.2.34_53644-1",
           "desc": "QQ, the instant messenger from Tencent (official Electron client)",
@@ -1964,9 +2014,9 @@
           "builddate": 1763739709
         },
         "mise-bin": {
-          "version": "2026.11.8-1",
+          "version": "2026.11.9-1",
           "desc": "dev tools, env vars, task runner",
-          "builddate": 1794663676
+          "builddate": 1794915886
         },
         "monologue": {
           "version": "0.3.1-1",
@@ -2334,9 +2384,9 @@
           "builddate": 1792040964
         },
         "rawmakase-bin": {
-          "version": "0.5.0-1",
+          "version": "0.6.0-1",
           "desc": "Fast, Lightroom-compatible RAW photo editor (binary release)",
-          "builddate": 1794573704
+          "builddate": 1794915679
         },
         "retroarch-joypad-autoconfig-git": {
           "version": "1.22.0.r96.g0331510-1",
@@ -2438,15 +2488,25 @@
           "desc": "Detached debugging symbols for symfony-cli",
           "builddate": 1792169666
         },
+        "t2fanrd": {
+          "version": "r16.48baf96-2",
+          "desc": "Fan control daemon for Macs with the Apple T2 chip",
+          "builddate": 1794844624
+        },
+        "t2fanrd-debug": {
+          "version": "r16.48baf96-2",
+          "desc": "Detached debugging symbols for t2fanrd",
+          "builddate": 1794844624
+        },
         "t3code-bin": {
-          "version": "0.1.9-1",
+          "version": "0.1.10-1",
           "desc": "Open-source control plane for coding agents",
-          "builddate": 1794408629
+          "builddate": 1794921511
         },
         "t3code-nightly-bin": {
-          "version": "0.1.10_nightly.20261113.4643-1",
+          "version": "0.1.11_nightly.20261117.4814-1",
           "desc": "Open-source control plane for coding agents (nightly)",
-          "builddate": 1794594418
+          "builddate": 1794922541
         },
         "tensaku": {
           "version": "0.29.0-2",
@@ -2669,7 +2729,7 @@
       "arch": "x86_64",
       "url": "https://pkgs.omarchy.org/edge/x86_64/omarchy.db",
       "ok": true,
-      "packageCount": 294,
+      "packageCount": 302,
       "packages": {
         "1password": {
           "version": "8.12.44-1",
@@ -2702,9 +2762,19 @@
           "builddate": 1792308548
         },
         "amp-desktop-bin": {
-          "version": "0.1.29913241-1",
+          "version": "0.1.29915281-1",
           "desc": "Amp, the frontier coding agent, as a desktop app",
-          "builddate": 1794796876
+          "builddate": 1794919457
+        },
+        "apple-bcm-firmware-fetcher": {
+          "version": "1-2",
+          "desc": "Fetches Wi-Fi and Bluetooth firmware for T2 Macs from the on-disk macOS volume (t2linux firmware.sh, method 4 only)",
+          "builddate": 1794844621
+        },
+        "apple-t2-audio-config": {
+          "version": "0.4.r21.ga973d53-2",
+          "desc": "ALSA UCM configuration for the t2bce audio driver on Apple T2 Macs",
+          "builddate": 1794856712
         },
         "asdcontrol": {
           "version": "1:0.6.0-2",
@@ -2722,9 +2792,9 @@
           "builddate": 1789500684
         },
         "ath12k-board-fallback": {
-          "version": "1-4",
+          "version": "1-5",
           "desc": "Board data for Qualcomm Wi-Fi cards linux-firmware does not list yet, from their card family's record",
-          "builddate": 1794766094
+          "builddate": 1794855864
         },
         "aurora-audio": {
           "version": "4.1.aurora3-2",
@@ -2781,15 +2851,20 @@
           "desc": "context-menu entry for opening other terminal in nautilus",
           "builddate": 1789442302
         },
+        "cards": {
+          "version": "0.1.0-2",
+          "desc": "Klondike solitaire in four card series, one drawn in the Omarchy theme",
+          "builddate": 1794854789
+        },
         "checkmate": {
-          "version": "0.1.1-1",
+          "version": "0.1.2-2",
           "desc": "Native 3D chess with original piece sets, local multiplayer, and a computer opponent",
-          "builddate": 1794832929
+          "builddate": 1794854819
         },
         "claude-code": {
-          "version": "2.1.325-1",
+          "version": "2.1.326-1",
           "desc": "An agentic coding tool that lives in your terminal",
-          "builddate": 1794610229
+          "builddate": 1794868855
         },
         "claude-desktop": {
           "version": "5.11492.5-1",
@@ -2807,9 +2882,9 @@
           "builddate": 1794519659
         },
         "collie-bin": {
-          "version": "1.28.4-1",
+          "version": "1.28.5-1",
           "desc": "Phone web UI for the AI agents running in your terminal, served over Tailscale (official binary release)",
-          "builddate": 1794680798
+          "builddate": 1794853632
         },
         "crush-bin": {
           "version": "0.101.0-1",
@@ -2942,14 +3017,14 @@
           "builddate": 1793288823
         },
         "ghost": {
-          "version": "0.11.8-1",
+          "version": "0.11.9-1",
           "desc": "Ghost HUD and desktop integration for Omarchy",
-          "builddate": 1794800492
+          "builddate": 1794889128
         },
         "ghost-runtime": {
-          "version": "0.11.8-1",
+          "version": "0.11.9-1",
           "desc": "Ghost daemon, API, CLI, and desktop/browser automation without the HUD",
-          "builddate": 1794800492
+          "builddate": 1794889128
         },
         "ghostty": {
           "version": "1.4.0-1",
@@ -2997,9 +3072,9 @@
           "builddate": 1794530454
         },
         "grok-bot": {
-          "version": "1.1.0-1",
+          "version": "1.2.0-1",
           "desc": "Grok Bot desktop agent",
-          "builddate": 1794620515
+          "builddate": 1794879896
         },
         "helium-browser-bin": {
           "version": "0.21.3.1-1",
@@ -3291,6 +3366,16 @@
           "desc": "NVIDIA open kernel modules for the Omarchy Linux (BORE CPU scheduler, ADIOS I/O scheduler) kernel",
           "builddate": 1793682958
         },
+        "linux-t2": {
+          "version": "1:7.2.15.arch1-1",
+          "desc": "The Linux for T2 Macs kernel and modules",
+          "builddate": 1794856760
+        },
+        "linux-t2-headers": {
+          "version": "1:7.2.15.arch1-1",
+          "desc": "Headers and scripts for building modules for the Linux for T2 Macs kernel",
+          "builddate": 1794856760
+        },
         "linuxqq": {
           "version": "3.2.34_53644-1",
           "desc": "QQ, the instant messenger from Tencent (official Electron client)",
@@ -3362,9 +3447,9 @@
           "builddate": 1762885455
         },
         "mise-bin": {
-          "version": "2026.11.8-1",
+          "version": "2026.11.9-1",
           "desc": "dev tools, env vars, task runner",
-          "builddate": 1794663676
+          "builddate": 1794915886
         },
         "monologue": {
           "version": "0.4.0-1",
@@ -3432,14 +3517,14 @@
           "builddate": 1794516943
         },
         "omacharts": {
-          "version": "0.3.7-1",
+          "version": "0.3.8-1",
           "desc": "Fast, beautiful charting software for Omarchy",
-          "builddate": 1794832257
+          "builddate": 1794906202
         },
         "omacharts-debug": {
-          "version": "0.3.7-1",
+          "version": "0.3.8-1",
           "desc": "Detached debugging symbols for omacharts",
-          "builddate": 1794832257
+          "builddate": 1794906202
         },
         "omacut": {
           "version": "0.8.3-1",
@@ -3511,10 +3596,15 @@
           "desc": "Detached debugging symbols for omarchy-chromium-bin",
           "builddate": 1789442417
         },
+        "omarchy-control": {
+          "version": "0.6.0-1",
+          "desc": "One searchable place to understand this computer, change its settings, and reach the right tool",
+          "builddate": 1794864746
+        },
         "omarchy-dev": {
-          "version": "4.0.0.r7947.gfc3fd08-1",
+          "version": "4.0.0.r7968.gc3c8acf-1",
           "desc": "Beautiful, modern, and opinionated Arch Linux by DHH (quattro branch tip)",
-          "builddate": 1794832937
+          "builddate": 1794904836
         },
         "omarchy-emacs": {
           "version": "1.10.1-2",
@@ -3577,9 +3667,9 @@
           "builddate": 1793848367
         },
         "omarchy-settings-dev": {
-          "version": "4.0.0.r7947.gfc3fd08-1",
+          "version": "4.0.0.r7968.gc3c8acf-1",
           "desc": "Omarchy user defaults, /etc/skel content, fonts, plymouth theme, and support helpers (quattro branch tip)",
-          "builddate": 1794832935
+          "builddate": 1794905043
         },
         "omarchy-speedtest": {
           "version": "0.2.1-1",
@@ -3612,9 +3702,9 @@
           "builddate": 1794423270
         },
         "omaroll": {
-          "version": "1.19.1-1",
+          "version": "1.20.0-1",
           "desc": "A fast, beautiful image, video, and PDF viewer for Omarchy",
-          "builddate": 1794723952
+          "builddate": 1794875350
         },
         "omasnap": {
           "version": "1.26.2-4",
@@ -3622,9 +3712,9 @@
           "builddate": 1794811491
         },
         "omasnap-git": {
-          "version": "1.26.0.r0.g2fe1c9c-1",
+          "version": "1.26.2.r0.g6150151-1",
           "desc": "Native Wayland screenshot and annotation overlay for Hyprland (main branch)",
-          "builddate": 1794422837
+          "builddate": 1794910078
         },
         "omaspeak-bin": {
           "version": "0.1.0-1",
@@ -3687,9 +3777,9 @@
           "builddate": 1792604214
         },
         "openclaw": {
-          "version": "2026.11.3-1",
+          "version": "2026.11.4-1",
           "desc": "Multi-channel AI gateway with extensible messaging integrations",
-          "builddate": 1794423081
+          "builddate": 1794890653
         },
         "openvino-genai": {
           "version": "1:2026.4.1.0-1",
@@ -3802,9 +3892,9 @@
           "builddate": 1794681996
         },
         "rawmakase-bin": {
-          "version": "0.5.0-1",
+          "version": "0.6.0-1",
           "desc": "Fast, Lightroom-compatible RAW photo editor (binary release)",
-          "builddate": 1794573704
+          "builddate": 1794915679
         },
         "retroarch-joypad-autoconfig-git": {
           "version": "1.22.0.r96.g0331510-1",
@@ -3837,9 +3927,9 @@
           "builddate": 1794701391
         },
         "signed": {
-          "version": "0.3.2-2",
+          "version": "0.3.2-4",
           "desc": "Sign PDFs and fill them in with text and dates",
-          "builddate": 1794530716
+          "builddate": 1794919481
         },
         "slack-desktop": {
           "version": "4.53.287-1",
@@ -3911,15 +4001,25 @@
           "desc": "Detached debugging symbols for symfony-cli",
           "builddate": 1792169666
         },
+        "t2fanrd": {
+          "version": "r16.48baf96-2",
+          "desc": "Fan control daemon for Macs with the Apple T2 chip",
+          "builddate": 1794844624
+        },
+        "t2fanrd-debug": {
+          "version": "r16.48baf96-2",
+          "desc": "Detached debugging symbols for t2fanrd",
+          "builddate": 1794844624
+        },
         "t3code-bin": {
-          "version": "0.1.9-1",
+          "version": "0.1.10-1",
           "desc": "Open-source control plane for coding agents",
-          "builddate": 1794408629
+          "builddate": 1794921511
         },
         "t3code-nightly-bin": {
-          "version": "0.1.10_nightly.20261113.4643-1",
+          "version": "0.1.11_nightly.20261117.4814-1",
           "desc": "Open-source control plane for coding agents (nightly)",
-          "builddate": 1794594418
+          "builddate": 1794922541
         },
         "tensaku": {
           "version": "0.29.0-2",
@@ -3962,9 +4062,9 @@
           "builddate": 1792911035
         },
         "tuxedo-drivers-nocompatcheck-dkms": {
-          "version": "4.22.1-3",
+          "version": "4.25.0-1",
           "desc": "TUXEDO Computers kernel module drivers. Compatibility check disabled - works when using identical models from other brands, example being TUXEDO Pulse 14 Gen 4 and Schenker Via 14 Pro (M24)",
-          "builddate": 1792360802
+          "builddate": 1794875345
         },
         "typora": {
           "version": "1.14.9-2",
@@ -4147,7 +4247,7 @@
       "arch": "aarch64",
       "url": "https://pkgs.omarchy.org/edge/aarch64/omarchy.db",
       "ok": true,
-      "packageCount": 340,
+      "packageCount": 363,
       "packages": {
         "1password": {
           "version": "8.12.44-1",
@@ -4178,6 +4278,11 @@
           "version": "20261102-3",
           "desc": "Audio DSP, compute DSP, GPU and video firmware for the Acer Aspire 16 AI",
           "builddate": 1794707373
+        },
+        "acer-spin-7-firmware": {
+          "version": "20261116-1",
+          "desc": "Audio DSP, compute DSP, GPU and modem firmware for the Acer Spin 7 SP714-61NA",
+          "builddate": 1794837274
         },
         "acer-swift-14-ai-firmware": {
           "version": "20261102-2",
@@ -4215,9 +4320,19 @@
           "builddate": 1793404191
         },
         "amp-desktop-bin": {
-          "version": "0.1.29913241-1",
+          "version": "0.1.29915281-1",
           "desc": "Amp, the frontier coding agent, as a desktop app",
-          "builddate": 1794796687
+          "builddate": 1794919099
+        },
+        "apple-bcm-firmware-fetcher": {
+          "version": "1-2",
+          "desc": "Fetches Wi-Fi and Bluetooth firmware for T2 Macs from the on-disk macOS volume (t2linux firmware.sh, method 4 only)",
+          "builddate": 1794844621
+        },
+        "apple-t2-audio-config": {
+          "version": "0.4.r21.ga973d53-2",
+          "desc": "ALSA UCM configuration for the t2bce audio driver on Apple T2 Macs",
+          "builddate": 1794856712
         },
         "aquamarine": {
           "version": "0.16.0-1.1",
@@ -4355,14 +4470,14 @@
           "builddate": 1793904536
         },
         "ath12k-board-fallback": {
-          "version": "1-4",
+          "version": "1-5",
           "desc": "Board data for Qualcomm Wi-Fi cards linux-firmware does not list yet, from their card family's record",
-          "builddate": 1794766094
+          "builddate": 1794855864
         },
         "aura": {
-          "version": "0.1.0.r20261023-1",
+          "version": "0.1.0.r20261023-2",
           "desc": "Aurora Silicon bootloader for Apple Silicon",
-          "builddate": 1792725991
+          "builddate": 1794882062
         },
         "aurora-audio": {
           "version": "4.1.aurora3-3",
@@ -4374,10 +4489,25 @@
           "desc": "Aurora Apple Silicon startup-volume selector with Neo NVRAM support",
           "builddate": 1792308502
         },
+        "aurora-fwextract": {
+          "version": "0.9.2-1",
+          "desc": "Apple Silicon firmware extractor",
+          "builddate": 1794882062
+        },
+        "aurora-scripts": {
+          "version": "20261023-1",
+          "desc": "Apple Silicon maintenance scripts: update-m1n1, firmware and initramfs hooks",
+          "builddate": 1794882065
+        },
         "avd-fw": {
           "version": "0.1-1",
           "desc": "Open replacement firmware for the Apple Video Decoder (AVD) on Apple Silicon",
           "builddate": 1790122507
+        },
+        "bankstown": {
+          "version": "1.1.0-3",
+          "desc": "A barebones bass enhancer LV2 plugin",
+          "builddate": 1794880530
         },
         "basecamp-cli": {
           "version": "0.30.0-1",
@@ -4424,15 +4554,20 @@
           "desc": "context-menu entry for opening other terminal in nautilus",
           "builddate": 1788556018
         },
+        "cards": {
+          "version": "0.1.0-2",
+          "desc": "Klondike solitaire in four card series, one drawn in the Omarchy theme",
+          "builddate": 1794854553
+        },
         "checkmate": {
-          "version": "0.1.1-1",
+          "version": "0.1.2-2",
           "desc": "Native 3D chess with original piece sets, local multiplayer, and a computer opponent",
-          "builddate": 1794832838
+          "builddate": 1794854579
         },
         "claude-code": {
-          "version": "2.1.325-1",
+          "version": "2.1.326-1",
           "desc": "An agentic coding tool that lives in your terminal",
-          "builddate": 1794610039
+          "builddate": 1794868660
         },
         "claude-desktop": {
           "version": "5.11492.5-1",
@@ -4445,9 +4580,9 @@
           "builddate": 1794519474
         },
         "collie-bin": {
-          "version": "1.28.4-1",
+          "version": "1.28.5-1",
           "desc": "Phone web UI for the AI agents running in your terminal, served over Tailscale (official binary release)",
-          "builddate": 1794680575
+          "builddate": 1794853402
         },
         "crush-bin": {
           "version": "0.101.0-1",
@@ -4480,9 +4615,9 @@
           "builddate": 1794443076
         },
         "dell-inspiron-14-3420-firmware": {
-          "version": "20261116-1",
-          "desc": "GPU firmware for the Dell Inspiron 14 3420",
-          "builddate": 1794820931
+          "version": "20261116-2",
+          "desc": "Audio DSP and GPU firmware for the Dell Inspiron 14 3420",
+          "builddate": 1794831878
         },
         "dell-inspiron-14-5441-firmware": {
           "version": "20261102-3",
@@ -4559,6 +4694,11 @@
           "desc": "Feishu (飞书), ByteDance messaging, meetings and docs for the China service",
           "builddate": 1792038530
         },
+        "fex-emu": {
+          "version": "2604-1",
+          "desc": "Fast x86 emulation frontend",
+          "builddate": 1794883817
+        },
         "ffmpeg": {
           "version": "2:9.0.2-2.1",
           "desc": "Complete solution to record, convert and stream audio and video",
@@ -4585,14 +4725,14 @@
           "builddate": 1793288606
         },
         "ghost": {
-          "version": "0.11.8-1",
+          "version": "0.11.9-1",
           "desc": "Ghost HUD and desktop integration for Omarchy",
-          "builddate": 1794800492
+          "builddate": 1794889128
         },
         "ghost-runtime": {
-          "version": "0.11.8-1",
+          "version": "0.11.9-1",
           "desc": "Ghost daemon, API, CLI, and desktop/browser automation without the HUD",
-          "builddate": 1794800492
+          "builddate": 1794889128
         },
         "ghostty": {
           "version": "1.4.0-1",
@@ -4635,9 +4775,9 @@
           "builddate": 1794530268
         },
         "grok-bot": {
-          "version": "1.1.0-1",
+          "version": "1.2.0-1",
           "desc": "Grok Bot desktop agent",
-          "builddate": 1794620341
+          "builddate": 1794879774
         },
         "gtk2": {
           "version": "2.24.33-5",
@@ -4699,10 +4839,20 @@
           "desc": "Audio DSP and compute DSP firmware for the HP EliteBook X G2q",
           "builddate": 1793904524
         },
+        "hp-envy-x2-firmware": {
+          "version": "20261116-1",
+          "desc": "Audio DSP, video, modem and sensor DSP firmware for the HP Envy x2",
+          "builddate": 1794855901
+        },
         "hp-omnibook-3-14-firmware": {
           "version": "20261107-1",
           "desc": "Audio DSP, compute DSP and GPU firmware for the HP OmniBook 3 14",
           "builddate": 1794091526
+        },
+        "hp-omnibook-3-16-ct0-firmware": {
+          "version": "20261115-1",
+          "desc": "Audio DSP, compute DSP, GPU and video firmware for the HP OmniBook 3 16 (16-ct0)",
+          "builddate": 1794874490
         },
         "hp-omnibook-3-16-firmware": {
           "version": "20261107-1",
@@ -4794,6 +4944,11 @@
           "desc": "Interactive, theme-aware courses for learning Omarchy",
           "builddate": 1791475910
         },
+        "lenovo-10w-firmware": {
+          "version": "20261116-1",
+          "desc": "Audio DSP, GPU, video and modem firmware for the Lenovo 10w",
+          "builddate": 1794837269
+        },
         "lenovo-flex-5g-firmware": {
           "version": "20261115-1",
           "desc": "Audio DSP, compute DSP, GPU and modem firmware for the Lenovo Flex 5G and Yoga 5G",
@@ -4803,6 +4958,11 @@
           "version": "20261102-3",
           "desc": "Audio DSP, compute DSP, GPU and video firmware for the Lenovo IdeaCentre Mini x",
           "builddate": 1794366391
+        },
+        "lenovo-ideapad-5g-firmware": {
+          "version": "20261116-1",
+          "desc": "Audio DSP, compute DSP, GPU and modem firmware for the Lenovo IdeaPad 5G 14Q8X05",
+          "builddate": 1794837270
         },
         "lenovo-ideapad-5x-2-in-1-firmware": {
           "version": "20261115-1",
@@ -4960,24 +5120,24 @@
           "builddate": 1794012767
         },
         "linux-omarchy": {
-          "version": "7.3-68",
+          "version": "7.3-72",
           "desc": "The Omarchy Linux for aarch64 (BORE CPU scheduler, ADIOS I/O scheduler) kernel and modules",
-          "builddate": 1794824939
+          "builddate": 1794909646
         },
         "linux-omarchy-dtbs": {
-          "version": "7.3-40",
-          "desc": "Device trees and hardware IDs for the Snapdragon laptops on linux-omarchy (built from linux-omarchy-headers 7.3-68)",
-          "builddate": 1794832673
+          "version": "7.3-47",
+          "desc": "Device trees and hardware IDs for the Snapdragon laptops on linux-omarchy (built from linux-omarchy-headers 7.3-71)",
+          "builddate": 1794901131
         },
         "linux-omarchy-headers": {
-          "version": "7.3-68",
+          "version": "7.3-72",
           "desc": "Headers and scripts for building modules and device trees for the Omarchy Linux for aarch64 (BORE CPU scheduler, ADIOS I/O scheduler) kernel",
-          "builddate": 1794824939
+          "builddate": 1794909646
         },
         "linux-omarchy-nvidia-open": {
-          "version": "7.3-68",
+          "version": "7.3-72",
           "desc": "NVIDIA open kernel modules for the Omarchy Linux for aarch64 (BORE CPU scheduler, ADIOS I/O scheduler) kernel",
-          "builddate": 1794824939
+          "builddate": 1794909646
         },
         "linuxqq": {
           "version": "3.2.34_53644-1",
@@ -4999,10 +5159,15 @@
           "desc": "An open source cross-platform alternative to AirDrop",
           "builddate": 1791484257
         },
+        "lzfse": {
+          "version": "1.0-2",
+          "desc": "LZFSE compression library and command line tool",
+          "builddate": 1794882060
+        },
         "m1n1-aurora": {
-          "version": "1.6.1.aurora23-2",
+          "version": "1.6.1.aurora23-3",
           "desc": "Omarchy Apple Silicon bootloader from omacom/m1n1",
-          "builddate": 1794312433
+          "builddate": 1794882061
         },
         "maplemono-nf-cn": {
           "version": "7.9-1",
@@ -5033,6 +5198,11 @@
           "version": "20261115-1",
           "desc": "Audio DSP, compute DSP, GPU and video firmware for the Microsoft Surface Laptop 7",
           "builddate": 1794759506
+        },
+        "microsoft-surface-laptop-7-support": {
+          "version": "1-1",
+          "desc": "Hardware support for the Microsoft Surface Laptop 7 15\" (Snapdragon X Elite) not yet carried upstream",
+          "builddate": 1794899458
         },
         "microsoft-surface-laptop-8-firmware": {
           "version": "20261102-2",
@@ -5100,14 +5270,19 @@
           "builddate": 1790983314
         },
         "mise-bin": {
-          "version": "2026.11.8-1",
+          "version": "2026.11.9-1",
           "desc": "dev tools, env vars, task runner",
-          "builddate": 1794663459
+          "builddate": 1794915510
         },
         "monologue": {
           "version": "0.4.0-1",
           "desc": "A simple, theme-synced webcam recorder for Omarchy",
           "builddate": 1794501835
+        },
+        "muvm": {
+          "version": "0.7.0-2",
+          "desc": "Run programs from your system in a microVM",
+          "builddate": 1794883551
         },
         "nautilus-dropbox": {
           "version": "2026.09.28-1",
@@ -5185,9 +5360,9 @@
           "builddate": 1794516792
         },
         "omacharts": {
-          "version": "0.3.7-1",
+          "version": "0.3.8-1",
           "desc": "Fast, beautiful charting software for Omarchy",
-          "builddate": 1794832119
+          "builddate": 1794905944
         },
         "omacut": {
           "version": "0.8.3-1",
@@ -5259,10 +5434,15 @@
           "desc": "A web browser built for speed, simplicity, and security, with patches for Omarchy (binary package)",
           "builddate": 1791486329
         },
+        "omarchy-control": {
+          "version": "0.6.0-1",
+          "desc": "One searchable place to understand this computer, change its settings, and reach the right tool",
+          "builddate": 1794864705
+        },
         "omarchy-dev": {
-          "version": "4.0.0.r7947.gfc3fd08-1",
+          "version": "4.0.0.r7968.gc3c8acf-1",
           "desc": "Beautiful, modern, and opinionated Arch Linux by DHH (quattro branch tip)",
-          "builddate": 1794832856
+          "builddate": 1794904677
         },
         "omarchy-emacs": {
           "version": "1.10.1-2",
@@ -5295,9 +5475,9 @@
           "builddate": 1793478624
         },
         "omarchy-mac-boot": {
-          "version": "20261104-1",
+          "version": "20261104-2",
           "desc": "Apple Silicon boot support for Omarchy: initramfs, in-place encryption, first boot and Limine activation",
-          "builddate": 1793771297
+          "builddate": 1794882063
         },
         "omarchy-mac-ml": {
           "version": "1-1",
@@ -5335,9 +5515,9 @@
           "builddate": 1793848174
         },
         "omarchy-settings-dev": {
-          "version": "4.0.0.r7947.gfc3fd08-1",
+          "version": "4.0.0.r7968.gc3c8acf-1",
           "desc": "Omarchy user defaults, /etc/skel content, fonts, plymouth theme, and support helpers (quattro branch tip)",
-          "builddate": 1794832866
+          "builddate": 1794904673
         },
         "omarchy-speedtest": {
           "version": "0.2.1-1",
@@ -5365,9 +5545,9 @@
           "builddate": 1794422597
         },
         "omaroll": {
-          "version": "1.19.1-1",
+          "version": "1.20.0-1",
           "desc": "A fast, beautiful image, video, and PDF viewer for Omarchy",
-          "builddate": 1794723839
+          "builddate": 1794875120
         },
         "omasnap": {
           "version": "1.26.2-4",
@@ -5375,9 +5555,9 @@
           "builddate": 1794811342
         },
         "omasnap-git": {
-          "version": "1.26.0.r0.g2fe1c9c-1",
+          "version": "1.26.2.r0.g6150151-1",
           "desc": "Native Wayland screenshot and annotation overlay for Hyprland (main branch)",
-          "builddate": 1794422351
+          "builddate": 1794909916
         },
         "omaspeak-bin": {
           "version": "0.1.0-1",
@@ -5430,9 +5610,9 @@
           "builddate": 1793670718
         },
         "openclaw": {
-          "version": "2026.11.3-1",
+          "version": "2026.11.4-1",
           "desc": "Multi-channel AI gateway with extensible messaging integrations",
-          "builddate": 1794422382
+          "builddate": 1794890269
         },
         "opto": {
           "version": "0.1.1-1",
@@ -5525,9 +5705,9 @@
           "builddate": 1794681861
         },
         "rawmakase-bin": {
-          "version": "0.5.0-1",
+          "version": "0.6.0-1",
           "desc": "Fast, Lightroom-compatible RAW photo editor (binary release)",
-          "builddate": 1794573530
+          "builddate": 1794915480
         },
         "retroarch-joypad-autoconfig-git": {
           "version": "1.22.0.r96.g0331510-1",
@@ -5538,6 +5718,16 @@
           "version": "0.1.11-1",
           "desc": "Read-only dashboard of pending updates and current problems on Arch and Omarchy",
           "builddate": 1793903513
+        },
+        "samsung-galaxy-book-go-5g-firmware": {
+          "version": "20261116-1",
+          "desc": "Audio DSP, compute DSP, GPU and modem firmware for the Samsung Galaxy Book Go 5G",
+          "builddate": 1794837273
+        },
+        "samsung-galaxy-book-go-firmware": {
+          "version": "20261116-1",
+          "desc": "Audio DSP, GPU, video and modem firmware for the Samsung Galaxy Book Go",
+          "builddate": 1794837267
         },
         "samsung-galaxy-book-s-firmware": {
           "version": "20261116-1",
@@ -5575,9 +5765,9 @@
           "builddate": 1794701391
         },
         "signed": {
-          "version": "0.3.2-2",
+          "version": "0.3.2-4",
           "desc": "Sign PDFs and fill them in with text and dates",
-          "builddate": 1794530570
+          "builddate": 1794919327
         },
         "slack-desktop": {
           "version": "4.53.287-1",
@@ -5593,6 +5783,11 @@
           "version": "0.1.0.aurora3-1",
           "desc": "Apple speaker feed-forward protection with J700 profile",
           "builddate": 1792459518
+        },
+        "speakersafetyd": {
+          "version": "2.0.1-2",
+          "desc": "Asahi Linux speaker safety daemon",
+          "builddate": 1794880529
         },
         "splinterm": {
           "version": "0.2.0-1",
@@ -5659,15 +5854,20 @@
           "desc": "The Symfony client helps developers create and manage Symfony applications.",
           "builddate": 1792169429
         },
+        "systemd-stub-omarchy": {
+          "version": "262.2-1",
+          "desc": "systemd's aarch64 UKI stub with header room for 1024 sections, for UKIs that carry many device trees",
+          "builddate": 1794844924
+        },
         "t3code-bin": {
-          "version": "0.1.9-1",
+          "version": "0.1.10-1",
           "desc": "Open-source control plane for coding agents",
-          "builddate": 1794400747
+          "builddate": 1794921335
         },
         "t3code-nightly-bin": {
-          "version": "0.1.10_nightly.20261113.4643-1",
+          "version": "0.1.11_nightly.20261117.4814-1",
           "desc": "Open-source control plane for coding agents (nightly)",
-          "builddate": 1794594356
+          "builddate": 1794922405
         },
         "tensaku": {
           "version": "0.29.0-2",
@@ -5678,6 +5878,11 @@
           "version": "1.10.1-3",
           "desc": "Fresh directories for every vibe.",
           "builddate": 1791562898
+        },
+        "triforce-lv2": {
+          "version": "0.3.2-2",
+          "desc": "A beamformer LV2 plugin for Apple Silicon laptop microphones",
+          "builddate": 1794880526
         },
         "ttf-ia-writer": {
           "version": "20261002.r63-3",
@@ -5769,6 +5974,11 @@
           "desc": "WeChat (微信) for Linux, the official client from Tencent",
           "builddate": 1792034062
         },
+        "widevine": {
+          "version": "4.10.2891.0-2",
+          "desc": "Google DRM content decryption module for Chromium and Firefox, fetched on the device",
+          "builddate": 1794883870
+        },
         "wordcraft-bin": {
           "version": "0.18.1-1",
           "desc": "Clean-room word processor in pure Rust that opens and saves Word documents",
@@ -5778,6 +5988,11 @@
           "version": "0.1.0-1",
           "desc": "Find and download the driver bundle a PC maker publishes on Windows Update",
           "builddate": 1794740663
+        },
+        "xiaomi-book-s-firmware": {
+          "version": "20261116-1",
+          "desc": "Audio DSP, compute DSP, GPU and modem firmware for the Xiaomi Book S 12.4",
+          "builddate": 1794837268
         },
         "xpadneo-dkms": {
           "version": "0.10.5-1",
@@ -5872,7 +6087,7 @@
       {
         "name": "ath12k-board-fallback",
         "stable": null,
-        "edge": "1-4"
+        "edge": "1-5"
       },
       {
         "name": "aurora-audio",
@@ -5885,14 +6100,19 @@
         "edge": "0.8.3-1"
       },
       {
+        "name": "cards",
+        "stable": null,
+        "edge": "0.1.0-2"
+      },
+      {
         "name": "checkmate",
         "stable": null,
-        "edge": "0.1.1-1"
+        "edge": "0.1.2-2"
       },
       {
         "name": "collie-bin",
         "stable": "1.23.1-1",
-        "edge": "1.28.4-1"
+        "edge": "1.28.5-1"
       },
       {
         "name": "cua-hyprland-plugin",
@@ -6097,12 +6317,12 @@
       {
         "name": "omacharts",
         "stable": "0.1.17-1",
-        "edge": "0.3.7-1"
+        "edge": "0.3.8-1"
       },
       {
         "name": "omacharts-debug",
         "stable": "0.1.17-1",
-        "edge": "0.3.7-1"
+        "edge": "0.3.8-1"
       },
       {
         "name": "omacut",
@@ -6140,9 +6360,14 @@
         "edge": "0.1.0-2"
       },
       {
+        "name": "omarchy-control",
+        "stable": null,
+        "edge": "0.6.0-1"
+      },
+      {
         "name": "omarchy-dev",
         "stable": "4.0.0.r7195.g3ac4365-1",
-        "edge": "4.0.0.r7947.gfc3fd08-1"
+        "edge": "4.0.0.r7968.gc3c8acf-1"
       },
       {
         "name": "omarchy-emacs",
@@ -6182,7 +6407,7 @@
       {
         "name": "omarchy-settings-dev",
         "stable": "4.0.0.r7195.g3ac4365-1",
-        "edge": "4.0.0.r7947.gfc3fd08-1"
+        "edge": "4.0.0.r7968.gc3c8acf-1"
       },
       {
         "name": "omarchy-themes-intros",
@@ -6202,7 +6427,7 @@
       {
         "name": "omaroll",
         "stable": null,
-        "edge": "1.19.1-1"
+        "edge": "1.20.0-1"
       },
       {
         "name": "omasnap",
@@ -6212,7 +6437,7 @@
       {
         "name": "omasnap-git",
         "stable": "1.21.0.r81.g6771b19-2",
-        "edge": "1.26.0.r0.g2fe1c9c-1"
+        "edge": "1.26.2.r0.g6150151-1"
       },
       {
         "name": "omaview",
@@ -6237,7 +6462,7 @@
       {
         "name": "openclaw",
         "stable": "2026.10.5-1",
-        "edge": "2026.11.3-1"
+        "edge": "2026.11.4-1"
       },
       {
         "name": "opto",
@@ -6327,7 +6552,7 @@
       {
         "name": "signed",
         "stable": "0.3.1-1",
-        "edge": "0.3.2-2"
+        "edge": "0.3.2-4"
       },
       {
         "name": "sunshine",
@@ -6353,6 +6578,11 @@
         "name": "ttfx",
         "stable": "0.5.0-3",
         "edge": "0.5.1-1"
+      },
+      {
+        "name": "tuxedo-drivers-nocompatcheck-dkms",
+        "stable": "4.22.1-3",
+        "edge": "4.25.0-1"
       },
       {
         "name": "v4l2-relayd",
@@ -6394,7 +6624,7 @@
       {
         "name": "ath12k-board-fallback",
         "rc": null,
-        "edge": "1-4"
+        "edge": "1-5"
       },
       {
         "name": "aurora-audio",
@@ -6407,14 +6637,19 @@
         "edge": "0.8.3-1"
       },
       {
+        "name": "cards",
+        "rc": null,
+        "edge": "0.1.0-2"
+      },
+      {
         "name": "checkmate",
         "rc": null,
-        "edge": "0.1.1-1"
+        "edge": "0.1.2-2"
       },
       {
         "name": "collie-bin",
         "rc": "1.23.1-1",
-        "edge": "1.28.4-1"
+        "edge": "1.28.5-1"
       },
       {
         "name": "cua-hyprland-plugin",
@@ -6619,12 +6854,12 @@
       {
         "name": "omacharts",
         "rc": "0.1.17-1",
-        "edge": "0.3.7-1"
+        "edge": "0.3.8-1"
       },
       {
         "name": "omacharts-debug",
         "rc": "0.1.17-1",
-        "edge": "0.3.7-1"
+        "edge": "0.3.8-1"
       },
       {
         "name": "omacut",
@@ -6662,9 +6897,14 @@
         "edge": "0.1.0-2"
       },
       {
+        "name": "omarchy-control",
+        "rc": null,
+        "edge": "0.6.0-1"
+      },
+      {
         "name": "omarchy-dev",
         "rc": "4.0.0.r7195.g3ac4365-1",
-        "edge": "4.0.0.r7947.gfc3fd08-1"
+        "edge": "4.0.0.r7968.gc3c8acf-1"
       },
       {
         "name": "omarchy-emacs",
@@ -6699,7 +6939,7 @@
       {
         "name": "omarchy-settings-dev",
         "rc": "4.0.0.r7195.g3ac4365-1",
-        "edge": "4.0.0.r7947.gfc3fd08-1"
+        "edge": "4.0.0.r7968.gc3c8acf-1"
       },
       {
         "name": "omarchy-themes-intros",
@@ -6719,7 +6959,7 @@
       {
         "name": "omaroll",
         "rc": null,
-        "edge": "1.19.1-1"
+        "edge": "1.20.0-1"
       },
       {
         "name": "omasnap",
@@ -6729,7 +6969,7 @@
       {
         "name": "omasnap-git",
         "rc": "1.21.0.r81.g6771b19-2",
-        "edge": "1.26.0.r0.g2fe1c9c-1"
+        "edge": "1.26.2.r0.g6150151-1"
       },
       {
         "name": "omaview",
@@ -6754,7 +6994,7 @@
       {
         "name": "openclaw",
         "rc": "2026.10.5-1",
-        "edge": "2026.11.3-1"
+        "edge": "2026.11.4-1"
       },
       {
         "name": "opto",
@@ -6844,7 +7084,7 @@
       {
         "name": "signed",
         "rc": "0.3.1-1",
-        "edge": "0.3.2-2"
+        "edge": "0.3.2-4"
       },
       {
         "name": "sunshine",
@@ -6870,6 +7110,11 @@
         "name": "ttfx",
         "rc": "0.5.0-3",
         "edge": "0.5.1-1"
+      },
+      {
+        "name": "tuxedo-drivers-nocompatcheck-dkms",
+        "rc": "4.22.1-3",
+        "edge": "4.25.0-1"
       },
       {
         "name": "v4l2-relayd",
@@ -6926,6 +7171,8 @@
       "linux-omarchy-headers": "7.2.15-1",
       "linux-omarchy-muqss": "7.2.15-1",
       "linux-omarchy-muqss-headers": "7.2.15-1",
+      "linux-t2": "1:7.2.15.arch1-1",
+      "linux-t2-headers": "1:7.2.15.arch1-1",
       "linuxqq": "3.2.34_53644-1"
     },
     "rc": {
@@ -6938,6 +7185,8 @@
       "linux-omarchy-headers": "7.2.15-1",
       "linux-omarchy-muqss": "7.2.15-1",
       "linux-omarchy-muqss-headers": "7.2.15-1",
+      "linux-t2": "1:7.2.15.arch1-1",
+      "linux-t2-headers": "1:7.2.15.arch1-1",
       "linuxqq": "3.2.34_53644-1"
     },
     "edge": {
@@ -6951,6 +7200,8 @@
       "linux-omarchy-muqss": "7.2.15-1",
       "linux-omarchy-muqss-headers": "7.2.15-1",
       "linux-omarchy-nvidia-open": "7.2.15-2",
+      "linux-t2": "1:7.2.15.arch1-1",
+      "linux-t2-headers": "1:7.2.15.arch1-1",
       "linuxqq": "3.2.34_53644-1"
     },
     "edge-aarch64": {
@@ -6958,10 +7209,10 @@
       "linux-aurora": "7.2.11.aurora16-1",
       "linux-aurora-headers": "7.2.11.aurora16-1",
       "linux-firmware-qcom": "20261019-1.1",
-      "linux-omarchy": "7.3-68",
-      "linux-omarchy-dtbs": "7.3-40",
-      "linux-omarchy-headers": "7.3-68",
-      "linux-omarchy-nvidia-open": "7.3-68",
+      "linux-omarchy": "7.3-72",
+      "linux-omarchy-dtbs": "7.3-47",
+      "linux-omarchy-headers": "7.3-72",
+      "linux-omarchy-nvidia-open": "7.3-72",
       "linuxqq": "3.2.34_53644-1"
     }
   },

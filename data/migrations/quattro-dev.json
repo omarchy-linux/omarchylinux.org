@@ -1,5 +1,5 @@
 {
-  "count": 292,
+  "count": 300,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -1734,12 +1734,12 @@
       "touches": []
     },
     {
-      "body": "echo \"Temporarily remove automatic printer discovery\"\n\nmachine_marker=\"${OMARCHY_CUPS_BROWSED_REMOVAL_MARKER:-/var/lib/omarchy/migrations/1788009111}\"\n\n[[ ! -e $machine_marker ]] || exit 0\nomarchy-pkg-present cups-browsed || exit 0\n\n# Check the full removal transaction before changing the service or queues.\npacman -Rs --print cups-browsed >/dev/null\n\n# Disable the unit while its package still owns the unit file so systemd can\n# remove the enable symlink cleanly.\nif systemctl is-enabled --quiet cups-browsed.service 2>/dev/null; then\n  sudo systemctl disable --now cups-browsed.service >/dev/null\nelif systemctl is-active --quiet cups-browsed.service 2>/dev/null; then\n  sudo systemctl stop cups-browsed.service >/dev/null\nfi\n\n# cups-browsed leaves its implicitclass queues behind when stopped. Remove idle\n# discovery queues before removing the backend they require, but leave queues\n# with jobs for the user to resolve.\n#\n# A healthy CUPS server with no configured printers reports this condition on\n# stderr and exits 1. Treat that as an empty queue list; every other failure\n# keeps the migration pending so it can be retried.\nif queue_report=$(LC_ALL=C lpstat -v 2>&1); then\n  :\nelif [[ $queue_report == \"lpstat: No destinations added.\" ]]; then\n  queue_report=\"\"\nelse\n  printf '%s\\n' \"$queue_report\" >&2\n  exit 1\nfi\n\ngenerated_queues=$(printf '%s\\n' \"$queue_report\" |\n  sed -n 's|^device for \\(.*\\): implicitclass://.*|\\1|p')\n\nwhile IFS= read -r queue; do\n  [[ -n $queue ]] || continue\n",
+      "body": "echo \"Temporarily remove automatic printer discovery\"\n\nmachine_marker=\"${OMARCHY_CUPS_BROWSED_REMOVAL_MARKER:-/var/lib/omarchy/migrations/1788009111}\"\n\n[[ ! -e $machine_marker ]] || exit 0\nomarchy-pkg-present cups-browsed || exit 0\n\n# Check the full removal transaction before changing the service or queues.\npacman -Rs --print cups-browsed >/dev/null\n\n# Disable the unit while its package still owns the unit file so systemd can\n# remove the enable symlink cleanly.\nif systemctl is-enabled --quiet cups-browsed.service 2>/dev/null; then\n  sudo systemctl disable --now cups-browsed.service >/dev/null\nelif systemctl is-active --quiet cups-browsed.service 2>/dev/null; then\n  sudo systemctl stop cups-browsed.service >/dev/null\nfi\n\n# cups-browsed leaves its implicitclass queues behind when stopped. Remove idle\n# discovery queues before removing the backend they require, but leave queues\n# with jobs for the user to resolve.\n#\n# A healthy CUPS server with no configured printers reports this condition on\n# stderr and exits 1. Treat that as an empty queue list. A stopped scheduler\n# is safe only after checking saved queues; other failures stay pending.\n# CUPS picks lpstat's message language itself; in the C locale it reads\n# LC_MESSAGES before LC_ALL, so pin LC_MESSAGES too. LANGUAGE=C is harmless.\nif queue_report=$(LC_ALL=C LANGUAGE=C LC_MESSAGES=C lpstat -v 2>&1); then\n  :\nelif [[ $queue_report == \"lpstat: No destinations added.\" ]]; then\n  queue_report=\"\"\nelif [[ $queue_report == \"lpstat: Scheduler is not running.\" ]]; then\n  # lpstat cannot list queues while CUPS is down. Saved implicitclass://\n  # entries in printers.conf would survive cups-browsed removal, so retry\n  # rather than mark the migration complete.\n  # CUPS saves this file as root:0600. A read failure is not an empty file.\n  if saved_config=$(sudo cat /etc/cups/printers.conf 2>/dev/null); then\n    if grep -Eq '^[[:space:]]*DeviceURI[[:space:]]+implicitclass://' <<<\"$saved_config\"; then\n      echo \"CUPS is down but discovery queues remain. Start CUPS (sudo systemctl start cups.service) and run the update again.\" >&2\n      exit 1",
       "bodyTruncated": true,
       "date": "2026-08-29T13:11:51Z",
       "description": "Temporarily remove automatic printer discovery",
       "file": "1788009111.sh",
-      "lineCount": 72,
+      "lineCount": 89,
       "packagesAdded": [],
       "packagesRemoved": [
         "cups-browsed"
@@ -1748,6 +1748,7 @@
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1788009111.sh",
       "timestamp": 1788009111,
       "touches": [
+        "/etc/cups/printers.conf",
         "/var/lib/omarchy/migrations/1788009111"
       ]
     },
@@ -3296,12 +3297,12 @@
       ]
     },
     {
-      "body": "echo \"Speed up the boot menu and keep it quiet until a key is pressed\"\n\n# Limine waits out its menu timeout on every boot and draws the menu while\n# it does. timeout: 1 with quiet: yes makes the boot silent and\n# near-instant; any key still shows the menu, and System > Reboot to Boot\n# Menu asks for it explicitly. Only machines that never set a timeout of\n# their own get the new one: an uncommented timeout: is the user's and\n# stays. quiet is added wherever it is missing. Running this twice\n# changes nothing the second time.\n\nlimine_conf=\"${OMARCHY_LIMINE_CONF:-}\"\nif [[ -z $limine_conf ]]; then\n  esp=\"\"\n  if [[ -r /etc/default/limine ]]; then\n    esp=$(sed -n 's/^ESP_PATH=[\"'\\'']\\?\\([^\"'\\'']*\\).*/\\1/p' /etc/default/limine | tail -n 1)\n  fi\n  limine_conf=\"${esp:-/boot}/limine.conf\"\nfi\n\nif [[ ! -f $limine_conf ]]; then\n  # The ESP is often mounted umask=0077, so an unreadable menu is not a\n  # missing one; and a denied prompt must leave this migration pending,\n  # not done, so authentication failure stops it here.\n  sudo -v\n  sudo test -f \"$limine_conf\" || exit 0\nfi\n\nset_timeout=\"\"\nadded_quiet=\"\"\nif ! sudo grep -Eqi '^[[:space:]]*timeout:' \"$limine_conf\"; then\n  if sudo grep -Eqi '^[[:space:]]*#timeout:' \"$limine_conf\"; then\n    sudo sed -i -E 's/^[[:space:]]*#timeout:.*/timeout: 1/I' \"$limine_conf\"\n  else\n    sudo sed -i '1i timeout: 1' \"$limine_conf\"\n  fi\n  set_timeout=1\nfi\n\nif ! sudo grep -Eqi '^[[:space:]]*quiet:' \"$limine_conf\"; then\n  sudo sed -i -E '/^[[:space:]]*timeout:/I a quiet: yes' \"$limine_conf\"",
+      "body": "echo \"Speed up the boot menu and keep it quiet until a key is pressed\"\n\n# Limine waits out its menu timeout on every boot and draws the menu while\n# it does. timeout: 1 with quiet: yes makes the boot silent and\n# near-instant; any key still shows the menu, and System > Reboot to Boot\n# Menu asks for it explicitly. Only machines that never set a timeout of\n# their own get the new one: an uncommented timeout: is the user's and\n# stays. quiet is added wherever it is missing. Running this twice\n# changes nothing the second time.\n\nlimine_conf=\"${OMARCHY_LIMINE_CONF:-}\"\nif [[ -z $limine_conf ]]; then\n  esp=\"\"\n  if [[ -r /etc/default/limine ]]; then\n    esp=$(sed -n 's/^ESP_PATH=[\"'\\'']\\?\\([^\"'\\'']*\\).*/\\1/p' /etc/default/limine | tail -n 1)\n  fi\n  limine_conf=\"${esp:-/boot}/limine.conf\"\nfi\n\nif [[ ! -f $limine_conf ]]; then\n  # The ESP is often mounted umask=0077, so an unreadable menu is not a\n  # missing one; and a denied prompt must leave this migration pending,\n  # not done, so authentication failure stops it here. Authorize by\n  # running a command rather than sudo -v: under sudo's default\n  # verifypw=all, -v prompts even when passwordless sudo is enabled.\n  sudo true\n  sudo test -f \"$limine_conf\" || exit 0\nfi\n\nset_timeout=\"\"\nadded_quiet=\"\"\nif ! sudo grep -Eqi '^[[:space:]]*timeout:' \"$limine_conf\"; then\n  if sudo grep -Eqi '^[[:space:]]*#timeout:' \"$limine_conf\"; then\n    sudo sed -i -E 's/^[[:space:]]*#timeout:.*/timeout: 1/I' \"$limine_conf\"\n  else\n    sudo sed -i '1i timeout: 1' \"$limine_conf\"\n  fi\n  set_timeout=1\nfi\n",
       "bodyTruncated": true,
       "date": "2026-10-13T13:32:45Z",
       "description": "Speed up the boot menu and keep it quiet until a key is pressed",
       "file": "1791898365.sh",
-      "lineCount": 50,
+      "lineCount": 52,
       "packagesAdded": [],
       "packagesRemoved": [],
       "path": "migrations/1791898365.sh",
@@ -3779,6 +3780,23 @@
       "touches": [
         "~/.local/state",
         "~/.local/state/omarchy/monitors"
+      ]
+    },
+    {
+      "body": "echo \"Mark the T2 Mac t2bce_vhci initramfs module optional so other kernels build\"\n\n# Only linux-t2 ships t2bce, so a bare t2bce_vhci in MODULES fails the initramfs\n# build for linux-omarchy installed next to it and leaves that kernel's UKI stale.\n# The 4.5.0 installer then wrote zz-omarchy-kernel-modules.conf, which takes a\n# module out of every image when any kernel lacks it, so linux-t2 lost it too\n# and the internal keyboard was gone at the LUKS prompt. That filter matches\n# exact names, so t2bce_vhci? stays in the linux-t2 image.\n\nconf=\"${OMARCHY_T2_MKINITCPIO_CONF:-/etc/mkinitcpio.conf.d/apple-t2.conf}\"\nrebuild_pending=\"${OMARCHY_T2_REBUILD_PENDING:-/var/lib/omarchy/migrations/1793464570.rebuild-pending}\"\n\n# The marker goes down before the edit and comes off only after a clean\n# rebuild, so a rebuild that fails or is interrupted runs again next time.\n# The trailing space matches the bare name fix-t2.sh wrote, and skips the\n# \"apple-bce? t2bce_vhci? \" that migration 1785273276 wrote.\nif [[ -f $conf ]] && grep -q 't2bce_vhci ' \"$conf\"; then\n  sudo install -Dm644 /dev/null \"$rebuild_pending\"\n  sudo sed -i 's/t2bce_vhci /t2bce_vhci? /' \"$conf\"\nfi\n[[ -e $rebuild_pending ]] || exit 0\n\nrebuild_log=$(mktemp)\ntrap 'rm -f \"$rebuild_log\"' EXIT\nif omarchy-cmd-present limine-mkinitcpio; then\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\nelse\n  sudo mkinitcpio -P 2>&1 | tee \"$rebuild_log\"\nfi\n\n# limine-mkinitcpio reports a kernel it could not rebuild and may still exit 0.\n# A failed mkinitcpio -P exits non-zero and stops the migration above.\nif grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n  echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n  exit 1\nfi\n\nsudo rm -f \"$rebuild_pending\"",
+      "bodyTruncated": false,
+      "date": "2026-10-31T16:36:10Z",
+      "description": "Mark the T2 Mac t2bce_vhci initramfs module optional so other kernels build",
+      "file": "1793464570.sh",
+      "lineCount": 38,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1793464570.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793464570.sh",
+      "timestamp": 1793464570,
+      "touches": [
+        "/etc/mkinitcpio.conf.d/apple-t2.conf",
+        "/var/lib/omarchy/migrations/1793464570.rebuild-pending"
       ]
     },
     {
@@ -4374,6 +4392,22 @@
       ]
     },
     {
+      "body": "echo \"Bring back Ghostscript, removed along with Nautilus\"\n\n# The first version of the Nautilus migration removed sushi with pacman -Rns,\n# which also took Ghostscript where it had only arrived as a dependency of\n# Nautilus. CUPS still picks its Ghostscript filter for driverless printers, so\n# every print job failed with \"gs: No such file or directory\". This puts it\n# back where it went.\nomarchy-pkg-add ghostscript\n\n# Where Nautilus goes in this same update, Ghostscript is still here as its\n# dependency, and the orphan cleanup that follows would remove it.\nif pacman -Qqd ghostscript &>/dev/null; then\n  sudo pacman -D --asexplicit ghostscript\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-11T12:51:17Z",
+      "description": "Bring back Ghostscript, removed along with Nautilus",
+      "file": "1794401477.sh",
+      "lineCount": 14,
+      "packagesAdded": [
+        "ghostscript"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1794401477.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794401477.sh",
+      "timestamp": 1794401477,
+      "touches": []
+    },
+    {
       "body": "echo \"Show the disk unlock prompt on the HP OmniBook X 14 (14-fe0, Snapdragon X Elite)\"\n\n# See install/hardware/hp/fix-hp-omnibook-x14-boot.sh.\nrebuild_marker=\"${OMARCHY_LIMINE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1794416700}\"\n\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match \"OmniBook X Laptop 14-fe0\"; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n  source \"$OMARCHY_PATH/install/hardware/hp/fix-hp-omnibook-x14-boot.sh\"\n'\n\n# A marker records the machine-wide rebuild: another user's run must not repeat\n# it, while a missing marker still retries an interrupted rebuild.\nif [[ ! -e $rebuild_marker ]]; then\n  rebuild_log=$(mktemp)\n  trap 'rm -f \"$rebuild_log\"' EXIT\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n  # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n  # That image lacks the display drivers, so the migration stays pending.\n  if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n    exit 1\n  fi\n\n  sudo install -Dm644 /dev/null \"$rebuild_marker\"\n  omarchy-state set reboot-required\nfi",
       "bodyTruncated": false,
       "date": "2026-11-11T17:05:00Z",
@@ -4868,6 +4902,20 @@
       ]
     },
     {
+      "body": "echo \"Add launchers for the local models already set up\"\n\n# Setting up a local model now adds a launcher of its own beside Agent, with\n# the model's name and its vendor's logo. Models set up before that get theirs\n# here; a machine without any gets nothing. Neither does one whose engine was\n# removed: without omarchy-local-ai no model can be read, let alone opened.\nif omarchy-cmd-present omarchy-local-ai; then\n  omarchy-agent-local-launchers\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-16T14:23:27Z",
+      "description": "Add launchers for the local models already set up",
+      "file": "1794839007.sh",
+      "lineCount": 9,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794839007.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794839007.sh",
+      "timestamp": 1794839007,
+      "touches": []
+    },
+    {
       "body": "echo \"Install Cards, the Klondike solitaire game\"\n\nif [[ ! -f $HOME/.local/state/omarchy/preinstalls-removed ]]; then\n  omarchy-pkg-add cards\nfi\n\n# Drawing the icon set puts its themed icon in the launcher right away, where\n# it would otherwise wait for the next theme switch.\nomarchy-theme-set-icons || true",
       "bodyTruncated": false,
       "date": "2026-11-16T14:25:03Z",
@@ -4938,6 +4986,84 @@
         "/etc/pacman.conf.XXXXXX",
         "/var/lib/omarchy/migrations/1794859637"
       ]
+    },
+    {
+      "body": "echo \"Wake from sleep without an 80 second freeze on the HP ZBook Ultra G3a 16\"\n\n# See install/hardware/hp/fix-hp-zbook-ultra-g3a-sleep.sh.\nrebuild_marker=\"${OMARCHY_LIMINE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1794929085}\"\n\nif ! omarchy-hw-x86 || ! omarchy-hw-match \"ZBook Ultra G3a 16\"; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n  source \"$OMARCHY_PATH/install/hardware/hp/fix-hp-zbook-ultra-g3a-sleep.sh\"\n'\n\n# A marker records the machine-wide rebuild: another user's run must not repeat\n# it, while a missing marker still retries an interrupted rebuild.\nif [[ ! -e $rebuild_marker ]]; then\n  rebuild_log=$(mktemp)\n  trap 'rm -f \"$rebuild_log\"' EXIT\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n  # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n  # That image lacks the kernel option, so the migration stays pending.\n  if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n    exit 1\n  fi\n\n  sudo install -Dm644 /dev/null \"$rebuild_marker\"\n  omarchy-state set reboot-required\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-17T15:24:45Z",
+      "description": "Wake from sleep without an 80 second freeze on the HP ZBook Ultra G3a 16",
+      "file": "1794929085.sh",
+      "lineCount": 30,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794929085.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794929085.sh",
+      "timestamp": 1794929085,
+      "touches": [
+        "/var/lib/omarchy/migrations/1794929085"
+      ]
+    },
+    {
+      "body": "echo \"Add launchers for the agent harnesses already installed\"\n\n# Installing a harness now adds a launcher of its own beside Agent, as signing\n# in to a subscription does. Harnesses installed before that get theirs here,\n# leaving any launcher already in place alone.\nfor entry in \"$OMARCHY_PATH\"/default/applications/omarchy-agent-*.desktop; do\n  name=${entry##*/}\n  agent=${name#omarchy-agent-}\n  agent=${agent%.desktop}\n  [[ -f $HOME/.local/share/applications/$name ]] && continue\n  if omarchy-default-agent --installed \"$agent\" 2>/dev/null; then\n    omarchy-agent-launcher \"$agent\"\n  fi\ndone\n\n# Drawing the icon set links the launchers' new icons in right away, where they\n# would otherwise wait for the next theme switch.\nomarchy-theme-set-icons || true",
+      "bodyTruncated": false,
+      "date": "2026-11-17T16:01:15Z",
+      "description": "Add launchers for the agent harnesses already installed",
+      "file": "1794931275.sh",
+      "lineCount": 18,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794931275.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794931275.sh",
+      "timestamp": 1794931275,
+      "touches": [
+        "~/.local/share/applications/"
+      ]
+    },
+    {
+      "body": "echo \"Turn off herdr's own update check, since pacman updates herdr\"\n\nconfig=\"$HOME/.config/herdr/config.toml\"\n\n[[ -f $config ]] || exit 0\n\n# Dotfile managers may own the file or a parent directory through a symlink.\n# Preserve that layout rather than detaching or editing its target.\npath=\"$config\"\nwhile [[ $path != \"$HOME\" && $path != / ]]; do\n  if [[ -L $path ]]; then\n    echo \"Preserving symlink-managed herdr config: $config\"\n    exit 0\n  fi\n  path=$(dirname \"$path\")\ndone\n\n# Read the config as TOML, not as text, so quoted keys and strings can't fool\n# the check. A user who set anything under update made their own choice, and a\n# config herdr can't parse is theirs to fix, so both are left alone.\nstate=$(python3 - \"$config\" <<'PY'\nimport sys\nimport tomllib\n\ntry:\n    with open(sys.argv[1], \"rb\") as config:\n        print(\"set\" if \"update\" in tomllib.load(config) else \"unset\")\nexcept (OSError, UnicodeDecodeError, tomllib.TOMLDecodeError):\n    print(\"unreadable\")\nPY\n)\n\nif [[ $state == \"unset\" ]]; then\n  printf '\\n[update]\\nversion_check = false\\n' >>\"$config\"\n\n  # The file now holds the setting, and a server started later reads it. A\n  # running server only needs a reload, so a failed reload is not a failed\n  # migration.\n  omarchy-restart-herdr || true\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-17T17:58:30Z",
+      "description": "Turn off herdr's own update check, since pacman updates herdr",
+      "file": "1794938310.sh",
+      "lineCount": 40,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794938310.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794938310.sh",
+      "timestamp": 1794938310,
+      "touches": [
+        "~/.config/herdr/config.toml"
+      ]
+    },
+    {
+      "body": "echo \"Link every agent skill from the Omarchy tree in use\"\n\n# Skills were linked once, at first login, so skills shipped since (web-game)\n# never reached existing installs, and a dev-linked checkout's agents kept\n# reading the package's copies.\n\"$OMARCHY_PATH/bin/omarchy-agent-skills-link\"",
+      "bodyTruncated": false,
+      "date": "2026-11-18T07:53:25Z",
+      "description": "Link every agent skill from the Omarchy tree in use",
+      "file": "1794988405.sh",
+      "lineCount": 6,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794988405.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794988405.sh",
+      "timestamp": 1794988405,
+      "touches": []
+    },
+    {
+      "body": "echo \"Use theme intros from the external package\"\n\nomarchy-pkg-add omarchy-themes-intros",
+      "bodyTruncated": false,
+      "date": "2026-11-18T12:14:14Z",
+      "description": "Use theme intros from the external package",
+      "file": "1795004054.sh",
+      "lineCount": 3,
+      "packagesAdded": [
+        "omarchy-themes-intros"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1795004054.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795004054.sh",
+      "timestamp": 1795004054,
+      "touches": []
     }
   ],
   "prerelease": true,

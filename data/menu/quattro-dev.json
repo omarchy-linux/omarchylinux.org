@@ -2,24 +2,6 @@
   "count": 441,
   "flat": [
     {
-      "action": "omarchy-launch-about",
-      "aliases": [],
-      "checked": null,
-      "command": null,
-      "declared": true,
-      "depth": 0,
-      "icon": "",
-      "iconFont": null,
-      "id": "about",
-      "kind": "action",
-      "label": "About",
-      "parent": null,
-      "provider": null,
-      "target": null,
-      "title": null,
-      "when": null
-    },
-    {
       "action": null,
       "aliases": [],
       "checked": null,
@@ -6333,6 +6315,26 @@
       "when": null
     },
     {
+      "action": "omarchy-launch-about",
+      "aliases": [
+        "about"
+      ],
+      "checked": null,
+      "command": null,
+      "declared": true,
+      "depth": 1,
+      "icon": "",
+      "iconFont": null,
+      "id": "system.about",
+      "kind": "action",
+      "label": "About",
+      "parent": "system",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": null
+    },
+    {
       "action": "omarchy-system firmware",
       "aliases": [],
       "checked": null,
@@ -6759,7 +6761,7 @@
       "when": null
     },
     {
-      "action": "omarchy-launch-floating-terminal-with-presentation omarchy-toggle-hybrid-gpu",
+      "action": "omarchy-launch-floating-terminal-with-presentation omarchy-device-gpu-hybrid",
       "aliases": [],
       "checked": null,
       "command": null,
@@ -6777,7 +6779,7 @@
       "when": "omarchy-hw-hybrid-gpu && grep -q '\"mode\": \"Hybrid\"' /etc/supergfxd.conf"
     },
     {
-      "action": "omarchy-launch-floating-terminal-with-presentation omarchy-toggle-hybrid-gpu",
+      "action": "omarchy-launch-floating-terminal-with-presentation omarchy-device-gpu-hybrid",
       "aliases": [],
       "checked": null,
       "command": null,
@@ -6939,7 +6941,7 @@
       "when": "omarchy-hw-dell-xps-haptic-touchpad && omarchy-cmd-present dell-xps-touchpad-haptics"
     },
     {
-      "action": "omarchy-toggle-touchpad",
+      "action": "omarchy-device-touchpad",
       "aliases": [],
       "checked": null,
       "command": null,
@@ -6957,7 +6959,7 @@
       "when": "omarchy-hw-touchpad && [[ ! -f ~/.local/state/omarchy/toggles/hypr/touchpad-disabled-name ]]"
     },
     {
-      "action": "omarchy-toggle-touchpad",
+      "action": "omarchy-device-touchpad",
       "aliases": [],
       "checked": null,
       "command": null,
@@ -6975,7 +6977,7 @@
       "when": "omarchy-hw-touchpad && [[ -f ~/.local/state/omarchy/toggles/hypr/touchpad-disabled-name ]]"
     },
     {
-      "action": "omarchy-toggle-touchscreen",
+      "action": "omarchy-device-touchscreen",
       "aliases": [],
       "checked": null,
       "command": null,
@@ -6993,7 +6995,7 @@
       "when": "omarchy-hw-touchscreen && [[ ! -f ~/.local/state/omarchy/toggles/hypr/touchscreen-disabled-name ]]"
     },
     {
-      "action": "omarchy-toggle-touchscreen",
+      "action": "omarchy-device-touchscreen",
       "aliases": [],
       "checked": null,
       "command": null,
@@ -10769,7 +10771,7 @@
               "when": "omarchy-hw-laptop && omarchy-hyprland-toggle-enabled internal-monitor-mirror"
             },
             {
-              "action": "omarchy-launch-floating-terminal-with-presentation omarchy-toggle-hybrid-gpu",
+              "action": "omarchy-launch-floating-terminal-with-presentation omarchy-device-gpu-hybrid",
               "aliases": [],
               "checked": null,
               "children": [],
@@ -10788,7 +10790,7 @@
               "when": "omarchy-hw-hybrid-gpu && ! grep -q '\"mode\": \"Hybrid\"' /etc/supergfxd.conf"
             },
             {
-              "action": "omarchy-launch-floating-terminal-with-presentation omarchy-toggle-hybrid-gpu",
+              "action": "omarchy-launch-floating-terminal-with-presentation omarchy-device-gpu-hybrid",
               "aliases": [],
               "checked": null,
               "children": [],
@@ -10807,7 +10809,7 @@
               "when": "omarchy-hw-hybrid-gpu && grep -q '\"mode\": \"Hybrid\"' /etc/supergfxd.conf"
             },
             {
-              "action": "omarchy-toggle-touchpad",
+              "action": "omarchy-device-touchpad",
               "aliases": [],
               "checked": null,
               "children": [],
@@ -10826,7 +10828,7 @@
               "when": "omarchy-hw-touchpad && [[ -f ~/.local/state/omarchy/toggles/hypr/touchpad-disabled-name ]]"
             },
             {
-              "action": "omarchy-toggle-touchpad",
+              "action": "omarchy-device-touchpad",
               "aliases": [],
               "checked": null,
               "children": [],
@@ -10922,7 +10924,7 @@
               "when": null
             },
             {
-              "action": "omarchy-toggle-touchscreen",
+              "action": "omarchy-device-touchscreen",
               "aliases": [],
               "checked": null,
               "children": [],
@@ -10941,7 +10943,7 @@
               "when": "omarchy-hw-touchscreen && [[ -f ~/.local/state/omarchy/toggles/hypr/touchscreen-disabled-name ]]"
             },
             {
-              "action": "omarchy-toggle-touchscreen",
+              "action": "omarchy-device-touchscreen",
               "aliases": [],
               "checked": null,
               "children": [],
@@ -16316,31 +16318,33 @@
       "when": null
     },
     {
-      "action": "omarchy-launch-about",
-      "aliases": [],
-      "checked": null,
-      "children": [],
-      "command": null,
-      "declared": true,
-      "depth": 0,
-      "icon": "",
-      "iconFont": null,
-      "id": "about",
-      "kind": "action",
-      "label": "About",
-      "parent": null,
-      "provider": null,
-      "target": null,
-      "title": null,
-      "when": null
-    },
-    {
       "action": null,
       "aliases": [
         "power-menu"
       ],
       "checked": null,
       "children": [
+        {
+          "action": "omarchy-launch-about",
+          "aliases": [
+            "about"
+          ],
+          "checked": null,
+          "children": [],
+          "command": null,
+          "declared": true,
+          "depth": 1,
+          "icon": "",
+          "iconFont": null,
+          "id": "system.about",
+          "kind": "action",
+          "label": "About",
+          "parent": "system",
+          "provider": null,
+          "target": null,
+          "title": null,
+          "when": null
+        },
         {
           "action": "omarchy-launch-screensaver force",
           "aliases": [],

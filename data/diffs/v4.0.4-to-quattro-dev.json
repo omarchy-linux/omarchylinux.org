@@ -766,11 +766,35 @@
         ],
         "chord": "XF86PowerOff",
         "label": "Power menu"
+      },
+      {
+        "action": [
+          "omarchy-toggle-touchpad off",
+          "omarchy-device-touchpad off"
+        ],
+        "chord": "XF86TouchpadOff",
+        "label": "Disable touchpad"
+      },
+      {
+        "action": [
+          "omarchy-toggle-touchpad on",
+          "omarchy-device-touchpad on"
+        ],
+        "chord": "XF86TouchpadOn",
+        "label": "Enable touchpad"
+      },
+      {
+        "action": [
+          "touchpad",
+          "omarchy-device-touchpad"
+        ],
+        "chord": "XF86TouchpadToggle",
+        "label": "Toggle touchpad"
       }
     ],
     "counts": {
       "added": 39,
-      "changedAction": 76,
+      "changedAction": 79,
       "from": 228,
       "fromRecords": 228,
       "removed": 13,
@@ -848,9 +872,17 @@
       "omarchy-agent-account-use",
       "omarchy-agent-instructions",
       "omarchy-agent-integrate-herdr",
+      "omarchy-agent-launcher",
       "omarchy-agent-local",
+      "omarchy-agent-local-launchers",
+      "omarchy-agent-local-warmup",
       "omarchy-agent-logo",
+      "omarchy-agent-look-app",
+      "omarchy-agent-look-page",
+      "omarchy-agent-look-plugin",
+      "omarchy-agent-look-theme",
       "omarchy-agent-make",
+      "omarchy-agent-skills-link",
       "omarchy-agent-usage-agy",
       "omarchy-agent-usage-copilot",
       "omarchy-agent-usage-cursor",
@@ -887,6 +919,10 @@
       "omarchy-default-dictation",
       "omarchy-dev-notification-demo",
       "omarchy-dev-pack-chrome-extensions",
+      "omarchy-device-gpu-hybrid",
+      "omarchy-device-keyboard-toprow",
+      "omarchy-device-touchpad",
+      "omarchy-device-touchscreen",
       "omarchy-dictation",
       "omarchy-dictation-hex",
       "omarchy-dictation-superwhisper",
@@ -949,7 +985,6 @@
       "omarchy-install-t3code-app",
       "omarchy-install-video-decode",
       "omarchy-kernel",
-      "omarchy-keyboard-toprow",
       "omarchy-language",
       "omarchy-launch-files",
       "omarchy-launch-files-cwd",
@@ -1579,12 +1614,63 @@
       },
       {
         "fields": {
+          "hidden": [
+            false,
+            true
+          ],
+          "requiresSudo": [
+            true,
+            false
+          ],
+          "summary": [
+            "Toggle dedicated vs integrated GPU mode via supergfxd (for hybrid gpu laptops, like Asus G14).",
+            "Toggle dedicated vs integrated GPU mode (the old name of omarchy-device-gpu-hybrid)."
+          ]
+        },
+        "name": "omarchy-toggle-hybrid-gpu"
+      },
+      {
+        "fields": {
           "args": [
             "<touchpad|touchscreen> [on|off|toggle]",
             "<touchpad|touchscreen> [on|off|toggle|cycle]"
           ]
         },
         "name": "omarchy-toggle-input-device"
+      },
+      {
+        "fields": {
+          "args": [
+            "[on|off|toggle]",
+            ""
+          ],
+          "hidden": [
+            false,
+            true
+          ],
+          "summary": [
+            "Enable, disable, or toggle the touchpad",
+            "Enable, disable, or toggle the touchpad (the old name of omarchy-device-touchpad)."
+          ]
+        },
+        "name": "omarchy-toggle-touchpad"
+      },
+      {
+        "fields": {
+          "args": [
+            "[on|off|toggle]",
+            ""
+          ],
+          "hidden": [
+            false,
+            true
+          ],
+          "summary": [
+            "Enable, disable, or toggle the touch functionality of the screen",
+            "Enable, disable, or toggle the touchscreen (the old name of omarchy-device-touchscreen)."
+          ]
+        },
+        "name": "omarchy-toggle-touchscreen"
       },
       {
         "fields": {
@@ -1642,11 +1728,11 @@
       }
     ],
     "counts": {
-      "added": 169,
-      "changed": 51,
+      "added": 180,
+      "changed": 54,
       "from": 444,
       "removed": 10,
-      "to": 603
+      "to": 614
     },
     "removed": [
       "omarchy-install-chromium-google-account",
@@ -1803,6 +1889,7 @@
       "setup.keyboard.keybindings",
       "setup.language",
       "setup.security.ssh-agent",
+      "system.about",
       "system.firmware",
       "trigger.clipboard-history",
       "trigger.hardware.hybrid-gpu-off",
@@ -2712,13 +2799,14 @@
       }
     ],
     "counts": {
-      "added": 163,
+      "added": 164,
       "changed": 97,
       "from": 333,
-      "removed": 55,
+      "removed": 56,
       "to": 441
     },
     "removed": [
+      "about",
       "install.ai.dictation",
       "install.service.chromium-account",
       "install.service.spotify",
@@ -2779,9 +2867,9 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 186,
+      "new": 194,
       "removed": 0,
-      "to": 292
+      "to": 300
     },
     "new": [
       {
@@ -3365,6 +3453,11 @@
         "file": "1793461630.sh"
       },
       {
+        "date": "2026-10-31T16:36:10Z",
+        "description": "Mark the T2 Mac t2bce_vhci initramfs module optional so other kernels build",
+        "file": "1793464570.sh"
+      },
+      {
         "date": "2026-10-31T17:22:49Z",
         "description": "Move monitors.lua's defaults and saved monitor scales over to the monitor panel's settings",
         "file": "1793467369.sh"
@@ -3545,6 +3638,11 @@
         "file": "1794397144.sh"
       },
       {
+        "date": "2026-11-11T12:51:17Z",
+        "description": "Bring back Ghostscript, removed along with Nautilus",
+        "file": "1794401477.sh"
+      },
+      {
         "date": "2026-11-11T17:05:00Z",
         "description": "Show the disk unlock prompt on the HP OmniBook X 14 (14-fe0, Snapdragon X Elite)",
         "file": "1794416700.sh"
@@ -3695,6 +3793,11 @@
         "file": "1794827288.sh"
       },
       {
+        "date": "2026-11-16T14:23:27Z",
+        "description": "Add launchers for the local models already set up",
+        "file": "1794839007.sh"
+      },
+      {
         "date": "2026-11-16T14:25:03Z",
         "description": "Install Cards, the Klondike solitaire game",
         "file": "1794839103.sh"
@@ -3713,6 +3816,31 @@
         "date": "2026-11-16T20:07:17Z",
         "description": "Take the T2 Mac packages from the Omarchy repository",
         "file": "1794859637.sh"
+      },
+      {
+        "date": "2026-11-17T15:24:45Z",
+        "description": "Wake from sleep without an 80 second freeze on the HP ZBook Ultra G3a 16",
+        "file": "1794929085.sh"
+      },
+      {
+        "date": "2026-11-17T16:01:15Z",
+        "description": "Add launchers for the agent harnesses already installed",
+        "file": "1794931275.sh"
+      },
+      {
+        "date": "2026-11-17T17:58:30Z",
+        "description": "Turn off herdr's own update check, since pacman updates herdr",
+        "file": "1794938310.sh"
+      },
+      {
+        "date": "2026-11-18T07:53:25Z",
+        "description": "Link every agent skill from the Omarchy tree in use",
+        "file": "1794988405.sh"
+      },
+      {
+        "date": "2026-11-18T12:14:14Z",
+        "description": "Use theme intros from the external package",
+        "file": "1795004054.sh"
       }
     ],
     "removed": []

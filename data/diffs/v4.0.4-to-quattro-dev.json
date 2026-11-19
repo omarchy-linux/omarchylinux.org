@@ -907,7 +907,6 @@
       "omarchy-apply-n1x-gpu-memory",
       "omarchy-apply-pacman",
       "omarchy-ascii",
-      "omarchy-boot-direct",
       "omarchy-branding-about-animation",
       "omarchy-branding-about-cpu",
       "omarchy-capture-screenrecording-process",
@@ -930,6 +929,11 @@
       "omarchy-dictation-voxtype",
       "omarchy-dock",
       "omarchy-font-cjk",
+      "omarchy-games-vibes-copy",
+      "omarchy-games-vibes-install",
+      "omarchy-games-vibes-launch",
+      "omarchy-games-vibes-remove",
+      "omarchy-games-vibes-update",
       "omarchy-hibernation-encrypted",
       "omarchy-hw-aarch64",
       "omarchy-hw-aarch64-apple",
@@ -991,6 +995,8 @@
       "omarchy-launch-versions",
       "omarchy-lifecycle-dispatch",
       "omarchy-locale-generate",
+      "omarchy-locale-session",
+      "omarchy-menu-region",
       "omarchy-mise-default-tools",
       "omarchy-n1x-probe",
       "omarchy-network-captive-portal",
@@ -1000,6 +1006,7 @@
       "omarchy-provision-hardware",
       "omarchy-realtime-repair",
       "omarchy-refresh-herdr-app",
+      "omarchy-region",
       "omarchy-remove-ai-amp",
       "omarchy-remove-ai-chatgpt",
       "omarchy-remove-ai-claude",
@@ -1728,17 +1735,18 @@
       }
     ],
     "counts": {
-      "added": 180,
+      "added": 187,
       "changed": 54,
       "from": 444,
-      "removed": 10,
-      "to": 614
+      "removed": 11,
+      "to": 620
     },
     "removed": [
       "omarchy-install-chromium-google-account",
       "omarchy-install-service-spotify",
       "omarchy-launch-config-editor",
       "omarchy-screensaver",
+      "omarchy-setup-direct-boot",
       "omarchy-system-logout",
       "omarchy-system-reboot",
       "omarchy-system-shutdown",
@@ -1779,6 +1787,7 @@
       "agent.instructions",
       "agent.make",
       "agent.make.app",
+      "agent.make.game",
       "agent.make.plugin",
       "agent.make.theme",
       "appearance",
@@ -1858,6 +1867,7 @@
       "install.ai.herdr",
       "install.browser.chromium",
       "install.gaming.moonlight",
+      "install.gaming.vibes",
       "install.service.microsoft",
       "install.service.notion",
       "install.service.slack",
@@ -1872,22 +1882,27 @@
       "remove.dictation.hex",
       "remove.dictation.superwhisper",
       "remove.dictation.voxtype",
+      "remove.factory-reset",
       "remove.gaming.moonlight",
+      "remove.gaming.vibes",
       "remove.icons",
       "remove.service.1password",
       "remove.service.microsoft",
       "remove.service.ssh-agent",
-      "setup.config.git",
       "setup.default.dictation",
       "setup.default.dictation.hex",
       "setup.default.dictation.superwhisper",
       "setup.default.dictation.voxtype",
       "setup.default.editor.plain",
+      "setup.git",
       "setup.keyboard",
       "setup.keyboard.input-methods",
       "setup.keyboard.inputs",
       "setup.keyboard.keybindings",
-      "setup.language",
+      "setup.region",
+      "setup.region.formats",
+      "setup.region.language",
+      "setup.region.timezone",
       "setup.security.ssh-agent",
       "system.about",
       "system.firmware",
@@ -1912,6 +1927,7 @@
       "trigger.toggle.notifications-on",
       "trigger.toggle.screensaver-off",
       "trigger.toggle.screensaver-on",
+      "update.games",
       "update.icons",
       "update.kernel"
     ],
@@ -2718,15 +2734,6 @@
       },
       {
         "fields": {
-          "when": [
-            null,
-            "! omarchy-hw-aarch64-apple && [[ ! -f /etc/limine-entry-tool.d/zz-omarchy-dgx-spark.conf ]]"
-          ]
-        },
-        "id": "setup.direct-boot"
-      },
-      {
-        "fields": {
           "action": [
             "omarchy-launch-config-editor \"$HOME/.config/hypr/input.lua\"",
             "omarchy-launch-editor \"$HOME/.config/hypr/input.lua\""
@@ -2799,11 +2806,11 @@
       }
     ],
     "counts": {
-      "added": 164,
-      "changed": 97,
+      "added": 172,
+      "changed": 96,
       "from": 333,
-      "removed": 56,
-      "to": 441
+      "removed": 59,
+      "to": 446
     },
     "removed": [
       "about",
@@ -2824,8 +2831,10 @@
       "setup.default.agent.openclaw",
       "setup.default.agent.opencode",
       "setup.default.agent.pi",
+      "setup.direct-boot",
       "setup.keybindings",
       "setup.monitors",
+      "setup.reset",
       "style",
       "style.about",
       "style.about.default",
@@ -2861,15 +2870,16 @@
       "trigger.toggle.screensaver",
       "trigger.toggle.top-bar",
       "trigger.toggle.window-gaps",
-      "trigger.toggle.workspace-layout"
+      "trigger.toggle.workspace-layout",
+      "update.timezone"
     ]
   },
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 194,
+      "new": 197,
       "removed": 0,
-      "to": 300
+      "to": 303
     },
     "new": [
       {
@@ -3788,19 +3798,9 @@
         "file": "1794784953.sh"
       },
       {
-        "date": "2026-11-16T11:08:08Z",
-        "description": "Install Checkmate, the 3D chess game",
-        "file": "1794827288.sh"
-      },
-      {
         "date": "2026-11-16T14:23:27Z",
         "description": "Add launchers for the local models already set up",
         "file": "1794839007.sh"
-      },
-      {
-        "date": "2026-11-16T14:25:03Z",
-        "description": "Install Cards, the Klondike solitaire game",
-        "file": "1794839103.sh"
       },
       {
         "date": "2026-11-16T15:55:05Z",
@@ -3841,6 +3841,31 @@
         "date": "2026-11-18T12:14:14Z",
         "description": "Use theme intros from the external package",
         "file": "1795004054.sh"
+      },
+      {
+        "date": "2026-11-18T14:13:57Z",
+        "description": "Return freed GPU memory to the system at once on GB10 machines",
+        "file": "1795011237.sh"
+      },
+      {
+        "date": "2026-11-18T17:30:56Z",
+        "description": "Install Fantasi, the image maker",
+        "file": "1795023056.sh"
+      },
+      {
+        "date": "2026-11-19T09:27:54Z",
+        "description": "Add Game Vibes, Omarchy's games, to the app launcher",
+        "file": "1795080474.sh"
+      },
+      {
+        "date": "2026-11-19T09:44:57Z",
+        "description": "Keep the kernel's default free-memory watermark on GB10 machines",
+        "file": "1795081497.sh"
+      },
+      {
+        "date": "2026-11-19T09:45:08Z",
+        "description": "Remove the retired Direct Boot EFI entry so the machine boots through Limine",
+        "file": "1795081508.sh"
       }
     ],
     "removed": []

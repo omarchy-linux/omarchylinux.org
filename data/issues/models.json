@@ -1,7 +1,7 @@
 {
  "source": "github.com/omacom/omarchy",
- "fetchedAt": "2026-11-18T13:12:17.969501+00:00",
- "derivedAt": "2026-11-18T13:22:12.357174+00:00",
+ "fetchedAt": "2026-11-19T13:28:31.095143+00:00",
+ "derivedAt": "2026-11-19T13:38:05.761694+00:00",
  "quirkScriptRef": "v4.0.4",
  "counts": {
   "models": 170,
@@ -44,15 +44,15 @@
     "2024"
    ],
    "counts": {
-    "issues": 157,
-    "open": 95,
+    "issues": 158,
+    "open": 96,
     "closed": 62,
     "discussions": 26
    },
    "components": [
     {
      "key": "apple-silicon-asahi",
-     "issues": 59
+     "issues": 60
     },
     {
      "key": "multi-monitor",
@@ -128,6 +128,16 @@
     }
    ],
    "issues": [
+    {
+     "number": 19344,
+     "title": "Screensaver shows kitty's tab bar on 4.5.x (kitty gets no dedicated screensaver config)",
+     "url": "https://github.com/omacom/omarchy/issues/19344",
+     "state": "OPEN",
+     "components": [
+      "apple-silicon-asahi"
+     ],
+     "createdAt": "2026-11-18T16:14:14Z"
+    },
     {
      "number": 19215,
      "title": "Встроенный микрофон MacBook Pro J293 (Asahi) не пишет сигнал после первых 0.5 с",
@@ -1850,16 +1860,6 @@
       "touchpad-input"
      ],
      "createdAt": "2025-09-19T13:52:19Z"
-    },
-    {
-     "number": 1786,
-     "title": "MacBook Pro 2020 Intel German Version WLAN setup issues",
-     "url": "https://github.com/omacom/omarchy/issues/1786",
-     "state": "CLOSED",
-     "components": [
-      "wifi"
-     ],
-     "createdAt": "2025-09-18T21:01:06Z"
     }
    ],
    "issuesTruncated": true,
@@ -2047,7 +2047,7 @@
     },
     {
      "key": "touchpad-input",
-     "issues": 13
+     "issues": 12
     },
     {
      "key": "wifi",
@@ -2063,7 +2063,7 @@
     },
     {
      "key": "audio",
-     "issues": 5
+     "issues": 6
     },
     {
      "key": "hybrid-gpu",
@@ -2095,6 +2095,18 @@
     }
    ],
    "issues": [
+    {
+     "number": 19378,
+     "title": "Right Alt dictation keeps recording after the mirror shortcut, because a reload drops the hold",
+     "url": "https://github.com/omacom/omarchy/issues/19378",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu",
+      "multi-monitor",
+      "audio"
+     ],
+     "createdAt": "2026-11-18T23:04:54Z"
+    },
     {
      "number": 18718,
      "title": "Framework 13 Pro (PIXA3854 093A:1343): after lid resume the pad reports two phantom contacts — single-finger motion dead, two fingers still moves the pointer",
@@ -2138,18 +2150,6 @@
       "boot-limine"
      ],
      "createdAt": "2026-11-10T13:45:25Z"
-    },
-    {
-     "number": 18052,
-     "title": "Hidden Quake console window stays focused over an empty workspace, so window-move gestures and Super+Shift+N drag it out",
-     "url": "https://github.com/omacom/omarchy/issues/18052",
-     "state": "OPEN",
-     "components": [
-      "amd-gpu",
-      "multi-monitor",
-      "touchpad-input"
-     ],
-     "createdAt": "2026-11-07T16:18:50Z"
     },
     {
      "number": 17263,
@@ -3170,7 +3170,7 @@
     "issues": 75,
     "open": 49,
     "closed": 26,
-    "discussions": 16
+    "discussions": 17
    },
    "components": [
     {
@@ -5293,15 +5293,15 @@
     "Gen 9"
    ],
    "counts": {
-    "issues": 68,
-    "open": 34,
+    "issues": 69,
+    "open": 35,
     "closed": 34,
     "discussions": 7
    },
    "components": [
     {
      "key": "intel-gpu",
-     "issues": 25
+     "issues": 26
     },
     {
      "key": "multi-monitor",
@@ -5309,7 +5309,7 @@
     },
     {
      "key": "boot-limine",
-     "issues": 21
+     "issues": 22
     },
     {
      "key": "suspend-sleep",
@@ -5377,6 +5377,17 @@
     }
    ],
    "issues": [
+    {
+     "number": 19343,
+     "title": "omarchy CLI fails and omarchy update aborts mid-run in non-interactive shells (unset OMARCHY_PATH)",
+     "url": "https://github.com/omacom/omarchy/issues/19343",
+     "state": "OPEN",
+     "components": [
+      "intel-gpu",
+      "boot-limine"
+     ],
+     "createdAt": "2026-11-18T16:06:28Z"
+    },
     {
      "number": 19295,
      "title": "intel-ipu7-camera: IMX471 (ThinkPad X1 Carbon Gen 14) fails at graphId 100005; the relay drop-in hardcodes ov08x40-uf, so users get a silent black camera",
@@ -10132,9 +10143,9 @@
    ],
    "counts": {
     "issues": 34,
-    "open": 19,
-    "closed": 15,
-    "discussions": 6
+    "open": 18,
+    "closed": 16,
+    "discussions": 7
    },
    "components": [
     {
@@ -10211,7 +10222,7 @@
      "number": 17321,
      "title": "Waydroid launch/resize crashes on linux-omarchy 7.2.8-9; possible Rust Binder involvement",
      "url": "https://github.com/omacom/omarchy/issues/17321",
-     "state": "OPEN",
+     "state": "CLOSED",
      "components": [],
      "createdAt": "2026-11-02T05:44:27Z"
     },
@@ -13897,22 +13908,22 @@
     "series"
    ],
    "counts": {
-    "issues": 24,
-    "open": 13,
+    "issues": 25,
+    "open": 14,
     "closed": 11,
     "discussions": 8
    },
    "components": [
     {
      "key": "nvidia",
-     "issues": 15
-    },
-    {
-     "key": "boot-limine",
-     "issues": 10
+     "issues": 16
     },
     {
      "key": "multi-monitor",
+     "issues": 11
+    },
+    {
+     "key": "boot-limine",
      "issues": 10
     },
     {
@@ -13961,6 +13972,17 @@
     }
    ],
    "issues": [
+    {
+     "number": 19348,
+     "title": "Weather bar icon missing on 4.5.0-3",
+     "url": "https://github.com/omacom/omarchy/issues/19348",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "multi-monitor"
+     ],
+     "createdAt": "2026-11-18T17:01:21Z"
+    },
     {
      "number": 18657,
      "title": "Battery panel shows \"Charging\" while discharging on a USB-C/Thunderbolt dock that doesn't charge the laptop",
@@ -14702,7 +14724,7 @@
     "issues": 22,
     "open": 9,
     "closed": 13,
-    "discussions": 3
+    "discussions": 4
    },
    "components": [
     {
@@ -19147,6 +19169,221 @@
    "dmiHints": []
   },
   {
+   "key": "hp-omen",
+   "vendor": "HP",
+   "model": "HP Omen",
+   "aliases": [
+    "HP OMEN Laptop",
+    "HP OMEN MAX",
+    "HP OMEN Transcend",
+    "HP OMEN by",
+    "HP OMEN embedded",
+    "HP OMEN laptop",
+    "HP Omen 16",
+    "OMEN Laptop",
+    "OMEN MAX",
+    "OMEN by",
+    "OMEN v1",
+    "Omen",
+    "Omen users",
+    "omenu"
+   ],
+   "variants": [
+    "16",
+    "Transcend",
+    "embedded",
+    "users",
+    "v1"
+   ],
+   "counts": {
+    "issues": 12,
+    "open": 6,
+    "closed": 6,
+    "discussions": 5
+   },
+   "components": [
+    {
+     "key": "nvidia",
+     "issues": 9
+    },
+    {
+     "key": "multi-monitor",
+     "issues": 5
+    },
+    {
+     "key": "amd-gpu",
+     "issues": 2
+    },
+    {
+     "key": "intel-gpu",
+     "issues": 2
+    },
+    {
+     "key": "suspend-sleep",
+     "issues": 2
+    },
+    {
+     "key": "boot-limine",
+     "issues": 2
+    },
+    {
+     "key": "battery-power",
+     "issues": 2
+    },
+    {
+     "key": "touchpad-input",
+     "issues": 1
+    },
+    {
+     "key": "wifi",
+     "issues": 1
+    },
+    {
+     "key": "thunderbolt-dock",
+     "issues": 1
+    }
+   ],
+   "issues": [
+    {
+     "number": 19384,
+     "title": "Intel Titan Ridge JHL7540 + HP Thunderbolt Dock G2 leaves DP MST display unresponsive across warm reboots",
+     "url": "https://github.com/omacom/omarchy/issues/19384",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "suspend-sleep",
+      "multi-monitor",
+      "boot-limine",
+      "battery-power",
+      "thunderbolt-dock"
+     ],
+     "createdAt": "2026-11-19T00:39:44Z"
+    },
+    {
+     "number": 18483,
+     "title": "HP HyperX OMEN MAX 16 (8E9A): missing performance profile limits RTX 5070 Ti to 105 W",
+     "url": "https://github.com/omacom/omarchy/issues/18483",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "suspend-sleep",
+      "multi-monitor",
+      "boot-limine",
+      "battery-power"
+     ],
+     "createdAt": "2026-11-11T14:44:45Z"
+    },
+    {
+     "number": 14599,
+     "title": "Screenshots include the mouse pointer on the NVIDIA output",
+     "url": "https://github.com/omacom/omarchy/issues/14599",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "intel-gpu"
+     ],
+     "createdAt": "2026-10-08T15:20:59Z"
+    },
+    {
+     "number": 14042,
+     "title": "Voice-to-text loses the intended text-field focus",
+     "url": "https://github.com/omacom/omarchy/issues/14042",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "multi-monitor"
+     ],
+     "createdAt": "2026-10-02T11:00:50Z"
+    },
+    {
+     "number": 12910,
+     "title": "Clock calendar duplicates a day and shifts the month grid by one across a forward-DST transition",
+     "url": "https://github.com/omacom/omarchy/issues/12910",
+     "state": "CLOSED",
+     "components": [
+      "nvidia"
+     ],
+     "createdAt": "2026-09-22T14:50:41Z"
+    },
+    {
+     "number": 11115,
+     "title": "omarchy plugin update exits 1 after a successful update: set -e aborts on the unguarded rescanPlugins when its 2s IPC timeout expires",
+     "url": "https://github.com/omacom/omarchy/issues/11115",
+     "state": "OPEN",
+     "components": [
+      "multi-monitor"
+     ],
+     "createdAt": "2026-09-10T10:41:24Z"
+    },
+    {
+     "number": 10488,
+     "title": "Google Chrome aborts on launch: Qt wayland plugin missing (QT_QPA_PLATFORM=wayland;xcb without qt5-wayland)",
+     "url": "https://github.com/omacom/omarchy/issues/10488",
+     "state": "CLOSED",
+     "components": [
+      "nvidia",
+      "multi-monitor",
+      "wifi"
+     ],
+     "createdAt": "2026-09-06T14:56:02Z"
+    },
+    {
+     "number": 6987,
+     "title": "Agents bar widget: Claude collector shows 'Waiting for auth' with Vertex/Bedrock auth; no Gemini collector",
+     "url": "https://github.com/omacom/omarchy/issues/6987",
+     "state": "OPEN",
+     "components": [
+      "nvidia",
+      "intel-gpu"
+     ],
+     "createdAt": "2026-08-15T14:53:33Z"
+    },
+    {
+     "number": 5260,
+     "title": "[walker app launcher is slow to open - omarchy walker and elephant version mismatch in repo] walker 2.15.2 crashes with \"failed to fill whole buffer\" after elephant updated to 2.20.3",
+     "url": "https://github.com/omacom/omarchy/issues/5260",
+     "state": "CLOSED",
+     "components": [
+      "nvidia",
+      "amd-gpu"
+     ],
+     "createdAt": "2026-04-08T21:09:08Z"
+    },
+    {
+     "number": 4987,
+     "title": "Add built-in RGB keyboard color control for HP Victus / Omen (stock hp-wmi)",
+     "url": "https://github.com/omacom/omarchy/issues/4987",
+     "state": "CLOSED",
+     "components": [
+      "nvidia",
+      "touchpad-input"
+     ],
+     "createdAt": "2026-03-12T08:14:11Z"
+    },
+    {
+     "number": 3586,
+     "title": "Keybinds work on one system and doesn't on the other",
+     "url": "https://github.com/omacom/omarchy/issues/3586",
+     "state": "CLOSED",
+     "components": [],
+     "createdAt": "2025-11-24T08:56:53Z"
+    },
+    {
+     "number": 2943,
+     "title": "Slow Walker responses since Omarchy 3.1 (2–4s delay even after clean reinstall)",
+     "url": "https://github.com/omacom/omarchy/issues/2943",
+     "state": "CLOSED",
+     "components": [
+      "amd-gpu"
+     ],
+     "createdAt": "2025-10-28T19:28:15Z"
+    }
+   ],
+   "issuesTruncated": false,
+   "quirkScripts": [],
+   "dmiHints": []
+  },
+  {
    "key": "hp-zbook",
    "vendor": "HP",
    "model": "HP Zbook",
@@ -19177,7 +19414,7 @@
     "issues": 12,
     "open": 4,
     "closed": 8,
-    "discussions": 2
+    "discussions": 3
    },
    "components": [
     {
@@ -19809,199 +20046,6 @@
       "nvidia"
      ],
      "createdAt": "2025-09-11T14:46:21Z"
-    }
-   ],
-   "issuesTruncated": false,
-   "quirkScripts": [],
-   "dmiHints": []
-  },
-  {
-   "key": "hp-omen",
-   "vendor": "HP",
-   "model": "HP Omen",
-   "aliases": [
-    "HP OMEN Laptop",
-    "HP OMEN MAX",
-    "HP OMEN Transcend",
-    "HP OMEN by",
-    "HP Omen 16",
-    "OMEN Laptop",
-    "OMEN MAX",
-    "OMEN by",
-    "OMEN v1",
-    "Omen",
-    "Omen users",
-    "omenu"
-   ],
-   "variants": [
-    "16",
-    "Transcend",
-    "users",
-    "v1"
-   ],
-   "counts": {
-    "issues": 11,
-    "open": 5,
-    "closed": 6,
-    "discussions": 5
-   },
-   "components": [
-    {
-     "key": "nvidia",
-     "issues": 8
-    },
-    {
-     "key": "multi-monitor",
-     "issues": 4
-    },
-    {
-     "key": "amd-gpu",
-     "issues": 2
-    },
-    {
-     "key": "intel-gpu",
-     "issues": 2
-    },
-    {
-     "key": "touchpad-input",
-     "issues": 1
-    },
-    {
-     "key": "wifi",
-     "issues": 1
-    },
-    {
-     "key": "suspend-sleep",
-     "issues": 1
-    },
-    {
-     "key": "boot-limine",
-     "issues": 1
-    },
-    {
-     "key": "battery-power",
-     "issues": 1
-    }
-   ],
-   "issues": [
-    {
-     "number": 18483,
-     "title": "HP HyperX OMEN MAX 16 (8E9A): missing performance profile limits RTX 5070 Ti to 105 W",
-     "url": "https://github.com/omacom/omarchy/issues/18483",
-     "state": "OPEN",
-     "components": [
-      "nvidia",
-      "suspend-sleep",
-      "multi-monitor",
-      "boot-limine",
-      "battery-power"
-     ],
-     "createdAt": "2026-11-11T14:44:45Z"
-    },
-    {
-     "number": 14599,
-     "title": "Screenshots include the mouse pointer on the NVIDIA output",
-     "url": "https://github.com/omacom/omarchy/issues/14599",
-     "state": "OPEN",
-     "components": [
-      "nvidia",
-      "intel-gpu"
-     ],
-     "createdAt": "2026-10-08T15:20:59Z"
-    },
-    {
-     "number": 14042,
-     "title": "Voice-to-text loses the intended text-field focus",
-     "url": "https://github.com/omacom/omarchy/issues/14042",
-     "state": "OPEN",
-     "components": [
-      "nvidia",
-      "multi-monitor"
-     ],
-     "createdAt": "2026-10-02T11:00:50Z"
-    },
-    {
-     "number": 12910,
-     "title": "Clock calendar duplicates a day and shifts the month grid by one across a forward-DST transition",
-     "url": "https://github.com/omacom/omarchy/issues/12910",
-     "state": "CLOSED",
-     "components": [
-      "nvidia"
-     ],
-     "createdAt": "2026-09-22T14:50:41Z"
-    },
-    {
-     "number": 11115,
-     "title": "omarchy plugin update exits 1 after a successful update: set -e aborts on the unguarded rescanPlugins when its 2s IPC timeout expires",
-     "url": "https://github.com/omacom/omarchy/issues/11115",
-     "state": "OPEN",
-     "components": [
-      "multi-monitor"
-     ],
-     "createdAt": "2026-09-10T10:41:24Z"
-    },
-    {
-     "number": 10488,
-     "title": "Google Chrome aborts on launch: Qt wayland plugin missing (QT_QPA_PLATFORM=wayland;xcb without qt5-wayland)",
-     "url": "https://github.com/omacom/omarchy/issues/10488",
-     "state": "CLOSED",
-     "components": [
-      "nvidia",
-      "multi-monitor",
-      "wifi"
-     ],
-     "createdAt": "2026-09-06T14:56:02Z"
-    },
-    {
-     "number": 6987,
-     "title": "Agents bar widget: Claude collector shows 'Waiting for auth' with Vertex/Bedrock auth; no Gemini collector",
-     "url": "https://github.com/omacom/omarchy/issues/6987",
-     "state": "OPEN",
-     "components": [
-      "nvidia",
-      "intel-gpu"
-     ],
-     "createdAt": "2026-08-15T14:53:33Z"
-    },
-    {
-     "number": 5260,
-     "title": "[walker app launcher is slow to open - omarchy walker and elephant version mismatch in repo] walker 2.15.2 crashes with \"failed to fill whole buffer\" after elephant updated to 2.20.3",
-     "url": "https://github.com/omacom/omarchy/issues/5260",
-     "state": "CLOSED",
-     "components": [
-      "nvidia",
-      "amd-gpu"
-     ],
-     "createdAt": "2026-04-08T21:09:08Z"
-    },
-    {
-     "number": 4987,
-     "title": "Add built-in RGB keyboard color control for HP Victus / Omen (stock hp-wmi)",
-     "url": "https://github.com/omacom/omarchy/issues/4987",
-     "state": "CLOSED",
-     "components": [
-      "nvidia",
-      "touchpad-input"
-     ],
-     "createdAt": "2026-03-12T08:14:11Z"
-    },
-    {
-     "number": 3586,
-     "title": "Keybinds work on one system and doesn't on the other",
-     "url": "https://github.com/omacom/omarchy/issues/3586",
-     "state": "CLOSED",
-     "components": [],
-     "createdAt": "2025-11-24T08:56:53Z"
-    },
-    {
-     "number": 2943,
-     "title": "Slow Walker responses since Omarchy 3.1 (2–4s delay even after clean reinstall)",
-     "url": "https://github.com/omacom/omarchy/issues/2943",
-     "state": "CLOSED",
-     "components": [
-      "amd-gpu"
-     ],
-     "createdAt": "2025-10-28T19:28:15Z"
     }
    ],
    "issuesTruncated": false,
@@ -23420,6 +23464,133 @@
    "legacyPrototypeSource": "legacy-prototype-unverified"
   },
   {
+   "key": "lenovo-thinkpad-t460s",
+   "vendor": "Lenovo",
+   "model": "ThinkPad T460S",
+   "aliases": [
+    "ThinkPad T460s",
+    "Thinkpad T460s"
+   ],
+   "variants": [],
+   "counts": {
+    "issues": 7,
+    "open": 3,
+    "closed": 4,
+    "discussions": 1
+   },
+   "components": [
+    {
+     "key": "multi-monitor",
+     "issues": 4
+    },
+    {
+     "key": "battery-power",
+     "issues": 4
+    },
+    {
+     "key": "boot-limine",
+     "issues": 1
+    },
+    {
+     "key": "windows-vm",
+     "issues": 1
+    },
+    {
+     "key": "bluetooth",
+     "issues": 1
+    },
+    {
+     "key": "wifi",
+     "issues": 1
+    },
+    {
+     "key": "touchpad-input",
+     "issues": 1
+    }
+   ],
+   "issues": [
+    {
+     "number": 19436,
+     "title": "Overlays (menu, pickers, OSD) stay invisible at fractional monitor scales below 1.0 — OverlayWindow reveal guard never matches",
+     "url": "https://github.com/omacom/omarchy/issues/19436",
+     "state": "OPEN",
+     "components": [
+      "multi-monitor",
+      "wifi",
+      "touchpad-input"
+     ],
+     "createdAt": "2026-11-19T13:22:56Z"
+    },
+    {
+     "number": 15112,
+     "title": "Bluetooth can't be turned back on from the bar on ThinkPads: rfkill block removes the adapter",
+     "url": "https://github.com/omacom/omarchy/issues/15112",
+     "state": "OPEN",
+     "components": [
+      "bluetooth",
+      "battery-power"
+     ],
+     "createdAt": "2026-10-12T06:24:15Z"
+    },
+    {
+     "number": 11429,
+     "title": "Power panel: percentage text and progress bar disagree on dual-battery systems",
+     "url": "https://github.com/omacom/omarchy/issues/11429",
+     "state": "CLOSED",
+     "components": [
+      "multi-monitor",
+      "battery-power"
+     ],
+     "createdAt": "2026-09-12T08:25:32Z"
+    },
+    {
+     "number": 7916,
+     "title": "Power panel reports dead BAT0 (0% / 0W / Holding) on dual-battery ThinkPads",
+     "url": "https://github.com/omacom/omarchy/issues/7916",
+     "state": "OPEN",
+     "components": [
+      "multi-monitor",
+      "battery-power"
+     ],
+     "createdAt": "2026-08-23T15:47:16Z"
+    },
+    {
+     "number": 7897,
+     "title": "omarchy-battery-status reports only the first battery (BAT0) on multi-battery systems",
+     "url": "https://github.com/omacom/omarchy/issues/7897",
+     "state": "CLOSED",
+     "components": [
+      "multi-monitor",
+      "battery-power"
+     ],
+     "createdAt": "2026-08-23T14:28:21Z"
+    },
+    {
+     "number": 3531,
+     "title": "Windows Vm not luanching",
+     "url": "https://github.com/omacom/omarchy/issues/3531",
+     "state": "CLOSED",
+     "components": [
+      "windows-vm"
+     ],
+     "createdAt": "2025-11-22T12:44:49Z"
+    },
+    {
+     "number": 1887,
+     "title": "Black screen after post installation update on Thinkpad T460s",
+     "url": "https://github.com/omacom/omarchy/issues/1887",
+     "state": "CLOSED",
+     "components": [
+      "boot-limine"
+     ],
+     "createdAt": "2025-09-22T18:22:52Z"
+    }
+   ],
+   "issuesTruncated": false,
+   "quirkScripts": [],
+   "dmiHints": []
+  },
+  {
    "key": "lenovo-thinkpad-x1-yoga",
    "vendor": "Lenovo",
    "model": "ThinkPad X1 Yoga",
@@ -24790,113 +24961,6 @@
       "thunderbolt-dock"
      ],
      "createdAt": "2026-04-18T03:57:50Z"
-    }
-   ],
-   "issuesTruncated": false,
-   "quirkScripts": [],
-   "dmiHints": []
-  },
-  {
-   "key": "lenovo-thinkpad-t460s",
-   "vendor": "Lenovo",
-   "model": "ThinkPad T460S",
-   "aliases": [
-    "ThinkPad T460s",
-    "Thinkpad T460s"
-   ],
-   "variants": [],
-   "counts": {
-    "issues": 6,
-    "open": 2,
-    "closed": 4,
-    "discussions": 1
-   },
-   "components": [
-    {
-     "key": "battery-power",
-     "issues": 4
-    },
-    {
-     "key": "multi-monitor",
-     "issues": 3
-    },
-    {
-     "key": "boot-limine",
-     "issues": 1
-    },
-    {
-     "key": "windows-vm",
-     "issues": 1
-    },
-    {
-     "key": "bluetooth",
-     "issues": 1
-    }
-   ],
-   "issues": [
-    {
-     "number": 15112,
-     "title": "Bluetooth can't be turned back on from the bar on ThinkPads: rfkill block removes the adapter",
-     "url": "https://github.com/omacom/omarchy/issues/15112",
-     "state": "OPEN",
-     "components": [
-      "bluetooth",
-      "battery-power"
-     ],
-     "createdAt": "2026-10-12T06:24:15Z"
-    },
-    {
-     "number": 11429,
-     "title": "Power panel: percentage text and progress bar disagree on dual-battery systems",
-     "url": "https://github.com/omacom/omarchy/issues/11429",
-     "state": "CLOSED",
-     "components": [
-      "multi-monitor",
-      "battery-power"
-     ],
-     "createdAt": "2026-09-12T08:25:32Z"
-    },
-    {
-     "number": 7916,
-     "title": "Power panel reports dead BAT0 (0% / 0W / Holding) on dual-battery ThinkPads",
-     "url": "https://github.com/omacom/omarchy/issues/7916",
-     "state": "OPEN",
-     "components": [
-      "multi-monitor",
-      "battery-power"
-     ],
-     "createdAt": "2026-08-23T15:47:16Z"
-    },
-    {
-     "number": 7897,
-     "title": "omarchy-battery-status reports only the first battery (BAT0) on multi-battery systems",
-     "url": "https://github.com/omacom/omarchy/issues/7897",
-     "state": "CLOSED",
-     "components": [
-      "multi-monitor",
-      "battery-power"
-     ],
-     "createdAt": "2026-08-23T14:28:21Z"
-    },
-    {
-     "number": 3531,
-     "title": "Windows Vm not luanching",
-     "url": "https://github.com/omacom/omarchy/issues/3531",
-     "state": "CLOSED",
-     "components": [
-      "windows-vm"
-     ],
-     "createdAt": "2025-11-22T12:44:49Z"
-    },
-    {
-     "number": 1887,
-     "title": "Black screen after post installation update on Thinkpad T460s",
-     "url": "https://github.com/omacom/omarchy/issues/1887",
-     "state": "CLOSED",
-     "components": [
-      "boot-limine"
-     ],
-     "createdAt": "2025-09-22T18:22:52Z"
     }
    ],
    "issuesTruncated": false,
@@ -26583,124 +26647,6 @@
    "legacyPrototypeSource": "legacy-prototype-unverified"
   },
   {
-   "key": "valve-steam-deck",
-   "vendor": "Valve",
-   "model": "Steam Deck",
-   "aliases": [
-    "Steam Deck"
-   ],
-   "variants": [],
-   "counts": {
-    "issues": 5,
-    "open": 3,
-    "closed": 2,
-    "discussions": 5
-   },
-   "components": [
-    {
-     "key": "multi-monitor",
-     "issues": 3
-    },
-    {
-     "key": "thunderbolt-dock",
-     "issues": 2
-    },
-    {
-     "key": "boot-limine",
-     "issues": 2
-    },
-    {
-     "key": "battery-power",
-     "issues": 2
-    },
-    {
-     "key": "audio",
-     "issues": 1
-    },
-    {
-     "key": "suspend-sleep",
-     "issues": 1
-    }
-   ],
-   "issues": [
-    {
-     "number": 16625,
-     "title": "linux-omarchy 7.2.8-9 (native rust binder) collides with installed binder_linux-dkms: EBUSY every boot → kernel corruption → random freezes; needs migration path",
-     "url": "https://github.com/omacom/omarchy/issues/16625",
-     "state": "OPEN",
-     "components": [
-      "suspend-sleep",
-      "boot-limine",
-      "battery-power"
-     ],
-     "createdAt": "2026-10-25T15:37:57Z"
-    },
-    {
-     "number": 15099,
-     "title": "Kernel hard-hangs on Steam Deck within ~0.7s of undocking USB-C dock (session and journal both die silently)",
-     "url": "https://github.com/omacom/omarchy/issues/15099",
-     "state": "OPEN",
-     "components": [
-      "multi-monitor",
-      "boot-limine",
-      "battery-power",
-      "thunderbolt-dock"
-     ],
-     "createdAt": "2026-10-12T03:25:08Z"
-    },
-    {
-     "number": 10357,
-     "title": "`omarchy toggle bar on/off` behaves in reverse",
-     "url": "https://github.com/omacom/omarchy/issues/10357",
-     "state": "CLOSED",
-     "components": [
-      "multi-monitor"
-     ],
-     "createdAt": "2026-09-05T19:47:16Z"
-    },
-    {
-     "number": 8378,
-     "title": "Shell restart buries external animated wallpapers — omarchy-background remaps above existing layer-shell background layers",
-     "url": "https://github.com/omacom/omarchy/issues/8378",
-     "state": "OPEN",
-     "components": [
-      "multi-monitor",
-      "audio",
-      "thunderbolt-dock"
-     ],
-     "createdAt": "2026-08-26T12:20:43Z"
-    },
-    {
-     "number": 582,
-     "title": "After omarchy update: all walker menus not working",
-     "url": "https://github.com/omacom/omarchy/issues/582",
-     "state": "CLOSED",
-     "components": [],
-     "createdAt": "2025-08-09T09:15:54Z"
-    }
-   ],
-   "issuesTruncated": false,
-   "quirkScripts": [],
-   "dmiHints": [],
-   "legacyPrototype": {
-    "id": "steam-deck",
-    "name": "Steam Deck (LCD / OLED)",
-    "brand": "Valve",
-    "rating": "experimental",
-    "summary": "Community Pizzarchy image exists (controller-only installer). Unofficial — do not grab random ISOs. Official Omarchy ISO is not a Deck image.",
-    "type": "handheld",
-    "tags": "steam deck pizzarchy gamescope",
-    "wifi": "works",
-    "audio": "works",
-    "webcam": "works",
-    "fingerprint": "n/a",
-    "gpu": "works",
-    "suspend": "works",
-    "href": "handheld.html#steam-deck"
-   },
-   "legacyPrototypeSource": "legacy-prototype-unverified"
-  },
-  {
    "key": "dell-vostro",
    "vendor": "Dell",
    "model": "Dell Vostro",
@@ -27258,6 +27204,108 @@
    "issuesTruncated": false,
    "quirkScripts": [],
    "dmiHints": []
+  },
+  {
+   "key": "valve-steam-deck",
+   "vendor": "Valve",
+   "model": "Steam Deck",
+   "aliases": [
+    "Steam Deck"
+   ],
+   "variants": [],
+   "counts": {
+    "issues": 4,
+    "open": 2,
+    "closed": 2,
+    "discussions": 5
+   },
+   "components": [
+    {
+     "key": "multi-monitor",
+     "issues": 2
+    },
+    {
+     "key": "boot-limine",
+     "issues": 2
+    },
+    {
+     "key": "battery-power",
+     "issues": 2
+    },
+    {
+     "key": "thunderbolt-dock",
+     "issues": 1
+    },
+    {
+     "key": "suspend-sleep",
+     "issues": 1
+    }
+   ],
+   "issues": [
+    {
+     "number": 16625,
+     "title": "linux-omarchy 7.2.8-9 (native rust binder) collides with installed binder_linux-dkms: EBUSY every boot → kernel corruption → random freezes; needs migration path",
+     "url": "https://github.com/omacom/omarchy/issues/16625",
+     "state": "OPEN",
+     "components": [
+      "suspend-sleep",
+      "boot-limine",
+      "battery-power"
+     ],
+     "createdAt": "2026-10-25T15:37:57Z"
+    },
+    {
+     "number": 15099,
+     "title": "Kernel hard-hangs on Steam Deck within ~0.7s of undocking USB-C dock (session and journal both die silently)",
+     "url": "https://github.com/omacom/omarchy/issues/15099",
+     "state": "OPEN",
+     "components": [
+      "multi-monitor",
+      "boot-limine",
+      "battery-power",
+      "thunderbolt-dock"
+     ],
+     "createdAt": "2026-10-12T03:25:08Z"
+    },
+    {
+     "number": 10357,
+     "title": "`omarchy toggle bar on/off` behaves in reverse",
+     "url": "https://github.com/omacom/omarchy/issues/10357",
+     "state": "CLOSED",
+     "components": [
+      "multi-monitor"
+     ],
+     "createdAt": "2026-09-05T19:47:16Z"
+    },
+    {
+     "number": 582,
+     "title": "After omarchy update: all walker menus not working",
+     "url": "https://github.com/omacom/omarchy/issues/582",
+     "state": "CLOSED",
+     "components": [],
+     "createdAt": "2025-08-09T09:15:54Z"
+    }
+   ],
+   "issuesTruncated": false,
+   "quirkScripts": [],
+   "dmiHints": [],
+   "legacyPrototype": {
+    "id": "steam-deck",
+    "name": "Steam Deck (LCD / OLED)",
+    "brand": "Valve",
+    "rating": "experimental",
+    "summary": "Community Pizzarchy image exists (controller-only installer). Unofficial — do not grab random ISOs. Official Omarchy ISO is not a Deck image.",
+    "type": "handheld",
+    "tags": "steam deck pizzarchy gamescope",
+    "wifi": "works",
+    "audio": "works",
+    "webcam": "works",
+    "fingerprint": "n/a",
+    "gpu": "works",
+    "suspend": "works",
+    "href": "handheld.html#steam-deck"
+   },
+   "legacyPrototypeSource": "legacy-prototype-unverified"
   },
   {
    "key": "apple-macbookair5-2",
@@ -30152,7 +30200,7 @@
     "issues": 1,
     "open": 1,
     "closed": 0,
-    "discussions": 0
+    "discussions": 1
    },
    "components": [
     {

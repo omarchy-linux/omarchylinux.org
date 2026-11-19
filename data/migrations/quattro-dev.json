@@ -1,5 +1,5 @@
 {
-  "count": 300,
+  "count": 303,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -2381,12 +2381,12 @@
       ]
     },
     {
-      "body": "echo \"Boot the DGX Spark without a UKI to skip a 20-second firmware delay\"\n\n# Existing installs predate the install-time setting, which Limine only applies\n# on a rebuild. The marker stops another user's run from repeating the\n# machine-wide rebuild, while a missing marker retries an interrupted one.\nlimine_config_dir=${OMARCHY_LIMINE_CONFIG_DIR:-/etc/limine-entry-tool.d}\nrebuild_marker=${OMARCHY_DGX_SPARK_BOOT_MARKER:-/var/lib/omarchy/migrations/1790517230}\n\nomarchy-hw-aarch64-gb10 && omarchy-hw-match \"NVIDIA_DGX_Spark\" || exit 0\nomarchy-cmd-present limine-mkinitcpio || exit 0\n[[ ! -e $rebuild_marker ]] || exit 0\n\n# Direct Boot loads the UKI through firmware. Rebuilding without a UKI would\n# delete its boot target; leave that choice intact, including its boot files.\n# A drop-in already on disk would do the same on the next kernel rebuild.\ndirect_boot_status=0\nomarchy-boot-direct || direct_boot_status=$?\nif (( direct_boot_status == 0 )); then\n  # Drop the file here. The hardware leaf exits 0 when a second read fails, and\n  # it can write ENABLE_UKI=no again if that read says Direct Boot is gone.\n  drop_in=$limine_config_dir/zz-omarchy-dgx-spark.conf\n  if [[ -f $drop_in ]]; then\n    sudo rm -f \"$drop_in\"\n    if [[ -f $drop_in ]]; then\n      echo \"Couldn't remove the DGX Spark drop-in that would delete the Direct Boot UKI\" >&2\n      exit 1\n    fi\n  fi\n  echo \"Keeping the UKI because Omarchy Direct Boot is configured\"\n  exit 0\nfi\nif (( direct_boot_status != 1 )); then\n  exit \"$direct_boot_status\"\nfi\n\n# Only an inactive Omarchy entry is named below. efibootmgr 18 follows each\n# label with a tab and the device path, so keep the label field.\nefi_labels=$(efibootmgr | cut -f1)\n\nif [[ ! -f $limine_config_dir/zz-omarchy-dgx-spark.conf ]]; then",
-      "bodyTruncated": true,
+      "body": "echo \"Boot the DGX Spark without a UKI to skip a 20-second firmware delay\"\n\n# Existing installs predate the install-time setting, which Limine only applies\n# on a rebuild. The marker stops another user's run from repeating the\n# machine-wide rebuild, while a missing marker retries an interrupted one.\nlimine_config_dir=${OMARCHY_LIMINE_CONFIG_DIR:-/etc/limine-entry-tool.d}\nrebuild_marker=${OMARCHY_DGX_SPARK_BOOT_MARKER:-/var/lib/omarchy/migrations/1790517230}\n\nomarchy-hw-aarch64-gb10 && omarchy-hw-match \"NVIDIA_DGX_Spark\" || exit 0\nomarchy-cmd-present limine-mkinitcpio || exit 0\n[[ ! -e $rebuild_marker ]] || exit 0\n\nif [[ ! -f $limine_config_dir/zz-omarchy-dgx-spark.conf ]]; then\n  sudo bash \"$OMARCHY_PATH/install/hardware/nvidia/dgx-spark-boot.sh\"\nfi\n\nif ! grep -Fxqs 'ENABLE_UKI=no' \"$limine_config_dir/zz-omarchy-dgx-spark.conf\"; then\n  echo \"Couldn't apply the DGX Spark non-UKI setting; leaving the boot migration pending\" >&2\n  exit 1\nfi\n\nsudo limine-mkinitcpio\nsudo install -Dm644 /dev/null \"$rebuild_marker\"",
+      "bodyTruncated": false,
       "date": "2026-09-27T13:53:50Z",
       "description": "Boot the DGX Spark without a UKI to skip a 20-second firmware delay",
       "file": "1790517230.sh",
-      "lineCount": 55,
+      "lineCount": 23,
       "packagesAdded": [],
       "packagesRemoved": [],
       "path": "migrations/1790517230.sh",
@@ -4884,24 +4884,6 @@
       ]
     },
     {
-      "body": "echo \"Install Checkmate, the 3D chess game\"\n\nif [[ ! -f $HOME/.local/state/omarchy/preinstalls-removed ]]; then\n  omarchy-pkg-add checkmate\nfi\n\n# Drawing the icon set puts its themed icon in the launcher right away, where\n# it would otherwise wait for the next theme switch.\nomarchy-theme-set-icons || true",
-      "bodyTruncated": false,
-      "date": "2026-11-16T11:08:08Z",
-      "description": "Install Checkmate, the 3D chess game",
-      "file": "1794827288.sh",
-      "lineCount": 9,
-      "packagesAdded": [
-        "checkmate"
-      ],
-      "packagesRemoved": [],
-      "path": "migrations/1794827288.sh",
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794827288.sh",
-      "timestamp": 1794827288,
-      "touches": [
-        "~/.local/state/omarchy/preinstalls-removed"
-      ]
-    },
-    {
       "body": "echo \"Add launchers for the local models already set up\"\n\n# Setting up a local model now adds a launcher of its own beside Agent, with\n# the model's name and its vendor's logo. Models set up before that get theirs\n# here; a machine without any gets nothing. Neither does one whose engine was\n# removed: without omarchy-local-ai no model can be read, let alone opened.\nif omarchy-cmd-present omarchy-local-ai; then\n  omarchy-agent-local-launchers\nfi",
       "bodyTruncated": false,
       "date": "2026-11-16T14:23:27Z",
@@ -4914,24 +4896,6 @@
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794839007.sh",
       "timestamp": 1794839007,
       "touches": []
-    },
-    {
-      "body": "echo \"Install Cards, the Klondike solitaire game\"\n\nif [[ ! -f $HOME/.local/state/omarchy/preinstalls-removed ]]; then\n  omarchy-pkg-add cards\nfi\n\n# Drawing the icon set puts its themed icon in the launcher right away, where\n# it would otherwise wait for the next theme switch.\nomarchy-theme-set-icons || true",
-      "bodyTruncated": false,
-      "date": "2026-11-16T14:25:03Z",
-      "description": "Install Cards, the Klondike solitaire game",
-      "file": "1794839103.sh",
-      "lineCount": 9,
-      "packagesAdded": [
-        "cards"
-      ],
-      "packagesRemoved": [],
-      "path": "migrations/1794839103.sh",
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794839103.sh",
-      "timestamp": 1794839103,
-      "touches": [
-        "~/.local/state/omarchy/preinstalls-removed"
-      ]
     },
     {
       "body": "echo \"Build Snapdragon boot images with a stub that holds every device tree\"\n\n# linux-omarchy-dtbs 7.3-42 ships more Snapdragon device trees than Arch Linux\n# ARM's systemd stub has header room for, so ukify stops building the boot\n# image. systemd-stub-omarchy is the same stub with room for all of them, and\n# omarchy-update-qualcomm-device-trees names it in the UKI configuration once\n# it is installed. The image is rebuilt, as the last kernel update's build may\n# have failed. The marker records the rebuild as owed before the package is\n# added, so a retry rebuilds even when the package is already there.\nif ! omarchy-hw-aarch64-qualcomm || ! grep -Fqx '# BEGIN OMARCHY QUALCOMM DEVICE TREES' /etc/kernel/uki.conf 2>/dev/null; then\n  exit 0\nfi\n\nrebuild_pending=/var/lib/omarchy/migrations/1794844505-rebuild-pending\nif [[ -e $rebuild_pending ]] || omarchy-pkg-missing systemd-stub-omarchy; then\n  sudo install -Dm644 /dev/null \"$rebuild_pending\" || exit 1\n  omarchy-pkg-add systemd-stub-omarchy || exit 1\nfi\n\nif [[ -e $rebuild_pending ]]; then\n  rebuild_log=$(mktemp)\n  trap 'rm -f \"$rebuild_log\"' EXIT\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n  # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n  if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n    exit 1\n  fi\n\n  sudo rm -f \"$rebuild_pending\"\n  omarchy-state set reboot-required\nfi",
@@ -5064,6 +5028,88 @@
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795004054.sh",
       "timestamp": 1795004054,
       "touches": []
+    },
+    {
+      "body": "echo \"Return freed GPU memory to the system at once on GB10 machines\"\n\n# See install/hardware/gb10/nvidia-memory-pools.sh. The nvidia module loads from\n# the boot image, which carries its options, so the image is rebuilt.\nrebuild_marker=\"${OMARCHY_LIMINE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1795011237}\"\n\nomarchy-hw-aarch64-gb10 || exit 0\n\nsudo env PATH=\"$PATH\" bash \"$OMARCHY_PATH/install/hardware/gb10/nvidia-memory-pools.sh\"\n\n# A marker records the machine-wide rebuild: another user's run must not repeat\n# it, while a missing marker still retries an interrupted rebuild.\nif [[ ! -e $rebuild_marker ]]; then\n  rebuild_log=$(mktemp)\n  trap 'rm -f \"$rebuild_log\"' EXIT\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n  # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n  # That image lacks the option, so the migration stays pending.\n  if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n    exit 1\n  fi\n\n  sudo install -Dm644 /dev/null \"$rebuild_marker\"\n  omarchy-state set reboot-required\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-18T14:13:57Z",
+      "description": "Return freed GPU memory to the system at once on GB10 machines",
+      "file": "1795011237.sh",
+      "lineCount": 27,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795011237.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795011237.sh",
+      "timestamp": 1795011237,
+      "touches": [
+        "/var/lib/omarchy/migrations/1795011237"
+      ]
+    },
+    {
+      "body": "echo \"Install Fantasi, the image maker\"\n\nif [[ ! -f $HOME/.local/state/omarchy/preinstalls-removed ]]; then\n  omarchy-pkg-add fantasi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-18T17:30:56Z",
+      "description": "Install Fantasi, the image maker",
+      "file": "1795023056.sh",
+      "lineCount": 5,
+      "packagesAdded": [
+        "fantasi"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1795023056.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795023056.sh",
+      "timestamp": 1795023056,
+      "touches": [
+        "~/.local/state/omarchy/preinstalls-removed"
+      ]
+    },
+    {
+      "body": "echo \"Add Game Vibes, Omarchy's games, to the app launcher\"\n\n# New installs get the launcher with the other default ones; existing ones\n# get it here. One already there, from opening Game Vibes, stays.\nlauncher=\"$HOME/.local/share/applications/Game Vibes.desktop\"\nif [[ ! -e $launcher ]]; then\n  mkdir -p \"${launcher%/*}\"\n  cp \"$OMARCHY_PATH/applications/Game Vibes.desktop\" \"$launcher\"\nfi\n\n# Drawing the icon set puts its themed icon in the launcher right away, where\n# it would otherwise wait for the next theme switch.\nomarchy-theme-set-icons || true",
+      "bodyTruncated": false,
+      "date": "2026-11-19T09:27:54Z",
+      "description": "Add Game Vibes, Omarchy's games, to the app launcher",
+      "file": "1795080474.sh",
+      "lineCount": 13,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795080474.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795080474.sh",
+      "timestamp": 1795080474,
+      "touches": [
+        "~/.local/share/applications/Game"
+      ]
+    },
+    {
+      "body": "echo \"Keep the kernel's default free-memory watermark on GB10 machines\"\n\n# See install/hardware/gb10/memory-watermark.sh, which sets up new installs the same way.\nomarchy-hw-aarch64-gb10 || exit 0\n\nsudo env PATH=\"$PATH\" bash \"$OMARCHY_PATH/install/hardware/gb10/memory-watermark.sh\"\nsudo sysctl -p /etc/sysctl.d/zz-omarchy-gb10-memory.conf >/dev/null || omarchy-state set reboot-required",
+      "bodyTruncated": false,
+      "date": "2026-11-19T09:44:57Z",
+      "description": "Keep the kernel's default free-memory watermark on GB10 machines",
+      "file": "1795081497.sh",
+      "lineCount": 7,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795081497.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795081497.sh",
+      "timestamp": 1795081497,
+      "touches": [
+        "/etc/sysctl.d/zz-omarchy-gb10-memory.conf"
+      ]
+    },
+    {
+      "body": "echo \"Remove the retired Direct Boot EFI entry so the machine boots through Limine\"\n\n# Setup > Direct Boot needed EFI and efibootmgr, and never ran on Apple Silicon.\n[[ -d /sys/firmware/efi ]] || exit 0\nomarchy-cmd-present efibootmgr || exit 0\nomarchy-hw-aarch64-apple && exit 0\n\n# Setup > Direct Boot labeled its entry exactly \"Omarchy\"; Limine's own is\n# \"Limine\". efibootmgr 18 follows each label with a tab and the device path.\nefi_labels=$(efibootmgr | cut -f1)\n\nfor boot_num in $(sed -nE 's/^Boot([0-9A-Fa-f]+)\\*?[[:space:]]+Omarchy[[:space:]]*$/\\1/p' <<<\"$efi_labels\"); do\n  sudo efibootmgr --bootnum \"$boot_num\" --delete-bootnum >/dev/null\ndone\n\n# A DGX Spark that kept Direct Boot left 1790517230 before its rebuild and\n# marker, keeping a UKI that Limine now loads with a 20-second firmware delay.\n# Finish that rebuild; the marker comes last, so an interrupted one retries.\nspark_marker=/var/lib/omarchy/migrations/1790517230\nif omarchy-hw-aarch64-gb10 && omarchy-hw-match \"NVIDIA_DGX_Spark\" && omarchy-cmd-present limine-mkinitcpio &&\n  [[ ! -e $spark_marker ]]; then\n  sudo bash \"$OMARCHY_PATH/install/hardware/nvidia/dgx-spark-boot.sh\"\n  sudo limine-mkinitcpio\n  sudo install -Dm644 /dev/null \"$spark_marker\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-19T09:45:08Z",
+      "description": "Remove the retired Direct Boot EFI entry so the machine boots through Limine",
+      "file": "1795081508.sh",
+      "lineCount": 25,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795081508.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795081508.sh",
+      "timestamp": 1795081508,
+      "touches": [
+        "/var/lib/omarchy/migrations/1790517230"
+      ]
     }
   ],
   "prerelease": true,

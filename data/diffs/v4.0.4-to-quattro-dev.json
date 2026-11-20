@@ -1008,6 +1008,7 @@
       "omarchy-refresh-herdr-app",
       "omarchy-region",
       "omarchy-remove-ai-amp",
+      "omarchy-remove-ai-antigravity",
       "omarchy-remove-ai-chatgpt",
       "omarchy-remove-ai-claude",
       "omarchy-remove-ai-grok-bot",
@@ -1735,11 +1736,11 @@
       }
     ],
     "counts": {
-      "added": 187,
+      "added": 188,
       "changed": 54,
       "from": 444,
       "removed": 11,
-      "to": 620
+      "to": 621
     },
     "removed": [
       "omarchy-install-chromium-google-account",
@@ -1863,6 +1864,7 @@
       "appearance.workspace-layout.floating",
       "appearance.workspace-layout.scrolling",
       "install.ai.amp",
+      "install.ai.antigravity",
       "install.ai.claude",
       "install.ai.herdr",
       "install.browser.chromium",
@@ -1873,6 +1875,7 @@
       "install.service.slack",
       "install.style.icons",
       "remove.ai.amp",
+      "remove.ai.antigravity",
       "remove.ai.chatgpt",
       "remove.ai.claude",
       "remove.ai.grok-bot",
@@ -2806,11 +2809,11 @@
       }
     ],
     "counts": {
-      "added": 172,
+      "added": 174,
       "changed": 96,
       "from": 333,
       "removed": 59,
-      "to": 446
+      "to": 448
     },
     "removed": [
       "about",
@@ -2877,9 +2880,9 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 197,
+      "new": 201,
       "removed": 0,
-      "to": 303
+      "to": 307
     },
     "new": [
       {
@@ -3866,6 +3869,26 @@
         "date": "2026-11-19T09:45:08Z",
         "description": "Remove the retired Direct Boot EFI entry so the machine boots through Limine",
         "file": "1795081508.sh"
+      },
+      {
+        "date": "2026-11-19T13:04:30Z",
+        "description": "Use theme loops from the external package",
+        "file": "1795093470.sh"
+      },
+      {
+        "date": "2026-11-19T13:11:50Z",
+        "description": "Relink agent skills for the omarchy-make-* and omarchy-contribute skills",
+        "file": "1795093910.sh"
+      },
+      {
+        "date": "2026-11-19T14:51:56Z",
+        "description": "Put the camera and video settings back into the browser flags of Snapdragon laptops",
+        "file": "1795099916.sh"
+      },
+      {
+        "date": "2026-11-19T18:35:15Z",
+        "description": "Restage the current theme so it picks up its packaged background loops",
+        "file": "1795113315.sh"
       }
     ],
     "removed": []

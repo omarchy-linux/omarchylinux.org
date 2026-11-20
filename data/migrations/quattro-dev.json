@@ -1,5 +1,5 @@
 {
-  "count": 303,
+  "count": 307,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -5109,6 +5109,68 @@
       "timestamp": 1795081508,
       "touches": [
         "/var/lib/omarchy/migrations/1790517230"
+      ]
+    },
+    {
+      "body": "echo \"Use theme loops from the external package\"\n\nomarchy-pkg-add omarchy-themes-loops",
+      "bodyTruncated": false,
+      "date": "2026-11-19T13:04:30Z",
+      "description": "Use theme loops from the external package",
+      "file": "1795093470.sh",
+      "lineCount": 3,
+      "packagesAdded": [
+        "omarchy-themes-loops"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1795093470.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795093470.sh",
+      "timestamp": 1795093470,
+      "touches": []
+    },
+    {
+      "body": "echo \"Relink agent skills for the omarchy-make-* and omarchy-contribute skills\"\n\n# web-game and omarchy-app became omarchy-make-game and omarchy-make-app, and\n# omarchy-make-theme, omarchy-make-plugin and omarchy-contribute are new.\n# Relinking drops the links to the old names and adds the new ones.\n\"$OMARCHY_PATH/bin/omarchy-agent-skills-link\"",
+      "bodyTruncated": false,
+      "date": "2026-11-19T13:11:50Z",
+      "description": "Relink agent skills for the omarchy-make-* and omarchy-contribute skills",
+      "file": "1795093910.sh",
+      "lineCount": 6,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795093910.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795093910.sh",
+      "timestamp": 1795093910,
+      "touches": []
+    },
+    {
+      "body": "echo \"Put the camera and video settings back into the browser flags of Snapdragon laptops\"\n\n# A browser installed or refreshed since those were set up got a fresh flags\n# file without them. Chrome and Chromium then list no camera and decode video\n# on the CPU.\nif omarchy-hw-aarch64-qualcomm; then\n  omarchy-install-camera\n  omarchy-install-video-decode\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-19T14:51:56Z",
+      "description": "Put the camera and video settings back into the browser flags of Snapdragon laptops",
+      "file": "1795099916.sh",
+      "lineCount": 9,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795099916.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795099916.sh",
+      "timestamp": 1795099916,
+      "touches": []
+    },
+    {
+      "body": "echo \"Restage the current theme so it picks up its packaged background loops\"\n\n# 1795093470 installed omarchy-themes-loops, but the current theme is a copy\n# staged by omarchy-theme-set, so its loops only arrive with the next theme\n# switch. Refreshing restages it without playing an intro.\ntheme=$(cat \"$HOME/.local/state/omarchy/current/theme.name\" 2>/dev/null || true)\nstaged_backgrounds=\"$HOME/.local/state/omarchy/current/theme/backgrounds\"\nif [[ -n $theme && -d /usr/share/omarchy/themes/$theme/backgrounds/loops && -d $staged_backgrounds && ! -d $staged_backgrounds/loops ]]; then\n  omarchy-theme-refresh\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-19T18:35:15Z",
+      "description": "Restage the current theme so it picks up its packaged background loops",
+      "file": "1795113315.sh",
+      "lineCount": 10,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795113315.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795113315.sh",
+      "timestamp": 1795113315,
+      "touches": [
+        "/usr/share/omarchy/themes/",
+        "~/.local/state/omarchy/current/theme.name",
+        "~/.local/state/omarchy/current/theme/backgrounds"
       ]
     }
   ],

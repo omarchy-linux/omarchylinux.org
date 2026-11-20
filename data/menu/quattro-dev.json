@@ -1,5 +1,5 @@
 {
-  "count": 446,
+  "count": 448,
   "flat": [
     {
       "action": null,
@@ -1959,6 +1959,24 @@
       "when": null
     },
     {
+      "action": "omarchy-install-and-launch 'Antigravity Desktop' antigravity antigravity",
+      "aliases": [],
+      "checked": null,
+      "command": null,
+      "declared": true,
+      "depth": 2,
+      "icon": "",
+      "iconFont": "omarchy",
+      "id": "install.ai.antigravity",
+      "kind": "action",
+      "label": "Antigravity Desktop",
+      "parent": "install.ai",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": null
+    },
+    {
       "action": "omarchy-launch-floating-terminal-with-presentation omarchy-install-ai-chatgpt",
       "aliases": [],
       "checked": null,
@@ -3903,6 +3921,24 @@
       "target": null,
       "title": null,
       "when": "omarchy-pkg-present amp-desktop-bin"
+    },
+    {
+      "action": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-ai-antigravity",
+      "aliases": [],
+      "checked": null,
+      "command": null,
+      "declared": true,
+      "depth": 2,
+      "icon": "",
+      "iconFont": "omarchy",
+      "id": "remove.ai.antigravity",
+      "kind": "action",
+      "label": "Antigravity Desktop",
+      "parent": "remove.ai",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": "omarchy-pkg-present antigravity"
     },
     {
       "action": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-ai-chatgpt",
@@ -12431,6 +12467,25 @@
               "when": null
             },
             {
+              "action": "omarchy-install-and-launch 'Antigravity Desktop' antigravity antigravity",
+              "aliases": [],
+              "checked": null,
+              "children": [],
+              "command": null,
+              "declared": true,
+              "depth": 2,
+              "icon": "",
+              "iconFont": "omarchy",
+              "id": "install.ai.antigravity",
+              "kind": "action",
+              "label": "Antigravity Desktop",
+              "parent": "install.ai",
+              "provider": null,
+              "target": null,
+              "title": null,
+              "when": null
+            },
+            {
               "action": "omarchy-launch-floating-terminal-with-presentation omarchy-install-ai-chatgpt",
               "aliases": [],
               "checked": null,
@@ -14325,6 +14380,25 @@
               "target": null,
               "title": null,
               "when": "omarchy-pkg-present amp-desktop-bin"
+            },
+            {
+              "action": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-ai-antigravity",
+              "aliases": [],
+              "checked": null,
+              "children": [],
+              "command": null,
+              "declared": true,
+              "depth": 2,
+              "icon": "",
+              "iconFont": "omarchy",
+              "id": "remove.ai.antigravity",
+              "kind": "action",
+              "label": "Antigravity Desktop",
+              "parent": "remove.ai",
+              "provider": null,
+              "target": null,
+              "title": null,
+              "when": "omarchy-pkg-present antigravity"
             },
             {
               "action": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-ai-chatgpt",

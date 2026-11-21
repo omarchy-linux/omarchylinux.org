@@ -2,7 +2,7 @@
   "count": 6,
   "docs": [
     {
-      "body": "Omarchy fires hooks at a handful of moments, and you can hang your own scripts off them. They live in `~/.config/omarchy/hooks/<event>.d/`, one directory per event, and every executable file in there runs when the event happens:\n\n| Event | When it runs |\n| ----- | ------------ |\n| `post-boot` | Right after the desktop has started |\n| `post-update` | Near the end of `omarchy update`, after packages, migrations, and service restarts, before mise tools are updated |\n| `pre-refresh-pacman` | After `omarchy refresh pacman` re-syncs the package config, before it updates packages; a channel switch runs it during that same refresh step |\n| `theme-set` | After a theme change (theme name in `$1`) |\n| `font-set` | After a font change (font name in `$1`) |\n| `battery-low` | When the battery gets low (percentage in `$1`) |\n\nThe `pre-refresh-pacman` hook is where custom repositories or `IgnorePkg` lines belong, since it runs before the package transaction. Both update-related hooks run as your user after Omarchy clears its cached sudo authorization, so a hook that uses `sudo` needs its own authorization and may ask for your password.\n\nEach of those directories already holds a `.sample` file showing the shape of a hook — drop the `.sample` from the name to put it to work. To install a script you've written elsewhere, use `omarchy hook install post-boot ~/my-hook`, which copies it in and makes it executable.",
+      "body": "Omarchy fires hooks at a handful of moments, and you can hang your own scripts off them. They live in `~/.config/omarchy/hooks/<event>.d/`, one directory per event, and every file in there that doesn't end in `.sample` runs with bash when the event happens:\n\n| Event | When it runs |\n| ----- | ------------ |\n| `post-boot` | Right after the desktop has started |\n| `post-update` | Near the end of `omarchy update`, after packages, migrations, and service restarts, before mise tools are updated |\n| `pre-refresh-pacman` | After `omarchy refresh pacman` re-syncs the package config, before it updates packages; a channel switch runs it during that same refresh step |\n| `theme-set` | After a theme change (theme name in `$1`) |\n| `font-set` | After a font change (font name in `$1`) |\n| `battery-low` | When the battery gets low (percentage in `$1`) |\n\nThe `pre-refresh-pacman` hook is where custom repositories or `IgnorePkg` lines belong, since it runs before the package transaction. Both run as your user. `post-update` runs while `omarchy update`'s sudo authorization is still fresh, so a hook that uses `sudo` won't ask for your password again; `pre-refresh-pacman` runs right after `omarchy refresh pacman` has used sudo itself.\n\nEach of those directories already holds a `.sample` file showing the shape of a hook — drop the `.sample` from the name to put it to work. To install a script you've written elsewhere, use `omarchy hook install post-boot ~/my-hook`, which copies it in and makes it executable.",
       "file": "manual/31-dotfiles.md",
       "heading": "Running scripts on system events",
       "level": 3,
@@ -92,9 +92,9 @@
       "firedBy": [
         {
           "file": "bin/omarchy-update",
-          "line": 130,
+          "line": 131,
           "snippet": "omarchy-hook post-update",
-          "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-update#L130"
+          "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-update#L131"
         }
       ],
       "samples": [

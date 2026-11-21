@@ -1,5 +1,5 @@
 {
-  "count": 307,
+  "count": 312,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -4884,7 +4884,7 @@
       ]
     },
     {
-      "body": "echo \"Add launchers for the local models already set up\"\n\n# Setting up a local model now adds a launcher of its own beside Agent, with\n# the model's name and its vendor's logo. Models set up before that get theirs\n# here; a machine without any gets nothing. Neither does one whose engine was\n# removed: without omarchy-local-ai no model can be read, let alone opened.\nif omarchy-cmd-present omarchy-local-ai; then\n  omarchy-agent-local-launchers\nfi",
+      "body": "echo \"Add launchers for the local models already set up\"\n\n# Setting up a local model now adds a launcher of its own beside Agent, with\n# the model's name and its vendor's logo. Models set up before that get theirs\n# here; a machine without any gets nothing. Neither does one whose engine was\n# removed: without omarchy-local-ai no model can be read, let alone opened.\nif omarchy-cmd-present omarchy-local-ai; then\n  omarchy-models-launchers\nfi",
       "bodyTruncated": false,
       "date": "2026-11-16T14:23:27Z",
       "description": "Add launchers for the local models already set up",
@@ -4949,6 +4949,24 @@
         "/etc/pacman.conf",
         "/etc/pacman.conf.XXXXXX",
         "/var/lib/omarchy/migrations/1794859637"
+      ]
+    },
+    {
+      "body": "echo \"Show the Samsung Galaxy Book4 Edge 14's disk unlock prompt and add its keyboard and Bluetooth support\"\n\n# See install/hardware/samsung/galaxy-book4-edge-14.sh. The initramfs hook and\n# the kernel command line are in the boot image, so they take a rebuild. The\n# marker records the rebuild as owed before the setup runs, so a retry rebuilds\n# even when the files are already there.\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match-device-tree samsung,galaxy-book4-edge-14; then\n  exit 0\nfi\n\ndrop_in=/etc/limine-entry-tool.d/samsung-galaxy-book4-edge-14.conf\nhook=/etc/initcpio/install/samsung-galaxy-book4-edge-14\nrebuild_pending=/var/lib/omarchy/migrations/1794909082-rebuild-pending\nif [[ -e $rebuild_pending ]] || [[ ! -f $hook ]] ||\n  ! grep -q 'usbcore.autosuspend=-1' \"$drop_in\" 2>/dev/null ||\n  omarchy-pkg-missing samsung-galaxy-book4-edge-14-support; then\n  sudo install -Dm644 /dev/null \"$rebuild_pending\" || exit 1\n  sudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n    source \"$OMARCHY_PATH/install/hardware/samsung/galaxy-book4-edge-14.sh\"\n  '\nfi\n\nif [[ -e $rebuild_pending ]]; then\n  rebuild_log=$(mktemp)\n  trap 'rm -f \"$rebuild_log\"' EXIT\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n  # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n  if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n    exit 1\n  fi\n\n  # Ask for the reboot before clearing the marker, so a run cut short in\n  # between still asks on the next one.\n  omarchy-state set reboot-required\n  sudo rm -f \"$rebuild_pending\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-17T09:51:22Z",
+      "description": "Show the Samsung Galaxy Book4 Edge 14's disk unlock prompt and add its keyboard and Bluetooth support",
+      "file": "1794909082.sh",
+      "lineCount": 38,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1794909082.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794909082.sh",
+      "timestamp": 1794909082,
+      "touches": [
+        "/etc/initcpio/install/samsung-galaxy-book4-edge-14",
+        "/etc/limine-entry-tool.d/samsung-galaxy-book4-edge-14.conf",
+        "/var/lib/omarchy/migrations/1794909082-rebuild-pending"
       ]
     },
     {
@@ -5172,6 +5190,68 @@
         "~/.local/state/omarchy/current/theme.name",
         "~/.local/state/omarchy/current/theme/backgrounds"
       ]
+    },
+    {
+      "body": "echo \"Relink agent skills for the omarchy-diagnose-crash rename\"\n\n# diagnose-crash became omarchy-diagnose-crash. Relinking drops the links to\n# the old name and adds the new one.\n\"$OMARCHY_PATH/bin/omarchy-agent-skills-link\"",
+      "bodyTruncated": false,
+      "date": "2026-11-20T13:26:36Z",
+      "description": "Relink agent skills for the omarchy-diagnose-crash rename",
+      "file": "1795181196.sh",
+      "lineCount": 5,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795181196.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795181196.sh",
+      "timestamp": 1795181196,
+      "touches": []
+    },
+    {
+      "body": "echo \"Install Flowtunes, endless music in the genre you pick\"\n\nif [[ ! -f $HOME/.local/state/omarchy/preinstalls-removed ]]; then\n  omarchy-pkg-add flowtunes\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-20T16:12:49Z",
+      "description": "Install Flowtunes, endless music in the genre you pick",
+      "file": "1795191169.sh",
+      "lineCount": 5,
+      "packagesAdded": [
+        "flowtunes"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1795191169.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795191169.sh",
+      "timestamp": 1795191169,
+      "touches": [
+        "~/.local/state/omarchy/preinstalls-removed"
+      ]
+    },
+    {
+      "body": "echo \"Put the local models icon beside the agents icon\"\n\n# Local models have a bar icon of their own, which only shows on a machine that\n# can run a model. It goes right before the agents icon, and only where that\n# one is.\nconfig_file=\"$HOME/.config/omarchy/shell.json\"\n[[ -s $config_file ]] || exit 0\n\ntmp=$(mktemp)\njq '\n  def entry_id: if type == \"object\" then (.id // \"\") elif type == \"string\" then . else \"\" end;\n\n  if [.bar.layout[]?[]? | entry_id] | (index(\"omarchy.local-models\") != null or index(\"omarchy.agents\") == null) then\n    .\n  else\n    .bar.layout[] |= (if type == \"array\" then [.[] | if entry_id == \"omarchy.agents\" then { id: \"omarchy.local-models\" }, . else . end] else . end)\n  end\n' \"$config_file\" >\"$tmp\" && mv \"$tmp\" \"$config_file\"",
+      "bodyTruncated": false,
+      "date": "2026-11-20T18:43:57Z",
+      "description": "Put the local models icon beside the agents icon",
+      "file": "1795200237.sh",
+      "lineCount": 18,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795200237.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795200237.sh",
+      "timestamp": 1795200237,
+      "touches": [
+        "~/.config/omarchy/shell.json"
+      ]
+    },
+    {
+      "body": "echo \"Count this install as updated, so the bar keeps watching only Omarchy\"\n\n# Until a user's first omarchy update, the bar's update icon shows for any\n# package update. This install has been updated already.\nomarchy-done mark first-update",
+      "bodyTruncated": false,
+      "date": "2026-11-21T12:11:37Z",
+      "description": "Count this install as updated, so the bar keeps watching only Omarchy",
+      "file": "1795263097.sh",
+      "lineCount": 5,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795263097.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795263097.sh",
+      "timestamp": 1795263097,
+      "touches": []
     }
   ],
   "prerelease": true,

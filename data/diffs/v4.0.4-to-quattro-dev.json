@@ -66,6 +66,10 @@
         "label": "Screenrecording with no audio"
       },
       {
+        "chord": "SUPER + CTRL + ALT + X",
+        "label": "Local models"
+      },
+      {
         "chord": "SUPER + CTRL + comma",
         "label": "Control notifications with the keyboard"
       },
@@ -793,13 +797,13 @@
       }
     ],
     "counts": {
-      "added": 39,
+      "added": 40,
       "changedAction": 79,
       "from": 228,
       "fromRecords": 228,
       "removed": 13,
-      "to": 254,
-      "toRecords": 254
+      "to": 255,
+      "toRecords": 255
     },
     "note": null,
     "removed": [
@@ -873,9 +877,6 @@
       "omarchy-agent-instructions",
       "omarchy-agent-integrate-herdr",
       "omarchy-agent-launcher",
-      "omarchy-agent-local",
-      "omarchy-agent-local-launchers",
-      "omarchy-agent-local-warmup",
       "omarchy-agent-logo",
       "omarchy-agent-look-app",
       "omarchy-agent-look-page",
@@ -998,6 +999,9 @@
       "omarchy-locale-session",
       "omarchy-menu-region",
       "omarchy-mise-default-tools",
+      "omarchy-models",
+      "omarchy-models-launchers",
+      "omarchy-models-warmup",
       "omarchy-n1x-probe",
       "omarchy-network-captive-portal",
       "omarchy-network-wifi-connected",
@@ -1028,6 +1032,7 @@
       "omarchy-sleep-disabled",
       "omarchy-system",
       "omarchy-system-lid-inhibit",
+      "omarchy-system-sddm-recover",
       "omarchy-theme-bg-boot-intro",
       "omarchy-theme-bg-intro",
       "omarchy-theme-icon-palette",
@@ -1212,6 +1217,15 @@
           ]
         },
         "name": "omarchy-drive-password"
+      },
+      {
+        "fields": {
+          "args": [
+            "[--force] [--no-rebuild]",
+            "[--force] [--no-rebuild] [--experimental]"
+          ]
+        },
+        "name": "omarchy-hibernation-setup"
       },
       {
         "fields": {
@@ -1736,11 +1750,11 @@
       }
     ],
     "counts": {
-      "added": 188,
-      "changed": 54,
+      "added": 189,
+      "changed": 55,
       "from": 444,
       "removed": 11,
-      "to": 621
+      "to": 622
     },
     "removed": [
       "omarchy-install-chromium-google-account",
@@ -2880,9 +2894,9 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 201,
+      "new": 206,
       "removed": 0,
-      "to": 307
+      "to": 312
     },
     "new": [
       {
@@ -3821,6 +3835,11 @@
         "file": "1794859637.sh"
       },
       {
+        "date": "2026-11-17T09:51:22Z",
+        "description": "Show the Samsung Galaxy Book4 Edge 14's disk unlock prompt and add its keyboard and Bluetooth support",
+        "file": "1794909082.sh"
+      },
+      {
         "date": "2026-11-17T15:24:45Z",
         "description": "Wake from sleep without an 80 second freeze on the HP ZBook Ultra G3a 16",
         "file": "1794929085.sh"
@@ -3889,6 +3908,26 @@
         "date": "2026-11-19T18:35:15Z",
         "description": "Restage the current theme so it picks up its packaged background loops",
         "file": "1795113315.sh"
+      },
+      {
+        "date": "2026-11-20T13:26:36Z",
+        "description": "Relink agent skills for the omarchy-diagnose-crash rename",
+        "file": "1795181196.sh"
+      },
+      {
+        "date": "2026-11-20T16:12:49Z",
+        "description": "Install Flowtunes, endless music in the genre you pick",
+        "file": "1795191169.sh"
+      },
+      {
+        "date": "2026-11-20T18:43:57Z",
+        "description": "Put the local models icon beside the agents icon",
+        "file": "1795200237.sh"
+      },
+      {
+        "date": "2026-11-21T12:11:37Z",
+        "description": "Count this install as updated, so the bar keeps watching only Omarchy",
+        "file": "1795263097.sh"
       }
     ],
     "removed": []

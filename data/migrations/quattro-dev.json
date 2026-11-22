@@ -1,5 +1,5 @@
 {
-  "count": 312,
+  "count": 318,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -3554,7 +3554,7 @@
       ]
     },
     {
-      "body": "echo \"Build the lazy shims for the newly declared default coding agents\"\n\n# The settings package ships the declarations for Qwen Code, DeepSeek Harness,\n# MiniMax Code, Kiro CLI, Freebuff, Kilo, Devin CLI, Amp, and Command Code.\n# Until it has, stay pending so the shims are built once they arrive.\nif ! omarchy-mise-default-tools list | grep -qxF qwen; then\n  echo \"Waiting for the omarchy-settings package that declares the new coding agents\" >&2\n  exit 1\nfi\n\n# A user who removed the preinstalls skips Omarchy's declarations, so there is\n# nothing to build for them.\nif omarchy-mise-default-tools declares qwen; then\n  mise reshim --system\nfi",
+      "body": "echo \"Build the lazy shims for the newly declared default coding agents\"\n\n# The settings package ships the declarations for Qwen Code, DeepSeek Harness,\n# MiniMax Code, Kiro CLI, Freebuff, Kilo, Devin CLI, Amp, and Command Code.\n# Until it has, stay pending so the shims are built once they arrive.\nif ! omarchy-mise-default-tools list | grep -qxF qwen; then\n  echo \"Waiting for the omarchy-settings package that declares the new coding agents\" >&2\n  exit 75\nfi\n\n# A user who removed the preinstalls skips Omarchy's declarations, so there is\n# nothing to build for them.\nif omarchy-mise-default-tools declares qwen; then\n  mise reshim --system\nfi",
       "bodyTruncated": false,
       "date": "2026-10-20T13:51:35Z",
       "description": "Build the lazy shims for the newly declared default coding agents",
@@ -5251,6 +5251,96 @@
       "path": "migrations/1795263097.sh",
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795263097.sh",
       "timestamp": 1795263097,
+      "touches": []
+    },
+    {
+      "body": "echo \"Show the disk unlock prompt on Snapdragon X laptops\"\n\n# See install/hardware/qualcomm/hamoa-display.sh. The prompt needs the display\n# chain in the boot image, so it takes a rebuild. The Surface Laptop 7 13.8\"\n# needs its keyboard there as well, which microsoft/surface-laptop-7.sh adds\n# and no earlier migration ran for it. A machine-wide marker, written only\n# after a rebuild, records that this one is done, and a retry after a failed\n# rebuild runs the setup and the rebuild again.\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match-device-tree qcom,x1e80100 qcom,x1p42100; then\n  exit 0\nfi\n\ndone_marker=/var/lib/omarchy/migrations/1795274792-done\nif [[ -e $done_marker ]]; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n  source \"$OMARCHY_PATH/install/hardware/qualcomm/hamoa-display.sh\"\n  if omarchy-hw-match-device-tree microsoft,romulus13; then\n    source \"$OMARCHY_PATH/install/hardware/microsoft/surface-laptop-7.sh\"\n  fi\n' || exit 1\n\nrebuild_log=$(mktemp)\ntrap 'rm -f \"$rebuild_log\"' EXIT\nsudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n# limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\nif grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n  echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n  exit 1\nfi\n\nsudo install -Dm644 /dev/null \"$done_marker\"\nomarchy-state set reboot-required",
+      "bodyTruncated": false,
+      "date": "2026-11-21T15:26:32Z",
+      "description": "Show the disk unlock prompt on Snapdragon X laptops",
+      "file": "1795274792.sh",
+      "lineCount": 36,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795274792.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795274792.sh",
+      "timestamp": 1795274792,
+      "touches": [
+        "/var/lib/omarchy/migrations/1795274792-done"
+      ]
+    },
+    {
+      "body": "echo \"Remove the launchers of local image, video and music models\"\n\n# Image, video and music models no longer get a launcher of their own: Fantasi\n# lists them itself. The sync takes away the ones made before that, and leaves\n# the coding models' alone. Without omarchy-local-ai no model can be read.\nif omarchy-cmd-present omarchy-local-ai; then\n  omarchy-models-launchers\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-21T16:05:41Z",
+      "description": "Remove the launchers of local image, video and music models",
+      "file": "1795277141.sh",
+      "lineCount": 8,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795277141.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795277141.sh",
+      "timestamp": 1795277141,
+      "touches": []
+    },
+    {
+      "body": "echo \"Install the FaceTime HD camera driver on Intel Macs that have one\"\n\n# Fresh installs get this from install/hardware/apple/fix-facetimehd.sh. Existing\n# Macs only pick it up on omarchy update via this migration.\nif omarchy-hw-facetimehd; then\n  source \"$OMARCHY_PATH/install/hardware/apple/fix-facetimehd.sh\"\n\n  # The module only loads at boot, so the camera stays missing until then.\n  (( ${#packages[@]} == 0 )) || omarchy-state set reboot-required\n\n  # The leaf only enables the fetch for the next boot; on a running system it can start now.\n  if pacman -Q facetimehd-firmware-fetcher &>/dev/null; then\n    sudo systemctl start --no-block facetimehd-firmware-fetcher.service\n  fi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-21T18:15:03Z",
+      "description": "Install the FaceTime HD camera driver on Intel Macs that have one",
+      "file": "1795284903.sh",
+      "lineCount": 15,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795284903.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795284903.sh",
+      "timestamp": 1795284903,
+      "touches": []
+    },
+    {
+      "body": "echo \"Stop horizontal-line display glitches on the HP ZBook Ultra G3a 16\"\n\n# See install/hardware/hp/fix-hp-zbook-ultra-g3a-display.sh.\nrebuild_marker=\"${OMARCHY_LIMINE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1795285870}\"\n\nif ! omarchy-hw-x86 || ! omarchy-hw-match \"ZBook Ultra G3a 16\"; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n  source \"$OMARCHY_PATH/install/hardware/hp/fix-hp-zbook-ultra-g3a-display.sh\"\n'\n\n# A marker records the machine-wide rebuild: another user's run must not repeat\n# it, while a missing marker still retries an interrupted rebuild.\nif [[ ! -e $rebuild_marker ]]; then\n  rebuild_log=$(mktemp)\n  trap 'rm -f \"$rebuild_log\"' EXIT\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n  # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n  # That image lacks the kernel option, so the migration stays pending.\n  if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n    exit 1\n  fi\n\n  sudo install -Dm644 /dev/null \"$rebuild_marker\"\n  omarchy-state set reboot-required\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-21T18:31:10Z",
+      "description": "Stop horizontal-line display glitches on the HP ZBook Ultra G3a 16",
+      "file": "1795285870.sh",
+      "lineCount": 30,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795285870.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795285870.sh",
+      "timestamp": 1795285870,
+      "touches": [
+        "/var/lib/omarchy/migrations/1795285870"
+      ]
+    },
+    {
+      "body": "echo \"Link Omarchy's Pi extensions (web_fetch, todo_write, subagents) and condense Pi's changelog\"\n\n\"$OMARCHY_PATH/bin/omarchy-agent-pi-defaults\"",
+      "bodyTruncated": false,
+      "date": "2026-11-21T20:49:33Z",
+      "description": "Link Omarchy's Pi extensions (web_fetch, todo_write, subagents) and condense Pi's changelog",
+      "file": "1795294173.sh",
+      "lineCount": 3,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795294173.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795294173.sh",
+      "timestamp": 1795294173,
+      "touches": []
+    },
+    {
+      "body": "echo \"Install Pi as a package instead of a mise tool\"\n\n# The settings package drops Pi's mise declaration. Until it has, stay pending:\n# the declaration would only install Pi through mise again.\nif omarchy-mise-default-tools list | grep -qx pi; then\n  echo \"Waiting for the omarchy-settings package that drops Pi from the default mise tools\" >&2\n  exit 75\nfi\n\nomarchy-pkg-add pi-coding-agent\n\n# mise's shims come before /usr/bin on PATH, and the shim left by the dropped\n# declaration fails rather than falling through to the package. A Pi the user\n# declared in a mise config of their own is theirs and stays.\nif ! mise ls pi --json | jq -e 'any(.[]; .source)' >/dev/null; then\n  mise uninstall --all pi\n  mise reshim\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-22T03:40:56Z",
+      "description": "Install Pi as a package instead of a mise tool",
+      "file": "1795318856.sh",
+      "lineCount": 18,
+      "packagesAdded": [
+        "pi-coding-agent"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1795318856.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795318856.sh",
+      "timestamp": 1795318856,
       "touches": []
     }
   ],

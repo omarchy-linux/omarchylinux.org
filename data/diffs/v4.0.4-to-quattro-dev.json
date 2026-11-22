@@ -801,9 +801,9 @@
       "changedAction": 79,
       "from": 228,
       "fromRecords": 228,
-      "removed": 13,
-      "to": 255,
-      "toRecords": 255
+      "removed": 27,
+      "to": 241,
+      "toRecords": 241
     },
     "note": null,
     "removed": [
@@ -818,6 +818,22 @@
       {
         "chord": "SUPER + ALT + comma",
         "label": "Invoke last notification"
+      },
+      {
+        "chord": "SUPER + SHIFT + ALT + A",
+        "label": "Grok"
+      },
+      {
+        "chord": "SUPER + SHIFT + ALT + E",
+        "label": "New email"
+      },
+      {
+        "chord": "SUPER + SHIFT + ALT + G",
+        "label": "WhatsApp"
+      },
+      {
+        "chord": "SUPER + SHIFT + ALT + X",
+        "label": "X Post"
       },
       {
         "chord": "SUPER + ALT + SPACE",
@@ -844,6 +860,10 @@
         "label": "Calculator"
       },
       {
+        "chord": "SUPER + SHIFT + CTRL + G",
+        "label": "Google Messages"
+      },
+      {
         "chord": "SUPER + CTRL + T",
         "label": "Activity"
       },
@@ -858,6 +878,42 @@
       {
         "chord": "SUPER + L",
         "label": "Toggle workspace layout"
+      },
+      {
+        "chord": "SUPER + SHIFT + A",
+        "label": "ChatGPT"
+      },
+      {
+        "chord": "SUPER + SHIFT + C",
+        "label": "Calendar"
+      },
+      {
+        "chord": "SUPER + SHIFT + E",
+        "label": "Email"
+      },
+      {
+        "chord": "SUPER + SHIFT + G",
+        "label": "Signal"
+      },
+      {
+        "chord": "SUPER + SHIFT + M",
+        "label": "Music"
+      },
+      {
+        "chord": "SUPER + SHIFT + P",
+        "label": "Google Photos"
+      },
+      {
+        "chord": "SUPER + SHIFT + S",
+        "label": "Google Maps"
+      },
+      {
+        "chord": "SUPER + SHIFT + X",
+        "label": "X"
+      },
+      {
+        "chord": "SUPER + SHIFT + Y",
+        "label": "YouTube"
       }
     ]
   },
@@ -868,10 +924,10 @@
       "omarchy-agent-account-exec",
       "omarchy-agent-account-home",
       "omarchy-agent-account-list",
-      "omarchy-agent-account-mode",
       "omarchy-agent-account-remove",
       "omarchy-agent-account-rename",
       "omarchy-agent-account-state",
+      "omarchy-agent-account-threshold",
       "omarchy-agent-account-transfer",
       "omarchy-agent-account-use",
       "omarchy-agent-instructions",
@@ -883,6 +939,7 @@
       "omarchy-agent-look-plugin",
       "omarchy-agent-look-theme",
       "omarchy-agent-make",
+      "omarchy-agent-pi-defaults",
       "omarchy-agent-skills-link",
       "omarchy-agent-usage-agy",
       "omarchy-agent-usage-copilot",
@@ -945,6 +1002,7 @@
       "omarchy-hw-dell-xps13-dx13260-ptl",
       "omarchy-hw-dell-xps13-sidecar-amps",
       "omarchy-hw-elgato-camlink-4k",
+      "omarchy-hw-facetimehd",
       "omarchy-hw-match-device-tree",
       "omarchy-hw-n1x",
       "omarchy-hw-nvidia-display",
@@ -993,13 +1051,15 @@
       "omarchy-language",
       "omarchy-launch-files",
       "omarchy-launch-files-cwd",
+      "omarchy-launch-manual",
       "omarchy-launch-versions",
       "omarchy-lifecycle-dispatch",
       "omarchy-locale-generate",
       "omarchy-locale-session",
-      "omarchy-menu-region",
+      "omarchy-menu-region-formats",
       "omarchy-mise-default-tools",
       "omarchy-models",
+      "omarchy-models-harness",
       "omarchy-models-launchers",
       "omarchy-models-warmup",
       "omarchy-n1x-probe",
@@ -1011,6 +1071,9 @@
       "omarchy-realtime-repair",
       "omarchy-refresh-herdr-app",
       "omarchy-region",
+      "omarchy-region-cn",
+      "omarchy-region-formats",
+      "omarchy-region-global",
       "omarchy-remove-ai-amp",
       "omarchy-remove-ai-antigravity",
       "omarchy-remove-ai-chatgpt",
@@ -1026,6 +1089,7 @@
       "omarchy-remove-service-ssh-agent",
       "omarchy-security-functions",
       "omarchy-setup-git",
+      "omarchy-setup-hostname",
       "omarchy-setup-input",
       "omarchy-setup-keyboard",
       "omarchy-setup-security-ssh-agent",
@@ -1033,6 +1097,7 @@
       "omarchy-system",
       "omarchy-system-lid-inhibit",
       "omarchy-system-sddm-recover",
+      "omarchy-system-sleep-facetimehd",
       "omarchy-theme-bg-boot-intro",
       "omarchy-theme-bg-intro",
       "omarchy-theme-icon-palette",
@@ -1208,6 +1273,15 @@
           ]
         },
         "name": "omarchy-default-editor"
+      },
+      {
+        "fields": {
+          "args": [
+            "[Cloudflare|Google|DHCP|Custom]",
+            "[Cloudflare|Google|AliDNS|DHCP|Custom]"
+          ]
+        },
+        "name": "omarchy-dns"
       },
       {
         "fields": {
@@ -1750,11 +1824,11 @@
       }
     ],
     "counts": {
-      "added": 189,
-      "changed": 55,
+      "added": 198,
+      "changed": 56,
       "from": 444,
       "removed": 11,
-      "to": 622
+      "to": 631
     },
     "removed": [
       "omarchy-install-chromium-google-account",
@@ -1884,9 +1958,11 @@
       "install.browser.chromium",
       "install.gaming.moonlight",
       "install.gaming.vibes",
+      "install.service.dingtalk",
       "install.service.microsoft",
       "install.service.notion",
       "install.service.slack",
+      "install.service.wechat",
       "install.style.icons",
       "remove.ai.amp",
       "remove.ai.antigravity",
@@ -1916,6 +1992,8 @@
       "setup.keyboard.input-methods",
       "setup.keyboard.inputs",
       "setup.keyboard.keybindings",
+      "setup.network.dns.alidns",
+      "setup.network.hostname",
       "setup.region",
       "setup.region.formats",
       "setup.region.language",
@@ -1962,7 +2040,7 @@
         "fields": {
           "when": [
             "! omarchy-pkg-present openai-codex-desktop",
-            null
+            "omarchy-region-global"
           ]
         },
         "id": "install.ai.chatgpt"
@@ -1971,7 +2049,7 @@
         "fields": {
           "when": [
             "! omarchy-pkg-present grok-bot",
-            null
+            "omarchy-region-global"
           ]
         },
         "id": "install.ai.grok-bot"
@@ -2016,7 +2094,7 @@
         "fields": {
           "when": [
             "! omarchy-pkg-present perplexity",
-            null
+            "omarchy-region-global"
           ]
         },
         "id": "install.ai.perplexity"
@@ -2250,7 +2328,7 @@
         "fields": {
           "when": [
             "! omarchy-pkg-present cursor-bin",
-            null
+            "omarchy-region-global"
           ]
         },
         "id": "install.editor.cursor"
@@ -2322,7 +2400,7 @@
         "fields": {
           "when": [
             "! flatpak info com.nvidia.geforcenow",
-            "omarchy-hw-x86"
+            "omarchy-hw-x86 && omarchy-region-global"
           ]
         },
         "id": "install.gaming.geforce-now"
@@ -2376,7 +2454,7 @@
         "fields": {
           "when": [
             "[[ ! -f \"$HOME/.local/share/applications/Xbox Cloud Gaming.desktop\" ]]",
-            null
+            "omarchy-region-global"
           ]
         },
         "id": "install.gaming.xbox-cloud"
@@ -2421,7 +2499,7 @@
         "fields": {
           "when": [
             "! omarchy-pkg-present dropbox",
-            "[[ $(getconf PAGESIZE) == 4096 ]]"
+            "[[ $(getconf PAGESIZE) == 4096 ]] && omarchy-region-global"
           ]
         },
         "id": "install.service.dropbox"
@@ -2430,7 +2508,7 @@
         "fields": {
           "when": [
             "! omarchy-pkg-present nordvpn-bin",
-            null
+            "omarchy-region-global"
           ]
         },
         "id": "install.service.nordvpn"
@@ -2448,7 +2526,7 @@
         "fields": {
           "when": [
             "! omarchy-pkg-present signal-desktop",
-            null
+            "omarchy-region-global"
           ]
         },
         "id": "install.service.signal"
@@ -2506,6 +2584,24 @@
           ]
         },
         "id": "install.windows"
+      },
+      {
+        "fields": {
+          "when": [
+            null,
+            "omarchy-region-global"
+          ]
+        },
+        "id": "learn.community"
+      },
+      {
+        "fields": {
+          "action": [
+            "omarchy-launch-webapp 'https://omarchy.org/manual/'",
+            "omarchy-launch-manual"
+          ]
+        },
+        "id": "learn.omarchy"
       },
       {
         "fields": {
@@ -2761,6 +2857,24 @@
       {
         "fields": {
           "when": [
+            null,
+            "omarchy-region-global"
+          ]
+        },
+        "id": "setup.network.dns.cloudflare"
+      },
+      {
+        "fields": {
+          "when": [
+            null,
+            "omarchy-region-global"
+          ]
+        },
+        "id": "setup.network.dns.google"
+      },
+      {
+        "fields": {
+          "when": [
             "[[ $(omarchy-network-status) == wifi* ]]",
             "omarchy-network-wifi-connected"
           ]
@@ -2823,11 +2937,11 @@
       }
     ],
     "counts": {
-      "added": 174,
-      "changed": 96,
+      "added": 178,
+      "changed": 100,
       "from": 333,
       "removed": 59,
-      "to": 448
+      "to": 452
     },
     "removed": [
       "about",
@@ -2894,9 +3008,9 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 206,
+      "new": 212,
       "removed": 0,
-      "to": 312
+      "to": 318
     },
     "new": [
       {
@@ -3928,6 +4042,36 @@
         "date": "2026-11-21T12:11:37Z",
         "description": "Count this install as updated, so the bar keeps watching only Omarchy",
         "file": "1795263097.sh"
+      },
+      {
+        "date": "2026-11-21T15:26:32Z",
+        "description": "Show the disk unlock prompt on Snapdragon X laptops",
+        "file": "1795274792.sh"
+      },
+      {
+        "date": "2026-11-21T16:05:41Z",
+        "description": "Remove the launchers of local image, video and music models",
+        "file": "1795277141.sh"
+      },
+      {
+        "date": "2026-11-21T18:15:03Z",
+        "description": "Install the FaceTime HD camera driver on Intel Macs that have one",
+        "file": "1795284903.sh"
+      },
+      {
+        "date": "2026-11-21T18:31:10Z",
+        "description": "Stop horizontal-line display glitches on the HP ZBook Ultra G3a 16",
+        "file": "1795285870.sh"
+      },
+      {
+        "date": "2026-11-21T20:49:33Z",
+        "description": "Link Omarchy's Pi extensions (web_fetch, todo_write, subagents) and condense Pi's changelog",
+        "file": "1795294173.sh"
+      },
+      {
+        "date": "2026-11-22T03:40:56Z",
+        "description": "Install Pi as a package instead of a mise tool",
+        "file": "1795318856.sh"
       }
     ],
     "removed": []

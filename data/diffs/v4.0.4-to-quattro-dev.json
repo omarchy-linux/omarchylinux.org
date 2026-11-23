@@ -2,8 +2,20 @@
   "bindings": {
     "added": [
       {
+        "chord": "\"SUPER + \" .. slash",
+        "label": "Monitor scaling up"
+      },
+      {
+        "chord": "\"SUPER + ALT + \" .. slash",
+        "label": "Monitor scaling down"
+      },
+      {
         "chord": "ALT + SPACE",
         "label": "Toggle dictation"
+      },
+      {
+        "chord": "\"SUPER + CTRL + \" .. keyboard.key(\"PERIOD\")",
+        "label": "Transcode"
       },
       {
         "chord": "CTRL + SHIFT + semicolon",
@@ -20,6 +32,10 @@
       {
         "chord": "CTRL + XF86MonBrightnessUp",
         "label": "Keyboard brightness up"
+      },
+      {
+        "chord": "\"SUPER + SHIFT + \" .. keyboard.key(\"SLASH\")",
+        "label": "Passwords"
       },
       {
         "chord": "SUPER + A",
@@ -40,6 +56,10 @@
       {
         "chord": "SUPER + BACKSPACE",
         "label": "Toggle transparency on a window"
+      },
+      {
+        "chord": "SUPER + code:49",
+        "label": "Toggle Quake console"
       },
       {
         "chord": "SUPER + comma",
@@ -64,10 +84,6 @@
       {
         "chord": "SUPER + SHIFT + CTRL + ALT + C",
         "label": "Screenrecording with no audio"
-      },
-      {
-        "chord": "SUPER + CTRL + ALT + X",
-        "label": "Local models"
       },
       {
         "chord": "SUPER + CTRL + comma",
@@ -106,10 +122,6 @@
         "label": "Agents"
       },
       {
-        "chord": "SUPER + grave",
-        "label": "Toggle Quake console"
-      },
-      {
         "chord": "SUPER + I",
         "label": "Switch input language"
       },
@@ -126,7 +138,7 @@
         "label": "Close window"
       },
       {
-        "chord": "SUPER + SHIFT + grave",
+        "chord": "SUPER + SHIFT + code:49",
         "label": "Move window to Quake console"
       },
       {
@@ -437,6 +449,78 @@
       },
       {
         "action": [
+          "omarchy-shell -q shell togglePanelAt right 1",
+          "{ panel_at = \"right:\" .. panel }"
+        ],
+        "chord": "SUPER + CTRL + code:10",
+        "label": "Bar panel 1"
+      },
+      {
+        "action": [
+          "omarchy-shell -q shell togglePanelAt right 2",
+          "{ panel_at = \"right:\" .. panel }"
+        ],
+        "chord": "SUPER + CTRL + code:11",
+        "label": "Bar panel 2"
+      },
+      {
+        "action": [
+          "omarchy-shell -q shell togglePanelAt right 3",
+          "{ panel_at = \"right:\" .. panel }"
+        ],
+        "chord": "SUPER + CTRL + code:12",
+        "label": "Bar panel 3"
+      },
+      {
+        "action": [
+          "omarchy-shell -q shell togglePanelAt right 4",
+          "{ panel_at = \"right:\" .. panel }"
+        ],
+        "chord": "SUPER + CTRL + code:13",
+        "label": "Bar panel 4"
+      },
+      {
+        "action": [
+          "omarchy-shell -q shell togglePanelAt right 5",
+          "{ panel_at = \"right:\" .. panel }"
+        ],
+        "chord": "SUPER + CTRL + code:14",
+        "label": "Bar panel 5"
+      },
+      {
+        "action": [
+          "omarchy-shell -q shell togglePanelAt right 6",
+          "{ panel_at = \"right:\" .. panel }"
+        ],
+        "chord": "SUPER + CTRL + code:15",
+        "label": "Bar panel 6"
+      },
+      {
+        "action": [
+          "omarchy-shell -q shell togglePanelAt right 7",
+          "{ panel_at = \"right:\" .. panel }"
+        ],
+        "chord": "SUPER + CTRL + code:16",
+        "label": "Bar panel 7"
+      },
+      {
+        "action": [
+          "omarchy-shell -q shell togglePanelAt right 8",
+          "{ panel_at = \"right:\" .. panel }"
+        ],
+        "chord": "SUPER + CTRL + code:17",
+        "label": "Bar panel 8"
+      },
+      {
+        "action": [
+          "omarchy-shell -q shell togglePanelAt right 9",
+          "{ panel_at = \"right:\" .. panel }"
+        ],
+        "chord": "SUPER + CTRL + code:18",
+        "label": "Bar panel 9"
+      },
+      {
+        "action": [
           "omarchy-shell shell toggle omarchy.monitor",
           "{ panel = \"omarchy.monitor\" }"
         ],
@@ -530,6 +614,14 @@
         ],
         "chord": "SUPER + ESCAPE",
         "label": "System menu"
+      },
+      {
+        "action": [
+          "omarchy-menu-keybindings",
+          "{ menu = \"learn.keybindings\" }"
+        ],
+        "chord": "SUPER + K",
+        "label": "Keybindings"
       },
       {
         "action": [
@@ -797,13 +889,13 @@
       }
     ],
     "counts": {
-      "added": 40,
-      "changedAction": 79,
+      "added": 43,
+      "changedAction": 89,
       "from": 228,
       "fromRecords": 228,
-      "removed": 27,
-      "to": 241,
-      "toRecords": 241
+      "removed": 31,
+      "to": 240,
+      "toRecords": 240
     },
     "note": null,
     "removed": [
@@ -836,6 +928,10 @@
         "label": "X Post"
       },
       {
+        "chord": "SUPER + ALT + SLASH",
+        "label": "Monitor scaling down"
+      },
+      {
         "chord": "SUPER + ALT + SPACE",
         "label": "Apps menu"
       },
@@ -854,6 +950,10 @@
       {
         "chord": "SUPER + CTRL + N",
         "label": "Toggle nightlight"
+      },
+      {
+        "chord": "SUPER + CTRL + PERIOD",
+        "label": "Transcode"
       },
       {
         "chord": "SUPER + CTRL + Q",
@@ -908,12 +1008,20 @@
         "label": "Google Maps"
       },
       {
+        "chord": "SUPER + SHIFT + SLASH",
+        "label": "Passwords"
+      },
+      {
         "chord": "SUPER + SHIFT + X",
         "label": "X"
       },
       {
         "chord": "SUPER + SHIFT + Y",
         "label": "YouTube"
+      },
+      {
+        "chord": "SUPER + SLASH",
+        "label": "Monitor scaling up"
       }
     ]
   },
@@ -961,7 +1069,7 @@
       "omarchy-agent-usage-synthetic",
       "omarchy-agent-usage-vibe",
       "omarchy-agent-usage-zai",
-      "omarchy-apply-amd-gpu-memory",
+      "omarchy-apply-gpu-memory",
       "omarchy-apply-n1x-gpu-memory",
       "omarchy-apply-pacman",
       "omarchy-ascii",
@@ -1006,6 +1114,7 @@
       "omarchy-hw-match-device-tree",
       "omarchy-hw-n1x",
       "omarchy-hw-nvidia-display",
+      "omarchy-hw-pci",
       "omarchy-hw-platform",
       "omarchy-hw-software-rendering",
       "omarchy-hw-vm",
@@ -1059,7 +1168,6 @@
       "omarchy-menu-region-formats",
       "omarchy-mise-default-tools",
       "omarchy-models",
-      "omarchy-models-harness",
       "omarchy-models-launchers",
       "omarchy-models-warmup",
       "omarchy-n1x-probe",
@@ -1123,7 +1231,7 @@
         "fields": {
           "args": [
             "[--inline] [--pick]",
-            "[--inline] [--pick] [--local] [--local-model <recipe>] [--prefer-local] [--agent <id>] [--app-id=<app-id>]"
+            "[--inline] [--pick] [--or-webapp <url>] [--local-model <recipe>] [--agent <id>] [--provider <fireworks|openrouter|deepseek|minimax|synthetic|zai>] [--app-id=<app-id>]"
           ],
           "examples": [
             [
@@ -1133,8 +1241,8 @@
             [
               "omarchy agent",
               "omarchy agent --inline",
-              "omarchy agent --local",
-              "omarchy agent --agent codex"
+              "omarchy agent --agent codex",
+              "omarchy agent --provider fireworks"
             ]
           ]
         },
@@ -1156,8 +1264,17 @@
       {
         "fields": {
           "args": [
+            "<on|off|status|match|fronted-sink> [--force]",
+            ""
+          ]
+        },
+        "name": "omarchy-audio-tuning"
+      },
+      {
+        "fields": {
+          "args": [
             "use <id> | reset | defaults | position <top|bottom|left|right> | transparent <true|false|toggle> | put <id> [placement] | move <id> [placement] | set <id> <key> <value> [--json] [placement]",
-            "use <id> | reset | defaults | position [top|bottom|left|right] | background [opaque|glassy|none|cycle] | put <id> [placement] | move <id> [placement] | set <id> <key> <value> [--json] [placement] | get <id> <key>"
+            ""
           ],
           "examples": [
             [
@@ -1248,7 +1365,20 @@
         "fields": {
           "args": [
             "[pi|omp|opencode|claude|codex|grok|gemini|openclaw|hermes|copilot|crush|cursor-agent|muse]",
-            "[pi|omp|opencode|ori|claude|codex|grok|openclaw|agy|hermes|copilot|crush|cursor-agent|muse|kimi|qwen|dsh|mcode|kiro-cli|freebuff|kilo|devin|amp|commandcode]"
+            "[local|pi|omp|opencode|ori|claude|codex|grok|openclaw|agy|hermes|copilot|crush|cursor-agent|muse|kimi|qwen|dsh|mcode|kiro-cli|freebuff|kilo|devin|amp|commandcode]"
+          ],
+          "examples": [
+            [
+              "omarchy default agent",
+              "omarchy default agent codex",
+              "omarchy default agent claude"
+            ],
+            [
+              "omarchy default agent",
+              "omarchy default agent codex",
+              "omarchy default agent local",
+              "omarchy default agent local qwen3.8-27b-gufo"
+            ]
           ]
         },
         "name": "omarchy-default-agent"
@@ -1277,6 +1407,15 @@
       {
         "fields": {
           "args": [
+            "[list|add] <name> <svg-file-or-url> [--codepoint U+E9xx] [--font PATH]",
+            ""
+          ]
+        },
+        "name": "omarchy-dev-font"
+      },
+      {
+        "fields": {
+          "args": [
             "[Cloudflare|Google|DHCP|Custom]",
             "[Cloudflare|Google|AliDNS|DHCP|Custom]"
           ]
@@ -1285,9 +1424,13 @@
       },
       {
         "fields": {
+          "args": [
+            "",
+            "[--login]"
+          ],
           "summary": [
             "Set a new encryption password for a drive selected.",
-            "Set a new password for an encrypted drive"
+            "Set a new password for an encrypted drive, or with --login for the system disk and your login together"
           ]
         },
         "name": "omarchy-drive-password"
@@ -1563,7 +1706,7 @@
         "fields": {
           "args": [
             "[--app-name <app-name>] [-g <glyph>] [-u <low|normal|critical>] [-i <icon>] [-t <ms>] [-r <id>] [-p] [--image <path-or-uri>] <headline> [description] [--exec <program> [args...]]",
-            "[--app-name <app-name>] [-g <glyph>] [-u <low|normal|critical>] [-i <icon>] [-t <ms>] [-r <id>] [-p] [--transient] [--image <path-or-uri>] <headline> [description] [--exec <program> [args...] | --action <label> <program> [words...]... [--with <args...>]]"
+            "[--app-name <app-name>] [-g <glyph>] [-u <low|normal|critical>] [-i <icon>] [-t <ms>] [-r <id>] [-p] [--transient] [--sticky] [--image <path-or-uri>] <headline> [description] [--exec <program> [args...] | --action <label> <program> [words...]... [--with <args...>]]"
           ]
         },
         "name": "omarchy-notification-send"
@@ -1585,6 +1728,15 @@
           ]
         },
         "name": "omarchy-reinstall-pkgs"
+      },
+      {
+        "fields": {
+          "args": [
+            "[-i|--interactive] | <minutes> [message] | show [-j|--json] | clear",
+            ""
+          ]
+        },
+        "name": "omarchy-reminder"
       },
       {
         "fields": {
@@ -1821,11 +1973,20 @@
           ]
         },
         "name": "omarchy-update-status"
+      },
+      {
+        "fields": {
+          "args": [
+            "<install|remove|launch|stop|status> [options]",
+            ""
+          ]
+        },
+        "name": "omarchy-windows-vm"
       }
     ],
     "counts": {
       "added": 198,
-      "changed": 56,
+      "changed": 60,
       "from": 444,
       "removed": 11,
       "to": 631
@@ -1847,38 +2008,6 @@
   "from": "v4.0.4",
   "menu": {
     "added": [
-      "agent",
-      "agent.harness",
-      "agent.harness.agy",
-      "agent.harness.amp",
-      "agent.harness.claude",
-      "agent.harness.codex",
-      "agent.harness.commandcode",
-      "agent.harness.copilot",
-      "agent.harness.crush",
-      "agent.harness.cursor-agent",
-      "agent.harness.devin",
-      "agent.harness.dsh",
-      "agent.harness.freebuff",
-      "agent.harness.grok",
-      "agent.harness.hermes",
-      "agent.harness.kilo",
-      "agent.harness.kimi",
-      "agent.harness.kiro-cli",
-      "agent.harness.mcode",
-      "agent.harness.muse",
-      "agent.harness.omp",
-      "agent.harness.openclaw",
-      "agent.harness.opencode",
-      "agent.harness.ori",
-      "agent.harness.pi",
-      "agent.harness.qwen",
-      "agent.instructions",
-      "agent.make",
-      "agent.make.app",
-      "agent.make.game",
-      "agent.make.plugin",
-      "agent.make.theme",
       "appearance",
       "appearance.animations-off",
       "appearance.animations-on",
@@ -2597,6 +2726,15 @@
       {
         "fields": {
           "action": [
+            "omarchy-menu-keybindings",
+            "omarchy-shell shell summon omarchy.menu '{\"mode\":\"keybindings\"}'"
+          ]
+        },
+        "id": "learn.keybindings"
+      },
+      {
+        "fields": {
+          "action": [
             "omarchy-launch-webapp 'https://omarchy.org/manual/'",
             "omarchy-launch-manual"
           ]
@@ -2934,14 +3072,23 @@
           ]
         },
         "id": "trigger.capture.screenrecord.stop"
+      },
+      {
+        "fields": {
+          "action": [
+            null,
+            "omarchy-launch-floating-terminal-with-presentation 'omarchy-drive-password --login'"
+          ]
+        },
+        "id": "update.password"
       }
     ],
     "counts": {
-      "added": 178,
-      "changed": 100,
+      "added": 146,
+      "changed": 102,
       "from": 333,
-      "removed": 59,
-      "to": 452
+      "removed": 61,
+      "to": 418
     },
     "removed": [
       "about",
@@ -3002,15 +3149,17 @@
       "trigger.toggle.top-bar",
       "trigger.toggle.window-gaps",
       "trigger.toggle.workspace-layout",
+      "update.password.drive",
+      "update.password.user",
       "update.timezone"
     ]
   },
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 212,
+      "new": 223,
       "removed": 0,
-      "to": 318
+      "to": 329
     },
     "new": [
       {
@@ -3949,6 +4098,11 @@
         "file": "1794859637.sh"
       },
       {
+        "date": "2026-11-16T21:31:05Z",
+        "description": "Install the Surface Laptop 7 15\\",
+        "file": "1794864665.sh"
+      },
+      {
         "date": "2026-11-17T09:51:22Z",
         "description": "Show the Samsung Galaxy Book4 Edge 14's disk unlock prompt and add its keyboard and Bluetooth support",
         "file": "1794909082.sh"
@@ -4072,6 +4226,56 @@
         "date": "2026-11-22T03:40:56Z",
         "description": "Install Pi as a package instead of a mise tool",
         "file": "1795318856.sh"
+      },
+      {
+        "date": "2026-11-22T08:53:03Z",
+        "description": "Install the Surface Laptop 7 13.8\\",
+        "file": "1795337583.sh"
+      },
+      {
+        "date": "2026-11-22T11:55:51Z",
+        "description": "Keep Panel Replay on for the HP ZBook Ultra G3a 16 display fix",
+        "file": "1795348551.sh"
+      },
+      {
+        "date": "2026-11-22T13:28:13Z",
+        "description": "Let Intel GPUs map all of RAM but 8 GiB, not half",
+        "file": "1795354093.sh"
+      },
+      {
+        "date": "2026-11-22T13:37:26Z",
+        "description": "Install Podman and crun, which run local models, on machines installed before they were base packages",
+        "file": "1795354646.sh"
+      },
+      {
+        "date": "2026-11-22T13:42:35Z",
+        "description": "Install kmscon, which setup after a factory reset is drawn in",
+        "file": "1795354955.sh"
+      },
+      {
+        "date": "2026-11-22T18:37:55Z",
+        "description": "Leave the loaded-resource listing out of Pi's startup, under the Omarchy header",
+        "file": "1795372675.sh"
+      },
+      {
+        "date": "2026-11-22T19:37:19Z",
+        "description": "Start Pi straight at the editor, without its header",
+        "file": "1795376239.sh"
+      },
+      {
+        "date": "2026-11-22T20:48:03Z",
+        "description": "Remove the local models icon from the bar",
+        "file": "1795380483.sh"
+      },
+      {
+        "date": "2026-11-23T10:43:12Z",
+        "description": "Stop the Lenovo Yoga Slim 7x DSPs and Wi-Fi around hibernation, so it resumes",
+        "file": "1795430592.sh"
+      },
+      {
+        "date": "2026-11-23T13:46:23Z",
+        "description": "Pre-generate shutdown-ramfs after boot for faster shutdown",
+        "file": "1795441583.sh"
       }
     ],
     "removed": []

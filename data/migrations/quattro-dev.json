@@ -1,5 +1,5 @@
 {
-  "count": 318,
+  "count": 329,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -4917,7 +4917,7 @@
       ]
     },
     {
-      "body": "echo \"Let AMD GPUs map all of RAM but 8 GiB, not half\"\n\n# See omarchy-apply-amd-gpu-memory. The cap is a kernel option, so it takes a\n# boot image rebuild and applies from the next boot. A machine-wide marker,\n# written only after the rebuild, records that this one is done, so a retry\n# after a failed rebuild writes and rebuilds again and a second user's run\n# does nothing.\ndone_marker=/var/lib/omarchy/migrations/1794855305-done\nif [[ -e $done_marker ]]; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" omarchy-apply-amd-gpu-memory || exit 1\n\n# No AMD GPU, or 16 GB or less where the kernel's default is as high.\nif [[ ! -f /etc/limine-entry-tool.d/amd-gpu-memory.conf ]]; then\n  exit 0\nfi\n\nrebuild_log=$(mktemp)\ntrap 'rm -f \"$rebuild_log\"' EXIT\nsudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n# limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\nif grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n  echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n  exit 1\nfi\n\nsudo install -Dm644 /dev/null \"$done_marker\"\nomarchy-state set reboot-required",
+      "body": "echo \"Let AMD GPUs map all of RAM but 8 GiB, not half\"\n\n# See omarchy-apply-gpu-memory. The cap is a kernel option, so it takes a\n# boot image rebuild and applies from the next boot. A machine-wide marker,\n# written only after the rebuild, records that this one is done, so a retry\n# after a failed rebuild writes and rebuilds again and a second user's run\n# does nothing.\ndone_marker=/var/lib/omarchy/migrations/1794855305-done\nif [[ -e $done_marker ]]; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" omarchy-apply-gpu-memory || exit 1\n\n# No AMD GPU, or 16 GB or less where the kernel's default is as high.\nif [[ ! -f /etc/limine-entry-tool.d/amd-gpu-memory.conf ]]; then\n  exit 0\nfi\n\nrebuild_log=$(mktemp)\ntrap 'rm -f \"$rebuild_log\"' EXIT\nsudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n# limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\nif grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n  echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n  exit 1\nfi\n\nsudo install -Dm644 /dev/null \"$done_marker\"\nomarchy-state set reboot-required",
       "bodyTruncated": false,
       "date": "2026-11-16T18:55:05Z",
       "description": "Let AMD GPUs map all of RAM but 8 GiB, not half",
@@ -4950,6 +4950,22 @@
         "/etc/pacman.conf.XXXXXX",
         "/var/lib/omarchy/migrations/1794859637"
       ]
+    },
+    {
+      "body": "echo \"Install the Surface Laptop 7 15\\\"'s support package on installs made before it existed\"\n\n# microsoft-surface-laptop-7-support reads the battery pack's cycle count from\n# the Surface controller (surface-laptop-7-battery) and keeps the infrared\n# camera out of camera pickers. Its timer checks for this laptop itself and\n# starts at the next boot.\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match-device-tree microsoft,romulus15; then\n  exit 0\nfi\n\nomarchy-pkg-add microsoft-surface-laptop-7-support",
+      "bodyTruncated": false,
+      "date": "2026-11-16T21:31:05Z",
+      "description": "Install the Surface Laptop 7 15\\",
+      "file": "1794864665.sh",
+      "lineCount": 11,
+      "packagesAdded": [
+        "microsoft-surface-laptop-7-support"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1794864665.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794864665.sh",
+      "timestamp": 1794864665,
+      "touches": []
     },
     {
       "body": "echo \"Show the Samsung Galaxy Book4 Edge 14's disk unlock prompt and add its keyboard and Bluetooth support\"\n\n# See install/hardware/samsung/galaxy-book4-edge-14.sh. The initramfs hook and\n# the kernel command line are in the boot image, so they take a rebuild. The\n# marker records the rebuild as owed before the setup runs, so a retry rebuilds\n# even when the files are already there.\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match-device-tree samsung,galaxy-book4-edge-14; then\n  exit 0\nfi\n\ndrop_in=/etc/limine-entry-tool.d/samsung-galaxy-book4-edge-14.conf\nhook=/etc/initcpio/install/samsung-galaxy-book4-edge-14\nrebuild_pending=/var/lib/omarchy/migrations/1794909082-rebuild-pending\nif [[ -e $rebuild_pending ]] || [[ ! -f $hook ]] ||\n  ! grep -q 'usbcore.autosuspend=-1' \"$drop_in\" 2>/dev/null ||\n  omarchy-pkg-missing samsung-galaxy-book4-edge-14-support; then\n  sudo install -Dm644 /dev/null \"$rebuild_pending\" || exit 1\n  sudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n    source \"$OMARCHY_PATH/install/hardware/samsung/galaxy-book4-edge-14.sh\"\n  '\nfi\n\nif [[ -e $rebuild_pending ]]; then\n  rebuild_log=$(mktemp)\n  trap 'rm -f \"$rebuild_log\"' EXIT\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n  # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n  if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n    exit 1\n  fi\n\n  # Ask for the reboot before clearing the marker, so a run cut short in\n  # between still asks on the next one.\n  omarchy-state set reboot-required\n  sudo rm -f \"$rebuild_pending\"\nfi",
@@ -5342,6 +5358,170 @@
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795318856.sh",
       "timestamp": 1795318856,
       "touches": []
+    },
+    {
+      "body": "echo \"Install the Surface Laptop 7 13.8\\\"'s Wi-Fi and Bluetooth addresses, iptsd and camera relay\"\n\n# See install/hardware/microsoft/surface-laptop-7.sh. Without the addresses\n# Bluetooth has no controller, iptsd gives the touchpad its gestures and runs\n# the touchscreen, and microsoft-surface-laptop-7-support relays the front\n# camera to a webcam device. Packages already installed are skipped.\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match-device-tree microsoft,romulus13; then\n  exit 0\nfi\n\nomarchy-pkg-add microsoft-surface-snapdragon-addresses iptsd microsoft-surface-laptop-7-support",
+      "bodyTruncated": false,
+      "date": "2026-11-22T08:53:03Z",
+      "description": "Install the Surface Laptop 7 13.8\\",
+      "file": "1795337583.sh",
+      "lineCount": 11,
+      "packagesAdded": [
+        "iptsd",
+        "microsoft-surface-laptop-7-support",
+        "microsoft-surface-snapdragon-addresses"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1795337583.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795337583.sh",
+      "timestamp": 1795337583,
+      "touches": []
+    },
+    {
+      "body": "echo \"Keep Panel Replay on for the HP ZBook Ultra G3a 16 display fix\"\n\n# See install/hardware/hp/fix-hp-zbook-ultra-g3a-display.sh. Migration\n# 1795285870 wrote amdgpu.dcdebugmask=0x402; only the stutter bit (0x2) fixes\n# the glitches, so the leaf now writes 0x2. The drop-in's contents can't tell\n# whether the boot image has caught up: 1795285870 skips its rebuild for a\n# second user and writes 0x2 without rebuilding. So this rebuilds once per\n# machine on its own marker, which is only set after the rebuild succeeds.\nrebuild_marker=\"${OMARCHY_LIMINE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1795348551}\"\n\nif ! omarchy-hw-x86 || ! omarchy-hw-match \"ZBook Ultra G3a 16\"; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n  source \"$OMARCHY_PATH/install/hardware/hp/fix-hp-zbook-ultra-g3a-display.sh\"\n'\n\n# A marker records the machine-wide rebuild: another user's run must not repeat\n# it, while a missing marker still retries a failed or interrupted rebuild.\nif [[ ! -e $rebuild_marker ]]; then\n  rebuild_log=$(mktemp)\n  trap 'rm -f \"$rebuild_log\"' EXIT\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n  # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n  # That image keeps the old option, so the migration stays pending.\n  if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n    exit 1\n  fi\n\n  sudo install -Dm644 /dev/null \"$rebuild_marker\"\n  omarchy-state set reboot-required\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-22T11:55:51Z",
+      "description": "Keep Panel Replay on for the HP ZBook Ultra G3a 16 display fix",
+      "file": "1795348551.sh",
+      "lineCount": 35,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795348551.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795348551.sh",
+      "timestamp": 1795348551,
+      "touches": [
+        "/var/lib/omarchy/migrations/1795348551"
+      ]
+    },
+    {
+      "body": "echo \"Let Intel GPUs map all of RAM but 8 GiB, not half\"\n\n# See omarchy-apply-gpu-memory, which now raises the cap for Intel graphics on\n# xe as well as AMD. The cap is a kernel option, so it takes a boot image\n# rebuild and applies from the next boot. A machine-wide marker, written only\n# after the rebuild, records that this one is done, so a second user's run\n# does nothing.\ndone_marker=/var/lib/omarchy/migrations/1795354093-done\nif [[ -e $done_marker ]]; then\n  exit 0\nfi\n\n# Written before the drop-in changes and removed only after the rebuild: once\n# the drop-in holds the new cap, it no longer shows that a rebuild is owed, so\n# a retry after a failed rebuild goes by this instead.\nowed_marker=/var/lib/omarchy/migrations/1795354093-owed\ndrop_in=/etc/limine-entry-tool.d/amd-gpu-memory.conf\n\nif [[ ! -e $owed_marker ]]; then\n  # What the helper would write, worked out without root and without touching\n  # the drop-in. Only the setting counts: the helper's comment line changed\n  # with this, and a raise omarchy-local-ai wrote carries its own.\n  wanted_conf=$(mktemp -u)\n  OMARCHY_AMD_GPU_MEMORY_CONF=$wanted_conf omarchy-apply-gpu-memory >/dev/null\n  wanted=$(grep -v '^#' \"$wanted_conf\" 2>/dev/null || true)\n  rm -f \"$wanted_conf\"\n\n  # No integrated GPU it covers, or 16 GB or less where the kernel's default is\n  # as high.\n  if [[ -z $wanted ]]; then\n    exit 0\n  fi\n\n  # An AMD machine that 1794855305 already rebuilt for, with the same cap,\n  # needs no second rebuild.\n  if [[ -e /var/lib/omarchy/migrations/1794855305-done && $(grep -v '^#' \"$drop_in\" 2>/dev/null || true) == \"$wanted\" ]]; then\n    sudo install -Dm644 /dev/null \"$done_marker\"\n    exit 0\n  fi\n",
+      "bodyTruncated": true,
+      "date": "2026-11-22T13:28:13Z",
+      "description": "Let Intel GPUs map all of RAM but 8 GiB, not half",
+      "file": "1795354093.sh",
+      "lineCount": 58,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795354093.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795354093.sh",
+      "timestamp": 1795354093,
+      "touches": [
+        "/etc/limine-entry-tool.d/amd-gpu-memory.conf",
+        "/var/lib/omarchy/migrations/1794855305-done",
+        "/var/lib/omarchy/migrations/1795354093-done",
+        "/var/lib/omarchy/migrations/1795354093-owed"
+      ]
+    },
+    {
+      "body": "echo \"Install Podman and crun, which run local models, on machines installed before they were base packages\"\n\nomarchy-pkg-add podman crun",
+      "bodyTruncated": false,
+      "date": "2026-11-22T13:37:26Z",
+      "description": "Install Podman and crun, which run local models, on machines installed before they were base packages",
+      "file": "1795354646.sh",
+      "lineCount": 3,
+      "packagesAdded": [
+        "crun",
+        "podman"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1795354646.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795354646.sh",
+      "timestamp": 1795354646,
+      "touches": []
+    },
+    {
+      "body": "echo \"Install kmscon, which setup after a factory reset is drawn in\"\n\nomarchy-pkg-add kmscon",
+      "bodyTruncated": false,
+      "date": "2026-11-22T13:42:35Z",
+      "description": "Install kmscon, which setup after a factory reset is drawn in",
+      "file": "1795354955.sh",
+      "lineCount": 3,
+      "packagesAdded": [
+        "kmscon"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1795354955.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795354955.sh",
+      "timestamp": 1795354955,
+      "touches": []
+    },
+    {
+      "body": "echo \"Leave the loaded-resource listing out of Pi's startup, under the Omarchy header\"\n\n\"$OMARCHY_PATH/bin/omarchy-agent-pi-defaults\"",
+      "bodyTruncated": false,
+      "date": "2026-11-22T18:37:55Z",
+      "description": "Leave the loaded-resource listing out of Pi's startup, under the Omarchy header",
+      "file": "1795372675.sh",
+      "lineCount": 3,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795372675.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795372675.sh",
+      "timestamp": 1795372675,
+      "touches": []
+    },
+    {
+      "body": "echo \"Start Pi straight at the editor, without its header\"\n\n# The previous Pi migration set quietStartup to \"header\" for the Omarchy header,\n# which is gone again, so that value becomes true. A value the user chose stays.\nsettings=~/.pi/agent/settings.json\nif jq -e '.quietStartup == \"header\"' \"$settings\" &>/dev/null; then\n  target=$(realpath \"$settings\")\n  tmp=$(mktemp \"$target.XXXXXX\")\n  jq '.quietStartup = true' \"$target\" >\"$tmp\" && mv \"$tmp\" \"$target\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-22T19:37:19Z",
+      "description": "Start Pi straight at the editor, without its header",
+      "file": "1795376239.sh",
+      "lineCount": 10,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795376239.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795376239.sh",
+      "timestamp": 1795376239,
+      "touches": [
+        "~/.pi/agent/settings.json"
+      ]
+    },
+    {
+      "body": "echo \"Remove the local models icon from the bar\"\n\n# Local coding models moved into the agents panel, and the local models icon\n# and panel are gone.\nconfig_file=\"$HOME/.config/omarchy/shell.json\"\n[[ -s $config_file ]] || exit 0\ngrep -q '\"omarchy.local-models\"' \"$config_file\" || exit 0\n\n# Written through, so a shell.json linked from dotfiles stays a link.\ntmp=$(mktemp)\nif jq '\n  def entry_id: if type == \"object\" then (.id // \"\") elif type == \"string\" then . else \"\" end;\n  .bar.layout[]? |= (if type == \"array\" then [.[] | select(entry_id != \"omarchy.local-models\")] else . end)\n' \"$config_file\" >\"$tmp\"; then\n  cat \"$tmp\" >\"$config_file\"\nelse\n  # A shell.json jq can't read stays as it is, and the migration pending.\n  status=$?\n  rm -f \"$tmp\"\n  exit \"$status\"\nfi\nrm -f \"$tmp\"",
+      "bodyTruncated": false,
+      "date": "2026-11-22T20:48:03Z",
+      "description": "Remove the local models icon from the bar",
+      "file": "1795380483.sh",
+      "lineCount": 22,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795380483.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795380483.sh",
+      "timestamp": 1795380483,
+      "touches": [
+        "~/.config/omarchy/shell.json"
+      ]
+    },
+    {
+      "body": "echo \"Stop the Lenovo Yoga Slim 7x DSPs and Wi-Fi around hibernation, so it resumes\"\n\n# Existing installs predate the hibernation service the board setup installs.\nomarchy-hw-aarch64-qualcomm && omarchy-hw-match \"83ED\" || exit 0\n[[ ! -e /etc/systemd/system/yoga-slim7x-hibernate.service ]] || exit 0\n\nsudo OMARCHY_PATH=\"$OMARCHY_PATH\" bash \"$OMARCHY_PATH/install/hardware/lenovo/yoga-slim7x.sh\"\nsudo systemctl daemon-reload",
+      "bodyTruncated": false,
+      "date": "2026-11-23T10:43:12Z",
+      "description": "Stop the Lenovo Yoga Slim 7x DSPs and Wi-Fi around hibernation, so it resumes",
+      "file": "1795430592.sh",
+      "lineCount": 8,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795430592.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795430592.sh",
+      "timestamp": 1795430592,
+      "touches": [
+        "/etc/systemd/system/yoga-slim7x-hibernate.service"
+      ]
+    },
+    {
+      "body": "echo \"Pre-generate shutdown-ramfs after boot for faster shutdown\"\n\n# New installs enable this in install/config/enable-services.sh. Existing\n# installs wait until omarchy-settings delivers the timer unit.\nif [[ ! -f /etc/systemd/system/omarchy-shutdown-ramfs.timer ]]; then\n  echo \"Waiting for the omarchy-settings package that ships omarchy-shutdown-ramfs.timer\" >&2\n  exit 75\nfi\n\nas_root() {\n  if (( EUID == 0 )); then\n    \"$@\"\n  else\n    sudo \"$@\"\n  fi\n}\n\nif ! systemctl is-enabled --quiet omarchy-shutdown-ramfs.timer 2>/dev/null; then\n  if ! as_root systemctl enable --now omarchy-shutdown-ramfs.timer; then\n    echo \"Could not enable omarchy-shutdown-ramfs.timer; shutdown-ramfs will keep generating during shutdown.\" >&2\n    exit 1\n  fi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-23T13:46:23Z",
+      "description": "Pre-generate shutdown-ramfs after boot for faster shutdown",
+      "file": "1795441583.sh",
+      "lineCount": 23,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795441583.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795441583.sh",
+      "timestamp": 1795441583,
+      "touches": [
+        "/etc/systemd/system/omarchy-shutdown-ramfs.timer"
+      ]
     }
   ],
   "prerelease": true,

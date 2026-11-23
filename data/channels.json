@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-22T12:51:04Z",
+  "fetchedAt": "2026-11-23T15:05:16Z",
   "mirrors": [
     {
       "name": "stable-mirror",
@@ -12,7 +12,7 @@
         "unix": 1792636269,
         "iso": "2026-10-22T02:31:09Z"
       },
-      "lagHoursVsUpstream": 754.38
+      "lagHoursVsUpstream": 780.34
     },
     {
       "name": "rc-mirror",
@@ -25,32 +25,32 @@
         "unix": 1792636269,
         "iso": "2026-10-22T02:31:09Z"
       },
-      "lagHoursVsUpstream": 754.38
+      "lagHoursVsUpstream": 780.34
     },
     {
       "name": "mirror",
       "url": "https://mirror.omarchy.org",
       "lastupdate": {
-        "unix": 1795349299,
-        "iso": "2026-11-22T12:08:19Z"
+        "unix": 1795443957,
+        "iso": "2026-11-23T14:25:57Z"
       },
       "lastsync": {
-        "unix": 1795349542,
-        "iso": "2026-11-22T12:12:22Z"
+        "unix": 1795444108,
+        "iso": "2026-11-23T14:28:28Z"
       },
-      "lagHoursVsUpstream": 0.53
+      "lagHoursVsUpstream": 0.2
     }
   ],
   "upstream": {
     "name": "arch-geo-mirror",
     "url": "https://geo.mirror.pkgbuild.com",
     "lastupdate": {
-      "unix": 1795351197,
-      "iso": "2026-11-22T12:39:57Z"
+      "unix": 1795444684,
+      "iso": "2026-11-23T14:38:04Z"
     },
     "lastsync": {
-      "unix": 1795351860,
-      "iso": "2026-11-22T12:51:00Z"
+      "unix": 1795446303,
+      "iso": "2026-11-23T15:05:03Z"
     }
   },
   "channels": {
@@ -58,7 +58,7 @@
       "arch": "x86_64",
       "url": "https://pkgs.omarchy.org/stable/x86_64/omarchy.db",
       "ok": true,
-      "packageCount": 266,
+      "packageCount": 280,
       "packages": {
         "1password": {
           "version": "8.12.46-1",
@@ -85,6 +85,11 @@
           "desc": "Detached debugging symbols for aether",
           "builddate": 1794987620
         },
+        "amp-cli": {
+          "version": "0.0.1795435239-1",
+          "desc": "Amp, the frontier coding agent, in your terminal",
+          "builddate": 1795442083
+        },
         "amp-desktop-bin": {
           "version": "0.1.29921761-1",
           "desc": "Amp, the frontier coding agent, as a desktop app",
@@ -94,6 +99,11 @@
           "version": "2.34.0-1",
           "desc": "Google Antigravity 2.0 agent-first desktop app",
           "builddate": 1795218028
+        },
+        "antigravity-cli": {
+          "version": "1.5.15-1",
+          "desc": "Google Antigravity CLI (agy), a terminal coding agent",
+          "builddate": 1795442006
         },
         "apple-bcm-firmware-fetcher": {
           "version": "1-2",
@@ -116,9 +126,9 @@
           "builddate": 1794273679
         },
         "basecamp-cli": {
-          "version": "0.30.0-1",
+          "version": "0.30.0-2",
           "desc": "CLI for Basecamp project management",
-          "builddate": 1794606082
+          "builddate": 1795442537
         },
         "basecamp-cli-debug": {
           "version": "0.30.0-1",
@@ -161,9 +171,9 @@
           "builddate": 1785110135
         },
         "claude-code": {
-          "version": "2.1.330-1",
-          "desc": "An agentic coding tool that lives in your terminal",
-          "builddate": 1795214438
+          "version": "2.1.330-2",
+          "desc": "Claude Code, Anthropic's agentic coding tool for the terminal",
+          "builddate": 1795442088
         },
         "claude-desktop": {
           "version": "6.28899.6-1",
@@ -186,9 +196,9 @@
           "builddate": 1792517233
         },
         "crush-bin": {
-          "version": "0.102.0-1",
-          "desc": "A powerful terminal-based AI assistant for developers, providing intelligent coding assistance directly in your terminal.",
-          "builddate": 1795112896
+          "version": "0.102.0-2",
+          "desc": "Crush, Charm's terminal coding agent",
+          "builddate": 1795442331
         },
         "crush-bin-debug": {
           "version": "0.102.0-1",
@@ -211,9 +221,9 @@
           "builddate": 1795218028
         },
         "cursor-cli": {
-          "version": "1:2026.11.22.1.e9042b2-1",
-          "desc": "CLI tool for Cursor, the AI-first coding agent",
-          "builddate": 1795311647
+          "version": "1:2026.11.22.1.e9042b2-2",
+          "desc": "Cursor Agent, the terminal coding agent from Cursor",
+          "builddate": 1795442397
         },
         "cursor-cli-debug": {
           "version": "1:2026.07.23.1.e383d2b-1",
@@ -221,14 +231,19 @@
           "builddate": 1786619026
         },
         "dbxcli-bin": {
-          "version": "3.8.2-1",
+          "version": "3.8.3-1",
           "desc": "A command line client for Dropbox built using the Go SDK",
-          "builddate": 1794983233
+          "builddate": 1795436964
         },
         "dbxcli-bin-debug": {
-          "version": "3.8.2-1",
+          "version": "3.8.3-1",
           "desc": "Detached debugging symbols for dbxcli-bin",
-          "builddate": 1794983233
+          "builddate": 1795436964
+        },
+        "deepseek-dsh": {
+          "version": "0.2.2rc.5-1",
+          "desc": "DeepSeek Harness (dsh), DeepSeek's terminal coding agent",
+          "builddate": 1795442581
         },
         "dell-xps-touchpad-haptics": {
           "version": "1.0.0-4",
@@ -280,6 +295,11 @@
           "desc": "Fast, keyboard-first file manager for Omarchy",
           "builddate": 1794644081
         },
+        "freebuff": {
+          "version": "0.2.36-1",
+          "desc": "Freebuff, a free AI coding agent for the terminal",
+          "builddate": 1795442713
+        },
         "ghost": {
           "version": "0.11.9-1",
           "desc": "Ghost HUD and desktop integration for Omarchy",
@@ -315,10 +335,15 @@
           "desc": "Terminfo for Ghostty",
           "builddate": 1793156731
         },
+        "ghui": {
+          "version": "0.9.1-1",
+          "desc": "Terminal UI for keeping up with your open GitHub pull requests",
+          "builddate": 1795441810
+        },
         "github-copilot-cli": {
-          "version": "1.0.114-1",
-          "desc": "GitHub Copilot CLI brings the power of Copilot coding agent directly to your terminal.",
-          "builddate": 1794983996
+          "version": "1.0.114-2",
+          "desc": "GitHub Copilot CLI, the Copilot coding agent in your terminal",
+          "builddate": 1795442265
         },
         "gliff": {
           "version": "0.4.3-1",
@@ -340,6 +365,11 @@
           "desc": "Grok Bot desktop agent",
           "builddate": 1794991230
         },
+        "grok-cli": {
+          "version": "1.0.92-1",
+          "desc": "Grok Build, xAI's terminal coding agent",
+          "builddate": 1795442072
+        },
         "helium-browser-bin": {
           "version": "0.22.2.1-1",
           "desc": "Private, fast, and honest web browser based on Chromium (Latest/Stable)",
@@ -356,9 +386,9 @@
           "builddate": 1794767203
         },
         "herdr-core": {
-          "version": "0.1.21-1",
+          "version": "0.1.22-1",
           "desc": "Herdr core (hc): the server that keeps Herdr terminals and coding agents running",
-          "builddate": 1794529677
+          "builddate": 1795393531
         },
         "hermes-desktop": {
           "version": "2026.9.7-7",
@@ -376,14 +406,19 @@
           "builddate": 1794462027
         },
         "hey-cli": {
-          "version": "1.3.0-1",
+          "version": "1.13.1-1",
           "desc": "CLI for HEY email",
-          "builddate": 1788020015
+          "builddate": 1795442336
         },
         "hey-cli-debug": {
           "version": "1.3.0-1",
           "desc": "Detached debugging symbols for hey-cli",
           "builddate": 1788020015
+        },
+        "hunk": {
+          "version": "0.25.0-1",
+          "desc": "Review-first terminal diff viewer for agentic coders",
+          "builddate": 1795441761
         },
         "hype": {
           "version": "0.6.0-1",
@@ -419,6 +454,16 @@
           "version": "1.0.6-3",
           "desc": "Intel IPU7 MIPI camera stack for Hurrican/Performance (OV08X40 + hardware ISP)",
           "builddate": 1791452334
+        },
+        "kilocode-cli": {
+          "version": "7.8.32-1",
+          "desc": "Kilo Code CLI, an open source terminal coding agent",
+          "builddate": 1795442333
+        },
+        "kimi-code": {
+          "version": "2.7.2-1",
+          "desc": "Kimi Code CLI, Moonshot AI's terminal coding agent",
+          "builddate": 1795441758
         },
         "kujo": {
           "version": "1.8.2-1",
@@ -561,44 +606,59 @@
           "builddate": 1791472103
         },
         "linux-omarchy": {
-          "version": "7.2.15-1",
+          "version": "7.2.15-4",
           "desc": "The Omarchy Linux (BORE CPU scheduler, ADIOS I/O scheduler) kernel and modules",
-          "builddate": 1793615537
+          "builddate": 1795361625
         },
         "linux-omarchy-bore": {
-          "version": "7.2.8-9",
+          "version": "7.2.15-4",
           "desc": "Transitional package: installs linux-omarchy, the Omarchy kernel this package became",
-          "builddate": 1792277502
+          "builddate": 1795361620
         },
         "linux-omarchy-bore-headers": {
-          "version": "7.2.8-9",
+          "version": "7.2.15-4",
           "desc": "Transitional package: installs linux-omarchy-headers, the headers of the Omarchy kernel this package became",
-          "builddate": 1792277502
+          "builddate": 1795361620
         },
         "linux-omarchy-eevdf": {
-          "version": "7.2.15-1",
+          "version": "7.2.15-4",
           "desc": "The Omarchy Linux kernel and modules",
-          "builddate": 1793545477
+          "builddate": 1795361621
         },
         "linux-omarchy-eevdf-headers": {
-          "version": "7.2.15-1",
+          "version": "7.2.15-4",
           "desc": "Headers and scripts for building modules for the Omarchy Linux kernel",
-          "builddate": 1793545477
+          "builddate": 1795361621
+        },
+        "linux-omarchy-eevdf-nvidia-open": {
+          "version": "7.2.15-4",
+          "desc": "NVIDIA open kernel modules for the Omarchy Linux kernel",
+          "builddate": 1795361621
         },
         "linux-omarchy-headers": {
-          "version": "7.2.15-1",
+          "version": "7.2.15-4",
           "desc": "Headers and scripts for building modules for the Omarchy Linux (BORE CPU scheduler, ADIOS I/O scheduler) kernel",
-          "builddate": 1793615537
+          "builddate": 1795361625
         },
         "linux-omarchy-muqss": {
-          "version": "7.2.15-1",
+          "version": "7.2.15-4",
           "desc": "The Omarchy Linux (MuQSS CPU scheduler) kernel and modules",
-          "builddate": 1793545663
+          "builddate": 1795361621
         },
         "linux-omarchy-muqss-headers": {
-          "version": "7.2.15-1",
+          "version": "7.2.15-4",
           "desc": "Headers and scripts for building modules for the Omarchy Linux (MuQSS CPU scheduler) kernel",
-          "builddate": 1793545663
+          "builddate": 1795361621
+        },
+        "linux-omarchy-muqss-nvidia-open": {
+          "version": "7.2.15-4",
+          "desc": "NVIDIA open kernel modules for the Omarchy Linux (MuQSS CPU scheduler) kernel",
+          "builddate": 1795361621
+        },
+        "linux-omarchy-nvidia-open": {
+          "version": "7.2.15-4",
+          "desc": "NVIDIA open kernel modules for the Omarchy Linux (BORE CPU scheduler, ADIOS I/O scheduler) kernel",
+          "builddate": 1795361625
         },
         "linux-t2": {
           "version": "1:7.2.15.arch1-1",
@@ -729,6 +789,11 @@
           "version": "580.178.04-1.1",
           "desc": "NVIDIA drivers utilities (580xx)",
           "builddate": 1786647872
+        },
+        "oh-my-pi": {
+          "version": "19.1.1-1",
+          "desc": "Oh My Pi, a terminal coding agent with the IDE wired in",
+          "builddate": 1795442260
         },
         "omacalc": {
           "version": "0.3.1-1",
@@ -965,6 +1030,11 @@
           "desc": "Multi-channel AI gateway with extensible messaging integrations",
           "builddate": 1792449634
         },
+        "openrouter-ori": {
+          "version": "0.17.3-1",
+          "desc": "Ori, OpenRouter's local agent CLI",
+          "builddate": 1795441809
+        },
         "openvino-genai": {
           "version": "1:2026.4.1.0-1",
           "desc": "OpenVINO GenAI C and C++ runtime libraries",
@@ -1051,9 +1121,9 @@
           "builddate": 1792040964
         },
         "rawmakase-bin": {
-          "version": "0.7.1-1",
+          "version": "0.7.2-1",
           "desc": "Fast, Lightroom-compatible RAW photo editor (binary release)",
-          "builddate": 1795272266
+          "builddate": 1795426919
         },
         "retroarch-joypad-autoconfig-git": {
           "version": "1.22.0.r96.g0331510-1",
@@ -1171,9 +1241,9 @@
           "builddate": 1795178062
         },
         "t3code-nightly-bin": {
-          "version": "0.1.12_nightly.20261122.5085-1",
+          "version": "0.1.12_nightly.20261123.5138-1",
           "desc": "Open-source control plane for coding agents (nightly)",
-          "builddate": 1795350796
+          "builddate": 1795437164
         },
         "tensaku": {
           "version": "0.29.0-2",
@@ -1271,14 +1341,14 @@
           "builddate": 1794998519
         },
         "voxtype-bin": {
-          "version": "1.3.0-1",
+          "version": "1.3.1-1",
           "desc": "Push-to-talk voice-to-text for Linux (pre-built binaries)",
-          "builddate": 1795117219
+          "builddate": 1795397995
         },
         "voxtype-bin-debug": {
-          "version": "1.3.0-1",
+          "version": "1.3.1-1",
           "desc": "Detached debugging symbols for voxtype-bin",
-          "builddate": 1795117219
+          "builddate": 1795397995
         },
         "walker": {
           "version": "2.17.2-1",
@@ -1396,7 +1466,7 @@
       "arch": "x86_64",
       "url": "https://pkgs.omarchy.org/rc/x86_64/omarchy.db",
       "ok": true,
-      "packageCount": 269,
+      "packageCount": 283,
       "packages": {
         "1password": {
           "version": "8.12.46-1",
@@ -1428,6 +1498,11 @@
           "desc": "Aurora Apple Silicon ALSA profiles including J700",
           "builddate": 1792308548
         },
+        "amp-cli": {
+          "version": "0.0.1795435239-1",
+          "desc": "Amp, the frontier coding agent, in your terminal",
+          "builddate": 1795442083
+        },
         "amp-desktop-bin": {
           "version": "0.1.29921761-1",
           "desc": "Amp, the frontier coding agent, as a desktop app",
@@ -1437,6 +1512,11 @@
           "version": "2.34.0-1",
           "desc": "Google Antigravity 2.0 agent-first desktop app",
           "builddate": 1795218028
+        },
+        "antigravity-cli": {
+          "version": "1.5.15-1",
+          "desc": "Google Antigravity CLI (agy), a terminal coding agent",
+          "builddate": 1795442006
         },
         "apple-bcm-firmware-fetcher": {
           "version": "1-2",
@@ -1464,9 +1544,9 @@
           "builddate": 1794273679
         },
         "basecamp-cli": {
-          "version": "0.30.0-1",
+          "version": "0.30.0-2",
           "desc": "CLI for Basecamp project management",
-          "builddate": 1794606082
+          "builddate": 1795442537
         },
         "basecamp-cli-debug": {
           "version": "0.30.0-1",
@@ -1509,9 +1589,9 @@
           "builddate": 1785110135
         },
         "claude-code": {
-          "version": "2.1.330-1",
-          "desc": "An agentic coding tool that lives in your terminal",
-          "builddate": 1795214438
+          "version": "2.1.330-2",
+          "desc": "Claude Code, Anthropic's agentic coding tool for the terminal",
+          "builddate": 1795442088
         },
         "claude-desktop": {
           "version": "6.28899.6-1",
@@ -1534,9 +1614,9 @@
           "builddate": 1792517233
         },
         "crush-bin": {
-          "version": "0.102.0-1",
-          "desc": "A powerful terminal-based AI assistant for developers, providing intelligent coding assistance directly in your terminal.",
-          "builddate": 1795112896
+          "version": "0.102.0-2",
+          "desc": "Crush, Charm's terminal coding agent",
+          "builddate": 1795442331
         },
         "crush-bin-debug": {
           "version": "0.102.0-1",
@@ -1559,9 +1639,9 @@
           "builddate": 1795218028
         },
         "cursor-cli": {
-          "version": "1:2026.11.22.1.e9042b2-1",
-          "desc": "CLI tool for Cursor, the AI-first coding agent",
-          "builddate": 1795311647
+          "version": "1:2026.11.22.1.e9042b2-2",
+          "desc": "Cursor Agent, the terminal coding agent from Cursor",
+          "builddate": 1795442397
         },
         "cursor-cli-debug": {
           "version": "1:2026.07.23.1.e383d2b-1",
@@ -1569,14 +1649,19 @@
           "builddate": 1786619026
         },
         "dbxcli-bin": {
-          "version": "3.8.2-1",
+          "version": "3.8.3-1",
           "desc": "A command line client for Dropbox built using the Go SDK",
-          "builddate": 1794983233
+          "builddate": 1795436964
         },
         "dbxcli-bin-debug": {
-          "version": "3.8.2-1",
+          "version": "3.8.3-1",
           "desc": "Detached debugging symbols for dbxcli-bin",
-          "builddate": 1794983233
+          "builddate": 1795436964
+        },
+        "deepseek-dsh": {
+          "version": "0.2.2rc.5-1",
+          "desc": "DeepSeek Harness (dsh), DeepSeek's terminal coding agent",
+          "builddate": 1795442581
         },
         "dell-xps-touchpad-haptics": {
           "version": "1.0.0-4",
@@ -1628,6 +1713,11 @@
           "desc": "Fast, keyboard-first file manager for Omarchy",
           "builddate": 1794644081
         },
+        "freebuff": {
+          "version": "0.2.36-1",
+          "desc": "Freebuff, a free AI coding agent for the terminal",
+          "builddate": 1795442713
+        },
         "ghost": {
           "version": "0.11.9-1",
           "desc": "Ghost HUD and desktop integration for Omarchy",
@@ -1663,10 +1753,15 @@
           "desc": "Terminfo for Ghostty",
           "builddate": 1793156731
         },
+        "ghui": {
+          "version": "0.9.1-1",
+          "desc": "Terminal UI for keeping up with your open GitHub pull requests",
+          "builddate": 1795441810
+        },
         "github-copilot-cli": {
-          "version": "1.0.114-1",
-          "desc": "GitHub Copilot CLI brings the power of Copilot coding agent directly to your terminal.",
-          "builddate": 1794983996
+          "version": "1.0.114-2",
+          "desc": "GitHub Copilot CLI, the Copilot coding agent in your terminal",
+          "builddate": 1795442265
         },
         "gliff": {
           "version": "0.4.3-1",
@@ -1688,6 +1783,11 @@
           "desc": "Grok Bot desktop agent",
           "builddate": 1794991230
         },
+        "grok-cli": {
+          "version": "1.0.92-1",
+          "desc": "Grok Build, xAI's terminal coding agent",
+          "builddate": 1795442072
+        },
         "helium-browser-bin": {
           "version": "0.22.2.1-1",
           "desc": "Private, fast, and honest web browser based on Chromium (Latest/Stable)",
@@ -1704,9 +1804,9 @@
           "builddate": 1794767203
         },
         "herdr-core": {
-          "version": "0.1.21-1",
+          "version": "0.1.22-1",
           "desc": "Herdr core (hc): the server that keeps Herdr terminals and coding agents running",
-          "builddate": 1794529677
+          "builddate": 1795393531
         },
         "hermes-desktop": {
           "version": "2026.9.7-7",
@@ -1724,14 +1824,19 @@
           "builddate": 1794462027
         },
         "hey-cli": {
-          "version": "1.3.0-1",
+          "version": "1.13.1-1",
           "desc": "CLI for HEY email",
-          "builddate": 1788019880
+          "builddate": 1795442336
         },
         "hey-cli-debug": {
           "version": "1.3.0-1",
           "desc": "Detached debugging symbols for hey-cli",
           "builddate": 1788019880
+        },
+        "hunk": {
+          "version": "0.25.0-1",
+          "desc": "Review-first terminal diff viewer for agentic coders",
+          "builddate": 1795441761
         },
         "hype": {
           "version": "0.6.0-1",
@@ -1767,6 +1872,16 @@
           "version": "1.0.6-3",
           "desc": "Intel IPU7 MIPI camera stack for Hurrican/Performance (OV08X40 + hardware ISP)",
           "builddate": 1791452334
+        },
+        "kilocode-cli": {
+          "version": "7.8.32-1",
+          "desc": "Kilo Code CLI, an open source terminal coding agent",
+          "builddate": 1795442333
+        },
+        "kimi-code": {
+          "version": "2.7.2-1",
+          "desc": "Kimi Code CLI, Moonshot AI's terminal coding agent",
+          "builddate": 1795441758
         },
         "kujo": {
           "version": "1.8.2-1",
@@ -1909,44 +2024,59 @@
           "builddate": 1791472103
         },
         "linux-omarchy": {
-          "version": "7.2.15-1",
+          "version": "7.2.15-4",
           "desc": "The Omarchy Linux (BORE CPU scheduler, ADIOS I/O scheduler) kernel and modules",
-          "builddate": 1793615537
+          "builddate": 1795361625
         },
         "linux-omarchy-bore": {
-          "version": "7.2.8-9",
+          "version": "7.2.15-4",
           "desc": "Transitional package: installs linux-omarchy, the Omarchy kernel this package became",
-          "builddate": 1792277502
+          "builddate": 1795361620
         },
         "linux-omarchy-bore-headers": {
-          "version": "7.2.8-9",
+          "version": "7.2.15-4",
           "desc": "Transitional package: installs linux-omarchy-headers, the headers of the Omarchy kernel this package became",
-          "builddate": 1792277502
+          "builddate": 1795361620
         },
         "linux-omarchy-eevdf": {
-          "version": "7.2.15-1",
+          "version": "7.2.15-4",
           "desc": "The Omarchy Linux kernel and modules",
-          "builddate": 1793545477
+          "builddate": 1795361621
         },
         "linux-omarchy-eevdf-headers": {
-          "version": "7.2.15-1",
+          "version": "7.2.15-4",
           "desc": "Headers and scripts for building modules for the Omarchy Linux kernel",
-          "builddate": 1793545477
+          "builddate": 1795361621
+        },
+        "linux-omarchy-eevdf-nvidia-open": {
+          "version": "7.2.15-4",
+          "desc": "NVIDIA open kernel modules for the Omarchy Linux kernel",
+          "builddate": 1795361621
         },
         "linux-omarchy-headers": {
-          "version": "7.2.15-1",
+          "version": "7.2.15-4",
           "desc": "Headers and scripts for building modules for the Omarchy Linux (BORE CPU scheduler, ADIOS I/O scheduler) kernel",
-          "builddate": 1793615537
+          "builddate": 1795361625
         },
         "linux-omarchy-muqss": {
-          "version": "7.2.15-1",
+          "version": "7.2.15-4",
           "desc": "The Omarchy Linux (MuQSS CPU scheduler) kernel and modules",
-          "builddate": 1793545663
+          "builddate": 1795361621
         },
         "linux-omarchy-muqss-headers": {
-          "version": "7.2.15-1",
+          "version": "7.2.15-4",
           "desc": "Headers and scripts for building modules for the Omarchy Linux (MuQSS CPU scheduler) kernel",
-          "builddate": 1793545663
+          "builddate": 1795361621
+        },
+        "linux-omarchy-muqss-nvidia-open": {
+          "version": "7.2.15-4",
+          "desc": "NVIDIA open kernel modules for the Omarchy Linux (MuQSS CPU scheduler) kernel",
+          "builddate": 1795361621
+        },
+        "linux-omarchy-nvidia-open": {
+          "version": "7.2.15-4",
+          "desc": "NVIDIA open kernel modules for the Omarchy Linux (BORE CPU scheduler, ADIOS I/O scheduler) kernel",
+          "builddate": 1795361625
         },
         "linux-t2": {
           "version": "1:7.2.15.arch1-1",
@@ -2077,6 +2207,11 @@
           "version": "580.178.04-1.1",
           "desc": "NVIDIA drivers utilities (580xx)",
           "builddate": 1786647872
+        },
+        "oh-my-pi": {
+          "version": "19.1.1-1",
+          "desc": "Oh My Pi, a terminal coding agent with the IDE wired in",
+          "builddate": 1795442260
         },
         "omacalc": {
           "version": "0.3.1-1",
@@ -2318,6 +2453,11 @@
           "desc": "Multi-channel AI gateway with extensible messaging integrations",
           "builddate": 1792449634
         },
+        "openrouter-ori": {
+          "version": "0.17.3-1",
+          "desc": "Ori, OpenRouter's local agent CLI",
+          "builddate": 1795441809
+        },
         "openvino-genai": {
           "version": "1:2026.4.1.0-1",
           "desc": "OpenVINO GenAI C and C++ runtime libraries",
@@ -2404,9 +2544,9 @@
           "builddate": 1792040964
         },
         "rawmakase-bin": {
-          "version": "0.7.1-1",
+          "version": "0.7.2-1",
           "desc": "Fast, Lightroom-compatible RAW photo editor (binary release)",
-          "builddate": 1795272266
+          "builddate": 1795426919
         },
         "retroarch-joypad-autoconfig-git": {
           "version": "1.22.0.r96.g0331510-1",
@@ -2524,9 +2664,9 @@
           "builddate": 1795178062
         },
         "t3code-nightly-bin": {
-          "version": "0.1.12_nightly.20261122.5085-1",
+          "version": "0.1.12_nightly.20261123.5138-1",
           "desc": "Open-source control plane for coding agents (nightly)",
-          "builddate": 1795350796
+          "builddate": 1795437164
         },
         "tensaku": {
           "version": "0.29.0-2",
@@ -2624,14 +2764,14 @@
           "builddate": 1794998519
         },
         "voxtype-bin": {
-          "version": "1.3.0-1",
+          "version": "1.3.1-1",
           "desc": "Push-to-talk voice-to-text for Linux (pre-built binaries)",
-          "builddate": 1795117219
+          "builddate": 1795397995
         },
         "voxtype-bin-debug": {
-          "version": "1.3.0-1",
+          "version": "1.3.1-1",
           "desc": "Detached debugging symbols for voxtype-bin",
-          "builddate": 1795117219
+          "builddate": 1795397995
         },
         "walker": {
           "version": "2.17.2-1",
@@ -2749,7 +2889,7 @@
       "arch": "x86_64",
       "url": "https://pkgs.omarchy.org/edge/x86_64/omarchy.db",
       "ok": true,
-      "packageCount": 310,
+      "packageCount": 324,
       "packages": {
         "1password": {
           "version": "8.12.46-1",
@@ -2781,6 +2921,11 @@
           "desc": "Aurora Apple Silicon ALSA profiles including J700",
           "builddate": 1792308548
         },
+        "amp-cli": {
+          "version": "0.0.1795435239-1",
+          "desc": "Amp, the frontier coding agent, in your terminal",
+          "builddate": 1795442083
+        },
         "amp-desktop-bin": {
           "version": "0.1.29921761-1",
           "desc": "Amp, the frontier coding agent, as a desktop app",
@@ -2790,6 +2935,11 @@
           "version": "2.34.0-1",
           "desc": "Google Antigravity 2.0 agent-first desktop app",
           "builddate": 1795218028
+        },
+        "antigravity-cli": {
+          "version": "1.5.15-1",
+          "desc": "Google Antigravity CLI (agy), a terminal coding agent",
+          "builddate": 1795442006
         },
         "apple-bcm-firmware-fetcher": {
           "version": "1-2",
@@ -2832,9 +2982,9 @@
           "builddate": 1794273679
         },
         "basecamp-cli": {
-          "version": "0.30.0-1",
+          "version": "0.30.0-2",
           "desc": "CLI for Basecamp project management",
-          "builddate": 1794606082
+          "builddate": 1795442537
         },
         "basecamp-cli-debug": {
           "version": "0.30.0-1",
@@ -2887,9 +3037,9 @@
           "builddate": 1794923118
         },
         "claude-code": {
-          "version": "2.1.330-1",
-          "desc": "An agentic coding tool that lives in your terminal",
-          "builddate": 1795214438
+          "version": "2.1.330-2",
+          "desc": "Claude Code, Anthropic's agentic coding tool for the terminal",
+          "builddate": 1795442088
         },
         "claude-desktop": {
           "version": "6.28899.6-1",
@@ -2912,9 +3062,9 @@
           "builddate": 1795307537
         },
         "crush-bin": {
-          "version": "0.102.0-1",
-          "desc": "A powerful terminal-based AI assistant for developers, providing intelligent coding assistance directly in your terminal.",
-          "builddate": 1795112896
+          "version": "0.102.0-2",
+          "desc": "Crush, Charm's terminal coding agent",
+          "builddate": 1795442331
         },
         "crush-bin-debug": {
           "version": "0.102.0-1",
@@ -2937,9 +3087,9 @@
           "builddate": 1795218028
         },
         "cursor-cli": {
-          "version": "1:2026.11.22.1.e9042b2-1",
-          "desc": "CLI tool for Cursor, the AI-first coding agent",
-          "builddate": 1795311647
+          "version": "1:2026.11.22.1.e9042b2-2",
+          "desc": "Cursor Agent, the terminal coding agent from Cursor",
+          "builddate": 1795442397
         },
         "cursor-cli-debug": {
           "version": "1:2026.07.23.1.e383d2b-1",
@@ -2947,14 +3097,19 @@
           "builddate": 1786619165
         },
         "dbxcli-bin": {
-          "version": "3.8.2-1",
+          "version": "3.8.3-1",
           "desc": "A command line client for Dropbox built using the Go SDK",
-          "builddate": 1794983233
+          "builddate": 1795436964
         },
         "dbxcli-bin-debug": {
-          "version": "3.8.2-1",
+          "version": "3.8.3-1",
           "desc": "Detached debugging symbols for dbxcli-bin",
-          "builddate": 1794983233
+          "builddate": 1795436964
+        },
+        "deepseek-dsh": {
+          "version": "0.2.2rc.5-1",
+          "desc": "DeepSeek Harness (dsh), DeepSeek's terminal coding agent",
+          "builddate": 1795442581
         },
         "dell-xps-touchpad-haptics": {
           "version": "1.0.0-5",
@@ -3022,9 +3177,9 @@
           "builddate": 1795335855
         },
         "fantasi": {
-          "version": "0.1.7-1",
+          "version": "0.2.0-1",
           "desc": "Make and change images with Omarchy local image models",
-          "builddate": 1795261208
+          "builddate": 1795430830
         },
         "fcitx5-debug": {
           "version": "5.1.16-1",
@@ -3042,14 +3197,19 @@
           "builddate": 1794644081
         },
         "flowtunes": {
-          "version": "0.2.0-1",
+          "version": "0.3.0-1",
           "desc": "Endless music in the genre you pick, made with Omarchy local music models",
-          "builddate": 1795206689
+          "builddate": 1795434161
         },
         "folio": {
-          "version": "0.7.1-1",
+          "version": "0.7.2-1",
           "desc": "Files: Omarchy's file manager, quiet, keyboard-first and following the theme",
-          "builddate": 1795282824
+          "builddate": 1795444828
+        },
+        "freebuff": {
+          "version": "0.2.36-1",
+          "desc": "Freebuff, a free AI coding agent for the terminal",
+          "builddate": 1795442713
         },
         "geekbench": {
           "version": "7.1.0-1",
@@ -3096,10 +3256,15 @@
           "desc": "Terminfo for Ghostty",
           "builddate": 1793156731
         },
+        "ghui": {
+          "version": "0.9.1-1",
+          "desc": "Terminal UI for keeping up with your open GitHub pull requests",
+          "builddate": 1795441810
+        },
         "github-copilot-cli": {
-          "version": "1.0.114-1",
-          "desc": "GitHub Copilot CLI brings the power of Copilot coding agent directly to your terminal.",
-          "builddate": 1794983996
+          "version": "1.0.114-2",
+          "desc": "GitHub Copilot CLI, the Copilot coding agent in your terminal",
+          "builddate": 1795442265
         },
         "gliff": {
           "version": "0.4.3-1",
@@ -3121,6 +3286,11 @@
           "desc": "Grok Bot desktop agent",
           "builddate": 1794991230
         },
+        "grok-cli": {
+          "version": "1.0.92-1",
+          "desc": "Grok Build, xAI's terminal coding agent",
+          "builddate": 1795442072
+        },
         "helium-browser-bin": {
           "version": "0.22.2.1-1",
           "desc": "Private, fast, and honest web browser based on Chromium (Latest/Stable)",
@@ -3137,9 +3307,9 @@
           "builddate": 1794767203
         },
         "herdr-core": {
-          "version": "0.1.21-1",
+          "version": "0.1.22-1",
           "desc": "Herdr core (hc): the server that keeps Herdr terminals and coding agents running",
-          "builddate": 1794529677
+          "builddate": 1795393531
         },
         "hermes-desktop": {
           "version": "2026.9.7-7",
@@ -3157,14 +3327,19 @@
           "builddate": 1794462027
         },
         "hey-cli": {
-          "version": "1.3.0-1",
+          "version": "1.13.1-1",
           "desc": "CLI for HEY email",
-          "builddate": 1788019880
+          "builddate": 1795442336
         },
         "hey-cli-debug": {
           "version": "1.3.0-1",
           "desc": "Detached debugging symbols for hey-cli",
           "builddate": 1788019880
+        },
+        "hunk": {
+          "version": "0.25.0-1",
+          "desc": "Review-first terminal diff viewer for agentic coders",
+          "builddate": 1795441761
         },
         "hype": {
           "version": "0.7.1-2",
@@ -3215,6 +3390,16 @@
           "version": "1.0.6-3",
           "desc": "Intel IPU7 MIPI camera stack for Hurrican/Performance (OV08X40 + hardware ISP)",
           "builddate": 1791452334
+        },
+        "kilocode-cli": {
+          "version": "7.8.32-1",
+          "desc": "Kilo Code CLI, an open source terminal coding agent",
+          "builddate": 1795442333
+        },
+        "kimi-code": {
+          "version": "2.7.2-1",
+          "desc": "Kimi Code CLI, Moonshot AI's terminal coding agent",
+          "builddate": 1795441758
         },
         "kujo": {
           "version": "1.10.0-1",
@@ -3347,9 +3532,9 @@
           "builddate": 1784653213
         },
         "limine-mkinitcpio-hook": {
-          "version": "1.41.0-1",
+          "version": "1.41.0-2",
           "desc": "Install kernels for the Limine bootloader.",
-          "builddate": 1794745790
+          "builddate": 1795386140
         },
         "limine-snapper-sync": {
           "version": "1.33.0-1",
@@ -3367,49 +3552,59 @@
           "builddate": 1791472103
         },
         "linux-omarchy": {
-          "version": "7.2.15-3",
+          "version": "7.2.15-4",
           "desc": "The Omarchy Linux (BORE CPU scheduler, ADIOS I/O scheduler) kernel and modules",
-          "builddate": 1795281111
+          "builddate": 1795361625
         },
         "linux-omarchy-bore": {
-          "version": "7.2.15-1",
+          "version": "7.2.15-4",
           "desc": "Transitional package: installs linux-omarchy, the Omarchy kernel this package became",
-          "builddate": 1793539668
+          "builddate": 1795361620
         },
         "linux-omarchy-bore-headers": {
-          "version": "7.2.15-1",
+          "version": "7.2.15-4",
           "desc": "Transitional package: installs linux-omarchy-headers, the headers of the Omarchy kernel this package became",
-          "builddate": 1793539668
+          "builddate": 1795361620
         },
         "linux-omarchy-eevdf": {
-          "version": "7.2.15-1",
+          "version": "7.2.15-4",
           "desc": "The Omarchy Linux kernel and modules",
-          "builddate": 1793545477
+          "builddate": 1795361621
         },
         "linux-omarchy-eevdf-headers": {
-          "version": "7.2.15-1",
+          "version": "7.2.15-4",
           "desc": "Headers and scripts for building modules for the Omarchy Linux kernel",
-          "builddate": 1793545477
+          "builddate": 1795361621
+        },
+        "linux-omarchy-eevdf-nvidia-open": {
+          "version": "7.2.15-4",
+          "desc": "NVIDIA open kernel modules for the Omarchy Linux kernel",
+          "builddate": 1795361621
         },
         "linux-omarchy-headers": {
-          "version": "7.2.15-3",
+          "version": "7.2.15-4",
           "desc": "Headers and scripts for building modules for the Omarchy Linux (BORE CPU scheduler, ADIOS I/O scheduler) kernel",
-          "builddate": 1795281111
+          "builddate": 1795361625
         },
         "linux-omarchy-muqss": {
-          "version": "7.2.15-1",
+          "version": "7.2.15-4",
           "desc": "The Omarchy Linux (MuQSS CPU scheduler) kernel and modules",
-          "builddate": 1793545663
+          "builddate": 1795361621
         },
         "linux-omarchy-muqss-headers": {
-          "version": "7.2.15-1",
+          "version": "7.2.15-4",
           "desc": "Headers and scripts for building modules for the Omarchy Linux (MuQSS CPU scheduler) kernel",
-          "builddate": 1793545663
+          "builddate": 1795361621
+        },
+        "linux-omarchy-muqss-nvidia-open": {
+          "version": "7.2.15-4",
+          "desc": "NVIDIA open kernel modules for the Omarchy Linux (MuQSS CPU scheduler) kernel",
+          "builddate": 1795361621
         },
         "linux-omarchy-nvidia-open": {
-          "version": "7.2.15-3",
+          "version": "7.2.15-4",
           "desc": "NVIDIA open kernel modules for the Omarchy Linux (BORE CPU scheduler, ADIOS I/O scheduler) kernel",
-          "builddate": 1795281111
+          "builddate": 1795361625
         },
         "linux-t2": {
           "version": "1:7.2.15.arch1-1",
@@ -3491,6 +3686,11 @@
           "desc": "Detached debugging symbols for minecraft-launcher",
           "builddate": 1762885455
         },
+        "minimax-code": {
+          "version": "0.7.9-1",
+          "desc": "MiniMax Code (MCode), MiniMax's terminal coding agent",
+          "builddate": 1795442729
+        },
         "mise-bin": {
           "version": "2026.11.12-1",
           "desc": "dev tools, env vars, task runner",
@@ -3561,20 +3761,25 @@
           "desc": "NVIDIA drivers utilities",
           "builddate": 1793671109
         },
+        "oh-my-pi": {
+          "version": "19.1.1-1",
+          "desc": "Oh My Pi, a terminal coding agent with the IDE wired in",
+          "builddate": 1795442260
+        },
         "omacalc": {
           "version": "0.4.2-1",
           "desc": "Dead-simple calculator built with Qt Quick",
           "builddate": 1794516943
         },
         "omacharts": {
-          "version": "0.3.12-1",
+          "version": "0.3.14-1",
           "desc": "Fast, beautiful charting software for Omarchy",
-          "builddate": 1795285725
+          "builddate": 1795436906
         },
         "omacharts-debug": {
-          "version": "0.3.12-1",
+          "version": "0.3.14-1",
           "desc": "Detached debugging symbols for omacharts",
-          "builddate": 1795285725
+          "builddate": 1795436906
         },
         "omacut": {
           "version": "0.8.3-1",
@@ -3652,9 +3857,9 @@
           "builddate": 1794864746
         },
         "omarchy-dev": {
-          "version": "4.0.0.r8173.g9f245c7-1",
+          "version": "4.0.0.r8257.g6311983-1",
           "desc": "Beautiful, modern, and opinionated Arch Linux by DHH (quattro branch tip)",
-          "builddate": 1795351262
+          "builddate": 1795444960
         },
         "omarchy-emacs": {
           "version": "1.10.1-2",
@@ -3682,9 +3887,9 @@
           "builddate": 1762885481
         },
         "omarchy-local-ai": {
-          "version": "0.10.0-1",
+          "version": "0.12.2-1",
           "desc": "Run open models locally for Omarchy's coding agents, with curated recipes per machine",
-          "builddate": 1795344050
+          "builddate": 1795445084
         },
         "omarchy-meeting-recorder-bin": {
           "version": "1.8.0-1",
@@ -3717,9 +3922,9 @@
           "builddate": 1793848367
         },
         "omarchy-settings-dev": {
-          "version": "4.0.0.r8173.g9f245c7-1",
+          "version": "4.0.0.r8257.g6311983-1",
           "desc": "Omarchy user defaults, /etc/skel content, fonts, plymouth theme, and support helpers (quattro branch tip)",
-          "builddate": 1795351262
+          "builddate": 1795444834
         },
         "omarchy-speedtest": {
           "version": "0.2.2-1",
@@ -3835,6 +4040,11 @@
           "version": "2026.11.6-1",
           "desc": "Multi-channel AI gateway with extensible messaging integrations",
           "builddate": 1795196409
+        },
+        "openrouter-ori": {
+          "version": "0.17.3-1",
+          "desc": "Ori, OpenRouter's local agent CLI",
+          "builddate": 1795441809
         },
         "openvino-genai": {
           "version": "1:2026.4.1.0-1",
@@ -3952,9 +4162,9 @@
           "builddate": 1794681996
         },
         "rawmakase-bin": {
-          "version": "0.7.1-1",
+          "version": "0.7.2-1",
           "desc": "Fast, Lightroom-compatible RAW photo editor (binary release)",
-          "builddate": 1795272266
+          "builddate": 1795426919
         },
         "retroarch-joypad-autoconfig-git": {
           "version": "1.22.0.r96.g0331510-1",
@@ -4077,9 +4287,9 @@
           "builddate": 1795178062
         },
         "t3code-nightly-bin": {
-          "version": "0.1.12_nightly.20261122.5085-1",
+          "version": "0.1.12_nightly.20261123.5138-1",
           "desc": "Open-source control plane for coding agents (nightly)",
-          "builddate": 1795350796
+          "builddate": 1795437164
         },
         "tensaku": {
           "version": "0.29.0-2",
@@ -4177,14 +4387,14 @@
           "builddate": 1794998519
         },
         "voxtype-bin": {
-          "version": "1.3.0-1",
+          "version": "1.3.1-1",
           "desc": "Push-to-talk voice-to-text for Linux (pre-built binaries)",
-          "builddate": 1795117219
+          "builddate": 1795397995
         },
         "voxtype-bin-debug": {
-          "version": "1.3.0-1",
+          "version": "1.3.1-1",
           "desc": "Detached debugging symbols for voxtype-bin",
-          "builddate": 1795117219
+          "builddate": 1795397995
         },
         "walker": {
           "version": "2.17.2-1",
@@ -4307,7 +4517,7 @@
       "arch": "aarch64",
       "url": "https://pkgs.omarchy.org/edge/aarch64/omarchy.db",
       "ok": true,
-      "packageCount": 371,
+      "packageCount": 384,
       "packages": {
         "1password": {
           "version": "8.12.46-1",
@@ -4379,6 +4589,11 @@
           "desc": "Aurora Apple Silicon ALSA profiles including J700",
           "builddate": 1795070239
         },
+        "amp-cli": {
+          "version": "0.0.1795435239-1",
+          "desc": "Amp, the frontier coding agent, in your terminal",
+          "builddate": 1795441792
+        },
         "amp-desktop-bin": {
           "version": "0.1.29921761-1",
           "desc": "Amp, the frontier coding agent, as a desktop app",
@@ -4388,6 +4603,11 @@
           "version": "2.34.0-1",
           "desc": "Google Antigravity 2.0 agent-first desktop app",
           "builddate": 1795217892
+        },
+        "antigravity-cli": {
+          "version": "1.5.15-1",
+          "desc": "Google Antigravity CLI (agy), a terminal coding agent",
+          "builddate": 1795441733
         },
         "apple-bcm-firmware-fetcher": {
           "version": "1-2",
@@ -4555,14 +4775,14 @@
           "builddate": 1792308502
         },
         "aurora-fwextract": {
-          "version": "0.9.2-1",
+          "version": "0.9.2-2",
           "desc": "Apple Silicon firmware extractor",
-          "builddate": 1794882062
+          "builddate": 1795386006
         },
         "aurora-scripts": {
-          "version": "20261023-1",
+          "version": "20261023-2",
           "desc": "Apple Silicon maintenance scripts: update-m1n1, firmware and initramfs hooks",
-          "builddate": 1794882065
+          "builddate": 1795386010
         },
         "aurora-touchid-rearm": {
           "version": "20261120-1",
@@ -4580,9 +4800,9 @@
           "builddate": 1794880530
         },
         "basecamp-cli": {
-          "version": "0.30.0-1",
+          "version": "0.30.0-2",
           "desc": "CLI for Basecamp project management",
-          "builddate": 1794605925
+          "builddate": 1795442349
         },
         "bitwarden": {
           "version": "2026.10.4-1",
@@ -4605,9 +4825,9 @@
           "builddate": 1795023481
         },
         "brcmfmac-awdl-dkms": {
-          "version": "0.10.8-1",
+          "version": "0.11.0-1",
           "desc": "AWDL (AirDrop link layer) support for Apple Broadcom Wi-Fi (BCM4378, BCM4387, BCM4388): DKMS module and root helpers",
-          "builddate": 1795047830
+          "builddate": 1795415065
         },
         "bun-bin": {
           "version": "1.4.3-1",
@@ -4635,9 +4855,9 @@
           "builddate": 1794922659
         },
         "claude-code": {
-          "version": "2.1.330-1",
-          "desc": "An agentic coding tool that lives in your terminal",
-          "builddate": 1795214260
+          "version": "2.1.330-2",
+          "desc": "Claude Code, Anthropic's agentic coding tool for the terminal",
+          "builddate": 1795441659
         },
         "claude-desktop": {
           "version": "6.28899.6-1",
@@ -4655,9 +4875,9 @@
           "builddate": 1795306995
         },
         "crush-bin": {
-          "version": "0.102.0-1",
-          "desc": "A powerful terminal-based AI assistant for developers, providing intelligent coding assistance directly in your terminal.",
-          "builddate": 1795112688
+          "version": "0.102.0-2",
+          "desc": "Crush, Charm's terminal coding agent",
+          "builddate": 1795442234
         },
         "cua-driver-bin": {
           "version": "0.47.5-1",
@@ -4675,14 +4895,19 @@
           "builddate": 1795217904
         },
         "cursor-cli": {
-          "version": "1:2026.11.22.1.e9042b2-1",
-          "desc": "CLI tool for Cursor, the AI-first coding agent",
-          "builddate": 1795311506
+          "version": "1:2026.11.22.1.e9042b2-2",
+          "desc": "Cursor Agent, the terminal coding agent from Cursor",
+          "builddate": 1795441942
         },
         "dbxcli-bin": {
-          "version": "3.8.2-1",
+          "version": "3.8.3-1",
           "desc": "A command line client for Dropbox built using the Go SDK",
-          "builddate": 1794983009
+          "builddate": 1795436606
+        },
+        "deepseek-dsh": {
+          "version": "0.2.2rc.5-1",
+          "desc": "DeepSeek Harness (dsh), DeepSeek's terminal coding agent",
+          "builddate": 1795442073
         },
         "dell-inspiron-14-3420-firmware": {
           "version": "20261116-2",
@@ -4760,9 +4985,9 @@
           "builddate": 1789928261
         },
         "fantasi": {
-          "version": "0.1.7-1",
+          "version": "0.2.0-1",
           "desc": "Make and change images with Omarchy local image models",
-          "builddate": 1795261044
+          "builddate": 1795430517
         },
         "feishu-bin": {
           "version": "7.72.23-1",
@@ -4780,14 +5005,19 @@
           "builddate": 1794643876
         },
         "flowtunes": {
-          "version": "0.2.0-1",
+          "version": "0.3.0-1",
           "desc": "Endless music in the genre you pick, made with Omarchy local music models",
-          "builddate": 1795206549
+          "builddate": 1795433870
         },
         "folio": {
-          "version": "0.7.1-1",
+          "version": "0.7.2-1",
           "desc": "Files: Omarchy's file manager, quiet, keyboard-first and following the theme",
-          "builddate": 1795282666
+          "builddate": 1795444706
+        },
+        "freebuff": {
+          "version": "0.2.36-1",
+          "desc": "Freebuff, a free AI coding agent for the terminal",
+          "builddate": 1795442549
         },
         "geekbench": {
           "version": "7.1.0-1",
@@ -4829,10 +5059,15 @@
           "desc": "Terminfo for Ghostty",
           "builddate": 1793156535
         },
+        "ghui": {
+          "version": "0.9.1-1",
+          "desc": "Terminal UI for keeping up with your open GitHub pull requests",
+          "builddate": 1795441570
+        },
         "github-copilot-cli": {
-          "version": "1.0.114-1",
-          "desc": "GitHub Copilot CLI brings the power of Copilot coding agent directly to your terminal.",
-          "builddate": 1794983866
+          "version": "1.0.114-2",
+          "desc": "GitHub Copilot CLI, the Copilot coding agent in your terminal",
+          "builddate": 1795442115
         },
         "gliff": {
           "version": "0.4.3-1",
@@ -4853,6 +5088,11 @@
           "version": "1.2.3-1",
           "desc": "Grok Bot desktop agent",
           "builddate": 1794991062
+        },
+        "grok-cli": {
+          "version": "1.0.92-1",
+          "desc": "Grok Build, xAI's terminal coding agent",
+          "builddate": 1795441658
         },
         "gtk2": {
           "version": "2.24.33-5",
@@ -4875,9 +5115,9 @@
           "builddate": 1794767032
         },
         "herdr-core": {
-          "version": "0.1.21-1",
+          "version": "0.1.22-1",
           "desc": "Herdr core (hc): the server that keeps Herdr terminals and coding agents running",
-          "builddate": 1794529421
+          "builddate": 1795393385
         },
         "hermes-desktop": {
           "version": "2026.9.7-7",
@@ -4888,6 +5128,11 @@
           "version": "3.4.0-1",
           "desc": "Hex voice dictation app by Anomaly: hold a key, speak, and it types (Linux beta; not the hex dump tool)",
           "builddate": 1794461865
+        },
+        "hey-cli": {
+          "version": "1.13.1-1",
+          "desc": "CLI for HEY email",
+          "builddate": 1795442312
         },
         "honor-magicbook-art-14-firmware": {
           "version": "20261102-3",
@@ -4979,6 +5224,11 @@
           "desc": "Audio DSP, compute DSP and GPU firmware for the Huawei MateBook E Go",
           "builddate": 1794108130
         },
+        "hunk": {
+          "version": "0.25.0-1",
+          "desc": "Review-first terminal diff viewer for agentic coders",
+          "builddate": 1795441580
+        },
         "hype": {
           "version": "0.7.1-2",
           "desc": "Simple Markdown presentations with a visual slide editor",
@@ -5005,9 +5255,19 @@
           "builddate": 1788571941
         },
         "iptsd": {
-          "version": "3.1.0-5",
+          "version": "3.1.0-6",
           "desc": "Userspace daemon for Surface touchscreens and pens (Intel Precise Touch & Stylus and SPI digitizers)",
-          "builddate": 1794784950
+          "builddate": 1795357930
+        },
+        "kilocode-cli": {
+          "version": "7.8.32-1",
+          "desc": "Kilo Code CLI, an open source terminal coding agent",
+          "builddate": 1795442063
+        },
+        "kimi-code": {
+          "version": "2.7.2-1",
+          "desc": "Kimi Code CLI, Moonshot AI's terminal coding agent",
+          "builddate": 1795441671
         },
         "kujo": {
           "version": "1.10.0-1",
@@ -5165,9 +5425,9 @@
           "builddate": 1795269362
         },
         "limine-mkinitcpio-hook": {
-          "version": "1.41.0-1",
+          "version": "1.41.0-2",
           "desc": "Install kernels for the Limine bootloader.",
-          "builddate": 1794745396
+          "builddate": 1795386014
         },
         "limine-snapper-sync": {
           "version": "1.33.0-1",
@@ -5180,14 +5440,14 @@
           "builddate": 1791555770
         },
         "linux-aurora": {
-          "version": "7.3.0.aurora0testedgeC-1",
+          "version": "7.3.0.aurora1-1",
           "desc": "The kernel and modules",
-          "builddate": 1795181908
+          "builddate": 1795408214
         },
         "linux-aurora-headers": {
-          "version": "7.3.0.aurora0testedgeC-1",
+          "version": "7.3.0.aurora1-1",
           "desc": "Headers and scripts for building modules for the kernel",
-          "builddate": 1795181908
+          "builddate": 1795408214
         },
         "linux-firmware-qcom": {
           "version": "20261019-1.1",
@@ -5195,24 +5455,24 @@
           "builddate": 1794012767
         },
         "linux-omarchy": {
-          "version": "7.3-75",
+          "version": "7.3-78",
           "desc": "The Omarchy Linux for aarch64 (BORE CPU scheduler, ADIOS I/O scheduler) kernel and modules",
-          "builddate": 1795231953
+          "builddate": 1795435516
         },
         "linux-omarchy-dtbs": {
-          "version": "7.3-54",
-          "desc": "Device trees and hardware IDs for the Snapdragon laptops on linux-omarchy (built from linux-omarchy-headers 7.3-75)",
-          "builddate": 1795286533
+          "version": "7.3-63",
+          "desc": "Device trees and hardware IDs for the Snapdragon laptops on linux-omarchy (built from linux-omarchy-headers 7.3-78)",
+          "builddate": 1795437697
         },
         "linux-omarchy-headers": {
-          "version": "7.3-75",
+          "version": "7.3-78",
           "desc": "Headers and scripts for building modules and device trees for the Omarchy Linux for aarch64 (BORE CPU scheduler, ADIOS I/O scheduler) kernel",
-          "builddate": 1795231953
+          "builddate": 1795435516
         },
         "linux-omarchy-nvidia-open": {
-          "version": "7.3-75",
+          "version": "7.3-78",
           "desc": "NVIDIA open kernel modules for the Omarchy Linux for aarch64 (BORE CPU scheduler, ADIOS I/O scheduler) kernel",
-          "builddate": 1795231953
+          "builddate": 1795435516
         },
         "linuxqq": {
           "version": "3.2.34_53644-1",
@@ -5255,9 +5515,9 @@
           "builddate": 1793904652
         },
         "mesa-aurora": {
-          "version": "1:26.3.0_devel.20261120.232519.fb3b11e121c-1",
+          "version": "1:26.3.0_devel.20261122.232644.e705eca833f-1",
           "desc": "Aurora native Asahi Gallium and Zink OpenGL drivers",
-          "builddate": 1795181919
+          "builddate": 1795408220
         },
         "microsoft-surface-laptop-13-2nd-edition-firmware": {
           "version": "20261114-1",
@@ -5275,9 +5535,9 @@
           "builddate": 1794759506
         },
         "microsoft-surface-laptop-7-support": {
-          "version": "1-1",
-          "desc": "Hardware support for the Microsoft Surface Laptop 7 15\" (Snapdragon X Elite) not yet carried upstream",
-          "builddate": 1794899458
+          "version": "1-2",
+          "desc": "Hardware support for the Microsoft Surface Laptop 7 (Snapdragon X Elite) not yet carried upstream",
+          "builddate": 1795357955
         },
         "microsoft-surface-laptop-8-firmware": {
           "version": "20261102-2",
@@ -5343,6 +5603,11 @@
           "version": "0.1.0-1",
           "desc": "MIL-to-HWX compiler for the Apple Neural Engine (mil-hwxc)",
           "builddate": 1790983314
+        },
+        "minimax-code": {
+          "version": "0.7.9-1",
+          "desc": "MiniMax Code (MCode), MiniMax's terminal coding agent",
+          "builddate": 1795442405
         },
         "mise-bin": {
           "version": "2026.11.12-1",
@@ -5414,6 +5679,11 @@
           "desc": "Knowledge base on top of a local folder of plain-text Markdown files",
           "builddate": 1794501517
         },
+        "oh-my-pi": {
+          "version": "19.1.1-1",
+          "desc": "Oh My Pi, a terminal coding agent with the IDE wired in",
+          "builddate": 1795441982
+        },
         "ollama": {
           "version": "0.35.0-1",
           "desc": "Create, run and share large language models (LLMs)",
@@ -5440,9 +5710,9 @@
           "builddate": 1794516792
         },
         "omacharts": {
-          "version": "0.3.12-1",
+          "version": "0.3.14-1",
           "desc": "Fast, beautiful charting software for Omarchy",
-          "builddate": 1795285577
+          "builddate": 1795436754
         },
         "omacut": {
           "version": "0.8.3-1",
@@ -5520,9 +5790,9 @@
           "builddate": 1794864705
         },
         "omarchy-dev": {
-          "version": "4.0.0.r8173.g9f245c7-1",
+          "version": "4.0.0.r8257.g6311983-1",
           "desc": "Beautiful, modern, and opinionated Arch Linux by DHH (quattro branch tip)",
-          "builddate": 1795351102
+          "builddate": 1795444693
         },
         "omarchy-emacs": {
           "version": "1.10.1-2",
@@ -5545,14 +5815,14 @@
           "builddate": 1788556415
         },
         "omarchy-local-ai": {
-          "version": "0.10.0-1",
+          "version": "0.12.2-1",
           "desc": "Run open models locally for Omarchy's coding agents, with curated recipes per machine",
-          "builddate": 1795344050
+          "builddate": 1795445084
         },
         "omarchy-mac": {
-          "version": "0.2.7-1",
+          "version": "0.2.7-2",
           "desc": "Apple Silicon configuration and support services for Omarchy",
-          "builddate": 1795298462
+          "builddate": 1795391078
         },
         "omarchy-mac-boot": {
           "version": "20261121-1",
@@ -5595,9 +5865,9 @@
           "builddate": 1793848174
         },
         "omarchy-settings-dev": {
-          "version": "4.0.0.r8173.g9f245c7-1",
+          "version": "4.0.0.r8257.g6311983-1",
           "desc": "Omarchy user defaults, /etc/skel content, fonts, plymouth theme, and support helpers (quattro branch tip)",
-          "builddate": 1795351101
+          "builddate": 1795444699
         },
         "omarchy-speedtest": {
           "version": "0.2.2-1",
@@ -5698,6 +5968,11 @@
           "version": "2026.11.6-1",
           "desc": "Multi-channel AI gateway with extensible messaging integrations",
           "builddate": 1795196282
+        },
+        "openrouter-ori": {
+          "version": "0.17.3-1",
+          "desc": "Ori, OpenRouter's local agent CLI",
+          "builddate": 1795441620
         },
         "opto": {
           "version": "0.1.1-1",
@@ -5800,9 +6075,9 @@
           "builddate": 1794926380
         },
         "rawmakase-bin": {
-          "version": "0.7.1-1",
+          "version": "0.7.2-1",
           "desc": "Fast, Lightroom-compatible RAW photo editor (binary release)",
-          "builddate": 1795271878
+          "builddate": 1795426751
         },
         "retroarch-joypad-autoconfig-git": {
           "version": "1.22.0.r96.g0331510-1",
@@ -5965,9 +6240,9 @@
           "builddate": 1795177936
         },
         "t3code-nightly-bin": {
-          "version": "0.1.12_nightly.20261122.5085-1",
+          "version": "0.1.12_nightly.20261123.5138-1",
           "desc": "Open-source control plane for coding agents (nightly)",
-          "builddate": 1795350553
+          "builddate": 1795436999
         },
         "tensaku": {
           "version": "0.29.0-2",
@@ -6015,9 +6290,9 @@
           "builddate": 1790322307
         },
         "uboot-aurora": {
-          "version": "2026.07.aurora7-1",
+          "version": "2026.07.aurora8-1",
           "desc": "Aurora common Apple Silicon U-Boot with Neo MTP handoff (Omarchy build: silent console)",
-          "builddate": 1795273290
+          "builddate": 1795324106
         },
         "ufw-docker": {
           "version": "251123-2",
@@ -6045,14 +6320,14 @@
           "builddate": 1794998283
         },
         "voxtype-bin": {
-          "version": "1.3.0-1",
+          "version": "1.3.1-1",
           "desc": "Push-to-talk voice-to-text for Linux (pre-built binaries)",
-          "builddate": 1795117068
+          "builddate": 1795397859
         },
         "vulkan-aurora": {
-          "version": "1:26.3.0_devel.20261120.232519.fb3b11e121c-1",
+          "version": "1:26.3.0_devel.20261122.232644.e705eca833f-1",
           "desc": "Aurora Honeykrisp Vulkan driver",
-          "builddate": 1795181919
+          "builddate": 1795408220
         },
         "walker": {
           "version": "2.17.2-1",
@@ -6272,17 +6547,17 @@
       {
         "name": "fantasi",
         "stable": null,
-        "edge": "0.1.7-1"
+        "edge": "0.2.0-1"
       },
       {
         "name": "flowtunes",
         "stable": null,
-        "edge": "0.2.0-1"
+        "edge": "0.3.0-1"
       },
       {
         "name": "folio",
         "stable": null,
-        "edge": "0.7.1-1"
+        "edge": "0.7.2-1"
       },
       {
         "name": "geekbench",
@@ -6362,7 +6637,7 @@
       {
         "name": "limine-mkinitcpio-hook",
         "stable": "1.40.0-2",
-        "edge": "1.41.0-1"
+        "edge": "1.41.0-2"
       },
       {
         "name": "limine-snapper-sync",
@@ -6375,34 +6650,14 @@
         "edge": "1.0.4-2"
       },
       {
-        "name": "linux-omarchy",
-        "stable": "7.2.15-1",
-        "edge": "7.2.15-3"
-      },
-      {
-        "name": "linux-omarchy-bore",
-        "stable": "7.2.8-9",
-        "edge": "7.2.15-1"
-      },
-      {
-        "name": "linux-omarchy-bore-headers",
-        "stable": "7.2.8-9",
-        "edge": "7.2.15-1"
-      },
-      {
-        "name": "linux-omarchy-headers",
-        "stable": "7.2.15-1",
-        "edge": "7.2.15-3"
-      },
-      {
-        "name": "linux-omarchy-nvidia-open",
-        "stable": null,
-        "edge": "7.2.15-3"
-      },
-      {
         "name": "macbook8-spi-pxa2xx-nodma-dkms",
         "stable": "1.0-2",
         "edge": "1.0-3"
+      },
+      {
+        "name": "minimax-code",
+        "stable": null,
+        "edge": "0.7.9-1"
       },
       {
         "name": "monologue",
@@ -6452,12 +6707,12 @@
       {
         "name": "omacharts",
         "stable": "0.1.17-1",
-        "edge": "0.3.12-1"
+        "edge": "0.3.14-1"
       },
       {
         "name": "omacharts-debug",
         "stable": "0.1.17-1",
-        "edge": "0.3.12-1"
+        "edge": "0.3.14-1"
       },
       {
         "name": "omacut",
@@ -6502,7 +6757,7 @@
       {
         "name": "omarchy-dev",
         "stable": "4.0.0.r7195.g3ac4365-1",
-        "edge": "4.0.0.r8173.g9f245c7-1"
+        "edge": "4.0.0.r8257.g6311983-1"
       },
       {
         "name": "omarchy-emacs",
@@ -6522,7 +6777,7 @@
       {
         "name": "omarchy-local-ai",
         "stable": null,
-        "edge": "0.10.0-1"
+        "edge": "0.12.2-1"
       },
       {
         "name": "omarchy-power-profiles-daemon",
@@ -6542,7 +6797,7 @@
       {
         "name": "omarchy-settings-dev",
         "stable": "4.0.0.r7195.g3ac4365-1",
-        "edge": "4.0.0.r8173.g9f245c7-1"
+        "edge": "4.0.0.r8257.g6311983-1"
       },
       {
         "name": "omarchy-themes-intros",
@@ -6849,17 +7104,17 @@
       {
         "name": "fantasi",
         "rc": null,
-        "edge": "0.1.7-1"
+        "edge": "0.2.0-1"
       },
       {
         "name": "flowtunes",
         "rc": null,
-        "edge": "0.2.0-1"
+        "edge": "0.3.0-1"
       },
       {
         "name": "folio",
         "rc": null,
-        "edge": "0.7.1-1"
+        "edge": "0.7.2-1"
       },
       {
         "name": "geekbench",
@@ -6939,7 +7194,7 @@
       {
         "name": "limine-mkinitcpio-hook",
         "rc": "1.40.0-2",
-        "edge": "1.41.0-1"
+        "edge": "1.41.0-2"
       },
       {
         "name": "limine-snapper-sync",
@@ -6952,34 +7207,14 @@
         "edge": "1.0.4-2"
       },
       {
-        "name": "linux-omarchy",
-        "rc": "7.2.15-1",
-        "edge": "7.2.15-3"
-      },
-      {
-        "name": "linux-omarchy-bore",
-        "rc": "7.2.8-9",
-        "edge": "7.2.15-1"
-      },
-      {
-        "name": "linux-omarchy-bore-headers",
-        "rc": "7.2.8-9",
-        "edge": "7.2.15-1"
-      },
-      {
-        "name": "linux-omarchy-headers",
-        "rc": "7.2.15-1",
-        "edge": "7.2.15-3"
-      },
-      {
-        "name": "linux-omarchy-nvidia-open",
-        "rc": null,
-        "edge": "7.2.15-3"
-      },
-      {
         "name": "macbook8-spi-pxa2xx-nodma-dkms",
         "rc": "1.0-2",
         "edge": "1.0-3"
+      },
+      {
+        "name": "minimax-code",
+        "rc": null,
+        "edge": "0.7.9-1"
       },
       {
         "name": "monologue",
@@ -7029,12 +7264,12 @@
       {
         "name": "omacharts",
         "rc": "0.1.17-1",
-        "edge": "0.3.12-1"
+        "edge": "0.3.14-1"
       },
       {
         "name": "omacharts-debug",
         "rc": "0.1.17-1",
-        "edge": "0.3.12-1"
+        "edge": "0.3.14-1"
       },
       {
         "name": "omacut",
@@ -7079,7 +7314,7 @@
       {
         "name": "omarchy-dev",
         "rc": "4.0.0.r7195.g3ac4365-1",
-        "edge": "4.0.0.r8173.g9f245c7-1"
+        "edge": "4.0.0.r8257.g6311983-1"
       },
       {
         "name": "omarchy-emacs",
@@ -7099,7 +7334,7 @@
       {
         "name": "omarchy-local-ai",
         "rc": null,
-        "edge": "0.10.0-1"
+        "edge": "0.12.2-1"
       },
       {
         "name": "omarchy-power-profiles-daemon",
@@ -7114,7 +7349,7 @@
       {
         "name": "omarchy-settings-dev",
         "rc": "4.0.0.r7195.g3ac4365-1",
-        "edge": "4.0.0.r8173.g9f245c7-1"
+        "edge": "4.0.0.r8257.g6311983-1"
       },
       {
         "name": "omarchy-themes-intros",
@@ -7343,56 +7578,64 @@
   "kernels": {
     "stable": {
       "linux-firmware-cirrus-dx13260": "20260810-2",
-      "linux-omarchy": "7.2.15-1",
-      "linux-omarchy-bore": "7.2.8-9",
-      "linux-omarchy-bore-headers": "7.2.8-9",
-      "linux-omarchy-eevdf": "7.2.15-1",
-      "linux-omarchy-eevdf-headers": "7.2.15-1",
-      "linux-omarchy-headers": "7.2.15-1",
-      "linux-omarchy-muqss": "7.2.15-1",
-      "linux-omarchy-muqss-headers": "7.2.15-1",
+      "linux-omarchy": "7.2.15-4",
+      "linux-omarchy-bore": "7.2.15-4",
+      "linux-omarchy-bore-headers": "7.2.15-4",
+      "linux-omarchy-eevdf": "7.2.15-4",
+      "linux-omarchy-eevdf-headers": "7.2.15-4",
+      "linux-omarchy-eevdf-nvidia-open": "7.2.15-4",
+      "linux-omarchy-headers": "7.2.15-4",
+      "linux-omarchy-muqss": "7.2.15-4",
+      "linux-omarchy-muqss-headers": "7.2.15-4",
+      "linux-omarchy-muqss-nvidia-open": "7.2.15-4",
+      "linux-omarchy-nvidia-open": "7.2.15-4",
       "linux-t2": "1:7.2.15.arch1-1",
       "linux-t2-headers": "1:7.2.15.arch1-1",
       "linuxqq": "3.2.34_53644-1"
     },
     "rc": {
       "linux-firmware-cirrus-dx13260": "20260810-2",
-      "linux-omarchy": "7.2.15-1",
-      "linux-omarchy-bore": "7.2.8-9",
-      "linux-omarchy-bore-headers": "7.2.8-9",
-      "linux-omarchy-eevdf": "7.2.15-1",
-      "linux-omarchy-eevdf-headers": "7.2.15-1",
-      "linux-omarchy-headers": "7.2.15-1",
-      "linux-omarchy-muqss": "7.2.15-1",
-      "linux-omarchy-muqss-headers": "7.2.15-1",
+      "linux-omarchy": "7.2.15-4",
+      "linux-omarchy-bore": "7.2.15-4",
+      "linux-omarchy-bore-headers": "7.2.15-4",
+      "linux-omarchy-eevdf": "7.2.15-4",
+      "linux-omarchy-eevdf-headers": "7.2.15-4",
+      "linux-omarchy-eevdf-nvidia-open": "7.2.15-4",
+      "linux-omarchy-headers": "7.2.15-4",
+      "linux-omarchy-muqss": "7.2.15-4",
+      "linux-omarchy-muqss-headers": "7.2.15-4",
+      "linux-omarchy-muqss-nvidia-open": "7.2.15-4",
+      "linux-omarchy-nvidia-open": "7.2.15-4",
       "linux-t2": "1:7.2.15.arch1-1",
       "linux-t2-headers": "1:7.2.15.arch1-1",
       "linuxqq": "3.2.34_53644-1"
     },
     "edge": {
       "linux-firmware-cirrus-dx13260": "20260810-2",
-      "linux-omarchy": "7.2.15-3",
-      "linux-omarchy-bore": "7.2.15-1",
-      "linux-omarchy-bore-headers": "7.2.15-1",
-      "linux-omarchy-eevdf": "7.2.15-1",
-      "linux-omarchy-eevdf-headers": "7.2.15-1",
-      "linux-omarchy-headers": "7.2.15-3",
-      "linux-omarchy-muqss": "7.2.15-1",
-      "linux-omarchy-muqss-headers": "7.2.15-1",
-      "linux-omarchy-nvidia-open": "7.2.15-3",
+      "linux-omarchy": "7.2.15-4",
+      "linux-omarchy-bore": "7.2.15-4",
+      "linux-omarchy-bore-headers": "7.2.15-4",
+      "linux-omarchy-eevdf": "7.2.15-4",
+      "linux-omarchy-eevdf-headers": "7.2.15-4",
+      "linux-omarchy-eevdf-nvidia-open": "7.2.15-4",
+      "linux-omarchy-headers": "7.2.15-4",
+      "linux-omarchy-muqss": "7.2.15-4",
+      "linux-omarchy-muqss-headers": "7.2.15-4",
+      "linux-omarchy-muqss-nvidia-open": "7.2.15-4",
+      "linux-omarchy-nvidia-open": "7.2.15-4",
       "linux-t2": "1:7.2.15.arch1-1",
       "linux-t2-headers": "1:7.2.15.arch1-1",
       "linuxqq": "3.2.34_53644-1"
     },
     "edge-aarch64": {
       "linux-aarch64-pkgbase-shim": "1-4",
-      "linux-aurora": "7.3.0.aurora0testedgeC-1",
-      "linux-aurora-headers": "7.3.0.aurora0testedgeC-1",
+      "linux-aurora": "7.3.0.aurora1-1",
+      "linux-aurora-headers": "7.3.0.aurora1-1",
       "linux-firmware-qcom": "20261019-1.1",
-      "linux-omarchy": "7.3-75",
-      "linux-omarchy-dtbs": "7.3-54",
-      "linux-omarchy-headers": "7.3-75",
-      "linux-omarchy-nvidia-open": "7.3-75",
+      "linux-omarchy": "7.3-78",
+      "linux-omarchy-dtbs": "7.3-63",
+      "linux-omarchy-headers": "7.3-78",
+      "linux-omarchy-nvidia-open": "7.3-78",
       "linuxqq": "3.2.34_53644-1"
     }
   },

@@ -1,5 +1,5 @@
 {
-  "count": 329,
+  "count": 331,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -5521,6 +5521,38 @@
       "timestamp": 1795441583,
       "touches": [
         "/etc/systemd/system/omarchy-shutdown-ramfs.timer"
+      ]
+    },
+    {
+      "body": "echo \"Unload MediaTek MT7925 Bluetooth cleanly on shutdown or reboot\"\n\n# MediaTek MT7925 / AMD RZ717 combo cards can wedge their internal USB\n# Bluetooth interface across warm reboots without a clean driver teardown.\nif ! omarchy-hw-pci 14c3:7925 14c3:0717; then\n  exit 0\nfi\n\nservice=omarchy-mt7925-bluetooth-shutdown.service\nsource_unit=\"$OMARCHY_PATH/default/systemd/system/$service\"\nunit=\"/etc/systemd/system/$service\"\n\nif [[ ! -e $unit ]]; then\n  if [[ ! -f $source_unit ]]; then\n    echo \"Waiting for $source_unit to arrive before enabling $service\"\n    exit 75\n  fi\n\n  sudo install -Dm644 \"$source_unit\" \"$unit\"\n  sudo systemctl daemon-reload\nfi\n\nif ! systemctl is-enabled --quiet \"$service\"; then\n  sudo systemctl enable \"$service\"\nfi\n\nif ! systemctl is-active --quiet \"$service\"; then\n  sudo systemctl start \"$service\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-23T16:21:43Z",
+      "description": "Unload MediaTek MT7925 Bluetooth cleanly on shutdown or reboot",
+      "file": "1795450903.sh",
+      "lineCount": 29,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795450903.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795450903.sh",
+      "timestamp": 1795450903,
+      "touches": [
+        "/etc/systemd/system/"
+      ]
+    },
+    {
+      "body": "echo \"Cap zram at 8 GiB with lzo-rle and prefer dropping page cache over swapping desktop apps\"\n\n# Wait until omarchy-settings delivers the updated vendor drop-in and sysctl file.\nzram_dropin=/usr/lib/systemd/zram-generator.conf.d/90-omarchy.conf\nif [[ ! -f $zram_dropin ]] || ! grep -q '^compression-algorithm = lzo-rle$' \"$zram_dropin\"; then\n  echo \"Waiting for the omarchy-settings package that ships the updated zram and reclaim tuning\" >&2\n  exit 75\nfi\n\n# Skip privileged work when another user or a reboot already applied the tuning.\nzram_ready=1\nif [[ -r /sys/block/zram0/comp_algorithm && -r /sys/block/zram0/disksize ]]; then\n  zram_algo=$(< /sys/block/zram0/comp_algorithm)\n  zram_size=$(< /sys/block/zram0/disksize)\n  half_ram=$(awk '$1 == \"MemTotal:\" {print $2 * 512}' /proc/meminfo)\n  max_zram=$(( half_ram < 8589934592 ? half_ram : 8589934592 ))\n  if [[ $zram_algo != *\"[lzo-rle]\"* ]] || (( zram_size > max_zram + 16777216 )); then\n    zram_ready=0\n  fi\nfi\n\ncur_swappiness=$(sysctl -n vm.swappiness)\ncur_vfs_pressure=$(sysctl -n vm.vfs_cache_pressure)\n\nif [[ $cur_swappiness == \"1\" && $cur_vfs_pressure != \"50\" ]] && (( zram_ready == 1 )); then\n  exit 0\nfi\n\n# Apply only the two sysctl keys this update changes so later drop-ins (such as\n# zz-omarchy-gb10-memory.conf) keep their live values. Fail if sudo or sysctl\n# fails so the migration stays pending instead of being marked complete.\nsysctl_updates=()\nif [[ $cur_swappiness != \"1\" ]]; then\n  sysctl_updates+=(vm.swappiness=1)\nfi\nif [[ $cur_vfs_pressure == \"50\" ]]; then\n  sysctl_updates+=(vm.vfs_cache_pressure=100)\nfi\nif (( ${#sysctl_updates[@]} > 0 )); then\n  sudo sysctl -q -w \"${sysctl_updates[@]}\"",
+      "bodyTruncated": true,
+      "date": "2026-11-24T08:45:04Z",
+      "description": "Cap zram at 8 GiB with lzo-rle and prefer dropping page cache over swapping desktop apps",
+      "file": "1795509904.sh",
+      "lineCount": 57,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795509904.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795509904.sh",
+      "timestamp": 1795509904,
+      "touches": [
+        "/usr/lib/systemd/zram-generator.conf.d/90-omarchy.conf"
       ]
     }
   ],

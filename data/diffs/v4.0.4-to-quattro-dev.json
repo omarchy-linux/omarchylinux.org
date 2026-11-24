@@ -1231,7 +1231,7 @@
         "fields": {
           "args": [
             "[--inline] [--pick]",
-            "[--inline] [--pick] [--or-webapp <url>] [--local-model <recipe>] [--agent <id>] [--provider <fireworks|openrouter|deepseek|minimax|synthetic|zai>] [--app-id=<app-id>]"
+            "[--inline] [--pick] [--local-model <recipe>] [--agent <id>] [--provider <fireworks|openrouter|deepseek|minimax|synthetic|zai>] [--app-id=<app-id>]"
           ],
           "examples": [
             [
@@ -1624,6 +1624,15 @@
       {
         "fields": {
           "args": [
+            "<window-pattern> <launch-command>",
+            "<window-pattern> [<launch-command>|-- <command> [args...]]"
+          ]
+        },
+        "name": "omarchy-launch-or-focus"
+      },
+      {
+        "fields": {
+          "args": [
             "",
             "[force] [options]"
           ],
@@ -1986,7 +1995,7 @@
     ],
     "counts": {
       "added": 198,
-      "changed": 60,
+      "changed": 61,
       "from": 444,
       "removed": 11,
       "to": 631
@@ -3157,9 +3166,9 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 223,
+      "new": 225,
       "removed": 0,
-      "to": 329
+      "to": 331
     },
     "new": [
       {
@@ -4276,6 +4285,16 @@
         "date": "2026-11-23T13:46:23Z",
         "description": "Pre-generate shutdown-ramfs after boot for faster shutdown",
         "file": "1795441583.sh"
+      },
+      {
+        "date": "2026-11-23T16:21:43Z",
+        "description": "Unload MediaTek MT7925 Bluetooth cleanly on shutdown or reboot",
+        "file": "1795450903.sh"
+      },
+      {
+        "date": "2026-11-24T08:45:04Z",
+        "description": "Cap zram at 8 GiB with lzo-rle and prefer dropping page cache over swapping desktop apps",
+        "file": "1795509904.sh"
       }
     ],
     "removed": []

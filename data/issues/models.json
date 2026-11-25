@@ -1,7 +1,7 @@
 {
  "source": "github.com/omacom/omarchy",
- "fetchedAt": "2026-11-24T14:59:19.756251+00:00",
- "derivedAt": "2026-11-24T15:09:17.756002+00:00",
+ "fetchedAt": "2026-11-25T14:35:14.449118+00:00",
+ "derivedAt": "2026-11-25T14:46:05.782162+00:00",
  "quirkScriptRef": "v4.0.4",
  "counts": {
   "models": 171,
@@ -44,9 +44,9 @@
     "2024"
    ],
    "counts": {
-    "issues": 166,
-    "open": 101,
-    "closed": 65,
+    "issues": 167,
+    "open": 100,
+    "closed": 67,
     "discussions": 28
    },
    "components": [
@@ -67,11 +67,11 @@
      "issues": 39
     },
     {
-     "key": "wifi",
-     "issues": 31
+     "key": "touchpad-input",
+     "issues": 32
     },
     {
-     "key": "touchpad-input",
+     "key": "wifi",
      "issues": 31
     },
     {
@@ -129,6 +129,16 @@
    ],
    "issues": [
     {
+     "number": 20051,
+     "title": "Keyboard-layout widget shows the same label for two layouts of one language (us + us:intl both read EN)",
+     "url": "https://github.com/omacom/omarchy/issues/20051",
+     "state": "OPEN",
+     "components": [
+      "touchpad-input"
+     ],
+     "createdAt": "2026-11-24T18:22:52Z"
+    },
+    {
      "number": 19959,
      "title": "Japanese mode keys: 英数 does nothing on a fresh 4.5, and 変換/無変換 do nothing after updating with Mozc already set up",
      "url": "https://github.com/omacom/omarchy/issues/19959",
@@ -142,7 +152,7 @@
      "number": 19951,
      "title": "Notifications show a letter instead of the icon for apps installed after the shell started",
      "url": "https://github.com/omacom/omarchy/issues/19951",
-     "state": "OPEN",
+     "state": "CLOSED",
      "components": [],
      "createdAt": "2026-11-23T19:34:51Z"
     },
@@ -440,7 +450,7 @@
      "number": 18253,
      "title": "M3 MacBook Pro 14\": Steam segfaults on launch (steamrtarm64/steam), no logs written",
      "url": "https://github.com/omacom/omarchy/issues/18253",
-     "state": "OPEN",
+     "state": "CLOSED",
      "components": [
       "apple-silicon-asahi"
      ],
@@ -1859,18 +1869,6 @@
       "apple-silicon-asahi"
      ],
      "createdAt": "2025-10-22T07:33:21Z"
-    },
-    {
-     "number": 2639,
-     "title": "Black Screen with NVIDIA Driver",
-     "url": "https://github.com/omacom/omarchy/issues/2639",
-     "state": "OPEN",
-     "components": [
-      "nvidia",
-      "hybrid-gpu",
-      "boot-limine"
-     ],
-     "createdAt": "2025-10-20T19:45:27Z"
     }
    ],
    "issuesTruncated": true,
@@ -2030,23 +2028,23 @@
    ],
    "variants": [],
    "counts": {
-    "issues": 92,
+    "issues": 93,
     "open": 34,
-    "closed": 58,
+    "closed": 59,
     "discussions": 14
    },
    "components": [
     {
      "key": "multi-monitor",
-     "issues": 32
+     "issues": 33
     },
     {
      "key": "suspend-sleep",
-     "issues": 26
+     "issues": 27
     },
     {
      "key": "boot-limine",
-     "issues": 22
+     "issues": 23
     },
     {
      "key": "amd-gpu",
@@ -2054,7 +2052,7 @@
     },
     {
      "key": "battery-power",
-     "issues": 19
+     "issues": 20
     },
     {
      "key": "touchpad-input",
@@ -2082,7 +2080,7 @@
     },
     {
      "key": "intel-gpu",
-     "issues": 4
+     "issues": 5
     },
     {
      "key": "bluetooth",
@@ -2106,6 +2104,20 @@
     }
    ],
    "issues": [
+    {
+     "number": 20058,
+     "title": "Framework 13 Pro (Panther Lake / Arc B390): intermittent sharp rectangular flashes on light backgrounds at 120 Hz",
+     "url": "https://github.com/omacom/omarchy/issues/20058",
+     "state": "CLOSED",
+     "components": [
+      "intel-gpu",
+      "suspend-sleep",
+      "multi-monitor",
+      "boot-limine",
+      "battery-power"
+     ],
+     "createdAt": "2026-11-24T21:09:14Z"
+    },
     {
      "number": 19378,
      "title": "Right Alt dictation keeps recording after the mirror shortcut, because a reload drops the hold",
@@ -3178,8 +3190,8 @@
    ],
    "variants": [],
    "counts": {
-    "issues": 78,
-    "open": 49,
+    "issues": 79,
+    "open": 50,
     "closed": 29,
     "discussions": 18
    },
@@ -3218,7 +3230,7 @@
     },
     {
      "key": "wifi",
-     "issues": 12
+     "issues": 13
     },
     {
      "key": "amd-gpu",
@@ -3258,6 +3270,16 @@
     }
    ],
    "issues": [
+    {
+     "number": 20056,
+     "title": "omarchy-network-band exits silently on Broadcom wl (BCM4331), hiding 2.4/5 GHz band pills",
+     "url": "https://github.com/omacom/omarchy/issues/20056",
+     "state": "OPEN",
+     "components": [
+      "wifi"
+     ],
+     "createdAt": "2026-11-24T20:05:09Z"
+    },
     {
      "number": 19959,
      "title": "Japanese mode keys: 英数 does nothing on a fresh 4.5, and 変換/無変換 do nothing after updating with Mozc already set up",
@@ -4333,8 +4355,8 @@
    ],
    "counts": {
     "issues": 76,
-    "open": 46,
-    "closed": 30,
+    "open": 45,
+    "closed": 31,
     "discussions": 14
    },
    "components": [
@@ -4416,7 +4438,7 @@
      "number": 19995,
      "title": "Migration 1794330979 aborts the update: folio now ships FileManager1.service, which nautilus still owns",
      "url": "https://github.com/omacom/omarchy/issues/19995",
-     "state": "OPEN",
+     "state": "CLOSED",
      "components": [
       "apple-silicon-asahi"
      ],
@@ -5416,31 +5438,31 @@
     "Gen 9"
    ],
    "counts": {
-    "issues": 69,
-    "open": 34,
+    "issues": 70,
+    "open": 35,
     "closed": 35,
     "discussions": 7
    },
    "components": [
     {
      "key": "intel-gpu",
-     "issues": 26
+     "issues": 27
     },
     {
      "key": "multi-monitor",
-     "issues": 23
+     "issues": 24
     },
     {
      "key": "boot-limine",
-     "issues": 22
+     "issues": 23
     },
     {
      "key": "suspend-sleep",
-     "issues": 21
+     "issues": 22
     },
     {
      "key": "battery-power",
-     "issues": 13
+     "issues": 14
     },
     {
      "key": "audio",
@@ -5500,6 +5522,20 @@
     }
    ],
    "issues": [
+    {
+     "number": 20071,
+     "title": "X1 Carbon Gen 14: BAT0 reports Charging after s2idle resume while battery drains to hard power loss",
+     "url": "https://github.com/omacom/omarchy/issues/20071",
+     "state": "OPEN",
+     "components": [
+      "intel-gpu",
+      "suspend-sleep",
+      "multi-monitor",
+      "boot-limine",
+      "battery-power"
+     ],
+     "createdAt": "2026-11-25T00:39:26Z"
+    },
     {
      "number": 19343,
      "title": "omarchy CLI fails and omarchy update aborts mid-run in non-interactive shells (unset OMARCHY_PATH)",
@@ -7070,13 +7106,13 @@
     "MSI Bravo",
     "MSI Cooler",
     "MSI G321Q",
+    "MSI GF63",
     "MSI GL63",
     "MSI GL65",
     "MSI GS60",
     "MSI GT",
     "MSI Katana",
-    "MSI Laptop",
-    "MSI MAG"
+    "MSI Laptop"
    ],
    "variants": [
     "600-series",
@@ -7087,6 +7123,7 @@
     "Bravo",
     "Cooler",
     "G321Q",
+    "GF63",
     "GL63",
     "GL65",
     "GS60",
@@ -7097,12 +7134,11 @@
     "MP275Q",
     "MP341CQ",
     "MPG",
-    "Nuvoton",
-    "Oct"
+    "Nuvoton"
    ],
    "counts": {
-    "issues": 47,
-    "open": 32,
+    "issues": 48,
+    "open": 33,
     "closed": 15,
     "discussions": 5
    },
@@ -7121,7 +7157,7 @@
     },
     {
      "key": "battery-power",
-     "issues": 16
+     "issues": 17
     },
     {
      "key": "hybrid-gpu",
@@ -7133,7 +7169,7 @@
     },
     {
      "key": "suspend-sleep",
-     "issues": 9
+     "issues": 10
     },
     {
      "key": "storage-nvme",
@@ -7173,6 +7209,17 @@
     }
    ],
    "issues": [
+    {
+     "number": 20084,
+     "title": "Low-battery warning only fires at ≤10% and once per discharge — laptops whose pack cuts off above that get no warning (data loss, deep-discharged pack)",
+     "url": "https://github.com/omacom/omarchy/issues/20084",
+     "state": "OPEN",
+     "components": [
+      "suspend-sleep",
+      "battery-power"
+     ],
+     "createdAt": "2026-11-25T04:53:58Z"
+    },
     {
      "number": 18928,
      "title": "Expand right window in scrolling layout not working correctly",
@@ -8470,8 +8517,8 @@
     "Slim 7x"
    ],
    "counts": {
-    "issues": 43,
-    "open": 28,
+    "issues": 44,
+    "open": 29,
     "closed": 15,
     "discussions": 13
    },
@@ -8482,7 +8529,7 @@
     },
     {
      "key": "multi-monitor",
-     "issues": 15
+     "issues": 16
     },
     {
      "key": "suspend-sleep",
@@ -8534,6 +8581,16 @@
     }
    ],
    "issues": [
+    {
+     "number": 20067,
+     "title": "Elsewhen: regional zone id (US/Central) makes \"here\" geocode to Australia",
+     "url": "https://github.com/omacom/omarchy/issues/20067",
+     "state": "OPEN",
+     "components": [
+      "multi-monitor"
+     ],
+     "createdAt": "2026-11-24T23:12:57Z"
+    },
     {
      "number": 19735,
      "title": "ath12k/wifi7 (ath12k_wifi7) destroys netdev in a re-association loop right after activation — WCN7850 on Snapdragon X Elite",
@@ -13134,8 +13191,8 @@
    ],
    "counts": {
     "issues": 27,
-    "open": 21,
-    "closed": 6,
+    "open": 20,
+    "closed": 7,
     "discussions": 3
    },
    "components": [
@@ -13201,7 +13258,7 @@
      "number": 20030,
      "title": "Agent launcher migration (1794931275) stalls 10+ minutes on per-agent mise where lookups",
      "url": "https://github.com/omacom/omarchy/issues/20030",
-     "state": "OPEN",
+     "state": "CLOSED",
      "components": [
       "nvidia"
      ],
@@ -16403,8 +16460,8 @@
    "variants": [],
    "counts": {
     "issues": 18,
-    "open": 13,
-    "closed": 5,
+    "open": 12,
+    "closed": 6,
     "discussions": 2
    },
    "components": [
@@ -16474,7 +16531,7 @@
      "number": 18479,
      "title": "Bar is drawn but ignores clicks while a fullscreen window sits under a special workspace or is scrolled out of view",
      "url": "https://github.com/omacom/omarchy/issues/18479",
-     "state": "OPEN",
+     "state": "CLOSED",
      "components": [
       "intel-gpu",
       "multi-monitor"
@@ -20838,6 +20895,251 @@
    "dmiHints": []
   },
   {
+   "key": "apple-macbookpro15-1",
+   "vendor": "Apple",
+   "model": "MacBookPro15,1",
+   "aliases": [
+    "MacBook Pro 15,1",
+    "MacBookPro15,1"
+   ],
+   "variants": [],
+   "counts": {
+    "issues": 10,
+    "open": 9,
+    "closed": 1,
+    "discussions": 2
+   },
+   "components": [
+    {
+     "key": "t2-mac",
+     "issues": 9
+    },
+    {
+     "key": "boot-limine",
+     "issues": 6
+    },
+    {
+     "key": "amd-gpu",
+     "issues": 6
+    },
+    {
+     "key": "multi-monitor",
+     "issues": 5
+    },
+    {
+     "key": "suspend-sleep",
+     "issues": 4
+    },
+    {
+     "key": "battery-power",
+     "issues": 3
+    },
+    {
+     "key": "audio",
+     "issues": 2
+    },
+    {
+     "key": "bluetooth",
+     "issues": 2
+    },
+    {
+     "key": "wifi",
+     "issues": 2
+    },
+    {
+     "key": "hybrid-gpu",
+     "issues": 2
+    },
+    {
+     "key": "thunderbolt-dock",
+     "issues": 1
+    },
+    {
+     "key": "touchpad-input",
+     "issues": 1
+    },
+    {
+     "key": "intel-gpu",
+     "issues": 1
+    },
+    {
+     "key": "apple-silicon-asahi",
+     "issues": 1
+    }
+   ],
+   "issues": [
+    {
+     "number": 20101,
+     "title": "Monitor panel keeps a phantom brightness level on a display with no brightness control",
+     "url": "https://github.com/omacom/omarchy/issues/20101",
+     "state": "OPEN",
+     "components": [
+      "hybrid-gpu",
+      "multi-monitor",
+      "t2-mac"
+     ],
+     "createdAt": "2026-11-25T10:20:11Z"
+    },
+    {
+     "number": 17944,
+     "title": "Log out/in doesn't apply environment.d changes on autologin: uwsm restores stale SSH_AUTH_SOCK after removing the SSH Agent",
+     "url": "https://github.com/omacom/omarchy/issues/17944",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu",
+      "t2-mac"
+     ],
+     "createdAt": "2026-11-06T20:25:48Z"
+    },
+    {
+     "number": 17943,
+     "title": "SSH Agent (gcr-ssh-agent): ssh hangs, spawned ssh-add spins at 100% CPU and the passphrase dialog never appears",
+     "url": "https://github.com/omacom/omarchy/issues/17943",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu",
+      "multi-monitor",
+      "t2-mac"
+     ],
+     "createdAt": "2026-11-06T20:25:39Z"
+    },
+    {
+     "number": 16287,
+     "title": "T2 Macs: single-boot install leaves no Wi-Fi firmware (fetcher runs after macOS is wiped)",
+     "url": "https://github.com/omacom/omarchy/issues/16287",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu",
+      "wifi",
+      "bluetooth",
+      "boot-limine",
+      "t2-mac",
+      "apple-silicon-asahi"
+     ],
+     "createdAt": "2026-10-22T14:03:25Z"
+    },
+    {
+     "number": 13589,
+     "title": "Add automatic T2 speaker DSP setup for MacBookPro15,1 installations",
+     "url": "https://github.com/omacom/omarchy/issues/13589",
+     "state": "OPEN",
+     "components": [
+      "audio",
+      "boot-limine",
+      "t2-mac"
+     ],
+     "createdAt": "2026-09-28T18:37:51Z"
+    },
+    {
+     "number": 13210,
+     "title": "MacBookPro15,1: after a long S3, amdgpu SMU firmware fails to start and both displays stay black",
+     "url": "https://github.com/omacom/omarchy/issues/13210",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu",
+      "suspend-sleep",
+      "multi-monitor",
+      "boot-limine",
+      "battery-power"
+     ],
+     "createdAt": "2026-09-25T09:15:04Z"
+    },
+    {
+     "number": 12593,
+     "title": "Omarchy 4.0.4 on 2019 T2 MacBook Pro: post-login black screen, full-speed fans and shutdown; hybrid graphics workaround succeeds",
+     "url": "https://github.com/omacom/omarchy/issues/12593",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu",
+      "intel-gpu",
+      "hybrid-gpu",
+      "suspend-sleep",
+      "multi-monitor",
+      "boot-limine",
+      "battery-power",
+      "t2-mac"
+     ],
+     "createdAt": "2026-09-20T03:04:38Z"
+    },
+    {
+     "number": 8668,
+     "title": "T2: 22s black lid wake after PR 6562 dropped pcie_ports=compat",
+     "url": "https://github.com/omacom/omarchy/issues/8668",
+     "state": "OPEN",
+     "components": [
+      "amd-gpu",
+      "suspend-sleep",
+      "wifi",
+      "boot-limine",
+      "touchpad-input",
+      "t2-mac"
+     ],
+     "createdAt": "2026-08-27T20:31:58Z"
+    },
+    {
+     "number": 6862,
+     "title": "MacBookPro15,1 (T2): deep never resumes; s2idle hangs on second suspend after Thunderbolt/xHCI die",
+     "url": "https://github.com/omacom/omarchy/issues/6862",
+     "state": "OPEN",
+     "components": [
+      "suspend-sleep",
+      "multi-monitor",
+      "boot-limine",
+      "battery-power",
+      "t2-mac",
+      "thunderbolt-dock"
+     ],
+     "createdAt": "2026-08-14T09:53:32Z"
+    },
+    {
+     "number": 6789,
+     "title": "Bluetooth panel starts adapter discovery and never stops it, breaking A2DP audio until shell restart",
+     "url": "https://github.com/omacom/omarchy/issues/6789",
+     "state": "CLOSED",
+     "components": [
+      "audio",
+      "bluetooth",
+      "t2-mac"
+     ],
+     "createdAt": "2026-08-13T05:20:21Z"
+    }
+   ],
+   "issuesTruncated": false,
+   "quirkScripts": [
+    {
+     "name": "omarchy-hw-display",
+     "path": "bin/omarchy-hw-display",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-hw-display",
+     "summary": "Print the most likely display backlight device."
+    },
+    {
+     "name": "fix-brcmfmac-supplicant.sh",
+     "path": "install/hardware/apple/fix-brcmfmac-supplicant.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-brcmfmac-supplicant.sh",
+     "summary": "handshake itself. On these parts that offload fails against an access point in"
+    },
+    {
+     "name": "fix-spi-keyboard.sh",
+     "path": "install/hardware/apple/fix-spi-keyboard.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-spi-keyboard.sh",
+     "summary": ""
+    },
+    {
+     "name": "fix-suspend-nvme.sh",
+     "path": "install/hardware/apple/fix-suspend-nvme.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-suspend-nvme.sh",
+     "summary": "This prevents NVMe drives from failing to wake from sleep properly"
+    },
+    {
+     "name": "fix-t2.sh",
+     "path": "install/hardware/apple/fix-t2.sh",
+     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-t2.sh",
+     "summary": "Vendor: 106b (Apple), Device IDs: 1801 or 1802 (T2 Security Chip)"
+    }
+   ],
+   "dmiHints": []
+  },
+  {
    "key": "dell-alienware",
    "vendor": "Dell",
    "model": "Dell Alienware",
@@ -21438,239 +21740,6 @@
    ],
    "issuesTruncated": false,
    "quirkScripts": [],
-   "dmiHints": []
-  },
-  {
-   "key": "apple-macbookpro15-1",
-   "vendor": "Apple",
-   "model": "MacBookPro15,1",
-   "aliases": [
-    "MacBook Pro 15,1",
-    "MacBookPro15,1"
-   ],
-   "variants": [],
-   "counts": {
-    "issues": 9,
-    "open": 8,
-    "closed": 1,
-    "discussions": 2
-   },
-   "components": [
-    {
-     "key": "t2-mac",
-     "issues": 8
-    },
-    {
-     "key": "boot-limine",
-     "issues": 6
-    },
-    {
-     "key": "amd-gpu",
-     "issues": 6
-    },
-    {
-     "key": "suspend-sleep",
-     "issues": 4
-    },
-    {
-     "key": "multi-monitor",
-     "issues": 4
-    },
-    {
-     "key": "battery-power",
-     "issues": 3
-    },
-    {
-     "key": "audio",
-     "issues": 2
-    },
-    {
-     "key": "bluetooth",
-     "issues": 2
-    },
-    {
-     "key": "wifi",
-     "issues": 2
-    },
-    {
-     "key": "thunderbolt-dock",
-     "issues": 1
-    },
-    {
-     "key": "touchpad-input",
-     "issues": 1
-    },
-    {
-     "key": "intel-gpu",
-     "issues": 1
-    },
-    {
-     "key": "hybrid-gpu",
-     "issues": 1
-    },
-    {
-     "key": "apple-silicon-asahi",
-     "issues": 1
-    }
-   ],
-   "issues": [
-    {
-     "number": 17944,
-     "title": "Log out/in doesn't apply environment.d changes on autologin: uwsm restores stale SSH_AUTH_SOCK after removing the SSH Agent",
-     "url": "https://github.com/omacom/omarchy/issues/17944",
-     "state": "OPEN",
-     "components": [
-      "amd-gpu",
-      "t2-mac"
-     ],
-     "createdAt": "2026-11-06T20:25:48Z"
-    },
-    {
-     "number": 17943,
-     "title": "SSH Agent (gcr-ssh-agent): ssh hangs, spawned ssh-add spins at 100% CPU and the passphrase dialog never appears",
-     "url": "https://github.com/omacom/omarchy/issues/17943",
-     "state": "OPEN",
-     "components": [
-      "amd-gpu",
-      "multi-monitor",
-      "t2-mac"
-     ],
-     "createdAt": "2026-11-06T20:25:39Z"
-    },
-    {
-     "number": 16287,
-     "title": "T2 Macs: single-boot install leaves no Wi-Fi firmware (fetcher runs after macOS is wiped)",
-     "url": "https://github.com/omacom/omarchy/issues/16287",
-     "state": "OPEN",
-     "components": [
-      "amd-gpu",
-      "wifi",
-      "bluetooth",
-      "boot-limine",
-      "t2-mac",
-      "apple-silicon-asahi"
-     ],
-     "createdAt": "2026-10-22T14:03:25Z"
-    },
-    {
-     "number": 13589,
-     "title": "Add automatic T2 speaker DSP setup for MacBookPro15,1 installations",
-     "url": "https://github.com/omacom/omarchy/issues/13589",
-     "state": "OPEN",
-     "components": [
-      "audio",
-      "boot-limine",
-      "t2-mac"
-     ],
-     "createdAt": "2026-09-28T18:37:51Z"
-    },
-    {
-     "number": 13210,
-     "title": "MacBookPro15,1: after a long S3, amdgpu SMU firmware fails to start and both displays stay black",
-     "url": "https://github.com/omacom/omarchy/issues/13210",
-     "state": "OPEN",
-     "components": [
-      "amd-gpu",
-      "suspend-sleep",
-      "multi-monitor",
-      "boot-limine",
-      "battery-power"
-     ],
-     "createdAt": "2026-09-25T09:15:04Z"
-    },
-    {
-     "number": 12593,
-     "title": "Omarchy 4.0.4 on 2019 T2 MacBook Pro: post-login black screen, full-speed fans and shutdown; hybrid graphics workaround succeeds",
-     "url": "https://github.com/omacom/omarchy/issues/12593",
-     "state": "OPEN",
-     "components": [
-      "amd-gpu",
-      "intel-gpu",
-      "hybrid-gpu",
-      "suspend-sleep",
-      "multi-monitor",
-      "boot-limine",
-      "battery-power",
-      "t2-mac"
-     ],
-     "createdAt": "2026-09-20T03:04:38Z"
-    },
-    {
-     "number": 8668,
-     "title": "T2: 22s black lid wake after PR 6562 dropped pcie_ports=compat",
-     "url": "https://github.com/omacom/omarchy/issues/8668",
-     "state": "OPEN",
-     "components": [
-      "amd-gpu",
-      "suspend-sleep",
-      "wifi",
-      "boot-limine",
-      "touchpad-input",
-      "t2-mac"
-     ],
-     "createdAt": "2026-08-27T20:31:58Z"
-    },
-    {
-     "number": 6862,
-     "title": "MacBookPro15,1 (T2): deep never resumes; s2idle hangs on second suspend after Thunderbolt/xHCI die",
-     "url": "https://github.com/omacom/omarchy/issues/6862",
-     "state": "OPEN",
-     "components": [
-      "suspend-sleep",
-      "multi-monitor",
-      "boot-limine",
-      "battery-power",
-      "t2-mac",
-      "thunderbolt-dock"
-     ],
-     "createdAt": "2026-08-14T09:53:32Z"
-    },
-    {
-     "number": 6789,
-     "title": "Bluetooth panel starts adapter discovery and never stops it, breaking A2DP audio until shell restart",
-     "url": "https://github.com/omacom/omarchy/issues/6789",
-     "state": "CLOSED",
-     "components": [
-      "audio",
-      "bluetooth",
-      "t2-mac"
-     ],
-     "createdAt": "2026-08-13T05:20:21Z"
-    }
-   ],
-   "issuesTruncated": false,
-   "quirkScripts": [
-    {
-     "name": "omarchy-hw-display",
-     "path": "bin/omarchy-hw-display",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/bin/omarchy-hw-display",
-     "summary": "Print the most likely display backlight device."
-    },
-    {
-     "name": "fix-brcmfmac-supplicant.sh",
-     "path": "install/hardware/apple/fix-brcmfmac-supplicant.sh",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-brcmfmac-supplicant.sh",
-     "summary": "handshake itself. On these parts that offload fails against an access point in"
-    },
-    {
-     "name": "fix-spi-keyboard.sh",
-     "path": "install/hardware/apple/fix-spi-keyboard.sh",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-spi-keyboard.sh",
-     "summary": ""
-    },
-    {
-     "name": "fix-suspend-nvme.sh",
-     "path": "install/hardware/apple/fix-suspend-nvme.sh",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-suspend-nvme.sh",
-     "summary": "This prevents NVMe drives from failing to wake from sleep properly"
-    },
-    {
-     "name": "fix-t2.sh",
-     "path": "install/hardware/apple/fix-t2.sh",
-     "sourceUrl": "https://github.com/omacom/omarchy/blob/v4.0.4/install/hardware/apple/fix-t2.sh",
-     "summary": "Vendor: 106b (Apple), Device IDs: 1801 or 1802 (T2 Security Chip)"
-    }
-   ],
    "dmiHints": []
   },
   {

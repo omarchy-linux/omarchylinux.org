@@ -1029,6 +1029,7 @@
     "added": [
       "omarchy-agent-account-add",
       "omarchy-agent-account-copy",
+      "omarchy-agent-account-dispatch",
       "omarchy-agent-account-exec",
       "omarchy-agent-account-home",
       "omarchy-agent-account-list",
@@ -1081,6 +1082,7 @@
       "omarchy-cmd-default-browser",
       "omarchy-cmd-editor-mimetypes",
       "omarchy-crash-mute",
+      "omarchy-default-browser-switch-to-chrome",
       "omarchy-default-dictation",
       "omarchy-dev-notification-demo",
       "omarchy-dev-pack-chrome-extensions",
@@ -1094,6 +1096,7 @@
       "omarchy-dictation-use",
       "omarchy-dictation-voxtype",
       "omarchy-dock",
+      "omarchy-drive-unlock",
       "omarchy-font-cjk",
       "omarchy-games-vibes-copy",
       "omarchy-games-vibes-install",
@@ -1119,6 +1122,7 @@
       "omarchy-hw-software-rendering",
       "omarchy-hw-vm",
       "omarchy-hw-wait-camera-access",
+      "omarchy-hw-wait-soundwire",
       "omarchy-hw-x86",
       "omarchy-hyprland-animations-off",
       "omarchy-hyprland-corners",
@@ -1146,10 +1150,13 @@
       "omarchy-icons-update",
       "omarchy-input-method",
       "omarchy-install-ai-claude",
+      "omarchy-install-ai-cli",
       "omarchy-install-ai-herdr",
       "omarchy-install-browser-extensions",
       "omarchy-install-camera",
       "omarchy-install-chromium-claude",
+      "omarchy-install-cli-basecamp",
+      "omarchy-install-cli-hey",
       "omarchy-install-dictation-hex",
       "omarchy-install-dictation-superwhisper",
       "omarchy-install-dictation-voxtype",
@@ -1173,6 +1180,7 @@
       "omarchy-n1x-probe",
       "omarchy-network-captive-portal",
       "omarchy-network-wifi-connected",
+      "omarchy-pkg-add-curated",
       "omarchy-pkg-defaults",
       "omarchy-powerprofiles-floor",
       "omarchy-provision-hardware",
@@ -1186,6 +1194,7 @@
       "omarchy-remove-ai-antigravity",
       "omarchy-remove-ai-chatgpt",
       "omarchy-remove-ai-claude",
+      "omarchy-remove-ai-cli",
       "omarchy-remove-ai-grok-bot",
       "omarchy-remove-ai-lm-studio",
       "omarchy-remove-ai-ollama",
@@ -1195,6 +1204,7 @@
       "omarchy-remove-gaming-moonlight",
       "omarchy-remove-service-microsoft",
       "omarchy-remove-service-ssh-agent",
+      "omarchy-rollcall",
       "omarchy-security-functions",
       "omarchy-setup-git",
       "omarchy-setup-hostname",
@@ -1207,6 +1217,7 @@
       "omarchy-system-sddm-recover",
       "omarchy-system-sleep-facetimehd",
       "omarchy-theme-bg-boot-intro",
+      "omarchy-theme-bg-generate",
       "omarchy-theme-bg-intro",
       "omarchy-theme-icon-palette",
       "omarchy-theme-set-fcitx5",
@@ -1365,7 +1376,7 @@
         "fields": {
           "args": [
             "[pi|omp|opencode|claude|codex|grok|gemini|openclaw|hermes|copilot|crush|cursor-agent|muse]",
-            "[local|pi|omp|opencode|ori|claude|codex|grok|openclaw|agy|hermes|copilot|crush|cursor-agent|muse|kimi|qwen|dsh|mcode|kiro-cli|freebuff|kilo|devin|amp|commandcode]"
+            "[local|pi|omp|opencode|ori|claude|codex|grok|openclaw|agy|hermes|copilot|crush|cursor-agent|muse|kimi|qwen|dsh|mcode|freebuff|kilo|devin|amp]"
           ],
           "examples": [
             [
@@ -1434,15 +1445,6 @@
           ]
         },
         "name": "omarchy-drive-password"
-      },
-      {
-        "fields": {
-          "args": [
-            "[--force] [--no-rebuild]",
-            "[--force] [--no-rebuild] [--experimental]"
-          ]
-        },
-        "name": "omarchy-hibernation-setup"
       },
       {
         "fields": {
@@ -1710,6 +1712,19 @@
           ]
         },
         "name": "omarchy-menu-select"
+      },
+      {
+        "fields": {
+          "hidden": [
+            false,
+            true
+          ],
+          "summary": [
+            "Install a small mise-backed wrapper for a given tool.",
+            "Retire a mise wrapper an older Omarchy release left in ~/.local/bin"
+          ]
+        },
+        "name": "omarchy-mise-install"
       },
       {
         "fields": {
@@ -1994,11 +2009,11 @@
       }
     ],
     "counts": {
-      "added": 198,
+      "added": 209,
       "changed": 61,
       "from": 444,
       "removed": 11,
-      "to": 631
+      "to": 642
     },
     "removed": [
       "omarchy-install-chromium-google-account",
@@ -2089,11 +2104,47 @@
       "appearance.workspace-layout.dwindle",
       "appearance.workspace-layout.floating",
       "appearance.workspace-layout.scrolling",
-      "install.ai.amp",
-      "install.ai.antigravity",
-      "install.ai.claude",
-      "install.ai.herdr",
+      "install.ai.cli",
+      "install.ai.cli.amp",
+      "install.ai.cli.antigravity",
+      "install.ai.cli.claude",
+      "install.ai.cli.codex",
+      "install.ai.cli.copilot",
+      "install.ai.cli.crush",
+      "install.ai.cli.cursor",
+      "install.ai.cli.deepseek",
+      "install.ai.cli.devin",
+      "install.ai.cli.freebuff",
+      "install.ai.cli.grok",
+      "install.ai.cli.kilo",
+      "install.ai.cli.kimi",
+      "install.ai.cli.minimax",
+      "install.ai.cli.muse",
+      "install.ai.cli.oh-my-pi",
+      "install.ai.cli.ollama",
+      "install.ai.cli.opencode",
+      "install.ai.cli.ori",
+      "install.ai.cli.qwen",
+      "install.ai.desktop",
+      "install.ai.desktop.amp",
+      "install.ai.desktop.antigravity",
+      "install.ai.desktop.chatgpt",
+      "install.ai.desktop.claude",
+      "install.ai.desktop.grok-bot",
+      "install.ai.desktop.herdr",
+      "install.ai.desktop.hermes",
+      "install.ai.desktop.lm-studio",
+      "install.ai.desktop.openclaw",
+      "install.ai.desktop.opencode",
+      "install.ai.desktop.perplexity",
+      "install.ai.desktop.t3-code",
       "install.browser.chromium",
+      "install.cli",
+      "install.cli.basecamp",
+      "install.cli.cloudflare",
+      "install.cli.github",
+      "install.cli.hey",
+      "install.cli.hunk",
       "install.gaming.moonlight",
       "install.gaming.vibes",
       "install.service.dingtalk",
@@ -2102,14 +2153,46 @@
       "install.service.slack",
       "install.service.wechat",
       "install.style.icons",
-      "remove.ai.amp",
-      "remove.ai.antigravity",
-      "remove.ai.chatgpt",
-      "remove.ai.claude",
-      "remove.ai.grok-bot",
-      "remove.ai.lm-studio",
-      "remove.ai.ollama",
+      "remove.ai.cli",
+      "remove.ai.cli.amp",
+      "remove.ai.cli.antigravity",
+      "remove.ai.cli.claude",
+      "remove.ai.cli.codex",
+      "remove.ai.cli.copilot",
+      "remove.ai.cli.crush",
+      "remove.ai.cli.cursor",
+      "remove.ai.cli.deepseek",
+      "remove.ai.cli.devin",
+      "remove.ai.cli.freebuff",
+      "remove.ai.cli.grok",
+      "remove.ai.cli.kilo",
+      "remove.ai.cli.kimi",
+      "remove.ai.cli.minimax",
+      "remove.ai.cli.muse",
+      "remove.ai.cli.oh-my-pi",
+      "remove.ai.cli.ollama",
+      "remove.ai.cli.opencode",
+      "remove.ai.cli.ori",
+      "remove.ai.cli.qwen",
+      "remove.ai.desktop",
+      "remove.ai.desktop.amp",
+      "remove.ai.desktop.antigravity",
+      "remove.ai.desktop.chatgpt",
+      "remove.ai.desktop.claude",
+      "remove.ai.desktop.grok-bot",
+      "remove.ai.desktop.hermes",
+      "remove.ai.desktop.lm-studio",
+      "remove.ai.desktop.openclaw",
+      "remove.ai.desktop.opencode",
+      "remove.ai.desktop.perplexity",
+      "remove.ai.desktop.t3-code",
       "remove.browser.chromium",
+      "remove.cli",
+      "remove.cli.basecamp",
+      "remove.cli.cloudflare",
+      "remove.cli.github",
+      "remove.cli.hey",
+      "remove.cli.hunk",
       "remove.dictation.hex",
       "remove.dictation.superwhisper",
       "remove.dictation.voxtype",
@@ -2173,78 +2256,6 @@
           ]
         },
         "id": "apps"
-      },
-      {
-        "fields": {
-          "when": [
-            "! omarchy-pkg-present openai-codex-desktop",
-            "omarchy-region-global"
-          ]
-        },
-        "id": "install.ai.chatgpt"
-      },
-      {
-        "fields": {
-          "when": [
-            "! omarchy-pkg-present grok-bot",
-            "omarchy-region-global"
-          ]
-        },
-        "id": "install.ai.grok-bot"
-      },
-      {
-        "fields": {
-          "when": [
-            "! omarchy-pkg-present hermes-desktop",
-            null
-          ]
-        },
-        "id": "install.ai.hermes"
-      },
-      {
-        "fields": {
-          "when": [
-            "! omarchy-pkg-present lmstudio-bin",
-            null
-          ]
-        },
-        "id": "install.ai.lm-studio"
-      },
-      {
-        "fields": {
-          "when": [
-            "! omarchy-cmd-present ollama",
-            null
-          ]
-        },
-        "id": "install.ai.ollama"
-      },
-      {
-        "fields": {
-          "when": [
-            "! omarchy-pkg-present openclaw",
-            null
-          ]
-        },
-        "id": "install.ai.openclaw"
-      },
-      {
-        "fields": {
-          "when": [
-            "! omarchy-pkg-present perplexity",
-            "omarchy-region-global"
-          ]
-        },
-        "id": "install.ai.perplexity"
-      },
-      {
-        "fields": {
-          "when": [
-            "! omarchy-pkg-present t3code-bin",
-            null
-          ]
-        },
-        "id": "install.ai.t3-code"
       },
       {
         "fields": {
@@ -2753,15 +2764,6 @@
       {
         "fields": {
           "when": [
-            "omarchy-pkg-present t3code-bin",
-            "[[ -f \"$HOME/.local/share/t3code/T3-Code.AppImage\" ]] || omarchy-pkg-present t3code-bin || omarchy-pkg-present t3code-nightly-bin"
-          ]
-        },
-        "id": "remove.ai.t3-code"
-      },
-      {
-        "fields": {
-          "when": [
             "[[ -x $HOME/.config/composer/vendor/bin/laravel ]]",
             "[[ -x $HOME/.local/bin/laravel || -x $HOME/.config/composer/vendor/bin/laravel ]]"
           ]
@@ -3093,17 +3095,29 @@
       }
     ],
     "counts": {
-      "added": 146,
-      "changed": 102,
+      "added": 214,
+      "changed": 93,
       "from": 333,
-      "removed": 61,
-      "to": 418
+      "removed": 73,
+      "to": 474
     },
     "removed": [
       "about",
+      "install.ai.chatgpt",
       "install.ai.dictation",
+      "install.ai.grok-bot",
+      "install.ai.hermes",
+      "install.ai.lm-studio",
+      "install.ai.ollama",
+      "install.ai.openclaw",
+      "install.ai.perplexity",
+      "install.ai.t3-code",
       "install.service.chromium-account",
       "install.service.spotify",
+      "remove.ai.hermes",
+      "remove.ai.openclaw",
+      "remove.ai.perplexity",
+      "remove.ai.t3-code",
       "setup.default.agent",
       "setup.default.agent.claude",
       "setup.default.agent.codex",
@@ -3166,9 +3180,9 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 225,
+      "new": 234,
       "removed": 0,
-      "to": 331
+      "to": 340
     },
     "new": [
       {
@@ -3822,11 +3836,6 @@
         "file": "1793836476.sh"
       },
       {
-        "date": "2026-11-05T03:24:37Z",
-        "description": "Disable the HP ZBook Ultra G3a's phantom USB port that stalls the fingerprint reader",
-        "file": "1793849077.sh"
-      },
-      {
         "date": "2026-11-05T05:02:13Z",
         "description": "Show the disk unlock prompt on Snapdragon X2 machines by loading their USB-C display drivers early",
         "file": "1793854933.sh"
@@ -3955,6 +3964,11 @@
         "date": "2026-11-11T21:25:05Z",
         "description": "Give the Acer Aspire 16 AI (A16-11M) working speakers and microphones",
         "file": "1794432305.sh"
+      },
+      {
+        "date": "2026-11-12T08:42:44Z",
+        "description": "Keep Papers and xdg-user-dirs through orphan cleanup",
+        "file": "1794472964.sh"
       },
       {
         "date": "2026-11-12T11:13:19Z",
@@ -4282,6 +4296,11 @@
         "file": "1795430592.sh"
       },
       {
+        "date": "2026-11-23T13:43:03Z",
+        "description": "Install coding agents and CLI tools as packages instead of mise tools",
+        "file": "1795441383.sh"
+      },
+      {
         "date": "2026-11-23T13:46:23Z",
         "description": "Pre-generate shutdown-ramfs after boot for faster shutdown",
         "file": "1795441583.sh"
@@ -4292,9 +4311,49 @@
         "file": "1795450903.sh"
       },
       {
+        "date": "2026-11-24T08:04:30Z",
+        "description": "Leave Firefox and Zen updates to pacman instead of their own updater",
+        "file": "1795507470.sh"
+      },
+      {
         "date": "2026-11-24T08:45:04Z",
         "description": "Cap zram at 8 GiB with lzo-rle and prefer dropping page cache over swapping desktop apps",
         "file": "1795509904.sh"
+      },
+      {
+        "date": "2026-11-24T16:47:45Z",
+        "description": "Protect desktop session slice from swap-out and CPU starvation",
+        "file": "1795538865.sh"
+      },
+      {
+        "date": "2026-11-24T20:15:25Z",
+        "description": "Re-enable the HP ZBook Ultra G3a's internal Bluetooth USB port",
+        "file": "1795551325.sh"
+      },
+      {
+        "date": "2026-11-25T01:40:20Z",
+        "description": "Stop the DSPs and Wi-Fi around hibernation on every Snapdragon X1 laptop, not only the Yoga Slim 7x",
+        "file": "1795570820.sh"
+      },
+      {
+        "date": "2026-11-25T10:02:48Z",
+        "description": "Isolate local AI models in their own low-priority slice",
+        "file": "1795600968.sh"
+      },
+      {
+        "date": "2026-11-25T10:26:16Z",
+        "description": "Offer to switch the default browser from Chromium to Google Chrome",
+        "file": "1795602376.sh"
+      },
+      {
+        "date": "2026-11-25T10:53:41Z",
+        "description": "Install dell-xps-touchpad-haptics on Dell XPS systems with the N1x Synaptics haptic touchpad",
+        "file": "1795604021.sh"
+      },
+      {
+        "date": "2026-11-25T13:33:53Z",
+        "description": "Enable speaker tuning for the Dell XPS 16 (DX16263, N1x)",
+        "file": "1795613633.sh"
       }
     ],
     "removed": []

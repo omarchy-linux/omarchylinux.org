@@ -1,5 +1,5 @@
 {
-  "count": 331,
+  "count": 340,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -3554,12 +3554,12 @@
       ]
     },
     {
-      "body": "echo \"Build the lazy shims for the newly declared default coding agents\"\n\n# The settings package ships the declarations for Qwen Code, DeepSeek Harness,\n# MiniMax Code, Kiro CLI, Freebuff, Kilo, Devin CLI, Amp, and Command Code.\n# Until it has, stay pending so the shims are built once they arrive.\nif ! omarchy-mise-default-tools list | grep -qxF qwen; then\n  echo \"Waiting for the omarchy-settings package that declares the new coding agents\" >&2\n  exit 75\nfi\n\n# A user who removed the preinstalls skips Omarchy's declarations, so there is\n# nothing to build for them.\nif omarchy-mise-default-tools declares qwen; then\n  mise reshim --system\nfi",
+      "body": "echo \"Build the lazy shims for the newly declared default coding agents\"\n\n# The settings package ships the declarations for Qwen Code, DeepSeek Harness,\n# MiniMax Code, Kiro CLI, Freebuff, Kilo, Devin CLI, Amp, and Command Code.\n# Until it has, stay pending so the shims are built once they arrive. A\n# settings package that declares no tools at all is newer still: the agents\n# became packages, and there is nothing to build.\ntools=$(omarchy-mise-default-tools list)\n[[ -n $tools ]] || exit 0\nif ! grep -qxF qwen <<<\"$tools\"; then\n  echo \"Waiting for the omarchy-settings package that declares the new coding agents\" >&2\n  exit 75\nfi\n\n# A user who removed the preinstalls skips Omarchy's declarations, so there is\n# nothing to build for them.\nif omarchy-mise-default-tools declares qwen; then\n  mise reshim --system\nfi",
       "bodyTruncated": false,
       "date": "2026-10-20T13:51:35Z",
       "description": "Build the lazy shims for the newly declared default coding agents",
       "file": "1792504295.sh",
-      "lineCount": 15,
+      "lineCount": 19,
       "packagesAdded": [],
       "packagesRemoved": [],
       "path": "migrations/1792504295.sh",
@@ -4009,20 +4009,6 @@
       "touches": []
     },
     {
-      "body": "echo \"Disable the HP ZBook Ultra G3a's phantom USB port that stalls the fingerprint reader\"\n\n# The udev rule now ships in omarchy-settings and runs on every boot. Trigger\n# the root hubs once so the port goes quiet without waiting for a reboot.\nif omarchy-hw-match \"ZBook Ultra G3a\"; then\n  sudo udevadm control --reload\n  sudo udevadm trigger --action=add --subsystem-match=usb --sysname-match='*-0:1.0'\n  sudo udevadm settle\nfi",
-      "bodyTruncated": false,
-      "date": "2026-11-05T03:24:37Z",
-      "description": "Disable the HP ZBook Ultra G3a's phantom USB port that stalls the fingerprint reader",
-      "file": "1793849077.sh",
-      "lineCount": 9,
-      "packagesAdded": [],
-      "packagesRemoved": [],
-      "path": "migrations/1793849077.sh",
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1793849077.sh",
-      "timestamp": 1793849077,
-      "touches": []
-    },
-    {
       "body": "echo \"Show the disk unlock prompt on Snapdragon X2 machines by loading their USB-C display drivers early\"\n\n# See install/hardware/qualcomm/glymur-display.sh.\nrebuild_marker=\"${OMARCHY_LIMINE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1793854933}\"\n\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match-device-tree qcom,glymur; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n  source \"$OMARCHY_PATH/install/hardware/qualcomm/glymur-display.sh\"\n'\n\n# A marker records the machine-wide rebuild: another user's run must not repeat\n# it, while a missing marker still retries an interrupted rebuild.\nif [[ ! -e $rebuild_marker ]]; then\n  rebuild_log=$(mktemp)\n  trap 'rm -f \"$rebuild_log\"' EXIT\n  sudo limine-mkinitcpio 2>&1 | tee \"$rebuild_log\"\n\n  # limine-mkinitcpio reports a kernel it could not rebuild and still exits 0.\n  # That image lacks the display drivers, so the migration stays pending.\n  if grep -q 'mkinitcpio failed for kernel' \"$rebuild_log\"; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n    exit 1\n  fi\n\n  sudo install -Dm644 /dev/null \"$rebuild_marker\"\nfi\n\nomarchy-state set reboot-required",
       "bodyTruncated": false,
       "date": "2026-11-05T05:02:13Z",
@@ -4207,12 +4193,12 @@
       ]
     },
     {
-      "body": "echo \"Replace Nautilus with Files as the file manager\"\n\nomarchy-pkg-add folio\n\n# The packaged mimeapps.list now names Files, but a personal one in ~/.config\n# still wins, so point any Nautilus association there at Files too.\nuser_mimeapps=\"$HOME/.config/mimeapps.list\"\nif [[ -f $user_mimeapps ]] && grep -q \"org.gnome.Nautilus.desktop\" \"$user_mimeapps\"; then\n  sed --follow-symlinks -i 's/org\\.gnome\\.Nautilus\\.desktop/folio.desktop/g' \"$user_mimeapps\"\nfi\n\n# A dock that still pins Nautilus pins Files instead.\nshell_json=\"$HOME/.config/omarchy/shell.json\"\nif [[ -f $shell_json ]] && grep -q '\"org.gnome.Nautilus\"' \"$shell_json\"; then\n  sed --follow-symlinks -i 's/\"org\\.gnome\\.Nautilus\"/\"folio\"/' \"$shell_json\"\nfi\n\n# Nautilus goes, with its extensions and its previewer. nautilus-dropbox\n# depends on it, so it goes too. Only these: removing their dependencies as\n# well (pacman -s) would take whatever arrived with them first, which on some\n# installs is Papers and xdg-user-dirs, both Omarchy defaults.\nnautilus_packages=()\nfor package_name in nautilus nautilus-python nautilus-dropbox sushi; do\n  pacman -Qq \"$package_name\" &>/dev/null && nautilus_packages+=(\"$package_name\")\ndone\nif ((${#nautilus_packages[@]})); then\n  sudo pacman -Rn --noconfirm \"${nautilus_packages[@]}\"\nfi",
-      "bodyTruncated": false,
+      "body": "echo \"Replace Nautilus with Files as the file manager\"\n\n# Nautilus goes, with its extensions and its previewer. nautilus-dropbox\n# depends on it, so it goes too. Only these: removing their dependencies as\n# well (pacman -s) would take whatever arrived with them first, which on some\n# installs is Papers and xdg-user-dirs, both Omarchy defaults. pacman -Qq names\n# the installed package, which is a replacement like nautilus-typeahead where\n# one provides nautilus.\nnautilus_packages=()\nfor package_name in nautilus nautilus-python nautilus-dropbox sushi; do\n  installed=$(pacman -Qq \"$package_name\" 2>/dev/null) && nautilus_packages+=(\"$installed\")\ndone\n\n# Extensions installed on top, like nautilus-open-any-terminal and\n# ghostty-nautilus, need these too, so they go with them. Anything else that\n# needs Nautilus, like GNOME's xdg-desktop-portal-gnome, keeps it, and Files\n# stays out: both own org.freedesktop.FileManager1.service.\nremoving=()\nneeded_by=\"\"\nif (( ${#nautilus_packages[@]} )); then\n  removal=$(pacman -Rc --print --print-format %n \"${nautilus_packages[@]}\")\n  mapfile -t removing <<<\"$removal\"\n  needed_by=$(printf '%s\\n' \"${removing[@]}\" | grep -v -e nautilus -e '^sushi$' || true)\nfi\n\nif [[ -n $needed_by ]]; then\n  echo \"Keeping Nautilus as the file manager: ${needed_by//$'\\n'/, } still need it.\"\n  echo \"To switch to Files, remove those, then run: rm ~/.local/state/omarchy/migrations/1794330979.sh && omarchy-migrate\"\n\n  # The packaged mimeapps.list names Files, which can't be installed here, so\n  # folders would open in whatever else claims them. Nautilus opens them,\n  # unless a personal list already says what does: the desktop's own, the\n  # one in ~/.config, or the older one in ~/.local/share.\n  personal_lists=(\n    \"${XDG_CONFIG_HOME:-$HOME/.config}/hyprland-mimeapps.list\"\n    \"${XDG_CONFIG_HOME:-$HOME/.config}/mimeapps.list\"\n    \"${XDG_DATA_HOME:-$HOME/.local/share}/applications/mimeapps.list\"\n  )\n  if ! grep -qs '^inode/directory=' \"${personal_lists[@]}\"; then\n    xdg-mime default org.gnome.Nautilus.desktop inode/directory",
+      "bodyTruncated": true,
       "date": "2026-11-10T17:16:19Z",
       "description": "Replace Nautilus with Files as the file manager",
       "file": "1794330979.sh",
-      "lineCount": 28,
+      "lineCount": 67,
       "packagesAdded": [
         "folio"
       ],
@@ -4221,8 +4207,11 @@
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794330979.sh",
       "timestamp": 1794330979,
       "touches": [
+        "~/.config",
         "~/.config/mimeapps.list",
-        "~/.config/omarchy/shell.json"
+        "~/.config/omarchy/shell.json",
+        "~/.local/share",
+        "~/.local/state/omarchy/migrations/1794330979.sh"
       ]
     },
     {
@@ -4453,6 +4442,23 @@
       "path": "migrations/1794432305.sh",
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794432305.sh",
       "timestamp": 1794432305,
+      "touches": []
+    },
+    {
+      "body": "echo \"Keep Papers and xdg-user-dirs through orphan cleanup\"\n\n# 1794351944 and 1794393156 install these with omarchy-pkg-add, which leaves a\n# package that is already there marked as a dependency. Where xdg-user-dirs had\n# arrived with Nautilus, the same update's orphan cleanup removed it right after\n# the Nautilus migration, and Papers stays only while an optional dependency\n# holds it. Both are base packages, so install what is missing and mark both\n# explicit, as a fresh install has them.\nomarchy-pkg-add papers xdg-user-dirs\n\nmapfile -t dependency_packages < <(pacman -Qqd papers xdg-user-dirs 2>/dev/null)\n\nif (( ${#dependency_packages[@]} )); then\n  sudo pacman -D --asexplicit \"${dependency_packages[@]}\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-12T08:42:44Z",
+      "description": "Keep Papers and xdg-user-dirs through orphan cleanup",
+      "file": "1794472964.sh",
+      "lineCount": 15,
+      "packagesAdded": [
+        "papers",
+        "xdg-user-dirs"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1794472964.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1794472964.sh",
+      "timestamp": 1794472964,
       "touches": []
     },
     {
@@ -5508,6 +5514,28 @@
       ]
     },
     {
+      "body": "echo \"Install coding agents and CLI tools as packages instead of mise tools\"\n\n# The settings package drops every mise declaration. Until it has, stay\n# pending: the declarations would only install the tools through mise again.\nif [[ -n $(omarchy-mise-default-tools list) ]]; then\n  echo \"Waiting for the omarchy-settings package that drops the default mise tools\" >&2\n  exit 75\nfi\n\n# Wrappers older releases wrote in ~/.local/bin run `mise use -g`, and would\n# count as the user's own install of the agent. Only an exact copy goes.\nomarchy-mise-install npm:@moonshot-ai/kimi-code kimi\nomarchy-mise-install cursor-agent\nomarchy-mise-install \"http:muse[url=https://api.meta.ai/muse-launcher.sh,bin=muse,version_list_url=https://api.meta.ai/muse-code/channels/muse-stable,version_json_path=.version]\" muse\n\n# A copy mise installed for Omarchy's declaration goes. One a mise config of\n# the user's own asks for is theirs and stays.\nfrom_omarchy() {\n  mise ls \"$1\" --json 2>/dev/null | jq -e 'length > 0 and all(.[]; .source == null)' >/dev/null\n}\ninstalled_version() {\n  mise ls \"$1\" --json | jq -r 'map(.version) | last'\n}\n\n# Everyone gets these. gh comes with Setup > Git, ghui, Hunk, Basecamp, HEY and\n# Cloudflare from Install > CLI, and each coding agent from Install > AI > CLI,\n# so one of them becomes its package only if it was in use. The lists are read\n# first and installed in one go, with the terminal still on stdin for sudo.\npackages=(nodejs playwright-cli uv)\nretired=(playwright uv)\nwhile read -r tool package; do\n  if from_omarchy \"$tool\"; then\n    packages+=(\"$package\")\n    retired+=(\"$tool\")\n  fi\ndone <<'EOF'\ngh github-cli\nghui ghui\nhunk hunk\nbasecamp basecamp-cli",
+      "bodyTruncated": true,
+      "date": "2026-11-23T13:43:03Z",
+      "description": "Install coding agents and CLI tools as packages instead of mise tools",
+      "file": "1795441383.sh",
+      "lineCount": 123,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795441383.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795441383.sh",
+      "timestamp": 1795441383,
+      "touches": [
+        "/etc/security/pam_env.conf",
+        "/usr/bin",
+        "/usr/local/bin",
+        "/usr/local/sbin",
+        "~/.config/omarchy/defaults/agent",
+        "~/.local/share",
+        "~/.local/share/applications/omarchy-agent-"
+      ]
+    },
+    {
       "body": "echo \"Pre-generate shutdown-ramfs after boot for faster shutdown\"\n\n# New installs enable this in install/config/enable-services.sh. Existing\n# installs wait until omarchy-settings delivers the timer unit.\nif [[ ! -f /etc/systemd/system/omarchy-shutdown-ramfs.timer ]]; then\n  echo \"Waiting for the omarchy-settings package that ships omarchy-shutdown-ramfs.timer\" >&2\n  exit 75\nfi\n\nas_root() {\n  if (( EUID == 0 )); then\n    \"$@\"\n  else\n    sudo \"$@\"\n  fi\n}\n\nif ! systemctl is-enabled --quiet omarchy-shutdown-ramfs.timer 2>/dev/null; then\n  if ! as_root systemctl enable --now omarchy-shutdown-ramfs.timer; then\n    echo \"Could not enable omarchy-shutdown-ramfs.timer; shutdown-ramfs will keep generating during shutdown.\" >&2\n    exit 1\n  fi\nfi",
       "bodyTruncated": false,
       "date": "2026-11-23T13:46:23Z",
@@ -5540,6 +5568,20 @@
       ]
     },
     {
+      "body": "echo \"Leave Firefox and Zen updates to pacman instead of their own updater\"\n\nsource \"$OMARCHY_PATH/install/helpers/browser-policy.sh\"\n\nfor dir in \"${BROWSER_POLICY_FIREFOX_DIRS[@]}\"; do\n  if browser_policy_firefox_hardened \"$dir\"; then\n    browser_policy_firefox_disable_app_update \"$dir\"\n  fi\ndone",
+      "bodyTruncated": false,
+      "date": "2026-11-24T08:04:30Z",
+      "description": "Leave Firefox and Zen updates to pacman instead of their own updater",
+      "file": "1795507470.sh",
+      "lineCount": 9,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795507470.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795507470.sh",
+      "timestamp": 1795507470,
+      "touches": []
+    },
+    {
       "body": "echo \"Cap zram at 8 GiB with lzo-rle and prefer dropping page cache over swapping desktop apps\"\n\n# Wait until omarchy-settings delivers the updated vendor drop-in and sysctl file.\nzram_dropin=/usr/lib/systemd/zram-generator.conf.d/90-omarchy.conf\nif [[ ! -f $zram_dropin ]] || ! grep -q '^compression-algorithm = lzo-rle$' \"$zram_dropin\"; then\n  echo \"Waiting for the omarchy-settings package that ships the updated zram and reclaim tuning\" >&2\n  exit 75\nfi\n\n# Skip privileged work when another user or a reboot already applied the tuning.\nzram_ready=1\nif [[ -r /sys/block/zram0/comp_algorithm && -r /sys/block/zram0/disksize ]]; then\n  zram_algo=$(< /sys/block/zram0/comp_algorithm)\n  zram_size=$(< /sys/block/zram0/disksize)\n  half_ram=$(awk '$1 == \"MemTotal:\" {print $2 * 512}' /proc/meminfo)\n  max_zram=$(( half_ram < 8589934592 ? half_ram : 8589934592 ))\n  if [[ $zram_algo != *\"[lzo-rle]\"* ]] || (( zram_size > max_zram + 16777216 )); then\n    zram_ready=0\n  fi\nfi\n\ncur_swappiness=$(sysctl -n vm.swappiness)\ncur_vfs_pressure=$(sysctl -n vm.vfs_cache_pressure)\n\nif [[ $cur_swappiness == \"1\" && $cur_vfs_pressure != \"50\" ]] && (( zram_ready == 1 )); then\n  exit 0\nfi\n\n# Apply only the two sysctl keys this update changes so later drop-ins (such as\n# zz-omarchy-gb10-memory.conf) keep their live values. Fail if sudo or sysctl\n# fails so the migration stays pending instead of being marked complete.\nsysctl_updates=()\nif [[ $cur_swappiness != \"1\" ]]; then\n  sysctl_updates+=(vm.swappiness=1)\nfi\nif [[ $cur_vfs_pressure == \"50\" ]]; then\n  sysctl_updates+=(vm.vfs_cache_pressure=100)\nfi\nif (( ${#sysctl_updates[@]} > 0 )); then\n  sudo sysctl -q -w \"${sysctl_updates[@]}\"",
       "bodyTruncated": true,
       "date": "2026-11-24T08:45:04Z",
@@ -5554,6 +5596,120 @@
       "touches": [
         "/usr/lib/systemd/zram-generator.conf.d/90-omarchy.conf"
       ]
+    },
+    {
+      "body": "echo \"Protect desktop session slice from swap-out and CPU starvation\"\n\ndrop_in=/etc/systemd/user/session.slice.d/10-omarchy.conf\nif [[ ! -f $drop_in ]]; then\n  echo \"Waiting for the omarchy-settings package that ships $drop_in\" >&2\n  exit 75\nfi\n\nif systemctl --user show-environment >/dev/null 2>&1; then\n  systemctl --user daemon-reload\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-24T16:47:45Z",
+      "description": "Protect desktop session slice from swap-out and CPU starvation",
+      "file": "1795538865.sh",
+      "lineCount": 11,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795538865.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795538865.sh",
+      "timestamp": 1795538865,
+      "touches": [
+        "/etc/systemd/user/session.slice.d/10-omarchy.conf"
+      ]
+    },
+    {
+      "body": "echo \"Re-enable the HP ZBook Ultra G3a's internal Bluetooth USB port\"\n\n# The removed 60-omarchy-hp-zbook-ultra-g3a-usb.rules mistook the warm-reboot\n# wedged MediaTek MT7925 Bluetooth adapter on port 5 for a phantom device.\n# Warm-reboot teardown is now handled by omarchy-mt7925-bluetooth-shutdown.service.\nif ! omarchy-hw-match \"ZBook Ultra G3a\"; then\n  exit 0\nfi\n\nrule=/etc/udev/rules.d/60-omarchy-hp-zbook-ultra-g3a-usb.rules\nif [[ -e $rule ]]; then\n  echo \"Waiting for the omarchy-settings package that removes $rule\" >&2\n  exit 75\nfi\n\nshopt -s nullglob\ndisabled_ports=()\nfor pci in /sys/bus/pci/devices/*; do\n  [[ -r $pci/vendor && -r $pci/device ]] || continue\n  [[ $(<\"$pci/vendor\") == \"0x1022\" && $(<\"$pci/device\") == \"0x1588\" ]] || continue\n  for port in \"$pci\"/usb*/*-0:1.0/usb*-port5; do\n    if [[ -r $port/disable && $(<\"$port/disable\") == \"1\" ]]; then\n      disabled_ports+=(\"$port\")\n    fi\n  done\ndone\n\nif (( ${#disabled_ports[@]} == 0 )); then\n  exit 0\nfi\n\nsudo udevadm control --reload\nfor port in \"${disabled_ports[@]}\"; do\n  printf '0\\n' | sudo tee \"$port/disable\" >/dev/null\ndone",
+      "bodyTruncated": false,
+      "date": "2026-11-24T20:15:25Z",
+      "description": "Re-enable the HP ZBook Ultra G3a's internal Bluetooth USB port",
+      "file": "1795551325.sh",
+      "lineCount": 35,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795551325.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795551325.sh",
+      "timestamp": 1795551325,
+      "touches": [
+        "/etc/udev/rules.d/60-omarchy-hp-zbook-ultra-g3a-usb.rules"
+      ]
+    },
+    {
+      "body": "echo \"Stop the DSPs and Wi-Fi around hibernation on every Snapdragon X1 laptop, not only the Yoga Slim 7x\"\n\nomarchy-hw-aarch64-qualcomm && omarchy-hw-match-device-tree qcom,x1e80100 qcom,x1p42100 || exit 0\n\nunit=/etc/systemd/system/omarchy-qualcomm-hibernate.service\nhook=/usr/lib/systemd/system-sleep/omarchy-qualcomm-hibernate-recover\n\n# Set up means the unit, enabled, and the hook that stops it after a failed\n# hibernation. A run that stopped half way does the rest on the next try.\nset_up() {\n  [[ -f $unit && -x $hook ]] && systemctl is-enabled --quiet omarchy-qualcomm-hibernate.service\n}\n\nif set_up && [[ ! -e /etc/systemd/system/yoga-slim7x-hibernate.service ]]; then\n  exit 0\nfi\n\n# The hook comes with omarchy-settings, which can land after this package.\n# Until it has, this stays pending.\nif [[ ! -f $OMARCHY_PATH/default/systemd/system-sleep/omarchy-qualcomm-hibernate-recover ]]; then\n  echo \"Waiting for the omarchy-settings package that ships the Snapdragon X1 hibernation hook\" >&2\n  exit 75\nfi\n\n# The Yoga Slim 7x had a unit of its own, which the family's replaces.\nif [[ -e /etc/systemd/system/yoga-slim7x-hibernate.service ]]; then\n  sudo systemctl disable yoga-slim7x-hibernate.service\n  sudo rm -f /etc/systemd/system/yoga-slim7x-hibernate.service /usr/lib/systemd/system-sleep/yoga-slim7x-hibernate-recover\nfi\n\n# Under errexit, as the installer runs it, so a failed step stops here.\nsudo OMARCHY_PATH=\"$OMARCHY_PATH\" bash -e \"$OMARCHY_PATH/install/hardware/qualcomm/hibernation.sh\"\nsudo systemctl daemon-reload\n\nif ! set_up; then\n  echo \"The Snapdragon X1 hibernation unit isn't fully set up yet\" >&2\n  exit 1\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-25T01:40:20Z",
+      "description": "Stop the DSPs and Wi-Fi around hibernation on every Snapdragon X1 laptop, not only the Yoga Slim 7x",
+      "file": "1795570820.sh",
+      "lineCount": 38,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795570820.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795570820.sh",
+      "timestamp": 1795570820,
+      "touches": [
+        "/etc/systemd/system/omarchy-qualcomm-hibernate.service",
+        "/etc/systemd/system/yoga-slim7x-hibernate.service",
+        "/usr/lib/systemd/system-sleep/omarchy-qualcomm-hibernate-recover",
+        "/usr/lib/systemd/system-sleep/yoga-slim7x-hibernate-recover"
+      ]
+    },
+    {
+      "body": "echo \"Isolate local AI models in their own low-priority slice\"\n\nslice_unit=/etc/systemd/user/app-models.slice\ndrop_in=/etc/systemd/user/omarchy-agent-local-model-.service.d/10-omarchy.conf\nif [[ ! -f $slice_unit || ! -f $drop_in ]]; then\n  echo \"Waiting for the omarchy-settings package that ships app-models.slice\" >&2\n  exit 75\nfi\n\nif systemctl --user show-environment >/dev/null 2>&1; then\n  systemctl --user daemon-reload\n\n  # Do not restart running models mid-inference; notify if any are active.\n  running=$(systemctl --user list-units --type=service --state=active,activating --no-legend --plain 'omarchy-agent-local-model-*.service' 2>/dev/null || true)\n  if [[ -n $running ]]; then\n    echo \"Restart any running local AI models to apply the new slice and priorities.\"\n  fi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-25T10:02:48Z",
+      "description": "Isolate local AI models in their own low-priority slice",
+      "file": "1795600968.sh",
+      "lineCount": 18,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795600968.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795600968.sh",
+      "timestamp": 1795600968,
+      "touches": [
+        "/etc/systemd/user/app-models.slice",
+        "/etc/systemd/user/omarchy-agent-local-model-.service.d/10-omarchy.conf"
+      ]
+    },
+    {
+      "body": "echo \"Offer to switch the default browser from Chromium to Google Chrome\"\n\n[[ $(omarchy-cmd-default-browser) == \"chromium.desktop\" ]] || exit 0\n\n# An update from a TTY or SSH has no desktop to show the offer on, so keep it\n# pending for the next graphical login without stopping the update.\nif ! omarchy-default-browser-switch-to-chrome --offer; then\n  echo \"No desktop to offer the switch on yet; it will be offered at the next login\"\n  exit 75\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-25T10:26:16Z",
+      "description": "Offer to switch the default browser from Chromium to Google Chrome",
+      "file": "1795602376.sh",
+      "lineCount": 10,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795602376.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795602376.sh",
+      "timestamp": 1795602376,
+      "touches": []
+    },
+    {
+      "body": "echo \"Install dell-xps-touchpad-haptics on Dell XPS systems with the N1x Synaptics haptic touchpad\"\n\nomarchy-hw-dell-xps-haptic-touchpad || exit 0\nomarchy-pkg-missing dell-xps-touchpad-haptics || exit 0\n\nif ! pacman -Si dell-xps-touchpad-haptics &>/dev/null; then\n  echo \"Waiting for dell-xps-touchpad-haptics to be published for this architecture\" >&2\n  exit 75\nfi\n\nomarchy-pkg-add dell-xps-touchpad-haptics",
+      "bodyTruncated": false,
+      "date": "2026-11-25T10:53:41Z",
+      "description": "Install dell-xps-touchpad-haptics on Dell XPS systems with the N1x Synaptics haptic touchpad",
+      "file": "1795604021.sh",
+      "lineCount": 11,
+      "packagesAdded": [
+        "dell-xps-touchpad-haptics"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1795604021.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795604021.sh",
+      "timestamp": 1795604021,
+      "touches": []
+    },
+    {
+      "body": "echo \"Enable speaker tuning for the Dell XPS 16 (DX16263, N1x)\"\n\nsku=$(cat /sys/class/dmi/id/product_sku 2>/dev/null || true)\nif [[ ${sku,,} != \"0d8e\" ]]; then\n  exit 0\nfi\n\nif [[ ! -r $OMARCHY_PATH/default/audio/tunings/dell-xps-16-n1x/tuning.conf ]]; then\n  echo \"Waiting for omarchy-settings to ship the dell-xps-16-n1x speaker tuning\"\n  exit 75\nfi\n\nomarchy-pkg-add lsp-plugins-lv2\nif ! omarchy-audio-tuning on; then\n  echo \"Speaker tuning not applied yet. After logging in or rebooting, run: omarchy audio tuning on\" >&2\n  exit 1\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-25T13:33:53Z",
+      "description": "Enable speaker tuning for the Dell XPS 16 (DX16263, N1x)",
+      "file": "1795613633.sh",
+      "lineCount": 17,
+      "packagesAdded": [
+        "lsp-plugins-lv2"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1795613633.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795613633.sh",
+      "timestamp": 1795613633,
+      "touches": []
     }
   ],
   "prerelease": true,

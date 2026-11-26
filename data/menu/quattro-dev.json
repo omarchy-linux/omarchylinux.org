@@ -1,5 +1,5 @@
 {
-  "count": 474,
+  "count": 476,
   "flat": [
     {
       "action": null,
@@ -2193,7 +2193,7 @@
       "when": null
     },
     {
-      "action": "omarchy-launch-floating-terminal-with-presentation omarchy-pkg-add-curated github-cli ghui",
+      "action": "omarchy-launch-floating-terminal-with-presentation omarchy-pkg-add-curated github-cli",
       "aliases": [],
       "checked": null,
       "command": null,
@@ -4661,7 +4661,7 @@
       "when": "omarchy-pkg-present cloudflare-cli"
     },
     {
-      "action": "omarchy-launch-floating-terminal-with-presentation omarchy-pkg-drop ghui github-cli",
+      "action": "omarchy-launch-floating-terminal-with-presentation omarchy-pkg-drop github-cli",
       "aliases": [],
       "checked": null,
       "command": null,
@@ -4676,7 +4676,7 @@
       "provider": null,
       "target": null,
       "title": null,
-      "when": "omarchy-pkg-present github-cli || omarchy-pkg-present ghui"
+      "when": "omarchy-pkg-present github-cli"
     },
     {
       "action": "omarchy-launch-floating-terminal-with-presentation omarchy-pkg-drop hey-cli",
@@ -7089,6 +7089,42 @@
       "target": null,
       "title": null,
       "when": null
+    },
+    {
+      "action": null,
+      "aliases": [],
+      "checked": null,
+      "command": null,
+      "declared": true,
+      "depth": 1,
+      "icon": "󰁯",
+      "iconFont": null,
+      "id": "system.snapshots",
+      "kind": "submenu",
+      "label": "Snapshots",
+      "parent": "system",
+      "provider": "snapshots",
+      "target": null,
+      "title": null,
+      "when": "[[ $(omarchy-boot-backend) == systemd-boot ]] && [[ -n $(omarchy-snapshot list) ]]"
+    },
+    {
+      "action": "omarchy-launch-floating-terminal-with-presentation omarchy-snapshot restore",
+      "aliases": [],
+      "checked": null,
+      "command": null,
+      "declared": true,
+      "depth": 2,
+      "icon": "󰦛",
+      "iconFont": null,
+      "id": "system.snapshots.restore",
+      "kind": "action",
+      "label": "Restore This Snapshot",
+      "parent": "system.snapshots",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": "grep -q '/[.]snapshots/[0-9]*/snapshot' /proc/cmdline && [[ $(omarchy-boot-backend) == systemd-boot ]]"
     },
     {
       "action": "systemctl suspend",
@@ -13049,7 +13085,7 @@
               "when": null
             },
             {
-              "action": "omarchy-launch-floating-terminal-with-presentation omarchy-pkg-add-curated github-cli ghui",
+              "action": "omarchy-launch-floating-terminal-with-presentation omarchy-pkg-add-curated github-cli",
               "aliases": [],
               "checked": null,
               "children": [],
@@ -15499,7 +15535,7 @@
               "when": "omarchy-pkg-present cloudflare-cli"
             },
             {
-              "action": "omarchy-launch-floating-terminal-with-presentation omarchy-pkg-drop ghui github-cli",
+              "action": "omarchy-launch-floating-terminal-with-presentation omarchy-pkg-drop github-cli",
               "aliases": [],
               "checked": null,
               "children": [],
@@ -15515,7 +15551,7 @@
               "provider": null,
               "target": null,
               "title": null,
-              "when": "omarchy-pkg-present github-cli || omarchy-pkg-present ghui"
+              "when": "omarchy-pkg-present github-cli"
             },
             {
               "action": "omarchy-launch-floating-terminal-with-presentation omarchy-pkg-drop hey-cli",
@@ -17663,6 +17699,45 @@
           "target": null,
           "title": null,
           "when": null
+        },
+        {
+          "action": null,
+          "aliases": [],
+          "checked": null,
+          "children": [
+            {
+              "action": "omarchy-launch-floating-terminal-with-presentation omarchy-snapshot restore",
+              "aliases": [],
+              "checked": null,
+              "children": [],
+              "command": null,
+              "declared": true,
+              "depth": 2,
+              "icon": "󰦛",
+              "iconFont": null,
+              "id": "system.snapshots.restore",
+              "kind": "action",
+              "label": "Restore This Snapshot",
+              "parent": "system.snapshots",
+              "provider": null,
+              "target": null,
+              "title": null,
+              "when": "grep -q '/[.]snapshots/[0-9]*/snapshot' /proc/cmdline && [[ $(omarchy-boot-backend) == systemd-boot ]]"
+            }
+          ],
+          "command": null,
+          "declared": true,
+          "depth": 1,
+          "icon": "󰁯",
+          "iconFont": null,
+          "id": "system.snapshots",
+          "kind": "submenu",
+          "label": "Snapshots",
+          "parent": "system",
+          "provider": "snapshots",
+          "target": null,
+          "title": null,
+          "when": "[[ $(omarchy-boot-backend) == systemd-boot ]] && [[ -n $(omarchy-snapshot list) ]]"
         },
         {
           "action": "omarchy-system reboot",

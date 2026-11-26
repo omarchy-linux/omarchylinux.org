@@ -1074,6 +1074,12 @@
       "omarchy-apply-n1x-gpu-memory",
       "omarchy-apply-pacman",
       "omarchy-ascii",
+      "omarchy-boot-backend",
+      "omarchy-boot-cmdline",
+      "omarchy-boot-notify",
+      "omarchy-boot-rebuild",
+      "omarchy-boot-switch",
+      "omarchy-boot-sync",
       "omarchy-branding-about-animation",
       "omarchy-branding-about-cpu",
       "omarchy-capture-screenrecording-process",
@@ -1215,6 +1221,7 @@
       "omarchy-system",
       "omarchy-system-lid-inhibit",
       "omarchy-system-sddm-recover",
+      "omarchy-system-sddm-wait-drm",
       "omarchy-system-sleep-facetimehd",
       "omarchy-theme-bg-boot-intro",
       "omarchy-theme-bg-generate",
@@ -1834,6 +1841,27 @@
       {
         "fields": {
           "args": [
+            "<create|restore>",
+            "<create|list|boot NUMBER|restore [NUMBER|backup|--cancel]>"
+          ],
+          "examples": [
+            [],
+            [
+              "omarchy snapshot create",
+              "omarchy snapshot boot 12",
+              "omarchy snapshot restore 12"
+            ]
+          ],
+          "summary": [
+            "Create or restore system snapshots with snapper",
+            "Create, list, boot into or restore system snapshots"
+          ]
+        },
+        "name": "omarchy-snapshot"
+      },
+      {
+        "fields": {
+          "args": [
             "[MINUTES]",
             "[MINUTES|permanent|--active|--disable]"
           ]
@@ -2009,11 +2037,11 @@
       }
     ],
     "counts": {
-      "added": 209,
-      "changed": 61,
+      "added": 216,
+      "changed": 62,
       "from": 444,
       "removed": 11,
-      "to": 642
+      "to": 649
     },
     "removed": [
       "omarchy-install-chromium-google-account",
@@ -2222,6 +2250,8 @@
       "setup.security.ssh-agent",
       "system.about",
       "system.firmware",
+      "system.snapshots",
+      "system.snapshots.restore",
       "trigger.clipboard-history",
       "trigger.hardware.hybrid-gpu-off",
       "trigger.hardware.hybrid-gpu-on",
@@ -3095,11 +3125,11 @@
       }
     ],
     "counts": {
-      "added": 214,
+      "added": 216,
       "changed": 93,
       "from": 333,
       "removed": 73,
-      "to": 474
+      "to": 476
     },
     "removed": [
       "about",
@@ -3180,9 +3210,9 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 234,
+      "new": 237,
       "removed": 0,
-      "to": 340
+      "to": 343
     },
     "new": [
       {
@@ -4354,6 +4384,21 @@
         "date": "2026-11-25T13:33:53Z",
         "description": "Enable speaker tuning for the Dell XPS 16 (DX16263, N1x)",
         "file": "1795613633.sh"
+      },
+      {
+        "date": "2026-11-25T14:59:25Z",
+        "description": "Point git's GitHub credentials at the packaged gh",
+        "file": "1795618765.sh"
+      },
+      {
+        "date": "2026-11-26T11:21:24Z",
+        "description": "Install the ASUS Zenbook A16 (UX3607OA) camera support package",
+        "file": "1795692084.sh"
+      },
+      {
+        "date": "2026-11-26T11:31:00Z",
+        "description": "Update the bar clock as soon as the time or timezone changes",
+        "file": "1795692660.sh"
       }
     ],
     "removed": []

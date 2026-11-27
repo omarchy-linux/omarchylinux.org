@@ -1,5 +1,5 @@
 {
-  "count": 343,
+  "count": 363,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -5755,6 +5755,338 @@
         "/usr/lib/systemd/user/",
         "~/.config"
       ]
+    },
+    {
+      "body": "echo \"Enable speaker tuning for the Flower Sakura (FRANQE0006)\"\n\nsku=$(cat /sys/class/dmi/id/product_sku 2>/dev/null || true)\nif [[ ${sku,,} != \"franqe0006\" ]]; then\n  exit 0\nfi\n\nif [[ ! -r $OMARCHY_PATH/default/audio/tunings/flower-sakura/tuning.conf ]]; then\n  echo \"Waiting for omarchy-settings to ship the flower-sakura speaker tuning\"\n  exit 75\nfi\n\nomarchy-pkg-add lsp-plugins-lv2\n\n# An update from a TTY or SSH has no audio session yet, so keep this migration\n# pending for the next graphical login without failing the update.\nif ! pactl info >/dev/null 2>&1; then\n  echo \"Waiting for an audio session to apply speaker tuning\"\n  exit 75\nfi\n\n# Preserve an existing EasyEffects setup rather than failing updates when\n# omarchy-audio-tuning refuses to coexist with it.\nif pactl list sinks short 2>/dev/null | awk '{print $2}' | grep -qx easyeffects_sink ||\n  pgrep -u \"$(id -u)\" -x easyeffects >/dev/null 2>&1 ||\n  systemctl --user is-active --quiet easyeffects.service 2>/dev/null; then\n  echo \"Skipping automatic speaker tuning while EasyEffects is active. To switch later, stop EasyEffects and run: omarchy audio tuning on\"\n  exit 0\nfi\n\nif ! omarchy-audio-tuning on; then\n  echo \"Speaker tuning not applied yet. After logging in or rebooting, run: omarchy audio tuning on\" >&2\n  exit 1\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-26T12:47:48Z",
+      "description": "Enable speaker tuning for the Flower Sakura (FRANQE0006)",
+      "file": "1795697268.sh",
+      "lineCount": 34,
+      "packagesAdded": [
+        "lsp-plugins-lv2"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1795697268.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795697268.sh",
+      "timestamp": 1795697268,
+      "touches": []
+    },
+    {
+      "body": "echo \"Install the Anduril BlueChip camera support package\"\n\n# anduril-bluechip-support relays the OV08X40 front camera from libcamera to a\n# regular V4L2/PipeWire webcam (/dev/video50) at 1080p, ships sensor black-level\n# tuning and DMA heap access, and hides raw CAMSS nodes from camera pickers. Its\n# systemd units are enabled by the package and start on the next boot.\nif omarchy-hw-aarch64-qualcomm && omarchy-hw-match-device-tree anduril,bluechip; then\n  if omarchy-pkg-missing anduril-bluechip-support; then\n    omarchy-pkg-add anduril-bluechip-support\n    omarchy-state set reboot-required\n  fi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-26T13:05:57Z",
+      "description": "Install the Anduril BlueChip camera support package",
+      "file": "1795698357.sh",
+      "lineCount": 12,
+      "packagesAdded": [
+        "anduril-bluechip-support"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1795698357.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795698357.sh",
+      "timestamp": 1795698357,
+      "touches": []
+    },
+    {
+      "body": "echo \"Update speaker tuning for the ASUS Zenbook A16 (UX3607OA)\"\n\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match \"UX3607OA\"; then\n  exit 0\nfi\n\n# Only refresh an unmodified copy of Omarchy's prior shipped Zenbook A16 tuning\n# (allowing only the substituted target.object sink name to differ) so users who\n# disabled speaker tuning or customized their graph are left untouched.\nconfig_home=\"${XDG_CONFIG_HOME:-$HOME/.config}\"\nhost_config=\"$config_home/pipewire/omarchy-speaker-tuning.conf\"\nfragment=\"$config_home/pipewire/omarchy-speaker-tuning.conf.d/90-tuning.conf\"\nunit_name=omarchy-speaker-tuning.service\nunit=\"$config_home/systemd/user/$unit_name\"\nunit_source=\"$OMARCHY_PATH/default/systemd/user/$unit_name\"\nprior_sha256=\"d53b4108730b129ffafae3a410b95751e75777788aa059d8ed6c35e787fa626d\"\n\nif [[ ! -f $fragment || -L $fragment ]]; then\n  exit 0\nfi\n\ninstalled_sha256=\"$(\n  sed -E 's|^([[:space:]]*target\\.object[[:space:]]*=[[:space:]]*).*|\\1\"@SPEAKER_SINK@\"|' \"$fragment\" |\n    sha256sum | awk '{print $1}'\n)\"\nif [[ $installed_sha256 != \"$prior_sha256\" ]]; then\n  exit 0\nfi\n\nif [[ ! -r $OMARCHY_PATH/default/audio/tunings/asus-zenbook-a16-ux3607oa/filter-chain.conf ]] ||\n  ! grep -q 'weq0_l' \"$OMARCHY_PATH/default/audio/tunings/asus-zenbook-a16-ux3607oa/filter-chain.conf\"; then\n  echo \"Waiting for omarchy-settings to ship the updated asus-zenbook-a16-ux3607oa speaker tuning\"\n  exit 75\nfi\n\n# An update from a TTY or SSH has no audio session yet, so keep this migration\n# pending for the next graphical login without failing the update.\nif ! pactl info >/dev/null 2>&1; then\n  echo \"Waiting for an audio session to apply speaker tuning\"\n  exit 75",
+      "bodyTruncated": true,
+      "date": "2026-11-26T14:43:54Z",
+      "description": "Update speaker tuning for the ASUS Zenbook A16 (UX3607OA)",
+      "file": "1795704234.sh",
+      "lineCount": 81,
+      "packagesAdded": [
+        "lsp-plugins-lv2"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1795704234.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795704234.sh",
+      "timestamp": 1795704234,
+      "touches": [
+        "~/.config"
+      ]
+    },
+    {
+      "body": "echo \"Move Anduril BlueChip camera relay and tunings to userland (omarchy-camera-tuning)\"\n\nif ! omarchy-camera-tuning match >/dev/null 2>&1 || ! omarchy-pkg-present anduril-bluechip-support; then\n  exit 0\nfi\n\n# Stop the legacy system relay/guard units before disabling them: omarchy-update\n# upgrades packages before running migrations, so anduril-bluechip-support 1-7\n# may have already deleted the unit files (making `disable --now` fail before\n# stopping a still-running daemon).\nsudo systemctl stop v4l2-relayd@bluechip.service bluechip-camera-guard.service 2>/dev/null || true\nsudo systemctl disable v4l2-relayd@bluechip.service bluechip-camera-guard.service 2>/dev/null || true\n\n# If an older anduril-bluechip-support (< 1-7) is still installed, mask the\n# legacy units so vendor symlinks and v4l2-relayd's generator cannot restart\n# them on the next boot alongside the userland relay.\npkg_ver=$(pacman -Q anduril-bluechip-support 2>/dev/null | awk '{print $2}')\nif [[ -n $pkg_ver ]] && (( $(vercmp \"$pkg_ver\" 1-7) < 0 )); then\n  sudo systemctl mask v4l2-relayd@bluechip.service bluechip-camera-guard.service 2>/dev/null || true\nfi\nsudo systemctl daemon-reload 2>/dev/null || true\n\n# Carry over any user-customized gamma/contrast/saturation values from the old\n# /etc/v4l2-relayd.d/bluechip.conf (or its .pacsave) into ~/.config/omarchy/camera.conf.\noverride_file=\"${XDG_CONFIG_HOME:-$HOME/.config}/omarchy/camera.conf\"\nif [[ ! -e $override_file ]]; then\n  for legacy in /etc/v4l2-relayd.d/bluechip.conf.pacsave /etc/v4l2-relayd.d/bluechip.conf; do\n    [[ -r $legacy ]] || continue\n    line=$(grep -E '^VIDEOSRC=' \"$legacy\" | head -n1 || true)\n    [[ -n $line ]] || continue\n    overrides=()\n    for key in gamma contrast saturation; do\n      if [[ $line =~ [[:space:]]${key}=([0-9]+(\\.[0-9]+)?) ]]; then\n        overrides+=(\"${key}=${BASH_REMATCH[1]}\")\n      fi\n    done\n    if ((${#overrides[@]})); then\n      mkdir -p \"$(dirname \"$override_file\")\"\n      printf '%s\\n' \"${overrides[@]}\" >\"$override_file\"\n    fi",
+      "bodyTruncated": true,
+      "date": "2026-11-26T15:10:00Z",
+      "description": "Move Anduril BlueChip camera relay and tunings to userland (omarchy-camera-tuning)",
+      "file": "1795705800.sh",
+      "lineCount": 48,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795705800.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795705800.sh",
+      "timestamp": 1795705800,
+      "touches": [
+        "/etc/v4l2-relayd.d/bluechip.conf",
+        "/etc/v4l2-relayd.d/bluechip.conf.pacsave",
+        "~/.config"
+      ]
+    },
+    {
+      "body": "echo \"Add Shure MV7+ microphone panel and hidraw udev rule\"\n\nrule_source=\"$OMARCHY_PATH/default/udev/shure-mv7plus.rules\"\nplugin_manifest=\"$OMARCHY_PATH/shell/plugins/panels/mv7plus/manifest.json\"\nif [[ ! -r $rule_source || ! -r $plugin_manifest ]]; then\n  echo \"Waiting for omarchy to ship the Shure MV7+ panel and udev rule\"\n  exit 75\nfi\n\nrule_target=/etc/udev/rules.d/62-shure-mv7plus.rules\nif [[ ! -f $rule_target ]] || ! cmp -s \"$rule_source\" \"$rule_target\"; then\n  sudo install -Dm644 \"$rule_source\" \"$rule_target\"\n  sudo udevadm control --reload-rules 2>/dev/null || true\n  sudo udevadm trigger --subsystem-match=hidraw 2>/dev/null || true\nfi\n\n# Best-effort rescan and placement, matching other first-party bar widgets.\nomarchy-shell -q shell rescanPlugins 2>/dev/null || true\n\nconfig_file=\"${XDG_CONFIG_HOME:-$HOME/.config}/omarchy/shell.json\"\nif [[ -s $config_file ]] && jq -e '(.disabledPlugins // []) | index(\"omarchy.mv7plus\")' \"$config_file\" >/dev/null 2>&1; then\n  echo \"Shure MV7+ panel is disabled in shell.json; skipping bar placement\"\n  exit 0\nfi\n\nomarchy-bar put omarchy.mv7plus --before omarchy.audio",
+      "bodyTruncated": false,
+      "date": "2026-11-26T16:09:23Z",
+      "description": "Add Shure MV7+ microphone panel and hidraw udev rule",
+      "file": "1795709363.sh",
+      "lineCount": 26,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795709363.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795709363.sh",
+      "timestamp": 1795709363,
+      "touches": [
+        "/etc/udev/rules.d/62-shure-mv7plus.rules",
+        "~/.config"
+      ]
+    },
+    {
+      "body": "echo \"Stop suspending a docked laptop on external power when its display blinks\"\n\ndropin=/etc/systemd/logind.conf.d/30-lid-external-power.conf\n\n# A dev checkout can run ahead of omarchy-settings: reloading or rebooting\n# before the drop-in lands changes nothing, so stay pending until it does.\nif [[ ! -r $dropin ]]; then\n  echo \"Waiting for omarchy-settings to ship $dropin\"\n  exit 75\nfi\n\n# Reload rather than restart: restarting systemd-logind tears down the session.\nsudo systemctl reload systemd-logind >/dev/null 2>&1 || true\n\n# A reload that left the old lid handling in place only takes effect on reboot.\neffective=$(busctl get-property org.freedesktop.login1 /org/freedesktop/login1 \\\n  org.freedesktop.login1.Manager HandleLidSwitchExternalPower 2>/dev/null || true)\n\nif [[ $effective != 's \"ignore\"' ]]; then\n  omarchy-state set reboot-required\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-26T18:50:18Z",
+      "description": "Stop suspending a docked laptop on external power when its display blinks",
+      "file": "1795719018.sh",
+      "lineCount": 21,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795719018.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795719018.sh",
+      "timestamp": 1795719018,
+      "touches": [
+        "/etc/systemd/logind.conf.d/30-lid-external-power.conf"
+      ]
+    },
+    {
+      "body": "echo \"Enable Panel Self Refresh on the ASUS Zenbook A16 (UX3607OA)\"\n\n# See install/hardware/asus/fix-asus-zenbook-a16-boot.sh. Adds msm.psr_enabled=1\n# to the zenbook-a16 boot drop-in and rebuilds the boot image once per machine.\nrebuild_marker=\"${OMARCHY_LIMINE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1795725833}\"\n\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match \"UX3607OA\"; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n  source \"$OMARCHY_PATH/install/hardware/asus/fix-asus-zenbook-a16-boot.sh\"\n'\n\nif [[ ! -e $rebuild_marker ]]; then\n  if ! sudo omarchy-boot-rebuild; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n    exit 1\n  fi\n\n  sudo install -Dm644 /dev/null \"$rebuild_marker\"\n  omarchy-state set reboot-required\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-26T20:43:53Z",
+      "description": "Enable Panel Self Refresh on the ASUS Zenbook A16 (UX3607OA)",
+      "file": "1795725833.sh",
+      "lineCount": 23,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795725833.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795725833.sh",
+      "timestamp": 1795725833,
+      "touches": [
+        "/var/lib/omarchy/migrations/1795725833"
+      ]
+    },
+    {
+      "body": "echo \"Enable Wi-Fi power save on the ASUS Zenbook A16 (UX3607OA)\"\n\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match \"UX3607OA\"; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n  source \"$OMARCHY_PATH/install/hardware/asus/fix-asus-zenbook-a16-wifi.sh\"\n  nmcli general reload conf >/dev/null 2>&1 || true\n\n  # NetworkManager only applies wifi.powersave when a connection activates, so\n  # also enable it directly for the running session unless the active profile\n  # explicitly overrides 802-11-wireless.powersave (1=ignore, 2=disable).\n  shopt -s nullglob\n  for wireless in /sys/class/net/*/wireless; do\n    iface=$(basename \"$(dirname \"$wireless\")\")\n    conn=$(nmcli -g GENERAL.CONNECTION dev show \"$iface\" 2>/dev/null || true)\n    powersave=\"\"\n    if [[ -n $conn && $conn != \"--\" ]]; then\n      powersave=$(nmcli -g 802-11-wireless.powersave con show \"$conn\" 2>/dev/null || true)\n    fi\n    if [[ -z $powersave || $powersave == 0* || $powersave == 3* || $powersave == \"default\" || $powersave == \"enable\" ]]; then\n      iw dev \"$iface\" set power_save on 2>/dev/null || true\n    fi\n  done\n'",
+      "bodyTruncated": false,
+      "date": "2026-11-26T20:52:21Z",
+      "description": "Enable Wi-Fi power save on the ASUS Zenbook A16 (UX3607OA)",
+      "file": "1795726341.sh",
+      "lineCount": 26,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795726341.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795726341.sh",
+      "timestamp": 1795726341,
+      "touches": []
+    },
+    {
+      "body": "echo \"Point git's retired gh shim credentials at the packaged gh\"\n\n# A user-owned mise gh keeps its shim and must keep its credential helper.\nshim=\"${MISE_SHIMS_DIR:-${MISE_DATA_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/mise}/shims}/gh\"\nshim_pattern=$(printf '%s' \"$shim\" | sed 's/[][\\\\.^$*+?(){}|]/\\\\&/g')\nstale=\"(/mise/shims/gh|$shim_pattern)([[:space:]\\\"']|$)\"\nif [[ ! -e $shim ]] &&\n  git config --global --get-regexp '^credential\\.https://(github\\.com|gist\\.github\\.com)\\.helper$' 2>/dev/null | grep -qE \"$stale\"; then\n  if omarchy-cmd-present gh && gh auth status >/dev/null 2>&1; then\n    gh auth setup-git\n  else\n    for host in https://github.com https://gist.github.com; do\n      git config --global --unset-all \"credential.$host.helper\" \"$stale\" || (( $? == 5 ))\n    done\n  fi\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-27T01:40:53Z",
+      "description": "Point git's retired gh shim credentials at the packaged gh",
+      "file": "1795743653.sh",
+      "lineCount": 16,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795743653.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795743653.sh",
+      "timestamp": 1795743653,
+      "touches": [
+        "~/.local/share"
+      ]
+    },
+    {
+      "body": "echo \"Enable Intel HWP dynamic boost for snappier I/O wakeups\"\n\nboost=/sys/devices/system/cpu/intel_pstate/hwp_dynamic_boost\ndropin=/etc/tmpfiles.d/omarchy-intel-hwp-boost.conf\n\n[[ -r $boost ]] || exit 0\n\n# A dev checkout can run ahead of omarchy-settings: stay pending until the\n# drop-in lands so the setting persists across reboots too.\nif [[ ! -r $dropin ]]; then\n  echo \"Waiting for omarchy-settings to ship $dropin\"\n  exit 75\nfi\n\ncurrent=$(<\"$boost\")\nif [[ $current == \"1\" ]]; then\n  exit 0\nfi\n\nsudo systemd-tmpfiles --create --boot \"$dropin\"",
+      "bodyTruncated": false,
+      "date": "2026-11-27T05:09:19Z",
+      "description": "Enable Intel HWP dynamic boost for snappier I/O wakeups",
+      "file": "1795756159.sh",
+      "lineCount": 20,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795756159.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795756159.sh",
+      "timestamp": 1795756159,
+      "touches": [
+        "/etc/tmpfiles.d/omarchy-intel-hwp-boost.conf"
+      ]
+    },
+    {
+      "body": "echo \"Keep balanced power profile on balance_performance when on battery\"\n\ndropin=/etc/tmpfiles.d/omarchy-power-profiles.conf\nstate_file=/var/lib/power-profiles-daemon/state.ini\n\n# A dev checkout can run ahead of omarchy-settings: stay pending until the\n# drop-in lands so fresh state resets keep battery_aware=false too.\nif [[ ! -r $dropin ]]; then\n  echo \"Waiting for omarchy-settings to ship $dropin\"\n  exit 75\nfi\n\nif [[ -r $state_file ]] && grep -q '^battery_aware=false$' \"$state_file\"; then\n  exit 0\nfi\n\nwas_active=0\nif systemctl is-active --quiet power-profiles-daemon.service; then\n  was_active=1\n  sudo systemctl stop power-profiles-daemon.service\n  trap 'sudo systemctl start power-profiles-daemon.service || true' EXIT\nfi\n\nif [[ ! -f $state_file ]]; then\n  sudo systemd-tmpfiles --create \"$dropin\"\nelif grep -q '^battery_aware=' \"$state_file\"; then\n  sudo sed -i 's/^battery_aware=.*/battery_aware=false/' \"$state_file\"\nelif grep -q '^\\[State\\]$' \"$state_file\"; then\n  sudo sed -i '/^\\[State\\]$/a battery_aware=false' \"$state_file\"\nelse\n  sudo tee -a \"$state_file\" >/dev/null <<'EOF'\n\n[State]\nbattery_aware=false\nEOF\nfi\n\nif (( was_active )); then\n  trap - EXIT\n  sudo systemctl start power-profiles-daemon.service",
+      "bodyTruncated": true,
+      "date": "2026-11-27T09:13:03Z",
+      "description": "Keep balanced power profile on balance_performance when on battery",
+      "file": "1795770783.sh",
+      "lineCount": 41,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795770783.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795770783.sh",
+      "timestamp": 1795770783,
+      "touches": [
+        "/etc/tmpfiles.d/omarchy-power-profiles.conf",
+        "/var/lib/power-profiles-daemon/state.ini"
+      ]
+    },
+    {
+      "body": "echo \"Install and enable intel-lpmd on Arrow Lake-U and Wildcat Lake Intel laptops\"\n\nif ! omarchy-hw-intel || ! omarchy-battery-present; then\n  exit 0\nfi\n\ncpu_model=$(grep -m1 \"^model\\s*:\" /proc/cpuinfo 2>/dev/null | cut -d: -f2 | tr -d ' ')\nif [[ ! $cpu_model =~ ^(181|213)$ ]]; then\n  exit 0\nfi\n\nomarchy-pkg-add intel-lpmd\n\nif ! systemctl is-enabled --quiet intel_lpmd.service 2>/dev/null ||\n  ! systemctl is-active --quiet intel_lpmd.service 2>/dev/null; then\n  sudo systemctl enable --now intel_lpmd.service\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-27T09:43:40Z",
+      "description": "Install and enable intel-lpmd on Arrow Lake-U and Wildcat Lake Intel laptops",
+      "file": "1795772620.sh",
+      "lineCount": 17,
+      "packagesAdded": [
+        "intel-lpmd"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1795772620.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795772620.sh",
+      "timestamp": 1795772620,
+      "touches": []
+    },
+    {
+      "body": "echo \"Disable NMI watchdog to save power\"\n\nwatchdog=/proc/sys/kernel/nmi_watchdog\ndropin=/etc/sysctl.d/99-omarchy-nmi-watchdog.conf\n\n[[ -r $watchdog ]] || exit 0\n\n# A dev checkout can run ahead of omarchy-settings: stay pending until the\n# drop-in lands so the setting persists across reboots too.\nif [[ ! -r $dropin ]]; then\n  echo \"Waiting for omarchy-settings to ship $dropin\"\n  exit 75\nfi\n\n[[ $(<\"$watchdog\") == \"0\" ]] || sudo /usr/lib/systemd/systemd-sysctl \"$dropin\"",
+      "bodyTruncated": false,
+      "date": "2026-11-27T10:28:20Z",
+      "description": "Disable NMI watchdog to save power",
+      "file": "1795775300.sh",
+      "lineCount": 15,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795775300.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795775300.sh",
+      "timestamp": 1795775300,
+      "touches": [
+        "/etc/sysctl.d/99-omarchy-nmi-watchdog.conf",
+        "/usr/lib/systemd/systemd-sysctl"
+      ]
+    },
+    {
+      "body": "echo \"Enable intel-lpmd dynamic WLT optimization on Meteor Lake laptops\"\n\nif ! omarchy-hw-intel || ! omarchy-battery-present; then\n  exit 0\nfi\n\ncpu_model=$(grep -m1 \"^model\\s*:\" /proc/cpuinfo 2>/dev/null | cut -d: -f2 | tr -d ' ')\n[[ $cpu_model == \"170\" ]] || exit 0\n\nconfig=/etc/intel_lpmd/omarchy-mtl.xml\ndropin=/etc/systemd/system/intel_lpmd.service.d/10-omarchy-mtl.conf\n\n# A dev checkout can run ahead of omarchy-settings: stay pending until the\n# shipped config file lands so the service override points at an existing file.\nif [[ ! -r $config ]]; then\n  echo \"Waiting for omarchy-settings to ship $config\"\n  exit 75\nfi\n\nif [[ -f $dropin ]] && systemctl is-enabled --quiet intel_lpmd.service 2>/dev/null &&\n  systemctl show -p ExecStart --value intel_lpmd.service 2>/dev/null | grep -qF \"$config\"; then\n  if ! systemctl is-active --quiet intel_lpmd.service; then\n    exit 0\n  fi\n  main_pid=$(systemctl show -p MainPID --value intel_lpmd.service 2>/dev/null || true)\n  if [[ -n $main_pid && $main_pid != \"0\" && -r /proc/$main_pid/cmdline ]] &&\n    tr '\\0' ' ' <\"/proc/$main_pid/cmdline\" | grep -qF -- \"-c $config\"; then\n    exit 0\n  fi\nfi\n\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n  source \"$OMARCHY_PATH/install/hardware/intel/lpmd.sh\"\n  systemctl daemon-reload\n  systemctl try-restart intel_lpmd.service\n'",
+      "bodyTruncated": false,
+      "date": "2026-11-27T10:30:00Z",
+      "description": "Enable intel-lpmd dynamic WLT optimization on Meteor Lake laptops",
+      "file": "1795775400.sh",
+      "lineCount": 36,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795775400.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795775400.sh",
+      "timestamp": 1795775400,
+      "touches": [
+        "/etc/intel_lpmd/omarchy-mtl.xml",
+        "/etc/systemd/system/intel_lpmd.service.d/10-omarchy-mtl.conf"
+      ]
+    },
+    {
+      "body": "echo \"Enable Wi-Fi power save on Intel Meteor Lake CNVi Wi-Fi 6E (AX211)\"\n\nif ! omarchy-hw-pci 8086:7e40; then\n  exit 0\nfi\n\nif [[ -f /etc/NetworkManager/conf.d/zz-intel-ax211-wifi-powersave.conf ]]; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n  source \"$OMARCHY_PATH/install/hardware/intel/fix-ax211-wifi-powersave.sh\"\n  nmcli general reload conf >/dev/null 2>&1 || true\n\n  # NetworkManager only applies wifi.powersave when a connection activates, so\n  # also enable it directly for the running session on the matching 8086:7e40\n  # device unless its active profile explicitly overrides 802-11-wireless.powersave\n  # (1=ignore, 2=disable).\n  shopt -s nullglob\n  for device in /sys/bus/pci/devices/*; do\n    [[ -r $device/vendor && -r $device/device ]] || continue\n    vendor=$(<\"$device/vendor\")\n    dev_id=$(<\"$device/device\")\n    [[ ${vendor,,} == \"0x8086\" && ${dev_id,,} == \"0x7e40\" ]] || continue\n\n    for net_dir in \"$device\"/net/*; do\n      [[ -d $net_dir/wireless ]] || continue\n      iface=$(basename \"$net_dir\")\n      uuid=$(nmcli -g GENERAL.CON-UUID dev show \"$iface\" 2>/dev/null || true)\n      powersave=\"\"\n      if [[ -n $uuid && $uuid != \"--\" ]]; then\n        if ! powersave=$(nmcli -g 802-11-wireless.powersave con show uuid \"$uuid\" 2>/dev/null); then\n          continue\n        fi\n      fi\n      if [[ -z $powersave || $powersave == 0* || $powersave == 3* || $powersave == \"default\" || $powersave == \"enable\" ]]; then\n        iw dev \"$iface\" set power_save on 2>/dev/null || true\n      fi\n    done\n  done",
+      "bodyTruncated": true,
+      "date": "2026-11-27T10:31:40Z",
+      "description": "Enable Wi-Fi power save on Intel Meteor Lake CNVi Wi-Fi 6E (AX211)",
+      "file": "1795775500.sh",
+      "lineCount": 41,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795775500.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795775500.sh",
+      "timestamp": 1795775500,
+      "touches": [
+        "/etc/NetworkManager/conf.d/zz-intel-ax211-wifi-powersave.conf"
+      ]
+    },
+    {
+      "body": "echo \"Remove the Image Viewer launcher, now that Omaview has replaced imv\"\n\n# 1794774234 kept a copy the user had changed or linked, but imv went with it,\n# so the launcher goes too, changed or not. Omaview opens those files now.\napplications=\"$HOME/.local/share/applications\"\nrm -f \"$applications/imv.desktop\"\nif [[ -d $applications ]]; then\n  update-desktop-database \"$applications\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-27T10:57:22Z",
+      "description": "Remove the Image Viewer launcher, now that Omaview has replaced imv",
+      "file": "1795777042.sh",
+      "lineCount": 9,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795777042.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795777042.sh",
+      "timestamp": 1795777042,
+      "touches": [
+        "~/.local/share/applications"
+      ]
+    },
+    {
+      "body": "echo \"Enable hardware video decoding and encoding in Chromium-based browsers\"\n\nfeatures=(\n  AcceleratedVideoDecodeLinuxGL\n  AcceleratedVideoDecodeLinuxZeroCopyGL\n  AcceleratedVideoEncoder\n)\n\nfor flags_file in \"$HOME\"/.config/{chromium,chrome,microsoft-edge-stable,brave,brave-origin}-flags.conf; do\n  [[ -f $flags_file ]] || continue\n\n  for feature in \"${features[@]}\"; do\n    args=$(sed -E 's/(^|[[:space:]])#.*$//' \"$flags_file\")\n\n    if grep -Eq -- \"(^|[[:space:]])--enable-features=([^[:space:]]*,)?$feature([,:<[:space:]]|\\$)\" <<<\"$args\"; then\n      continue\n    fi\n\n    if grep -Eq -- '(^|[[:space:]])--enable-features=' <<<\"$args\"; then\n      sed -i --follow-symlinks -E \\\n        -e \"s/^(([^#]*[[:space:]])?--enable-features=[^[:space:]#]*)/\\1,$feature/\" \\\n        -e \"s/--enable-features=,$feature/--enable-features=$feature/\" \"$flags_file\"\n    else\n      if [[ -n $(tail -c1 \"$flags_file\") ]]; then\n        echo >>\"$flags_file\"\n      fi\n      printf '%s\\n' \"--enable-features=$feature\" >>\"$flags_file\"\n    fi\n  done\ndone",
+      "bodyTruncated": false,
+      "date": "2026-11-27T11:25:51Z",
+      "description": "Enable hardware video decoding and encoding in Chromium-based browsers",
+      "file": "1795778751.sh",
+      "lineCount": 30,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795778751.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795778751.sh",
+      "timestamp": 1795778751,
+      "touches": []
+    },
+    {
+      "body": "echo \"Set transparent huge pages to madvise and cap systemd journal size\"\n\nthp_dropin=/etc/tmpfiles.d/omarchy-thp.conf\njournal_dropin=/etc/systemd/journald.conf.d/10-omarchy.conf\njournal_stamp=/var/lib/omarchy/migrations/1795784791-journald\n\n# A dev checkout can run ahead of omarchy-settings: stay pending until both\n# drop-ins land so the settings persist across reboots too.\nif [[ ! -r $thp_dropin || ! -r $journal_dropin ]]; then\n  echo \"Waiting for omarchy-settings to ship THP and journald drop-ins\"\n  exit 75\nfi\n\nthp_sysfs=/sys/kernel/mm/transparent_hugepage/enabled\nif [[ -r $thp_sysfs && $(<\"$thp_sysfs\") != *\"[madvise]\"* ]]; then\n  sudo /usr/bin/systemd-tmpfiles --create --boot \"$thp_dropin\"\nfi\n\n# Track application with a machine-wide stamp so later users on the same\n# machine do not restart systemd-journald again.\nif [[ ! -e $journal_stamp ]]; then\n  sudo /usr/bin/systemctl restart systemd-journald.service\n  sudo /usr/bin/journalctl --vacuum-size=100M\n  sudo /usr/bin/install -Dm644 /dev/null \"$journal_stamp\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-27T13:06:31Z",
+      "description": "Set transparent huge pages to madvise and cap systemd journal size",
+      "file": "1795784791.sh",
+      "lineCount": 25,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795784791.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795784791.sh",
+      "timestamp": 1795784791,
+      "touches": [
+        "/etc/systemd/journald.conf.d/10-omarchy.conf",
+        "/etc/tmpfiles.d/omarchy-thp.conf",
+        "/usr/bin/install",
+        "/usr/bin/journalctl",
+        "/usr/bin/systemctl",
+        "/usr/bin/systemd-tmpfiles",
+        "/var/lib/omarchy/migrations/1795784791-journald"
+      ]
+    },
+    {
+      "body": "echo \"Re-enable deep sleep (s2idle) on the ASUS Zenbook A16 (UX3607OA)\"\n\n# Full APSS + CXSD + AOSD + DDR deep sleep (~0.26 W) with reliable\n# Wi-Fi/BT/audio/lid resume requires linux-omarchy-dtbs >= 7.3-75 (s2idle-only\n# cluster_cl5 and lid-switch fix) booted on the running kernel, plus\n# asus-zenbook-a16-support >= 1-4 (s2idle config, PCIe4 wakeup udev rule, and\n# systemd-sleep hook).\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match \"UX3607OA\"; then\n  exit 0\nfi\n\nsleep_config_dir=\"${OMARCHY_SLEEP_CONFIG_DIR:-/etc/systemd/sleep.conf.d}\"\ndt_root=\"${OMARCHY_DT_ROOT:-/sys/firmware/devicetree/base}\"\n\n# Nothing to clean up on fresh installs or if another user already migrated.\nif [[ ! -e $sleep_config_dir/omarchy-sleep-disabled.conf && ! -e $sleep_config_dir/zenbook-a16.conf ]]; then\n  exit 0\nfi\n\nomarchy-pkg-add asus-zenbook-a16-support || exit 75\n\ndtbs_ver=$(pacman -Q linux-omarchy-dtbs 2>/dev/null | awk '{print $2}') || dtbs_ver=\"\"\nsupport_ver=$(pacman -Q asus-zenbook-a16-support 2>/dev/null | awk '{print $2}') || support_ver=\"\"\n\nif [[ -z $dtbs_ver ]] || (( $(vercmp \"$dtbs_ver\" 7.3-75) < 0 )) ||\n  [[ -z $support_ver ]] || (( $(vercmp \"$support_ver\" 1-4) < 0 )); then\n  echo \"Waiting for linux-omarchy-dtbs >= 7.3-75 and asus-zenbook-a16-support >= 1-4 before re-enabling suspend\"\n  exit 75\nfi\n\n# Packages may be upgraded while the previous device tree is still active in\n# memory. Keep suspend disabled and ask for a reboot until the running tree\n# carries both the s2idle-only cluster_cl5 state (1000 s = 0x3b9aca00) and the\n# switch-lid fix (no wakeup-event-action).\ncl5_residency_file=\"$dt_root/cpus/domain-idle-states/cluster-sleep-0/min-residency-us\"\ncl5_residency=\"\"\nif [[ -r $cl5_residency_file ]]; then\n  cl5_residency=$(od -An -tx4 --endian=big \"$cl5_residency_file\" 2>/dev/null | tr -d '[:space:]') || cl5_residency=\"\"\nfi\n",
+      "bodyTruncated": true,
+      "date": "2026-11-27T13:06:45Z",
+      "description": "Re-enable deep sleep (s2idle) on the ASUS Zenbook A16 (UX3607OA)",
+      "file": "1795784805.sh",
+      "lineCount": 51,
+      "packagesAdded": [
+        "asus-zenbook-a16-support"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1795784805.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795784805.sh",
+      "timestamp": 1795784805,
+      "touches": [
+        "/etc/systemd/sleep.conf.d"
+      ]
+    },
+    {
+      "body": "echo \"Ensure udisks2 is explicitly installed for omarchy-drive-automount\"\n\nomarchy-pkg-add udisks2",
+      "bodyTruncated": false,
+      "date": "2026-11-27T13:16:00Z",
+      "description": "Ensure udisks2 is explicitly installed for omarchy-drive-automount",
+      "file": "1795785360.sh",
+      "lineCount": 3,
+      "packagesAdded": [
+        "udisks2"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1795785360.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795785360.sh",
+      "timestamp": 1795785360,
+      "touches": []
     }
   ],
   "prerelease": true,

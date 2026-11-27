@@ -1070,18 +1070,28 @@
       "omarchy-agent-usage-synthetic",
       "omarchy-agent-usage-vibe",
       "omarchy-agent-usage-zai",
+      "omarchy-apply-fingerprint-pam",
       "omarchy-apply-gpu-memory",
       "omarchy-apply-n1x-gpu-memory",
       "omarchy-apply-pacman",
       "omarchy-ascii",
+      "omarchy-audio-mv7plus",
+      "omarchy-battery-limit",
+      "omarchy-bluetooth",
       "omarchy-boot-backend",
       "omarchy-boot-cmdline",
       "omarchy-boot-notify",
       "omarchy-boot-rebuild",
       "omarchy-boot-switch",
       "omarchy-boot-sync",
+      "omarchy-boot-sync-initcpio",
       "omarchy-branding-about-animation",
       "omarchy-branding-about-cpu",
+      "omarchy-camera",
+      "omarchy-camera-guard",
+      "omarchy-camera-relay",
+      "omarchy-camera-relay-daemon",
+      "omarchy-camera-tuning",
       "omarchy-capture-screenrecording-process",
       "omarchy-chromium-add-feature",
       "omarchy-cmd-browser-handoff",
@@ -1102,6 +1112,7 @@
       "omarchy-dictation-use",
       "omarchy-dictation-voxtype",
       "omarchy-dock",
+      "omarchy-drive-automount",
       "omarchy-drive-unlock",
       "omarchy-font-cjk",
       "omarchy-games-vibes-copy",
@@ -1185,6 +1196,8 @@
       "omarchy-models-warmup",
       "omarchy-n1x-probe",
       "omarchy-network-captive-portal",
+      "omarchy-network-ethernet",
+      "omarchy-network-wifi",
       "omarchy-network-wifi-connected",
       "omarchy-pkg-add-curated",
       "omarchy-pkg-defaults",
@@ -1216,6 +1229,8 @@
       "omarchy-setup-hostname",
       "omarchy-setup-input",
       "omarchy-setup-keyboard",
+      "omarchy-setup-security-fingerprint-enroll",
+      "omarchy-setup-security-passwordless-login",
       "omarchy-setup-security-ssh-agent",
       "omarchy-sleep-disabled",
       "omarchy-system",
@@ -1665,7 +1680,7 @@
         "fields": {
           "args": [
             "[command...]",
-            "[--pid=<terminal-pid>] [command...]"
+            "[--pid=<terminal-pid>] [--dir=<dir>] [command...]"
           ]
         },
         "name": "omarchy-launch-terminal"
@@ -1804,6 +1819,15 @@
           ]
         },
         "name": "omarchy-restart-hyprctl"
+      },
+      {
+        "fields": {
+          "args": [
+            "",
+            "[--terminal]"
+          ]
+        },
+        "name": "omarchy-setup-security-fingerprint"
       },
       {
         "fields": {
@@ -1985,6 +2009,15 @@
       },
       {
         "fields": {
+          "args": [
+            "",
+            "[start byte]"
+          ]
+        },
+        "name": "omarchy-update-analyze-logs"
+      },
+      {
+        "fields": {
           "summary": [
             "Ensure the Omarchy and Arch keyring packages are installed and populated",
             "Ensure the Omarchy, Arch and (on aarch64) Arch Linux ARM keyring packages are installed and populated"
@@ -2037,11 +2070,11 @@
       }
     ],
     "counts": {
-      "added": 216,
-      "changed": 62,
+      "added": 231,
+      "changed": 64,
       "from": 444,
       "removed": 11,
-      "to": 649
+      "to": 664
     },
     "removed": [
       "omarchy-install-chromium-google-account",
@@ -2247,6 +2280,7 @@
       "setup.region.formats",
       "setup.region.language",
       "setup.region.timezone",
+      "setup.security.passwordless-login",
       "setup.security.ssh-agent",
       "system.about",
       "system.firmware",
@@ -3062,6 +3096,15 @@
       },
       {
         "fields": {
+          "action": [
+            "omarchy-launch-floating-terminal-with-presentation omarchy-setup-security-fingerprint",
+            "omarchy-setup-security-fingerprint"
+          ]
+        },
+        "id": "setup.security.fingerprint"
+      },
+      {
+        "fields": {
           "when": [
             "omarchy-hibernation-available",
             "omarchy-hibernation-available && ! omarchy-sleep-disabled"
@@ -3125,11 +3168,11 @@
       }
     ],
     "counts": {
-      "added": 216,
-      "changed": 93,
+      "added": 217,
+      "changed": 94,
       "from": 333,
-      "removed": 73,
-      "to": 476
+      "removed": 77,
+      "to": 473
     },
     "removed": [
       "about",
@@ -3144,6 +3187,10 @@
       "install.ai.t3-code",
       "install.service.chromium-account",
       "install.service.spotify",
+      "learn.arch",
+      "learn.bash",
+      "learn.neovim",
+      "learn.tmux-keybindings",
       "remove.ai.hermes",
       "remove.ai.openclaw",
       "remove.ai.perplexity",
@@ -3210,9 +3257,9 @@
   "migrations": {
     "counts": {
       "from": 106,
-      "new": 237,
+      "new": 257,
       "removed": 0,
-      "to": 343
+      "to": 363
     },
     "new": [
       {
@@ -4399,6 +4446,106 @@
         "date": "2026-11-26T11:31:00Z",
         "description": "Update the bar clock as soon as the time or timezone changes",
         "file": "1795692660.sh"
+      },
+      {
+        "date": "2026-11-26T12:47:48Z",
+        "description": "Enable speaker tuning for the Flower Sakura (FRANQE0006)",
+        "file": "1795697268.sh"
+      },
+      {
+        "date": "2026-11-26T13:05:57Z",
+        "description": "Install the Anduril BlueChip camera support package",
+        "file": "1795698357.sh"
+      },
+      {
+        "date": "2026-11-26T14:43:54Z",
+        "description": "Update speaker tuning for the ASUS Zenbook A16 (UX3607OA)",
+        "file": "1795704234.sh"
+      },
+      {
+        "date": "2026-11-26T15:10:00Z",
+        "description": "Move Anduril BlueChip camera relay and tunings to userland (omarchy-camera-tuning)",
+        "file": "1795705800.sh"
+      },
+      {
+        "date": "2026-11-26T16:09:23Z",
+        "description": "Add Shure MV7+ microphone panel and hidraw udev rule",
+        "file": "1795709363.sh"
+      },
+      {
+        "date": "2026-11-26T18:50:18Z",
+        "description": "Stop suspending a docked laptop on external power when its display blinks",
+        "file": "1795719018.sh"
+      },
+      {
+        "date": "2026-11-26T20:43:53Z",
+        "description": "Enable Panel Self Refresh on the ASUS Zenbook A16 (UX3607OA)",
+        "file": "1795725833.sh"
+      },
+      {
+        "date": "2026-11-26T20:52:21Z",
+        "description": "Enable Wi-Fi power save on the ASUS Zenbook A16 (UX3607OA)",
+        "file": "1795726341.sh"
+      },
+      {
+        "date": "2026-11-27T01:40:53Z",
+        "description": "Point git's retired gh shim credentials at the packaged gh",
+        "file": "1795743653.sh"
+      },
+      {
+        "date": "2026-11-27T05:09:19Z",
+        "description": "Enable Intel HWP dynamic boost for snappier I/O wakeups",
+        "file": "1795756159.sh"
+      },
+      {
+        "date": "2026-11-27T09:13:03Z",
+        "description": "Keep balanced power profile on balance_performance when on battery",
+        "file": "1795770783.sh"
+      },
+      {
+        "date": "2026-11-27T09:43:40Z",
+        "description": "Install and enable intel-lpmd on Arrow Lake-U and Wildcat Lake Intel laptops",
+        "file": "1795772620.sh"
+      },
+      {
+        "date": "2026-11-27T10:28:20Z",
+        "description": "Disable NMI watchdog to save power",
+        "file": "1795775300.sh"
+      },
+      {
+        "date": "2026-11-27T10:30:00Z",
+        "description": "Enable intel-lpmd dynamic WLT optimization on Meteor Lake laptops",
+        "file": "1795775400.sh"
+      },
+      {
+        "date": "2026-11-27T10:31:40Z",
+        "description": "Enable Wi-Fi power save on Intel Meteor Lake CNVi Wi-Fi 6E (AX211)",
+        "file": "1795775500.sh"
+      },
+      {
+        "date": "2026-11-27T10:57:22Z",
+        "description": "Remove the Image Viewer launcher, now that Omaview has replaced imv",
+        "file": "1795777042.sh"
+      },
+      {
+        "date": "2026-11-27T11:25:51Z",
+        "description": "Enable hardware video decoding and encoding in Chromium-based browsers",
+        "file": "1795778751.sh"
+      },
+      {
+        "date": "2026-11-27T13:06:31Z",
+        "description": "Set transparent huge pages to madvise and cap systemd journal size",
+        "file": "1795784791.sh"
+      },
+      {
+        "date": "2026-11-27T13:06:45Z",
+        "description": "Re-enable deep sleep (s2idle) on the ASUS Zenbook A16 (UX3607OA)",
+        "file": "1795784805.sh"
+      },
+      {
+        "date": "2026-11-27T13:16:00Z",
+        "description": "Ensure udisks2 is explicitly installed for omarchy-drive-automount",
+        "file": "1795785360.sh"
       }
     ],
     "removed": []

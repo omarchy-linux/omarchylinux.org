@@ -1,5 +1,5 @@
 {
-  "count": 473,
+  "count": 478,
   "flat": [
     {
       "action": null,
@@ -256,43 +256,25 @@
       "provider": null,
       "target": null,
       "title": null,
-      "when": "[[ $(omarchy-hyprland-workspace-layout-current) == \"floating\" ]]"
+      "when": null
     },
     {
-      "action": "omarchy-dock autohide off",
+      "action": "omarchy-dock tiling off",
       "aliases": [],
       "checked": null,
       "command": null,
       "declared": true,
       "depth": 2,
-      "icon": "󰈈",
+      "icon": "󰕮",
       "iconFont": null,
-      "id": "appearance.dock.always-on",
+      "id": "appearance.dock.floating-only",
       "kind": "action",
-      "label": "Always-on Dock",
+      "label": "Dock Only on Floating",
       "parent": "appearance.dock",
       "provider": null,
       "target": null,
       "title": null,
-      "when": "[[ $(omarchy-dock autohide) == \"on\" ]]"
-    },
-    {
-      "action": "omarchy-dock autohide on",
-      "aliases": [],
-      "checked": null,
-      "command": null,
-      "declared": true,
-      "depth": 2,
-      "icon": "󰈉",
-      "iconFont": null,
-      "id": "appearance.dock.autohide",
-      "kind": "action",
-      "label": "Auto-hide Dock",
-      "parent": "appearance.dock",
-      "provider": null,
-      "target": null,
-      "title": null,
-      "when": "[[ $(omarchy-dock autohide) == \"off\" ]]"
+      "when": "[[ $(omarchy-dock tiling) == \"on\" ]]"
     },
     {
       "action": null,
@@ -328,7 +310,7 @@
       "provider": null,
       "target": null,
       "title": null,
-      "when": null
+      "when": "[[ $(omarchy-bar position) != \"bottom\" ]] || omarchy-toggle-enabled bar-off"
     },
     {
       "action": "omarchy-dock position left",
@@ -346,7 +328,7 @@
       "provider": null,
       "target": null,
       "title": null,
-      "when": null
+      "when": "[[ $(omarchy-bar position) != \"left\" ]] || omarchy-toggle-enabled bar-off"
     },
     {
       "action": "omarchy-dock position right",
@@ -364,7 +346,7 @@
       "provider": null,
       "target": null,
       "title": null,
-      "when": null
+      "when": "[[ $(omarchy-bar position) != \"right\" ]] || omarchy-toggle-enabled bar-off"
     },
     {
       "action": "omarchy-dock position top",
@@ -379,6 +361,96 @@
       "kind": "action",
       "label": "Top Dock",
       "parent": "appearance.dock.position",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": "[[ $(omarchy-bar position) != \"top\" ]] || omarchy-toggle-enabled bar-off"
+    },
+    {
+      "action": "omarchy-dock tiling on",
+      "aliases": [],
+      "checked": null,
+      "command": null,
+      "declared": true,
+      "depth": 2,
+      "icon": "󰕰",
+      "iconFont": null,
+      "id": "appearance.dock.tiling",
+      "kind": "action",
+      "label": "Dock on Tiling",
+      "parent": "appearance.dock",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": "[[ $(omarchy-dock tiling) == \"off\" ]]"
+    },
+    {
+      "action": null,
+      "aliases": [],
+      "checked": null,
+      "command": null,
+      "declared": true,
+      "depth": 2,
+      "icon": "󰈈",
+      "iconFont": null,
+      "id": "appearance.dock.visibility",
+      "kind": "submenu",
+      "label": "Dock Visibility",
+      "parent": "appearance.dock",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": null
+    },
+    {
+      "action": "omarchy-dock visibility always",
+      "aliases": [],
+      "checked": "[[ $(omarchy-dock visibility) == \"always\" ]]",
+      "command": null,
+      "declared": true,
+      "depth": 3,
+      "icon": "󰈈",
+      "iconFont": null,
+      "id": "appearance.dock.visibility.always",
+      "kind": "action",
+      "label": "Always On",
+      "parent": "appearance.dock.visibility",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": null
+    },
+    {
+      "action": "omarchy-dock visibility first-app",
+      "aliases": [],
+      "checked": "[[ $(omarchy-dock visibility) == \"first-app\" ]]",
+      "command": null,
+      "declared": true,
+      "depth": 3,
+      "icon": "󰖯",
+      "iconFont": null,
+      "id": "appearance.dock.visibility.first-app",
+      "kind": "action",
+      "label": "First App Hides",
+      "parent": "appearance.dock.visibility",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": null
+    },
+    {
+      "action": "omarchy-dock visibility hidden",
+      "aliases": [],
+      "checked": "[[ $(omarchy-dock visibility) == \"hidden\" ]]",
+      "command": null,
+      "declared": true,
+      "depth": 3,
+      "icon": "󰈉",
+      "iconFont": null,
+      "id": "appearance.dock.visibility.hidden",
+      "kind": "action",
+      "label": "Always Hidden",
+      "parent": "appearance.dock.visibility",
       "provider": null,
       "target": null,
       "title": null,
@@ -980,26 +1052,6 @@
       "target": null,
       "title": null,
       "when": "omarchy-toggle-enabled bar-off"
-    },
-    {
-      "action": "unlock=$(omarchy-plymouth-switcher); if [[ $unlock == default ]]; then omarchy-launch-floating-terminal-with-presentation omarchy-plymouth-reset; elif [[ -n $unlock ]]; then omarchy-launch-floating-terminal-with-presentation \"omarchy-plymouth-set-by-theme $(printf %q \"$unlock\")\"; fi",
-      "aliases": [
-        "unlock"
-      ],
-      "checked": null,
-      "command": null,
-      "declared": true,
-      "depth": 1,
-      "icon": "󰟵",
-      "iconFont": null,
-      "id": "appearance.unlock",
-      "kind": "action",
-      "label": "Unlock",
-      "parent": "appearance",
-      "provider": null,
-      "target": null,
-      "title": null,
-      "when": null
     },
     {
       "action": null,
@@ -2114,6 +2166,24 @@
       "id": "install.browser.firefox",
       "kind": "action",
       "label": "Firefox",
+      "parent": "install.browser",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": null
+    },
+    {
+      "action": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-browser ladybird'",
+      "aliases": [],
+      "checked": null,
+      "command": null,
+      "declared": true,
+      "depth": 2,
+      "icon": "󰠭",
+      "iconFont": null,
+      "id": "install.browser.ladybird",
+      "kind": "action",
+      "label": "Ladybird",
       "parent": "install.browser",
       "provider": null,
       "target": null,
@@ -4337,7 +4407,7 @@
       "when": "omarchy-pkg-present openclaw"
     },
     {
-      "action": "omarchy-launch-floating-terminal-with-presentation 'omarchy-pkg-drop opencode-desktop'",
+      "action": "omarchy-launch-floating-terminal-with-presentation 'echo \"Removing OpenCode Desktop...\"; omarchy-pkg-drop opencode-desktop'",
       "aliases": [],
       "checked": null,
       "command": null,
@@ -4517,6 +4587,24 @@
       "when": "omarchy-pkg-present firefox"
     },
     {
+      "action": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-browser ladybird'",
+      "aliases": [],
+      "checked": null,
+      "command": null,
+      "declared": true,
+      "depth": 2,
+      "icon": "󰠭",
+      "iconFont": null,
+      "id": "remove.browser.ladybird",
+      "kind": "action",
+      "label": "Ladybird",
+      "parent": "remove.browser",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": "omarchy-pkg-present ladybird-bin"
+    },
+    {
       "action": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-browser zen'",
       "aliases": [],
       "checked": null,
@@ -4553,7 +4641,7 @@
       "when": null
     },
     {
-      "action": "omarchy-launch-floating-terminal-with-presentation omarchy-pkg-drop basecamp-cli",
+      "action": "omarchy-launch-floating-terminal-with-presentation 'echo \"Removing Basecamp CLI...\"; omarchy-pkg-drop basecamp-cli'",
       "aliases": [],
       "checked": null,
       "command": null,
@@ -4571,7 +4659,7 @@
       "when": "omarchy-pkg-present basecamp-cli"
     },
     {
-      "action": "omarchy-launch-floating-terminal-with-presentation omarchy-pkg-drop cloudflare-cli",
+      "action": "omarchy-launch-floating-terminal-with-presentation 'echo \"Removing Cloudflare CLI...\"; omarchy-pkg-drop cloudflare-cli'",
       "aliases": [],
       "checked": null,
       "command": null,
@@ -4589,7 +4677,7 @@
       "when": "omarchy-pkg-present cloudflare-cli"
     },
     {
-      "action": "omarchy-launch-floating-terminal-with-presentation omarchy-pkg-drop github-cli",
+      "action": "omarchy-launch-floating-terminal-with-presentation 'echo \"Removing GitHub CLI...\"; omarchy-pkg-drop github-cli'",
       "aliases": [],
       "checked": null,
       "command": null,
@@ -4607,7 +4695,7 @@
       "when": "omarchy-pkg-present github-cli"
     },
     {
-      "action": "omarchy-launch-floating-terminal-with-presentation omarchy-pkg-drop hey-cli",
+      "action": "omarchy-launch-floating-terminal-with-presentation 'echo \"Removing HEY CLI...\"; omarchy-pkg-drop hey-cli'",
       "aliases": [],
       "checked": null,
       "command": null,
@@ -4625,7 +4713,7 @@
       "when": "omarchy-pkg-present hey-cli"
     },
     {
-      "action": "omarchy-launch-floating-terminal-with-presentation omarchy-pkg-drop hunk",
+      "action": "omarchy-launch-floating-terminal-with-presentation 'echo \"Removing Hunk...\"; omarchy-pkg-drop hunk'",
       "aliases": [],
       "checked": null,
       "command": null,
@@ -5901,6 +5989,24 @@
       "id": "setup.default.browser.firefox",
       "kind": "action",
       "label": "Firefox",
+      "parent": "setup.default.browser",
+      "provider": null,
+      "target": null,
+      "title": null,
+      "when": null
+    },
+    {
+      "action": "omarchy-default-browser ladybird",
+      "aliases": [],
+      "checked": "[[ \"$(omarchy-default-browser)\" == \"ladybird\" ]]",
+      "command": null,
+      "declared": true,
+      "depth": 3,
+      "icon": "󰠭",
+      "iconFont": null,
+      "id": "setup.default.browser.ladybird",
+      "kind": "action",
+      "label": "Ladybird",
       "parent": "setup.default.browser",
       "provider": null,
       "target": null,
@@ -7383,12 +7489,12 @@
       "iconFont": null,
       "id": "trigger.hardware.hybrid-gpu-off",
       "kind": "action",
-      "label": "Switch to Integrated GPU",
+      "label": "Switch to iGPU",
       "parent": "trigger.hardware",
       "provider": null,
       "target": null,
       "title": null,
-      "when": "omarchy-hw-hybrid-gpu && grep -q '\"mode\": \"Hybrid\"' /etc/supergfxd.conf"
+      "when": "omarchy-hw-hybrid-gpu && ! grep -q '\"mode\": \"Integrated\"' /etc/supergfxd.conf"
     },
     {
       "action": "omarchy-launch-floating-terminal-with-presentation omarchy-device-gpu-hybrid",
@@ -7401,12 +7507,12 @@
       "iconFont": null,
       "id": "trigger.hardware.hybrid-gpu-on",
       "kind": "action",
-      "label": "Switch to Hybrid GPU",
+      "label": "Switch to dGPU",
       "parent": "trigger.hardware",
       "provider": null,
       "target": null,
       "title": null,
-      "when": "omarchy-hw-hybrid-gpu && ! grep -q '\"mode\": \"Hybrid\"' /etc/supergfxd.conf"
+      "when": "omarchy-hw-hybrid-gpu && grep -q '\"mode\": \"Integrated\"' /etc/supergfxd.conf"
     },
     {
       "action": "omarchy-hyprland-monitor-internal toggle",
@@ -7455,7 +7561,7 @@
       "iconFont": null,
       "id": "trigger.hardware.mirror-display-off",
       "kind": "action",
-      "label": "Display Mirroring Off",
+      "label": "Mirror Display Off",
       "parent": "trigger.hardware",
       "provider": null,
       "target": null,
@@ -7473,7 +7579,7 @@
       "iconFont": null,
       "id": "trigger.hardware.mirror-display-on",
       "kind": "action",
-      "label": "Display Mirroring On",
+      "label": "Mirror Display On",
       "parent": "trigger.hardware",
       "provider": null,
       "target": null,
@@ -8225,24 +8331,6 @@
       "id": "update.config.hyprsunset",
       "kind": "action",
       "label": "Hyprsunset",
-      "parent": "update.config",
-      "provider": null,
-      "target": null,
-      "title": null,
-      "when": null
-    },
-    {
-      "action": "omarchy-launch-floating-terminal-with-presentation omarchy-refresh-plymouth",
-      "aliases": [],
-      "checked": null,
-      "command": null,
-      "declared": true,
-      "depth": 2,
-      "icon": "󱣴",
-      "iconFont": null,
-      "id": "update.config.plymouth",
-      "kind": "action",
-      "label": "Plymouth",
       "parent": "update.config",
       "provider": null,
       "target": null,
@@ -9696,42 +9784,42 @@
           "checked": null,
           "children": [
             {
-              "action": "omarchy-dock autohide on",
+              "action": "omarchy-dock tiling on",
               "aliases": [],
               "checked": null,
               "children": [],
               "command": null,
               "declared": true,
               "depth": 2,
-              "icon": "󰈉",
+              "icon": "󰕰",
               "iconFont": null,
-              "id": "appearance.dock.autohide",
+              "id": "appearance.dock.tiling",
               "kind": "action",
-              "label": "Auto-hide Dock",
+              "label": "Dock on Tiling",
               "parent": "appearance.dock",
               "provider": null,
               "target": null,
               "title": null,
-              "when": "[[ $(omarchy-dock autohide) == \"off\" ]]"
+              "when": "[[ $(omarchy-dock tiling) == \"off\" ]]"
             },
             {
-              "action": "omarchy-dock autohide off",
+              "action": "omarchy-dock tiling off",
               "aliases": [],
               "checked": null,
               "children": [],
               "command": null,
               "declared": true,
               "depth": 2,
-              "icon": "󰈈",
+              "icon": "󰕮",
               "iconFont": null,
-              "id": "appearance.dock.always-on",
+              "id": "appearance.dock.floating-only",
               "kind": "action",
-              "label": "Always-on Dock",
+              "label": "Dock Only on Floating",
               "parent": "appearance.dock",
               "provider": null,
               "target": null,
               "title": null,
-              "when": "[[ $(omarchy-dock autohide) == \"on\" ]]"
+              "when": "[[ $(omarchy-dock tiling) == \"on\" ]]"
             },
             {
               "action": null,
@@ -9755,7 +9843,7 @@
                   "provider": null,
                   "target": null,
                   "title": null,
-                  "when": null
+                  "when": "[[ $(omarchy-bar position) != \"top\" ]] || omarchy-toggle-enabled bar-off"
                 },
                 {
                   "action": "omarchy-dock position bottom",
@@ -9774,7 +9862,7 @@
                   "provider": null,
                   "target": null,
                   "title": null,
-                  "when": null
+                  "when": "[[ $(omarchy-bar position) != \"bottom\" ]] || omarchy-toggle-enabled bar-off"
                 },
                 {
                   "action": "omarchy-dock position left",
@@ -9793,7 +9881,7 @@
                   "provider": null,
                   "target": null,
                   "title": null,
-                  "when": null
+                  "when": "[[ $(omarchy-bar position) != \"left\" ]] || omarchy-toggle-enabled bar-off"
                 },
                 {
                   "action": "omarchy-dock position right",
@@ -9812,7 +9900,7 @@
                   "provider": null,
                   "target": null,
                   "title": null,
-                  "when": null
+                  "when": "[[ $(omarchy-bar position) != \"right\" ]] || omarchy-toggle-enabled bar-off"
                 }
               ],
               "command": null,
@@ -9823,6 +9911,83 @@
               "id": "appearance.dock.position",
               "kind": "submenu",
               "label": "Dock Position",
+              "parent": "appearance.dock",
+              "provider": null,
+              "target": null,
+              "title": null,
+              "when": null
+            },
+            {
+              "action": null,
+              "aliases": [],
+              "checked": null,
+              "children": [
+                {
+                  "action": "omarchy-dock visibility always",
+                  "aliases": [],
+                  "checked": "[[ $(omarchy-dock visibility) == \"always\" ]]",
+                  "children": [],
+                  "command": null,
+                  "declared": true,
+                  "depth": 3,
+                  "icon": "󰈈",
+                  "iconFont": null,
+                  "id": "appearance.dock.visibility.always",
+                  "kind": "action",
+                  "label": "Always On",
+                  "parent": "appearance.dock.visibility",
+                  "provider": null,
+                  "target": null,
+                  "title": null,
+                  "when": null
+                },
+                {
+                  "action": "omarchy-dock visibility first-app",
+                  "aliases": [],
+                  "checked": "[[ $(omarchy-dock visibility) == \"first-app\" ]]",
+                  "children": [],
+                  "command": null,
+                  "declared": true,
+                  "depth": 3,
+                  "icon": "󰖯",
+                  "iconFont": null,
+                  "id": "appearance.dock.visibility.first-app",
+                  "kind": "action",
+                  "label": "First App Hides",
+                  "parent": "appearance.dock.visibility",
+                  "provider": null,
+                  "target": null,
+                  "title": null,
+                  "when": null
+                },
+                {
+                  "action": "omarchy-dock visibility hidden",
+                  "aliases": [],
+                  "checked": "[[ $(omarchy-dock visibility) == \"hidden\" ]]",
+                  "children": [],
+                  "command": null,
+                  "declared": true,
+                  "depth": 3,
+                  "icon": "󰈉",
+                  "iconFont": null,
+                  "id": "appearance.dock.visibility.hidden",
+                  "kind": "action",
+                  "label": "Always Hidden",
+                  "parent": "appearance.dock.visibility",
+                  "provider": null,
+                  "target": null,
+                  "title": null,
+                  "when": null
+                }
+              ],
+              "command": null,
+              "declared": true,
+              "depth": 2,
+              "icon": "󰈈",
+              "iconFont": null,
+              "id": "appearance.dock.visibility",
+              "kind": "submenu",
+              "label": "Dock Visibility",
               "parent": "appearance.dock",
               "provider": null,
               "target": null,
@@ -9842,7 +10007,7 @@
           "provider": null,
           "target": null,
           "title": null,
-          "when": "[[ $(omarchy-hyprland-workspace-layout-current) == \"floating\" ]]"
+          "when": null
         },
         {
           "action": null,
@@ -9958,27 +10123,6 @@
           "target": null,
           "title": null,
           "when": "! omarchy-hyprland-animations-off"
-        },
-        {
-          "action": "unlock=$(omarchy-plymouth-switcher); if [[ $unlock == default ]]; then omarchy-launch-floating-terminal-with-presentation omarchy-plymouth-reset; elif [[ -n $unlock ]]; then omarchy-launch-floating-terminal-with-presentation \"omarchy-plymouth-set-by-theme $(printf %q \"$unlock\")\"; fi",
-          "aliases": [
-            "unlock"
-          ],
-          "checked": null,
-          "children": [],
-          "command": null,
-          "declared": true,
-          "depth": 1,
-          "icon": "󰟵",
-          "iconFont": null,
-          "id": "appearance.unlock",
-          "kind": "action",
-          "label": "Unlock",
-          "parent": "appearance",
-          "provider": null,
-          "target": null,
-          "title": null,
-          "when": null
         }
       ],
       "command": null,
@@ -10728,7 +10872,7 @@
               "iconFont": null,
               "id": "trigger.hardware.mirror-display-on",
               "kind": "action",
-              "label": "Display Mirroring On",
+              "label": "Mirror Display On",
               "parent": "trigger.hardware",
               "provider": null,
               "target": null,
@@ -10747,7 +10891,7 @@
               "iconFont": null,
               "id": "trigger.hardware.mirror-display-off",
               "kind": "action",
-              "label": "Display Mirroring Off",
+              "label": "Mirror Display Off",
               "parent": "trigger.hardware",
               "provider": null,
               "target": null,
@@ -10766,12 +10910,12 @@
               "iconFont": null,
               "id": "trigger.hardware.hybrid-gpu-on",
               "kind": "action",
-              "label": "Switch to Hybrid GPU",
+              "label": "Switch to dGPU",
               "parent": "trigger.hardware",
               "provider": null,
               "target": null,
               "title": null,
-              "when": "omarchy-hw-hybrid-gpu && ! grep -q '\"mode\": \"Hybrid\"' /etc/supergfxd.conf"
+              "when": "omarchy-hw-hybrid-gpu && grep -q '\"mode\": \"Integrated\"' /etc/supergfxd.conf"
             },
             {
               "action": "omarchy-launch-floating-terminal-with-presentation omarchy-device-gpu-hybrid",
@@ -10785,12 +10929,12 @@
               "iconFont": null,
               "id": "trigger.hardware.hybrid-gpu-off",
               "kind": "action",
-              "label": "Switch to Integrated GPU",
+              "label": "Switch to iGPU",
               "parent": "trigger.hardware",
               "provider": null,
               "target": null,
               "title": null,
-              "when": "omarchy-hw-hybrid-gpu && grep -q '\"mode\": \"Hybrid\"' /etc/supergfxd.conf"
+              "when": "omarchy-hw-hybrid-gpu && ! grep -q '\"mode\": \"Integrated\"' /etc/supergfxd.conf"
             },
             {
               "action": "omarchy-device-touchpad",
@@ -11180,6 +11324,25 @@
                   "id": "setup.default.browser.zen",
                   "kind": "action",
                   "label": "Zen",
+                  "parent": "setup.default.browser",
+                  "provider": null,
+                  "target": null,
+                  "title": null,
+                  "when": null
+                },
+                {
+                  "action": "omarchy-default-browser ladybird",
+                  "aliases": [],
+                  "checked": "[[ \"$(omarchy-default-browser)\" == \"ladybird\" ]]",
+                  "children": [],
+                  "command": null,
+                  "declared": true,
+                  "depth": 3,
+                  "icon": "󰠭",
+                  "iconFont": null,
+                  "id": "setup.default.browser.ladybird",
+                  "kind": "action",
+                  "label": "Ladybird",
                   "parent": "setup.default.browser",
                   "provider": null,
                   "target": null,
@@ -14559,6 +14722,25 @@
               "target": null,
               "title": null,
               "when": null
+            },
+            {
+              "action": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-browser ladybird'",
+              "aliases": [],
+              "checked": null,
+              "children": [],
+              "command": null,
+              "declared": true,
+              "depth": 2,
+              "icon": "󰠭",
+              "iconFont": null,
+              "id": "install.browser.ladybird",
+              "kind": "action",
+              "label": "Ladybird",
+              "parent": "install.browser",
+              "provider": null,
+              "target": null,
+              "title": null,
+              "when": null
             }
           ],
           "command": null,
@@ -14970,7 +15152,7 @@
                   "when": "omarchy-pkg-present openclaw"
                 },
                 {
-                  "action": "omarchy-launch-floating-terminal-with-presentation 'omarchy-pkg-drop opencode-desktop'",
+                  "action": "omarchy-launch-floating-terminal-with-presentation 'echo \"Removing OpenCode Desktop...\"; omarchy-pkg-drop opencode-desktop'",
                   "aliases": [],
                   "checked": null,
                   "children": [],
@@ -15462,7 +15644,7 @@
           "checked": null,
           "children": [
             {
-              "action": "omarchy-launch-floating-terminal-with-presentation omarchy-pkg-drop basecamp-cli",
+              "action": "omarchy-launch-floating-terminal-with-presentation 'echo \"Removing Basecamp CLI...\"; omarchy-pkg-drop basecamp-cli'",
               "aliases": [],
               "checked": null,
               "children": [],
@@ -15481,7 +15663,7 @@
               "when": "omarchy-pkg-present basecamp-cli"
             },
             {
-              "action": "omarchy-launch-floating-terminal-with-presentation omarchy-pkg-drop cloudflare-cli",
+              "action": "omarchy-launch-floating-terminal-with-presentation 'echo \"Removing Cloudflare CLI...\"; omarchy-pkg-drop cloudflare-cli'",
               "aliases": [],
               "checked": null,
               "children": [],
@@ -15500,7 +15682,7 @@
               "when": "omarchy-pkg-present cloudflare-cli"
             },
             {
-              "action": "omarchy-launch-floating-terminal-with-presentation omarchy-pkg-drop github-cli",
+              "action": "omarchy-launch-floating-terminal-with-presentation 'echo \"Removing GitHub CLI...\"; omarchy-pkg-drop github-cli'",
               "aliases": [],
               "checked": null,
               "children": [],
@@ -15519,7 +15701,7 @@
               "when": "omarchy-pkg-present github-cli"
             },
             {
-              "action": "omarchy-launch-floating-terminal-with-presentation omarchy-pkg-drop hey-cli",
+              "action": "omarchy-launch-floating-terminal-with-presentation 'echo \"Removing HEY CLI...\"; omarchy-pkg-drop hey-cli'",
               "aliases": [],
               "checked": null,
               "children": [],
@@ -15538,7 +15720,7 @@
               "when": "omarchy-pkg-present hey-cli"
             },
             {
-              "action": "omarchy-launch-floating-terminal-with-presentation omarchy-pkg-drop hunk",
+              "action": "omarchy-launch-floating-terminal-with-presentation 'echo \"Removing Hunk...\"; omarchy-pkg-drop hunk'",
               "aliases": [],
               "checked": null,
               "children": [],
@@ -16589,6 +16771,25 @@
               "target": null,
               "title": null,
               "when": "omarchy-pkg-present zen-browser-bin"
+            },
+            {
+              "action": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-browser ladybird'",
+              "aliases": [],
+              "checked": null,
+              "children": [],
+              "command": null,
+              "declared": true,
+              "depth": 2,
+              "icon": "󰠭",
+              "iconFont": null,
+              "id": "remove.browser.ladybird",
+              "kind": "action",
+              "label": "Ladybird",
+              "parent": "remove.browser",
+              "provider": null,
+              "target": null,
+              "title": null,
+              "when": "omarchy-pkg-present ladybird-bin"
             }
           ],
           "command": null,
@@ -16990,25 +17191,6 @@
               "id": "update.config.hyprsunset",
               "kind": "action",
               "label": "Hyprsunset",
-              "parent": "update.config",
-              "provider": null,
-              "target": null,
-              "title": null,
-              "when": null
-            },
-            {
-              "action": "omarchy-launch-floating-terminal-with-presentation omarchy-refresh-plymouth",
-              "aliases": [],
-              "checked": null,
-              "children": [],
-              "command": null,
-              "declared": true,
-              "depth": 2,
-              "icon": "󱣴",
-              "iconFont": null,
-              "id": "update.config.plymouth",
-              "kind": "action",
-              "label": "Plymouth",
               "parent": "update.config",
               "provider": null,
               "target": null,

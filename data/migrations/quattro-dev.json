@@ -1,5 +1,5 @@
 {
-  "count": 363,
+  "count": 374,
   "generatedFrom": "data/source/quattro-dev/migrations",
   "migrations": [
     {
@@ -1620,20 +1620,6 @@
       ]
     },
     {
-      "body": "echo \"Enable Dell XPS 13 sidecar speaker amplifiers\"\n\nif omarchy-hw-dell-xps13-sidecar-amps; then\n  source \"$OMARCHY_PATH/install/hardware/dell-xps13-sidecar-amps.sh\"\n  omarchy-state set reboot-required\nfi",
-      "bodyTruncated": false,
-      "date": "2026-08-25T14:07:17Z",
-      "description": "Enable Dell XPS 13 sidecar speaker amplifiers",
-      "file": "1787666837.sh",
-      "lineCount": 6,
-      "packagesAdded": [],
-      "packagesRemoved": [],
-      "path": "migrations/1787666837.sh",
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1787666837.sh",
-      "timestamp": 1787666837,
-      "touches": []
-    },
-    {
       "body": "echo \"Drop saved workspace layouts belonging to named workspaces\"\n\n# omarchy-hyprland-workspace-layout-toggle acted on whatever id activeworkspace\n# reported, and a named workspace reports a negative one. Hyprland reads a\n# leading \"-\" as a selector relative to the current workspace, so a layout saved\n# for one is applied to workspace 1 at every login instead. The command no longer\n# writes these; this clears the ones already on disk. It wrote to ~/.local/state\n# whatever XDG_STATE_HOME said, so both are cleared.\nremoved=0\n\nfor state_home in \"$HOME/.local/state\" \"${XDG_STATE_HOME:-}\"; do\n  [[ -n $state_home ]] || continue\n\n  layouts_dir=\"$state_home/omarchy/workspace-layouts\"\n  [[ -d $layouts_dir ]] || continue\n\n  for saved in \"$layouts_dir\"/-*.lua; do\n    if [[ -f $saved ]]; then\n      rm -f -- \"$saved\"\n      removed=1\n    fi\n  done\ndone\n\n# The package hook reloads Hyprland before migrations run, so the rule from the\n# file just deleted is already applied to workspace 1. Hyprland watches the files\n# it required and picks the deletion up on its own, but not for a user who has\n# turned autoreload off, so ask for one.\nif (( removed )); then\n  hyprctl reload >/dev/null 2>&1 || true\nfi",
       "bodyTruncated": false,
       "date": "2026-08-25T17:42:55Z",
@@ -2842,20 +2828,6 @@
       "touches": [
         "/etc/pacman.d/hooks/zz-omarchy-n1x-rescue.hook"
       ]
-    },
-    {
-      "body": "echo \"Install the Dell XPS 13 Panther Lake speaker firmware\"\n\nif omarchy-hw-dell-xps13-dx13260-ptl; then\n  source \"$OMARCHY_PATH/install/hardware/dell-xps13-ptl-speaker-firmware.sh\"\n  omarchy-state set reboot-required\nfi",
-      "bodyTruncated": false,
-      "date": "2026-10-06T05:46:53Z",
-      "description": "Install the Dell XPS 13 Panther Lake speaker firmware",
-      "file": "1791265613.sh",
-      "lineCount": 6,
-      "packagesAdded": [],
-      "packagesRemoved": [],
-      "path": "migrations/1791265613.sh",
-      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1791265613.sh",
-      "timestamp": 1791265613,
-      "touches": []
     },
     {
       "body": "echo \"Replace the Disk Usage TUI with Disktree\"\n\nomarchy-pkg-add disktree-bin\nomarchy-pkg-drop dua-cli\n\nrm -f \"$HOME/.local/share/applications/Disk Usage.desktop\"\nif [[ -d $HOME/.local/share/applications ]]; then\n  update-desktop-database \"$HOME/.local/share/applications\"\nfi",
@@ -6087,6 +6059,237 @@
       "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795785360.sh",
       "timestamp": 1795785360,
       "touches": []
+    },
+    {
+      "body": "echo \"Tune zram and reclaim for 8 GiB machines\"\n\n# 9 GiB catches 8 GiB machines (MemTotal ~7.3-7.9 GiB) while skipping sudo on\n# 12 GiB and larger machines.\ntotal_kib=$(awk '$1 == \"MemTotal:\" { print $2; exit }' /proc/meminfo 2>/dev/null)\n[[ $total_kib =~ ^[0-9]+$ ]] && (( total_kib > 0 && total_kib <= 9437184 )) || exit 0\n\nzram_conf=/etc/systemd/zram-generator.conf.d/95-omarchy-low-memory.conf\nsysctl_conf=/etc/sysctl.d/zz-omarchy-low-memory.conf\n\nconfigs_ready=0\nif [[ -f $zram_conf && -f $sysctl_conf ]] &&\n  grep -Fqx 'zram-size = ram' \"$zram_conf\" &&\n  grep -Fqx 'compression-algorithm = zstd' \"$zram_conf\" &&\n  grep -Fqx 'vm.swappiness=100' \"$sysctl_conf\"; then\n  configs_ready=1\nfi\n\nzram_ready=1\nif [[ -r /sys/block/zram0/comp_algorithm && -r /sys/block/zram0/disksize ]]; then\n  zram_algo=$(< /sys/block/zram0/comp_algorithm)\n  zram_size=$(< /sys/block/zram0/disksize)\n  target_bytes=$(( total_kib * 1024 ))\n  if [[ $zram_algo != *\"[zstd]\"* ]] || (( zram_size + 67108864 < target_bytes )); then\n    zram_ready=0\n  fi\nfi\n\ncur_swappiness=$(sysctl -n vm.swappiness)\n\nif (( configs_ready == 1 && zram_ready == 1 )) && [[ $cur_swappiness == \"100\" ]]; then\n  exit 0\nfi\n\nif (( configs_ready == 0 )); then\n  sudo bash -e \"$OMARCHY_PATH/install/hardware/low-memory.sh\"\nfi\n\nif [[ $cur_swappiness != \"100\" ]]; then\n  sudo sysctl -q -p \"$sysctl_conf\"",
+      "bodyTruncated": true,
+      "date": "2026-11-27T14:08:20Z",
+      "description": "Tune zram and reclaim for 8 GiB machines",
+      "file": "1795788500.sh",
+      "lineCount": 56,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795788500.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795788500.sh",
+      "timestamp": 1795788500,
+      "touches": [
+        "/etc/sysctl.d/zz-omarchy-low-memory.conf",
+        "/etc/systemd/zram-generator.conf.d/95-omarchy-low-memory.conf"
+      ]
+    },
+    {
+      "body": "echo \"Enable browser Memory Saver on 8 GiB machines\"\n\nsource \"$OMARCHY_PATH/install/helpers/browser-policy.sh\"\n\nbrowser_policy_low_memory || exit 0\n\nlow_memory_policy=\"$OMARCHY_PATH/default/chromium/policies/omarchy-low-memory.json\"\n\nfor dir in \"${BROWSER_POLICY_MANAGED_DIRS[@]}\"; do\n  browser_policy_dir_hardened \"$dir\" && browser_policy_parents_hardened \"$dir\" || continue\n  cmp -s \"$low_memory_policy\" \"$dir/omarchy-low-memory.json\" 2>/dev/null && continue\n\n  as_root install -m 644 -o root -g root -T \"$low_memory_policy\" \"$dir/omarchy-low-memory.json\"\ndone",
+      "bodyTruncated": false,
+      "date": "2026-11-27T14:09:20Z",
+      "description": "Enable browser Memory Saver on 8 GiB machines",
+      "file": "1795788560.sh",
+      "lineCount": 14,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795788560.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795788560.sh",
+      "timestamp": 1795788560,
+      "touches": []
+    },
+    {
+      "body": "echo \"Socket-activate CUPS so cupsd starts on demand\"\n\npending=/var/lib/omarchy/migrations/1795788620-cups-socket\n\nif ! systemctl is-enabled --quiet cups.service 2>/dev/null && [[ ! -e $pending ]]; then\n  exit 0\nfi\n\n# Record that the switch started before disabling cups.service (whose Also=\n# also disables cups.socket and cups.path), so an interrupted run finishes\n# enabling them on retry while deliberately disabled installs stay untouched.\nsudo install -d -m 0755 /var/lib/omarchy/migrations\nsudo touch \"$pending\"\nsudo systemctl disable cups.service\nsudo systemctl enable --now cups.socket cups.path\nsudo rm -f \"$pending\"",
+      "bodyTruncated": false,
+      "date": "2026-11-27T14:10:20Z",
+      "description": "Socket-activate CUPS so cupsd starts on demand",
+      "file": "1795788620.sh",
+      "lineCount": 16,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795788620.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795788620.sh",
+      "timestamp": 1795788620,
+      "touches": [
+        "/var/lib/omarchy/migrations",
+        "/var/lib/omarchy/migrations/1795788620-cups-socket"
+      ]
+    },
+    {
+      "body": "echo \"Enable Panel Self Refresh on the Anduril BlueChip\"\n\n# See install/hardware/anduril/fix-anduril-bluechip-boot.sh. Adds\n# msm.psr_enabled=1 to the bluechip boot drop-in and rebuilds the boot image\n# once per machine.\nrebuild_marker=\"${OMARCHY_LIMINE_REBUILD_MARKER:-/var/lib/omarchy/migrations/1795789868}\"\n\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match-device-tree anduril,bluechip; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n  source \"$OMARCHY_PATH/install/hardware/anduril/fix-anduril-bluechip-boot.sh\"\n'\n\nif [[ ! -e $rebuild_marker ]]; then\n  if ! sudo omarchy-boot-rebuild; then\n    echo \"A boot image was not rebuilt. Fix the error above, then run omarchy-migrate again before rebooting.\" >&2\n    exit 1\n  fi\n\n  sudo install -Dm644 /dev/null \"$rebuild_marker\"\n  omarchy-state set reboot-required\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-27T14:31:08Z",
+      "description": "Enable Panel Self Refresh on the Anduril BlueChip",
+      "file": "1795789868.sh",
+      "lineCount": 24,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795789868.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795789868.sh",
+      "timestamp": 1795789868,
+      "touches": [
+        "/var/lib/omarchy/migrations/1795789868"
+      ]
+    },
+    {
+      "body": "echo \"Protect desktop session file cache and tighten OOM pressure response\"\n\n# Gate only on the newly shipped non-backup drop-ins so customized pacman\n# backup files (like /etc/systemd/oomd.conf.d/10-omarchy.conf) never trap the\n# migration queue in exit 75.\nfor req in \\\n  /etc/systemd/system/user.slice.d/10-omarchy-memory.conf \\\n  /etc/systemd/system/user-.slice.d/10-omarchy-memory.conf \\\n  /etc/systemd/system/user@.service.d/20-omarchy-memory.conf; do\n  if [[ ! -f $req ]]; then\n    echo \"Waiting for the omarchy-settings package that ships $req\" >&2\n    exit 75\n  fi\ndone\n\nuid=$(id -u)\nsystem_reload_needed=0\nfor unit in user.slice \"user-$uid.slice\" \"user@$uid.service\"; do\n  cur_low=$(systemctl show -p MemoryLow --value \"$unit\" 2>/dev/null || true)\n  if [[ $cur_low != \"805306368\" ]]; then\n    system_reload_needed=1\n    break\n  fi\ndone\n\noomd_restart_needed=0\nif systemctl is-active --quiet systemd-oomd.service 2>/dev/null &&\n  grep -Fqx 'DefaultMemoryPressureLimit=60%' /etc/systemd/oomd.conf.d/10-omarchy.conf 2>/dev/null &&\n  grep -Fqx 'DefaultMemoryPressureDurationSec=10s' /etc/systemd/oomd.conf.d/10-omarchy.conf 2>/dev/null; then\n  oomd_status=$(oomctl 2>/dev/null || true)\n  if [[ $oomd_status != *\"Default Memory Pressure Limit: 60.00%\"* ||\n    $oomd_status != *\"Default Memory Pressure Duration: 10s\"* ]]; then\n    oomd_restart_needed=1\n  fi\nfi\n\nif (( system_reload_needed == 1 )); then\n  sudo systemctl daemon-reload\nfi\n",
+      "bodyTruncated": true,
+      "date": "2026-11-27T14:45:00Z",
+      "description": "Protect desktop session file cache and tighten OOM pressure response",
+      "file": "1795790700.sh",
+      "lineCount": 50,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795790700.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795790700.sh",
+      "timestamp": 1795790700,
+      "touches": [
+        "/etc/systemd/oomd.conf.d/10-omarchy.conf",
+        "/etc/systemd/system/user-.slice.d/10-omarchy-memory.conf",
+        "/etc/systemd/system/user.slice.d/10-omarchy-memory.conf",
+        "/etc/systemd/system/user@.service.d/20-omarchy-memory.conf"
+      ]
+    },
+    {
+      "body": "echo \"Put mise shims ahead of system binaries for SSH commands, as in a desktop session\"\n\n# A tool version pinned with mise lost to a system copy in SSH commands: the\n# PAM PATH listed mise's shims after /usr/bin. Only the exact line Omarchy wrote is changed.\npam_env=/etc/security/pam_env.conf\nold_path='PATH DEFAULT=@{HOME}/.local/share/omarchy/agent-accounts/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:@{HOME}/.local/share/mise/shims:@{HOME}/.local/bin'\nnew_path='PATH DEFAULT=@{HOME}/.local/share/omarchy/agent-accounts/bin:@{HOME}/.local/share/mise/shims:/usr/local/sbin:/usr/local/bin:/usr/bin:@{HOME}/.local/bin'\nif grep -qxF \"$old_path\" \"$pam_env\"; then\n  sudo sed -i \"s|^${old_path//./\\\\.}\\$|${new_path}|\" \"$pam_env\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-27T14:56:10Z",
+      "description": "Put mise shims ahead of system binaries for SSH commands, as in a desktop session",
+      "file": "1795791370.sh",
+      "lineCount": 10,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795791370.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795791370.sh",
+      "timestamp": 1795791370,
+      "touches": [
+        "/etc/security/pam_env.conf",
+        "/usr/bin",
+        "/usr/local/bin",
+        "/usr/local/sbin"
+      ]
+    },
+    {
+      "body": "echo \"Enable power tuning and PSCI deep sleep on the ASUS Zenbook 14 (UX3480QA)\"\n\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match \"UX3480QA\"; then\n  exit 0\nfi\n\ndt_root=\"${OMARCHY_DT_ROOT:-/sys/firmware/devicetree/base}\"\n\n# Apply Wi-Fi 6E power save and USB/PHY runtime PM + webcam wakeup rules\n# immediately; both are safe on any kernel/DTB version.\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" bash -euo pipefail -c '\n  source \"$OMARCHY_PATH/install/hardware/asus/fix-asus-zenbook-14-ux3480qa-power.sh\"\n  nmcli general reload conf >/dev/null 2>&1 || true\n\n  # NetworkManager only applies wifi.powersave when a connection activates, so\n  # also enable it directly for the running session unless the active profile\n  # explicitly overrides 802-11-wireless.powersave (1=ignore, 2=disable).\n  shopt -s nullglob\n  for wireless in /sys/class/net/*/wireless; do\n    iface=$(basename \"$(dirname \"$wireless\")\")\n    uuid=$(nmcli -g GENERAL.CON-UUID dev show \"$iface\" 2>/dev/null || true)\n    powersave=\"\"\n    if [[ -n $uuid && $uuid != \"--\" ]]; then\n      if ! powersave=$(nmcli -g 802-11-wireless.powersave con show uuid \"$uuid\" 2>/dev/null); then\n        continue\n      fi\n    fi\n    if [[ -z $powersave || $powersave == 0* || $powersave == 3* || $powersave == \"default\" || $powersave == \"enable\" ]]; then\n      iw dev \"$iface\" set power_save on 2>/dev/null || true\n    fi\n  done\n'\n\n# Switching from s2idle to PSCI deep sleep requires linux-omarchy-dtbs >= 7.3-77\n# (drops wakeup-event-action from switch-lid so open-lid deep suspend does not\n# wake on CX collapse exit) booted on the running kernel.\ndtbs_ver=$(pacman -Q linux-omarchy-dtbs 2>/dev/null | awk '{print $2}') || dtbs_ver=\"\"\nif [[ -z $dtbs_ver ]] || (( $(vercmp \"$dtbs_ver\" 7.3-77) < 0 )); then\n  echo \"Waiting for linux-omarchy-dtbs >= 7.3-77 before switching to deep sleep\"\n  exit 75",
+      "bodyTruncated": true,
+      "date": "2026-11-27T15:01:45Z",
+      "description": "Enable power tuning and PSCI deep sleep on the ASUS Zenbook 14 (UX3480QA)",
+      "file": "1795791705.sh",
+      "lineCount": 51,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795791705.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795791705.sh",
+      "timestamp": 1795791705,
+      "touches": []
+    },
+    {
+      "body": "echo \"Remove the .NET 9 runtime Omarchy installed for Pinta\"\n\n# 1765846739 installed dotnet-runtime-9.0 for Pinta, which runs on\n# dotnet-runtime now. .NET 9 is out of support and Arch has dropped the\n# package, so the AUR helper tries to build it from source and fails the\n# update. It goes when pacman can remove it without breaking a dependency.\n# Required By can't tell that: it also names a package whose unversioned\n# dependency dotnet-runtime satisfies.\nif omarchy-pkg-present dotnet-runtime-9.0 &&\n  pacman -Rs --print dotnet-runtime-9.0 >/dev/null 2>&1; then\n  omarchy-pkg-drop dotnet-runtime-9.0\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-27T16:35:52Z",
+      "description": "Remove the .NET 9 runtime Omarchy installed for Pinta",
+      "file": "1795797352.sh",
+      "lineCount": 12,
+      "packagesAdded": [],
+      "packagesRemoved": [
+        "dotnet-runtime-9.0"
+      ],
+      "path": "migrations/1795797352.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795797352.sh",
+      "timestamp": 1795797352,
+      "touches": []
+    },
+    {
+      "body": "echo \"Unlock encrypted drives with the keyfiles udiskie was configured to use\"\n\n# udiskie read the first of these that exists.\nconfig=\"\"\nfor candidate in \"${XDG_CONFIG_HOME:-$HOME/.config}\"/udiskie/config.{yml,json}; do\n  if [[ -f $candidate ]]; then\n    config=$candidate\n    break\n  fi\ndone\n\n[[ -n $config ]] && grep -qE '^[^#]*keyfile' \"$config\" || exit 0\n\n# The system Python, since mise may put its own first on PATH without system packages.\nif [[ $config == *.yml ]] && ! /usr/bin/python3 -I -c \"import yaml\" 2>/dev/null; then\n  omarchy-pkg-add python-yaml\nfi\n\n# omarchy-drive-unlock finds a keyfile by the LUKS UUID alone, so only a drive\n# named by exactly one UUID translates. Anything less certain is named, not guessed.\n/usr/bin/python3 -I - \"$config\" \"$HOME/.config/omarchy/drive-keys\" <<'PY'\nimport fnmatch\nimport json\nimport os\nimport re\nimport sys\n\nconfig, keys = sys.argv[1:]\nvalues = {\"keyfile\", \"options\", \"ignore\", \"automount\", \"skip\"}\nunknown = object()\n\ntry:\n    with open(config) as f:\n        if config.endswith(\".json\"):\n            data = json.load(f)\n        else:\n            import yaml\n            data = yaml.safe_load(f)\n    rules = []\n    for section in (\"device_config\", \"mount_options\", \"ignore_device\"):",
+      "bodyTruncated": true,
+      "date": "2026-11-27T17:08:28Z",
+      "description": "Unlock encrypted drives with the keyfiles udiskie was configured to use",
+      "file": "1795799308.sh",
+      "lineCount": 128,
+      "packagesAdded": [
+        "python-yaml"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1795799308.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795799308.sh",
+      "timestamp": 1795799308,
+      "touches": [
+        "/usr/bin/python3",
+        "~/.config",
+        "~/.config/omarchy/drive-keys"
+      ]
+    },
+    {
+      "body": "echo \"Drop obsolete Dell XPS 13 DX13260 audio workarounds\"\n\n# Linux 7.2+ includes commit efd80de2de9d (snd_soc_sof_sdw sidecar amps quirk\n# for 1028:0e53) and linux-firmware-cirrus >= 20260910-2 ships the nine\n# 10280e54 Panther Lake speaker firmware aliases natively.\nmodules_dir=\"${OMARCHY_MODULES_DIR:-/usr/lib/modules}\"\nto_drop=()\n\nif omarchy-pkg-present dell-xps13-sidecar-amps; then\n  shopt -s nullglob\n  pkgbases=(\"$modules_dir\"/*/pkgbase)\n  shopt -u nullglob\n\n  if (( ${#pkgbases[@]} > 0 )); then\n    all_kernels_supported=1\n    for pkgbase in \"${pkgbases[@]}\"; do\n      kver=$(basename \"$(dirname \"$pkgbase\")\")\n      if [[ $kver == *-rc* ]] || (( $(vercmp \"${kver%%-*}\" \"7.2\") < 0 )); then\n        all_kernels_supported=0\n        break\n      fi\n    done\n\n    if (( all_kernels_supported )); then\n      to_drop+=(dell-xps13-sidecar-amps)\n    fi\n  fi\nfi\n\nif omarchy-pkg-present linux-firmware-cirrus-dx13260; then\n  cirrus_pkg=$(pacman -Q linux-firmware-cirrus 2>/dev/null || true)\n  if [[ -n $cirrus_pkg ]] && (( $(vercmp \"${cirrus_pkg#* }\" \"20260910-2\") >= 0 )); then\n    to_drop+=(linux-firmware-cirrus-dx13260)\n  fi\nfi\n\nif (( ${#to_drop[@]} > 0 )); then\n  omarchy-pkg-drop \"${to_drop[@]}\"\nfi",
+      "bodyTruncated": false,
+      "date": "2026-11-27T18:50:14Z",
+      "description": "Drop obsolete Dell XPS 13 DX13260 audio workarounds",
+      "file": "1795805414.sh",
+      "lineCount": 39,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795805414.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795805414.sh",
+      "timestamp": 1795805414,
+      "touches": [
+        "/usr/lib/modules"
+      ]
+    },
+    {
+      "body": "echo \"Switch machines on linux-omarchy from v4l2loopback-dkms to prebuilt linux-omarchy-v4l2loopback\"\n\n# linux-omarchy-v4l2loopback ships the v4l2loopback module built and signed\n# with each linux-omarchy kernel, so it loads under Secure Boot without MOK\n# enrollment and kernel updates no longer compile it via DKMS. It only covers\n# linux-omarchy, so machines with another kernel installed (including Apple\n# Silicon Macs on linux-aurora) stay on DKMS.\nomarchy-pkg-present v4l2loopback-dkms linux-omarchy || exit 0\n\npkgbases=$(cat /usr/lib/modules/*/pkgbase 2>/dev/null | sort -u || true)\n[[ $pkgbases == \"linux-omarchy\" ]] || exit 0\n\n# Check whether any installed package still depends on v4l2loopback-dkms by\n# name instead of the virtual V4L2LOOPBACK-MODULE. Check permanent no-ops\n# (third-party packages) before any exit-75 deferral so we never block the\n# migration queue on a machine we intend to leave on DKMS.\npkg_hard_depends_on_v4l2loopback_dkms() {\n  LC_ALL=C pacman -Qi \"$1\" 2>/dev/null | awk '\n    /^Depends On[[:space:]]*:/ { sub(/^[^:]*:[[:space:]]*/, \"\"); in_deps = 1 }\n    /^Optional Deps[[:space:]]*:/ { in_deps = 0 }\n    in_deps {\n      for (i = 1; i <= NF; i++) {\n        dep = $i\n        sub(/[<>=].*/, \"\", dep)\n        if (dep == \"v4l2loopback-dkms\") found = 1\n      }\n    }\n    END { exit(found ? 0 : 1) }\n  '\n}\n\nrequired_by=$(\n  LC_ALL=C pacman -Qi v4l2loopback-dkms 2>/dev/null | awk '\n    /^Required By[[:space:]]*:/ { sub(/^[^:]*:[[:space:]]*/, \"\"); in_req = 1 }\n    /^Optional For[[:space:]]*:/ { in_req = 0 }\n    in_req {\n      for (i = 1; i <= NF; i++) {\n        if ($i != \"None\") print $i\n      }\n    }",
+      "bodyTruncated": true,
+      "date": "2026-11-27T22:32:02Z",
+      "description": "Switch machines on linux-omarchy from v4l2loopback-dkms to prebuilt linux-omarchy-v4l2loopback",
+      "file": "1795818722.sh",
+      "lineCount": 116,
+      "packagesAdded": [
+        "linux-omarchy-v4l2loopback"
+      ],
+      "packagesRemoved": [
+        "v4l2loopback-dkms"
+      ],
+      "path": "migrations/1795818722.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795818722.sh",
+      "timestamp": 1795818722,
+      "touches": [
+        "/usr/lib/modules/"
+      ]
+    },
+    {
+      "body": "echo \"Replace Plymouth with the Omarchy boot splash, and SDDM with greetd's login screen\"\n\n# omarchy-settings ships the splash, and the login screen greetd runs from\n# below, and can land after the omarchy package carrying this migration.\nif [[ ! -e /etc/initcpio/install/omarchy-splash ]]; then\n  echo \"Waiting for omarchy-settings with the Omarchy boot splash and login screen\"\n  exit 75\nfi\n\n# The splash is untested with systemd-boot, whether the machine boots it or is\n# switching to it (etc/initcpio/install/omarchy-splash): stop before changing\n# anything.\nif omarchy-boot-backend --managed | grep -qx systemd-boot; then\n  echo \"The Omarchy boot splash does not support systemd-boot yet\" >&2\n  exit 1\nfi\n\n# The boot splash's runtime and patched wlroots, beside Quickshell, and the\n# login screen's daemon. These ship together in the Omarchy package update.\nomarchy-pkg-add sway seatd wlroots0.20 greetd\n\n# greetd takes over as the display manager, signing in whoever SDDM did and\n# keeping its permanent autologin. Enable its alias before disabling SDDM:\n# a failed enable leaves SDDM intact, and a retry after the switch is harmless.\n# Neither daemon is stopped, so this session keeps working until the next boot.\nif systemctl is-enabled --quiet sddm.service 2>/dev/null; then\n  sudo omarchy-system-login --from-sddm\n  sudo systemctl enable --force greetd.service\n  sudo systemctl disable sddm.service\n  omarchy-state set reboot-required\nfi\n\n# The login screen and the boot splash take their colors from the theme. A\n# failure shouldn't stop the update: the next theme change tries again.\nomarchy-theme-set-login || echo \"Could not color the boot splash and login screen; the next theme change tries again\" >&2\n\n# An N1x lights its panel for the LUKS prompt with a hook placed after\n# plymouth's; place it after the splash's too.\nn1x_drop_in=/etc/mkinitcpio.conf.d/zz-omarchy-n1x-boot-brightness.conf\nif [[ -f $n1x_drop_in ]] && grep -qF '[[ $_omarchy_n1x_hook == plymouth ]] &&' \"$n1x_drop_in\"; then",
+      "bodyTruncated": true,
+      "date": "2026-11-28T02:47:40Z",
+      "description": "Replace Plymouth with the Omarchy boot splash, and SDDM with greetd's login screen",
+      "file": "1795834060.sh",
+      "lineCount": 82,
+      "packagesAdded": [
+        "greetd",
+        "seatd",
+        "sway",
+        "wlroots0.20"
+      ],
+      "packagesRemoved": [],
+      "path": "migrations/1795834060.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795834060.sh",
+      "timestamp": 1795834060,
+      "touches": [
+        "/etc/initcpio/install/omarchy-splash",
+        "/etc/mkinitcpio.conf",
+        "/etc/mkinitcpio.conf.d/",
+        "/etc/mkinitcpio.conf.d/zz-omarchy-n1x-boot-brightness.conf",
+        "/etc/vconsole.conf",
+        "/var/lib/omarchy/migrations/1795834060"
+      ]
+    },
+    {
+      "body": "echo \"Keep external USB3 controllers active on the ASUS Zenbook 14 (UX3480QA)\"\n\nif ! omarchy-hw-aarch64-qualcomm || ! omarchy-hw-match \"UX3480QA\"; then\n  exit 0\nfi\n\nudev_rules_dir=${OMARCHY_ZENBOOK_UX3480QA_UDEV_RULES_DIR:-/etc/udev/rules.d}\nnm_conf_dir=${OMARCHY_ZENBOOK_UX3480QA_NM_CONF_DIR:-/etc/NetworkManager/conf.d}\nplatform_devices_dir=${OMARCHY_ZENBOOK_UX3480QA_PLATFORM_DEVICES_DIR:-/sys/bus/platform/devices}\nrules_file=\"$udev_rules_dir/90-asus-zenbook-14-ux3480qa-power.rules\"\n\nneeds_rules_update=false\nif [[ ! -f $rules_file ]] || grep -qF 'qcom-qmp-combo-phy' \"$rules_file\"; then\n  needs_rules_update=true\nfi\n\nneeds_live_restore=false\nshopt -s nullglob\nfor dev in \"$platform_devices_dir\"/*; do\n  [[ -L $dev/driver && -r $dev/power/control ]] || continue\n  name=$(basename \"$dev\")\n  [[ $name == \"a200000.usb\" ]] && continue\n  drv=$(basename \"$(readlink -f \"$dev/driver\" 2>/dev/null || true)\" 2>/dev/null || true)\n  case \"$drv\" in\n    dwc3-qcom|qcom-qmp-combo-phy|qcom-qmp-usb-phy)\n      [[ $(<\"$dev/power/control\") != \"on\" ]] && needs_live_restore=true\n      ;;\n    xhci-hcd)\n      parent=$(basename \"$(dirname \"$(readlink -f \"$dev\")\")\")\n      [[ $parent == \"a200000.usb\" ]] && continue\n      [[ $(<\"$dev/power/control\") != \"on\" ]] && needs_live_restore=true\n      ;;\n  esac\ndone\n\nif ! $needs_rules_update && ! $needs_live_restore; then\n  exit 0\nfi\n\nsudo env PATH=\"$PATH\" OMARCHY_PATH=\"$OMARCHY_PATH\" \\",
+      "bodyTruncated": true,
+      "date": "2026-11-28T09:01:58Z",
+      "description": "Keep external USB3 controllers active on the ASUS Zenbook 14 (UX3480QA)",
+      "file": "1795856518.sh",
+      "lineCount": 66,
+      "packagesAdded": [],
+      "packagesRemoved": [],
+      "path": "migrations/1795856518.sh",
+      "sourceUrl": "https://github.com/omacom/omarchy/blob/quattro/migrations/1795856518.sh",
+      "timestamp": 1795856518,
+      "touches": [
+        "/etc/NetworkManager/conf.d",
+        "/etc/udev/rules.d"
+      ]
     }
   ],
   "prerelease": true,
